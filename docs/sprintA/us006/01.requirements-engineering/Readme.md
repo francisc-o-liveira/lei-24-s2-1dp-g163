@@ -5,68 +5,67 @@
 
 ### 1.1. User Story Description
 
-As an organization employee, I want to create a new task in order to be further published.
-
+As an FM, I wish to register a vehicle including Brand, Model, Plate, Type, Tare,
+Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-
+up Frequency (in Kms).
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
-
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
-
+>	Each vehicle is characterized by only take the team or mixed, light or heavy, open box, closed vans or trucks.
+ 
+[]()
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** Should the application identify a registered vehicle by a serial number or other attribute?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** By plate id.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** Should the application a group the vehicles by their brand, serial number or other attribute?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:**  No requirements were set concerning groups of vehicles;
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
-* **AC2:** The task reference must have at least 5 alphanumeric characters.
-* **AC3:** When creating a task with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC2:** When creating a vehicle with an existing reference, the system must reject such operation and the user must be able to modify it.
+* **AC3:** When introducing a plate, the system must ask first the register date, so that can change the format of the plate.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US003 - Create a task category" as there must be at least one task category to classify the task being created.
+XXX
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+    * brand
+    * model 
+    * type
+    * tare
+    * gross weight
+    * current km
+    * register date 
+    * acquisition date
+    * maintenance/check-up frequency (in kms)
 	
 * Selected data:
-    * a task category 
+    * vehicle category
 
 **Output Data:**
 
-* List of existing task categories
-* (In)Success of the operation
+* Display confirmation success
 
 ### 1.6. System Sequence Diagram (SSD)
-
-**_Other alternatives might exist._**
-
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](../01.requirements-engineering/svg/us006-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
 #### Alternative Two
 
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative Two](../01.requirements-engineering/svg/us006-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+XXX
