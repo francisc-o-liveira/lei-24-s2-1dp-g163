@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "HRM" as HRManager
+participant ":System" as System
+
+activate HRManager
+
+HRManager -> System : Provides Employee ID
+activate System
+
+System --> HRManager : Validates Employee ID
+deactivate System
+
+HRManager -> System : Types Skill Name(s) to assign
+activate System
+
+System -> System : Verifies if Skill(s) exist and are not already assigned
+System --> HRManager : Confirms skill assignment is possible
+deactivate System
+
+HRManager -> System : Confirms skill assignment
+activate System
+
+System -> System : Assigns Skill(s) to Collaborator
+System --> HRManager : Displays operation success message
+
+deactivate System
+@enduml

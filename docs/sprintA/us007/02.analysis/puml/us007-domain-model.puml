@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+class Vehicle{
+    plate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    maintenanceFrequency
+}
+
+class VFM{
+    email
+    password
+}
+
+class CheckUp {
+    date
+    kilometersAtCheckUp
+}
+
+VFM "1" -- "0..*" Vehicle : manages >
+Vehicle "1" -- "1..*" CheckUp : undergoes >
+VFM "1" -- "0..*" CheckUp : registers >
+@enduml
