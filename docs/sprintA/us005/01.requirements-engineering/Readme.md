@@ -54,6 +54,7 @@ The max size of the team (for instance 4) and the skill needed(example): 4 tree 
 
 * Typed data:
     * a max size of the team
+    * a min size of the team
 	
 * Selected data:
     * a skills set
@@ -71,6 +72,8 @@ The max size of the team (for instance 4) and the skill needed(example): 4 tree 
 #### Alternative One
 
 ![System Sequence Diagram - Alternative One](svg/us005-system-sequence-diagram-alternative-one.svg)
+
+![System Sequence Diagram - Alternative Two](svg/us005-system-sequence-diagram-alternative-two.svg)
 
 
 ### 1.7 Other Relevant Remarks

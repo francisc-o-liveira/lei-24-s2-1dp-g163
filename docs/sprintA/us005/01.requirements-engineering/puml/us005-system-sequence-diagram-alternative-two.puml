@@ -7,32 +7,38 @@ title System Sequence Diagram (SSD) - Alternative Two
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "HRM" as Manager
 participant ":System" as System
 
-activate Employee
+activate Manager
 
-    Employee -> System : asks to create a new task
+    Manager -> System : asks to generate a new Team
     activate System
 
-        System --> Employee : shows task category list and asks to select one
+        System --> Manager : show skills list/requests data (i.e. skills set)
     deactivate System
 
-    Employee -> System : selects a task category
+    Manager -> System : types requested data
     activate System
 
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+     alt Minimum >= 1
+    System --> Manager : requests data ( max team size,\n min team size )
+    end
+
+        System --> Manager : shows all data and requests confirmation or modification
     deactivate System
 
-    Employee -> System : types requested data
+    opt optional for "HRM"
+    Manager -> System : modify data
     activate System
 
-        System --> Employee : shows all data and requests confirmation
+    System --> Manager : shows all data and requests confirmation or modification.
     deactivate System
+    end
 
-    Employee -> System : confirms data
+    Manager -> System : confirm the data
     activate System
 
-        System --> Employee : displays operation success
+        System --> Manager : displays operation success
     deactivate System
 @enduml

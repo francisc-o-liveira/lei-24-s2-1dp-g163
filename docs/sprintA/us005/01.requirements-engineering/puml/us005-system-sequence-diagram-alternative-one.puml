@@ -16,7 +16,7 @@ activate Manager
     activate System
 
     alt Minimum of 1 collaborator and 1 skill
-        System --> Manager : requests data (i.e. skills set, number\nof pretended collaborators)
+        System --> Manager : requests data (i.e. skills set, max team size,\n min team size )
     deactivate System
     end
 
