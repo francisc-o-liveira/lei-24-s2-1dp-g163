@@ -73,6 +73,7 @@ The max size of the team (for instance 4) and the skill needed(example): 4 tree 
 
 ![System Sequence Diagram - Alternative One](svg/us005-system-sequence-diagram-alternative-one.svg)
 
+#### Alternative Two
 ![System Sequence Diagram - Alternative Two](svg/us005-system-sequence-diagram-alternative-two.svg)
 
 
