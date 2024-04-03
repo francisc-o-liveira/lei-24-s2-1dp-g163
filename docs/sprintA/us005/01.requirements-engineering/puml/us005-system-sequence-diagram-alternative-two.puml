@@ -13,24 +13,27 @@ participant ":System" as System
 activate Manager
 
     Manager -> System : asks to generate a new Team
-    activate System
+     activate System
 
         System --> Manager : show skills list/requests data (i.e. skills set)
-    deactivate System
+     deactivate System
 
     Manager -> System : types requested data
-    activate System
+     activate System
 
-     alt Minimum >= 1
+    alt Minimum >= 1
     System --> Manager : requests data ( max team size,\n min team size )
     end
 
-        System --> Manager : shows all data and requests confirmation or modification
-    deactivate System
+    Manager -> System : types requested data
+     activate System
+
+    System --> Manager : shows all data and requests confirmation or modification
+     deactivate System
 
     opt optional for "HRM"
     Manager -> System : modify data
-    activate System
+     activate System
 
     System --> Manager : shows all data and requests confirmation or modification.
     deactivate System
