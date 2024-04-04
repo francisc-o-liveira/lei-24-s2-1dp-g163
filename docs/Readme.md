@@ -4,7 +4,7 @@
 
 The teams consists of students identified in the following table.
 
-| Student Number | Name                            | curricular units  |
+| Student Number | Name                            | Curricular Units  |
 |----------------|---------------------------------|-------------------|
 | **1230684**    | Francisco Manuel Silva Oliveira | ALL               |
 | **1210527**    | Diogo Moreira                   | ESOFT/MDISC/MATCP |
