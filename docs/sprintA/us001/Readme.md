@@ -1,4 +1,4 @@
-# US001 - Register a Vehicle’s Check-Up
+# US001 - Register skills for collaborators
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
