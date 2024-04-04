@@ -31,14 +31,7 @@ class Vehicle {
     maintenanceFrequency
 }
 
-class CheckUp{
-    date
-    kilometersAtCheckUp
-}
-
-
 VFM "1" -- "0..*" Vehicle : manages >
-VFM "1" -- "0..*" CheckUp : sees >
-CheckUp "1" -- "0..*" Vehicle : contains >
+
 
 @enduml

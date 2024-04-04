@@ -56,8 +56,6 @@ class Vehicle{
 }
 
 class Agenda{
-    task
-    team
     greenSpace
     startDate
     finishDate
@@ -110,7 +108,6 @@ VFM "1" -- "0..*" Vehicle : manage >
 VFM "1" -- "0..*" Equipment : manage >
 VFM "1" -- "0..*" Machine : manage >
 VFM "1" -- "0..*" Vehicle : manages >
-VFM "1" -- "0..*" CheckUp : registers >
 
 GSM "1" --- "0..*" Colaborator : manage >
 GSM "1" --- "0..*" Vehicle : manage >
