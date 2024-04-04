@@ -7,8 +7,8 @@
 ### Created by: 
 
 #### Francisco Oliveira
-#### Ines Oliveira
-#### Tomas 
+#### Inês Oliveira
+#### Tomás Borges
 
 <br>
 <br>

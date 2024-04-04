@@ -1,4 +1,4 @@
-# US002 - Register a Vehicle’s Check-Up
+# US002 - Register a Job Category
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
