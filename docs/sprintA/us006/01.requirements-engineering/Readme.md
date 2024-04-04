@@ -25,6 +25,10 @@ up Frequency (in Kms).
 >
 > **Answer:**  No requirements were set concerning groups of vehicles;
 
+> **Question:** For the application to work does the FM need to fill all the attributes of the vehicle?
+>
+> **Answer:** Yes, besides the vehicle plate
+
 ### 1.3. Acceptance Criteria
 
 * **AC1:** All required fields must be filled in.
