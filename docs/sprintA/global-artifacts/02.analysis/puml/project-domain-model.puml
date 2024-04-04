@@ -55,11 +55,6 @@ class Vehicle{
     maintenanceFrequency
 }
 
-class CheckUp {
-    date
-    kilometersAtCheckUp
-}
-
 class Agenda{
     task
     team
@@ -122,14 +117,12 @@ GSM "1" --- "0..*" Vehicle : manage >
 GSM "1" --- "0..*" Team : manage >
 GSM "1" --- "0..*" Task : create >
 GSM "1" --- "0..*" Equipment : manage >
-'GSM "1" --- "0..1" CheckUpList : see >
 GSM "1" --- "0..*" Job : manage >
 GSM "1" --- "0..*" Machine : manage >
 GSM "1" - "0..*" Agenda : manage >
 GSM "1" --- "0..*" Skill : manage >
 
 Vehicle "1" -- "0..*" Task : has >
-Vehicle "1" -- "1..*" CheckUp : undergoes >
 
 Equipment "1" -- "0..*" Task : has >
 
