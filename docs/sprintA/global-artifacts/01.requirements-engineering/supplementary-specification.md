@@ -2,19 +2,20 @@
 
 ## Functionality
 
+* All the images/figures produced should be recorded in SVG format
+
 _Specifies functionalities that:  
 &nbsp; &nbsp; (i) are common across several US/UC;  
 &nbsp; &nbsp; (ii) are not related to US/UC, namely: Audit, Reporting and Security._
 
-* All the images/figures produced should be recorded in SVG format
-
 ## Usability
+
+* The application interface must be developed in JavaFX 11.
 
 _Evaluates the user interface. It has several subcategories,
 among them: error prevention; interface aesthetics and design; help and
 documentation; consistency and standards._
 
-* The application interface must be developed in JavaFX 11.
 
 ## Reliability
 
@@ -43,34 +44,33 @@ _The supportability requirements gathers several characteristics, such as:
 testability, adaptability, maintainability, compatibility,
 configurability, installability, scalability and more._
 
-(fill in here )
-
 ## Others +
 
 ### Design Constraints
 
-_Specifies or constraints the system design process. Examples may include: programming languages, software process, mandatory standards/patterns, use of development tools, class library, etc._
-
 N/A
 
+_Specifies or constraints the system design process. Examples may include: programming languages, software process, mandatory standards/patterns, use of development tools, class library, etc._
+
+
 ### Implementation Constraints
+
+* The application must be developed in Java language.
+* The application's graphical interface is to be developed in JavaFX 11.
 
 _Specifies or constraints the code or construction of a system such
 such as: mandatory standards/patterns, implementation languages,
 database integrity, resource limits, operating system._
 
-* The application must be developed in Java language.
-* The application's graphical interface is to be developed in JavaFX 11.
-
 ### Interface Constraints
+
+N/A
 
 _Specifies or constraints the features inherent to the interaction of the
 system being developed with other external systems._
 
-N/A
-
 ### Physical Constraints
 
-_Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._
-
 N/A
+
+_Specifies a limitation or physical requirement regarding the hardware used to house the system, as for example: material, shape, size or weight._

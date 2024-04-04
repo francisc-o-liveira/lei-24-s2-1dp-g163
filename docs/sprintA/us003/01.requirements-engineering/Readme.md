@@ -51,7 +51,7 @@ As a Human Resources Manager, I want to register a collaborator with a job and f
 The prefix appears to the left of the @ symbol. The domain appears to the right of the @ symbol.
 For example, in the address example@mail.com, "example" is the email prefix, and "mail.com" is the email domain.
 
-> **Question:** What is needed for the adress ?  Street, zipcode and a city?
+> **Question:** What is needed for the address ?  Street, zipcode and a city?
 > 
 >  **Answer:** That would be enough.
 
