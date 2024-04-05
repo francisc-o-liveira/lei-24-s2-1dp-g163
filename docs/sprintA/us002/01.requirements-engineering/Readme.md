@@ -58,7 +58,7 @@ or tractors; tree pruning; application of phytopharmaceuticals.
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](01.requirements-engineering/svg/us002-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us002-system-sequence-diagram-alternative-one.svg)
 
 
 ### 1.7 Other Relevant Remarks
