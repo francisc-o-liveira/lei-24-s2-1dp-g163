@@ -22,6 +22,10 @@ or tractors; tree pruning; application of phytopharmaceuticals.
 > **Question:** Should we add a description or anything atribute for the Job registration?
 >
 > **Answer:** Not need to, job is just a name;
+> 
+> **Question:** Can special characters and numbers be entered when registering a job?
+> 
+> **Answer:** No.
 
 ### 1.3. Acceptance Criteria
 
