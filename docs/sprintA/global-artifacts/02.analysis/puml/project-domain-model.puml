@@ -90,9 +90,6 @@ class Colaborator {
     docNumber
 }
 
-class Time{
-    timePeriod
-}
 
 
 Organization "1" -- "1" HRM : has >
@@ -136,7 +133,7 @@ Machine "1" -- "0..*" Team : has >
 
 Agenda "1" -- "0..*" Team : has >
 Agenda "1" -- "0..*" Task : have >
-Agenda "1" -- "0..*" Time : has >
+
 
 
 
