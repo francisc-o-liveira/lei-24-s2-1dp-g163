@@ -108,4 +108,4 @@ For example, in the address example@mail.com, "example" is the email prefix, and
 
 ### 1.7 Other Relevant Remarks
 
-* The register collaborator stays in a "not activate" state in order to distinguish from "activate" collaborators.
+* The register collaborator stays in a "not activate" state in order to distinguish from "activate" collaborators.(admission date)

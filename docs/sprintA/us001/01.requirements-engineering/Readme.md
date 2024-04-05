@@ -66,6 +66,5 @@ or tractors; tree pruning; application of phytopharmaceuticals.
 
 
 ### 1.7 Other Relevant Remarks
-XXXXXXXXXXXXXXXX
-* The register skill stays in a "not activate" state in order to distinguish from "activate" skills.
-XXXXXXXXXXXXXXXX
+
+N/A
