@@ -26,6 +26,10 @@ or tractors; tree pruning; application of phytopharmaceuticals.
 > **Question:** Do I need to add skills by writing them or can I just give a file with all of the skills?
 > 
 > **Answer:** Both are acceptable since the business the same the crucial difference resides in the UX.
+> 
+> **Question:** Should the system able the HRM to introduce multiple skills in one interaction before saving all of them?
+> 
+> **Answer:** It's not required to do so.
 
 ### 1.3. Acceptance Criteria
 
