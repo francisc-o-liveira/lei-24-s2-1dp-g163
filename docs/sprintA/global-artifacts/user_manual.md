@@ -177,14 +177,14 @@ can:
 
 ## Green Space Manager (GSM)
 
-When you open and login in the User Portal app,(there are two possible paths) the GSM
+When you open and login in the User Portal app,(there are 2 possible paths) the GSM
 can:
 
 * See the Report Faults of the Green Spaces - The Manager can access the report faults made by the users of the Green Space
 * See the Evaluations of Green Spaces - The Manager can access the Evaluations made by the users of the Green Spaces
 
 
-When you open and login in the software, (there are XXXXX possible paths), the GSM can:
+When you open and login in the software, (there are 6 possible paths), the GSM can:
 
 * Manage the Vehicles - The Manager can oversee and administer vehicles used for green space management.(including Check-Up List and Check Up register)
 * Manage the Collaborators - The Manager can handle the administration and organization of collaborators involved in green space management.
