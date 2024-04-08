@@ -187,7 +187,7 @@ can:
 When you open and login in the software, (there are XXXXX possible paths), the GSM can:
 
 * Manage the Vehicles - The Manager can
-* Manage the Collaborators -
+* Manage the Collaborators - 
 * Manage the Job's Category -
 * Manage the Skills -
 * Create and Manage Tasks -
@@ -209,9 +209,20 @@ When you open and login in the Software,(there are 8 possible paths) the HRM can
 
 #### Register a Collaborator
 ##### Syntax Notes:
-+ Name : Should contain at least 8 characters
-+  : Should contain an e-mail prefix, before the "@" symbol, and e-mail domain, after the "@" symbol.
-+  : Should contain at least 12 characters, with special characters included and upper case characters.
++ Name : Can have maximum of 6 words.
++ Date of birthday  : The age of the collaborator is mandatory be greater than 18.
++ Admission data : Should contain at least 12 characters, with special characters included and upper case characters.
++ Address Street : (N/A)
++ Zipcode : (N/A)
++ Address City : (N/A)
++ Email : The email address need to have a prefix, "@" and a domain for example: "mail.com" (the domain need to have one ".")
++ Phone Number : Need to have 9 digits and have an international validation.
++ ID doc type : Taxpayer number, Citizen Card or Passport
++ Number of ID card : Need to be unique in the system and verified.
++ Job Category : It is mandatory to select a job category.
++ Skill(s) : Not Mandatory.
+
+
 
 #### Register a Job Category
 ##### Syntax Notes:
