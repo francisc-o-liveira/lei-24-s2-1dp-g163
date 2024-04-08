@@ -218,10 +218,12 @@ When you open and login in the Software,(there are 8 possible paths) the HRM can
 #### Register a Job Category
 ##### Syntax Notes:
 + Job Name : To register a job is mandatory input the job name.
++ Rejected Operation: When creating a job with an existing reference, the system must reject such operation.
 
 #### Register a Skill
 ##### Syntax Notes:
 + Skill Name : To register a skill is mandatory input the skill name.
++ Rejected Operation: When creating a skill with an existing reference, the system must reject such operation.
 
 #### Generate a Team of Collaborators
 ##### Syntax Notes:
