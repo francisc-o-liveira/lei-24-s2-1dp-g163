@@ -239,6 +239,22 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 * Register a Maintenance Check-Up of a Vehicle - The VFM can register a Check-Up of a Vehicle
 * See the Vehicles Check-Up List - The VFM can see the all Vehicles needing to make a check-up
 
+#### Register a Vehicle
+##### Syntax Notes:
++ XXX : Contain the number maximum of collaborators that the team can have.
++ XXX : Contain the number maximum of collaborators that the team can have. The minimum size is at least 1.
++ XXX : Should contain the skills that are needed to the team (not Mandatory)
+
+#### Register a Maintenance Check-Up
+##### Syntax Notes:
++ XXX : Contain the number maximum of collaborators that the team can have.
++ XXX : Contain the number maximum of collaborators that the team can have. The minimum size is at least 1.
++ XXX : Should contain the skills that are needed to the team (not Mandatory)
+
+#### See the Vehicles Check-Up List
+##### Syntax Notes Output:
++ XXX : Contain the number vehicles 5% close check-up kilometers.
+
 
 # TroubleShooting
 
