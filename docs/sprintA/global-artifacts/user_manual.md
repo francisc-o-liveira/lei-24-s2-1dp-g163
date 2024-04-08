@@ -156,14 +156,6 @@ can:
 + Password : Should contain at least 12 characters, with special characters included and upper case characters.
 
 
-#### Browse all the Green Spaces
-
-
-
-#### See Evaluations of Green Spaces
-
-
-
 ### Signed
 
 When you login in the User Portal app, there are four possible paths, the GSU
@@ -175,9 +167,11 @@ can:
 * Make an Evaluation of a Green Space - The user can make an Evaluation of a Green Space to comment something about it.
 
 #### Register a Report Fault
+##### Syntax Notes:
 
 
 #### Make an Evaluation of a Green Space
+##### Syntax Notes:
 
 
 
@@ -197,7 +191,7 @@ When you open and login in the software, (there are XXXXX possible paths), the G
 * Manage the Job's Category -
 * Manage the Skills -
 * Create and Manage Tasks -
-* Manage Agenda -
+* Manage Agenda - 
 
 
 ## Human Resources Manager (HRM)
@@ -213,9 +207,27 @@ When you open and login in the Software,(there are 8 possible paths) the HRM can
 * Create a Team of Collaborators - The HRM can create a Team of Collaborators
 * Generate a Team of Collaborators - The HRM can generate a Team of Collaborators
 
+#### Register a Collaborator
+##### Syntax Notes:
++ Name : Should contain at least 8 characters
++  : Should contain an e-mail prefix, before the "@" symbol, and e-mail domain, after the "@" symbol.
++  : Should contain at least 12 characters, with special characters included and upper case characters.
 
-# Vehicle and Equipment Fleet Manager (VFM)
+#### Register a Job Category
+##### Syntax Notes:
++ Job Name : 
 
+#### Register a Skill
+##### Syntax Notes:
++ Skill Name : 
+
+#### Generate a Team of Collaborators
+##### Syntax Notes:
++ Max Team Size : Contain the number maximum of collaborators that the team can have.
++ Min Team Size : Contain the number maximum of collaborators that the team can have. The minimum size is at least 1.
++ Skill Set : Should contain the skills that are needed to the team (not Mandatory)
+
+## Vehicle and Equipment Fleet Manager (VFM)
 When you open and login in the Software, (there are 8 possible paths) the HRM can:
 
 * See the Vehicles - The VFM can see the information of the Vehicles registered on the System and edit them.
@@ -226,7 +238,6 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 * Register Machines - The VFM can register new Machine for the System
 * Register a Maintenance Check-Up of a Vehicle - The VFM can register a Check-Up of a Vehicle
 * See the Vehicles Check-Up List - The VFM can see the all Vehicles needing to make a check-up
-
 
 
 # TroubleShooting
