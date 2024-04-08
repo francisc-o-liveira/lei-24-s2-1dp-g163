@@ -28,22 +28,17 @@
 4. [Features](#features)
    1. [Unsigned Green Space User](#unsigned)
       1. Register
-      2.
    2. [Green Space User](#signed)
-      1.
-      2.
    3. [Green Space Manager](#green-space-manager-gsm)
-      1.
-      2.
-      3.
-      4.
    4. [Human Resources Manager](#human-resources-manager-hrm)
-      1.
-      2.
-      3.
+      1. Register a Collaborator
+      2. Register a Job Category
+      3. Register a Skill
+      4. Generate a Team of Collaborators
    5. [Vehicle and Equipment Fleet Manager](#vehicle-and-equipment-fleet-manager-vfm)
-      1.
-      2.
+      1. Register a Vehicle
+      2. Register a Maintenance Check-Up
+      3. See the Vehicles Check-Up List
 
 5. [Troubleshooting](#troubleshooting)
 
@@ -127,10 +122,6 @@ events. In summary, the Green Space Management System offers a comprehensive and
 management needs in green space environments.
 
 
-
-(Objectives of the application)
-
-(Relevant information to include)
 
 
 # System Requirements
