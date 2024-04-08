@@ -186,12 +186,12 @@ can:
 
 When you open and login in the software, (there are XXXXX possible paths), the GSM can:
 
-* Manage the Vehicles - The Manager can
-* Manage the Collaborators - 
-* Manage the Job's Category -
-* Manage the Skills -
-* Create and Manage Tasks -
-* Manage Agenda - 
+* Manage the Vehicles - The Manager can oversee and administer vehicles used for green space management.(including Check-Up List and Check Up register)
+* Manage the Collaborators - The Manager can handle the administration and organization of collaborators involved in green space management.
+* Manage the Job's Category - The Manager can define and organize different job categories related to green space management.
+* Manage the Skills - The Manager can oversee and modify skills related to green space management.
+* Create and Manage Tasks -The Manager can create, assign, and monitor tasks related to green space management.
+* Manage Agenda - The Manager can schedule and coordinate activities and events related to green space management.
 
 
 ## Human Resources Manager (HRM)
