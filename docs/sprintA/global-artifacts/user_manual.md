@@ -243,9 +243,16 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 
 #### Register a Vehicle
 ##### Syntax Notes:
-+ XXX : Contain the number maximum of collaborators that the team can have.
-+ XXX : Contain the number maximum of collaborators that the team can have. The minimum size is at least 1.
-+ XXX : Should contain the skills that are needed to the team (not Mandatory)
++ Format Plate Number : AA-BB-00, AA-00-AS, 00-AA-00
++ Brand : It is the name brand of the vehicle, for example "Ford"
++ Model : It is the model of the vehicle, for example "F-150 Raptor"
++ Type : It is the type of vehicle, for example "Open Box"
++ Tare : It is the weight of an empty vehicle
++ Gros Weight : It is the total weight of a vehicle when is fully loaded with passengers, cargo or equipment.
++ Current KM : The current KM of the vehicle on that moment.
++ Register Date : When the vehicle was registered.
++ Acquisition Date :  Date of the vehicle acquisition
++ Maintenance/Check-Up Frequency : How many KM does the vehicle require maintenance.
 
 #### Register a Maintenance Check-Up
 ##### Syntax Notes:
