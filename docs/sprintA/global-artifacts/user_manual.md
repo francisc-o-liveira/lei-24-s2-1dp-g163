@@ -269,9 +269,7 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 
 # TroubleShooting
 
-
 # Frequently asked questions
-
 
 # Glossary
 
