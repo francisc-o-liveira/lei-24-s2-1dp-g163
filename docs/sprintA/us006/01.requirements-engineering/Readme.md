@@ -1,5 +1,4 @@
-# US006 - Create a Task 
-
+# US006 - Register a Vehicle 
 
 ## 1. Requirements Engineering
 
@@ -8,13 +7,13 @@
 As an FM, I wish to register a vehicle including Brand, Model, Plate, Type, Tare,
 Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-
 up Frequency (in Kms).
+
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
 >	Each vehicle is characterized by only take the team or mixed, light or heavy, open box, closed vans or trucks.
- 
-[]()
+
 **From the client clarifications:**
 
 > **Question:** Should the application identify a registered vehicle by a serial number or other attribute?
@@ -37,7 +36,7 @@ up Frequency (in Kms).
 
 ### 1.4. Found out Dependencies
 
-XXX
+N/A
 
 ### 1.5 Input and Output Data
 
@@ -72,4 +71,4 @@ XXX
 
 ### 1.7 Other Relevant Remarks
 
-XXX
+N/A
