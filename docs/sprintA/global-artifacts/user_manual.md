@@ -218,16 +218,33 @@ When you open and login in the Software,(there are 8 possible paths) the HRM can
 #### Register a Job Category
 ##### Syntax Notes:
 + Job Name : To register a job is mandatory input the job name.
++ Rejected Operation: When creating a job with an existing reference, the system must reject such operation.
 
 #### Register a Skill
 ##### Syntax Notes:
 + Skill Name : To register a skill is mandatory input the skill name.
++ Rejected Operation: When creating a skill with an existing reference, the system must reject such operation.
 
 #### Generate a Team of Collaborators
 ##### Syntax Notes:
 + Max Team Size : Contain the number maximum of collaborators that the team can have.
 + Min Team Size : Contain the number maximum of collaborators that the team can have. The minimum size is at least 1.
 + Skill Set : Should contain the skills that are needed to the team (not Mandatory)
+
+#### Assign Skills to Collaborators
+##### Process Overview
+Assigning skills to collaborators is a straightforward process enabling Human Resources Managers (HRM) to tailor the workforce according to the project requirements and individual capabilities.
+
+##### Steps for Assigning Skills
+1. **Collaborator Identification:** Utilize the Employee ID to select the collaborator for skill assignment.
+2. **Skill Selection:** Choose one or more skills from the list of predefined skills available within the system. These skills should align with the collaborator's qualifications and the needs of the company.
+3. **Assignment:** After selecting the appropriate skills, assign them to the collaborator. The system will update the collaborator’s profile to reflect these new skills.
+
+#### Important Considerations
++ **No Limit on Skills:** You can assign any number of skills to a collaborator, enhancing their versatility and value to the company.
++ **No Need for Certification:** Skills can be assigned based on the collaborator's resume (CV) and proficiencies, with no requirement for formal certification.
++ **Feedback and Confirmation:** Upon successful assignment, the system provides confirmation. If an issue arises (e.g., attempting to assign a non-existent skill), the system will offer clear feedback to rectify the situation.
+
 
 ## Vehicle and Equipment Fleet Manager (VFM)
 When you open and login in the Software, (there are 8 possible paths) the HRM can:
@@ -256,14 +273,29 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 
 #### Register a Maintenance Check-Up
 ##### Syntax Notes:
-+ XXX : Contain the number maximum of collaborators that the team can have.
-+ XXX : Contain the number maximum of collaborators that the team can have. The minimum size is at least 1.
-+ XXX : Should contain the skills that are needed to the team (not Mandatory)
++ **Vehicle ID (Plate Number):** Must match the validation criteria appropriate to the vehicle's registration year. Formats include:
+  - For vehicles after 2020: `AA-00-AA`
+  - For vehicles between 2005 and 2020: `00-AA-00`
+  - For vehicles between 1992 and 2005: `00-00-XX`
++ **Date of the Check-Up:** Should be the current date or a past date, not a future date.
++ **Current Kilometers:** The odometer reading at the time of the check-up. This must be greater than or equal to the last recorded odometer reading to ensure accurate tracking of vehicle usage.
+
+##### Process Overview:
+1. **Vehicle Identification:** Enter the Vehicle ID using the correct format based on the vehicle's registration date.
+2. **Check-Up Date:** Input the date when the check-up was performed.
+3. **Odometer Reading:** Record the current kilometers on the vehicle to monitor its usage and schedule future maintenance accordingly.
+4. **Submission and Confirmation:** After entering the required details, submit the information. The system will validate the inputs and, if correct, register the check-up. A confirmation message will be displayed upon successful registration.
 
 #### See the Vehicles Check-Up List
 ##### Syntax Notes Output:
-+ XXX : Contain the number vehicles 5% close check-up kilometers.
-
++ The list will display vehicles that are within 5% of reaching their next scheduled maintenance check-up, based on the current odometer reading and the maintenance frequency specified during vehicle registration.
++ **Display Information Includes:**
+  - Vehicle ID (Plate Number)
+  - Brand and Model
+  - Last Check-Up Date
+  - Current Kilometers
+  - Kilometers Until Next Check-Up
++ This feature enables proactive maintenance scheduling, ensuring that all vehicles remain in optimal condition and service disruptions are minimized.
 
 # TroubleShooting
 
