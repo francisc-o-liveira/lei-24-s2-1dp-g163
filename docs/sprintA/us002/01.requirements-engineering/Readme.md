@@ -32,6 +32,7 @@ or tractors; tree pruning; application of phytopharmaceuticals.
 * **AC1:** All required fields must be filled in.
 * **AC2:** To register a job is mandatory input the job name.
 * **AC3:** When creating a skill with an existing reference, the system must reject such operation.
+* **AC4:** A job name can’t have special characters or digits.
 
 ### 1.4. Found out Dependencies
 

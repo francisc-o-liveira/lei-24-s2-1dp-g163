@@ -29,6 +29,8 @@ The list must clearly identify the vehicles through: plate number, brand, model 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The vehicles data need at least have the plate number.
+* **AC2:** The vehicles that appear, have a difference minor than 5% of the number of kms of the checkup frequency.
+* **AC3:** The report should have the data concerning the vehicle description (Plate, Brand, Model and Current Kms) and the Checkup related data.
 
 ### 1.4. Found out Dependencies
 There is dependency on:
@@ -36,7 +38,6 @@ There is dependency on:
   Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-
   up Frequency (in Kms)."
 
-* "US07 - As an FM, I wish to register a vehicle’s check-up."
 ### 1.5 Input and Output Data
 
 **Selected data:**

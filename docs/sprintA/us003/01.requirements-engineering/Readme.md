@@ -58,12 +58,12 @@ For example, in the address example@mail.com, "example" is the email prefix, and
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The ID card number of the collaborator need to be unique in the system.
-* **AC2:** The name of the collaborator can have maximum of 6 words.
-* **AC3:** The age of the collaborator is mandatory be greater than 18.
-* **AC4:** The email address need to have a prefix, "@" and a domain for example: "mail.com" (the domain need to have one ".")
-* **AC5:** The phone number need to have 9 digits and can have an international validation.
-* **AC6:** The collaborator must have at least the name, birthdate, admission date, address, contact info (mobile and email), ID doc type and respective number, should be provided by HRM
-* **AC7:** When creating a collaborator with an existing reference, the system must reject such operation and the user must be able to modify the typed reference.
+* **AC2:** The taxpayer identification number and the citizen card number should be valid.
+* **AC3:** The name of the collaborator can have maximum of 6 words.
+* **AC4:** The age of the collaborator is mandatory be greater than 18.
+* **AC5:** The email address need to have a prefix, "@" and a domain for example: "mail.com" (the domain need to have one ".")
+* **AC6:** The phone number need to have 9 digits and can have an international validation.
+* **AC7:** The collaborator must have at least the name, birthdate, admission date, address, contact info (mobile and email), ID doc type and respective number, should be provided by HRM
 
 ### 1.4. Found out Dependencies
 

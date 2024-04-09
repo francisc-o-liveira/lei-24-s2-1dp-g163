@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "VFM" as VFM
+participant ":System" as System
+
+activate VFM
+
+    VFM -> System : asks to register a vehicle
+    activate System
+
+        System --> VFM : requests data (brand, model, type, tare, gross weight, current km, register date, acquisition date, maintenance/check-up frequency (in kms))
+    deactivate System
+
+    VFM -> System : types requested data
+    activate System
+
+        System --> VFM : shows all data and requests confirmation
+    deactivate System
+
+    VFM -> System : confirms data
+    activate System
+
+        System --> VFM : displays operation success
+    deactivate System
+
+@enduml
