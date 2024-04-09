@@ -27,7 +27,7 @@ activate Manager
     Manager  -> System : confirms data
     activate System
 
-        System --> Manager : displays operation success
+        System --> Manager : displays operation success and list of skills for collaborators.
     deactivate System
 
 @enduml

@@ -1,12 +1,12 @@
-# US006 - Register a Vehicle 
+# US016 - Register a Vehicle 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an FM, I wish to register a vehicle including Brand, Model, Plate, Type, Tare,
-Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-
-up Frequency (in Kms).
+As a GSM, I want to import a .csv file containing lines with:
+Water Point X, Water Point Y, Distance
+into a unique data structure.
 
 ### 1.2. Customer Specifications and Clarifications 
 
