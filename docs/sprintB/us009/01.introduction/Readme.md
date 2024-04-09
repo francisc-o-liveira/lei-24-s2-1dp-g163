@@ -67,11 +67,11 @@ N/A
 ### 1.6. System Sequence Diagram (SSD)
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](../01.requirements-engineering/svg/us006-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
+![System Sequence Diagram - Alternative One](/svg/us006-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
 #### Alternative Two
 
-![System Sequence Diagram - Alternative Two](../01.requirements-engineering/svg/us006-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two.svg)
+![System Sequence Diagram - Alternative Two](/svg/us006-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two.svg)
 
 ### 1.7 Other Relevant Remarks
 
