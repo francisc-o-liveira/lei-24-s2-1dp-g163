@@ -66,4 +66,8 @@ N/A
 
 ### 1.7 Other Relevant Remarks
 
-N/A
+* Programming Language: Python
+* Development environment: Jupyter Notebook
+* Work delivery format: A single Jupyter Notebook file, which contains
+  all the work carried out
+* Formulas must be written in LaTeX
