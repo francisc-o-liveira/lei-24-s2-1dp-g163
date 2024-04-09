@@ -7,27 +7,30 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "VFM" as VFM
+actor "GSM" as GSM
 participant ":System" as System
 
-activate VFM
+activate GSM
 
-    VFM -> System : asks to register a vehicle
+        GSM -> System : asks to know the exact costs referring to water consumption.
     activate System
 
-        System --> VFM : requests data (brand, model, type, tare, gross weight, current km, register date, acquisition date, maintenance/check-up frequency (in kms))
+     System --> GSM : requests data (CSV File)
     deactivate System
 
-    VFM -> System : types requested data
+        GSM -> System : introduce requested data
     activate System
 
-        System --> VFM : shows all data and requests confirmation
+     System --> GSM : shows all data and requests confirmation
     deactivate System
 
-    VFM -> System : confirms data
+        GSM -> System : confirms data
     activate System
 
-        System --> VFM : displays operation success
+     System --> GSM : displays operation success
+     System --> GSM : displays Barplot success
+     System --> GSM : displays Average of monthly costs
+     System --> GSM : displays Histograms of 10 class's
     deactivate System
 
 @enduml

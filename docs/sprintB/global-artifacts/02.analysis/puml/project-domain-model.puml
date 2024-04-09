@@ -1,0 +1,140 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+'skinparam linetype ortho
+'left to right direction
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+title Domain Model Green Spaces Software Management
+
+'class Platform {
+'  -description
+'}
+
+class Organization {
+}
+
+class Task {
+}
+
+
+class HRM{
+    name
+    email
+    password
+}
+
+class Skill{
+    skillName
+}
+
+class VFM{
+    name
+    email
+    password
+}
+
+class GSM{
+    name
+    email
+    password
+}
+
+class Vehicle{
+    plate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    maintenanceFrequency
+}
+
+class Agenda{
+    greenSpace
+    startDate
+    finishDate
+}
+
+class Equipment{
+    nameType
+}
+
+class Job{
+    jobName
+}
+
+class Machine{
+    nameType
+}
+
+class Team{
+    skillSet
+    size
+}
+
+
+class Colaborator {
+    name
+    birthdate
+    admissionDate
+    address
+    mobileNumber
+    email
+    docType
+    docNumber
+}
+
+
+
+Organization "1" -- "1" HRM : has >
+Organization "1" -- "1" VFM : has >
+Organization "1" -- "1" GSM : has >
+
+HRM "1" -- "0..*" Colaborator : register >
+HRM "1" -- "0..*" Job : has >
+HRM "1" -- "0..*" Team : creates >
+HRM "1" -- "0..*" Skill : creates >
+
+VFM "1" -- "0..*" Vehicle : manage >
+VFM "1" -- "0..*" Equipment : manage >
+VFM "1" -- "0..*" Machine : manage >
+VFM "1" -- "0..*" Vehicle : manages >
+
+GSM "1" --- "0..*" Colaborator : manage >
+GSM "1" --- "0..*" Vehicle : manage >
+GSM "1" --- "0..*" Team : manage >
+GSM "1" --- "0..*" Task : create >
+GSM "1" --- "0..*" Equipment : manage >
+GSM "1" --- "0..*" Job : manage >
+GSM "1" --- "0..*" Machine : manage >
+GSM "1" - "0..*" Agenda : manage >
+GSM "1" --- "0..*" Skill : manage >
+
+Vehicle "1" -- "0..*" Task : has >
+
+Equipment "1" -- "0..*" Task : has >
+
+Colaborator "0..*" -- "0..*" Skill : posesses >
+Colaborator "1" -- "0..*" Team : has >
+
+Job "1" -- "0..*" Colaborator : has >
+
+Team "1" -- "1" Task : has >
+Team "1" -- "1" Agenda : has >
+
+Machine "1" -- "0..*" Team : has >
+
+
+Agenda "1" -- "0..*" Team : has >
+Agenda "1" -- "0..*" Task : have >
+
+
+
+
+@enduml

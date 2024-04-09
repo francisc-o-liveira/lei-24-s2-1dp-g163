@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative Two
+
+autonumber
+
+actor "HRM" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks to generate a new Team
+    activate System
+
+    alt Minimum of 1 collaborator and 1 skill
+        System --> Manager : requests data (i.e. skills set, max team size,\n min team size )
+    deactivate System
+    end
+
+    Manager -> System : types requested data
+    activate System
+
+        System --> Manager : shows all data and requests confirmation or modification
+    deactivate System
+
+    opt optional for "HRM"
+    Manager -> System : modify data
+    activate System
+
+    System --> Manager : shows all data and requests confirmation or modification.
+    deactivate System
+    end
+
+    Manager -> System : confirm the data
+    activate System
+
+        System --> Manager : displays operation success
+    deactivate System
+@enduml

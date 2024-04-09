@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="498px" preserveAspectRatio="none" style="width:343px;height:498px;background:#FFFFFF;" version="1.1" viewBox="0 0 343 498" width="343px" zoomAndPan="magnify"><defs/><g><!--MD5=[3aa0d89c6bfdcbf7f32042cedac57549]
+class Vehicle--><g id="elem_Vehicle"><rect codeLine="8" fill="#F1F1F1" height="197.2656" id="Vehicle" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="175" x="7" y="151"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="69.5" y="168.9951">Vehicle</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="181" y1="177.2969" y2="177.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="34" x="13" y="194.292">plate</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="40" x="13" y="210.5889">brand</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="43" x="13" y="226.8857">model</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30" x="13" y="243.1826">type</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="27" x="13" y="259.4795">tare</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="13" y="275.7764">grossWeight</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72" x="13" y="292.0732">currentKm</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="86" x="13" y="308.3701">registerDate</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107" x="13" y="324.667">acquisitionDate</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="163" x="13" y="340.9639">maintenanceFrequency</text></g><!--MD5=[91716dbe9e77b1470b09b01314ffcca0]
+class VFM--><g id="elem_VFM"><rect codeLine="21" fill="#F1F1F1" height="66.8906" id="VFM" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79" x="134" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="159" y="24.9951">VFM</text><line style="stroke:#181818;stroke-width:0.5;" x1="135" x2="212" y1="33.2969" y2="33.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="36" x="140" y="50.292">email</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="67" x="140" y="66.5889">password</text></g><!--MD5=[718766fa6104d7616cd6c26a3d35ce0a]
+class CheckUp--><g id="elem_CheckUp"><rect codeLine="26" fill="#F1F1F1" height="66.8906" id="CheckUp" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161" x="93" y="425"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63" x="142" y="442.9951">CheckUp</text><line style="stroke:#181818;stroke-width:0.5;" x1="94" x2="253" y1="451.2969" y2="451.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="31" x="99" y="468.292">date</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="149" x="99" y="484.5889">kilometersAtCheckUp</text></g><!--MD5=[c4d9ec57418017e8987a5ffe6d2562d6]
+link VFM to Vehicle--><g id="link_VFM_Vehicle"><path codeLine="31" d="M160.98,74.3 C153.02,95.16 142.26,123.37 131.71,151 " fill="none" id="VFM-Vehicle" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#000000" points="151.7173,117.2378,157.688,109.835,152.1964,107.7393,151.7173,117.2378" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="60" x="162.5" y="117.0669">manages</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="149.9341" y="94.0039">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="23" x="110.6784" y="139.9462">0..*</text></g><!--MD5=[d7e5e19117c92518ee44d38286921e70]
+link Vehicle to CheckUp--><g id="link_Vehicle_CheckUp"><path codeLine="32" d="M125.86,348.25 C131.42,364 137.4,380.04 143.5,395 C147.5,404.81 152.29,415.26 156.87,424.75 " fill="none" id="Vehicle-CheckUp" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#000000" points="150.3783,391.2002,149.7041,381.7135,144.2567,383.9217,150.3783,391.2002" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="68" x="157.5" y="391.0669">undergoes</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="119.9548" y="368.4466">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="23" x="128.5077" y="413.9767">1..*</text></g><!--MD5=[a58dc4a5c445577ee606a7568511e7eb]
+link VFM to CheckUp--><g id="link_VFM_CheckUp"><path codeLine="33" d="M211.55,74.3 C219.28,83.09 226.31,93.18 230.5,104 C277.23,224.59 277.23,274.41 230.5,395 C226.31,405.82 219.28,415.91 211.55,424.7 " fill="none" id="VFM-CheckUp" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#000000" points="270.5,254.5664,273.4389,245.5213,267.5611,245.5213,270.5,254.5664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="56" x="279.5" y="254.0669">registers</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="209.828" y="94.0039">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="23" x="193.6111" y="413.9172">0..*</text></g><!--MD5=[5642607b2e4bc2c25bfc2b60f9f42fbf]
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+class Vehicle{
+    plate
+    brand
+    model
+    type
+    tare
+    grossWeight
+    currentKm
+    registerDate
+    acquisitionDate
+    maintenanceFrequency
+}
+
+class VFM{
+    email
+    password
+}
+
+class CheckUp {
+    date
+    kilometersAtCheckUp
+}
+
+VFM "1" - - "0..*" Vehicle : manages >
+Vehicle "1" - - "1..*" CheckUp : undergoes >
+VFM "1" - - "0..*" CheckUp : registers >
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 18:01:30 WEST 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
