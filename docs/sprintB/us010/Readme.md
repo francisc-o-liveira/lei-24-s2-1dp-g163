@@ -1,9 +1,5 @@
-# US001 - Register skills for collaborators
+# US010 - See a pie chart representing, in percentage, the use of each piece of equipment
 
-[Requirements Engineering](01.requirements-engineering/Readme.md)
+[Introduction](01.introduction/Readme.md)
 
 [Analysis](02.analysis/Readme.md)
-
-[Design](../../template/03.design/Readme.md)
-
-[Tests & Implementation](../../template/04.tests-and-implementation/Readme.md)

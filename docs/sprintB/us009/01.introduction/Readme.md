@@ -50,7 +50,7 @@ N/A
 ### 1.5 Input and Output Data
 
 **Input Data:**
-* Data File
+* CSV Data File
   * Contains Records:
     * ”Park Identification”
     * ”Year” 
@@ -63,15 +63,6 @@ N/A
 * Average of monthly costs related to water consumption
 * Histograms with 10 classes
 * Display confirmation success
-
-### 1.6. System Sequence Diagram (SSD)
-#### Alternative One
-
-![System Sequence Diagram - Alternative One](/svg/us006-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](/svg/us006-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_Two.svg)
 
 ### 1.7 Other Relevant Remarks
 
