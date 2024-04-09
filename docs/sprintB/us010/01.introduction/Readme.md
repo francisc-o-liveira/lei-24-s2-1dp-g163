@@ -1,4 +1,4 @@
-# US006 - Register a Vehicle 
+# US010 - See a pie chart representing, in percentage, the use of each piece of equipment
 
 ## 1. Requirements Engineering
 
@@ -49,14 +49,14 @@ used that day."
   * Contains Records:
     * the choices of 1000 users
 
-* Selected data:
-    * vehicle category
-
 **Output Data:**
-
+* Pie chart
 * Display confirmation success
-
 
 ### 1.7 Other Relevant Remarks
 
-N/A
+* Programming Language: Python
+* Development environment: Jupyter Notebook
+* Work delivery format: A single Jupyter Notebook file, which contains
+all the work carried out
+* Formulas must be written in LaTeX
