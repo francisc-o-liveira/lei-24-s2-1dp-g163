@@ -42,11 +42,6 @@ the following specifications given by the user: time period (StartMonth, EndMont
 >
 > **Answer:** 
 
-### 1.3. Acceptance Criteria
-
-* **AC1:** The barplot need to have the park identification and start month and end month.
-* **AC2:** 
-* **AC3:** 
 
 ### 1.4. Found out Dependencies
 
@@ -62,9 +57,6 @@ N/A
     * ”Month”
     * ”Day”
     * ”Consumption"
-
-
-
 
 **Output Data:**
 * Barplot representing monthly water consumption
