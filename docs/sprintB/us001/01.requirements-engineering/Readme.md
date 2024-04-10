@@ -13,7 +13,7 @@ As a Human Resources Manager, I want to register skills that may be appointed to
 
 >	When creating multipurpose teams, the number of members and the set of skills that must be covered are crucial. 
 
->	Thus, an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types , operating machines such as backhoes
+>	Thus, an collaborator has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types , operating machines such as backhoes
 or tractors; tree pruning; application of phytopharmaceuticals.
 
 

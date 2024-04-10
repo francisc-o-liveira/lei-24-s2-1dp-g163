@@ -112,11 +112,11 @@ In the Software Management System the HRM can:
 
 
 The Green Space Management System is a platform designed to ensure the efficient management of employees,
-vehicles, equipment, tasks, employee teams, schedules, and more in green space environments. It enables detailed
+vehicles, equipment, tasks, collaborator teams, schedules, and more in green space environments. It enables detailed
 registration and tracking of employees, including their assignments, skills, and availability. Additionally,
 the system manages vehicle maintenance, including checklists and service records.
 Necessary equipment for the maintenance of green spaces is also monitored, along with their conditions and maintenance
-history. Task assignment has the ability to assign specific tasks to employee teams and track
+history. Task assignment has the ability to assign specific tasks to collaborator teams and track
 their progress. The integrated schedule allows for efficient activity scheduling and management of important
 events. In summary, the Green Space Management System offers a comprehensive and effective solution for all
 management needs in green space environments.

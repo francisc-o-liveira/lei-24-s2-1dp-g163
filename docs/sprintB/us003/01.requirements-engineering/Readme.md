@@ -11,11 +11,11 @@ As a Human Resources Manager, I want to register a collaborator with a job and f
 
 **From the specifications document:**
 
->   A person who is an employee of the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.
+>   A person who is an collaborator of the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.
 
 >	Each collaborator is characterized by having a name, birthdate, admission date, address, contact info (mobile and email), ID doc type and respective number should be provided by HRM
 
->	Thus, an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals.
+>	Thus, an collaborator has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals.
 
 **From the client clarifications:**
 

@@ -11,10 +11,10 @@ participant ":System" as System
 
 activate HRManager
 
-HRManager -> System : Provides Employee ID
+HRManager -> System : Provides Collaborator ID
 activate System
 
-System - -> HRManager : Validates Employee ID
+System - -> HRManager : Validates Collaborator ID
 deactivate System
 
 HRManager -> System : Types Skill Name(s) to assign

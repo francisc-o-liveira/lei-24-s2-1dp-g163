@@ -32,11 +32,11 @@ public Task createTask(String reference, String description, String informalDesc
 
 	TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
 
-	Employee employee = getEmployeeFromSession();
-	Organization organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+	Employee collaborator = getEmployeeFromSession();
+	Organization organization = getOrganizationRepository().getOrganizationByEmployee(collaborator);
 
 	newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration,
-                                      cost,taskCategory, employee);
+                                      cost,taskCategory, collaborator);
     
 	return newTask;
 }
@@ -47,10 +47,10 @@ public Task createTask(String reference, String description, String informalDesc
 ```java
 public Optional<Task> createTask(String reference, String description, String informalDescription,
                                  String technicalDescription, Integer duration, Double cost, TaskCategory taskCategory,
-                                 Employee employee) {
+                                 Employee collaborator) {
     
     Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                         taskCategory, employee);
+                         taskCategory, collaborator);
 
     addTask(task);
         
