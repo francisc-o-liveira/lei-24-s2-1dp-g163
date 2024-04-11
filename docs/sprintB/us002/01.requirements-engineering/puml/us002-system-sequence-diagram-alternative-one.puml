@@ -12,7 +12,7 @@ participant ":System" as System
 
 activate Manager 
 
-    Manager -> System : asks to register a new skill
+    Manager -> System : asks to register a new job
     activate System
 
         System --> Manager : requests data (job name)
