@@ -16,6 +16,11 @@ title Domain Model Green Spaces Software Management
 class Organization {
 }
 
+class GreenSpace{
+    name
+    locationStreet
+}
+
 class Task {
 }
 
@@ -115,8 +120,11 @@ GSM "1" --- "0..*" Job : manage >
 GSM "1" --- "0..*" Machine : manage >
 GSM "1" - "0..*" Agenda : manage >
 GSM "1" --- "0..*" Skill : manage >
+GSM "1" --- "0..*" GreenSpace : create >
 
-Vehicle "1" -- "0..*" Task : has >
+
+Task "1" -- "0..*" Vehicle : have >
+Task "1" -- "1" GreenSpace : have >
 
 Equipment "1" -- "0..*" Task : has >
 
