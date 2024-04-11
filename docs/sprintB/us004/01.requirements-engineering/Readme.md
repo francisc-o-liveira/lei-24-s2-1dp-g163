@@ -63,11 +63,11 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 #### **Input Data:**
 
-* **Typed Data:**
+* **Typed Data:**: n/a.
+
+* **Selected Data:** 
   - **Employee ID (Number):** Utilizing the unique identifier of the collaborator registered in <u>US003</u> to ensure the correct collaborator is identified for skill assignment.
   - **Skill Name(s):** Name(s) of the skill(s) to be assigned to the collaborator, based on their resume (CV). Each skill listed must correspond to those predefined and available within the system, ensuring alignment with <u>US001</u>.
-
-* **Selected Data:** n/a.
 
 #### **Output Data:**
 
