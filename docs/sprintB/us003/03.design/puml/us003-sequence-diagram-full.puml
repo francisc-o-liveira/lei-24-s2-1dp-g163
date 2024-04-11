@@ -86,8 +86,9 @@ activate HRM
     deactivate CTRL
 
 
-    UI --> HRM : shows docTypeList\n and asks to select one
 
+    UI --> HRM : shows docTypeList\n and asks to select one
+    deactivate UI
 
     HRM -> UI : selects a docType
     activate UI
@@ -112,14 +113,31 @@ activate HRM
     HRM -> UI : submits data
     activate UI
 
-        UI -> CTRL : registerCollaborator()
+        UI -> CTRL : registerCollaborator(name, date of birthday, admission data, address street, zipcode, address city, email, phone number, docType, docIDNumber, jobCategory)
         activate CTRL
 
-            CTRL -> CTRL : getJobCategoryByDescription(jobCategoryDescription)
-            activate CTRL
+
+                            CTRL -> RepositorySingleton : getInstance()
+                            activate RepositorySingleton
+
+                                RepositorySingleton --> CTRL: repositories
+                            deactivate RepositorySingleton
+
+                            CTRL -> PLAT : getDocTypeCategoryRepository()
+                            activate PLAT
+
+                                PLAT --> CTRL: docTypeCategoryRepository
+                            deactivate PLAT
+
+                            CTRL -> DocTypeRepository : verifyDocType(docIDNumber)
+                            activate DocTypeRepository
+
+                                DocTypeRepository --> CTRL : true/false
+                            deactivate DocTypeRepository
 
 
-            CTRL -> ORG: registerCollaborator()
+
+            CTRL -> ORG: registerCollaborator(name, date of birthday, admission data, address street, zipcode, address city, email, phone number, docType, docIDNumber, jobCategory)
             activate ORG
 
                 ORG -> Collaborator**: createCollaborator()
