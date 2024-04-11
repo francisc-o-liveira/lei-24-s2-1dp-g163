@@ -12,20 +12,19 @@ participant ":System" as System
 
 activate FleetManager
 
-    FleetManager -> System : requests to register a vehicle check-up
+    FleetManager -> System : Selects a Vehicle ID and requests to register check-up
     activate System
 
-        System --> FleetManager : requests Vehicle ID, Date of Check-Up, Current Kilometers
+    System --> FleetManager : Requests Date of Check-Up, Current Kilometers
     deactivate System
 
-    FleetManager -> System : provides Vehicle ID, Date of Check-Up, Current Kilometers
+    FleetManager -> System : Provides Date of Check-Up, Current Kilometers 
     activate System
 
-        System -> System : validate Vehicle ID format
-        System -> System : validate Date of Check-Up
-        System -> System : validate Current Kilometers
+        System -> System : Validate Date of Check-Up
+        System -> System : Validate Current Kilometers format
 
-        System --> FleetManager : confirms registration success
+        System --> FleetManager : Confirms registration success
     deactivate System
 
 @enduml

@@ -77,10 +77,10 @@ These points highlight the role of Fleet Managers and vehicles in task completio
 **Input Data:**
 
 * **Typed Data**:
-  - **Vehicle ID (Plate Number):** This must match the validation criteria appropriate to the vehicle's year of registration, with the assumption that the vehicle has been pre-registered in the system as delineated in <u>US006</u>.
   - **Date of Check-Up:** Should be logged as the date when the check-up occurred and must be chronologically subsequent to the date of the last registered check-up for the same vehicle.
   - **Current Kilometers:** Indicates the vehicle's odometer reading at the time of the check-up and must be greater than the reading recorded at the last check-up to ensure accurate tracking of vehicle usage and maintenance schedules.
-* **Selected Data:** n/a.
+* **Selected Data:**:
+  - **Vehicle ID (Plate Number):** This must match the validation criteria appropriate to the vehicle's year of registration, with the assumption that the vehicle has been pre-registered in the system as delineated in <u>US006</u>.
 
 **Output Data:**
 
@@ -96,5 +96,4 @@ These points highlight the role of Fleet Managers and vehicles in task completio
 ### 1.6. System Sequence Diagram (SSD)
 
 ![System Sequence Diagram - Success Scenario](svg/us007-system-sequence-diagram.svg)
-
 
