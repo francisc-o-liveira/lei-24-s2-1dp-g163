@@ -106,7 +106,7 @@ activate HRM
             UI --> HRM : show team and confirm or modify data
     deactivate UI
 
-    loop
+    opt Optional Modify the Team Generated
     HRM -> UI : modify data
     activate UI
 
