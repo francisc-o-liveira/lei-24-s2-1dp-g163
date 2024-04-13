@@ -38,7 +38,7 @@ activate ADM
         UI --> ADM : requests data
     deactivate UI
 
-    ADM -> UI : types requested data (reference, description,\ninformal description, technical description,\nduration, cost)
+    ADM -> UI : types requested data (job name)
     activate UI
 
         UI --> ADM : shows selected category and requested data

@@ -1,0 +1,77 @@
+# US001 - Register skills for collaborators
+
+## 3. Design - User Story Realization 
+
+### 3.1. Rationale
+
+_**Note that SSD - Alternative One is adopted.**_
+
+| Interaction ID                                                                 | Question: Which class is responsible for...                      | Answer                | Justification (with patterns)                                                                                 |
+|:-------------------------------------------------------------------------------|:-----------------------------------------------------------------|:----------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1: asks to register a new skill  		                                       | 	... interacting with the actor?                                 | CreateSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		                                                                        | 	... coordinating the US?                                        | CreateSkillController | Controller                                                                                                    |
+| 			  		                                                                        | 	... instantiating the class that handles the UI?                | CreateSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 2:requests data (skill name)	 			  		                                     | ... displaying the form for the actor to input data?             | Organization          | IE: cf. A&A component documentation.                                                                          |
+| Step 3: types requested data	                                                  | ... validating input data? ... temporarily keeping input data? 	 |                       |                                                                                                               |
+| Step 4: requests confirmation                                                  | ... display request confirmation? 							                        |                       |                                                                                                               |
+| Step 5: confirms data	 		                                                      | ... validating the data locally (mandatory data)?							         |                       |                                                                                                               |
+| 	                                                                              | 	...... creating the skill object?                               |                       |                                                                                                               |
+| Step 6:displays operation success and the list of skills for collaborators. 		 | 	... informing operation success?	                               | CreateSkillUI         | Pure Fabrication                                                                                              |
+|	                                                                     | 	... saving the created data (the list of skills)?	              | System                |                                                                                                               | |                                                                                                               |              
+
+### Systematization ##
+
+According to the taken rationale, the conceptual classes promoted to software classes are: 
+
+* Organization
+* Skill
+
+Other software classes (i.e Information Expert) identified:
+
+* Repositories
+* DocTypeRepository
+* SkillCategoryRepository
+
+Other software classes (i.e. Pure Fabrication) identified:
+
+* CreateSkillUI
+* CreateSkillController
+
+
+## 3.2. Sequence Diagram (SD)
+
+_**Note that SSD - Alternative Two is adopted.**_
+
+### Full Diagram
+
+This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
+
+![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+
+### Split Diagrams
+
+The following diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
+
+It uses Interaction Occurrence (a.k.a. Interaction Use).
+
+![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+
+**Get Task Category List Partial SD**
+
+![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+
+**Get Task Category Object**
+
+![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
+
+**Get Employee**
+
+![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-collaborator.svg)
+
+**Create Task**
+
+![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+
+## 3.3. Class Diagram (CD)
+
+![Class Diagram](svg/us006-class-diagram.svg)
