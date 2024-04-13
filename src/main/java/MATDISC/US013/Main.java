@@ -1,7 +1,6 @@
 package MATDISC.US013;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 
@@ -20,7 +19,7 @@ public class Main {
         Point p12=new Point(8,6,3.0);
         Point p13=new Point(8,9,2.0);
         Point p14=new Point(9,7,1.0);
-        ArrayList<Point> points=new ArrayList<>();
+        ArrayList<Point> points = new ArrayList<>();
         points.add(p1);
         points.add(p2);
         points.add(p3);
@@ -53,6 +52,29 @@ public class Main {
                 }
             }
         }
+    }
+
+    public static int numberOfVertices(ArrayList<Point> points){
+        ArrayList<Double> vertices = new ArrayList<>();
+        for(Point x : points){
+            boolean valueX = true;
+            boolean valueY = true;
+            for(Double y : vertices){
+                if(x.getX()== y){
+                    valueX=false;
+                }
+                if(x.getY()== y){
+                    valueY=false;
+                }
+            }
+            if(valueX){
+                vertices.add(x.getX());
+            }
+            if (valueY){
+                vertices.add(x.getY());
+            }
+        }
+        return vertices.size();
     }
 
     public static double minimumCostAlgorithm(ArrayList<Point> points){
