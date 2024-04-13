@@ -80,13 +80,14 @@ public class Main {
     public static double minimumCostAlgorithm(ArrayList<Point> points){
         double cost=0;
         int na=0;
+        int naFalse = numberOfVertices(points);
         ArrayList<Point> pointsMinimumCost=new ArrayList<>();
         sortArrayListPrimitivePerPrice(points);
         ArrayList<Double> temps=new ArrayList<>();
         temps.add(points.get(0).getX());
         for(int i=0; i<points.size(); i++) {
             for (int j = 0; j < i; j++) {
-                if (na == 8) { //algoritmo para determinar nª de vértices
+                if (na == naFalse) { //algoritmo para determinar nª de vértices
                     break;
                 }
                 if (points.get(i).getX() != temps.get(j) && points.get(i).getY() != temps.get(j)) {
