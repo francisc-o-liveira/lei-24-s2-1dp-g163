@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":JobController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
+
+autonumber 12
+-> CTRL : getJobCategoryByDescription(jobCategoryDescription)
+
+autonumber 12.1
+
+activate CTRL
+    group Get Job Category
+        CTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT : getJobCategoryRepository()
+        activate PLAT
+
+            PLAT -> CTRL : jobCategoryRepository
+        deactivate PLAT
+
+        CTRL -> JobCategoryRepository : getJobCategoryByDescription(taskCategoryDescription)
+        activate JobCategoryRepository
+
+            JobCategoryRepository --> CTRL : jobCategory
+        deactivate JobCategoryRepository
+
+    end group
+
+    autonumber 13
+    <-- CTRL : jobCategory
+
+deactivate CTRL
+
+
+@enduml
