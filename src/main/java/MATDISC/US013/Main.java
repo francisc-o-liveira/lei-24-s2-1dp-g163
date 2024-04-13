@@ -81,6 +81,12 @@ public class Main {
         double cost=0;
         int na=0;
         int naFalse = numberOfVertices(points);
+
+        double[][] S = new double[points.size()][naFalse];
+
+
+
+
         ArrayList<Point> pointsMinimumCost=new ArrayList<>();
         sortArrayListPrimitivePerPrice(points);
         ArrayList<Double> temps=new ArrayList<>();
