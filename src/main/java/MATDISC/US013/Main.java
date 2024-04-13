@@ -39,6 +39,16 @@ public class Main {
 
     }
 
+    public static void readFromFile(String fileName){
+        Scanner scanFile = new Scanner(fileName);
+        String[] line;
+        ArrayList <Point> points = new ArrayList<>();
+        while(scanFile.hasNextLine()){
+            line = scanFile.nextLine().split(";");
+            points.add(new Point(Double.parseDouble(line[0]),Double.parseDouble(line[1]),Double.parseDouble(line[2])));
+        }
+    }
+
     // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Point> points){
         Point savePoint;
