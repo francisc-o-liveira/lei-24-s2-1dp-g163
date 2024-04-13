@@ -11,6 +11,8 @@ public class Main {
 
     }
 
+
+    // US012
     public static void readFromFile(String fileName){
         Scanner scanFile = new Scanner(fileName);
         String[] line;
@@ -21,6 +23,7 @@ public class Main {
         }
     }
 
+    // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Point> points){
         Point savePoint;
         for (int i = 0; i < points.size(); i++) {
