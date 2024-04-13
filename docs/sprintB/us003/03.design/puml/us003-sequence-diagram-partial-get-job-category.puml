@@ -6,7 +6,7 @@ skinparam shadowing false
 participant ":JobController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
+participant "docTypeRepository:\ndocTypeRepository" as DocTypeRepository
 
 autonumber 12
 -> CTRL : getJobCategoryByDescription(jobCategoryDescription)
@@ -14,29 +14,28 @@ autonumber 12
 autonumber 12.1
 
 activate CTRL
-    group Get Job Category
-        CTRL -> RepositorySingleton : getInstance()
-        activate RepositorySingleton
+    group Verify DocIDNumber
+                                    CTRL -> RepositorySingleton : getInstance()
+                                    activate RepositorySingleton
 
-            RepositorySingleton --> CTRL: repositories
-        deactivate RepositorySingleton
+                                        RepositorySingleton --> CTRL: repositories
+                                    deactivate RepositorySingleton
 
-        CTRL -> PLAT : getJobCategoryRepository()
-        activate PLAT
+                                    CTRL -> PLAT : getDocTypeCategoryRepository()
+                                    activate PLAT
 
-            PLAT -> CTRL : jobCategoryRepository
-        deactivate PLAT
+                                        PLAT --> CTRL: docTypeCategoryRepository
+                                    deactivate PLAT
 
-        CTRL -> JobCategoryRepository : getJobCategoryByDescription(taskCategoryDescription)
-        activate JobCategoryRepository
+                                    CTRL -> DocTypeRepository : verifyDocType(docIDNumber)
+                                    activate DocTypeRepository
 
-            JobCategoryRepository --> CTRL : jobCategory
-        deactivate JobCategoryRepository
-
+                                        DocTypeRepository --> CTRL : true/false
+                                    deactivate DocTypeRepository
     end group
 
     autonumber 13
-    <-- CTRL : jobCategory
+    <-- CTRL : true
 
 deactivate CTRL
 

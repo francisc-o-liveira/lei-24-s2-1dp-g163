@@ -10,16 +10,15 @@ participant ":System" as System
 
 activate HRManager
 
-HRManager -> System : Provides Employee ID
+HRManager -> System : Selects Employee ID
 activate System
 
-System --> HRManager : Validates Employee ID
+System --> HRManager :  Validates employee ID and displays all skills already assigned to that employee
 deactivate System
 
-HRManager -> System : Types Skill Name(s) to assign
+HRManager -> System : Selects Skill Name(s) to assign
 activate System
 
-System -> System : Verifies if Skill(s) exist and are not already assigned
 System --> HRManager : Confirms skill assignment is possible
 deactivate System
 

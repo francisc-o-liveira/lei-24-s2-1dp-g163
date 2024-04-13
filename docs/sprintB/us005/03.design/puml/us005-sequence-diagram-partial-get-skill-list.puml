@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+participant ":GenerateTeamController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository\n:SkillRepository" as SkillRepository
+
+autonumber 3
+-> CTRL : getSkillList()
+                 activate CTRL
+
+                     CTRL -> RepositorySingleton : getInstance()
+                     activate RepositorySingleton
+
+                         RepositorySingleton --> CTRL: repositories
+                     deactivate RepositorySingleton
+
+                     CTRL -> PLAT : getSkillRepository()
+                     activate PLAT
+
+                         PLAT --> CTRL: skillRepository
+                     deactivate PLAT
+
+                     CTRL -> SkillRepository : getSkillList()
+                     activate SkillRepository
+
+                         SkillRepository --> CTRL : skillList
+                     deactivate SkillRepository
+
+     <-- CTRL : skillList
+     deactivate CTRL
+
+
+@enduml
