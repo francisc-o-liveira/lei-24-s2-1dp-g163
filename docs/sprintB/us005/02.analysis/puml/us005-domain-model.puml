@@ -45,7 +45,7 @@ class Team {
 }
 
 
-HRM "1" - "1" Team: generate >
+HRM "1" - "0..*" Team: generate >
 Team "1" - "0..*" Skill: have >
 Team "1" - "1..*" Collaborator: have>
 Collaborator "1" -- "0..*" Skill: have>
