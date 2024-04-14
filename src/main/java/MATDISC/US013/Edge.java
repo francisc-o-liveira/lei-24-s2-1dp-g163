@@ -1,17 +1,17 @@
 package MATDISC.US013;
 
-public class Point {
-    private double x;
+public class Edge {
+    private Point p1;
 
-    private double y;
+    private Point p2;
 
     private double price;
 
     private static final double PRICE_PER_OMISSION=0;
 
-    public Point(double x, double y, double price){
-        this.x=x;
-        this.y=y;
+    public Edge(Point p1, Point p2, double price){
+        this.p1=p1;
+        this.p2=p2;
         if(price>0){
             this.price=price;
         }else {
@@ -31,22 +31,10 @@ public class Point {
     public double getPrice() {
         return price;
     }
-    public double getX() {
-        return x;
+    public Point getP1() {
+        return p1;
     }
-    public double getY() {
-        return y;
-    }
-
-    @Override
-    public boolean equals(Object other){
-        if(this==other){
-            return true;
-        }
-        if(other != null || this.getClass() != other.getClass()){
-            return false;
-        }
-        Point otherPoint = (Point) other;
-        return otherPoint.getX()==this.getX() && otherPoint.getY()==this.getY();
+    public Point getP2() {
+        return p2;
     }
 }
