@@ -3,31 +3,46 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
-participant "collaborator\n:Collaborator" as collaborator
+participant ":GenerateTeamController" as CTRL
+participant ":Organization" as ORG
+participant ":Team" as Team
+autonumber 17
 
-autonumber 16
--> ORG: registerCollaborator(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee )
+-> CTRL: generateTeam(maxSizeTeam,minSizeTeam,skillSet)(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee )
 
-autonumber 16.1
+autonumber 17.1
 activate ORG
-    group Create Task
+    group Generate Team
 
-        ORG -> collaborator**: register(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee)
-        ORG -> ORG: addCollaborator (collaborator)
 
-        activate ORG
-            ORG -> ORG: validateCollaborator(collaborator)
-            activate ORG
-                ORG --> ORG
-            deactivate ORG
 
-            ORG --> ORG
-        deactivate ORG
-    end
+                   CTRL -> ORG:generateTeam(maxSizeTeam,minSizeTeam,skillSet)
+                   activate ORG
 
-    autonumber 17
-    <-- ORG : collaborator
+                       ORG -> Team**: create()
+
+                       loop Until you have the full team
+
+                       ORG -> ORG: validateCollaborator(collaboratorNotActivateList, skillSet)
+                       activate ORG
+
+                           ORG -> Team: addCollaborator(collaborator)
+                           activate Team
+
+                               Team --> ORG
+                           deactivate Team
+
+                           ORG --> ORG
+                       deactivate ORG
+
+                       end
+
+                       ORG --> CTRL : team / collaboratorNotActivateList
+
+                   deactivate ORG
+
+    autonumber 18
+    <-- CTRL : team / collaboratorNotActivateList
 deactivate ORG
 
 

@@ -153,13 +153,13 @@ activate HRM
                     ORG --> ORG
                 deactivate ORG
 
-                ORG --> CTRL : collaborator
+                ORG --> CTRL : true / collaboratorList
 
             deactivate ORG
 
-            CTRL --> UI: collaborator
+            CTRL --> UI: true / collaboratorList
             deactivate CTRL
-            UI --> HRM : displays operation success
+            UI --> HRM : displays operation success / show collaboratorList
     deactivate UI
 
 deactivate HRM
