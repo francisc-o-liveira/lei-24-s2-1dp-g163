@@ -1,71 +1,75 @@
 package MATDISC.US013;
 
-import MATDISC.US013.Edge;
-import MATDISC.US013.Point;
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
+    public static String fileName;
+
+    public static final String FILENAME_PER_OMISSION="..NONE..";
+
     public static void main(String[] args) {
-        Point p1 = new Point(1.0, 0.0);
-        Point p2 = new Point(2.0, 0.0);
-        Point p3 = new Point(3.0, 0.0);
-        Point p4 = new Point(4.0, 0.0);
-        Point p5 = new Point(5.0, 0.0);
-        Point p6 = new Point(6.0, 0.0);
-        Point p7 = new Point(7.0, 0.0);
-        Point p8 = new Point(8.0, 0.0);
+        String filename = FILENAME_PER_OMISSION;
+        int option=-1;
+        ArrayList<Edge> edges = null;
+        ArrayList<Edge> result;
+        while(option!=0){
+            option=askOptionShowOptions();
+            switch (option){
+                case 1:
+                    filename=askFileName();
+                    edges = readFromFile(filename);
+                    sortArrayListPrimitivePerPrice(edges);
+                case 2:
+                    if(edges==null){
+                        break;
+                    }
+                    result=kruskalAlgorithm(edges);
+                    double price=0;
+                    for(Edge r : result){
+                        System.out.print(r+"\n");
+                        price += r.getPrice();
+                    }
+                    System.out.printf("Cost: %f", price);
+                case 0:
+                    break;
+            }
 
-        Edge edge1 = new Edge(p1, p2, 13.0);
-        Edge edge2 = new Edge(p2, p3, 15.0);
-        Edge edge3 = new Edge(p3, p4, 8.0);
-        Edge edge4 = new Edge(p4, p1, 5.0);
-        Edge edge5 = new Edge(p1, p5, 1.0);
-        Edge edge6 = new Edge(p5, p2, 12.0);
-        Edge edge7 = new Edge(p1, p8, 6.0);
-        Edge edge8 = new Edge(p2, p6, 3.0);
-        Edge edge9 = new Edge(p5, p6, 4.0);
-        Edge edge10= new Edge(p5,p8,14.0);
-        Edge edge11=new Edge(p8,p7,8.0);
-        Edge edge12=new Edge(p7,p6,11.0);
-        Edge edge13=new Edge(p6,p3,9.0);
-        Edge edge14= new Edge(p3,p7,8.0);
-        Edge edge15= new Edge(p8,p4,7.0);
-        Edge edge16 = new Edge(p4,p7,10.0);
-
-
-        ArrayList<Edge> edges = new ArrayList<>();
-
-        edges.add(edge1);
-        edges.add(edge2);
-        edges.add(edge3);
-        edges.add(edge4);
-        edges.add(edge5);
-        edges.add(edge6);
-        edges.add(edge7);
-        edges.add(edge8);
-        edges.add(edge9);
-        edges.add(edge10);
-        edges.add(edge11);
-        edges.add(edge12);
-        edges.add(edge13);
-        edges.add(edge14);
-
-        sortArrayListPrimitivePerPrice(edges);
-
-        ArrayList<Edge> result=kruskalAlgorithm(edges);
-        double price=0;
-        for(Edge r : result){
-            System.out.print(r+"\n");
-            price += r.getPrice();
         }
-        System.out.printf("Cost: %f", price);
-
     }
 
-    public static void readFromFile(String fileName) {
+    public static String askFileName() {
+        String filename;
+        Scanner readLineFile = new Scanner(System.in);
+        File test;
+        do{
+            System.out.println("Introduce the FileName to take data.(input: nameFile.csv)");
+            filename=readLineFile.nextLine();
+            test = new File(filename);
+
+        }while(!test.canExecute());
+        return filename;
+    }
+
+    public static int askOptionShowOptions() {
+        Scanner scan = new Scanner(System.in);
+        int option=-1;
+        System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
+        System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
+        System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
+        while(option<0 || option>2){
+            if(option!=-1){
+                System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MEN");
+            }
+
+            option = Integer.parseInt(scan.nextLine());
+        }
+        return option;
+    }
+
+    public static ArrayList<Edge> readFromFile(String fileName) {
         Scanner scanFile = new Scanner(fileName);
         String[] line;
         ArrayList<Edge> edges = new ArrayList<>();
@@ -73,12 +77,13 @@ public class Main {
             line = scanFile.nextLine().split(";");
             edges.add(new Edge(new Point(Double.parseDouble(line[0]), Double.parseDouble(line[1])),new Point(Double.parseDouble(line[2]), Double.parseDouble(line[3])), Double.parseDouble(line[4])));
         }
+        return edges;
     }
 
     // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
         Edge saveEdge;
-        for (int i = 0; i <edges.size() - 1; i++) {
+        for (int i = 1; i <edges.size() - 1; i++) {
             for (int j = i + 1; j < edges.size(); j++) {
                 if (edges.get(j).getPrice() < edges.get(i).getPrice()) {
                     saveEdge = edges.get(i);
@@ -117,14 +122,11 @@ public class Main {
     }
 
     public static ArrayList<Edge> kruskalAlgorithm(ArrayList<Edge> edges) {
-        int na = 0;
         ArrayList<Point> vertices = numberOfVertices(edges);
         ArrayList<Edge> edgesSave = new ArrayList<>();
         Point[][] S = new Point[vertices.size()][vertices.size()];
         distributeInArrayPoints(S,vertices);
 
-        int valueIndexLine1 = 0;
-        int valueIndexLine2 = 0;
         int valueIndexColumn1=0;
         int valueIndexColumn2=0;
         for(Edge edgeX : edges){
@@ -132,21 +134,18 @@ public class Main {
             Point x2 = edgeX.getP2();
             for (int j = 0; j < S[0].length; j++){
                 for(int k = 0; k < S.length; k++){
+                    if(S[k][j] == null||valueIndexColumn1!=0&&valueIndexColumn2!=0){
+                        break;
+                    }
                     if (x1.equals(S[k][j])){
                         valueIndexColumn1=j;
-                        valueIndexLine1=k;
                     }
                     if (x2.equals(S[k][j])){
                         valueIndexColumn2=j;
-                        valueIndexLine2=k;
                     }
                 }
             }
             if(valueIndexColumn1!=valueIndexColumn2){
-                na++;
-                if(na==vertices.size()){
-                    break;
-                }
                 edgesSave.add(edgeX);
                 int newIndexLine2=findNull(valueIndexColumn1, S);
                 for(int l=0; l<S[valueIndexColumn2].length; l++){
