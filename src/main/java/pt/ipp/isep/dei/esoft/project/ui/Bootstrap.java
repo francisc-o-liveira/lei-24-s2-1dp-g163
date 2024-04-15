@@ -30,7 +30,6 @@ public class Bootstrap implements Runnable {
 
     private void addTaskCategories() {
         //TODO: add bootstrap Task Categories here
-
         //get task category repository
         TaskCategoryRepository taskCategoryRepository = Repositories.getInstance().getTaskCategoryRepository();
         taskCategoryRepository.add(new TaskCategory("Analysis"));

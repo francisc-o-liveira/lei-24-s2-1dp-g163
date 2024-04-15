@@ -70,12 +70,14 @@ activate ADM
 
                 end
 
-                ORG --> CTRL : collaborator
-            deactivate ORG
 
-            CTRL --> UI: collaborator
-            deactivate CTRL
-            UI --> ADM: displays operation success
+            ORG --> CTRL : true / collaboratorList
+
+                       deactivate ORG
+
+                       CTRL --> UI: true / collaboratorList
+                       deactivate CTRL
+                       UI --> ADM : displays operation success / show collaboratorList
     deactivate UI
 
 deactivate ADM

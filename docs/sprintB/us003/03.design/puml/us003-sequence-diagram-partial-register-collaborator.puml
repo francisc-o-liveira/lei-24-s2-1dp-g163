@@ -27,7 +27,7 @@ activate ORG
     end
 
     autonumber 17
-    <-- ORG : collaborator
+    <-- ORG : true / collaboratorList
 deactivate ORG
 
 

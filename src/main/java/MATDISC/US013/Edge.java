@@ -1,17 +1,18 @@
-package MATDISC;
+package MATDISC.US013;
 
-public class Point {
-    private double xA;
 
-    private double xB;
+public class Edge {
+    private Point p1;
+
+    private Point p2;
 
     private double price;
 
     private static final double PRICE_PER_OMISSION=0;
 
-    public Point(double xA, double xB, double price){
-        this.xA=xA;
-        this.xB=xB;
+    public Edge(Point p1, Point p2, double price){
+        this.p1=p1;
+        this.p2=p2;
         if(price>0){
             this.price=price;
         }else {
@@ -31,10 +32,10 @@ public class Point {
     public double getPrice() {
         return price;
     }
-    public double getxA() {
-        return xA;
+    public Point getP1() {
+        return p1;
     }
-    public double getxB() {
-        return xB;
+    public Point getP2() {
+        return p2;
     }
 }

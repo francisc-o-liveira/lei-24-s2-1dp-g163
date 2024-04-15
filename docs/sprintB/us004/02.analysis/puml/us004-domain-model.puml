@@ -20,7 +20,7 @@ class Collaborator {
 }
 
 class Skill {
-    name
+    skillName
 }
 
 Collaborator "0..*" -r- "0..*" Skill : possesses 

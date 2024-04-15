@@ -91,7 +91,6 @@ For example, in the address example@mail.com, "example" is the email prefix, and
 
 **Output Data:**
 
-* List of existing collaborators
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
