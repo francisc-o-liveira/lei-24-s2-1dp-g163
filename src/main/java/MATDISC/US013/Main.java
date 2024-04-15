@@ -17,24 +17,23 @@ public class Main {
         Point p6 = new Point(6.0, 0.0);
         Point p7 = new Point(7.0, 0.0);
         Point p8 = new Point(8.0, 0.0);
-        Point p9 = new Point(9.0, 0.0);
 
-
-
-        Edge edge1 = new Edge(p1, p5, 2.0);
-        Edge edge2 = new Edge(p1, p2, 4.0);
-        Edge edge3 = new Edge(p5, p2, 1.0);
-        Edge edge4 = new Edge(p5, p6, 2.0);
-        Edge edge5 = new Edge(p2, p3, 2.0);
-        Edge edge6 = new Edge(p6, p3, 3.0);
-        Edge edge7 = new Edge(p3, p7, 2.0);
-        Edge edge8 = new Edge(p6, p7, 2.0);
-        Edge edge9 = new Edge(p3, p4, 4.0);
-        Edge edge10= new Edge(p7,p4,3.0);
-        Edge edge11=new Edge(p5,p8,1.0);
-        Edge edge12=new Edge(p8,p6,3.0);
-        Edge edge13=new Edge(p8,p9,2.0);
-        Edge edge14= new Edge(p9,p7,1.0);
+        Edge edge1 = new Edge(p1, p2, 13.0);
+        Edge edge2 = new Edge(p2, p3, 15.0);
+        Edge edge3 = new Edge(p3, p4, 8.0);
+        Edge edge4 = new Edge(p4, p1, 5.0);
+        Edge edge5 = new Edge(p1, p5, 1.0);
+        Edge edge6 = new Edge(p5, p2, 12.0);
+        Edge edge7 = new Edge(p1, p8, 6.0);
+        Edge edge8 = new Edge(p2, p6, 3.0);
+        Edge edge9 = new Edge(p5, p6, 4.0);
+        Edge edge10= new Edge(p5,p8,14.0);
+        Edge edge11=new Edge(p8,p7,8.0);
+        Edge edge12=new Edge(p7,p6,11.0);
+        Edge edge13=new Edge(p6,p3,9.0);
+        Edge edge14= new Edge(p3,p7,8.0);
+        Edge edge15= new Edge(p8,p4,7.0);
+        Edge edge16 = new Edge(p4,p7,10.0);
 
 
         ArrayList<Edge> edges = new ArrayList<>();
