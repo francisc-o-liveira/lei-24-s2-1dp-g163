@@ -79,7 +79,7 @@ public class Main {
     // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
         Edge saveEdge;
-        for (int i = 1; i <edges.size() - 1; i++) {
+        for (int i = 0; i <edges.size() - 1; i++) {
             for (int j = i + 1; j < edges.size(); j++) {
                 if (edges.get(j).getPrice() < edges.get(i).getPrice()) {
                     saveEdge = edges.get(i);
@@ -118,7 +118,6 @@ public class Main {
     }
 
     public static ArrayList<Edge> kruskalAlgorithm(ArrayList<Edge> edges) {
-        double cost = 0;
         int na = 0;
         ArrayList<Point> vertices = numberOfVertices(edges);
         ArrayList<Edge> edgesSave = new ArrayList<>();
@@ -134,9 +133,6 @@ public class Main {
             Point x2 = edgeX.getP2();
             for (int j = 0; j < S[0].length; j++){
                 for(int k = 0; k < S.length; k++){
-                    if(S[k][j] == null||valueIndexColumn1!=0&&valueIndexColumn2!=0){
-                        break;
-                    }
                     if (x1.equals(S[k][j])){
                         valueIndexColumn1=j;
                         valueIndexLine1=k;
@@ -148,6 +144,10 @@ public class Main {
                 }
             }
             if(valueIndexColumn1!=valueIndexColumn2){
+                na++;
+                if(na==vertices.size()){
+                    break;
+                }
                 edgesSave.add(edgeX);
                 int newIndexLine2=findNull(valueIndexColumn1, S);
                 for(int l=0; l<S[valueIndexColumn2].length; l++){

@@ -28,4 +28,9 @@ public class Point {
         Point otherPoint = (Point) other;
         return otherPoint.getX()==this.getX() && otherPoint.getY()==this.getY();
     }
+
+    @Override
+    public String toString(){
+        return String.format("%.2f, %.2f", x,y);
+    }
 }
