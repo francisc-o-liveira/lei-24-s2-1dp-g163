@@ -103,7 +103,7 @@ activate HRM
 
 
 
-    HRM -> UI : types requested data (name, date of birthday, admission data, address street, zipcode, address city, email, phone number, number of ID card)
+    HRM -> UI : types requested data (name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, number of ID card)
     activate UI
 
         UI --> HRM : shows selected category and requested data
@@ -112,7 +112,7 @@ activate HRM
     HRM -> UI : submits data
     activate UI
 
-        UI -> CTRL : registerCollaborator(name, date of birthday, admission data, address street, zipcode, address city, email, phone number, docType, docIDNumber, jobCategory)
+        UI -> CTRL : registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
         activate CTRL
 
 
@@ -128,7 +128,7 @@ activate HRM
                                 PLAT --> CTRL: CollaboratorRepository
                             deactivate PLAT
 
-                            CTRL -> CollaboratorRepository : verifyDocType(docIDNumber)
+                            CTRL -> CollaboratorRepository : verifyDocTypeNumber(docIDNumber)
                             activate CollaboratorRepository
 
                                 CollaboratorRepository --> CTRL : true/false
@@ -136,7 +136,7 @@ activate HRM
 
 
 
-            CTRL -> CollaboratorRepository: registerCollaborator(name, date of birthday, admission data, address street, zipcode, address city, email, phone number, docType, docIDNumber, jobCategory)
+            CTRL -> CollaboratorRepository: registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number,\n docType, docIDNumber, jobCategory)
             activate CollaboratorRepository
 
                 CollaboratorRepository -> Collaborator**: createCollaborator()

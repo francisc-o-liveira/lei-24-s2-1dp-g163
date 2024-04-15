@@ -9,7 +9,7 @@ participant "repositories\n:Repositories" as PLAT
 participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
 
 autonumber 12
--> CTRL : getJobCategoryByDescription(jobCategoryDescription)
+-> CTRL : verifyDocType()
 
 autonumber 12.1
 

@@ -5,81 +5,113 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-actor "HRM" as ADM
+actor "HRM" as HRM
 participant ":RegisterCollaboratorUI" as UI
 participant ":RegisterCollaboratorController" as CTRL
-participant "organization\n:Organization" as ORG
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
+participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
+participant "collaborator\n:Collaborator" as Collaborator
 
-activate ADM
+activate HRM
 
-    ADM -> UI : asks to register a new Collaborator
+        HRM -> UI : asks to register a Collaborator
 
-    activate UI
+        activate UI
 
-        UI -> CTRL** : register
-        UI -> CTRL : getJobCategories()
-        ref over CTRL
-            Get Job Category List
+'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
 
-        end ref
-
-        activate CTRL
-
-            CTRL --> UI : jobCategoryList
-        deactivate CTRL
-
-        UI --> ADM : shows job category list and asks to sleect one
-    deactivate UI
-
-    ADM -> UI : selects a job category
-    activate UI
-
-        UI --> ADM : requests data
-    deactivate UI
-
-    ADM -> UI : types requested data (reference, description,\ninformal description, technical description,\nduration, cost)
-    activate UI
-
-        UI --> ADM : shows selected category and requested data
-    deactivate UI
-
-    ADM -> UI : submits data
-    activate UI
-
-        UI -> CTRL : registerCollaborator(reference, description, informalDescription,\ntechnicalDescription,duration, cost, taskCategoryDescription)
-        activate CTRL
-
-            CTRL -> CTRL : getJobCategoryByDescription(taskCategoryDescription)
+            UI -> CTRL : getJobCategories()
             activate CTRL
 
                 ref over CTRL
-                    Get Job Category Object
+                            Get JobCategoryList
 
-                end ref
+                        end ref
 
-                CTRL --> CTRL : jobCategory
+                CTRL --> UI : jobCategoryList
             deactivate CTRL
 
+            UI --> HRM : shows job category list\n and asks to select one
+        deactivate UI
 
-            CTRL -> ORG: registerCollaborator(reference, description, informalDescription,\ntechnicalDescription, duration, cost, taskCategory, employee)
-            activate ORG
-
-                ref over ORG
-                    Register Collaborator
-
-                end
+    HRM -> UI : selects a job category
+    activate UI
 
 
-            ORG --> CTRL : true / collaboratorList
 
-                       deactivate ORG
 
-                       CTRL --> UI: true / collaboratorList
-                       deactivate CTRL
-                       UI --> ADM : displays operation success / show collaboratorList
+
+
+    UI -> CTRL : getDocTypeList()
+                activate CTRL
+
+                  ref over CTRL
+                              Get DocTypeList with CollaboratorRepository
+
+                          end ref
+    CTRL --> UI : docTypeList
+    deactivate CTRL
+
+
+
+    UI --> HRM : shows docTypeList\n and asks to select one
     deactivate UI
 
-deactivate ADM
+    HRM -> UI : selects a docType
+    activate UI
+
+
+    UI --> HRM : requests data
+    deactivate UI
+
+
+
+
+
+
+
+
+    HRM -> UI : types requested data (name, date of birthday, admission data,\n address street, zipcode, address city, email,\n phone number, number of ID card)
+    activate UI
+
+        UI --> HRM : shows selected category and requested data
+    deactivate UI
+
+    HRM -> UI : submits data
+    activate UI
+
+        UI -> CTRL : registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email,\n phone number, docType, docIDNumber, jobCategory)
+        activate CTRL
+
+
+                            ref over CTRL
+                                        Verify Doc Type
+
+                                    end ref
+
+
+
+            CTRL -> CollaboratorRepository: registerCollaborator(name, date of birthday,\n admission data, address street, zipcode, address city, email, phone number,\n docType, docIDNumber, jobCategory)
+            activate CollaboratorRepository
+
+                ref over CollaboratorRepository
+                            Create and Save Collaborator
+
+                        end ref
+
+                CollaboratorRepository --> CTRL : true / collaboratorList
+
+            deactivate CollaboratorRepository
+
+            CTRL --> UI: true / collaboratorList
+            deactivate CTRL
+            UI --> HRM : displays operation success / show collaboratorList
+    deactivate UI
+
+deactivate HRM
 
 @enduml
