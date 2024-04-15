@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "organization\n:Organization" as ORG
+participant "collaboratorRepository\n:CollaboratorRepository" as ORG
 participant "collaborator\n:Collaborator" as collaborator
 
 autonumber 16

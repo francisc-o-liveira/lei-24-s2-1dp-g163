@@ -6,7 +6,7 @@ skinparam shadowing false
 participant ":JobController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "docTypeRepository:\ndocTypeRepository" as DocTypeRepository
+participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
 
 autonumber 12
 -> CTRL : getJobCategoryByDescription(jobCategoryDescription)
@@ -21,17 +21,17 @@ activate CTRL
                                         RepositorySingleton --> CTRL: repositories
                                     deactivate RepositorySingleton
 
-                                    CTRL -> PLAT : getDocTypeCategoryRepository()
+                                    CTRL -> PLAT : getCollaboratorRepository()
                                     activate PLAT
 
-                                        PLAT --> CTRL: docTypeCategoryRepository
+                                        PLAT --> CTRL: CollaboratorRepository
                                     deactivate PLAT
 
-                                    CTRL -> DocTypeRepository : verifyDocType(docIDNumber)
-                                    activate DocTypeRepository
+                                    CTRL -> CollaboratorRepository : verifyDocType(docIDNumber)
+                                    activate CollaboratorRepository
 
-                                        DocTypeRepository --> CTRL : true/false
-                                    deactivate DocTypeRepository
+                                        CollaboratorRepository --> CTRL : true/false
+                                    deactivate CollaboratorRepository
     end group
 
     autonumber 13

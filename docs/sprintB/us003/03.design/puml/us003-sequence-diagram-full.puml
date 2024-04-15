@@ -12,8 +12,7 @@ participant ":RegisterCollaboratorController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
-participant "docTypeRepository:\nDocTypeRepository" as DocTypeRepository
-participant "organization\n:Organization" as ORG
+participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
 participant "collaborator\n:Collaborator" as Collaborator
 
 activate HRM
@@ -70,17 +69,17 @@ activate HRM
                         RepositorySingleton --> CTRL: repositories
                     deactivate RepositorySingleton
 
-                    CTRL -> PLAT : getDocTypeCategoryRepository()
+                    CTRL -> PLAT : getCollaboratorRepository()
                     activate PLAT
 
-                        PLAT --> CTRL: docTypeCategoryRepository
+                        PLAT --> CTRL: CollaboratorRepository
                     deactivate PLAT
 
-                    CTRL -> DocTypeRepository : getDocType()
-                    activate DocTypeRepository
+                    CTRL -> CollaboratorRepository : getDocType()
+                    activate CollaboratorRepository
 
-                        DocTypeRepository --> CTRL : docTypeList
-                    deactivate DocTypeRepository
+                        CollaboratorRepository --> CTRL : docTypeList
+                    deactivate CollaboratorRepository
 
     CTRL --> UI : docTypeList
     deactivate CTRL
@@ -123,39 +122,39 @@ activate HRM
                                 RepositorySingleton --> CTRL: repositories
                             deactivate RepositorySingleton
 
-                            CTRL -> PLAT : getDocTypeCategoryRepository()
+                            CTRL -> PLAT : getCollaboratorRepository()
                             activate PLAT
 
-                                PLAT --> CTRL: docTypeCategoryRepository
+                                PLAT --> CTRL: CollaboratorRepository
                             deactivate PLAT
 
-                            CTRL -> DocTypeRepository : verifyDocType(docIDNumber)
-                            activate DocTypeRepository
+                            CTRL -> CollaboratorRepository : verifyDocType(docIDNumber)
+                            activate CollaboratorRepository
 
-                                DocTypeRepository --> CTRL : true/false
-                            deactivate DocTypeRepository
-
-
-
-            CTRL -> ORG: registerCollaborator(name, date of birthday, admission data, address street, zipcode, address city, email, phone number, docType, docIDNumber, jobCategory)
-            activate ORG
-
-                ORG -> Collaborator**: createCollaborator()
-                ORG -> ORG: addCollaborator(collaborator)
+                                CollaboratorRepository --> CTRL : true/false
+                            deactivate CollaboratorRepository
 
 
-                activate ORG
-                    ORG -> ORG: validateCollaborator(collaborator)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
 
-                    ORG --> ORG
-                deactivate ORG
+            CTRL -> CollaboratorRepository: registerCollaborator(name, date of birthday, admission data, address street, zipcode, address city, email, phone number, docType, docIDNumber, jobCategory)
+            activate CollaboratorRepository
 
-                ORG --> CTRL : true / collaboratorList
+                CollaboratorRepository -> Collaborator**: createCollaborator()
+                CollaboratorRepository -> CollaboratorRepository: addCollaborator(collaborator)
 
-            deactivate ORG
+
+                activate CollaboratorRepository
+                    CollaboratorRepository -> CollaboratorRepository: validateCollaborator(collaborator)
+                    activate CollaboratorRepository
+                        CollaboratorRepository --> CollaboratorRepository
+                    deactivate CollaboratorRepository
+
+                    CollaboratorRepository --> CollaboratorRepository
+                deactivate CollaboratorRepository
+
+                CollaboratorRepository --> CTRL : true / collaboratorList
+
+            deactivate CollaboratorRepository
 
             CTRL --> UI: true / collaboratorList
             deactivate CTRL
