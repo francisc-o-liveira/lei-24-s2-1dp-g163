@@ -5,31 +5,13 @@ public class Point {
 
     private double y;
 
-    private double price;
 
     private static final double PRICE_PER_OMISSION=0;
 
-    public Point(double x, double y, double price){
+    public Point(double x, double y){
         this.x=x;
         this.y=y;
-        if(price>0){
-            this.price=price;
-        }else {
-            this.price=PRICE_PER_OMISSION;
-            System.out.println("Preço por omissao introduzido");
-        }
-    }
 
-    public void setPrice(double price) {
-        if(price>0){
-            this.price=price;
-        }else {
-            this.price=PRICE_PER_OMISSION;
-            System.out.println("Preço por omissao introduzido");
-        }
-    }
-    public double getPrice() {
-        return price;
     }
     public double getX() {
         return x;

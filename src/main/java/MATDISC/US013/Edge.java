@@ -1,5 +1,6 @@
 package MATDISC.US013;
 
+
 public class Edge {
     private Point p1;
 
