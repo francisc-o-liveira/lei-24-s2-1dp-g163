@@ -105,7 +105,6 @@ RegisterCollaboratorController ..> JobCategoryRepository : JobCategoryRepository
 Repositories --> "1" CollaboratorRepository
 
 ApplicationSession --> "1" UserSession : userSession
-
 RegisterCollaboratorController ..> "1" CollaboratorRepository : collaboratorRepository
 RegisterCollaboratorController ..> ApplicationSession
 RegisterCollaboratorController ..> UserSession
