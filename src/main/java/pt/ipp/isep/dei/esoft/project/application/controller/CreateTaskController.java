@@ -1,11 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.Employee;
-import pt.ipp.isep.dei.esoft.project.domain.Organization;
 import pt.ipp.isep.dei.esoft.project.domain.Task;
 import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.OrganizationRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TaskCategoryRepository;
 import pt.isep.lei.esoft.auth.domain.model.Email;
@@ -15,7 +14,7 @@ import java.util.Optional;
 
 public class CreateTaskController {
 
-    private OrganizationRepository organizationRepository;
+    private Organization organizationRepository;
     private TaskCategoryRepository taskCategoryRepository;
     private AuthenticationRepository authenticationRepository;
 
@@ -28,7 +27,7 @@ public class CreateTaskController {
     }
 
     //Allows receiving the repositories as parameters for testing purposes
-    public CreateTaskController(OrganizationRepository organizationRepository,
+    public CreateTaskController(Organization organizationRepository,
                                 TaskCategoryRepository taskCategoryRepository,
                                 AuthenticationRepository authenticationRepository) {
         this.organizationRepository = organizationRepository;
@@ -46,7 +45,7 @@ public class CreateTaskController {
         return taskCategoryRepository;
     }
 
-    private OrganizationRepository getOrganizationRepository() {
+    private Organization getOrganizationRepository() {
         if (organizationRepository == null) {
             Repositories repositories = Repositories.getInstance();
             organizationRepository = repositories.getOrganizationRepository();
@@ -72,15 +71,12 @@ public class CreateTaskController {
         TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
 
         Employee employee = getEmployeeFromSession();
-        Optional<Organization> organization = getOrganizationRepository().getOrganizationByEmployee(employee);
+        Organization organization = getOrganizationRepository();
 
         Optional<Task> newTask = Optional.empty();
 
-        if (organization.isPresent()) {
-            newTask = organization.get()
-                    .createTask(reference, description, informalDescription, technicalDescription, duration, cost,
-                            taskCategory, employee);
-        }
+            newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration, cost,
+                    taskCategory, employee);
         return newTask;
     }
 
