@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HRManagerUI implements Runnable{
-    public HRManager() {
+    public HRManagerUI() {
     }
 
     public void run() {
