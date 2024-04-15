@@ -109,12 +109,11 @@ CreateTaskController .> Repositories : repositories
 Repositories -> "1" TaskCategoryRepository
 
 CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
+CreateTaskController ..> Organization: organization
+CreateTaskController ..> TaskCategoryRepository: TaskCategoryRepository
 
-Repositories --> "1" OrganizationRepository
+Repositories ---> "1" Organization
 
-OrganizationRepository --> "*" Organization
 ApplicationSession --> "1" UserSession : userSession
 
 CreateTaskController ..> "1" Organization : organization
