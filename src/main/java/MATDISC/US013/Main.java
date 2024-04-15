@@ -1,5 +1,8 @@
 package MATDISC.US013;
 
+import MATDISC.US013.Edge;
+import MATDISC.US013.Point;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -63,21 +66,20 @@ public class Main {
 
     }
 
-    /*public static void readFromFile(String fileName) {
+    public static void readFromFile(String fileName) {
         Scanner scanFile = new Scanner(fileName);
         String[] line;
-        ArrayList<Point> points = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
         while (scanFile.hasNextLine()) {
             line = scanFile.nextLine().split(";");
-            points.add(new Point(Double.parseDouble(line[0]), Double.parseDouble(line[1]), Double.parseDouble(line[2])));
+            edges.add(new Edge(new Point(Double.parseDouble(line[0]), Double.parseDouble(line[1])),new Point(Double.parseDouble(line[2]), Double.parseDouble(line[3])), Double.parseDouble(line[4])));
         }
-    }*/
+    }
 
     // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
         Edge saveEdge;
         for (int i = 1; i <edges.size() - 1; i++) {
-            saveEdge = edges.get(i);
             for (int j = i + 1; j < edges.size(); j++) {
                 if (edges.get(j).getPrice() < edges.get(i).getPrice()) {
                     saveEdge = edges.get(i);
@@ -121,11 +123,8 @@ public class Main {
         ArrayList<Point> vertices = numberOfVertices(edges);
         ArrayList<Edge> edgesSave = new ArrayList<>();
         Point[][] S = new Point[vertices.size()][vertices.size()];
-        int i=0;
-        for(Point vertice: vertices){
-            S[0][i]= vertice;
-            i++;
-        }
+        distributeInArrayPoints(S,vertices);
+
         int valueIndexLine1 = 0;
         int valueIndexLine2 = 0;
         int valueIndexColumn1=0;
@@ -133,24 +132,23 @@ public class Main {
         for(Edge edgeX : edges){
             Point x1 = edgeX.getP1();
             Point x2 = edgeX.getP2();
-            for (int j = 0; i < S[0].length; i++){
-                for(int k = 0; i < S.length; i++){
-                    if(S[k][j] == null){
+            for (int j = 0; j < S[0].length; j++){
+                for(int k = 0; k < S.length; k++){
+                    if(S[k][j] == null||valueIndexColumn1!=0&&valueIndexColumn2!=0){
                         break;
                     }
                     if (x1.equals(S[k][j])){
-                        valueIndexLine1=j;
-                        valueIndexColumn1=k;
+                        valueIndexColumn1=j;
+                        valueIndexLine1=k;
                     }
                     if (x2.equals(S[k][j])){
-                        valueIndexLine2=j;
-                        valueIndexColumn2=k;
+                        valueIndexColumn2=j;
+                        valueIndexLine2=k;
                     }
                 }
             }
-            if(valueIndexLine1!=valueIndexLine2){
-                S[valueIndexLine1++][valueIndexColumn1]=S[valueIndexLine2][valueIndexColumn2];
-                S[valueIndexLine2][valueIndexColumn2]=null;
+            if(valueIndexColumn1!=valueIndexColumn2){
+                edgesSave.add(edgeX);
                 int newIndexLine2=findNull(valueIndexColumn1, S);
                 for(int l=0; l<S[valueIndexColumn2].length; l++){
                     if(S[l][valueIndexColumn2]==null){
@@ -160,10 +158,17 @@ public class Main {
                     S[l][valueIndexColumn2]=null;
                     newIndexLine2++;
                 }
-                edgesSave.add(edgeX);
             }
         }
         return edgesSave;
+    }
+
+    private static void distributeInArrayPoints(Point[][] s, ArrayList<Point> vertices) {
+        int i=0;
+        for(Point vertice: vertices){
+            s[0][i]= vertice;
+            i++;
+        }
     }
 
     public static int findNull(int column, Point[][] S){

@@ -22,10 +22,7 @@ public class Point {
 
     @Override
     public boolean equals(Object other){
-        if(this==other){
-            return true;
-        }
-        if(other != null || this.getClass() != other.getClass()){
+        if(other == null || this.getClass() != other.getClass()){
             return false;
         }
         Point otherPoint = (Point) other;
