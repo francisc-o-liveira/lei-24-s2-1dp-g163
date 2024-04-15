@@ -17,7 +17,7 @@ class ApplicationSession{
 class UserSession{
 }
 
-class Employee {
+class HRM {
 }
 
 class Collaborator {
@@ -71,7 +71,7 @@ class RegisterCollaboratorController {
     + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
     + getJobCategoriesList()
     + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
-    - getEmployeeFromSession()
+    - getHRMFromSession()
 }
 
 note right of RegisterCollaboratorController
@@ -114,6 +114,8 @@ CollaboratorRepository "1" --> "*" Collaborator : collaborators
 CollaboratorRepository "1" --> "3" DocType : docTypes
 Collaborator --> Employee : createdBy
 
-CollaboratorRepository --> "*" Employee : employs
+CollaboratorRepository --> "*" HRM : employs
+JobCategoryRepository --> "*" HRM : employs
+
 
 @enduml
