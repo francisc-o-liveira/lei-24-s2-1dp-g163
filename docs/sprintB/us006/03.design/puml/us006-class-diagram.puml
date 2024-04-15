@@ -27,21 +27,19 @@ class Employee {
     - phone
 }
 
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
+class Vehicle {
+    - String brand
+    - String model
+    - Integer plate
+    - String type
+    - Integer tare
+    - String grossWeight
+    - Integer currenteKM
+    - String registerDate
+    - String acquisitionDate
+    - Integer checkupFrequency
 
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
-
-class TaskCategory {
-    - String description
-
-    + TaskCategory(description)
+    + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
 }
 
 class Organization {
@@ -51,18 +49,15 @@ class Organization {
     - String phone
     - String email
 
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
+
     + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDesccription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
+    + createVehicle(brand, model, plate,type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
     - getEmployeeByEmail(email)
 
-'  +saveTask(task)
 }
 
-class TaskCategoryRepository {
-    + getTaskCategoryByDescription(description)
+class VehicleTypeRepository {
+    + getVehicleTypeByDescription(description)
 }
 
 class OrganizationRepository {
@@ -72,58 +67,58 @@ class OrganizationRepository {
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getTaskCategoryRepository()
+    + getVehicleTypeRepository()
     + getOrganizationRepository()
 }
 
-class CreateTaskController {
-    + CreateTaskController(organizationRepository, taskCategoryRepository)
+class RegisterVehicleController {
+    + RegisterVehicleController(organizationRepository, vehicleTypeRepository)
     + getTaskCategories()
     + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
     - getTaskCategoryByDescription(taskCategoryDescription)
     - getEmployeeFromSession()
 }
 
-note right of CreateTaskController
+note right of RegisterVehicleController
     - userEmail is obtained
     from the user session
     - categoryDescription
     is retrieved from selected data
 end note
 
-note bottom of TaskCategoryRepository
+note bottom of VehicleTypeRepository
     - used for displaying
-    the category list
+    the type list
 end note
 
-class CreateTaskUI {
+class RegisterVehicleUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateTaskUI .> CreateTaskController
+RegisterVehicleUI .> RegisterVehicleController
 
-CreateTaskController .> Repositories : repositories
+RegisterVehicleController .> Repositories : repositories
 
-Repositories -> "1" TaskCategoryRepository
+Repositories -> "1" VehicleTypeRepository
 
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
+RegisterVehicleController ..> TaskCategory
+RegisterVehicleController ..> OrganizationRepository : organizationRepository
+RegisterVehicleController ..> VehicleTypeRepository : VehicleTypeRepository
 
 Repositories --> "1" OrganizationRepository
 
 OrganizationRepository --> "*" Organization
 ApplicationSession --> "1" UserSession : userSession
 
-CreateTaskController ..> "1" Organization : organization
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-Task "*" --> "1" TaskCategory : taskCategory
-TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
+RegisterVehicleController ..> "1" Organization : organization
+RegisterVehicleController ..> ApplicationSession
+RegisterVehicleController ..> UserSession
+Vehicle "*" --> "1" TaskCategory : taskCategory
+VehicleTypeRepository "1" --> "*" TaskCategory : taskCategory
 Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
+Vehicle --> Employee : createdBy
 
 Organization --> "*" Employee : employs
 
