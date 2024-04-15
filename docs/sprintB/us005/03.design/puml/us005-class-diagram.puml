@@ -34,29 +34,33 @@ class Collaborator {
     + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
 }
 
-class JobCategory {
+class Skill {
     - String name
-    + JobCategory(name)
+    + Skill(name)
 }
 
 class CollaboratorRepository {
-    - List <Collaborator>
-    - List <DocType>
-    + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
-    + validateCollaborator(collaborator)
-    + saveCollaborator(collaborator)
-    + getDocTypeList()
-    + validateDocType(docTypeIndex,docTypeNumber);
+    - List <Collaborator> collaboratorsNotActivate
+    - List <Collaborator> collaboratorsActivate
+    + getCollaboratorList()
+    + activateCollaborator(team)
 }
 
-class DocType{
-    -String type
-    +DocType()
+class TeamRepository {
+    - List <Team>
+    + generateTeamBySkillSetAndSize(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
+    + getTeamList()
 }
 
-class JobCategoryRepository {
-    - List <JobCategory>
-    + getJobCategoryList()
+class SkillRepository{
+    - List <Skill>
+    + getSkillList()
+}
+
+class Team{
+    -List <Collaborator> collaboratorsTeam
+    + Team(size,collaboratorsList,skillsSelected)
+    + getTeamList()
 }
 
 
@@ -67,54 +71,67 @@ class Repositories {
     + getCollaboratorRepository()
 }
 
-class RegisterCollaboratorController {
+class GenerateTeamController {
     + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
-    + getJobCategoriesList()
+    + getSkillList()
+    + getCollaboratorsNotActivate()
+    + generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
     + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
+    + activateCollaboratorsList(team)
     - getHRMFromSession()
 }
 
-note right of RegisterCollaboratorController
+class SkillRepository{
+    - List <Skill>
+    + getSkillList()
+}
+
+note right of GenerateTeamController
     - userEmail is obtained
     from the user session
-    - jobCategory
-    is achieved with job category repository
+    - skillList
+    is achieved with skill repository
 end note
 
-note bottom of JobCategoryRepository
+note bottom of SkillRepository
     - used for displaying
     the job category list
 end note
 
-class RegisterCollaboratorUI {
+class GenerateTeamUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-RegisterCollaboratorUI .> RegisterCollaboratorController
+GenerateTeamUI .> GenerateTeamController
 
-RegisterCollaboratorController .> Repositories : repositories
-
-Repositories -> "1" JobCategoryRepository
-
-RegisterCollaboratorController ..> JobCategory
-RegisterCollaboratorController ..> CollaboratorRepository : CollaboratorRepository
-RegisterCollaboratorController ..> JobCategoryRepository : JobCategoryRepository
+GenerateTeamController .> Repositories : repositories
 
 Repositories --> "1" CollaboratorRepository
+Repositories --> "1" SkillRepository
+Repositories --> "1" TeamRepository
 
-ApplicationSession --> "1" UserSession : userSession
-RegisterCollaboratorController ..> "1" CollaboratorRepository : collaboratorRepository
-RegisterCollaboratorController ..> ApplicationSession
+GenerateTeamController ..> CollaboratorRepository : CollaboratorRepository
+GenerateTeamController ..> SkillRepository : SkillRepository
+GenerateTeamController ..> TeamRepository : TeamRepository
+
+
+GenerateTeamController ..> "1" CollaboratorRepository : collaboratorRepository
+GenerateTeamController ..> ApplicationSession
 GenerateTeamController ..> UserSession
 
 CollaboratorRepository "1" --> "*" Collaborator : collaborators
+TeamRepository "1" --> "*" Team : teams
+SkillRepository "1" --> "*" Skill : skills
 
 Team --> HRM : generatedBy
 
+ApplicationSession --> "1" UserSession : userSession
+
 TeamRepository --> "*" HRM : employs
 SkillRepository --> "*" HRM : employs
+CollaboratorRepository --> "*" HRM : employs
 
 
 @enduml

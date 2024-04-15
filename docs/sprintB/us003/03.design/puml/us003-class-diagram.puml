@@ -40,11 +40,12 @@ class JobCategory {
 }
 
 class CollaboratorRepository {
-    - List <Collaborator>
+    - List <Collaborator> collaboratorsNotActivate
+    - List <Collaborator> collaboratorsActivate
     - List <DocType>
     + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
     + validateCollaborator(collaborator)
-    + saveCollaborator(collaborator)
+    + saveCollaborator(collaborator, this.collaboratorsNotActivate)
     + getDocTypeList()
     + validateDocType(docTypeIndex,docTypeNumber);
 }
@@ -98,7 +99,6 @@ RegisterCollaboratorController .> Repositories : repositories
 
 Repositories -> "1" JobCategoryRepository
 
-RegisterCollaboratorController ..> JobCategory
 RegisterCollaboratorController ..> CollaboratorRepository : CollaboratorRepository
 RegisterCollaboratorController ..> JobCategoryRepository : JobCategoryRepository
 
