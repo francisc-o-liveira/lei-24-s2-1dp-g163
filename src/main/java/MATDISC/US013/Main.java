@@ -46,11 +46,9 @@ public class Main {
             }
 
         }
-        // Stop measuring execution time
-
 
         // Calculate the execution time in milliseconds
-        long executionTime = (endTime - startTime) / 1000000;
+        long executionTime = (endTime - startTime);
         System.out.println("Counting the time of Execution Kruskal takes "
                 + executionTime + "ms");
     }
