@@ -37,19 +37,16 @@ class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getJobCategoryRepository()
-    + getCollaboratorRepository()
+
 }
 
-class CreateJobCategoryController{
-    + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
+class RegisterJobCategoryController{
+    + registerJobCategory(jobCategoryRepository)
     + getJobCategoriesList()
-    + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
-    - getEmployeeFromSession()
+    + getJobCategoryRepository
 }
 
-note right of CreateJobCategoryController
-    - userEmail is obtained
-    from the user session
+note right of RegisterJobCategoryController
     - jobCategory
     is achieved with job category repository
 end note
@@ -59,27 +56,25 @@ note bottom of JobCategoryRepository
     the job category list
 end note
 
-class CreateJobCategoryUI {
+class RegisterJobCategoryUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateJobCategoryUI .> CreateJobCategoryController
+RegisterJobCategoryUI .> RegisterJobCategoryController
 
-CreateJobCategoryController .> Repositories : repositories
+RegisterJobCategoryController .> Repositories : repositories
 
 Repositories -> "1" JobCategoryRepository
-
-CreateJobCategoryController ..> JobCategory
-CreateJobCategoryController ..> CollaboratorRepository : CollaboratorRepository
-CreateJobCategoryController ..> JobCategoryRepository : JobCategoryRepository
+RegisterJobCategoryController ..> JobCategory
+RegisterJobCategoryController ..> JobCategoryRepository : JobCategoryRepository
 
 
 ApplicationSession --> "1" UserSession : userSession
 
-CreateJobCategoryController ..> ApplicationSession
-CreateJobCategoryController ..> UserSession
+RegisterJobCategoryController ..> ApplicationSession
+RegisterJobCategoryController ..> UserSession
 
 JobCategoryRepository "1" --> "*" JobCategory : jobCategory's
 
