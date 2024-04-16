@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 
@@ -17,17 +16,14 @@ public class RegisterACollaboratorController {
 
     public List<JobCategory> getJobCategoriesList(){
 
-        return jobCategoryRepository;
     }
 
-    public void registerCollaborator(Collaborator collaborator){
-
+    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill){
+        Collaborator collaborator=new Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill);
     }
 
     private void getHRMFromSession(){
 
     }
-
-    + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
 
 }
