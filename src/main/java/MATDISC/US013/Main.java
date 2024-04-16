@@ -75,7 +75,7 @@ public class Main {
         ArrayList<Edge> edges = new ArrayList<>();
         while (scanFile.hasNextLine()) {
             line = scanFile.nextLine().split(";");
-            edges.add(new Edge(new Point(Double.parseDouble(line[0]), Double.parseDouble(line[1])),new Point(Double.parseDouble(line[2]), Double.parseDouble(line[3])), Double.parseDouble(line[4])));
+            edges.add(new Edge(new Point(Double.parseDouble(line[0])), new Point(Double.parseDouble(line[1])), Double.parseDouble(line[2])));
         }
         return edges;
     }

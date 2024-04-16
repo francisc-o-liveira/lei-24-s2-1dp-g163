@@ -2,22 +2,13 @@ package MATDISC.US013;
 
 public class Point {
     private double x;
-
-    private double y;
-
-
     private static final double PRICE_PER_OMISSION=0;
 
-    public Point(double x, double y){
+    public Point(double x){
         this.x=x;
-        this.y=y;
-
     }
     public double getX() {
         return x;
-    }
-    public double getY() {
-        return y;
     }
 
     @Override
@@ -26,11 +17,11 @@ public class Point {
             return false;
         }
         Point otherPoint = (Point) other;
-        return otherPoint.getX()==this.getX() && otherPoint.getY()==this.getY();
+        return otherPoint.getX()==this.getX();
     }
 
     @Override
     public String toString(){
-        return String.format("%.2f, %.2f", x,y);
+        return String.format("%.2f", x);
     }
 }
