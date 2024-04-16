@@ -1,3 +1,4 @@
+
 # OO Analysis
 
 The construction process of the domain model is based on the client specifications, particularly focusing on the nouns (for _concepts_) and verbs (for _relations_) present in the specifications.
