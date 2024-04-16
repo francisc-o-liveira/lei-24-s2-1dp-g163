@@ -29,7 +29,7 @@ activate ADM
             CTRL --> UI : jobCategoryList
         deactivate CTRL
 
-        UI --> ADM : shows job category list and asks to sleect one
+        UI --> ADM : shows job category list and asks to select one
     deactivate UI
 
     ADM -> UI : selects a job category
