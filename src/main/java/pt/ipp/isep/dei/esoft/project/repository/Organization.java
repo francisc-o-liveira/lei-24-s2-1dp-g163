@@ -1,12 +1,15 @@
-package pt.ipp.isep.dei.esoft.project.domain;
+package pt.ipp.isep.dei.esoft.project.repository;
+
+import pt.ipp.isep.dei.esoft.project.domain.Employee;
+import pt.ipp.isep.dei.esoft.project.domain.Task;
+import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Organization {
-    private final String vatNumber;
+public class Organization{
     private final List<Employee> employees;
     private final List<Task> tasks;
     private String name;
@@ -17,11 +20,8 @@ public class Organization {
     /**
      * This method is the constructor of the organization.
      *
-     * @param vatNumber The vat number of the organization. This is the identity of the organization, therefore it
-     *                  cannot be changed.
      */
-    public Organization(String vatNumber) {
-        this.vatNumber = vatNumber;
+    public Organization() {
         employees = new ArrayList<>();
         tasks = new ArrayList<>();
     }
@@ -121,22 +121,7 @@ public class Organization {
         return result;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Organization)) {
-            return false;
-        }
-        Organization that = (Organization) o;
-        return vatNumber.equals(that.vatNumber);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(vatNumber);
-    }
 
     //add employee to organization
     public boolean addEmployee(Employee employee) {
@@ -156,22 +141,5 @@ public class Organization {
     }
 
     //Clone organization
-    public Organization clone() {
-        Organization clone = new Organization(this.vatNumber);
-        clone.name = (this.name);
-        clone.website = (this.website);
-        clone.phone = (this.phone);
-        clone.email = (this.email);
 
-        for (Employee in : this.employees) {
-            clone.employees.add(in.clone());
-        }
-
-
-        for (Task in : this.tasks) {
-            clone.tasks.add(in.clone());
-        }
-
-        return clone;
-    }
 }

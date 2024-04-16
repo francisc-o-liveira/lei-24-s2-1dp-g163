@@ -38,4 +38,9 @@ public class Edge {
     public Point getP2() {
         return p2;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Edge: %s to %s Cost: %.2f", p1, p2, price);
+    }
 }

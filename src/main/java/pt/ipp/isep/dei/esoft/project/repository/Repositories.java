@@ -5,12 +5,12 @@ import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 public class Repositories {
 
     private static Repositories instance;
-    private final OrganizationRepository organizationRepository;
+    private final Organization organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
 
     private Repositories() {
-        organizationRepository = new OrganizationRepository();
+        organizationRepository = new Organization();
         taskCategoryRepository = new TaskCategoryRepository();
         authenticationRepository = new AuthenticationRepository();
     }
@@ -24,7 +24,7 @@ public class Repositories {
         return instance;
     }
 
-    public OrganizationRepository getOrganizationRepository() {
+    public Organization getOrganizationRepository() {
         return organizationRepository;
     }
 

@@ -9,85 +9,77 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
+class ApplicationSession{
     + static getInstance()
     + getCurrentSession()
 }
 
-class UserSession
-{
-    + getUserEmail()
+class UserSession{
 }
 
-class Employee {
-    - name
-    - email
-    - position
-    - phone
+class HRM {
 }
 
 class Collaborator {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
+    - name
+    - date of birthday
+    - admission data
+    - address street zipcode
+    - address city, email
+    - phone number
+    - docType
+    - docIDNumber
+    - jobCategory
 
-    + Collaborator(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, jobCategory)
+    + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
 }
 
 class JobCategory {
-    - String description
-
-    + JobCategory(description)
+    - String name
+    + JobCategory(name)
 }
 
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
+class CollaboratorRepository {
+    - List <Collaborator> collaboratorsNotActivate
+    - List <Collaborator> collaboratorsActivate
+    - List <DocType>
+    + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
+    + validateCollaborator(collaborator)
+    + saveCollaborator(collaborator, this.collaboratorsNotActivate)
+    + getDocTypeList()
+    + validateDocType(docTypeIndex,docTypeNumber);
+}
 
-    - addCollaborator(collaborator)
-    - validateCollaborator(collaborator)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + registerCollaborator(reference, description, informalDescription,\ntechnicalDescription, duration, cost, jobCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveCollaborator(collaborator)
+class DocType{
+    -enum type
+    +DocType(type)
 }
 
 class JobCategoryRepository {
-    + getJobCategoryByDescription(description)
+    - List <JobCategory>
+    + getJobCategoryList()
 }
 
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
-}
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getJobCategoryRepository()
-    + getOrganizationRepository()
+    + getCollaboratorRepository()
 }
 
 class RegisterCollaboratorController {
-    + RegisterCollaboratorController(organizationRepository, jobCategoryRepository)
-    + getJobCategories()
-    + registerCollaborator(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getEmployeeFromSession()
+    + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
+    + getJobCategoriesList()
+    + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
+    - getHRMFromSession()
 }
 
 note right of RegisterCollaboratorController
     - userEmail is obtained
     from the user session
-    - categoryDescription
-    is retrieved from selected data
+    - jobCategory
+    is achieved with job category repository
 end note
 
 note bottom of JobCategoryRepository
@@ -107,23 +99,23 @@ RegisterCollaboratorController .> Repositories : repositories
 
 Repositories -> "1" JobCategoryRepository
 
-RegisterCollaboratorController ..> JobCategory
-RegisterCollaboratorController ..> OrganizationRepository : organizationRepository
+RegisterCollaboratorController ..> CollaboratorRepository : CollaboratorRepository
 RegisterCollaboratorController ..> JobCategoryRepository : JobCategoryRepository
 
-Repositories --> "1" OrganizationRepository
+Repositories --> "1" CollaboratorRepository
 
-OrganizationRepository --> "*" Organization
 ApplicationSession --> "1" UserSession : userSession
-
-RegisterCollaboratorController ..> "1" Organization : organization
+RegisterCollaboratorController ..> "1" CollaboratorRepository : collaboratorRepository
 RegisterCollaboratorController ..> ApplicationSession
 RegisterCollaboratorController ..> UserSession
 Collaborator "*" --> "1" JobCategory : jobCategory
-JobCategoryRepository "1" --> "*" JobCategory : jobCategory
-Organization "1" --> "*" Collaborator : collaborators
+JobCategoryRepository "1" --> "*" JobCategory : jobCategory's
+CollaboratorRepository "1" --> "*" Collaborator : collaborators
+CollaboratorRepository "1" --> "3" DocType : docTypes
 Collaborator --> Employee : createdBy
 
-Organization --> "*" Employee : employs
+CollaboratorRepository --> "*" HRM : employs
+JobCategoryRepository --> "*" HRM : employs
+
 
 @enduml

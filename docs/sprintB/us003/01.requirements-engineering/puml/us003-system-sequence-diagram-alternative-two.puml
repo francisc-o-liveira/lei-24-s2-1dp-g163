@@ -21,13 +21,13 @@ activate Manager
     Manager -> System : selects a job category
     activate System
 
-     System --> Manager : shows identification card type list and asks to select one
+     System --> Manager : shows docType list and asks to select one
         deactivate System
 
-        Manager -> System : selects a job category
+        Manager -> System : selects a docType
         activate System
 
-        System --> Manager : requests data (i.e. name, date of birthday, admission data,\n address, email, phone number,(taxpayer number/\ncitizen card number/passport number),...)
+        System --> Manager : requests data (i.e. name, date of birthday, admission data,\n address, email, phone number,docType,(taxpayer number/\ncitizen card number/passport number),...)
     deactivate System
 
     Manager -> System : types requested data

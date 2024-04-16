@@ -7,7 +7,7 @@ title System Sequence Diagram (SSD) - Register Vehicle Check-Up Success Scenario
 
 autonumber
 
-actor "FM" as FleetManager
+actor "VFM" as FleetManager
 participant ":System" as System
 
 activate FleetManager

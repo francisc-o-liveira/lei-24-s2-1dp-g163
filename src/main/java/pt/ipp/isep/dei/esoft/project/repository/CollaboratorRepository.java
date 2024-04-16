@@ -1,5 +1,4 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-class OrganizationRepositoryTest {
-
+public class CollaboratorRepository {
 }

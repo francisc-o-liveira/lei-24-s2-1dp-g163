@@ -9,122 +9,129 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
+class ApplicationSession{
     + static getInstance()
     + getCurrentSession()
 }
 
-class UserSession
-{
-    + getUserEmail()
+class UserSession{
 }
 
-class Employee {
+class HRM {
+}
+
+class Collaborator {
     - name
-    - email
-    - position
-    - phone
+    - date of birthday
+    - admission data
+    - address street zipcode
+    - address city, email
+    - phone number
+    - docType
+    - docIDNumber
+    - jobCategory
+
+    + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
 }
 
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
-
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
-
-class TaskCategory {
-    - String description
-
-    + TaskCategory(description)
-}
-
-class Organization {
+class Skill {
     - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
-
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDescription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveTask(task)
+    + Skill(name)
 }
 
-class TaskCategoryRepository {
-    + getTaskCategoryByDescription(description)
+class CollaboratorRepository {
+    - List <Collaborator> collaboratorsNotActivate
+    - List <Collaborator> collaboratorsActivate
+    + getCollaboratorList()
+    + activateCollaborator(team)
 }
 
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
+class TeamRepository {
+    - List <Team>
+    + generateTeamBySkillSetAndSize(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
+    + getTeamList()
 }
+
+class SkillRepository{
+    - List <Skill>
+    + getSkillList()
+}
+
+class Team{
+    -List <Collaborator> collaboratorsTeam
+    + Team(size,collaboratorsList,skillsSelected)
+    + getTeamList()
+}
+
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
+    + getJobCategoryRepository()
+    + getCollaboratorRepository()
 }
 
-class CreateTaskController {
-    + CreateTaskController(organizationRepository, taskCategoryRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
+class GenerateTeamController {
+    + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
+    + getSkillList()
+    + getCollaboratorsNotActivate()
+    + generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
+    + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
+    + activateCollaboratorsList(team)
+    - getHRMFromSession()
 }
 
-note right of CreateTaskController
+class SkillRepository{
+    - List <Skill>
+    + getSkillList()
+}
+
+note right of GenerateTeamController
     - userEmail is obtained
     from the user session
-    - categoryDescription
-    is retrieved from selected data
+    - skillList
+    is achieved with skill repository
 end note
 
-note bottom of TaskCategoryRepository
+note bottom of SkillRepository
     - used for displaying
-    the category list
+    the job category list
 end note
 
-class CreateTaskUI {
+class GenerateTeamUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateTaskUI .> CreateTaskController
+GenerateTeamUI .> GenerateTeamController
 
-CreateTaskController .> Repositories : repositories
+GenerateTeamController .> Repositories : repositories
 
-Repositories -> "1" TaskCategoryRepository
+Repositories --> "1" CollaboratorRepository
+Repositories --> "1" SkillRepository
+Repositories --> "1" TeamRepository
 
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
+GenerateTeamController ..> CollaboratorRepository : CollaboratorRepository
+GenerateTeamController ..> SkillRepository : SkillRepository
+GenerateTeamController ..> TeamRepository : TeamRepository
 
-Repositories --> "1" OrganizationRepository
 
-OrganizationRepository --> "*" Organization
+GenerateTeamController ..> "1" CollaboratorRepository : collaboratorRepository
+GenerateTeamController ..> ApplicationSession
+GenerateTeamController ..> UserSession
+
+CollaboratorRepository "1" --> "*" Collaborator : collaborators
+TeamRepository "1" --> "*" Team : teams
+SkillRepository "1" --> "*" Skill : skills
+
+Team --> HRM : generatedBy
+
 ApplicationSession --> "1" UserSession : userSession
 
-CreateTaskController ..> "1" Organization : organization
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-Task "*" --> "1" TaskCategory : taskCategory
-TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
-Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
+TeamRepository --> "*" HRM : employs
+SkillRepository --> "*" HRM : employs
+CollaboratorRepository --> "*" HRM : employs
 
-Organization --> "*" Employee : employs
 
 @enduml

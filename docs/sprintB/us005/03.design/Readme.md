@@ -6,35 +6,37 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...   | Answer                 | Justification (with patterns)                                                                                 |
-|:---------------|:----------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?              | GenerateTeamUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                     | GenerateTeamController | Controller                                                                                                    |
-| 			  		        | ... instantiating a new Team?                 | Organization           | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  	         |                                               |                        |                                                                                                               |
-| 			  		        | 							                                       |                        |                                                                                                               |
-| 			  		        | 							                                       |                        |                                                                                                               |
-| Step 2  		     | 							                                       |                        |                                                                                                               |
-| Step 3  		     | 	...saving the inputted data?                 | Team                   | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		     | 	...knowing the Skills to show?               | Repositories           | IE: Skills are defined by the HRMs.                                                                           |
-| Step 5  		     | 	... saving the selected skill?               | Team                   | IE: XXX.                                                                                                      |
-| Step 6  		     | 				 	                                        |                        |                                                                                                               |
-| Step 7  		     | 	... validating data (local validation)?      | Team                   | IE: owns its data.                                                                                            | 
-|                | 	... validating all data (global validation)? | Organization           | IE: knows all its teams.                                                                                      | 
-| 		             | 	... saving the registered Team?              | Organization           | IE: owns all its teams.                                                                                       | 
-| Step 8  		     | 	... informing operation success?             | RegisterCollaboratorUI | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...                | Answer                 | Justification (with patterns)                                                                                 |
+|:---------------|:-----------------------------------------------------------|:-----------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		     | 	... interacting with the actor?                           | GenerateTeamUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		        | 	... coordinating the US?                                  | GenerateTeamController | Controller:  Pure Fabrication(Rule 3)                                                                         |
+| 			  		        | ... instantiating a new Team?                              | TeamRepository         | Creator (Rule 1): in the DM Organization has a Task.                                                          |
+| 			  	         |                                                            |                        |                                                                                                               |
+| 			  		        | 							                                                    |                        |                                                                                                               |
+| 			  		        | 							                                                    |                        |                                                                                                               |
+| 		             | 							                                                    |                        |                                                                                                               |
+| Step 2  		     | 	...saving the inputted data?                              | Team                   | IE: object created in step 1 has its own data.                                                                |
+| Step 3  		     | 	...knowing the Skills to show?                            | Repositories           | IE: Skills are defined by the HRMs. Information Expert(Rule 2)                                                |
+| Step 4  		     | 	... saving the selected skill?                            | Team                   | IE: The team have a SkillSet.                                                                                 |
+| Step 5  		     | 	...knowing the Collaborators with Skills to generateTeam? | Repositories           | IE: Skills assigned to Collaborators by the HRMs.   Information Expert(Rule 2)                                |
+| Step 6  		     | 	... saving the selected Collaborators?                    | Team                   | IE: The team have a List of Collaborators.                                                                    |
+| Step 7  		     | 	... validating data (local validation)?                   | Team                   | IE: owns its data.                                                                                            | 
+|                | 	... validating all data (global validation)?              | TeamRepository         | IE: knows all its teams.                                                                                      | 
+| 		             | 	... saving the registered Team?                           | TeamRepository         | IE: owns all its teams.                                                                                       | 
+| Step 8  		     | 	... informing operation success?                          | GenerateTeamUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator): 
 
-* Organization
+* TeamRepository
 * Team
 
 Other software classes (i.e Information Expert) identified:
 
 * Repositories
 * SkillRepository
+* CollaboratorRepository
 
 Other software classes (i.e. Pure Fabrication) identified: 
 

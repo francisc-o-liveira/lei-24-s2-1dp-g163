@@ -1,0 +1,69 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title UI Sequence Diagram (SSD) for Registering Vehicle Maintenance
+
+autonumber
+
+actor "FM" as FleetManager
+participant ":RegistMaintenanceUI" as UI
+participant ":RegistMaintenanceController" as Controller
+participant "vfm:VFM" as VFM
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+participant "collaboratorRepository:CollaboratorRepository" as CollabRepo
+
+activate FleetManager
+
+FleetManager -> UI : Selects a Vehicle ID and requests to register check-up
+activate UI
+
+UI -> Controller : create()
+activate Controller
+
+Controller -> VFM : getInstance()
+activate VFM
+VFM --> Controller : vfm
+deactivate VFM
+
+Controller -> VehicleRepo : getVehicleRepository()
+activate VehicleRepo
+VehicleRepo --> Controller : vehicleRepository
+deactivate VehicleRepo
+
+Controller -> CollabRepo : getCollaboratorRepository()
+activate CollabRepo
+CollabRepo --> Controller : collaboratorRepository
+deactivate CollabRepo
+
+Controller -> VehicleRepo : findVehicleByID(vehicleID)
+activate VehicleRepo
+VehicleRepo --> Controller : vehicleDetails
+deactivate VehicleRepo
+
+Controller -> UI : requestMaintenanceDetails()
+UI --> FleetManager : Requests Date of Check-Up, Current Kilometers
+deactivate UI
+
+FleetManager -> UI : Provides Date of Check-Up, Current Kilometers
+activate UI
+UI -> Controller : validateDate(dateOfCheckUp)
+UI -> Controller : validateKilometers(currentKilometers)
+
+alt All Data Valid
+    Controller -> VehicleRepo : registerCheckUp(vehicleID, dateOfCheckUp, currentKilometers)
+    activate VehicleRepo
+    VehicleRepo --> Controller : Confirmation
+    deactivate VehicleRepo
+
+    Controller --> UI : confirmRegistrationSuccess()
+    UI --> FleetManager : Confirms registration success
+else Data Invalid
+    Controller --> UI : notifyDataInvalid()
+    UI --> FleetManager : Notifies data invalid
+end
+
+deactivate Controller
+deactivate UI
+@enduml

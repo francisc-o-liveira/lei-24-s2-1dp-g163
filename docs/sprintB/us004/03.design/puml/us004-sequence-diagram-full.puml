@@ -1,0 +1,138 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "HR Manager" as HRManager
+participant "AssignSkillsUI" as UI
+participant ":AssignSkillsController" as Controller
+
+participant "Repositories" as Repos
+participant "repositories:Repositories" as reposRepos
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+participant "skillRepository:SkillRepository" as SkillRepo
+
+participant "hrm:HRM" as HRM
+participant "colaborator:Colaborator" as Colaborator
+
+activate HRManager
+
+HRManager -> UI : Asks to assign skills to a specific employee
+activate UI
+
+UI -> Controller** : create
+
+Controller -> Repos : getInstance()
+activate Controller
+activate Repos
+
+Repos --> Controller : repositories
+deactivate Repos
+
+Controller -> reposRepos : getCollaboratorRepository()
+activate reposRepos
+
+reposRepos --> Controller : collaboratorRepository
+deactivate reposRepos
+
+Controller -> EmpRepo : checkHRManager(userEmail)
+activate EmpRepo
+
+EmpRepo -> HRM : isHRM(userEmail)
+activate HRM
+
+HRM --> EmpRepo : Authorization Status (true/false)
+deactivate HRM
+
+EmpRepo --> Controller : Authorization Status (true/false)
+deactivate EmpRepo
+
+alt Authorization Status is True
+    Controller --> UI : Authorized
+    deactivate Controller
+
+    UI -> Controller : getEmployeeIDList()
+    activate Controller
+
+    Controller -> EmpRepo : fetchEmployeeIDs()
+    activate EmpRepo
+
+    EmpRepo --> Controller : Employee IDs
+    deactivate EmpRepo
+
+    Controller --> UI : Displays Employee ID list
+    deactivate Controller
+   
+    UI --> HRManager : Displays Employee ID list
+    deactivate UI
+
+    HRManager -> UI : Selects Employee ID number
+    activate UI
+
+    UI -> Controller : getEmployeeDetails(ID)
+    activate Controller
+
+    Controller -> EmpRepo : fetchEmployeeDetails(employeeID)
+    activate EmpRepo
+
+    EmpRepo --> Controller : Employee Name with Skills
+    deactivate EmpRepo
+
+    Controller -> reposRepos : getSkillRepository()
+    activate reposRepos
+
+    reposRepos --> Controller : skillRepository
+    deactivate reposRepos
+
+    Controller -> SkillRepo : getAllSkills()
+    activate SkillRepo
+
+    SkillRepo --> Controller : All Skills
+    deactivate SkillRepo
+
+    loop over each Skill not assigned to Employee
+        Controller -> Controller : filterAssignedSkills(Employee Skills, All Skills)
+    end
+
+    Controller --> UI : Displays Available Skills to Assign
+    deactivate Controller
+
+    UI --> HRManager : Displays Available Skills to Assign
+    deactivate UI
+
+    HRManager -> UI : Confirms Skill Assignment for Selected Skills
+    activate UI
+
+    UI -> Controller : assignSkills(employeeID, Skill(s) name(s))
+    activate Controller
+
+    Controller -> EmpRepo : assignSkillToEmployee(employeeID, Skill(s) Name(s))
+    activate EmpRepo
+
+    loop over each Selected Skill
+        EmpRepo -> Colaborator : assignSkill(Skill Name)
+        activate Colaborator
+
+        Colaborator --> EmpRepo : Assignment Success
+        deactivate Colaborator
+    end
+
+    EmpRepo --> Controller : Operation Success for Skill
+    deactivate EmpRepo
+
+    Controller --> UI : Operation Success
+    deactivate Controller
+
+    UI --> HRManager : Displays Operation Success Message
+    deactivate UI
+else Authorization Status is False
+    Controller --> UI : Not Authorized Message
+    deactivate Controller
+
+    UI --> HRManager : Display Not Authorized Message
+    deactivate UI
+end
+
+@enduml
