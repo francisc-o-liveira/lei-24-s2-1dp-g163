@@ -7,14 +7,12 @@ autonumber
 
 'hide footbox
 actor "HRM" as HRM
-participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
+participant ":RegisterJobCategoryUI" as UI
+participant ":RegisterJobCategoryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
-participant "docTypeRepository:\nDocTypeRepository" as DocTypeRepository
-participant "organization\n:Organization" as ORG
-participant "collaborator\n:Collaborator" as Collaborator
+
 
 activate HRM
 
@@ -26,8 +24,14 @@ activate HRM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getJobCategories()
+         UI -> HRM : requests data(job name)
+         HRM -> UI : types requested data (job name)
+
+            UI -> CTRL : registerJobCategories(job name)
+
             activate CTRL
+            CTRL -> CTRL : verifyJobName(job name))
+
 
                 CTRL -> RepositorySingleton : getInstance()
                 activate RepositorySingleton
@@ -41,107 +45,26 @@ activate HRM
                     PLAT --> CTRL: jobCategoryRepository
                 deactivate PLAT
 
-                CTRL -> JobCategoryRepository : getJobCategories()
+
                 activate JobCategoryRepository
 
-                    JobCategoryRepository --> CTRL : jobCategoryList
+
+                    CTRL -> JobCategoryRepository : registerJobCategory (job name)
+                    JobCategoryRepository -> JobCategory** : JobCategory(name)
+
+                    JobCategoryRepository -> JobCategoryRepository : verifyIfExistAndSave(jobCategory)
+                    activate JobCategoryRepository
+
+                deactivate JobCategoryRepository
+
+                JobCategoryRepository -> CTRL : jobCategoryList
                 deactivate JobCategoryRepository
 
                 CTRL --> UI : jobCategoryList
             deactivate CTRL
 
-            UI --> HRM : shows job category list\n and asks to select one
-        deactivate UI
 
-    HRM -> UI : selects a job category
-    activate UI
-
-
-
-
-
-
-    UI -> CTRL : getDocTypeList()
-                activate CTRL
-
-                    CTRL -> RepositorySingleton : getInstance()
-                    activate RepositorySingleton
-
-                        RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
-
-                    CTRL -> PLAT : getDocTypeCategoryRepository()
-                    activate PLAT
-
-                        PLAT --> CTRL: docTypeCategoryRepository
-                    deactivate PLAT
-
-                    CTRL -> DocTypeRepository : getDocType()
-                    activate DocTypeRepository
-
-                        DocTypeRepository --> CTRL : docTypeList
-                    deactivate DocTypeRepository
-
-    CTRL --> UI : docTypeList
-    deactivate CTRL
-
-
-    UI --> HRM : shows docTypeList\n and asks to select one
-
-
-    HRM -> UI : selects a docType
-    activate UI
-
-
-    UI --> HRM : requests data
-    deactivate UI
-
-
-
-
-
-
-
-
-    HRM -> UI : types requested data (name, date of birthday, admission data, address street, zipcode, address city, email, phone number, number of ID card)
-    activate UI
-
-        UI --> HRM : shows selected category and requested data
-    deactivate UI
-
-    HRM -> UI : submits data
-    activate UI
-
-        UI -> CTRL : registerCollaborator()
-        activate CTRL
-
-            CTRL -> CTRL : getJobCategoryByDescription(jobCategoryDescription)
-            activate CTRL
-
-
-            CTRL -> ORG: registerCollaborator()
-            activate ORG
-
-                ORG -> Collaborator**: createCollaborator()
-                ORG -> ORG: addCollaborator(collaborator)
-
-
-                activate ORG
-                    ORG -> ORG: validateCollaborator(collaborator)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
-
-                    ORG --> ORG
-                deactivate ORG
-
-                ORG --> CTRL : collaborator
-
-            deactivate ORG
-
-            CTRL --> UI: collaborator
-            deactivate CTRL
-            UI --> HRM : displays operation success
+            UI --> HRM : displays operation success and \n show jobCategoryList
     deactivate UI
 
 deactivate HRM

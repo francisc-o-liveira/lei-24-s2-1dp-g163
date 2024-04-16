@@ -29,7 +29,7 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getTaskCategories()
+            UI -> CTRL : getSkillCategories()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
