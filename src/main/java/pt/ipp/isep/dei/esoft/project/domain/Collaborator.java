@@ -8,7 +8,7 @@ public class Collaborator {
     private String addressZipCode;
     private String addressCity;
     private int phoneNumber;
-    private DocType docType;
+    private DocType.Type docType;
     private int docIDNumber;
     private int taxPayerNumber;
     private JobCategory jobCategory;
