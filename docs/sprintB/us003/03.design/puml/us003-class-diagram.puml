@@ -51,8 +51,8 @@ class CollaboratorRepository {
 }
 
 class DocType{
-    -String type
-    +DocType()
+    -enum type
+    +DocType(type)
 }
 
 class JobCategoryRepository {
