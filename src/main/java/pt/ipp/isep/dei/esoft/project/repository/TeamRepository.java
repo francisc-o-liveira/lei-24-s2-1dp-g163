@@ -13,9 +13,9 @@ public class TeamRepository {
     public TeamRepository(Team team){
         teams.add(team);
     }
-    public List<Team> getTeam(){
+    /*public List<Team> getTeam(){
 
-    }
+    }*/
 
     public List<Team> getTeamBySkill(Skill skills){
         List<Team> teamWithSkills=new ArrayList<>();

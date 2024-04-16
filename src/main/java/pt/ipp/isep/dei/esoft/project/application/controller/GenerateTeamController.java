@@ -20,9 +20,9 @@ public class GenerateTeamController {
         Team team= new Team(collaboratorsTeam,sizeTeam,skillsSelected);
     }
 
-    public List<Team> getTeam(){
+    /*public List<Team> getTeam(){
         return teamRepository.getTeam();
-    }
+    }*/
 
     public List<Team> getTeamBySkills(Skill skills){
         return teamRepository.getTeamBySkill(skills);
