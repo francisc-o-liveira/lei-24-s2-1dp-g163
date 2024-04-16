@@ -12,7 +12,8 @@ participant ":GenerateTeamController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "skillRepository\n:SkillRepository" as SkillRepository
-participant "organization\n:Organization" as ORG
+participant "teamRepository\n:TeamRepository" as TeamRepository
+participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
 participant "team\n:Team" as Team
 
 activate HRM
@@ -77,29 +78,46 @@ activate HRM
         activate CTRL
 
 
+            CTRL -> RepositorySingleton : getInstance()
+                                activate RepositorySingleton
 
-            CTRL -> ORG:generateTeam(maxSizeTeam,minSizeTeam,skillSet)
-            activate ORG
+                                    RepositorySingleton --> CTRL: repositories
+                                deactivate RepositorySingleton
 
-                ORG -> Team**: create()
+                                CTRL -> PLAT : getCollaboratorRepository()
+                                activate PLAT
+
+                                    PLAT --> CTRL: collaboratorRepository
+                                deactivate PLAT
+
+                                CTRL -> CollaboratorRepository : getCollaboratorNotActivateList()
+                                activate CollaboratorRepository
+
+                                    CollaboratorRepository --> CTRL : collaboratorNotActivateList
+                                deactivate CollaboratorRepository
+
+            CTRL -> TeamRepository:generateTeam(maxSizeTeam,minSizeTeam,skillSet)
+            activate TeamRepository
+
+                TeamRepository -> Team**: create()
 
                 loop Until you have the full team
-                ORG -> ORG: validateCollaborator(collaboratorNotActivateList, skillSet)
-                activate ORG
+                TeamRepository -> TeamRepository: validateCollaborator(collaboratorNotActivateList, skillSet)
+                activate TeamRepository
 
-                    ORG -> Team: addCollaborator(collaborator)
+                    TeamRepository -> Team: addCollaborator(collaborator)
                     activate Team
 
-                        Team --> ORG
+                        Team --> TeamRepository
                     deactivate Team
 
-                    ORG --> ORG
-                deactivate ORG
+                    TeamRepository --> TeamRepository
+                deactivate TeamRepository
                 end
 
-                ORG --> CTRL : team / collaboratorNotActivateList
+                TeamRepository --> CTRL : team / collaboratorNotActivateList
 
-            deactivate ORG
+            deactivate TeamRepository
 
             CTRL --> UI: team / collaboratorNotActivateList
             deactivate CTRL
@@ -130,19 +148,19 @@ activate HRM
     UI -> CTRL : addCollaboratorTeam(indexCollaborator,team)
     activate CTRL
 
-    CTRL -> ORG : validateCollaboratorByIndex(indexCollaborator, collaboratorNotActivateList, team)
-    activate ORG
+    CTRL -> TeamRepository : validateCollaboratorByIndex(indexCollaborator, collaboratorNotActivateList, team)
+    activate TeamRepository
 
-        ORG -> Team: addCollaborator(collaborator)
+        TeamRepository -> Team: addCollaborator(collaborator)
                         activate Team
 
                             Team --> ORG
                         deactivate Team
 
-    ORG --> CTRL : team / collaboratorNotActivateList
+    TeamRepository --> CTRL : team / collaboratorNotActivateList
 
 
-    deactivate ORG
+    deactivate TeamRepository
 
 
 
@@ -162,14 +180,14 @@ activate HRM
     UI -> CTRL : saveTeam(team)
     activate CTRL
 
-    CTRL -> ORG : saveTeam(team)
-    activate ORG
-    activate ORG
-    ORG -> ORG : saveTeam(team)
-    deactivate ORG
+    CTRL -> TeamRepository : saveTeam(team)
+    activate TeamRepository
+    activate TeamRepository
+    TeamRepository -> TeamRepository : saveTeam(team)
+    deactivate TeamRepository
 
-    ORG --> CTRL : true
-    deactivate ORG
+    TeamRepository --> CTRL : true
+    deactivate TeamRepository
 
     CTRL --> UI : true
     deactivate CTRL

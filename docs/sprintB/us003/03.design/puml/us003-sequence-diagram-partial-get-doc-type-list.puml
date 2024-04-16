@@ -3,10 +3,8 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant ":JobController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
+participant ":RegisterCollaboratorController" as CTRL
+participant ":DocType" as DocType
 
 autonumber 12
 -> CTRL : verifyDocType()
@@ -15,23 +13,11 @@ autonumber 12.1
 
 activate CTRL
     group Verify DocIDNumber
-                                    CTRL -> RepositorySingleton : getInstance()
-                                    activate RepositorySingleton
+                   CTRL -> DocType : verifyDocTypeNumber(docIDNumber)
+                   activate DocType
 
-                                        RepositorySingleton --> CTRL: repositories
-                                    deactivate RepositorySingleton
-
-                                    CTRL -> PLAT : getCollaboratorRepository()
-                                    activate PLAT
-
-                                        PLAT --> CTRL: CollaboratorRepository
-                                    deactivate PLAT
-
-                                    CTRL -> CollaboratorRepository : verifyDocType(docIDNumber)
-                                    activate CollaboratorRepository
-
-                                        CollaboratorRepository --> CTRL : true/false
-                                    deactivate CollaboratorRepository
+                   DocType --> CTRL : true/false
+                   deactivate DocType
     end group
 
     autonumber 13

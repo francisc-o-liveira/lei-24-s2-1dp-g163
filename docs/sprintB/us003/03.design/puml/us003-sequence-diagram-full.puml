@@ -25,7 +25,7 @@ activate HRM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getJobCategories()
+            UI -> CTRL : getDataNeededToRegister()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -40,11 +40,17 @@ activate HRM
                     PLAT --> CTRL: jobCategoryRepository
                 deactivate PLAT
 
-                CTRL -> JobCategoryRepository : getJobCategories()
+                CTRL -> JobCategoryRepository : getJobCategoriesList()
                 activate JobCategoryRepository
 
                     JobCategoryRepository --> CTRL : jobCategoryList
                 deactivate JobCategoryRepository
+
+
+
+
+
+
 
                 CTRL --> UI : jobCategoryList
             deactivate CTRL
@@ -63,23 +69,11 @@ activate HRM
     UI -> CTRL : getDocTypeList()
                 activate CTRL
 
-                    CTRL -> RepositorySingleton : getInstance()
-                    activate RepositorySingleton
+                 CTRL -> DocType : getDocTypesValues()
+                                 activate DocType
 
-                        RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
-
-                    CTRL -> PLAT : getCollaboratorRepository()
-                    activate PLAT
-
-                        PLAT --> CTRL: CollaboratorRepository
-                    deactivate PLAT
-
-                    CTRL -> CollaboratorRepository : getDocType()
-                    activate CollaboratorRepository
-
-                        CollaboratorRepository --> CTRL : docTypeList
-                    deactivate CollaboratorRepository
+                                    DocType --> CTRL : docTypeList
+                                    deactivate DocType
 
     CTRL --> UI : docTypeList
     deactivate CTRL
@@ -106,6 +100,8 @@ activate HRM
     HRM -> UI : types requested data (name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, number of ID card)
     activate UI
 
+
+
         UI --> HRM : shows selected category and requested data
     deactivate UI
 
@@ -128,11 +124,11 @@ activate HRM
                                 PLAT --> CTRL: CollaboratorRepository
                             deactivate PLAT
 
-                            CTRL -> CollaboratorRepository : verifyDocTypeNumber(docIDNumber)
-                            activate CollaboratorRepository
+                            CTRL -> DocType : verifyDocTypeNumber(docIDNumber)
+                            activate DocType
 
-                                CollaboratorRepository --> CTRL : true/false
-                            deactivate CollaboratorRepository
+                                DocType --> CTRL : true/false
+                            deactivate DocType
 
 
 

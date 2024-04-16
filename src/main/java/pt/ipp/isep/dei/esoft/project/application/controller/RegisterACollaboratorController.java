@@ -15,11 +15,15 @@ public class RegisterACollaboratorController {
     }
 
     public List<JobCategory> getJobCategoriesList(){
-
+        return jobCategoryRepository.getJobCategoryList();
     }
 
-    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill){
-        Collaborator collaborator=new Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill);
+    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType.Type docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill){
+        Collaborator collaborator=new Collaborator(name, birthday, admissionDate,address, addressZipCode, addressCity,phoneNumber, docType, docIDNumber, taxPayerNumber, jobCategory, skill);
+    }
+
+    public DocType.Type[] getDocTypeList(){
+        return DocType.Type.values();
     }
 
     private void getHRMFromSession(){

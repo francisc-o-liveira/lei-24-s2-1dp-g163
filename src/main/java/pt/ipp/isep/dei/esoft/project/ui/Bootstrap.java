@@ -11,13 +11,13 @@ import pt.ipp.isep.dei.esoft.project.repository.TaskCategoryRepository;
 public class Bootstrap implements Runnable {
 
     //Add some task categories to the repository as bootstrap
-    public void run() {
+    public void run(){
         addTaskCategories();
         addOrganization();
         addUsers();
     }
 
-    private void addOrganization() {
+    private void addOrganization(){
         //TODO: add organizations bootstrap here
         //get organization repository
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();

@@ -11,6 +11,12 @@ public class Main {
     public static final String FILENAME_PER_OMISSION="..NONE..";
 
     public static void main(String[] args) {
+        long startTime = 0;
+        long endTime = 0;
+
+
+
+
         String filename = FILENAME_PER_OMISSION;
         int option=-1;
         ArrayList<Edge> edges = null;
@@ -26,6 +32,7 @@ public class Main {
                     if(edges==null){
                         break;
                     }
+                    startTime = System.nanoTime();
                     result=kruskalAlgorithm(edges);
                     double price=0;
                     for(Edge r : result){
@@ -33,11 +40,17 @@ public class Main {
                         price += r.getPrice();
                     }
                     System.out.printf("Cost: %f", price);
+                    endTime = System.nanoTime();
                 case 0:
                     break;
             }
 
         }
+
+        // Calculate the execution time in milliseconds
+        long executionTime = (endTime - startTime);
+        System.out.println("Counting the time of Execution Kruskal takes "
+                + executionTime + "ms");
     }
 
     public static String askFileName() {

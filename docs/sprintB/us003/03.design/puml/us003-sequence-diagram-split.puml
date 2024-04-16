@@ -50,8 +50,7 @@ activate HRM
                 activate CTRL
 
                   ref over CTRL
-                              Get DocTypeList with CollaboratorRepository
-
+                              Get DocTypeList with Class Enum DocType
                           end ref
     CTRL --> UI : docTypeList
     deactivate CTRL
@@ -89,7 +88,7 @@ activate HRM
 
 
                             ref over CTRL
-                                        Verify Doc Type
+                                        Verify Doc Type with DocType Class
 
                                     end ref
 

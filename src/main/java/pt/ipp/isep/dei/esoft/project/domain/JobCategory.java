@@ -6,4 +6,12 @@ public class JobCategory {
     public JobCategory(String name){
         this.name=name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setTradeName(String name){
+        this.name=name;
+    }
 }
