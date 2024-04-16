@@ -27,7 +27,7 @@ activate HRM
          UI -> HRM : requests data(job name)
          HRM -> UI : types requested data (job name)
 
-            UI -> CTRL : registerJobCategories(job name)
+            UI -> CTRL : registerJobCategory(job name)
 
             activate CTRL
             CTRL -> CTRL : verifyJobName(job name))

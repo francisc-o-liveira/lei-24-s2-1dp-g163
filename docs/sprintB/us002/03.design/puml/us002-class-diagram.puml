@@ -37,19 +37,16 @@ class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getJobCategoryRepository()
-    + getCollaboratorRepository()
+
 }
 
 class RegisterJobCategoryController{
-    + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
+    + registerJobCategory(jobCategoryRepository)
     + getJobCategoriesList()
-    + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
-    - getEmployeeFromSession()
+    + getJobCategoryRepository
 }
 
 note right of RegisterJobCategoryController
-    - userEmail is obtained
-    from the user session
     - jobCategory
     is achieved with job category repository
 end note
@@ -59,19 +56,18 @@ note bottom of JobCategoryRepository
     the job category list
 end note
 
-class CreateJobCategoryUI {
+class RegisterJobCategoryUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-CreateJobCategoryUI .> RegisterJobCategoryController
+RegisterJobCategoryUI .> RegisterJobCategoryController
 
 RegisterJobCategoryController .> Repositories : repositories
 
 Repositories -> "1" JobCategoryRepository
 RegisterJobCategoryController ..> JobCategory
-RegisterJobCategoryController ..> CollaboratorRepository : CollaboratorRepository
 RegisterJobCategoryController ..> JobCategoryRepository : JobCategoryRepository
 
 
