@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+title Employee ID List
+
+actor "HR Manager" as HRManager
+participant "AssignSkillsUI" as UI
+participant ":AssignSkillsController" as Controller
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+
+activate HRManager
+
+HRManager -> UI : [Authorization Status is True]
+activate UI
+
+UI -> Controller : getEmployeeIDList()
+activate Controller
+Controller -> EmpRepo : fetchEmployeeIDs()
+activate EmpRepo
+EmpRepo --> Controller : Employee IDs
+deactivate EmpRepo
+Controller --> UI : Displays Employee ID list
+deactivate Controller
+
+UI --> HRManager : Displays Employee ID list
+deactivate UI
+@enduml

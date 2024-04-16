@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+title Atribuição de Competências
+
+actor "HR Manager" as HRManager
+participant "AssignSkillsUI" as UI
+participant ":AssignSkillsController" as Controller
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+participant "skillRepository:SkillRepository" as SkillRepo
+participant "colaborator:Colaborator" as Colaborator
+
+activate HRManager
+
+HRManager -> UI : Selects Employee ID number
+activate UI
+
+UI -> Controller : getEmployeeDetails(ID) and assignSkills(...)
+activate Controller
+
+Controller -> EmpRepo : fetchEmployeeDetails(employeeID)
+activate EmpRepo
+EmpRepo --> Controller : Employee Details with Skills
+deactivate EmpRepo
+
+Controller -> SkillRepo : getAllSkills()
+activate SkillRepo
+SkillRepo --> Controller : All Skills
+deactivate SkillRepo
+
+Controller -> Controller : filterAssignedSkills(Employee Skills, All Skills)
+Controller -> EmpRepo : assignSkillToEmployee(employeeID, Skill(s) Name(s))
+activate EmpRepo
+
+loop over each Selected Skill
+    EmpRepo -> Colaborator : assignSkill(Skill Name)
+    activate Colaborator
+    Colaborator --> EmpRepo : Assignment Success
+    deactivate Colaborator
+end
+
+EmpRepo --> Controller : Operation Success for Skill
+deactivate EmpRepo
+
+Controller --> UI : Operation Success
+deactivate Controller
+
+UI --> HRManager : Displays Operation Success Message
+deactivate UI
+@enduml

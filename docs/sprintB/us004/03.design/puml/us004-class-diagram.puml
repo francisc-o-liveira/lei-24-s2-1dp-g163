@@ -1,0 +1,110 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession {
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession {
+    + userEmail: String
+}
+
+class HRManager {
+    + isHRM(userEmail): boolean
+}
+
+class Collaborator {
+    - name: String
+    - collaboratorID: String
+    - skills: List<Skill>
+}
+
+class Skill {
+    - name: String
+    - description: String
+}
+
+class CollaboratorRepository {
+    - List<Collaborator>
+    + checkHRManager(userEmail): boolean
+    + fetchCollaboratorIDs(): List<String>
+    + fetchCollaboratorDetails(collaboratorID): Collaborator
+    + assignSkillToCollaborator(collaboratorID, skill): boolean
+}
+
+class SkillRepository {
+    - List<Skill>
+    + getAllSkills(): List<Skill>
+}
+
+class Repositories {
+    - instance: Repositories
+    + getInstance(): Repositories
+    + getCollaboratorRepository(): CollaboratorRepository
+    + getSkillRepository(): SkillRepository
+}
+
+class AssignSkillsController {
+    + AssignSkillsController(collaboratorRepository, skillRepository)
+    + assignSkills(collaboratorID, skills)
+    + checkAuthorization(userEmail)
+    + getCollaboratorIDList()
+    + getCollaboratorDetails(ID)
+    + filterAssignedSkills(collaboratorSkills, allSkills)
+}
+
+note right of AssignSkillsController
+    - Authorization is checked against
+    the HRManager roles in the system
+    - Collaborator and Skill information
+    are obtained from their respective repositories
+end note
+
+class AssignSkillsUI {
+}
+
+Repositories --> Repositories : instance
+ApplicationSession --> ApplicationSession : instance
+
+AssignSkillsUI .> AssignSkillsController
+
+AssignSkillsController .> Repositories : uses >>Singleton<<
+
+Repositories --> "1" CollaboratorRepository
+Repositories --> "1" SkillRepository
+
+AssignSkillsController ..> Skill
+AssignSkillsController ..> CollaboratorRepository : uses
+AssignSkillsController ..> SkillRepository : uses
+
+CollaboratorRepository "1" --> "*" Collaborator : collaborators
+SkillRepository "1" --> "*" Skill : skills
+
+Collaborator "1" -right- "*" Skill : "has"
+
+note bottom of CollaboratorRepository
+    - Responsible for all data handling
+    concerning collaborators, including skill assignment
+end note
+
+note bottom of SkillRepository
+    - Manages the retrieval and
+    storage of skill information
+end note
+
+ApplicationSession --> "1" UserSession : userSession
+
+AssignSkillsController ..> UserSession : uses
+HRManager -down-> AssignSkillsUI : interacts with
+AssignSkillsController ..> HRManager : checks authorization
+
+@enduml
