@@ -6,78 +6,42 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "HRM" as ADM
-participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
-participant "organization\n:Organization" as ORG
+actor "HRM" as HRM
+participant ":RegisterJobCategoryUI" as UI
+participant ":RegisterJobCategoryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
 
-activate ADM
 
-    ADM -> UI : asks to register a new Collaborator
+activate HRM
 
-    activate UI
+        HRM -> UI : asks to register a new job
 
-        UI -> CTRL** : register
-        UI -> CTRL : getJobCategories()
-        ref over CTRL
-            Get Job Category List
+        activate UI
 
-        end ref
+'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
 
-        activate CTRL
+         UI -> HRM : requests data(job name)
+         HRM -> UI : types requested data (job name)
 
-            CTRL --> UI : jobCategoryList
-        deactivate CTRL
+            UI -> CTRL : registerJobCategories(job name)
 
-        UI --> ADM : shows job category list and asks to select one
-    deactivate UI
-
-    ADM -> UI : selects a job category
-    activate UI
-
-        UI --> ADM : requests data
-    deactivate UI
-
-    ADM -> UI : types requested data (job name)
-    activate UI
-
-        UI --> ADM : shows selected category and requested data
-    deactivate UI
-
-    ADM -> UI : submits data
-    activate UI
-
-        UI -> CTRL : registerCollaborator(reference, description, informalDescription,\ntechnicalDescription,duration, cost, taskCategoryDescription)
-        activate CTRL
-
-            CTRL -> CTRL : getJobCategoryByDescription(taskCategoryDescription)
             activate CTRL
 
                 ref over CTRL
-                    Get Job Category Object
-
+                        Register a JobCategory
                 end ref
 
-                CTRL --> CTRL : jobCategory
+                CTRL --> UI : jobCategoryList
             deactivate CTRL
 
 
-            CTRL -> ORG: registerCollaborator(reference, description, informalDescription,\ntechnicalDescription, duration, cost, taskCategory, employee)
-            activate ORG
-
-                ref over ORG
-                    Register Collaborator
-
-                end
-
-                ORG --> CTRL : collaborator
-            deactivate ORG
-
-            CTRL --> UI: collaborator
-            deactivate CTRL
-            UI --> ADM: displays operation success
+            UI --> HRM : displays operation success and \n show jobCategoryList
     deactivate UI
 
-deactivate ADM
+deactivate HRM
 
 @enduml

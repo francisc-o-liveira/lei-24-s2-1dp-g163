@@ -8,34 +8,44 @@ participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
 
-autonumber 12
--> CTRL : getJobCategoryByDescription(jobCategoryDescription)
+autonumber 5
+-> CTRL : registerJobCategories(job name)
 
-autonumber 12.1
+autonumber 6
 
-activate CTRL
-    group Get Job Category
-        CTRL -> RepositorySingleton : getInstance()
-        activate RepositorySingleton
+            activate CTRL
+            CTRL -> CTRL : verifyJobName(job name))
 
-            RepositorySingleton --> CTRL: repositories
-        deactivate RepositorySingleton
 
-        CTRL -> PLAT : getJobCategoryRepository()
-        activate PLAT
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
 
-            PLAT -> CTRL : jobCategoryRepository
-        deactivate PLAT
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
 
-        CTRL -> JobCategoryRepository : getJobCategoryByDescription(taskCategoryDescription)
-        activate JobCategoryRepository
+                CTRL -> PLAT : getJobCategoryRepository()
+                activate PLAT
 
-            JobCategoryRepository --> CTRL : jobCategory
-        deactivate JobCategoryRepository
+                    PLAT --> CTRL: jobCategoryRepository
+                deactivate PLAT
 
-    end group
 
-    autonumber 13
+                activate JobCategoryRepository
+
+
+                    CTRL -> JobCategoryRepository : registerJobCategory (job name)
+                    JobCategoryRepository -> JobCategory** : JobCategory(name)
+
+                    JobCategoryRepository -> JobCategoryRepository : verifyIfExistAndSave(jobCategory)
+                    activate JobCategoryRepository
+
+                deactivate JobCategoryRepository
+
+                JobCategoryRepository -> CTRL : jobCategoryList
+                deactivate JobCategoryRepository
+
+
+    autonumber 15
     <-- CTRL : jobCategory
 
 deactivate CTRL

@@ -45,10 +45,10 @@ activate HRM
                     PLAT --> CTRL: jobCategoryRepository
                 deactivate PLAT
 
-                CTRL -> JobCategoryRepository : getJobCategoriesRepository()
+
                 activate JobCategoryRepository
 
-                    JobCategoryRepository --> CTRL : jobCategoryList
+
                     CTRL -> JobCategoryRepository : registerJobCategory (job name)
                     JobCategoryRepository -> JobCategory** : JobCategory(name)
 
