@@ -58,9 +58,13 @@ class SkillRepository{
 }
 
 class Team{
+    -Integer maxSizeTeam
+    -Integer minSizeTeam
+    -List <Skill> requiredSkills
     -List <Collaborator> collaboratorsTeam
-    + Team(size,collaboratorsList,skillsSelected)
+    + Team(maxSizeTeam,minSizeTeam,collaboratorsList,skillsSelected)
     + getTeamList()
+    + Optional <Team> addCollaborator
 }
 
 
@@ -69,6 +73,7 @@ class Repositories {
     + getInstance() : Repositories
     + getJobCategoryRepository()
     + getCollaboratorRepository()
+    + getTeamRepository()
 }
 
 class GenerateTeamController {
@@ -76,7 +81,6 @@ class GenerateTeamController {
     + getSkillList()
     + getCollaboratorsNotActivate()
     + generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
-    + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
     + activateCollaboratorsList(team)
     - getHRMFromSession()
 }
