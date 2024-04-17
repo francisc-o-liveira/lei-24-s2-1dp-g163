@@ -27,19 +27,17 @@ class Employee {
     - phone
 }
 
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
-
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
-
-class TaskCategory {
-    - String description
+class Vehicle {
+    - String brand
+    - String model
+    - Integer plate
+    - String type
+    - Integer tare
+    - String grossWeight
+    - Integer currenteKM
+    - String registerDate
+    - String acquisitionDate
+    - Integer checkupFrequency
 
     + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
 }
@@ -48,6 +46,8 @@ class TaskCategory {
 
 class VehicleRepository {
     + getVehicleByBrand(brand)
+    + getVehicleCehckUpList()
+
 }
 
 
@@ -57,15 +57,12 @@ class Repositories {
     + getVehicleRepository()
 }
 
-class RegisterVehicleController {
-    + RegisterVehicleController(vehicleRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
+class VehicleController {
+    + VehicleController(vehicleRepository)
     - getEmployeeFromSession()
 }
 
-note right of RegisterVehicleController
+note right of VehicleController
     - userEmail is obtained
     from the user session
     - categoryDescription
@@ -77,7 +74,7 @@ note bottom of VehicleRepository
     the vehicle list
 end note
 
-class RegisterVehicleUI {
+class VehicleUI {
 }
 
 
@@ -87,13 +84,13 @@ Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 ApplicationSession --> "1" UserSession : userSession
 
-RegisterVehicleUI .> RegisterVehicleController
+VehicleUI .> VehicleController
 
-RegisterVehicleController .> Repositories : repositories
-RegisterVehicleController ..> ApplicationSession
-RegisterVehicleController ..> UserSession
-RegisterVehicleController ..> VehicleRepository : VehicleRepository
-RegisterVehicleController ..> VehicleRepository : VehicleRepository
+VehicleController .> Repositories : repositories
+VehicleController ..> ApplicationSession
+VehicleController ..> UserSession
+VehicleController ..> VehicleRepository : VehicleRepository
+VehicleController ..> VehicleRepository : VehicleRepository
 
 Vehicle --> Employee : createdBy
 
