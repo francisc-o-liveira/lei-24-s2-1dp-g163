@@ -1,18 +1,39 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.Active;
 import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.NotActive;
 
 public class CollaboratorRepository {
     private List<Collaborator> collaboratorList;
-
+    public boolean validateDocType(DocType.Type type, int docTypeNumber){
+        DocType.Type[] values = DocType.Type.values();
+        boolean valueVerify = false;
+        if(type==values[0]){
+            if(docTypeNumber>0 && docTypeNumber<999999999){
+                valueVerify=true;
+            }
+        } else if(type==values[1]){
+            if(docTypeNumber>0 && docTypeNumber<999999999){
+                valueVerify=true;
+            }
+        } else if (type==values[2]){
+            if(docTypeNumber>0 && docTypeNumber<999999999){
+                valueVerify=true;
+            }
+        }else {
+            throw new IllegalStateException("DocType Not Recognized: " + type);
+        }
+        return valueVerify;
+    }
     public List<Collaborator> getCollaboratorsNotActive(){
         List<Collaborator> collaboratorNotActive=new ArrayList<>();
         for(Collaborator c : collaboratorList){
@@ -23,22 +44,12 @@ public class CollaboratorRepository {
         return collaboratorNotActive;
     }
 
-    public List<Collaborator> getCollaboratorsActive(Team team){
-        List<Collaborator> collaboratorActive=new ArrayList<>();
-        for(Collaborator c : collaboratorList){
-            if(c.getStatus()==Active){
-                collaboratorActive.add(c);
+    public void activateCollaborators(Team team){
+        for(Collaborator c : team.getTeamList()){
+            if(c.getStatus()==NotActive){
+                c.setStatus(Active);
             }
         }
-        return collaboratorActive;
-    }
-
-    public List<String> getCollaboratorIDList(List<Collaborator> allCollaborators){
-        List<String> collaboratorsID=new ArrayList<>();
-        for(Collaborator c : allCollaborators){
-            collaboratorsID.add(c.getCollaboratorID());
-        }
-        return collaboratorsID;
     }
 
     public List<Collaborator> getCollaboratorsNotActiveBySkills(List<Skill> skill){
@@ -75,5 +86,23 @@ public class CollaboratorRepository {
                 }
             }
         }
+    }
+
+    public Optional<Collaborator> addCollaborator(Collaborator collaborator){
+        Optional<Collaborator> newCollaborator = Optional.empty();
+        newCollaborator = Optional.of(collaborator);
+        if (isValidCollaborator(collaborator)){
+            saveCollaborator(collaborator);
+        }
+        return newCollaborator;
+    }
+
+    private void saveCollaborator(Collaborator collaborator) {
+        collaboratorList.add(collaborator);
+    }
+
+    private boolean isValidCollaborator(Collaborator collaborator) {
+        boolean isValid = !collaboratorList.contains(collaborator);
+        return isValid;
     }
 }

@@ -28,6 +28,11 @@ public class TeamRepository {
         return newTeam;
     }
 
+    private boolean teamIsValid(Team team) {
+        boolean isValid = !teams.contains(team);
+        return isValid;
+    }
+
     public List<Team> removeTeam(Team team){
         if (teams.contains(team)){
             teams.remove(team);

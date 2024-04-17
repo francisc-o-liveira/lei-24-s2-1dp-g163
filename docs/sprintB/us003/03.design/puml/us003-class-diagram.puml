@@ -44,7 +44,7 @@ class CollaboratorRepository {
     - List <Collaborator> collaboratorsActivate
     - List <DocType>
     + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
-    + validateCollaborator(collaborator)
+    + isValidCollaborator(collaborator)
     + saveCollaborator(collaborator, this.collaboratorsNotActivate)
     + validateDocType(docType,docTypeNumber);
     + addCollaborator(collaborator)
