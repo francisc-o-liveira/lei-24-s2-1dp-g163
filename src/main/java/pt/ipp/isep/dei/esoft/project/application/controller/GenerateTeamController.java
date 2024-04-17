@@ -44,6 +44,7 @@ public class GenerateTeamController {
             if (GenerateTeamUI.getSelected(c) && sizeTeam < maxSize) {
                 collaboratorsTeam.add(c);
                 sizeTeam++;
+
             }
         }
         Team team = new Team(collaboratorsTeam, sizeTeam, skillSelected);

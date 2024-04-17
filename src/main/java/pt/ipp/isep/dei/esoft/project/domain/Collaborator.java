@@ -35,6 +35,7 @@ public class Collaborator {
         this.statusType=status;
         this.collaboratorID=collaboratorID;
         this.skills=SKILLS_BY_OMISSION;
+
     }
 
     public Collaborator(String name, String collaboratorID, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType.Type docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, List<Skill> skill, StatusType status){

@@ -133,7 +133,7 @@ activate HRM
     HRM -> UI : addCollaborator
     activate UI
 
-    UI -> CTRL : getCollaboratorNotActivateList
+    UI -> CTRL : getCollaboratorNotActivateList()
     activate CTRL
 
     CTRL --> UI : collaboratorNotActivateList

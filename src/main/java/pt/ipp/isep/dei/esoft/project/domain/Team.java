@@ -13,6 +13,7 @@ public class Team {
             this.collaboratorsTeam=collaboratorsTeam;
             this.sizeTeam=sizeTeam;
             this.skillSelected=skillSelected;
+
     }
 
     public Team(List<Collaborator> collaboratorsTeam, int sizeTeam, List<Skill> skillsSelected){
