@@ -45,7 +45,6 @@ class Vehicle {
 
 
 class VehicleRepository {
-    + getVehicleByBrand(brand)
 }
 
 
@@ -55,15 +54,13 @@ class Repositories {
     + getVehicleRepository()
 }
 
-class RegisterVehicleController {
-    + RegisterVehicleController(vehicleRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
+class VehicleController {
+    + VehicleController(vehicleRepository)
+    + registerVehicle()
     - getEmployeeFromSession()
 }
 
-note right of RegisterVehicleController
+note right of VehicleController
     - userEmail is obtained
     from the user session
     - categoryDescription
@@ -75,23 +72,18 @@ note bottom of VehicleRepository
     the vehicle list
 end note
 
-class RegisterVehicleUI {
-}
-
-
 Repositories -> "1" VehicleRepository
 Repositories -> Repositories : instance
 
 ApplicationSession -> ApplicationSession : instance
 ApplicationSession --> "1" UserSession : userSession
 
-RegisterVehicleUI .> RegisterVehicleController
+VehicleUI .> VehicleController
 
-RegisterVehicleController .> Repositories : repositories
-RegisterVehicleController ..> ApplicationSession
-RegisterVehicleController ..> UserSession
-RegisterVehicleController ..> VehicleRepository : VehicleRepository
-RegisterVehicleController ..> VehicleRepository : VehicleRepository
+VehicleController .> Repositories : repositories
+VehicleController ..> ApplicationSession
+VehicleController ..> UserSession
+VehicleController ..> VehicleRepository : VehicleRepository
 
 Vehicle --> Employee : createdBy
 

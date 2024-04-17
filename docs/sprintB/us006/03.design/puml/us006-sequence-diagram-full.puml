@@ -33,21 +33,28 @@ activate VFM
                             CTRL -> Repositories : getInstance()
                             activate Repositories
 
-                                Repositories --> CTRL: repositories
-                            deactivate Repositories
 
-                            CTRL -> VehicleRepository : getVehicleRepository()
+                            CTRL -> Repositories : getVehicleRepository()
                             activate VehicleRepository
 
-                            VehicleRepository --> CTRL: VehicleRepository
+                            Repositories -> VehicleRepository : getVehicleRepository()
+
+
+
+                            CTRL -> Repositories: registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+
+                            Repositories -> VehicleRepository : registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+                            VehicleRepository -> Vehicle: createVehicle()
+                            Vehicle -> VehicleRepository: addVehicle(vehicle)
+                            VehicleRepository --> Repositories : true / vehicle
+
+                            VehicleRepository --> Repositories: vehicleRepository
                             deactivate VehicleRepository
 
-        CTRL -> VehicleRepository: registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+                            Repositories --> CTRL : true / vehicle
 
-                        VehicleRepository -> Vehicle: createVehicle()
-                        Vehicle -> VehicleRepository: addVehicle(vehicle)
-                        VehicleRepository --> Repositories : true / vehicle
-                        Repositories --> CTRL : true / vehicle
+                            Repositories --> CTRL: repositories
+
 
                     deactivate VehicleRepository
 
