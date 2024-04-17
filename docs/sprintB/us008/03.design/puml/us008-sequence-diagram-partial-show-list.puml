@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "vehicleController\n:VehicleController" as VC
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+
+autonumber 16
+-> VC: getCehckUpList()
+
+autonumber 16.1
+activate VC
+    group Check-Up List
+
+        VC -> VehicleRepository**: getVehicleCehckUpList()
+
+        VehicleRepository -> VC : vehicleCheckUpList
+
+    end
+
+    autonumber 17
+    <- VC : vehicleCheckUpList
+deactivate VC
+
+
+@enduml
