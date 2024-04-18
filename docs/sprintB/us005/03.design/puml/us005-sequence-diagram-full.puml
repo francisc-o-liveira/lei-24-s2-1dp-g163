@@ -96,7 +96,7 @@ activate HRM
                                     CollaboratorRepository --> CTRL : collaboratorStatusNotActivateList
                                 deactivate CollaboratorRepository
 
-            CTRL -> TeamRepository:generateTeam(maxSizeTeam,minSizeTeam,skillSet)
+            CTRL -> TeamRepository:generateTeamBySkillSetAndSize(maxSizeTeam,minSizeTeam,skillSet)
             activate TeamRepository
 
                 TeamRepository -> Team**: create()
@@ -151,11 +151,26 @@ activate HRM
     CTRL -> TeamRepository : validateCollaboratorAddBySkill(collaboratorNotActive, team)
     activate TeamRepository
 
+        TeamRepository -> Team: getSkillListTeam()
+        activate Team
+
+        Team -> TeamRepository: skillSet
+        deactivate Team
+
+        TeamRepository -> Team: getMaxSizeTeam() / (to remove need MinSize)
+        activate Team
+
+        Team -> TeamRepository: maxSizeTeam
+        deactivate Team
+
+        TeamRepository -> TeamRepository : validateCollaboratorForTeam(maxSizeTeam,skillSet,collaborator)
+
         TeamRepository -> Team: addCollaborator(collaborator)
                         activate Team
 
-                            Team --> ORG
+                            Team --> TeamRepository
                         deactivate Team
+
 
     TeamRepository --> CTRL : team / collaboratorNotActivateList
 
@@ -180,6 +195,17 @@ activate HRM
     UI -> CTRL : saveTeam(team)
     activate CTRL
 
+    CTRL -> CollaboratorRepository : activateCollaboratorsTeam(team)
+    activate CollaboratorRepository
+    loop [Loop all of the collaborators of the team and activate the status of the collaborator]
+    CollaboratorRepository -> Collaborator : activateStatus()
+    activate Collaborator
+
+    Collaborator -> CollaboratorRepository : true/false
+    deactivate Collaborator
+    end
+    CollaboratorRepository -> CTRL : true/false
+    deactivate CollaboratorRepository
     CTRL -> TeamRepository : saveTeam(team)
     activate TeamRepository
     activate TeamRepository
