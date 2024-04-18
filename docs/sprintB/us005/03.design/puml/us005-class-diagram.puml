@@ -30,8 +30,12 @@ class Collaborator {
     - docType
     - docIDNumber
     - jobCategory
+    - StatusType status
 
-    + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
+    - Enum StatusType={Activate,NotActive}
+
+    + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory, StatusType NotActive)
+    + activateStatus()
 }
 
 class Skill {
@@ -43,19 +47,21 @@ class CollaboratorRepository {
     - List <Collaborator> collaboratorsNotActivate
     - List <Collaborator> collaboratorsActivate
     + getCollaboratorList()
-    + activateCollaborators(team)
+    + activateCollaboratorsTeam(team)
 }
 
 class TeamRepository {
     - List <Team>
-    + generateTeamBySkillSetAndSize(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
+    + saveTeam(team)
+    + getSkillListTeam(team)
+    + getMaxSizeTeam(team)
+    + getMinSizeTeam(team)
+    + generateTeamBySkillSetAndSize(minSizeTeam,maxSizeTeam,skillsSelected, collaboratorStatusNotActivateList)
     + getTeamList()
+    - validateCollaboratorForTeam(maxSizeTeam,skillSet,collaborator)
+    + validateCollaboratorAddBySkill(collaboratorsNotActivate, team)
 }
 
-class SkillRepository{
-    - List <Skill>
-    + getSkillList()
-}
 
 class Team{
     -Integer maxSizeTeam
@@ -64,25 +70,28 @@ class Team{
     -List <Collaborator> collaboratorsTeam
     + Team(maxSizeTeam,minSizeTeam,collaboratorsList,skillsSelected)
     + getTeamList()
-    + Optional <Team> addCollaborator
+    + getMaxSize()
+    + getMinSize()
+    + Optional <Team> addCollaborator(collaborator)
 }
 
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getJobCategoryRepository()
+    + getSkillRepository()
     + getCollaboratorRepository()
     + getTeamRepository()
 }
 
 class GenerateTeamController {
-    + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
+    + GenerateTeamController()
     + getSkillList()
-    + getCollaboratorsNotActivate()
+    + getCollaboratorsNotActivateList()
     + generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate)
-    + activateCollaboratorsList(team)
+    + addCollaboratorToTeam(indexCollaborator, collaboratorsNotActivateList, team)
     - getHRMFromSession()
+    + saveTeam(team)
 }
 
 class SkillRepository{
