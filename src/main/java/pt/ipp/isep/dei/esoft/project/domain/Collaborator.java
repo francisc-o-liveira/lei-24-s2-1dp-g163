@@ -13,18 +13,18 @@ public class Collaborator {
     private int phoneNumber;
     private DocType docType;
     private int docIDNumber;
+    private String email;
     private JobCategory jobCategory;
     private List<Skill> skills;
     public enum StatusType {Active,NotActive}
     private StatusType statusType;
-    private String collaboratorID;
     private List<Skill> SKILLS_BY_OMISSION=null;
 
     public void setStatus(StatusType statusType) {
         this.statusType=statusType;
     }
 
-    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory, StatusType status){
+    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType docType, int docIDNumber, JobCategory jobCategory, StatusType status){
         this.name=name;
         this.address=address;
         this.addressZipCode=addressZipCode;
@@ -37,7 +37,6 @@ public class Collaborator {
         this.skills=SKILLS_BY_OMISSION;
 
     }
-
 
 
     public int getNumberOfSkills(){
@@ -54,9 +53,7 @@ public class Collaborator {
         return this.statusType;
     }
 
-    public String getCollaboratorID(){
-        return this.collaboratorID;
-    }
+
 
     public Optional<Collaborator> setAddSkill(Skill skill){
         Optional<Collaborator> collabWithNewSkill = Optional.empty();
@@ -77,9 +74,6 @@ public class Collaborator {
         return List.copyOf(skills);
     }
 
-    public String getID(){
-        return this.collaboratorID;
-    }
 
 
 
