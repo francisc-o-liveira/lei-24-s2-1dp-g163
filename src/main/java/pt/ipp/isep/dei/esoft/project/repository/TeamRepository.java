@@ -40,13 +40,19 @@ public class TeamRepository {
         return teams;
     }
 
-    public List<Team> getTeamBySkill(Skill skills){
+    public List<Team> getTeamBySkill(List<Skill> skills){
         List<Team> teamWithSkills=new ArrayList<>();
-        for(Team team : teams){
-            if(team.getSkill()==skills){
-                teamWithSkills.add(team);
+        for(int i=0; i<skills.size(); i++){
+            for(Team team : teams){
+                if(team.getSkills()==skills.get(i)){
+                    teamWithSkills.add(team);
+                }
             }
         }
         return teamWithSkills;
+    }
+
+    public List<Team> getTeams(){
+        return teams;
     }
 }

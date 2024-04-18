@@ -11,16 +11,20 @@ import pt.ipp.isep.dei.esoft.project.ui.console.utils.GenerateTeamUI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenerateTeamController {
+public class GenerateTeamController{
     public TeamRepository teamRepository;
     public CollaboratorRepository collaboratorRepository;
     public SkillRepository skillRepository;
 
-    /** Team com várias Skills
-     * */
-    public void generateTeam(List<Collaborator> collaborators, int sizeTeam, List<Skill> skillsSelected, int maxSize, int minSize){
-            List<Collaborator> collaboratorsForTeam=new ArrayList<>();
-            collaboratorsForTeam=getCollaboratorsNotActiveBySkills(skillsSelected);
+    /** Method to generate a team according to the List of Skills given
+     *
+     * @param collaborators
+     * @param sizeTeam
+     * @param skillsSelected
+     * @param maxSize
+     */
+    public void generateTeam(List<Collaborator> collaborators, int sizeTeam, List<Skill> skillsSelected, int maxSize){
+            List<Collaborator> collaboratorsForTeam=getCollaboratorsNotActiveBySkills(skillsSelected);
             List<Collaborator> collaboratorsTeam= new ArrayList<>();
             for(Collaborator c : collaboratorsForTeam){
                 if(GenerateTeamUI.getSelected(c) && sizeTeam<maxSize){
@@ -30,49 +34,57 @@ public class GenerateTeamController {
             }
             Team team=new Team(collaboratorsTeam,sizeTeam,skillsSelected);
     }
+
+    /**Gets the list of not active collaborators by the list of Skills needed
+     *
+     * @param skillsSelected
+     * @return Not Active Collaborators
+     */
     public List<Collaborator> getCollaboratorsNotActiveBySkills(List<Skill> skillsSelected){
         return collaboratorRepository.getCollaboratorsNotActiveBySkills(skillsSelected);
     }
 
-    /** Team com uma Skill*/
-
-    public void generateTeamWithOneSkill(List<Collaborator> collaborators, int sizeTeam, Skill skillSelected, int maxSize, int minSize) {
-        List<Collaborator> collaboratorsForTeam = new ArrayList<>();
-        collaboratorsForTeam = getCollaboratorsNotActiveByOneSkill(skillSelected);
-        List<Collaborator> collaboratorsTeam = new ArrayList<>();
-        for (Collaborator c : collaboratorsForTeam) {
-            if (GenerateTeamUI.getSelected(c) && sizeTeam < maxSize) {
-                collaboratorsTeam.add(c);
-                sizeTeam++;
-
-            }
-        }
-        Team team = new Team(collaboratorsTeam, sizeTeam, skillSelected);
-    }
-    public List<Collaborator> getCollaboratorsNotActiveByOneSkill(Skill skillSelected){
-        return collaboratorRepository.getCollaboratorsNotActiveByOneSkill(skillSelected);
-    }
-
-    public List<Team> getTeamBySkills(Skill skills){
+    /**Gets the list of teams with the Skills given
+     *
+     * @param skills
+     * @return List of teams with Skill (or Skills)
+     */
+    public List<Team> getTeamBySkills(List<Skill> skills){
         return teamRepository.getTeamBySkill(skills);
     }
+
+    /** Gets List of Skills
+     *
+     * @return List of Skills
+     */
 
     public List<Skill> getSkillList(){
         return skillRepository.getSkillList();
     }
 
+    /**Gets list of not active collaborators
+     *
+     * @return List of Not Active Collaborators
+     */
+
     public List<Collaborator> getCollaboratorsNotActive(){
         return collaboratorRepository.getCollaboratorsNotActive();
     }
-    public List<Collaborator> activeCollaboratorsList(Team team){
-        return collaboratorRepository.getCollaboratorsActive(team);
+
+    /** Changes the status of collaborators that have been selected for a team
+     *
+     * @param team
+     */
+    public void activateCollaborators(Team team){
+        collaboratorRepository.activateCollaborators(team);
     }
 
+    /** Gets list of teams
+     */
+    public List<Team> getTeams(){
+        return teamRepository.getTeams();
+    }
 
-    /*public List<Team> getTeam(){
-        return teamRepository.getTeam();
-    }*/
-    /*+ RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
-    - getHRMFromSession()*/
+    /*private (...) getHRMFromSession()*/
 
 }
