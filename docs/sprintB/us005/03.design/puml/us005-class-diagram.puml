@@ -43,7 +43,7 @@ class CollaboratorRepository {
     - List <Collaborator> collaboratorsNotActivate
     - List <Collaborator> collaboratorsActivate
     + getCollaboratorList()
-    + activateCollaborator(team)
+    + activateCollaborators(team)
 }
 
 class TeamRepository {

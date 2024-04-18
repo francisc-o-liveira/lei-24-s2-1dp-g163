@@ -17,7 +17,7 @@ participant "collaborator\n:Collaborator" as Collaborator
 
 activate HRM
 
-        HRM -> UI : asks to register a Collaborator
+        HRM -> UI : asks to register a new Collaborator
 
         activate UI
 
@@ -40,11 +40,19 @@ activate HRM
                     PLAT --> CTRL: jobCategoryRepository
                 deactivate PLAT
 
+                CTRL -> PLAT : getCollaboratorRepository()
+                                            activate PLAT
+
+                                                PLAT --> CTRL: CollaboratorRepository
+                                            deactivate PLAT
+
                 CTRL -> JobCategoryRepository : getJobCategoriesList()
                 activate JobCategoryRepository
 
                     JobCategoryRepository --> CTRL : jobCategoryList
                 deactivate JobCategoryRepository
+
+
 
 
 
@@ -112,19 +120,9 @@ activate HRM
         activate CTRL
 
 
-                            CTRL -> RepositorySingleton : getInstance()
-                            activate RepositorySingleton
 
-                                RepositorySingleton --> CTRL: repositories
-                            deactivate RepositorySingleton
 
-                            CTRL -> PLAT : getCollaboratorRepository()
-                            activate PLAT
-
-                                PLAT --> CTRL: CollaboratorRepository
-                            deactivate PLAT
-
-                            CTRL -> DocType : verifyDocTypeNumber(docIDNumber)
+                            CTRL -> DocType : validateDocType(docType, docTypeNumber)
                             activate DocType
 
                                 DocType --> CTRL : true/false

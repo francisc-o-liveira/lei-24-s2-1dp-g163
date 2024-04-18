@@ -14,7 +14,7 @@ public class AssignSkillsController {
 
     }
 
-    public void assignSkills(Collaborator collaboratorID, Skill skills){
+    public void assignSkills(Collaborator doctypeNumber, Skill skills){
 
     }
 

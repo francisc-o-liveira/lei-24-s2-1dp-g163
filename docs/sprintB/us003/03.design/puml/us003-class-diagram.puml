@@ -44,10 +44,9 @@ class CollaboratorRepository {
     - List <Collaborator> collaboratorsActivate
     - List <DocType>
     + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
-    + validateCollaborator(collaborator)
+    + isValidCollaborator(collaborator)
     + saveCollaborator(collaborator, this.collaboratorsNotActivate)
-    + getDocTypeList()
-    + validateDocType(docTypeIndex,docTypeNumber);
+    + addCollaborator(collaborator)
 }
 
 class DocType{
@@ -69,9 +68,13 @@ class Repositories {
 }
 
 class RegisterCollaboratorController {
-    + RegisterCollaboratorController(collaboratorRepository, jobCategoryRepository)
+    - CollaboratorRepository collaboratorRepository
+    - JobCategoryRepository jobCategoryRepository
+    + RegisterCollaboratorController()
+    + validateDocType(docType,docTypeNumber);
     + getJobCategoriesList()
     + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
+    + getDocTypeList()
     - getHRMFromSession()
 }
 
@@ -101,7 +104,7 @@ Repositories -> "1" JobCategoryRepository
 
 RegisterCollaboratorController ..> CollaboratorRepository : CollaboratorRepository
 RegisterCollaboratorController ..> JobCategoryRepository : JobCategoryRepository
-
+RegisterCollaboratorController --> DocType
 Repositories --> "1" CollaboratorRepository
 
 ApplicationSession --> "1" UserSession : userSession

@@ -21,23 +21,28 @@ activate CTRL
 
 
             CTRL -> RepositorySingleton : getInstance()
-            activate RepositorySingleton
+                            activate RepositorySingleton
 
-                RepositorySingleton --> CTRL: repositories
-            deactivate RepositorySingleton
+                                RepositorySingleton --> CTRL: repositories
+                            deactivate RepositorySingleton
 
-            CTRL -> PLAT : getJobCategoryRepository()
-            activate PLAT
+                            CTRL -> PLAT : getJobCategoryRepository()
+                            activate PLAT
 
-                PLAT --> CTRL: jobCategoryRepository
-            deactivate PLAT
+                                PLAT --> CTRL: jobCategoryRepository
+                            deactivate PLAT
 
-            CTRL -> JobCategoryRepository : getJobCategories()
-            activate JobCategoryRepository
+                            CTRL -> PLAT : getCollaboratorRepository()
+                                                        activate PLAT
 
-                JobCategoryRepository --> CTRL : jobCategoryList
-            deactivate JobCategoryRepository
+                                                            PLAT --> CTRL: CollaboratorRepository
+                                                        deactivate PLAT
 
+                            CTRL -> JobCategoryRepository : getJobCategoriesList()
+                            activate JobCategoryRepository
+
+                                JobCategoryRepository --> CTRL : jobCategoryList
+                            deactivate JobCategoryRepository
 
     end
     autonumber 4

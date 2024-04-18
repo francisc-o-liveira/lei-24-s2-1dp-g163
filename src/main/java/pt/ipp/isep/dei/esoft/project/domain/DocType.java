@@ -8,6 +8,10 @@ public class DocType {
         this.docType=docType;
     }
 
+    public Type[] getDocTypesValues() {
+        return Type.values();
+    }
+
     public boolean verifyDocType(int numberID){
         boolean valueVerify = false;
         switch (this.docType) {
@@ -25,10 +29,6 @@ public class DocType {
                 }
         }
         return valueVerify;
-    }
-
-    public Type[] getDocTypesValues() {
-        return Type.values();
     }
 }
 
