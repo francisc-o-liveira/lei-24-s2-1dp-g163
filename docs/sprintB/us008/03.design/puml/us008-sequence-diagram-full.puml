@@ -1,0 +1,65 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "VFM" as VFM
+participant ":VehicleUI" as UI
+participant ":VehicleController" as CTRL
+participant ":Repositories" as Repositories
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+participant "vehicle\n:Vehicle" as Vehicle
+
+activate VFM
+
+    VFM -> UI : asks the list of vehicles for check-up
+    activate UI
+
+        UI -> CTRL : getVehicleCheckUpList()
+        activate CTRL
+
+        CTRL -> Repositories : getInstance()
+        activate Repositories
+
+        CTRL -> Repositories : getVehicleCheckUpList()
+
+        Repositories -> VehicleRepository : getVehicleCheckUpList()
+
+        VehicleRepository -> Repositories : vehicleCheckUpList
+
+        CTRL -> Repositories : getVehicleRepository()
+
+        Repositories -> VehicleRepository : getVehicleRepository()
+
+        VehicleRepository --> Repositories : vehicleRepository
+        deactivate VehicleRepository
+
+        Repositories --> CTRL: repositories
+
+        VehicleRepository -> Vehicle: createVehicle()
+
+        Vehicle -> VehicleRepository: addVehicle(vehicle)
+
+        VehicleRepository --> Repositories : true / vehicle
+
+        Repositories --> CTRL : true / vehicle
+        deactivate Repositories
+
+        deactivate VehicleRepository
+
+        CTRL --> UI: true / vehicle
+        deactivate CTRL
+
+        UI -> VFM : shows the list of vehicles
+
+        VFM -> UI : confirms data
+
+        UI -> VFM : displays operation success
+    deactivate UI
+
+deactivate VFM
+
+@enduml

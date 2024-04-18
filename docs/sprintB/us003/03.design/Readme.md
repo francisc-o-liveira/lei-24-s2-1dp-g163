@@ -15,7 +15,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 | Step 2  		     | 	...saving the inputted data?                        | Collaborator                   | IE: object created in step 1 has its own data.                                                                |
 | Step 3  		     | 	...knowing the Job categories to show?              | Repositories                   | IE: Job Categories are defined by the Administrators.                                                         |
 | Step 4  		     | 	... saving the selected category?                   | Collaborator                   | IE: object created in step 1 is classified in one jobCategory.                                                |
-| Step 5  		     | 	...knowing the DocType to show?                     | CollaboratorRepository         | IE: DocType are defined in Bootstrap.                                                                         |
+| Step 5  		     | 	...knowing the DocType to show?                     | Enum DocType                   | IE: DocType are static and final.                                                                             |
 | Step 6  		     | 	... saving the selected docType?                    | Collaborator                   | IE: object created in step 1 is classified in one docType.                                                    |
 | Step 7  		     | 	... validating docIDNumber (local validation)? 				 | docType                        | IE:  the docType have the verification method by omission.                                                    |
 | Step 8  		     | 	... validating data (local validation)?             | Collaborator                   | IE: owns its data.                                                                                            | 
@@ -27,7 +27,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator): 
 
-* Organization
+* Collaborator Repository
 * Collaborator
 
 Other software classes (i.e Information Expert) identified:
@@ -35,6 +35,7 @@ Other software classes (i.e Information Expert) identified:
 * Repositories
 * DocTypeRepository
 * JobCategoryRepository
+* CollaboratorRepository
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
@@ -57,23 +58,15 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us003-sequence-diagram-split.svg)
 
-**Get Task Category List Partial SD**
+**Get Job Category List Partial SD**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
+![Sequence Diagram - Partial - Get Task Category List](svg/us003-sequence-diagram-partial-get-job-category-list.svg)
 
-**Get Task Category Object**
+**Register a Collaborator Partial SD**
 
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
-
-**Get Employee**
-
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-collaborator.svg)
-
-**Create Task**
-
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Create Task](svg/us003-sequence-diagram-partial-register-collaborator.svg)
 
 ## 3.3. Class Diagram (CD)
 

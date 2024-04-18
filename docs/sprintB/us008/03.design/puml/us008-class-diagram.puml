@@ -45,6 +45,9 @@ class Vehicle {
 
 
 class VehicleRepository {
+    + getVehicleByBrand(brand)
+    + getVehicleCehckUpList()
+
 }
 
 
@@ -56,7 +59,6 @@ class Repositories {
 
 class VehicleController {
     + VehicleController(vehicleRepository)
-    + registerVehicle()
     - getEmployeeFromSession()
 }
 
@@ -72,6 +74,10 @@ note bottom of VehicleRepository
     the vehicle list
 end note
 
+class VehicleUI {
+}
+
+
 Repositories -> "1" VehicleRepository
 Repositories -> Repositories : instance
 
@@ -83,6 +89,7 @@ VehicleUI .> VehicleController
 VehicleController .> Repositories : repositories
 VehicleController ..> ApplicationSession
 VehicleController ..> UserSession
+VehicleController ..> VehicleRepository : VehicleRepository
 VehicleController ..> VehicleRepository : VehicleRepository
 
 Vehicle --> Employee : createdBy

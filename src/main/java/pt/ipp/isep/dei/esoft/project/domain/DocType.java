@@ -8,25 +8,6 @@ public class DocType {
         this.docType=docType;
     }
 
-    public boolean verifyDocType(int numberID){
-        boolean valueVerify = false;
-        switch (this.docType) {
-            case CitizenCard:
-                if(numberID){
-                    valueVerify=true;
-                }
-            case BilheteIdentidade:
-                if(numberID){
-                    valueVerify=true;
-                }
-            case Passport:
-                if(numberID){
-                    valueVerify=true;
-                }
-        }
-        return valueVerify;
-    }
-
     public Type[] getDocTypesValues() {
         return Type.values();
     }

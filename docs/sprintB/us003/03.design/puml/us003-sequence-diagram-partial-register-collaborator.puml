@@ -13,7 +13,7 @@ autonumber 16.1
 activate ORG
     group Create Task
 
-        ORG -> collaborator**: register(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee)
+        ORG -> collaborator**: Collaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
         ORG -> ORG: addCollaborator (collaborator)
 
         activate ORG

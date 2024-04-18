@@ -13,6 +13,7 @@ participant "repositories\n:Repositories" as PLAT
 participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
 participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
 participant "collaborator\n:Collaborator" as Collaborator
+participant "DocType" as DT
 
 activate HRM
 

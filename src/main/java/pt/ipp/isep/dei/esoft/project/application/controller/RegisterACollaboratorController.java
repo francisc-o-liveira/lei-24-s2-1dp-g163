@@ -18,8 +18,8 @@ public class RegisterACollaboratorController {
         return jobCategoryRepository.getJobCategoryList();
     }
 
-    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType.Type docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill){
-        Collaborator collaborator=new Collaborator(name, birthday, admissionDate,address, addressZipCode, addressCity,phoneNumber, docType, docIDNumber, taxPayerNumber, jobCategory, skill);
+    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType.Type docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill, Collaborator.StatusType statusType){
+        Collaborator collaborator = new Collaborator(name, birthday, admissionDate,address, addressZipCode, addressCity,phoneNumber, docType, docIDNumber, taxPayerNumber, jobCategory, skill, statusType);
     }
 
     public DocType.Type[] getDocTypeList(){
