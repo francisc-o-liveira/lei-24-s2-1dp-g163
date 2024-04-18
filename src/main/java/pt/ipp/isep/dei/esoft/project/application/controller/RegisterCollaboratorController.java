@@ -112,6 +112,10 @@ public class RegisterCollaboratorController {
         return arrayNeedSize.length<=6;
     }
 
+    private boolean verifyInternationalPhoneNumber(int phoneNumber){
+
+    }
+
     public DocType.Type[] getDocTypeList(){
         return DocType.Type.values();
     }
