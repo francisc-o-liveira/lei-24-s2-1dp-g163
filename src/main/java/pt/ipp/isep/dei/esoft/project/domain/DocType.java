@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 public class DocType {
-    public enum Type {CitizenCard, BilheteIdentidade, Passport};
+    public enum Type {CitizenCard, TaxPayerCard, Passport};
     private Type docType;
 
     public DocType(Type docType){
@@ -19,7 +19,7 @@ public class DocType {
                 if(numberID>0 && numberID<999999999){
                     valueVerify=true;
                 }
-            case BilheteIdentidade:
+            case TaxPayerCard:
                 if(numberID>0 && numberID<999999999){
                     valueVerify=true;
                 }
@@ -30,6 +30,7 @@ public class DocType {
         }
         return valueVerify;
     }
+
 }
 
 

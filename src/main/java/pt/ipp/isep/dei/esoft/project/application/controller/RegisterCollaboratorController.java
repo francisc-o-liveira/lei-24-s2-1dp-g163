@@ -53,11 +53,7 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyData(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber,String email, DocType docType, int docIDNumber, JobCategory jobCategory, Collaborator.StatusType statusType) {
-        boolean value=false;
-        if(verifyName(name) && verifyBirthdayAndAdmission(birthday,admissionDate) && verifyAddress(address,addressZipCode,addressCity) && verifyPhoneNumber(phoneNumber) && verifyEmail(email) && verifyStatus(statusType)){
-            value=true;
-        }
-        return value;
+        return (verifyName(name) && verifyBirthdayAndAdmission(birthday,admissionDate) && verifyAddress(address,addressZipCode,addressCity) && verifyPhoneNumber(phoneNumber) && verifyEmail(email) && verifyStatus(statusType));
     }
 
     private boolean verifyEmail(String email) {
@@ -71,7 +67,7 @@ public class RegisterCollaboratorController {
         String[] domainPrefix;
         String[] domain;
         if(value){
-             domainPrefix = email.split("@");
+            domainPrefix = email.split("@");
             value = domainPrefix.length==2;
             if (value){
                 domain=domainPrefix[1].split(".");
@@ -93,7 +89,7 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyAddress(String address, String addressZipCode, String addressCity) {
-        return false;
+        return (addressZipCode.split("-").length==2 && addressCity.split(" ").length<5);
     }
 
     private boolean verifyBirthdayAndAdmission(Date birthday, Date admissionDate) {
@@ -114,6 +110,10 @@ public class RegisterCollaboratorController {
     private boolean verifyName(String name) {
         String[]arrayNeedSize=name.split(" ");
         return arrayNeedSize.length<=6;
+    }
+
+    private boolean verifyInternationalPhoneNumber(int phoneNumber){
+
     }
 
     public DocType.Type[] getDocTypeList(){
