@@ -60,28 +60,32 @@ public class VehicleRepository{
             for(int j=i+1; j < vehiclesCloseToCheck.size(); j++){
                 if(vehiclesCloseToCheck.get(i).getKmCloseToCheck()<vehiclesCloseToCheck.get(j).getKmCloseToCheck()){
                     temp=vehiclesCloseToCheck.get(i);
-                    vehiclesCloseToCheck.set(i, collaborators.get(j));
+                    vehiclesCloseToCheck.set(i, vehiclesCloseToCheck.get(j));
                     vehiclesCloseToCheck.set(j, temp);
                 }
             }
         }
     }
 
-    public Optional<Collaborator> addCollaborator(Collaborator collaborator){
-        Optional<Collaborator> newCollaborator = Optional.empty();
-        newCollaborator = Optional.of(collaborator);
-        if (isValidCollaborator(collaborator)){
-            saveCollaborator(collaborator);
+    public Optional<Vehicle> addVehicle(Vehicle vehicle){
+        Optional<Vehicle> newVehicle = Optional.empty();
+        newVehicle = Optional.of(vehicle);
+        boolean operationSucess = false;
+        if (isValidVehicle(vehicle)){
+            operationSucess = saveVehicle(vehicle);
         }
-        return newCollaborator;
+        if (!operationSucess){
+            newVehicle=Optional.empty();
+        }
+        return newVehicle;
     }
 
-    private void saveCollaborator(Collaborator collaborator) {
-        collaboratorList.add(collaborator);
+    private boolean saveVehicle(Vehicle vehicle) {
+        return vehicleList.add(vehicle);
     }
 
-    private boolean isValidCollaborator(Collaborator collaborator) {
-        boolean isValid = !collaboratorList.contains(collaborator);
-        return isValid;
+    private boolean isValidVehicle(Vehicle vehicle) {
+       return !vehicleList.contains(vehicle);
+
     }
 }
