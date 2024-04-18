@@ -62,7 +62,7 @@ activate HRM
                 skillRepository -> CTRL : skillList
 
 
-                CTRL --> UI : skillName
+                CTRL --> UI : skillList
             deactivate CTRL
 
 

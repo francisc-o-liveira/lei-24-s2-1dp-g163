@@ -35,7 +35,7 @@ activate HRM
                                     Register a skill
                             end ref
 
-                CTRL --> UI : skillName
+                CTRL --> UI : skillList
             deactivate CTRL
 
 

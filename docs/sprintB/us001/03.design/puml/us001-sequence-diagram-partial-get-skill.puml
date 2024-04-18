@@ -53,7 +53,7 @@ autonumber 5
                 skillRepository -> CTRL : skillList
 
  autonumber 15
-    <-- CTRL : skillName
+    <-- CTRL : skillList
             deactivate CTRL
 
 
