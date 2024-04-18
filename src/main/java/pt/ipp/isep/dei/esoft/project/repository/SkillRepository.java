@@ -24,7 +24,7 @@ public class SkillRepository {
 
     }
     public boolean verifyIfExistAndSave(Skill skill) {
-        Optional<Skill> newSkill= Optional.empty();
+        Optional<Skill> newSkill;
         boolean operationSuccess = false;
         if (validateSkill(skill)) {
             newSkill = Optional.of(skill.clone());
