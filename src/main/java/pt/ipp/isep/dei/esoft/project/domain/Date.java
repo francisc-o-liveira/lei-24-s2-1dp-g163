@@ -6,11 +6,17 @@ public class Date {
     private int year;
     private int month;
     private int day;
+    private static int[] diasPorMes = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30,
+            31, 30, 31};
 
     public Date(int year, int month, int day){
         this.year=year;
         this.month=month;
         this.day=day;
+    }
+
+    public static boolean isAnoBissexto(int ano) {
+        return ano % 4 == 0 && ano % 100 != 0 || ano % 400 == 0;
     }
 
     public int getNumberOfDaysOfLife(Date outraData){
@@ -23,14 +29,16 @@ public class Date {
     private int contaDias() {
         int totalDias = 0;
 
-        for (int i = 1; i < ano; i++) {
-            totalDias += isAnoBissexto(i) ? 366 : 365;
+        for (int i = 1; i < year; i++) {
+            totalDias += isAnoBissexto(i) ? 366
+                                            : 365;
         }
-        for (int i = 1; i < mes; i++) {
+        for (int i = 1; i < month; i++) {
             totalDias += diasPorMes[i];
         }
-        totalDias += (isAnoBissexto(ano) && mes > 2) ? 1 : 0;
-        totalDias += dia;
+        totalDias += (isAnoBissexto(year) && month > 2) ? 1
+                                                        : 0;
+        totalDias += day;
 
         return totalDias;
     }
