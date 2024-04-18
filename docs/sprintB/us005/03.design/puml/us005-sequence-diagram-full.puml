@@ -90,10 +90,10 @@ activate HRM
                                     PLAT --> CTRL: collaboratorRepository
                                 deactivate PLAT
 
-                                CTRL -> CollaboratorRepository : getCollaboratorNotActivateList()
+                                CTRL -> CollaboratorRepository : getCollaboratorByStatus()
                                 activate CollaboratorRepository
 
-                                    CollaboratorRepository --> CTRL : collaboratorNotActivateList
+                                    CollaboratorRepository --> CTRL : collaboratorStatusNotActivateList
                                 deactivate CollaboratorRepository
 
             CTRL -> TeamRepository:generateTeam(maxSizeTeam,minSizeTeam,skillSet)
@@ -102,7 +102,7 @@ activate HRM
                 TeamRepository -> Team**: create()
 
                 loop Until you have the full team
-                TeamRepository -> TeamRepository: validateCollaborator(collaboratorNotActivateList, skillSet)
+                TeamRepository -> TeamRepository: validateCollaboratorBySkill(collaboratorStatusNotActivateList, skillSet)
                 activate TeamRepository
 
                     TeamRepository -> Team: addCollaborator(collaborator)
@@ -145,10 +145,10 @@ activate HRM
     HRM -> UI : indexCollaborator
     activate UI
 
-    UI -> CTRL : addCollaboratorTeam(indexCollaborator,team)
+    UI -> CTRL : addCollaboratorToTeam(indexCollaborator,team)
     activate CTRL
 
-    CTRL -> TeamRepository : validateCollaboratorByIndex(indexCollaborator, collaboratorNotActivateList, team)
+    CTRL -> TeamRepository : validateCollaboratorAddBySkill(collaboratorNotActive, team)
     activate TeamRepository
 
         TeamRepository -> Team: addCollaborator(collaborator)
