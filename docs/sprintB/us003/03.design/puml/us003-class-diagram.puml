@@ -46,7 +46,6 @@ class CollaboratorRepository {
     + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
     + isValidCollaborator(collaborator)
     + saveCollaborator(collaborator, this.collaboratorsNotActivate)
-    + validateDocType(docType,docTypeNumber);
     + addCollaborator(collaborator)
 }
 
@@ -72,6 +71,7 @@ class RegisterCollaboratorController {
     - CollaboratorRepository collaboratorRepository
     - JobCategoryRepository jobCategoryRepository
     + RegisterCollaboratorController()
+    + validateDocType(docType,docTypeNumber);
     + getJobCategoriesList()
     + registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
     + getDocTypeList()

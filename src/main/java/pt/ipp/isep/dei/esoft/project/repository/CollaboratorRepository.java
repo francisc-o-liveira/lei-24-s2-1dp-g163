@@ -14,26 +14,7 @@ import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.NotAc
 
 public class CollaboratorRepository {
     private List<Collaborator> collaboratorList;
-    public boolean validateDocType(DocType.Type type, int docTypeNumber){
-        DocType.Type[] values = DocType.Type.values();
-        boolean valueVerify = false;
-        if(type==values[0]){
-            if(docTypeNumber>0 && docTypeNumber<999999999){
-                valueVerify=true;
-            }
-        } else if(type==values[1]){
-            if(docTypeNumber>0 && docTypeNumber<999999999){
-                valueVerify=true;
-            }
-        } else if (type==values[2]){
-            if(docTypeNumber>0 && docTypeNumber<999999999){
-                valueVerify=true;
-            }
-        }else {
-            throw new IllegalStateException("DocType Not Recognized: " + type);
-        }
-        return valueVerify;
-    }
+
     public List<Collaborator> getCollaboratorsNotActive(){
         List<Collaborator> collaboratorNotActive=new ArrayList<>();
         for(Collaborator c : collaboratorList){

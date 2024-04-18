@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Collaborator {
     private String name;
@@ -10,11 +11,9 @@ public class Collaborator {
     private String addressZipCode;
     private String addressCity;
     private int phoneNumber;
-    private DocType.Type docType;
+    private DocType docType;
     private int docIDNumber;
-    private int taxPayerNumber;
     private JobCategory jobCategory;
-    private Skill skill;
     private List<Skill> skills;
     public enum StatusType {Active,NotActive}
     private StatusType statusType;
@@ -25,7 +24,7 @@ public class Collaborator {
         this.statusType=statusType;
     }
 
-    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType.Type docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, Skill skill, StatusType status){
+    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory, StatusType status){
         this.name=name;
         this.address=address;
         this.addressZipCode=addressZipCode;
@@ -33,28 +32,13 @@ public class Collaborator {
         this.phoneNumber=phoneNumber;
         this.docType=docType;
         this.docIDNumber=docIDNumber;
-        this.taxPayerNumber=taxPayerNumber;
         this.jobCategory=jobCategory;
-        this.skill=skill;
         this.statusType=status;
         this.skills=SKILLS_BY_OMISSION;
 
     }
 
-    public Collaborator(String name, String collaboratorID, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, DocType.Type docType, int docIDNumber, int taxPayerNumber, JobCategory jobCategory, List<Skill> skill, StatusType status){
-        this.name=name;
-        this.address=address;
-        this.addressZipCode=addressZipCode;
-        this.addressCity=addressCity;
-        this.phoneNumber=phoneNumber;
-        this.docType=docType;
-        this.docIDNumber=docIDNumber;
-        this.taxPayerNumber=taxPayerNumber;
-        this.jobCategory=jobCategory;
-        this.skills=skill;
-        this.statusType=status;
-        this.collaboratorID=collaboratorID;
-    }
+
 
     public int getNumberOfSkills(){
         int count=0;
@@ -74,12 +58,23 @@ public class Collaborator {
         return this.collaboratorID;
     }
 
-    public void setSkill(Skill skill){
-        this.skill=skill;
+    public Optional<Collaborator> setAddSkill(Skill skill){
+        Optional<Collaborator> collabWithNewSkill = Optional.empty();
+        collabWithNewSkill = Optional.of(this);
+        if(!verifyIfHaveSkill(skill)){
+            this.skills.add(skill);
+        }else {
+            Optional.empty();
+        }
+        return collabWithNewSkill;
     }
 
-    public Skill getSkill(){
-        return this.skill;
+    private boolean verifyIfHaveSkill(Skill skill) {
+        return skills.contains(skill);
+    }
+
+    public List<Skill> getSkills(){
+        return List.copyOf(skills);
     }
 
     public String getID(){
