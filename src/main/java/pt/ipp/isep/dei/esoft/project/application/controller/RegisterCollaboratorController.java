@@ -1,9 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.Calendar;
 import java.util.List;
@@ -45,7 +47,7 @@ public class RegisterCollaboratorController {
     public boolean validateDocType(DocType type, int docTypeNumber){
         return type.verifyDocType(docTypeNumber);
     }
-    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity,String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory, Collaborator.StatusType statusType){
+    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory, Collaborator.StatusType statusType){
         if(verifyData(name, birthday, admissionDate, address, addressZipCode, addressCity, phoneNumber, email, docType, docIDNumber, jobCategory, statusType)){
 
         }
@@ -93,8 +95,7 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyBirthdayAndAdmission(Date birthday, Date admissionDate) {
-        Date outraData = new Date(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        if(birthday.getNumberOfDaysOfLife(outraData)>6574){
+        if(birthday.diference(Date.atualDate())>6574){
             return true;
         }
         return false;
@@ -113,7 +114,7 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyInternationalPhoneNumber(int phoneNumber){
-
+        return false;
     }
 
     public DocType.Type[] getDocTypeList(){

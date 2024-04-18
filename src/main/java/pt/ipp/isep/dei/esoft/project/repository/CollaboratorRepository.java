@@ -37,7 +37,7 @@ public class CollaboratorRepository {
         List<Collaborator> collaboratorNotActiveBySkills=new ArrayList<>();
         for(int i=0; i<skill.size(); i++){
             for(Collaborator c : collaboratorList){
-                if(c.getStatus()==NotActive && c.getSkill()==skill.get(i)){
+                if(c.getStatus()==NotActive && c.verifyIfHaveSkill(skill.get(i))){
                     collaboratorNotActiveBySkills.add(c);
                 }
             }
@@ -49,7 +49,7 @@ public class CollaboratorRepository {
     public List<Collaborator> getCollaboratorsNotActiveByOneSkill(Skill skill){
         List<Collaborator> collaboratorNotActiveBySkill=new ArrayList<>();
         for(Collaborator c : collaboratorList){
-            if(c.getStatus()==NotActive && c.getSkill()==skill){
+            if(c.getStatus()==NotActive && c.verifyIfHaveSkill(skill)){
                 collaboratorNotActiveBySkill.add(c);
             }
         }
