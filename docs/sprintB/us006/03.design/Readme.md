@@ -6,31 +6,29 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID                                     | Question: Which class is responsible for...         | Answer                  | Justification (with patterns)                                                                                |
-|:---------------------------------------------------|:----------------------------------------------------|:------------------------|:-------------------------------------------------------------------------------------------------------------|
-| Step 1: Ask to register a vehicle. 		              | ...interacting with the actor?                      | CreateVehicleUI         | Pure Fabrication                                                                                             |
-| 			  		                                            | ...coordinating the US?                             | CreateVehicleController | Controller                                                                                                   |
-| 			  		                                            | ... knowing the user using the system?        	     | UserSession             |                                                                                                              | |
-| Step 2: Request Data  		                           | ...displaying the form for the actor to input data? |                         |                                                                                                              |
-| Step 3: Types Requested Data 		                    | ...validating input data?                           | CreateVehicleUI         | Pure Fabrication                                                                                             |
-| 		                                                 | ...temporarily keeping input data?                  | System                  |                                                                                                              |
-| Step 4: Shows all data and request confirmation 		 | ...display all data?                                | Task                    |                                                                                                              |
-| 		                                                 | ...display request confirmation?  							           |                         |                                                                                                              |              
-| Step 5: Confirms data  		                          | ...accepts confirmation?                            |                     |                                                                                                              |                                           |                                                                                      | 
-| 			  		                                            | ...saving the created data?                         | Vehicle                 |                                                                                                              | 
-| Step 6: Display operation success  		              | ...informing operation success?                     | CreateTaskUI            | IE: is responsible for user interactions.                                                                    | 
+| Interaction ID | Question: Which class is responsible for...   | Answer            | Justification (with patterns)             |
+|:---------------|:----------------------------------------------|:------------------|:------------------------------------------|
+| Step 1	        | ...interacting with the actor?                | VehicleUI         | Pure Fabrication                          |
+| 			  	         | ...coordinating the US?                       | VehicleController | Controller                                |
+| 			  	         | ... knowing the user using the system?        	 | UserSession       |                                           |
+| Step 2 		      | ...saving the input data?                     | Vehicle           | IE: object created in step 1 has its own data.|                                                |                                                      |             |                                           |
+| Step 3 		      | ...display all data?                          | VehicleUI         |                                           |
+| Step 4  		     | ...accepts confirmation?                      | VehicleUI         | Pure Fabrication                          |                                       |                                                                                      | 
+| 			            | ...saving the created data?                   | VehicleRepository | Owns all the vehicles                     | 
+| Step 5  		     | ...informing operation success?               | VehicleUI         | IE: is responsible for user interactions. | 
 
 ### Systematization ##
 
-According to the taken rationale, the conceptual classes promoted to software classes are: 
+According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator):
 
-* Organization
-* Task
+* VehicleRepository
+* Vehicle
 
-Other software classes (i.e. Pure Fabrication) identified: 
+Other software classes
 
-* CreateVehicleUI  
-* CreateVehicleController
+* VehicleUI
+* VehicleController
+* Repositories
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -49,23 +47,9 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us006-sequence-diagram-split.svg)
+**Register Vehicle Partial SD**
 
-**Get Task Category List Partial SD**
-
-![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partial-get-task-category-list.svg)
-
-**Get Task Category Object**
-
-![Sequence Diagram - Partial - Get Task Category Object](svg/us006-sequence-diagram-partial-get-task-category.svg)
-
-**Get Employee**
-
-![Sequence Diagram - Partial - Get Employee](svg/us006-sequence-diagram-partial-get-collaborator.svg)
-
-**Create Task**
-
-![Sequence Diagram - Partial - Create Task](svg/us006-sequence-diagram-partial-create-task.svg)
+![Sequence Diagram - Partial - Get Task Category List](svg/us006-sequence-diagram-partia-register-vehicle.svg)
 
 ## 3.3. Class Diagram (CD)
 
