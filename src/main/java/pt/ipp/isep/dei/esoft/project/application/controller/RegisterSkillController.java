@@ -1,24 +1,34 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
-import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class RegisterSkillController {
 
-    public SkillRepository skillRepository;
-
-    public SkillRepository getSkillRepository(){
-        return skillRepository;
-    }
-
     public void RegisterSkill(String skillName){
+        verifySkillName(skillName);
         Skill skill=new Skill(skillName);
-        skillRepository.add(skill);
+        Repositories.getInstance().getSkillRepository().registerSkill(skillName);
     }
 
-    public List<Skill> getSkillList(){
-        return skillRepository.getSkillList();
+    private void verifySkillName(String skillName) {
+        if(skillName.trim().isEmpty()){
+            throw new NullPointerException("The Skill Name is empty please introduce name");
+        }
+        char[] testSkill = skillName.trim().toCharArray();
+        for(char x : testSkill){
+            if(!Character.isLetter(x)){
+                throw new IllegalArgumentException("The Skill Name dont accept Special Characters or Numbers");
+            }
+        }
     }
+
+    public List<Skill> getSkillList(){return Repositories.getInstance().getSkillRepository().getSkillList();}
+
+    public ArrayList<DocType.Type> getDocTypeList(){return new ArrayList<>(Arrays.asList(DocType.Type.values()));}
 }
