@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.Employee;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 import java.util.ArrayList;
@@ -15,6 +16,37 @@ public class AssignSkillsController {
     public CollaboratorRepository collaboratorRepository;
 
     public SkillRepository skillRepository;
+
+    public AssignSkillsController(){
+        getCollaboratorRepository();
+        getSkillRepository();
+    }
+
+    /**Returns the repository of Skills
+     *
+     * @return repository of Skills
+     */
+    public SkillRepository getSkillRepository(){
+        if (skillRepository==null) {
+            Repositories repositories=Repositories.getInstance();
+            skillRepository=repositories.getSkillRepository();
+        }
+        return skillRepository;
+    }
+
+    /**Returns the repository of Collaborators
+     *
+     * @return collaborator repository
+     */
+    public CollaboratorRepository getCollaboratorRepository(){
+        if(collaboratorRepository==null){
+            Repositories repositories=Repositories.getInstance();
+            collaboratorRepository=repositories.getCollaboratorRepository();
+        }
+        return collaboratorRepository;
+    }
+
+
 
     /**This method assigns Skills to a Collaborator
      *
