@@ -1,9 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.Calendar;
 import java.util.List;
@@ -45,7 +47,7 @@ public class RegisterCollaboratorController {
     public boolean validateDocType(DocType type, int docTypeNumber){
         return type.verifyDocType(docTypeNumber);
     }
-    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity,String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory, Collaborator.StatusType statusType){
+    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory, Collaborator.StatusType statusType){
         if(verifyData(name, birthday, admissionDate, address, addressZipCode, addressCity, phoneNumber, email, docType, docIDNumber, jobCategory, statusType)){
 
         }
@@ -53,11 +55,7 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyData(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber,String email, DocType docType, int docIDNumber, JobCategory jobCategory, Collaborator.StatusType statusType) {
-        boolean value=false;
-        if(verifyName(name) && verifyBirthdayAndAdmission(birthday,admissionDate) && verifyAddress(address,addressZipCode,addressCity) && verifyPhoneNumber(phoneNumber) && verifyEmail(email) && verifyStatus(statusType)){
-            value=true;
-        }
-        return value;
+        return (verifyName(name) && verifyBirthdayAndAdmission(birthday,admissionDate) && verifyAddress(address,addressZipCode,addressCity) && verifyPhoneNumber(phoneNumber) && verifyEmail(email) && verifyStatus(statusType));
     }
 
     private boolean verifyEmail(String email) {
@@ -71,7 +69,7 @@ public class RegisterCollaboratorController {
         String[] domainPrefix;
         String[] domain;
         if(value){
-             domainPrefix = email.split("@");
+            domainPrefix = email.split("@");
             value = domainPrefix.length==2;
             if (value){
                 domain=domainPrefix[1].split(".");
@@ -93,12 +91,11 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyAddress(String address, String addressZipCode, String addressCity) {
-        return false;
+        return (addressZipCode.split("-").length==2 && addressCity.split(" ").length<5);
     }
 
     private boolean verifyBirthdayAndAdmission(Date birthday, Date admissionDate) {
-        Date outraData = new Date(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        if(birthday.getNumberOfDaysOfLife(outraData)>6574){
+        if(birthday.diference(Date.atualDate())>6574){
             return true;
         }
         return false;
@@ -117,7 +114,7 @@ public class RegisterCollaboratorController {
     }
 
     private boolean verifyInternationalPhoneNumber(int phoneNumber){
-
+        return false;
     }
 
     public DocType.Type[] getDocTypeList(){

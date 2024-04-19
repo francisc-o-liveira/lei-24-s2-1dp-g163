@@ -15,7 +15,7 @@ activate VFM
     VFM -> System : asks to register a vehicle
     activate System
 
-        System --> VFM : requests data (brand, model, type, tare, gross weight, current km, register date, acquisition date, maintenance/check-up frequency (in kms))
+        System --> VFM : requests data (brand, plate, model, type, tare, gross weight, current km, register date, acquisition date, maintenance/check-up frequency (in kms))
     deactivate System
 
     VFM -> System : types requested data

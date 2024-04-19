@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +68,7 @@ public class Collaborator {
         return collabWithNewSkill;
     }
 
-    private boolean verifyIfHaveSkill(Skill skill) {
+    public boolean verifyIfHaveSkill(Skill skill) {
         return skills.contains(skill);
     }
 
