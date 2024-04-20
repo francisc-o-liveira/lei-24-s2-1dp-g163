@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.JobCategory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -18,11 +19,14 @@ public class JobCategoryRepository {
      * @param jobCategoryName represent the name introduced by the user
      * @return the new job category if there are saved on the jobCategories List and successful been created.
      */
-    public Optional<JobCategory> registerJobCategory(String jobCategoryName){
+    public Optional<List<JobCategory>> registerJobCategory(String jobCategoryName){
         Optional<JobCategory> newJobCategory =Optional.empty();
         JobCategory jobCategory = new JobCategory(jobCategoryName);
         newJobCategory=verifyJobCategoryExistAndSave(jobCategory);
-        return newJobCategory;
+        if (Objects.equals(jobCategory, newJobCategory)){ //PODE TER ERRO AQUI
+            return Optional.of(jobCategories);
+        }
+        return Optional.empty();
     }
 
     /**
