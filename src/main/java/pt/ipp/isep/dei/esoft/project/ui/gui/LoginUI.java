@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 
 import java.io.IOException;
 
@@ -27,22 +28,68 @@ public class LoginUI{
     private Button forgotPassword;
 
     public Stage leadingPage;
+    public AuthenticationRepository authenticationRepository;
 
     @FXML
     public void uiToShow() throws IOException{
-        //authentication to make sure email is correct goes here
+        if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
+            //deciding which ui is going to be shown
+            if(emailLogin.getText().contains("hrm")){
+                showHRManagerUI();
+            }
+            if(emailLogin.getText().contains("vfm")){
+                showVFManagerUI();
+            }
+            if(emailLogin.getText().contains("gsm")){
+                showGSManagerUI();
+            }
+            if(emailLogin.getText().equals("admin")){
+                showAdminUI();
+            }
+        }
+    }
 
-        //choosing which ui is going to be shown
-        if(emailLogin.getText().contains("hrm")){
-            showHRManagerUI();
+    private boolean authenticateCredentials(String email, String password){
+        if(!authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText())){
+            popUp(Alert.AlertType.ERROR, "ERROR", "Invalid Credentials").show();
+            return false;
         }
-        if(emailLogin.getText().equals("admin")){
-            showAdminUI();
-        }
+        return true;
+    }
+
+    @FXML
+    public void btnForgotPassword() throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneForgotPassword.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+
+        leadingPage=new Stage();
+        leadingPage.setScene(scene);
+        leadingPage.show();
     }
 
     public void showHRManagerUI()throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_HRM.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+
+        leadingPage=new Stage();
+        leadingPage.setScene(scene);
+        leadingPage.show();
+    }
+
+    public void showVFManagerUI() throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_VFM.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+
+        leadingPage=new Stage();
+        leadingPage.setScene(scene);
+        leadingPage.show();
+    }
+
+    public void showGSManagerUI() throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_GSM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
 
