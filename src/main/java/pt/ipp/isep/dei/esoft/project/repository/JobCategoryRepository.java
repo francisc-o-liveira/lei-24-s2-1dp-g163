@@ -1,12 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.repository;
-
 import pt.ipp.isep.dei.esoft.project.domain.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represent the JobCategoryRepository
+ */
 public class JobCategoryRepository {
     private final List<JobCategory> jobCategories;
     public JobCategoryRepository() {
@@ -14,42 +14,41 @@ public class JobCategoryRepository {
     }
 
     /**
-     * This method returns an exsiting Task Category by its description.
-     *
-     * @param jobCategoryName The description of the task category to be created.
-     * @return The task category.
-     * @throws IllegalArgumentException if the task category does not exist, which should never happen.
+     * This method create the JobCategory with the name typed be the user
+     * @param jobCategoryName represent the name introduced by the user
+     * @return the new job category if there are saved on the jobCategories List and successful been created.
      */
-    public boolean verifyJobCategoryExistByName(String jobCategoryName) {
-        JobCategory newJobCategory = new JobCategory(jobCategoryName);
-        JobCategory jobCategory = null;
-        if (jobCategories.contains(newJobCategory)) {
-            jobCategory = jobCategories.get(jobCategories.indexOf(newJobCategory));
-        }
-        if (jobCategory == null) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean add(JobCategory jobCategory) {
-        boolean operationSuccess = false;
-        if (!verifyJobCategoryExist(jobCategory) && !verifyJobCategoryExistByName(jobCategory.getName())) {
-           operationSuccess=true;
-           jobCategories.add(jobCategory);
-        }
-        return true;
-    }
-
-    private boolean verifyJobCategoryExist(JobCategory jobCategory) {
-        boolean isValid = !jobCategories.contains(jobCategory);
-        return isValid;
+    public Optional<JobCategory> registerJobCategory(String jobCategoryName){
+        Optional<JobCategory> newJobCategory =Optional.empty();
+        JobCategory jobCategory = new JobCategory(jobCategoryName);
+        newJobCategory=verifyJobCategoryExistAndSave(jobCategory);
+        return newJobCategory;
     }
 
     /**
-     * This method returns a defensive (immutable) copy of the list of task categories.
+     * This method verify after creating the jobCategory, if dont exist one equals to them
+     * If exist, the method dont save the JobCategory created on the list of JobCategories
+     * @param jobCategory created in RegisterJobCategory method by the user
+     * @return the JobCategory if save them on the List
+     */
+
+    private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) {
+       Optional<JobCategory> newJobCategory = Optional.empty();
+       boolean operationSucess = false;
+        if (!jobCategories.contains(jobCategory)){
+            operationSucess=jobCategories.add(jobCategory);
+            newJobCategory=Optional.of(jobCategory);
+        }
+        if (!operationSucess){
+            newJobCategory=Optional.empty();
+        }
+        return newJobCategory;
+    }
+
+    /**
+     * This method returns a defensive (immutable) copy of the list of job categories.
      *
-     * @return The list of task categories.
+     * @return The list of job categories.
      */
     public List<JobCategory> getJobCategoryList() {
         //This is a defensive copy, so that the repository cannot be modified from the outside.

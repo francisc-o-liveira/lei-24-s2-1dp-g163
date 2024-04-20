@@ -41,9 +41,9 @@ class Repositories {
 }
 
 class RegisterJobCategoryController{
-    + registerJobCategory(jobCategoryRepository)
+    + registerJobCategory(jobCategoryName)
     + getJobCategoriesList()
-    + getJobCategoryRepository
+
 }
 
 note right of RegisterJobCategoryController

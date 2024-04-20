@@ -18,6 +18,8 @@ public class Bootstrap implements Runnable {
     }
 
     private void addOrganization(){
+        // EMPLOYEE PODE SER SUPER DE COLLABORATOR E DE HRM E DE VFM E DE GSM
+        // DE FORMA A UTILIZAR O EMAIL DOS COLLABORADORES PARA OS REGISTAR NO PROGRAMA! MAIS TARDE POR CAUSA DA AGENDA
         //TODO: add organizations bootstrap here
         //get organization repository
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
@@ -42,13 +44,13 @@ public class Bootstrap implements Runnable {
         //TODO: add Authentication users here: should be created for each user in the organization
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
-        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE,
-                AuthenticationController.ROLE_EMPLOYEE);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM,AuthenticationController.ROLE_VFM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM,AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE, AuthenticationController.ROLE_EMPLOYEE);
 
-        authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
-                AuthenticationController.ROLE_ADMIN);
+        authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_ADMIN);
 
-        authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd",
-                AuthenticationController.ROLE_EMPLOYEE);
+        //TODO: COMO ADICIONAR UTILIZADORES
+        authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd", AuthenticationController.ROLE_EMPLOYEE);
     }
 }
