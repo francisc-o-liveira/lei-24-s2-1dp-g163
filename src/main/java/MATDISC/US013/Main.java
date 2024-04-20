@@ -1,6 +1,8 @@
 package MATDISC.US013;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,10 +15,6 @@ public class Main {
     public static void main(String[] args) {
         long startTime = 0;
         long endTime = 0;
-
-
-
-
         String filename = FILENAME_PER_OMISSION;
         int option=-1;
         ArrayList<Edge> edges = null;
@@ -26,7 +24,11 @@ public class Main {
             switch (option){
                 case 1:
                     filename=askFileName();
+                    try {
                     edges = readFromFile(filename);
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
                     sortArrayListPrimitivePerPrice(edges);
                 case 2:
                     if(edges==null){
@@ -34,12 +36,12 @@ public class Main {
                     }
                     startTime = System.nanoTime();
                     result=kruskalAlgorithm(edges);
-                    double price=0;
+                    int price=0;
                     for(Edge r : result){
                         System.out.print(r+"\n");
                         price += r.getPrice();
                     }
-                    System.out.printf("Cost: %f", price);
+                    System.out.printf("Cost: %d%n", price);
                     endTime = System.nanoTime();
                 case 0:
                     break;
@@ -74,7 +76,7 @@ public class Main {
         System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
         while(option<0 || option>2){
             if(option!=-1){
-                System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MEN");
+                System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
             }
 
             option = Integer.parseInt(scan.nextLine());
@@ -82,17 +84,16 @@ public class Main {
         return option;
     }
 
-    public static ArrayList<Edge> readFromFile(String fileName) {
-        Scanner scanFile = new Scanner(fileName);
+    public static ArrayList<Edge> readFromFile(String fileName) throws FileNotFoundException {
+        Scanner scanFile = new Scanner(new File(fileName));
         String[] line;
         ArrayList<Edge> edges = new ArrayList<>();
         while (scanFile.hasNextLine()) {
             line = scanFile.nextLine().split(";");
-            edges.add(new Edge(new Point(Double.parseDouble(line[0])), new Point(Double.parseDouble(line[1])), Double.parseDouble(line[2])));
+            edges.add(new Edge(new Point(line[0]), new Point(line[1]), Integer.parseInt(line[2])));
         }
         return edges;
     }
-
     // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
         Edge saveEdge;

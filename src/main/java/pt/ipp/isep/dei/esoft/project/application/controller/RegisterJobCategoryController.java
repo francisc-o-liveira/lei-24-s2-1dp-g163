@@ -15,8 +15,20 @@ public class RegisterJobCategoryController {
     /**
      * When create the Controller, the jobCategory instance is taken from repositories
      */
-    public RegisterJobCategoryController() {
-        jobCategoryRepository=Repositories.getInstance().getJobCategoryRepository();
+    public RegisterJobCategoryController(){
+        getJobCategoryRepository();
+    }
+
+    /**Returns the repository of Job Categories
+     *
+     * @return repository of Job Categories
+     */
+    public JobCategoryRepository getJobCategoryRepository(){
+        if (jobCategoryRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            jobCategoryRepository = repositories.getJobCategoryRepository();
+        }
+        return jobCategoryRepository;
     }
 
 

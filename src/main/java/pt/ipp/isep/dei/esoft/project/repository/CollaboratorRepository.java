@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 
@@ -13,8 +12,12 @@ import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.Activ
 import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.NotActive;
 
 public class CollaboratorRepository {
-    private List<Collaborator> collaboratorList;
+    public List<Collaborator> collaboratorList;
 
+    /**Method to get the List of Not Active Collaborators
+     *
+     * @return List of Not Active Collaborators
+     */
     public List<Collaborator> getCollaboratorsNotActive(){
         List<Collaborator> collaboratorNotActive=new ArrayList<>();
         for(Collaborator c : collaboratorList){
@@ -25,6 +28,11 @@ public class CollaboratorRepository {
         return collaboratorNotActive;
     }
 
+    /**Method to change the status of Not Active Collaborators to Active
+     *
+     * @param team
+     */
+
     public void activateCollaborators(Team team){
         for(Collaborator c : team.getTeamList()){
             if(c.getStatus()==NotActive){
@@ -32,6 +40,13 @@ public class CollaboratorRepository {
             }
         }
     }
+
+
+    /**This method gets the List of Collaborators that are not active according to the List of Skills given
+     *
+     * @param skill
+     * @return List of Not Active Collaborators with the given skills
+     */
 
     public List<Collaborator> getCollaboratorsNotActiveBySkills(List<Skill> skill){
         List<Collaborator> collaboratorNotActiveBySkills=new ArrayList<>();
@@ -46,15 +61,11 @@ public class CollaboratorRepository {
         return collaboratorNotActiveBySkills;
     }
 
-    public List<Collaborator> getCollaboratorsNotActiveByOneSkill(Skill skill){
-        List<Collaborator> collaboratorNotActiveBySkill=new ArrayList<>();
-        for(Collaborator c : collaboratorList){
-            if(c.getStatus()==NotActive && c.verifyIfHaveSkill(skill)){
-                collaboratorNotActiveBySkill.add(c);
-            }
-        }
-        return collaboratorNotActiveBySkill;
-    }
+
+    /** This method sorts, in ascending order, the List of Collaborators by the number of Skills they have
+     *
+     * @param collaborators
+     */
 
     public void sortCollaboratorsByNumberOfSkills(List<Collaborator> collaborators){
         Collaborator temp;
@@ -85,5 +96,30 @@ public class CollaboratorRepository {
     private boolean isValidCollaborator(Collaborator collaborator) {
         boolean isValid = !collaboratorList.contains(collaborator);
         return isValid;
+    }
+
+    /** The method searches for the Collaborator by their DocIDNumber
+     *
+     * @param docIDNumber
+     * @return collaborator
+     */
+
+    public Collaborator searchForCollaborator(int docIDNumber){
+        Collaborator collaboratorFound = null;
+        List<Collaborator> collaborators=getCollaboratorList();
+        for(Collaborator c : collaborators){
+            if(c.getDocIDNumber()==docIDNumber){
+                collaboratorFound=c;
+            }
+        }
+        return collaboratorFound;
+    }
+
+    /** The method gets the List of Collaborators
+     *
+     * @return List of Collaborators
+     */
+    public List<Collaborator> getCollaboratorList(){
+        return List.copyOf(collaboratorList);
     }
 }

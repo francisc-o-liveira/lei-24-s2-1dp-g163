@@ -1,13 +1,14 @@
 package MATDISC.US013;
 
 public class Point {
-    private double x;
+    private String x;
     private static final double PRICE_PER_OMISSION=0;
 
-    public Point(double x){
+    public Point(String x){
         this.x=x;
     }
-    public double getX() {
+
+    public String getX() {
         return x;
     }
 
@@ -17,11 +18,11 @@ public class Point {
             return false;
         }
         Point otherPoint = (Point) other;
-        return otherPoint.getX()==this.getX();
+        return otherPoint.getX().equals(this.getX());
     }
 
     @Override
     public String toString(){
-        return String.format("%.2f", x);
+        return String.format("%s", x);
     }
 }

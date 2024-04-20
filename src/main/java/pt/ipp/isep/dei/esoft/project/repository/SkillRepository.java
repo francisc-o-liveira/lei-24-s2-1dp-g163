@@ -32,6 +32,11 @@ public class SkillRepository {
         }
         return operationSuccess;
     }
+
+    /** The method gets the List of Skills
+     *
+     * @return List of Skills
+     */
     public List<Skill> getSkillList(){
         return List.copyOf(skillList);
     }

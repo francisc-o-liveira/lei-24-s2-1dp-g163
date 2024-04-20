@@ -76,6 +76,10 @@ public class Collaborator {
         return List.copyOf(skills);
     }
 
+    public int getDocIDNumber(){
+        return this.docIDNumber;
+    }
+
 
 
 
