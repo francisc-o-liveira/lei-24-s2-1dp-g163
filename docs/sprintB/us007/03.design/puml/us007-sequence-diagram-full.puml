@@ -7,63 +7,113 @@ title UI Sequence Diagram (SSD) for Registering Vehicle Maintenance
 
 autonumber
 
-actor "FM" as FleetManager
+actor "VFM" as FleetManager
+
+
 participant ":RegistMaintenanceUI" as UI
 participant ":RegistMaintenanceController" as Controller
-participant "vfm:VFM" as VFM
+
+participant "Repositories" as Repos
+participant "repositories:Repositories" as Repo
 participant "vehicleRepository:VehicleRepository" as VehicleRepo
 participant "collaboratorRepository:CollaboratorRepository" as CollabRepo
 
+
+participant "vfm:VFM" as VFM
+participant "vehicle:Vehicle" as Vehicle
+participant "checkup:Checkup" as Checkup
+
 activate FleetManager
 
-FleetManager -> UI : Selects a Vehicle ID and requests to register check-up
+
+FleetManager -> UI : Asks to register a maintenance
 activate UI
 
-UI -> Controller : create()
+UI -> Controller** : create
 activate Controller
 
-Controller -> VFM : getInstance()
+Controller -> Repos : getInstance()
+activate Repos
+
+Repos --> Controller : repositories
+deactivate Repos
+
+Controller -> Repo : getCollaboratorRepository()
+activate Repo
+Repo --> Controller : collaboratorRepository
+deactivate Repo
+
+Controller -> CollabRepo : checkVFManager(userEmail)
+activate CollabRepo
+
+CollabRepo -> VFM : isVFM(userEmail)
 activate VFM
-VFM --> Controller : vfm
+
+VFM --> CollabRepo  : Authorization Status (true/false)
 deactivate VFM
 
-Controller -> VehicleRepo : getVehicleRepository()
-activate VehicleRepo
-VehicleRepo --> Controller : vehicleRepository
-deactivate VehicleRepo
-
-Controller -> CollabRepo : getCollaboratorRepository()
-activate CollabRepo
-CollabRepo --> Controller : collaboratorRepository
+CollabRepo --> Controller  : Authorization Status (true/false)
 deactivate CollabRepo
 
-Controller -> VehicleRepo : findVehicleByID(vehicleID)
-activate VehicleRepo
-VehicleRepo --> Controller : vehicleDetails
-deactivate VehicleRepo
+alt Authorization Status is False
+    Controller --> UI : Not Authorized
+    deactivate Controller
 
-Controller -> UI : requestMaintenanceDetails()
-UI --> FleetManager : Requests Date of Check-Up, Current Kilometers
-deactivate UI
+    UI --> FleetManager : Display Not Authorized Message
+    deactivate UI
+else Authorization Status is True
 
-FleetManager -> UI : Provides Date of Check-Up, Current Kilometers
-activate UI
-UI -> Controller : validateDate(dateOfCheckUp)
-UI -> Controller : validateKilometers(currentKilometers)
+    Controller --> UI : Authorized
+    activate UI
+    activate Controller
+    UI -> Controller : getVehiclePLateList()
+    
+    Controller -> Repo : getVehicleRepository()
+    activate Repo
+    Repo --> Controller : vehicleRepository
+    deactivate Repo
 
-alt All Data Valid
-    Controller -> VehicleRepo : registerCheckUp(vehicleID, dateOfCheckUp, currentKilometers)
+    Controller -> VehicleRepo : fetchVehiclePLates()
     activate VehicleRepo
-    VehicleRepo --> Controller : Confirmation
+
+    VehicleRepo --> Controller : Vehicle Plates List
     deactivate VehicleRepo
 
-    Controller --> UI : confirmRegistrationSuccess()
-    UI --> FleetManager : Confirms registration success
-else Data Invalid
-    Controller --> UI : notifyDataInvalid()
-    UI --> FleetManager : Notifies data invalid
+    Controller --> UI : Displays Plates list and Requests Date of Maintenande and Current Kilometers
+    deactivate Controller
+   
+    UI --> FleetManager : Displays Plates list
+    deactivate UI
+
+    FleetManager -> UI : Selects a Vehicle ID (Plate), Provides Date of Maintenance and Current Kilometers and Submits
+
+    activate UI
+    UI -> UI : Verify Date of Maintenance Format and Validate Date of Maintenance inserted
+    UI -> UI : Verify Current Kilometers Format and Validate Current Kilometers inserted 
+
+    alt Date Greater Or Equal To The Current (Valid) and Current Kilometers Value Inputed Greater Than the Last Current Kilometers Stored
+        UI -> Controller : addMaintenance(Plate, Date, CurrentKms) 
+        activate Controller
+        Controller -> VehicleRepo : addMaintenance(Plate, Date, CurrentKms)
+        activate VehicleRepo
+        VehicleRepo -> Vehicle : updateVehicleMaintenanceList(Date, CurrentKms)
+        activate Vehicle
+        Vehicle -> Checkup** : createCheckup(Date, CurrentKms)
+        activate Checkup
+        Checkup -> Vehicle : Success (true)
+        deactivate Checkup
+        Vehicle --> VehicleRepo : Success (true)
+        deactivate Vehicle
+        VehicleRepo --> Controller : Success (true)
+        deactivate VehicleRepo
+        Controller --> UI : Success (true)
+        deactivate Controller
+        UI --> FleetManager : Confirms registration success
+        deactivate UI
+        
+    else else
+        UI -> FleetManager : Shows error, invalid input 
+    end
 end
 
-deactivate Controller
-deactivate UI
 @enduml

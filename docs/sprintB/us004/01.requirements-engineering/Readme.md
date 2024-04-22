@@ -39,16 +39,6 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1: Skill to Employee Linkage**
-  - Skills can be associated with any collaborator based on their resume, without sorting into specific job categories.
-
-
-* **AC3: No Certification Required for Skills**
-  - Adding a skill to an collaborator's profile does not require proof or certification.
-
-* **AC4: Unlimited Skill Addition**
-  - There are no limits on the number of skills that can be added to an collaborator's profile.
-
 * **AC5: No Special Qualities Needed for Skill Addition**
   - Skills can be added to any collaborator's profile without the need for the collaborator to possess certain predefined qualities.
 
@@ -63,10 +53,8 @@ As an HRM, I want to assign one or more skills to a collaborator.
 
 #### **Input Data:**
 
-* **Typed Data:**: n/a.
-
 * **Selected Data:** 
-  - **Employee ID (Number):** Utilizing the unique identifier of the collaborator registered in <u>US003</u> to ensure the correct collaborator is identified for skill assignment.
+  - **Collaborator Number:** Utilizing the unique identifier of the collaborator registered in <u>US003</u> to ensure the correct collaborator is identified for skill assignment.
   - **Skill Name(s):** Name(s) of the skill(s) to be assigned to the collaborator, based on their resume (CV). Each skill listed must correspond to those predefined and available within the system, ensuring alignment with <u>US001</u>.
 
 #### **Output Data:**

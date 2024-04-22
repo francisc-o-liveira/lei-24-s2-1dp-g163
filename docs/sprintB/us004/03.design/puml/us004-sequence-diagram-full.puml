@@ -19,13 +19,13 @@ participant "colaborator:Colaborator" as Colaborator
 
 activate HRManager
 
-HRManager -> UI : Asks to assign skills to a specific employee
+HRManager -> UI : Asks to assign skills to a specific collaborator
 activate UI
 
 UI -> Controller** : create
 
-Controller -> Repos : getInstance()
 activate Controller
+Controller -> Repos : getInstance()
 activate Repos
 
 Repos --> Controller : repositories
@@ -49,35 +49,42 @@ deactivate HRM
 EmpRepo --> Controller : Authorization Status (true/false)
 deactivate EmpRepo
 
-alt Authorization Status is True
-    Controller --> UI : Authorized
+alt Authorization Status is False
+    Controller --> UI : Not Authorized (false)
     deactivate Controller
 
-    UI -> Controller : getEmployeeIDList()
-    activate Controller
-
-    Controller -> EmpRepo : fetchEmployeeIDs()
-    activate EmpRepo
-
-    EmpRepo --> Controller : Employee IDs
-    deactivate EmpRepo
-
-    Controller --> UI : Displays Employee ID list
-    deactivate Controller
-   
-    UI --> HRManager : Displays Employee ID list
+    UI --> HRManager : Display Not Authorized Message
     deactivate UI
 
-    HRManager -> UI : Selects Employee ID number
+else Authorization Status is True
+    Controller --> UI : Authorized (true)
+    activate Controller
     activate UI
 
-    UI -> Controller : getEmployeeDetails(ID)
-    activate Controller
+    UI -> Controller : getCollaboratorIDList()
 
-    Controller -> EmpRepo : fetchEmployeeDetails(employeeID)
+    Controller -> EmpRepo : fetchCollaboratorIDs()
     activate EmpRepo
 
-    EmpRepo --> Controller : Employee Name with Skills
+    EmpRepo --> Controller : Collaborators IDs
+    deactivate EmpRepo
+
+    Controller --> UI : Displays Collaborator ID list
+    deactivate Controller
+   
+    UI --> HRManager : Displays Collaborator ID list
+    deactivate UI
+
+    HRManager -> UI : Selects Collaborator ID number
+    activate UI
+
+    UI -> Controller : getCollaboratorDetails(ID)
+    activate Controller
+
+    Controller -> EmpRepo : fetchCollaboratorDetails(CollaboratorID)
+    activate EmpRepo
+
+    EmpRepo --> Controller : Collaborator Name with Skills
     deactivate EmpRepo
 
     Controller -> reposRepos : getSkillRepository()
@@ -92,8 +99,8 @@ alt Authorization Status is True
     SkillRepo --> Controller : All Skills
     deactivate SkillRepo
 
-    loop over each Skill not assigned to Employee
-        Controller -> Controller : filterAssignedSkills(Employee Skills, All Skills)
+    loop over each Skill not assigned to Collaborator
+        Controller -> Controller : filterAssignedSkills(Collaborator Skills, All Skills)
     end
 
     Controller --> UI : Displays Available Skills to Assign
@@ -105,10 +112,10 @@ alt Authorization Status is True
     HRManager -> UI : Confirms Skill Assignment for Selected Skills
     activate UI
 
-    UI -> Controller : assignSkills(employeeID, Skill(s) name(s))
+    UI -> Controller : assignSkills(CollaboratorID, Skill(s) name(s))
     activate Controller
 
-    Controller -> EmpRepo : assignSkillToEmployee(employeeID, Skill(s) Name(s))
+    Controller -> EmpRepo : assignSkillToCollaborator(CollaboratorID, Skill(s) Name(s))
     activate EmpRepo
 
     loop over each Selected Skill
@@ -127,12 +134,7 @@ alt Authorization Status is True
 
     UI --> HRManager : Displays Operation Success Message
     deactivate UI
-else Authorization Status is False
-    Controller --> UI : Not Authorized Message
-    deactivate Controller
 
-    UI --> HRManager : Display Not Authorized Message
-    deactivate UI
 end
 
 @enduml
