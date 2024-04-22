@@ -67,11 +67,11 @@ public class LoginUI{
 
     @FXML
     public void btnForgotPassword(ActionEvent event) throws IOException{
-        // FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneForgotPassword.fxml"));
+        // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneForgotPassword.fxml"));
         // Parent root= fxmlLoader.load();
         // Scene scene= new Scene(root);
 
-            popUp(Alert.AlertType.ERROR, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
+            popUp(Alert.AlertType.WARNING, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
 
 
         // Stage leadingPage=new Stage();
