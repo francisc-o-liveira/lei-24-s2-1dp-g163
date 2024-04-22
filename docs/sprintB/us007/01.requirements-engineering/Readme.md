@@ -16,7 +16,7 @@ As a VFM, I wish to register a vehicle’s maintenance.
 
 > *Fleet Manager (FM) – a person who manages [...] vehicles, ensuring their good condition and assigning them to the tasks to be carried out.*
 
-These points highlight the role of Fleet Managers and vehicles in task completion and equipment transport, pointing to the need for regular vehicle check-ups.
+These points highlight the role of Fleet Managers and vehicles in task completion and equipment transport, pointing to the need for regular vehicle check-ups.v
 
 **From the client clarifications:**
 
