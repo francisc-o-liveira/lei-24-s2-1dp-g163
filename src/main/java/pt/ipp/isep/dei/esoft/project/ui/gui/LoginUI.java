@@ -66,7 +66,7 @@ public class LoginUI{
 
     @FXML
     public void btnForgotPassword() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneForgotPassword.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneForgotPassword.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
 
