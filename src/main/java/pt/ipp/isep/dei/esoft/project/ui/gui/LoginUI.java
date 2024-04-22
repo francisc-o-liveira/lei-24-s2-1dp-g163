@@ -37,7 +37,7 @@ public class LoginUI{
     }
 
     @FXML
-    public void uiToShow() throws IOException{
+    public void uiToShow(ActionEvent event) throws IOException{
         if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
             //deciding which ui is going to be shown
             if(emailLogin.getText().contains("hrm")){
