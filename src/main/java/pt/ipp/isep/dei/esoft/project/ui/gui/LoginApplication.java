@@ -8,14 +8,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginApplication extends Application {
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("/SceneLogin.fxml"));
         Scene scene=new Scene(fxmlLoader.load());
-        stage.setTitle("AquaCode - Green Space Management");
-        stage.setScene(scene);
-        stage.show();
+        Stage mainStage=new Stage();
+        LoginUI controller=fxmlLoader.getController();
+        controller.setMainStage(mainStage);
+        mainStage.setTitle("AquaCode - Green Space Management");
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public static void main(String[] args) {

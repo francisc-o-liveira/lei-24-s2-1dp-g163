@@ -27,8 +27,12 @@ public class LoginUI{
     @FXML
     private Button forgotPassword;
 
-    public Stage leadingPage;
+    public Stage mainStage;
     public AuthenticationRepository authenticationRepository;
+
+    public void setMainStage(Stage mainStage){
+        this.mainStage=mainStage;
+    }
 
     @FXML
     public void uiToShow() throws IOException{
@@ -63,7 +67,7 @@ public class LoginUI{
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
 
-        leadingPage=new Stage();
+        Stage leadingPage=new Stage();
         leadingPage.setScene(scene);
         leadingPage.show();
     }
@@ -72,40 +76,32 @@ public class LoginUI{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_HRM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public void showVFManagerUI() throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_VFM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public void showGSManagerUI() throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_GSM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public void showAdminUI()throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneAdmin.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
 
