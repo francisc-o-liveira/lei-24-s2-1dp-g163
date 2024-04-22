@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -65,14 +66,17 @@ public class LoginUI{
     }
 
     @FXML
-    public void btnForgotPassword() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneForgotPassword.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
+    public void btnForgotPassword(ActionEvent event) throws IOException{
+        // FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneForgotPassword.fxml"));
+        // Parent root= fxmlLoader.load();
+        // Scene scene= new Scene(root);
 
-        Stage leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+            popUp(Alert.AlertType.ERROR, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
+
+
+        // Stage leadingPage=new Stage();
+        // leadingPage.setScene(scene);
+        // leadingPage.show();
     }
 
     public void showHRManagerUI()throws IOException{
