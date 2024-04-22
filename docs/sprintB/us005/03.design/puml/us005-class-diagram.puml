@@ -44,14 +44,11 @@ class Skill {
 }
 
 class CollaboratorRepository {
-    - List <Collaborator> collaboratorsNotActivate
-    - List <Collaborator> collaboratorsActivate
-    + getCollaboratorList()
+    + getCollaboratorNotActivateList()
     + activateCollaboratorsTeam(team)
 }
 
 class TeamRepository {
-    - List <Team>
     + saveTeam(team)
     + getSkillListTeam(team)
     + getMaxSizeTeam(team)
@@ -66,8 +63,6 @@ class TeamRepository {
 class Team{
     -Integer maxSizeTeam
     -Integer minSizeTeam
-    -List <Skill> requiredSkills
-    -List <Collaborator> collaboratorsTeam
     + Team(maxSizeTeam,minSizeTeam,collaboratorsList,skillsSelected)
     + getTeamList()
     + getMaxSize()
@@ -95,7 +90,6 @@ class GenerateTeamController {
 }
 
 class SkillRepository{
-    - List <Skill>
     + getSkillList()
 }
 
@@ -139,6 +133,9 @@ TeamRepository "1" --> "*" Team : teams
 SkillRepository "1" --> "*" Skill : skills
 
 Team --> HRM : generatedBy
+Team "1" --> "1..*" Collaborator : have
+Team "1" --> "*" Skill : skillsRequired
+Collaborator "1" --> "*" Skill : have
 
 ApplicationSession --> "1" UserSession : userSession
 
