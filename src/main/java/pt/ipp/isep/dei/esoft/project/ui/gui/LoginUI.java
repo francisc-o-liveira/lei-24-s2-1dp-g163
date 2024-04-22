@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class LoginUI{
     private Button forgotPassword;
 
     public Stage mainStage;
-    public AuthenticationRepository authenticationRepository;
+    public AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
 
     public void setMainStage(Stage mainStage){
         this.mainStage=mainStage;
@@ -54,8 +55,10 @@ public class LoginUI{
     }
 
     private boolean authenticateCredentials(String email, String password){
-        if(!authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText())){
-            popUp(Alert.AlertType.ERROR, "ERROR", "Invalid Credentials").show();
+        try{
+            authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText());
+        }catch (IllegalArgumentException e){
+            popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
             return false;
         }
         return true;
