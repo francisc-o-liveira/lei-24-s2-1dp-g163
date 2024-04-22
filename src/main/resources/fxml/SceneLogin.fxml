@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="520.0" maxWidth="520.0" minHeight="400.0" minWidth="520.0" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.LoginUI">
+<BorderPane maxHeight="520.0" maxWidth="520.0" minHeight="400.0" minWidth="520.0" prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.LoginUI">
    <left>
       <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #1C4741;" BorderPane.alignment="CENTER">
          <children>
@@ -61,17 +62,12 @@
                   <Font name="Avenir Next Regular" size="10.0" />
                </font>
             </Button>
+            <Label layoutX="-50.0" layoutY="125.0" prefHeight="29.0" prefWidth="49.0" text="Email">
+               <font>
+                  <Font name="Avenir Next Regular" size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </right>
-   <center>
-      <Label prefHeight="29.0" prefWidth="49.0" text="Email" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Avenir Next Regular" size="14.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets right="-20.0" top="-120.0" />
-         </BorderPane.margin>
-      </Label>
-   </center>
 </BorderPane>
