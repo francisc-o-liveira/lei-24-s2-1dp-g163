@@ -79,6 +79,7 @@ public class Main {
             yData[i] = executionTimes.get(i);
         }
 
+        if(yData.length!=0 && xData.length!=0){
         XYChart chart = QuickChart.getChart("Tempo de Execução", "Execução", "Tempo (ms)", "Execução", xData, yData);
 
         // Estilização do gráfico
@@ -87,7 +88,7 @@ public class Main {
         chart.getStyler().setChartBackgroundColor(Color.WHITE);
         chart.getStyler().setChartFontColor(Color.BLACK);
 
-        new SwingWrapper<>(chart).displayChart();
+        new SwingWrapper<>(chart).displayChart();}
     }
 
     private static int getTheHighest(ArrayList<Long> executionTimes) {
