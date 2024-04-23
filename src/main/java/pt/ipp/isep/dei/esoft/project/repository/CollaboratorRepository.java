@@ -1,8 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.Team;
+import pt.ipp.isep.dei.esoft.project.domain.*;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,46 @@ public class CollaboratorRepository {
             }
         }
         return collaboratorNotActive;
+    }
+
+    /**
+     * This method create and instance a new Collaborator verify if exist and save
+     * @param name
+     * @param birthday
+     * @param admissionDate
+     * @param address
+     * @param addressZipCode
+     * @param addressCity
+     * @param email
+     * @param phoneNumber
+     * @param docType
+     * @param docIDNumber
+     * @param jobCategory
+     * @return
+     */
+    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory){
+        Optional<Collaborator> newCollab = Optional.empty();
+        Collaborator collab = new Collaborator(name,birthday,admissionDate,address,addressZipCode,addressCity,phoneNumber,email,docType,docIDNumber,jobCategory);
+        newCollab = verifyCollaboratorExistAndSave(collab);
+        return newCollab;
+    }
+
+    /**
+     *
+     * @param collab
+     * @return
+     */
+    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) {
+        Optional<Collaborator> newCollab = Optional.empty();
+        boolean operationSucess = false;
+        if (!collaboratorList.contains(collab)){
+            operationSucess=collaboratorList.add(collab);
+            newCollab=Optional.of(collab);
+        }
+        if (!operationSucess){
+            newCollab=Optional.empty();
+        }
+        return newCollab;
     }
 
     /**Method to change the status of Not Active Collaborators to Active
