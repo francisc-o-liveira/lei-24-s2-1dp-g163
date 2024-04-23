@@ -63,7 +63,7 @@ public class LoginUI{
             }catch (LoginException e){
                 popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
             }catch (IOException e){
-
+                popUp(Alert.AlertType.ERROR, "Redirect Page By Role Error", "Try Again Please").show();
             }
     }
     private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
