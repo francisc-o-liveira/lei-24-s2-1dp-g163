@@ -18,7 +18,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("/fxml/SceneLogin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/SceneLogin.fxml"));
             Scene scene=new Scene(fxmlLoader.load());
             Stage mainStage=new Stage();
             LoginUI controller=fxmlLoader.getController();
