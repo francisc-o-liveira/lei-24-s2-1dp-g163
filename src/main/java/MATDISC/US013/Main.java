@@ -14,7 +14,10 @@ import org.knowm.xchart.*;
 
 public class Main {
 
+
     public static String fileName;
+
+    public static final String pathName = "src/main/java/MATDISC/US013/";
 
     public static final String FILENAME_PER_OMISSION="..NONE..";
 
@@ -28,15 +31,16 @@ public class Main {
         ArrayList<Long> executionTimes = new ArrayList<>();
 
         ArrayList<Double> sizeInput = new ArrayList<Double>();
-
+        String path="";
 
         while(option!=0){
             option=askOptionShowOptions();
             switch (option){
                 case 1:
                     filename=askFileName();
+                    path = pathName+filename;
                     try {
-                    edges = readFromFile(filename);
+                    edges = readFromFile(path);
                     } catch (IOException e){
                         e.printStackTrace();
                     }
