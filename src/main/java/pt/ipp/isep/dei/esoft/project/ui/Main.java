@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.MainMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 public class Main {
 
@@ -9,8 +9,7 @@ public class Main {
         bootstrap.run();
 
         try {
-            MainMenuUI menu = new MainMenuUI();
-            menu.run();
+            MainApp.main(args);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.io.IOException;
 
@@ -27,11 +29,15 @@ public class LoginUI{
     @FXML
     private Button forgotPassword;
 
-    public Stage leadingPage;
-    public AuthenticationRepository authenticationRepository;
+    public Stage mainStage;
+    public AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
+
+    public void setMainStage(Stage mainStage){
+        this.mainStage=mainStage;
+    }
 
     @FXML
-    public void uiToShow() throws IOException{
+    public void uiToShow(ActionEvent event) throws IOException{
         if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
             //deciding which ui is going to be shown
             if(emailLogin.getText().contains("hrm")){
@@ -50,62 +56,59 @@ public class LoginUI{
     }
 
     private boolean authenticateCredentials(String email, String password){
-        if(!authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText())){
-            popUp(Alert.AlertType.ERROR, "ERROR", "Invalid Credentials").show();
+        try{
+            authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText());
+        }catch (IllegalArgumentException e){
+            popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
             return false;
         }
         return true;
     }
 
     @FXML
-    public void btnForgotPassword() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneForgotPassword.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
+    public void btnForgotPassword(ActionEvent event) throws IOException{
+        // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneForgotPassword.fxml"));
+        // Parent root= fxmlLoader.load();
+        // Scene scene= new Scene(root);
 
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+            popUp(Alert.AlertType.WARNING, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
+
+
+        // Stage leadingPage=new Stage();
+        // leadingPage.setScene(scene);
+        // leadingPage.show();
     }
 
     public void showHRManagerUI()throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_HRM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public void showVFManagerUI() throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_VFM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public void showGSManagerUI() throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_GSM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
     public void showAdminUI()throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneAdmin.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-
-        leadingPage=new Stage();
-        leadingPage.setScene(scene);
-        leadingPage.show();
+        mainStage.setScene(scene);
+        mainStage.show();
     }
 
 

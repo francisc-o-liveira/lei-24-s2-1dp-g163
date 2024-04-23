@@ -21,6 +21,7 @@ class HRM {
 }
 
 class Collaborator {
+    - Enum StatusType={Activate,NotActivate}
     - name
     - date of birthday
     - admission data
@@ -29,7 +30,7 @@ class Collaborator {
     - phone number
     - docType
     - docIDNumber
-    - jobCategory
+    - StatusType status
 
     + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
 }
@@ -40,9 +41,6 @@ class JobCategory {
 }
 
 class CollaboratorRepository {
-    - List <Collaborator> collaboratorsNotActivate
-    - List <Collaborator> collaboratorsActivate
-    - List <DocType>
     + registerCollaborator(name, date of birthday, admission data, address street, zipcode,\n address city, email, phone number, docType,\n docIDNumber, jobCategory)
     + isValidCollaborator(collaborator)
     + saveCollaborator(collaborator, this.collaboratorsNotActivate)
@@ -116,7 +114,7 @@ JobCategoryRepository "1" --> "*" JobCategory : jobCategory's
 CollaboratorRepository "1" --> "*" Collaborator : collaborators
 CollaboratorRepository "1" --> "3" DocType : docTypes
 Collaborator --> Employee : createdBy
-
+Collaborator "1" --> "1" DocType : have
 CollaboratorRepository --> "*" HRM : employs
 JobCategoryRepository --> "*" HRM : employs
 
