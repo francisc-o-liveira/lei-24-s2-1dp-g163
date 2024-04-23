@@ -41,6 +41,8 @@
 
     </properties>
 
+
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -97,6 +99,12 @@
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-fontawesome</artifactId>
             <version>4.7.0-9.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.knowm.xchart</groupId>
+            <artifactId>xchart</artifactId>
+            <version>3.8.7</version>
         </dependency>
 
 

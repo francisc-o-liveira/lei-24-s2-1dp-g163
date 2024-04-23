@@ -4,6 +4,8 @@ module pt.ipp.isep.dei.esoft.project.ui.gui {
     requires AuthLib;
     requires org.apache.commons.lang3;
     requires java.logging;
+    requires org.knowm.xchart;
+    requires java.desktop;
 
 
     opens pt.ipp.isep.dei.esoft.project.ui.gui to javafx.fxml;
