@@ -28,23 +28,25 @@ public class Main {
         int option=-1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
-        ArrayList<Long> executionTimes = new ArrayList<>();
+        ArrayList<Double> executionTimes = new ArrayList<Double>();
 
         ArrayList<Double> sizeInput = new ArrayList<Double>();
-        String path="";
+
 
         while(option!=0){
             option=askOptionShowOptions();
             switch (option){
                 case 1:
                     filename=askFileName();
-                    path = pathName+filename;
+
+
                     try {
-                    edges = readFromFile(path);
+                    edges = readFromFile(filename);
                     } catch (IOException e){
                         e.printStackTrace();
                     }
                     sortArrayListPrimitivePerPrice(edges);
+                    break;
                 case 2:
                     if(edges==null){
                         System.out.println("Nenhum arquivo carregado ainda!");
@@ -59,15 +61,17 @@ public class Main {
                     }
                     System.out.printf("Cost: %d%n", price);
                     endTime = System.nanoTime();
-
+                    long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+                    executionTimes.add((double) executionTime);
+                    sizeInput.add((double) (edges != null ? edges.size() : 0));
+                    break;
                 case 3:
                     plotGraphAndShow(executionTimes,sizeInput);
+                    break;
                 case 0:
                     break;
             }
-            long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
-            executionTimes.add(executionTime);
-            sizeInput.add((double) (edges != null ? edges.size() : 0));
+
         }
 
         // Calculate the execution time in milliseconds
@@ -75,10 +79,10 @@ public class Main {
 
     }
 
-    private static void plotGraphAndShow(ArrayList<Long> executionTimes, ArrayList<Double> sizeInput) {
+    private static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
         double[] xData = new double[sizeInput.size()];
         double[] yData = new double[getTheHighest(executionTimes)];
-        for (int i = 0; i < executionTimes.size(); i++) {
+        for (int i = 1; i < executionTimes.size(); i++) {
             xData[i] = sizeInput.get(i);
             yData[i] = executionTimes.get(i);
         }
@@ -95,8 +99,8 @@ public class Main {
         new SwingWrapper<>(chart).displayChart();}
     }
 
-    private static int getTheHighest(ArrayList<Long> executionTimes) {
-        Long highestValue = 0L;
+    private static int getTheHighest(ArrayList<Double> executionTimes) {
+        double highestValue = 0;
         int indexValue = 0;
         for(int i=0; i < executionTimes.size(); i++){
             if(executionTimes.get(i) > highestValue){
@@ -108,12 +112,12 @@ public class Main {
     }
 
     public static String askFileName() {
-        String filename;
+        String filename=pathName;
         Scanner readLineFile = new Scanner(System.in);
         File test;
         do{
             System.out.println("Introduce the FileName to take data.(input: nameFile.csv)");
-            filename=readLineFile.nextLine();
+            filename+=readLineFile.nextLine();
             test = new File(filename);
 
         }while(!test.canExecute());
