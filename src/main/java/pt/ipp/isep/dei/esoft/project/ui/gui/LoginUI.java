@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class LoginUI{
+public class LoginUI {
     @FXML
     private TextField emailLogin;
 
@@ -33,86 +33,94 @@ public class LoginUI{
 
     @FXML
     private Button forgotPassword;
+    private static int attemps=3;
 
     public Stage mainStage;
 
     private final AuthenticationController ctrl = new AuthenticationController();
 
-    public void setMainStage(Stage mainStage){
-        this.mainStage=mainStage;
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
     }
 
     @FXML
-    public void uiToShow(ActionEvent event){
-            //if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
-            //deciding which ui is going to be shown
-
-            try {
-                authenticateCredentials();
-                    List<UserRoleDTO> roles = this.ctrl.getUserRoles();
-                    UserRoleDTO role = selectsRole(roles);
-                    if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
-                        showVFManagerUI();
-                    }
-                    if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
-                        showHRManagerUI();
-                    }
-                    if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
-                        showGSManagerUI();
-                    }
-            }catch (LoginException e){
-                popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
-            }catch (IOException e){
-                popUp(Alert.AlertType.ERROR, "Redirect Page By Role Error", "Try Again Please").show();
+    public void uiToShow(ActionEvent event) {
+        if (attemps==0){
+            blockUser();
+        }
+        try {
+            attemps--;
+            authenticateCredentials();
+            List<UserRoleDTO> roles = this.ctrl.getUserRoles();
+            UserRoleDTO role = selectsRole(roles);
+            if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
+                showVFManagerUI();
             }
+            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+                showHRManagerUI();
+            }
+            if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
+                showGSManagerUI();
+            }
+        } catch (LoginException e) {
+            popUp(Alert.AlertType.WARNING, "Invalid Credentials of Login", "Try Again Please more: " + attemps + " times.").show();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            popUp(Alert.AlertType.ERROR, "", "Try Again Please").show();
+        } catch (IOException e) {
+            popUp(Alert.AlertType.ERROR, "Redirect Page By Role Error", "Try Again Please").show();
+        }
     }
+
+    private void blockUser() {
+    }
+
     private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
         if (roles.size() == 1) {
             return roles.get(0);
         } else {
-            return (UserRoleDTO) Utils.showAndSelectOne(roles, "Select the role you want to adopt in this session:");
+            throw new ArrayIndexOutOfBoundsException();
         }
     }
 
     private boolean authenticateCredentials() throws LoginException {
         boolean sucess;
-        sucess=ctrl.doLogin(emailLogin.getText(),passwordLogin.getText());
-        if(!sucess){
+        sucess = ctrl.doLogin(emailLogin.getText(), passwordLogin.getText());
+        if (!sucess) {
             throw new LoginException(emailLogin.getText());
         }
         return true;
     }
 
     @FXML
-    public void btnForgotPassword(ActionEvent event){
+    public void btnForgotPassword(ActionEvent event) {
         popUp(Alert.AlertType.WARNING, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
     }
 
-    public void showHRManagerUI()throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        mainStage.setScene(scene);
-        mainStage.show();
-    }
-
-    public void showVFManagerUI() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageTeams.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        mainStage.setScene(scene);
-        mainStage.show();
-    }
-
-    public void showGSManagerUI() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+    public void showHRManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
         Parent root = fxmlLoader.load();
-        Scene scene= new Scene(root);
+        Scene scene = new Scene(root);
         mainStage.setScene(scene);
         mainStage.show();
     }
 
-    private Alert popUp(Alert.AlertType alertType, String header, String message){
+    public void showVFManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ManageTeams.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        mainStage.setScene(scene);
+        mainStage.show();
+    }
+
+    public void showGSManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        mainStage.setScene(scene);
+        mainStage.show();
+    }
+
+    private Alert popUp(Alert.AlertType alertType, String header, String message) {
         Alert alerta = new Alert(alertType);
 
         alerta.setTitle("ERROR");
