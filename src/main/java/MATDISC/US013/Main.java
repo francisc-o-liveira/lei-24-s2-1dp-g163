@@ -1,10 +1,16 @@
 package MATDISC.US013;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+
+import org.knowm.xchart.*;
+
+
 
 public class Main {
 
@@ -19,6 +25,11 @@ public class Main {
         int option=-1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
+        ArrayList<Long> executionTimes = new ArrayList<>();
+
+        ArrayList<Double> sizeInput = new ArrayList<Double>();
+
+
         while(option!=0){
             option=askOptionShowOptions();
             switch (option){
@@ -32,6 +43,7 @@ public class Main {
                     sortArrayListPrimitivePerPrice(edges);
                 case 2:
                     if(edges==null){
+                        System.out.println("Nenhum arquivo carregado ainda!");
                         break;
                     }
                     startTime = System.nanoTime();
@@ -43,16 +55,51 @@ public class Main {
                     }
                     System.out.printf("Cost: %d%n", price);
                     endTime = System.nanoTime();
+
+                case 3:
+                    plotGraphAndShow(executionTimes,sizeInput);
                 case 0:
                     break;
             }
-
+            long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+            executionTimes.add(executionTime);
+            sizeInput.add((double) (edges != null ? edges.size() : 0));
         }
 
         // Calculate the execution time in milliseconds
-        long executionTime = (endTime - startTime);
-        System.out.println("Counting the time of Execution Kruskal takes "
-                + executionTime + "ms");
+
+
+    }
+
+    private static void plotGraphAndShow(ArrayList<Long> executionTimes, ArrayList<Double> sizeInput) {
+        double[] xData = new double[sizeInput.size()];
+        double[] yData = new double[getTheHighest(executionTimes)];
+        for (int i = 0; i < executionTimes.size(); i++) {
+            xData[i] = sizeInput.get(i);
+            yData[i] = executionTimes.get(i);
+        }
+
+        XYChart chart = QuickChart.getChart("Tempo de Execução", "Execução", "Tempo (ms)", "Execução", xData, yData);
+
+        // Estilização do gráfico
+        chart.getStyler().setMarkerSize(8);
+        chart.getStyler().setCursorColor(Color.BLUE);
+        chart.getStyler().setChartBackgroundColor(Color.WHITE);
+        chart.getStyler().setChartFontColor(Color.BLACK);
+
+        new SwingWrapper<>(chart).displayChart();
+    }
+
+    private static int getTheHighest(ArrayList<Long> executionTimes) {
+        Long highestValue = 0L;
+        int indexValue = 0;
+        for(int i=0; i < executionTimes.size(); i++){
+            if(executionTimes.get(i) > highestValue){
+                highestValue=executionTimes.get(i);
+                indexValue = i;
+            }
+        }
+        return indexValue;
     }
 
     public static String askFileName() {
@@ -74,7 +121,8 @@ public class Main {
         System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
         System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
-        while(option<0 || option>2){
+        System.out.println("----Option 3 : Plot the graph of Execution Time");
+        while(option<0 || option>3){
             if(option!=-1){
                 System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
             }
