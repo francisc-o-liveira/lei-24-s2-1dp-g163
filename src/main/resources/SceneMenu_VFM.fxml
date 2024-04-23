@@ -147,7 +147,7 @@
                                           </TextField>
                                           <ImageView fitHeight="81.0" fitWidth="77.0" layoutX="99.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../Downloads/pngegg.png" />
+                                                <Image url = />
                                              </image>
                                           </ImageView>
                                                     </children>
