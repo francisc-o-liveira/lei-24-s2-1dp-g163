@@ -22,7 +22,7 @@ public class Vehicle {
     private StatusType statusType;
 
 
-    public Vehicle(String brand, String model, Type type, int tare, double grossWeight, int currentKm, Date registerDate, Date acquisionDate, int frequencyCheckKm, String plate, StatusType statusType){
+    public Vehicle(String brand, String model, Type type, int tare, double grossWeight, int currentKm, Date registerDate, Date acquisionDate, int frequencyCheckKm, String plate){
         this.brand=brand;
         this.model=model;
         this.type=type;
@@ -33,7 +33,7 @@ public class Vehicle {
         this.acquisionDate=acquisionDate;
         this.frequencyCheckKm=frequencyCheckKm;
         this.plate=plate;
-        this.statusType=statusType;
+        this.statusType=StatusType.NotUse;
     }
 
     public StatusType getStatus() {

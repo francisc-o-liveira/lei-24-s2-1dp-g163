@@ -6,6 +6,8 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.List;
 
+
+//Verified By Francisco
 public class RegisterJobCategoryController {
     /**
      * Represent the job category repository instance(unique)
@@ -24,18 +26,25 @@ public class RegisterJobCategoryController {
      * @return repository of Job Categories
      */
     public JobCategoryRepository getJobCategoryRepository(){
-        if (jobCategoryRepository == null) {
+        if (jobCategoryRepository == null){
             Repositories repositories = Repositories.getInstance();
             jobCategoryRepository = repositories.getJobCategoryRepository();
         }
         return jobCategoryRepository;
     }
 
-
+    /**
+     * Register Job Category Method
+     * @param jobname represent the Job Category name
+     */
     public void registerJobCategory(String jobname){
         jobCategoryRepository.registerJobCategory(jobname);
     }
 
+    /**
+     * Get from Job Category Repository all the Job Categories in a List
+     * @return a List of JobCategory's
+     */
     public List<JobCategory> getJobCategoriesList(){
         return jobCategoryRepository.getJobCategoryList();
     }
