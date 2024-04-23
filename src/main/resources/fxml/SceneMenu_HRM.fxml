@@ -106,11 +106,11 @@
                                                 <Image url="@../resources/pngegg.png" />
                                              </image>
                                           </ImageView>
-                                          <TextField blendMode="MULTIPLY" layoutX="79.0" layoutY="178.0" prefHeight="29.0" prefWidth="109.0" text="Manage Jobs">
+                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="178.0" onAction="#manageJobs" prefHeight="29.0" prefWidth="109.0" text="Manage Jobs">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
-                                          </TextField>
+                                          </Button>
                                           <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="94.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../resources/pngegg.png" />
@@ -143,11 +143,11 @@
                                                 <Image url="@../resources/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
                                              </image>
                                           </ImageView>
-                                          <TextField blendMode="MULTIPLY" layoutX="79.0" layoutY="182.0" prefHeight="29.0" prefWidth="114.0" text="Manage Skills">
+                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="182.0" onAction="#manageSkills" prefHeight="29.0" prefWidth="114.0" text="Manage Skills">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
-                                          </TextField>
+                                          </Button>
                                           <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="93.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../resources/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
@@ -176,11 +176,11 @@
                                                             </fill>
                                                         </Circle>
                                                         <FontAwesomeIconView glyphName="USER" layoutX="120.0" layoutY="125.0" size="5em" />
-                                          <TextField blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" prefHeight="29.0" prefWidth="165.0" text="Manage Collaborators">
+                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageCollaborators" prefHeight="29.0" prefWidth="165.0" text="Manage Collaborators">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
-                                          </TextField>
+                                          </Button>
                                                     </children>
                                                 </AnchorPane>
                                             </children></AnchorPane>
@@ -210,11 +210,11 @@
                                                             </fill>
                                                         </Circle>
                                                         <FontAwesomeIconView glyphName="USERS" layoutX="102.0" layoutY="132.0" size="5em" />
-                                          <TextField blendMode="MULTIPLY" layoutX="78.0" layoutY="181.0" prefHeight="29.0" prefWidth="117.0" text="Manage Teams">
+                                          <Button blendMode="MULTIPLY" layoutX="78.0" layoutY="181.0" onAction="#manageTeams" prefHeight="29.0" prefWidth="117.0" text="Manage Teams">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
-                                          </TextField>
+                                          </Button>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
