@@ -1,12 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.Employee;
-import pt.ipp.isep.dei.esoft.project.domain.Task;
-import pt.ipp.isep.dei.esoft.project.domain.TaskCategory;
+import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
+import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Organization{

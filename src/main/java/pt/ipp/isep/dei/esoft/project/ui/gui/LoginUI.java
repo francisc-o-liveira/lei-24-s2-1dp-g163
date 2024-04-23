@@ -11,9 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import javax.security.auth.login.LoginException;
@@ -33,7 +30,7 @@ public class LoginUI {
 
     @FXML
     private Button forgotPassword;
-    private static int attemps=3;
+    private static int attemps=4;
 
     public Stage mainStage;
 
@@ -65,7 +62,7 @@ public class LoginUI {
         } catch (LoginException e) {
             popUp(Alert.AlertType.WARNING, "Invalid Credentials of Login", "Try Again Please more: " + attemps + " times.").show();
         } catch (ArrayIndexOutOfBoundsException e) {
-            popUp(Alert.AlertType.ERROR, "", "Try Again Please").show();
+            popUp(Alert.AlertType.ERROR, "Login Error Program", "Try Again Please").show();
         } catch (IOException e) {
             popUp(Alert.AlertType.ERROR, "Redirect Page By Role Error", "Try Again Please").show();
         }

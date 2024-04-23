@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.utils;
 
-import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 
 import java.util.Scanner;
 

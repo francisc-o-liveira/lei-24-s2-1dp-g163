@@ -1,14 +1,18 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.*;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.Active;
-import static pt.ipp.isep.dei.esoft.project.domain.Collaborator.StatusType.NotActive;
+import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.Active;
+import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.NotActive;
 
 public class CollaboratorRepository {
     public List<Collaborator> collaboratorList;

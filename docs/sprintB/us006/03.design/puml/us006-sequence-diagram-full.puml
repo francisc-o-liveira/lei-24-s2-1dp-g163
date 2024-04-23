@@ -44,8 +44,8 @@ activate VFM
                             CTRL -> Repositories: registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
 
                             Repositories -> VehicleRepository : registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
-                            VehicleRepository -> Vehicle: createVehicle()
-                            Vehicle -> VehicleRepository: addVehicle(vehicle)
+                            VehicleRepository -> Vehicle**: create()
+                            VehicleRepository -> VehicleRepository: addVehicle(vehicle)
                             VehicleRepository --> Repositories : true / vehicle
 
                             VehicleRepository --> Repositories: vehicleRepository

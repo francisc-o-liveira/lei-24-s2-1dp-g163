@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.DocType;
-import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.ArrayList;

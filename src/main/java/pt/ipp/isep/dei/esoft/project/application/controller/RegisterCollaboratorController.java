@@ -1,13 +1,13 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
