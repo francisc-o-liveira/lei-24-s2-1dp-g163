@@ -16,6 +16,7 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
+import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.util.List;
 
@@ -45,9 +46,9 @@ public class LoginUI{
     public void uiToShow(ActionEvent event){
             //if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
             //deciding which ui is going to be shown
-            boolean sucess = authenticateCredentials();
-            if (sucess) {
-                try {
+
+            try {
+                authenticateCredentials();
                     List<UserRoleDTO> roles = this.ctrl.getUserRoles();
                     UserRoleDTO role = selectsRole(roles);
                     if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
@@ -59,9 +60,10 @@ public class LoginUI{
                     if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
                         showGSManagerUI();
                     }
-                }catch (IOException UILoad){
+            }catch (LoginException e){
+                popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
+            }catch (IOException e){
 
-                }
             }
     }
     private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
@@ -72,18 +74,17 @@ public class LoginUI{
         }
     }
 
-    private boolean authenticateCredentials(){
-        try{
-            ctrl.doLogin(emailLogin.getText(),passwordLogin.getText());
-        }catch (IllegalArgumentException e){
-            popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
-            return false;
+    private boolean authenticateCredentials() throws LoginException {
+        boolean sucess;
+        sucess=ctrl.doLogin(emailLogin.getText(),passwordLogin.getText());
+        if(!sucess){
+            throw new LoginException(emailLogin.getText());
         }
         return true;
     }
 
     @FXML
-    public void btnForgotPassword(ActionEvent event) throws IOException{
+    public void btnForgotPassword(ActionEvent event){
         popUp(Alert.AlertType.WARNING, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
     }
 
