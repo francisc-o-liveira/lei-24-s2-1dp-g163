@@ -1,5 +1,8 @@
 package MATDISC.US013;
 
+import org.knowm.xchart.*;
+import org.knowm.xchart.style.Styler;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,9 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-
-import org.knowm.xchart.*;
-
 
 
 public class Main {
@@ -19,13 +19,13 @@ public class Main {
 
     public static final String pathName = "src/main/java/MATDISC/US013/";
 
-    public static final String FILENAME_PER_OMISSION="..NONE..";
+    public static final String FILENAME_PER_OMISSION = "..NONE..";
 
     public static void main(String[] args) {
         long startTime = 0;
         long endTime = 0;
         String filename = FILENAME_PER_OMISSION;
-        int option=-1;
+        int option = -1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
         ArrayList<Double> executionTimes = new ArrayList<Double>();
@@ -33,30 +33,30 @@ public class Main {
         ArrayList<Double> sizeInput = new ArrayList<Double>();
 
 
-        while(option!=0){
-            option=askOptionShowOptions();
-            switch (option){
+        while (option != 0) {
+            option = askOptionShowOptions();
+            switch (option) {
                 case 1:
-                    filename=askFileName();
+                    filename = askFileName();
 
 
                     try {
-                    edges = readFromFile(filename);
-                    } catch (IOException e){
+                        edges = readFromFile(filename);
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     sortArrayListPrimitivePerPrice(edges);
                     break;
                 case 2:
-                    if(edges==null){
+                    if (edges == null) {
                         System.out.println("Nenhum arquivo carregado ainda!");
                         break;
                     }
                     startTime = System.nanoTime();
-                    result=kruskalAlgorithm(edges);
-                    int price=0;
-                    for(Edge r : result){
-                        System.out.print(r+"\n");
+                    result = kruskalAlgorithm(edges);
+                    int price = 0;
+                    for (Edge r : result) {
+                        System.out.print(r + "\n");
                         price += r.getPrice();
                     }
                     System.out.printf("Cost: %d%n", price);
@@ -66,7 +66,7 @@ public class Main {
                     sizeInput.add((double) (edges != null ? edges.size() : 0));
                     break;
                 case 3:
-                    plotGraphAndShow(executionTimes,sizeInput);
+                    plotGraphAndShow(executionTimes, sizeInput);
                     break;
                 case 0:
                     break;
@@ -79,32 +79,37 @@ public class Main {
 
     }
 
-    private static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
+    public static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
         double[] xData = new double[sizeInput.size()];
-        double[] yData = new double[getTheHighest(executionTimes)];
-        for (int i = 1; i < executionTimes.size(); i++) {
+        double[] yData = new double[sizeInput.size()];
+
+        for (int i = 0; i < executionTimes.size(); i++) {
             xData[i] = sizeInput.get(i);
             yData[i] = executionTimes.get(i);
         }
 
-        if(yData.length!=0 && xData.length!=0){
-        XYChart chart = QuickChart.getChart("Tempo de Execução", "Execução", "Tempo (ms)", "Execução", xData, yData);
+        if (yData.length != 0 && xData.length != 0) {
+            XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("").yAxisTitle("").build();
 
-        // Estilização do gráfico
-        chart.getStyler().setMarkerSize(8);
-        chart.getStyler().setCursorColor(Color.BLUE);
-        chart.getStyler().setChartBackgroundColor(Color.WHITE);
-        chart.getStyler().setChartFontColor(Color.BLACK);
+            // Customize chart
+            chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+            chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
-        new SwingWrapper<>(chart).displayChart();}
+            // Add data series
+            XYSeries series = chart.addSeries("Sum", xData, yData);
+
+            // Show the chart
+            new SwingWrapper<>(chart).displayChart();
+
+        }
     }
 
     private static int getTheHighest(ArrayList<Double> executionTimes) {
         double highestValue = 0;
         int indexValue = 0;
-        for(int i=0; i < executionTimes.size(); i++){
-            if(executionTimes.get(i) > highestValue){
-                highestValue=executionTimes.get(i);
+        for (int i = 0; i < executionTimes.size(); i++) {
+            if (executionTimes.get(i) > highestValue) {
+                highestValue = executionTimes.get(i);
                 indexValue = i;
             }
         }
@@ -112,27 +117,27 @@ public class Main {
     }
 
     public static String askFileName() {
-        String filename=pathName;
+        String filename = pathName;
         Scanner readLineFile = new Scanner(System.in);
         File test;
-        do{
+        do {
             System.out.println("Introduce the FileName to take data.(input: nameFile.csv)");
-            filename+=readLineFile.nextLine();
+            filename += readLineFile.nextLine();
             test = new File(filename);
 
-        }while(!test.canExecute());
+        } while (!test.canExecute());
         return filename;
     }
 
     public static int askOptionShowOptions() {
         Scanner scan = new Scanner(System.in);
-        int option=-1;
+        int option = -1;
         System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
         System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
         System.out.println("----Option 3 : Plot the graph of Execution Time");
-        while(option<0 || option>3){
-            if(option!=-1){
+        while (option < 0 || option > 3) {
+            if (option != -1) {
                 System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
             }
 
@@ -151,10 +156,11 @@ public class Main {
         }
         return edges;
     }
+
     // START US013
     public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
         Edge saveEdge;
-        for (int i = 0; i <edges.size() - 1; i++) {
+        for (int i = 0; i < edges.size() - 1; i++) {
             for (int j = i + 1; j < edges.size(); j++) {
                 if (edges.get(j).getPrice() < edges.get(i).getPrice()) {
                     saveEdge = edges.get(i);
@@ -164,6 +170,7 @@ public class Main {
             }
         }
     }
+
     // VERTICES == POINTS
     public static ArrayList<Point> numberOfVertices(ArrayList<Edge> edges) {
         ArrayList<Point> vertices = new ArrayList<>();
@@ -197,40 +204,40 @@ public class Main {
         ArrayList<Point> vertices = numberOfVertices(edges);
         ArrayList<Edge> edgesSave = new ArrayList<>();
         Point[][] S = new Point[vertices.size()][vertices.size()];
-        distributeInArrayPoints(S,vertices);
+        distributeInArrayPoints(S, vertices);
 
         int valueIndexLine1 = 0;
         int valueIndexLine2 = 0;
-        int valueIndexColumn1=0;
-        int valueIndexColumn2=0;
-        for(Edge edgeX : edges){
+        int valueIndexColumn1 = 0;
+        int valueIndexColumn2 = 0;
+        for (Edge edgeX : edges) {
             Point x1 = edgeX.getP1();
             Point x2 = edgeX.getP2();
-            for (int j = 0; j < S[0].length; j++){
-                for(int k = 0; k < S.length; k++){
-                    if (x1.equals(S[k][j])){
-                        valueIndexColumn1=j;
-                        valueIndexLine1=k;
+            for (int j = 0; j < S[0].length; j++) {
+                for (int k = 0; k < S.length; k++) {
+                    if (x1.equals(S[k][j])) {
+                        valueIndexColumn1 = j;
+                        valueIndexLine1 = k;
                     }
-                    if (x2.equals(S[k][j])){
-                        valueIndexColumn2=j;
-                        valueIndexLine2=k;
+                    if (x2.equals(S[k][j])) {
+                        valueIndexColumn2 = j;
+                        valueIndexLine2 = k;
                     }
                 }
             }
-            if(valueIndexColumn1!=valueIndexColumn2){
+            if (valueIndexColumn1 != valueIndexColumn2) {
                 na++;
-                if(na==vertices.size()){
+                if (na == vertices.size()) {
                     break;
                 }
                 edgesSave.add(edgeX);
-                int newIndexLine2=findNull(valueIndexColumn1, S);
-                for(int l=0; l<S[valueIndexColumn2].length; l++){
-                    if(S[l][valueIndexColumn2]==null){
+                int newIndexLine2 = findNull(valueIndexColumn1, S);
+                for (int l = 0; l < S[valueIndexColumn2].length; l++) {
+                    if (S[l][valueIndexColumn2] == null) {
                         break;
                     }
-                    S[newIndexLine2][valueIndexColumn1]=S[l][valueIndexColumn2];
-                    S[l][valueIndexColumn2]=null;
+                    S[newIndexLine2][valueIndexColumn1] = S[l][valueIndexColumn2];
+                    S[l][valueIndexColumn2] = null;
                     newIndexLine2++;
                 }
             }
@@ -239,16 +246,16 @@ public class Main {
     }
 
     private static void distributeInArrayPoints(Point[][] s, ArrayList<Point> vertices) {
-        int i=0;
-        for(Point vertice: vertices){
-            s[0][i]= vertice;
+        int i = 0;
+        for (Point vertice : vertices) {
+            s[0][i] = vertice;
             i++;
         }
     }
 
-    public static int findNull(int column, Point[][] S){
-        for(int i=0; i<S[column].length; i++){
-            if(S[i][column]==null){
+    public static int findNull(int column, Point[][] S) {
+        for (int i = 0; i < S[column].length; i++) {
+            if (S[i][column] == null) {
                 return i;
             }
         }
