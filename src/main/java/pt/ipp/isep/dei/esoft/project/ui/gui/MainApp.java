@@ -18,14 +18,15 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/SceneLogin.fxml"));
-            Scene scene = new Scene(root);
-           // String css = this.getClass().getResource("/styles/Styles.css").toExternalForm();
-            // scene.getStylesheets().add(css);
-            stage.setTitle("Login Page");
-            stage.setScene(scene);
-
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("/fxml/SceneLogin.fxml"));
+            Scene scene=new Scene(fxmlLoader.load());
+            Stage mainStage=new Stage();
+            LoginUI controller=fxmlLoader.getController();
+            controller.setMainStage(mainStage);
+            mainStage.setTitle("AquaCode - Green Space Management");
+            mainStage.setScene(scene);
+            mainStage.show();
+            mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
                     Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
@@ -42,7 +43,6 @@ public class MainApp extends Application {
                     }
                 }
             });
-            stage.show();
         } catch (IOException ex) {
             criarAlertaErro(ex).show();
         }
