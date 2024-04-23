@@ -38,7 +38,7 @@ public class LoginUI{
 
     @FXML
     public void uiToShow(ActionEvent event) throws IOException{
-        if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
+        //if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
             //deciding which ui is going to be shown
             if(emailLogin.getText().contains("hrm")){
                 showHRManagerUI();
@@ -49,10 +49,7 @@ public class LoginUI{
             if(emailLogin.getText().contains("gsm")){
                 showGSManagerUI();
             }
-            if(emailLogin.getText().equals("admin")){
-                showAdminUI();
-            }
-        }
+        //}
     }
 
     private boolean authenticateCredentials(String email, String password){
@@ -102,15 +99,6 @@ public class LoginUI{
         mainStage.setScene(scene);
         mainStage.show();
     }
-
-    public void showAdminUI()throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneAdmin.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        mainStage.setScene(scene);
-        mainStage.show();
-    }
-
 
     private Alert popUp(Alert.AlertType alertType, String header, String message){
         Alert alerta = new Alert(alertType);
