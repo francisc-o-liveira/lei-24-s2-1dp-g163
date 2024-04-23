@@ -10,10 +10,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class LoginUI{
@@ -30,31 +34,47 @@ public class LoginUI{
     private Button forgotPassword;
 
     public Stage mainStage;
-    public AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
+
+    private final AuthenticationController ctrl = new AuthenticationController();
 
     public void setMainStage(Stage mainStage){
         this.mainStage=mainStage;
     }
 
     @FXML
-    public void uiToShow(ActionEvent event) throws IOException{
-        //if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
+    public void uiToShow(ActionEvent event){
+            //if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
             //deciding which ui is going to be shown
-            if(emailLogin.getText().contains("vfm")){
-                showVFManagerUI();
+            boolean sucess = authenticateCredentials();
+            if (sucess) {
+                try {
+                    List<UserRoleDTO> roles = this.ctrl.getUserRoles();
+                    UserRoleDTO role = selectsRole(roles);
+                    if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
+                        showVFManagerUI();
+                    }
+                    if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+                        showHRManagerUI();
+                    }
+                    if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
+                        showGSManagerUI();
+                    }
+                }catch (IOException UILoad){
+
+                }
             }
-            if(emailLogin.getText().contains("hrm")){
-                showHRManagerUI();
-            }
-            if(emailLogin.getText().contains("gsm")){
-                showGSManagerUI();
-            }
-        //}
+    }
+    private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
+        if (roles.size() == 1) {
+            return roles.get(0);
+        } else {
+            return (UserRoleDTO) Utils.showAndSelectOne(roles, "Select the role you want to adopt in this session:");
+        }
     }
 
-    private boolean authenticateCredentials(String email, String password){
+    private boolean authenticateCredentials(){
         try{
-            authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText());
+            ctrl.doLogin(emailLogin.getText(),passwordLogin.getText());
         }catch (IllegalArgumentException e){
             popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
             return false;
@@ -76,7 +96,7 @@ public class LoginUI{
     }
 
     public void showVFManagerUI() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/Scene_ManageTeams.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageTeams.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         mainStage.setScene(scene);
@@ -84,8 +104,8 @@ public class LoginUI{
     }
 
     public void showGSManagerUI() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_GSM.fxml"));
-        Parent root= fxmlLoader.load();
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        Parent root = fxmlLoader.load();
         Scene scene= new Scene(root);
         mainStage.setScene(scene);
         mainStage.show();
