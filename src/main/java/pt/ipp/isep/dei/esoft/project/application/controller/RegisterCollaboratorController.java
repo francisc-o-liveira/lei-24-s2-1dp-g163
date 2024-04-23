@@ -9,6 +9,8 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This Class Represent the Controller for Register a Collaborator
@@ -157,7 +159,21 @@ public class RegisterCollaboratorController {
         return arrayNeedSize.length<=6;
     }
 
+    /** Using Java Regex, this method verifies an international phone number
+     *
+     * @param phoneNumber to validate
+     * @return true if phoneNumber is correctly written
+     *
+     * */
+
     private boolean verifyInternationalPhoneNumber(int phoneNumber){
+        String phone=String.valueOf(phoneNumber);
+        String verify="^\\+(?:[0-9] ?){6,14}[0-9]$"; //a phone number is valid if it starts with a plus sign followed by 6 to 14 digits with optional spaces between them
+        Pattern pattern = Pattern.compile(verify);
+        Matcher matcher=pattern.matcher(phone);
+        if(matcher.matches()){
+            return true;
+        }
         return false;
     }
 
