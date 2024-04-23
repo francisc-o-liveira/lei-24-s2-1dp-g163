@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.paint.Color?>
@@ -28,16 +30,6 @@
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
-                                <Button layoutX="1039.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
-                                    <graphic>
-                                        <FontAwesomeIconView glyphName="CLOSE" size="1.2em" />
-                                    </graphic>
-                                </Button>
-                                <Button layoutX="1004.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0">
-                                    <graphic>
-                                        <FontAwesomeIconView glyphName="MINUS" size="1.2em" />
-                                    </graphic>
-                                </Button>
                             </children>
                             <effect>
                                 <DropShadow />
@@ -115,16 +107,21 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <Label layoutX="89.0" layoutY="178.0" text="Register Jobs" textFill="WHITE">
+                                                        <Label layoutX="89.0" layoutY="178.0" text="Manage Jobs" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Label>
+                                          <ImageView fitHeight="72.0" fitWidth="82.0" layoutX="96.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../../Downloads/pngegg.png" />
+                                             </image>
+                                          </ImageView>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane layoutX="14.0" layoutY="13.0" prefHeight="231.0" prefWidth="273.0" style="-fx-background-color: #1C4741;">
                                                     <children>
-                                                        <Circle layoutX="137.0" layoutY="105.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                                        <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                                             <fill>
                                                                 <LinearGradient endX="1.0" endY="1.0">
                                                                     <stops>
@@ -142,11 +139,16 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <Label layoutX="91.0" layoutY="182.0" text="Register Skills" textFill="WHITE">
+                                                        <Label layoutX="91.0" layoutY="182.0" text="Manage Skills" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Label>
+                                          <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="96.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../../Downloads/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
+                                             </image>
+                                          </ImageView>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane layoutX="587.0" layoutY="15.0" prefHeight="228.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
@@ -169,7 +171,7 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <Label layoutX="71.0" layoutY="176.0" text="Register Collaborators" textFill="#fffdfd">
+                                                        <Label layoutX="72.0" layoutY="176.0" text="Manage Collaborators" textFill="#fffdfd">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
@@ -184,33 +186,6 @@
                                             </effect>
                                             <children>
                                                 <AnchorPane layoutX="14.0" layoutY="19.0" prefHeight="231.0" prefWidth="273.0" style="-fx-background-color: #1C4741;">
-                                                    <children>
-                                                        <Circle layoutX="137.0" layoutY="108.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
-                                                            <fill>
-                                                                <LinearGradient endX="1.0" endY="1.0">
-                                                                    <stops>
-                                                                        <Stop>
-                                                                            <color>
-                                                                                <Color red="0.26499998569488525" green="0.5299999713897705" blue="0.4038897752761841" />
-                                                                            </color>
-                                                                        </Stop>
-                                                                        <Stop offset="1.0">
-                                                                            <color>
-                                                                                <Color red="1.0" green="1.0" blue="1.0" />
-                                                                            </color>
-                                                                        </Stop>
-                                                                    </stops>
-                                                                </LinearGradient>
-                                                            </fill>
-                                                        </Circle>
-                                                        <Label layoutX="97.0" layoutY="182.0" text="Assign Skills" textFill="WHITE">
-                                                            <font>
-                                                                <Font name="Tahoma" size="15.0" />
-                                                            </font>
-                                                        </Label>
-                                                    </children>
-                                                </AnchorPane>
-                                                <AnchorPane layoutX="305.0" layoutY="19.0" prefHeight="231.0" prefWidth="273.0" style="-fx-background-color: #1C4741;">
                                                     <children>
                                                         <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                                             <fill>
@@ -230,7 +205,7 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <Label layoutX="82.0" layoutY="182.0" text="Generate Teams" textFill="WHITE">
+                                                        <Label layoutX="87.0" layoutY="182.0" text="Manage Teams" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
