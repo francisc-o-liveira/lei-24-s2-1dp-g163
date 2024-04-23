@@ -26,12 +26,10 @@ activate HRM
 
          UI -> HRM : requests data(job name)
          HRM -> UI : types requested data (job name)
+         UI -> UI : verifyJobName(job name)
 
             UI -> CTRL : registerJobCategory(job name)
-
             activate CTRL
-            CTRL -> CTRL : verifyJobName(job name))
-
 
                 CTRL -> RepositorySingleton : getInstance()
                 activate RepositorySingleton
