@@ -147,7 +147,7 @@
                                                         </Circle>
                                                         <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="96.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
-                                                                <Image url=" ../resources/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
+                                                                <Image url="../resources/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
                                                             </image>
                                                         </ImageView>
                                                         <TextField blendMode="MULTIPLY" layoutX="79.0" layoutY="182.0" prefHeight="29.0" prefWidth="114.0" text="Manage Skills">
