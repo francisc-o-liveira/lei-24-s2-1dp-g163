@@ -3,10 +3,7 @@ package MATDISC.US013;
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -57,7 +54,7 @@ public class Main {
                     startTime = System.nanoTime();
                     result = kruskalAlgorithm(edges);
                     try {
-                        createDOTFile(result);
+                         createResultFile(result);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
