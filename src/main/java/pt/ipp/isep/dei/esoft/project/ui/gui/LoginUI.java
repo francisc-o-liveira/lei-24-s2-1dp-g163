@@ -10,13 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
+import javax.security.auth.login.LoginException;
 import java.io.IOException;
+import java.util.List;
 
 
-public class LoginUI{
+public class LoginUI {
     @FXML
     private TextField emailLogin;
 
@@ -28,70 +30,94 @@ public class LoginUI{
 
     @FXML
     private Button forgotPassword;
+    private static int attemps=4;
 
     public Stage mainStage;
-    public AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
 
-    public void setMainStage(Stage mainStage){
-        this.mainStage=mainStage;
+    private final AuthenticationController ctrl = new AuthenticationController();
+
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
     }
 
     @FXML
-    public void uiToShow(ActionEvent event) throws IOException{
-        //if(authenticateCredentials(emailLogin.getText(),passwordLogin.getText())){
-            //deciding which ui is going to be shown
-            if(emailLogin.getText().contains("vfm")){
+    public void uiToShow(ActionEvent event) {
+        if (attemps==0){
+            blockUser();
+        }
+        try {
+            attemps--;
+            authenticateCredentials();
+            List<UserRoleDTO> roles = this.ctrl.getUserRoles();
+            UserRoleDTO role = selectsRole(roles);
+            if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
                 showVFManagerUI();
             }
-            if(emailLogin.getText().contains("hrm")){
+            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
                 showHRManagerUI();
             }
-            if(emailLogin.getText().contains("gsm")){
+            if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
                 showGSManagerUI();
             }
-        //}
+        } catch (LoginException e) {
+            popUp(Alert.AlertType.WARNING, "Invalid Credentials of Login", "Try Again Please more: " + attemps + " times.").show();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            popUp(Alert.AlertType.ERROR, "Login Error Program", "Try Again Please").show();
+        } catch (IOException e) {
+            popUp(Alert.AlertType.ERROR, "Redirect Page By Role Error", "Try Again Please").show();
+        }
     }
 
-    private boolean authenticateCredentials(String email, String password){
-        try{
-            authenticationRepository.doLogin(emailLogin.getText(),passwordLogin.getText());
-        }catch (IllegalArgumentException e){
-            popUp(Alert.AlertType.ERROR, "Invalid Credentials of Login", "Try Again Please").show();
-            return false;
+    private void blockUser() {
+    }
+
+    private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
+        if (roles.size() == 1) {
+            return roles.get(0);
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    private boolean authenticateCredentials() throws LoginException {
+        boolean sucess;
+        sucess = ctrl.doLogin(emailLogin.getText(), passwordLogin.getText());
+        if (!sucess) {
+            throw new LoginException(emailLogin.getText());
         }
         return true;
     }
 
     @FXML
-    public void btnForgotPassword(ActionEvent event) throws IOException{
+    public void btnForgotPassword(ActionEvent event) {
         popUp(Alert.AlertType.WARNING, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
     }
 
-    public void showHRManagerUI()throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
+    public void showHRManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
         mainStage.setScene(scene);
         mainStage.show();
     }
 
-    public void showVFManagerUI() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/Scene_ManageTeams.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
+    public void showVFManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ManageTeams.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
         mainStage.setScene(scene);
         mainStage.show();
     }
 
-    public void showGSManagerUI() throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/SceneMenu_GSM.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
+    public void showGSManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
         mainStage.setScene(scene);
         mainStage.show();
     }
 
-    private Alert popUp(Alert.AlertType alertType, String header, String message){
+    private Alert popUp(Alert.AlertType alertType, String header, String message) {
         Alert alerta = new Alert(alertType);
 
         alerta.setTitle("ERROR");

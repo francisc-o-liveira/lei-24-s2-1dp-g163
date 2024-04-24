@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.domain;
+package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 /**
  * Represent the Domain Class of JobCategory Objects

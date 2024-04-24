@@ -6,6 +6,7 @@ import org.knowm.xchart.style.Styler;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -54,6 +55,11 @@ public class Main {
                     }
                     startTime = System.nanoTime();
                     result = kruskalAlgorithm(edges);
+                    try{
+                        createDOTFile(result);
+                    } catch (IOException e){
+                        throw new RuntimeException(e);
+                    }
                     int price = 0;
                     for (Edge r : result) {
                         System.out.print(r + "\n");
@@ -260,5 +266,28 @@ public class Main {
             }
         }
         return -1;
+    }
+
+    public static void createDOTFile(ArrayList<Edge> edges) throws IOException {
+        FileWriter fileDot= new FileWriter("graph.dot");
+        String line="graph US13 {\n" ;
+        fileDot.write(line);
+        for(int i=0; i<edges.size(); i++){
+            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            fileDot.write(string);
+        }
+        String line2="}";
+        fileDot.write(line2);
+        fileDot.close();
+        try{
+            createGraph("graph.dot");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public static void createGraph(String fileName) throws IOException{
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o gr.png";
+        Runtime rt = Runtime.getRuntime();
+        Process prcs = rt.exec(command);
     }
 }

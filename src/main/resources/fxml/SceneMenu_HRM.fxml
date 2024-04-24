@@ -19,7 +19,7 @@
                         <AnchorPane layoutX="255.0" layoutY="-86.0" prefHeight="40.0" prefWidth="1100.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <FontAwesomeIconView glyphName="USERS" layoutX="14.0" layoutY="29.0" size="1.5em" />
-                                <Label layoutX="43.0" layoutY="13.0" text="Employee Management System">
+                                <Label layoutX="43.0" layoutY="13.0" text="Green Space Management System">
                                     <font>
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
@@ -103,7 +103,7 @@
                                                         </Circle>
                                           <ImageView fitHeight="72.0" fitWidth="82.0" layoutX="96.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../resources/pngegg.png" />
+                                                <Image url="@../pngegg.png" />
                                              </image>
                                           </ImageView>
                                           <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="178.0" onAction="#manageJobs" prefHeight="29.0" prefWidth="109.0" text="Manage Jobs">
@@ -113,7 +113,7 @@
                                           </Button>
                                           <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="94.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../resources/pngegg.png" />
+                                                <Image url="@../pngegg.png" />
                                              </image>
                                           </ImageView>
                                                     </children>
@@ -140,7 +140,7 @@
                                                         </Circle>
                                           <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="96.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../resources/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
+                                                <Image url="@../kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
                                              </image>
                                           </ImageView>
                                           <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="182.0" onAction="#manageSkills" prefHeight="29.0" prefWidth="114.0" text="Manage Skills">
@@ -150,7 +150,7 @@
                                           </Button>
                                           <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="93.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../resources/kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
+                                                <Image url="@../kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
                                              </image>
                                           </ImageView>
                                                     </children>

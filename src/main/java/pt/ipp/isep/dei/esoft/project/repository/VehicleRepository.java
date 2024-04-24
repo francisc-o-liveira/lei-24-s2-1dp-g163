@@ -1,14 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.*;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static pt.ipp.isep.dei.esoft.project.domain.Vehicle.StatusType.Use;
+import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.Use;
 
-import static pt.ipp.isep.dei.esoft.project.domain.Vehicle.StatusType.NotUse;
+import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.NotUse;
 
 public class VehicleRepository{
     private List<Vehicle> vehicleList;

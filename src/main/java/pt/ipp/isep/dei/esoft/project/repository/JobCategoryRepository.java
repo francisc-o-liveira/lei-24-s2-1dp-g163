@@ -1,8 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
-import pt.ipp.isep.dei.esoft.project.domain.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

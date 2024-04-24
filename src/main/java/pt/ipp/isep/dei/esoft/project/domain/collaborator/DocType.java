@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.domain;
+package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 public class DocType {
     public enum Type {CitizenCard, TaxPayerCard, Passport};
