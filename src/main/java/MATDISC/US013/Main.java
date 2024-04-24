@@ -3,8 +3,10 @@ package MATDISC.US013;
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
 
-import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -16,8 +18,11 @@ public class Main {
     private static final String pathZip = "../resources/graphVizInstall.zip";
     private static final String pathDestination = "C:/Program Files/";
     public static String fileName;
+
     public static final String pathName = "src/main/java/MATDISC/US013/";
+
     public static final String FILENAME_PER_OMISSION = "..NONE..";
+
     public static void main(String[] args) {
         long startTime = 0;
         long endTime = 0;
@@ -56,12 +61,6 @@ public class Main {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    int price = 0;
-                    for (Edge r : result) {
-                        System.out.print(r + "\n");
-                        price += r.getPrice();
-                    }
-                    System.out.printf("Cost: %d%n", price);
                     endTime = System.nanoTime();
                     long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
                     executionTimes.add((double) executionTime);
@@ -267,26 +266,34 @@ public class Main {
         return -1;
     }
 
-    public static void createDOTFile(ArrayList<Edge> edges) throws IOException {
-        FileWriter fileDot = new FileWriter("graph.dot");
-        String line = "graph US13 {\n";
+    public static void createResultFile(ArrayList<Edge> edges) throws IOException {
+        FileWriter fileDot= new FileWriter("graph.dot");
+        FileWriter result=new FileWriter("result.csv");
+        int price = 0;
+        String line="graph US13 {\n" ;
         fileDot.write(line);
-        for (int i = 0; i < edges.size(); i++) {
-            String string = String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+        for(int i=0; i<edges.size(); i++){
+            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
             fileDot.write(string);
+            String line1=String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price+=edges.get(i).getPrice();
+            result.write(line1);
         }
-        String line2 = "}";
+        String line2="}";
         fileDot.write(line2);
+        String line3=String.format("Cost: %s", price);
+        result.write(line3);
         fileDot.close();
-        try {
+        result.close();
+        try{
             createGraph("graph.dot");
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public static void createGraph(String fileName) throws IOException {
-        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o gr.png";
+    public static void createGraph(String fileName) throws IOException{
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o result_graph.png";
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
     }
