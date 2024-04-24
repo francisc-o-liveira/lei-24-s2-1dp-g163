@@ -49,12 +49,12 @@
                                     </font>
                                 </Label>
                                 <Line endX="86.5" layoutX="117.0" layoutY="171.0" startX="-107.0" stroke="WHITE" />
-                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Home">
+                                <Button layoutX="38.0" layoutY="222.0" onAction="#reloadPage" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Home">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="HOME" />
                                     </graphic>
                                 </Button>
-                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false">
+                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false" onAction="#doLogout">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="SIGN_OUT" size="2em" />
                                     </graphic>
