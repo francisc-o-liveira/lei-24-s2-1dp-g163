@@ -5,9 +5,6 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
-import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.List;
@@ -33,51 +30,10 @@ public class RegisterCollaboratorUI implements Runnable{
 
     Scanner scan= new Scanner(System.in);
 
-    /** The repositories for further verifications */
-    public JobCategoryRepository jobCategoryRepository=getJobCategoryRepository();
-    public CollaboratorRepository collaboratorRepository=getCollaboratorRepository();
 
-    /**This method initializes the repository of collaborators
-     *
-     * @return Repository of Collaborators
-     */
-    public CollaboratorRepository getCollaboratorRepository(){
-        if (collaboratorRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            // Getting the Collaborator Repository
-            collaboratorRepository = repositories.getCollaboratorRepository();
-        }
-        return collaboratorRepository;
-    }
+    /**Controller*/
+    public RegisterCollaboratorController controller= new RegisterCollaboratorController();
 
-    /**This method initializes the repository of job categories
-     *
-     * @return Repository of Job Categories
-     */
-    public JobCategoryRepository getJobCategoryRepository() {
-        if (jobCategoryRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-            // Getting the JobCategory Repository
-            jobCategoryRepository = repositories.getJobCategoryRepository();
-        }
-        return jobCategoryRepository;
-    }
-
-    /**
-     * This method the Doc Type List
-     * @return a Type List for Select (Passport,TaxPayer and CitizenCard)
-     */
-    public DocType.Type[] getDocTypeList(){
-        return DocType.Type.values();
-    }
-
-    /**
-     * This method return the JobCategories List
-     * @return List of JobCategory existent
-     */
-    public List<JobCategory> getJobCategoriesList(){
-        return jobCategoryRepository.getJobCategoryList();
-    }
 
     public void run(){
         System.out.print("--------- Register a Collaborator ---------\n");
@@ -96,12 +52,7 @@ public class RegisterCollaboratorUI implements Runnable{
         registerEmail();
         registerDocType();
         registerJobCategory();
-
-        Collaborator test=new Collaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
-        if(!verifyIfCollaboratorNOTExist(test)){
-            throw new IllegalArgumentException("The introduced Collaborator already exists.");
-        }
-        new RegisterCollaboratorController(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
+        controller.registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
         System.out.println("Collaborator registered!");
     }
 
@@ -367,27 +318,10 @@ public class RegisterCollaboratorUI implements Runnable{
      */
 
     private boolean verifyIfJobCategoryExists(JobCategory jobCategory){
-        List<JobCategory> jobCategoryList=jobCategoryRepository.getJobCategoryList();
+        List<JobCategory> jobCategoryList=controller.jobCategoryRepository.getJobCategoryList();
         if(jobCategoryList.contains(jobCategory)){
             return true;
         }
         return false;
     }
-
-    /**Verifies if the collaborator does not exist
-     *
-     * @param test to test the collaborator
-     * @return true if collaborator doesn't exist
-     */
-
-    private boolean verifyIfCollaboratorNOTExist(Collaborator test){
-        List<Collaborator> collaboratorList= collaboratorRepository.getCollaboratorList();
-        boolean operationSucess = false;
-        if (!collaboratorList.contains(test)){
-            operationSucess=true;
-        }
-        return operationSucess;
-    }
-
-
 }

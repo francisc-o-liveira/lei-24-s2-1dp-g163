@@ -1,78 +1,64 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterCollaboratorUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
 /**
- * This Class Represent the Controller for Register a Collaborator
+ * This Class represents the Controller to Register a Collaborator
  */
 public class RegisterCollaboratorController {
     /**
-     * This variable represent the Collaborator Repository
+     * This variable represents the Collaborator Repository
      */
-    public CollaboratorRepository collaboratorRepository=getCollaboratorRepository();
+    public CollaboratorRepository collaboratorRepository;
     /**
-     * This variable represent the JobCategory Repository
+     * This variable represents the JobCategory Repository
      */
-    public JobCategoryRepository jobCategoryRepository=getJobCategoryRepository();
+    public JobCategoryRepository jobCategoryRepository;
 
-    /**This method initializes the repository of collaborators
-     *
-     * @return Repository of Collaborators
+
+    public RegisterCollaboratorController() {
+        getDataNeededToRegister();
+    }
+
+    /**
+     * This method gets the instances of Job Category Repository and Collaborator Repository
+     * It is necessary Data to register a Collaborator
      */
-    public CollaboratorRepository getCollaboratorRepository(){
+    public void getDataNeededToRegister(){
+        if (jobCategoryRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            // Getting the JobCategory Repository
+            jobCategoryRepository = repositories.getJobCategoryRepository();
+            }
         if (collaboratorRepository == null) {
             Repositories repositories = Repositories.getInstance();
             // Getting the Collaborator Repository
             collaboratorRepository = repositories.getCollaboratorRepository();
         }
-        return collaboratorRepository;
     }
 
-    /**This method initializes the repository of job categories
-     *
-     * @return Repository of Job Categories
+    /**
+     * This method registers a collaborator from collaborator's Repository
+     * @param name of collaborator
+     * @param birthday of collaborator
+     * @param admissionDate of collaborator
+     * @param address of collaborator
+     * @param addressZipCode of collaborator
+     * @param addressCity of collaborator
+     * @param email of collaborator
+     * @param phoneNumber of collaborator
+     * @param docType of collaborator
+     * @param docIDNumber of collaborator
+     * @param jobCategory of collaborator
      */
-    public JobCategoryRepository getJobCategoryRepository() {
-        if (jobCategoryRepository == null) {
-            Repositories repositories = Repositories.getInstance();
-
-            // Getting the JobCategory Repository
-            jobCategoryRepository = repositories.getJobCategoryRepository();
-        }
-        return jobCategoryRepository;
-    }
-
-
-    /**After the verification made in the UI, this constructor method registers the collaborator in the repository
-     *
-     * @param name
-     * @param birthday
-     * @param admissionDate
-     * @param address
-     * @param addressCity
-     * @param addressZipCode
-     * @param phoneNumber
-     * @param email
-     * @param docType
-     * @param docIDNumber
-     * @param jobCategory
-     */
-    public RegisterCollaboratorController(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, int phoneNumber, String email, DocType docType, int docIDNumber, JobCategory jobCategory) {
-        collaboratorRepository.registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
+    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, int phoneNumber, String email, DocType docType, int docIDNumber, JobCategory jobCategory){
+        collaboratorRepository.createCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
     }
 
     private void getHRMFromSession(){
