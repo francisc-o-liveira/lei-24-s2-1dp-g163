@@ -21,15 +21,15 @@ public class Main {
     public static final String FILENAME_PER_OMISSION = "..NONE..";
 
     public static void main(String[] args) {
-        long startTime = 0;
-        long endTime = 0;
+        long startTime;
+        long endTime;
         String filename = FILENAME_PER_OMISSION;
         int option = -1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
-        ArrayList<Double> executionTimes = new ArrayList<Double>();
+        ArrayList<Double> executionTimes = new ArrayList<>();
 
-        ArrayList<Double> sizeInput = new ArrayList<Double>();
+        ArrayList<Double> sizeInput = new ArrayList<>();
 
 
         while (option != 0) {
@@ -44,7 +44,15 @@ public class Main {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    sortArrayListPrimitivePerPrice(edges);
+                    try {
+                        if (edges != null) {
+                            sortArrayListPrimitivePerPrice(edges);
+                        }else {
+                            throw new FileNotFoundException();
+                        }
+                    }catch (FileNotFoundException e){
+                        System.out.println("File Empty, not found any Edge on this file");
+                    }
                     break;
                 case 2:
                     if (edges == null) {
@@ -67,7 +75,8 @@ public class Main {
                     plotGraphAndShow(executionTimes, sizeInput);
                     break;
                 case 4:
-
+                    InstallGrapgViz();
+                    break;
                 case 0:
                     break;
             }
