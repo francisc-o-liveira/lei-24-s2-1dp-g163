@@ -2,10 +2,11 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class RegisterCollaboratorUI implements Runnable{
     private String addressZipCode;
     private String addressCity;
     private int phoneNumber;
-    private DocType docType;
+    private DocType.Type docType;
     private int docIDNumber;
     private String email;
     private JobCategory jobCategory;
@@ -32,27 +33,54 @@ public class RegisterCollaboratorUI implements Runnable{
 
 
     /**Controller*/
-    public RegisterCollaboratorController controller= new RegisterCollaboratorController();
+    public RegisterCollaboratorController ctrl= new RegisterCollaboratorController();
 
 
     public void run(){
         System.out.print("--------- Register a Collaborator ---------\n");
+        ctrl.getDataNeededToRegister();
+        displayAndSelectJobCategory();
         registerCollaborator();
     }
+
+    private void displayAndSelectJobCategory() {
+        List<JobCategory> jobCategoryList = ctrl.getJobCategoryList();
+
+        int listSize = jobCategoryList.size();
+        int indexOfJobCategory = -1;
+
+        Scanner input = new Scanner(System.in);
+
+        while (indexOfJobCategory < 1 || indexOfJobCategory > listSize) {
+            displayJobCategoryOptions(jobCategoryList);
+            System.out.print("Select a task category: ");
+            indexOfJobCategory = input.nextInt();
+        }
+        this.jobCategory = jobCategoryList.get(indexOfJobCategory - 1);
+    }
+
+    private void displayJobCategoryOptions(List<JobCategory> jobCategoryList) {
+        int i = 1;
+        for (JobCategory jobCategory : jobCategoryList) {
+            System.out.println("  " + i + " - " + jobCategory.getName());
+            i++;
+        }
+    }
+
 
 
     /**Method to register a collaborator
      *
      */
     public void registerCollaborator(){
+        displayAndSelectJobCategory();
+        registerDocType();
         registerName();
         registerDates();
         registerAddress();
         registerPhoneNumber();
         registerEmail();
-        registerDocType();
-        registerJobCategory();
-        controller.registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
+        ctrl.registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
         System.out.println("Collaborator registered!");
     }
 
@@ -158,65 +186,37 @@ public class RegisterCollaboratorUI implements Runnable{
      * If the user introduces a wrong number according to its document type, the user needs to re-introduce it
      */
     public void registerDocType(){
-        boolean validDocType=false;
-        while(!validDocType){
-            System.out.print("Select one of the following for the type of document: \n");
-            System.out.print("1- CitizenCard\n");
-            System.out.print("2- TaxPayerCard\n");
-            System.out.print("3- Passport\n");
-            switch (scan.nextInt()){
-                case 1:
-                    docType=new DocType(Type.CitizenCard);
-                break;
-                case 2:
-                    docType=new DocType(Type.TaxPayerCard);
-                break;
-                case 3:
-                    docType=new DocType(Type.Passport);
-                break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option (1, 2, or 3).");
-                continue;
+        DocType.Type[] types = ctrl.getDocTypeList();
+        boolean operationSucess=false;
+        Scanner scan = new Scanner(System.in);
+        while(operationSucess){
+            System.out.print("Select one of the following types of document of identification: \n");
+            for(int i = 0; i < types.length; i++){
+                System.out.printf("%d --- %s%n", i+1,types[i]);
+            }
+            int option = -1;
+            while(option<1 && option>3){
+                option=scan.nextInt();
             }
             System.out.print("ID Number from Document of Identification: ");
             docIDNumber=scan.nextInt();
-            if(!validateDocType(docType,docIDNumber)){
-                throw new IllegalArgumentException("The introduced document of identification is incorrect.");
-            } else {
-                validDocType=true;
-            }
+            docType = types[option];
+            operationSucess=validDocType(types[option],docIDNumber);
         }
     }
-
-    /**Register a job for collaborator
-     *
-     * If the job registered does not exist in the system, the user needs to re-introduce it
-     */
-    public void registerJobCategory(){
-        boolean validJob = false;
-        while (!validJob) {
-            System.out.print("Job of Collaborator: ");
-            jobCategory.setTradeName(scan.next());
-
-            if (verifyIfJobCategoryExists(jobCategory)) {
-                validJob= true;
-            } else {
-                System.out.println("The introduced Job Category does not exist. Please try again.");
-            }
-        }
-    }
-
-
-
     /**
      * This method verifies the DocType Number by DocType
      * @param type of document (Passport,TaxPayer and CitizenCard)
-     * @param docTypeNumber represent the value introduce by User to register Collaborator
+     * @param docIDNumber represent the value introduce by User to register Collaborator
      * @return true if verify the value by there docType
      */
-    public boolean validateDocType(DocType type, int docTypeNumber){
-        return type.verifyDocType(docTypeNumber);
+
+    private boolean validDocType(Type type, int docIDNumber) {
+        return ctrl.validateDocType(type,docIDNumber);
     }
+
+
+
 
     /**Verifies if e-mail is correctly inserted
      *
@@ -318,10 +318,12 @@ public class RegisterCollaboratorUI implements Runnable{
      */
 
     private boolean verifyIfJobCategoryExists(JobCategory jobCategory){
-        List<JobCategory> jobCategoryList=controller.jobCategoryRepository.getJobCategoryList();
+        List<JobCategory> jobCategoryList=ctrl.jobCategoryRepository.getJobCategoryList();
         if(jobCategoryList.contains(jobCategory)){
             return true;
         }
         return false;
     }
 }
+
+
