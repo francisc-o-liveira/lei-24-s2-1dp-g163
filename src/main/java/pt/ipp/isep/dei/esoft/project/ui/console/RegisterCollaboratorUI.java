@@ -315,19 +315,6 @@ public class RegisterCollaboratorUI implements Runnable{
         return arrayNeedSize.length<=6;
     }
 
-    /**Verifies if Job Category exists
-     *
-     * @param jobCategory of collaborator
-     * @return true if job exists
-     */
-
-    private boolean verifyIfJobCategoryExists(JobCategory jobCategory){
-        List<JobCategory> jobCategoryList=ctrl.jobCategoryRepository.getJobCategoryList();
-        if(jobCategoryList.contains(jobCategory)){
-            return true;
-        }
-        return false;
-    }
 }
 
 
