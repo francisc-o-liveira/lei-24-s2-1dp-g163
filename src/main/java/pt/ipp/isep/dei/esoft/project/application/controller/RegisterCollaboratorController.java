@@ -1,4 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
@@ -8,6 +9,7 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This Class represents the Controller to Register a Collaborator
@@ -46,20 +48,23 @@ public class RegisterCollaboratorController {
 
     /**
      * This method registers a collaborator from collaborator's Repository
-     * @param name of collaborator
-     * @param birthday of collaborator
-     * @param admissionDate of collaborator
-     * @param address of collaborator
+     *
+     * @param name           of collaborator
+     * @param birthday       of collaborator
+     * @param admissionDate  of collaborator
+     * @param address        of collaborator
      * @param addressZipCode of collaborator
-     * @param addressCity of collaborator
-     * @param email of collaborator
-     * @param phoneNumber of collaborator
-     * @param docType of collaborator
-     * @param docIDNumber of collaborator
-     * @param jobCategory of collaborator
+     * @param addressCity    of collaborator
+     * @param email          of collaborator
+     * @param phoneNumber    of collaborator
+     * @param docType        of collaborator
+     * @param docIDNumber    of collaborator
+     * @param jobCategory    of collaborator
+     * @return
      */
-    public void registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, int phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory){
-        collaboratorRepository.createCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
+    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, int phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory){
+        Optional<Collaborator> newCollab=collaboratorRepository.createCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
+        return newCollab;
     }
 
     private void getHRMFromSession(){

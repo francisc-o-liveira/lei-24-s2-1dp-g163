@@ -3,12 +3,11 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,17 +31,37 @@ public class RegisterCollaboratorUI implements Runnable{
     Scanner scan= new Scanner(System.in);
     
     /**Controller*/
-    public RegisterCollaboratorController ctrl= new RegisterCollaboratorController();
+    public RegisterCollaboratorController ctrl;
+    public RegisterCollaboratorUI() {
+        ctrl= new RegisterCollaboratorController();
+    }
 
+    private RegisterCollaboratorController getController() {
+        return ctrl;
+    }
 
     public void run(){
         System.out.print("--------- Register a Collaborator ---------\n");
         ctrl.getDataNeededToRegister();
-        displayAndSelectJobCategory();
-        registerCollaborator();
+        jobCategory=displayAndSelectJobCategory();
+        docType=displayAndVerifyDocType();
+        docIDNumber=registerDocIDNumber();
+        requestData();
+        submitData();
     }
 
-    private void displayAndSelectJobCategory() {
+    private int registerDocIDNumber() {
+        System.out.print("ID Number from Document of Identification: ");
+        boolean operationSuccess = false;
+        int docIDNumber = 0;
+        while(!operationSuccess) {
+            docIDNumber = scan.nextInt();
+            operationSuccess = validDocType(docType, docIDNumber);
+        }
+        return docIDNumber;
+    }
+
+    private JobCategory displayAndSelectJobCategory() {
         List<JobCategory> jobCategoryList = ctrl.getJobCategoryList();
 
         int listSize = jobCategoryList.size();
@@ -55,7 +74,7 @@ public class RegisterCollaboratorUI implements Runnable{
             System.out.print("Select a task category: ");
             indexOfJobCategory = input.nextInt();
         }
-        this.jobCategory = jobCategoryList.get(indexOfJobCategory - 1);
+        return jobCategoryList.get(indexOfJobCategory - 1);
     }
 
     private void displayJobCategoryOptions(List<JobCategory> jobCategoryList) {
@@ -71,16 +90,20 @@ public class RegisterCollaboratorUI implements Runnable{
     /**Method to register a collaborator
      *
      */
-    public void registerCollaborator(){
-        displayAndSelectJobCategory();
-        displayAndVerifyDocType();
+    public void requestData(){
         registerName();
         registerDates();
         registerAddress();
         registerPhoneNumber();
         registerEmail();
-        ctrl.registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
-        System.out.println("Collaborator registered!");
+    }
+    private void submitData() {
+        Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
+        if (collaborator.isPresent()) {
+            System.out.println("\nCollaborator successfully created!");
+        } else {
+            System.out.println("\nCollaborator not created!");
+        }
     }
 
     /**Register the name of collaborator
@@ -179,18 +202,21 @@ public class RegisterCollaboratorUI implements Runnable{
         }
     }
 
-    /**Register the document of identification of collaborator
-     *
+    /**
+     * Register the document of identification of collaborator
+     * <p>
      * If the user chooses a wrong option, it is required to choose again
      * If the user introduces a wrong number according to its document type, the user needs to re-introduce it
+     *
+     * @return
      */
-    public void displayAndVerifyDocType(){
+    public Type displayAndVerifyDocType(){
         Type[] types = ctrl.getDocTypeList();
-        boolean operationSuccess=false;
+
         Scanner scan = new Scanner(System.in);
-        int docIDNumber = 0;
-        Type type = null;
-        while(operationSuccess){
+        int docIDNumber;
+
+
             System.out.print("Select one of the following types of document of identification: \n");
             for(int i = 0; i < types.length; i++){
                 System.out.printf("%d --- %s%n", i+1,types[i]);
@@ -199,14 +225,8 @@ public class RegisterCollaboratorUI implements Runnable{
             while(option<1 && option>3){
                 option=scan.nextInt();
             }
-            System.out.print("ID Number from Document of Identification: ");
-            docIDNumber=scan.nextInt();
-            type = types[option];
-            operationSuccess=validDocType(types[option],docIDNumber);
-        }
-        docType = type;
-        this.docIDNumber=docIDNumber;
-        
+
+        return types[option-1];
     }
     /**
      * This method verifies the DocType Number by DocType
