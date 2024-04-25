@@ -24,14 +24,13 @@ public class RegisterCollaboratorUI implements Runnable{
     private String addressZipCode;
     private String addressCity;
     private int phoneNumber;
-    private DocType.Type docType;
+    private Type docType;
     private int docIDNumber;
     private String email;
     private JobCategory jobCategory;
 
     Scanner scan= new Scanner(System.in);
-
-
+    
     /**Controller*/
     public RegisterCollaboratorController ctrl= new RegisterCollaboratorController();
 
@@ -74,7 +73,7 @@ public class RegisterCollaboratorUI implements Runnable{
      */
     public void registerCollaborator(){
         displayAndSelectJobCategory();
-        registerDocType();
+        displayAndVerifyDocType();
         registerName();
         registerDates();
         registerAddress();
@@ -185,11 +184,13 @@ public class RegisterCollaboratorUI implements Runnable{
      * If the user chooses a wrong option, it is required to choose again
      * If the user introduces a wrong number according to its document type, the user needs to re-introduce it
      */
-    public void registerDocType(){
-        DocType.Type[] types = ctrl.getDocTypeList();
-        boolean operationSucess=false;
+    public void displayAndVerifyDocType(){
+        Type[] types = ctrl.getDocTypeList();
+        boolean operationSuccess=false;
         Scanner scan = new Scanner(System.in);
-        while(operationSucess){
+        int docIDNumber = 0;
+        Type type = null;
+        while(operationSuccess){
             System.out.print("Select one of the following types of document of identification: \n");
             for(int i = 0; i < types.length; i++){
                 System.out.printf("%d --- %s%n", i+1,types[i]);
@@ -200,9 +201,12 @@ public class RegisterCollaboratorUI implements Runnable{
             }
             System.out.print("ID Number from Document of Identification: ");
             docIDNumber=scan.nextInt();
-            docType = types[option];
-            operationSucess=validDocType(types[option],docIDNumber);
+            type = types[option];
+            operationSuccess=validDocType(types[option],docIDNumber);
         }
+        docType = type;
+        this.docIDNumber=docIDNumber;
+        
     }
     /**
      * This method verifies the DocType Number by DocType
