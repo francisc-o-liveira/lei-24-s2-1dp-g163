@@ -11,6 +11,26 @@ import javax.swing.*;
 import java.io.IOException;
 
 public class HRManagerUI {
+
+    @FXML
+    public void reloadPage(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        Stage stage= new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void doLogout(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        Stage stage= new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageJobs.fxml"));

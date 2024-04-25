@@ -17,6 +17,77 @@ import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.Sta
 public class CollaboratorRepository {
     public List<Collaborator> collaboratorList;
 
+    /** The method gets the List of Collaborators
+     *
+     * @return List of Collaborators
+     */
+    public List<Collaborator> getCollaboratorList(){
+        return List.copyOf(collaboratorList);
+    }
+
+    /**
+     * This method creates and instances a new Collaborator after verification made in UI
+     * @param name of collaborator
+     * @param birthday of collaborator
+     * @param admissionDate of collaborator
+     * @param address of collaborator
+     * @param addressZipCode of collaborator
+     * @param addressCity of collaborator
+     * @param email of collaborator
+     * @param phoneNumber of collaborator
+     * @param docType of collaborator
+     * @param docIDNumber of collaborator
+     * @param jobCategory of collaborator
+     *
+     */
+
+    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory){
+        Optional<Collaborator> newCollab;
+        Collaborator collab = new Collaborator(name,birthday,admissionDate,address,addressZipCode,addressCity,phoneNumber,email,docType,docIDNumber,jobCategory);
+        newCollab = verifyCollaboratorExistAndSave(collab);
+        addCollaborator(collab);
+        return newCollab;
+    }
+
+
+    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) {
+        Optional<Collaborator> newCollab = Optional.empty();
+        boolean operationSucess = false;
+        if (!collaboratorList.contains(collab)){
+            operationSucess=collaboratorList.add(collab);
+            newCollab=Optional.of(collab);
+        }
+        if (!operationSucess){
+            newCollab=Optional.empty();
+        }
+        return newCollab;
+    }
+
+    /**Adds the collaborator to the List of Collaborators
+     *
+     * @param collaborator
+     * @return
+     */
+    public Optional<Collaborator> addCollaborator(Collaborator collaborator){
+        Optional<Collaborator> newCollaborator = Optional.empty();
+        newCollaborator = Optional.of(collaborator);
+        if (isValidCollaborator(collaborator)){
+            collaboratorList.add(collaborator);
+        }
+        return newCollaborator;
+    }
+
+
+    /**Verifies if collaborator does not exist
+     *
+     * @param collaborator
+     * @return true if collaborator does not exist
+     */
+    private boolean isValidCollaborator(Collaborator collaborator) {
+        boolean isValid = !collaboratorList.contains(collaborator);
+        return isValid;
+    }
+
     /**Method to get the List of Not Active Collaborators
      *
      * @return List of Not Active Collaborators
@@ -31,49 +102,9 @@ public class CollaboratorRepository {
         return collaboratorNotActive;
     }
 
-    /**
-     * This method create and instance a new Collaborator verify if exist and save
-     * @param name
-     * @param birthday
-     * @param admissionDate
-     * @param address
-     * @param addressZipCode
-     * @param addressCity
-     * @param email
-     * @param phoneNumber
-     * @param docType
-     * @param docIDNumber
-     * @param jobCategory
-     * @return
-     */
-    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory){
-        Optional<Collaborator> newCollab = Optional.empty();
-        Collaborator collab = new Collaborator(name,birthday,admissionDate,address,addressZipCode,addressCity,phoneNumber,email,docType,docIDNumber,jobCategory);
-        newCollab = verifyCollaboratorExistAndSave(collab);
-        return newCollab;
-    }
-
-    /**
-     *
-     * @param collab
-     * @return
-     */
-    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) {
-        Optional<Collaborator> newCollab = Optional.empty();
-        boolean operationSucess = false;
-        if (!collaboratorList.contains(collab)){
-            operationSucess=collaboratorList.add(collab);
-            newCollab=Optional.of(collab);
-        }
-        if (!operationSucess){
-            newCollab=Optional.empty();
-        }
-        return newCollab;
-    }
-
     /**Method to change the status of Not Active Collaborators to Active
      *
-     * @param team
+     * @param team where collaborator has been added to
      */
 
     public void activateCollaborators(Team team){
@@ -87,7 +118,7 @@ public class CollaboratorRepository {
 
     /**This method gets the List of Collaborators that are not active according to the List of Skills given
      *
-     * @param skill
+     * @param skill of collaborator
      * @return List of Not Active Collaborators with the given skills
      */
 
@@ -107,7 +138,7 @@ public class CollaboratorRepository {
 
     /** This method sorts, in ascending order, the List of Collaborators by the number of Skills they have
      *
-     * @param collaborators
+     * @param collaborators - List of Collaborators
      */
 
     public void sortCollaboratorsByNumberOfSkills(List<Collaborator> collaborators){
@@ -123,27 +154,10 @@ public class CollaboratorRepository {
         }
     }
 
-    public Optional<Collaborator> addCollaborator(Collaborator collaborator){
-        Optional<Collaborator> newCollaborator = Optional.empty();
-        newCollaborator = Optional.of(collaborator);
-        if (isValidCollaborator(collaborator)){
-            saveCollaborator(collaborator);
-        }
-        return newCollaborator;
-    }
-
-    private void saveCollaborator(Collaborator collaborator) {
-        collaboratorList.add(collaborator);
-    }
-
-    private boolean isValidCollaborator(Collaborator collaborator) {
-        boolean isValid = !collaboratorList.contains(collaborator);
-        return isValid;
-    }
 
     /** The method searches for the Collaborator by their DocIDNumber
      *
-     * @param docIDNumber
+     * @param docIDNumber of collaboraator
      * @return collaborator
      */
 
@@ -158,11 +172,4 @@ public class CollaboratorRepository {
         return collaboratorFound;
     }
 
-    /** The method gets the List of Collaborators
-     *
-     * @return List of Collaborators
-     */
-    public List<Collaborator> getCollaboratorList(){
-        return List.copyOf(collaboratorList);
-    }
 }
