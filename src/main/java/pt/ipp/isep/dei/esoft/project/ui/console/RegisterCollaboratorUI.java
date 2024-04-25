@@ -114,7 +114,7 @@ public class RegisterCollaboratorUI implements Runnable{
         boolean validName=false;
         while(!validName){
             System.out.print("Name of collaborator: ");
-            name= scan.next();
+            name = scan.next();
             if(!verifyName(name)){
                 throw new IllegalArgumentException("The introduced name is incorrect.");
             } else {
@@ -128,8 +128,6 @@ public class RegisterCollaboratorUI implements Runnable{
      * If the collaborator is younger than 18 years old, the user needs to re-introduce the dates
      */
     public void registerDates(){
-        boolean validDate=false;
-        while(!validDate){
             System.out.print("Date of birth (Format: YYYY MM DD): ");
             birthday.setData(scan.nextInt(), scan.nextInt(), scan.nextInt());
             System.out.print("Date of admission (Format: YYYY MM DD): ");
@@ -137,7 +135,6 @@ public class RegisterCollaboratorUI implements Runnable{
             if(!verifyBirthdayAndAdmission(birthday, admissionDate)){
                 throw new IllegalArgumentException("The collaborator cannot be under 18.");
             }
-        }
     }
 
     /**Register the address of collaborator
