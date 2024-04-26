@@ -166,4 +166,8 @@ public class TeamRepository {
         }
         return count;
     }
+
+    public boolean saveTeam(Team teamCreated) {
+        return teams.add(teamCreated);
+    }
 }

@@ -102,17 +102,20 @@ public class CollaboratorRepository {
         return collaboratorNotActive;
     }
 
-    /**Method to change the status of Not Active Collaborators to Active
+    /**
+     * Method to change the status of Not Active Collaborators to Active
      *
      * @param team where collaborator has been added to
+     * @return
      */
 
-    public void activateCollaborators(Team team){
+    public boolean activateCollaborators(Team team){
         for(Collaborator c : team.getTeamList()){
             if(c.getStatus()==NotActive){
                 c.setStatus(Active);
             }
         }
+        return false;
     }
 
 
@@ -153,7 +156,6 @@ public class CollaboratorRepository {
             }
         }
     }
-
 
     /** The method searches for the Collaborator by their DocIDNumber
      *

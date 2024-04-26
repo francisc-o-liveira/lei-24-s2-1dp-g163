@@ -21,6 +21,8 @@ public class GenerateTeamUI {
     private List<Skill> skillsSelected;
     private List<Integer> numberCollabForSkill;
 
+    private Team teamCreated;
+
     public GenerateTeamUI(){
         ctrl= new GenerateTeamController();
     }
@@ -34,7 +36,12 @@ public class GenerateTeamUI {
         requestData();
         skillsSelected = showSelectData();
         numberCollabForSkill = showAndRequestData();
+        teamCreated=submitsDataAndShow();
         submitsData();
+    }
+
+    private boolean submitsData() {
+        return ctrl.saveTeam(teamCreated);
     }
 
     private List<Integer> showAndRequestData() {
@@ -52,13 +59,15 @@ public class GenerateTeamUI {
         return numbCollabPerSkill;
     }
 
-    private void submitsData() {
+    private Team submitsDataAndShow() {
         Optional<Team> team = getController().generateTeam(minSize,maxSize,skillsSelected,numberCollabForSkill);
         if (team.isPresent()) {
             System.out.println("\nTeam successfully created!");
+            System.out.println(team.get());
         } else {
             System.out.println("\nTeam not created!");
         }
+        return team.get();
     }
 
     private List<Skill> showSelectData() {

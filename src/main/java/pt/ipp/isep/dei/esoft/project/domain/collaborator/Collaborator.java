@@ -24,9 +24,11 @@ public class Collaborator {
 
     /**
      * This method it is for trade the statusType
+     *
      * @param statusType represent the new status for the collaborator
+     * @return
      */
-    public void setStatus(StatusType statusType) {
+    public boolean setStatus(StatusType statusType) {
         this.statusType=statusType;
     }
 

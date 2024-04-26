@@ -6,9 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
-import pt.ipp.isep.dei.esoft.project.ui.console.utils.GenerateTeamUI;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +72,14 @@ public class GenerateTeamController{
      */
     public List<Team> getTeams(){
         return teamRepository.getTeams();
+    }
+
+    public boolean saveTeam(Team teamCreated) {
+        boolean operationSucess=teamRepository.saveTeam(teamCreated);
+        if (operationSucess){
+            activateCollaborators(teamCreated);
+        }
+        return operationSucess;
     }
 
     /*private (...) getHRMFromSession()*/

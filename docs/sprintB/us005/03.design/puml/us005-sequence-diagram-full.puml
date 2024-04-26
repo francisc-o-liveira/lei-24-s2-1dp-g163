@@ -201,10 +201,10 @@ activate HRM
     CollaboratorRepository -> Collaborator : activateStatus()
     activate Collaborator
 
-    Collaborator -> CollaboratorRepository : true/false
+    Collaborator -> CollaboratorRepository :
     deactivate Collaborator
     end
-    CollaboratorRepository -> CTRL : true/false
+    CollaboratorRepository -> CTRL :
     deactivate CollaboratorRepository
     CTRL -> TeamRepository : saveTeam(team)
     activate TeamRepository

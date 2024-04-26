@@ -95,4 +95,7 @@ public class GSManagerUI {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void reloadPage(ActionEvent event) {
+    }
 }
