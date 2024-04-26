@@ -86,14 +86,14 @@
                                  <children>
                                     <TableView layoutX="165.0" layoutY="68.0" prefHeight="220.0" prefWidth="535.0">
                                       <columns>
-                                        <TableColumn prefWidth="534.0" text="List of Skills" />
+                                        <TableColumn prefWidth="534.0" text="List of Jobs" />
                                       </columns>
                                     </TableView>
                                     <TextField layoutX="15.0" layoutY="21.0" prefHeight="26.0" prefWidth="276.0" promptText="   Search" />
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="38.0" size="1.2em" text="" wrappingWidth="10.07341194152832" />
                                  </children>
                               </AnchorPane>
-                              <Label layoutX="21.0" layoutY="354.0" text="Skill name: ">
+                              <Label layoutX="21.0" layoutY="354.0" text="Job name: ">
                                  <font>
                                     <Font name="Tahoma" size="15.0" />
                                  </font>
