@@ -72,7 +72,7 @@ public class RegisterCollaboratorController {
     }
 
     public boolean validateDocType(DocType.Type type, int docIDNumber) {
-            return type.verifyDocTypeValues(docTypeNumber);
+        return DocType.verifyDocType(type,docIDNumber);
     }
 
     public Type[] getDocTypeList() {

@@ -12,9 +12,9 @@ public class DocType {
         return Type.values();
     }
 
-    public boolean verifyDocType(int numberID){
+    public static boolean verifyDocType(Type docType , int numberID){
         boolean valueVerify = false;
-        switch (this.docType) {
+        switch (docType) {
             case CitizenCard:
                 if(numberID>0 && numberID<999999999){
                     valueVerify=true;

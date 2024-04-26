@@ -41,7 +41,7 @@ public class CollaboratorRepository {
      *
      */
 
-    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType docType, int docIDNumber, JobCategory jobCategory){
+    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, int phoneNumber, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
         Optional<Collaborator> newCollab;
         Collaborator collab = new Collaborator(name,birthday,admissionDate,address,addressZipCode,addressCity,phoneNumber,email,docType,docIDNumber,jobCategory);
         newCollab = verifyCollaboratorExistAndSave(collab);
