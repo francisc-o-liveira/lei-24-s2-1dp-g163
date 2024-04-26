@@ -30,7 +30,7 @@ public class Collaborator {
         this.statusType=statusType;
     }
 
-    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType docType, int docIDNumber, JobCategory jobCategory){
+    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
         this.name=name;
         this.address=address;
         this.addressZipCode=addressZipCode;
