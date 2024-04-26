@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
@@ -20,7 +19,6 @@ public class RegisterVehicleUI {
     private Date acquisitionDate;
     private int checkupFrequency;
 
-    Scanner scan= new Scanner(System.in);
 
     /**Controller*/
     public RegisterVehicleController ctrl;
