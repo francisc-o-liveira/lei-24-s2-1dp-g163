@@ -14,7 +14,6 @@ participant "repositories:Repositories" as reposRepos
 participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
 participant "skillRepository:SkillRepository" as SkillRepo
 
-participant "hrm:HRM" as HRM
 participant "collaborator:Collaborator" as Collaborator
 
 activate HRManager
@@ -48,10 +47,10 @@ deactivate reposRepos
 Controller -> EmpRepo : getCollaboratorList()
 activate EmpRepo
 
-EmpRepo --> Controller : CollaboratorList
+EmpRepo --> Controller : collaboratorList
 deactivate EmpRepo
 
-Controller --> UI : CollaboratorList
+Controller --> UI : collaboratorList
 deactivate Controller
 
 
@@ -61,10 +60,10 @@ deactivate UI
 HRManager -> UI : Selects Collaborator
 activate UI
 
-UI -> Controller : getCollaboratorDetails(Collaborator)
+UI -> Controller : getAvailableSkillsList(collaborator)
 activate Controller
 
-Controller -> EmpRepo : getCollaboratorSkillsList(Collaborator)
+Controller -> EmpRepo : getAvailableSkillsList(Collaborator)
 activate EmpRepo
 
 EmpRepo --> Controller : CollaboratorSkillsList
@@ -89,10 +88,10 @@ deactivate UI
 HRManager -> UI : Confirms Skill Assignment for Selected Skills
 activate UI
 
-UI -> Controller : assignSkills(Collaborator, skillName)
+UI -> Controller : assignSkills(collaborator, skillName)
 activate Controller
 
-Controller -> EmpRepo : assignSkillToCollaborator(Collaborator, skillName)
+Controller -> EmpRepo : assignSkillToCollaborator(collaborator, skillName)
 activate EmpRepo
 
 

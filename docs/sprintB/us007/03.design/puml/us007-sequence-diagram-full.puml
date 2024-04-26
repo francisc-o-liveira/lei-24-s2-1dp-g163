@@ -10,7 +10,7 @@ autonumber
 actor "VFM" as FleetManager
 
 
-participant ":RegistMaintenanceUI" as UI
+participant ":RegisterCheckUpUI" as UI
 participant ":RegistMaintenanceController" as Controller
 
 participant "Repositories" as Repos
@@ -30,90 +30,80 @@ FleetManager -> UI : Asks to register a maintenance
 activate UI
 
 UI -> Controller** : create
+
+UI -> Controller : getDataNeededToRegisterCheckUp()
 activate Controller
 
 Controller -> Repos : getInstance()
 activate Repos
 
 Repos --> Controller : repositories
-deactivate Repos
+deactivate Repos        
 
-Controller -> Repo : getCollaboratorRepository()
+Controller -> Repo : getVehicleRepository()
 activate Repo
-Repo --> Controller : collaboratorRepository
+Repo --> Controller : vehicleRepository
 deactivate Repo
 
-Controller -> CollabRepo : checkVFManager(userEmail)
-activate CollabRepo
+Controller -> VehicleRepo : getVehiclePLateList()
+activate VehicleRepo
 
-CollabRepo -> VFM : isVFM(userEmail)
-activate VFM
+VehicleRepo --> Controller : plates
+deactivate VehicleRepo
 
-VFM --> CollabRepo  : Authorization Status (true/false)
-deactivate VFM
+Controller --> UI : vehiclePlates
+deactivate Controller
 
-CollabRepo --> Controller  : Authorization Status (true/false)
-deactivate CollabRepo
+UI --> FleetManager : Displays Plates list and Requests Date of Maintenande and Current Kilometers
+deactivate UI
 
-alt Authorization Status is False
-    Controller --> UI : Not Authorized
-    deactivate Controller
+FleetManager -> UI : Selects a Plate, Provides Date of Maintenance and Current Kilometers and Submits
+activate UI
 
-    UI --> FleetManager : Display Not Authorized Message
-    deactivate UI
-else Authorization Status is True
+UI -> UI : verifyCheckUpDateFormat(date)
+UI -> Controller : validateCheckUpDate(date)
+activate Controller
 
-    Controller --> UI : Authorized
-    activate UI
-    activate Controller
-    UI -> Controller : getVehiclePLateList()
-    
-    Controller -> Repo : getVehicleRepository()
-    activate Repo
-    Repo --> Controller : vehicleRepository
-    deactivate Repo
+Controller -> UI : true
+deactivate Controller
 
-    Controller -> VehicleRepo : fetchVehiclePLates()
-    activate VehicleRepo
+UI -> UI : verifyKilometersFormat(currentKms)
 
-    VehicleRepo --> Controller : Vehicle Plates List
-    deactivate VehicleRepo
+UI -> Controller : validateKilometers(currentKms, selectedPlate)
+activate Controller
 
-    Controller --> UI : Displays Plates list and Requests Date of Maintenande and Current Kilometers
-    deactivate Controller
-   
-    UI --> FleetManager : Displays Plates list
-    deactivate UI
+Controller -> UI : true
+deactivate Controller
 
-    FleetManager -> UI : Selects a Vehicle ID (Plate), Provides Date of Maintenance and Current Kilometers and Submits
+UI -> Controller : addCheckUp(selectedPlate, date, currentKms)
+activate Controller
+Controller -> VehicleRepo : addCheckUp(plate, date, currentKms)
+activate VehicleRepo
 
-    activate UI
-    UI -> UI : Verify Date of Maintenance Format and Validate Date of Maintenance inserted
-    UI -> UI : Verify Current Kilometers Format and Validate Current Kilometers inserted 
+VehicleRepo -> Vehicle : findVehicleByPlate(plate)
+activate Vehicle
 
-    alt Date Greater Or Equal To The Current (Valid) and Current Kilometers Value Inputed Greater Than the Last Current Kilometers Stored
-        UI -> Controller : addMaintenance(Plate, Date, CurrentKms) 
-        activate Controller
-        Controller -> VehicleRepo : addMaintenance(Plate, Date, CurrentKms)
-        activate VehicleRepo
-        VehicleRepo -> Vehicle : updateVehicleMaintenanceList(Date, CurrentKms)
-        activate Vehicle
-        Vehicle -> Checkup** : createCheckup(Date, CurrentKms)
-        activate Checkup
-        Checkup -> Vehicle : Success (true)
-        deactivate Checkup
-        Vehicle --> VehicleRepo : Success (true)
-        deactivate Vehicle
-        VehicleRepo --> Controller : Success (true)
-        deactivate VehicleRepo
-        Controller --> UI : Success (true)
-        deactivate Controller
-        UI --> FleetManager : Confirms registration success
-        deactivate UI
-        
-    else else
-        UI -> FleetManager : Shows error, invalid input 
-    end
-end
+Vehicle -> VehicleRepo : vehicle
+deactivate Vehicle
+
+VehicleRepo -> Vehicle : addCheckUp(currentKms, date)
+activate Vehicle
+Vehicle -> Checkup** : new CheckUp(km, date)
+activate Checkup
+
+Checkup -> Vehicle : Created and Added to the Check Up List of the Vehicle which was under maintenance 
+deactivate Checkup
+
+Vehicle --> VehicleRepo : Done
+deactivate Vehicle
+
+VehicleRepo --> Controller : true
+deactivate VehicleRepo
+
+Controller -> UI : Success
+deactivate Controller
+
+UI --> FleetManager : Confirms registration success
+deactivate UI
 
 @enduml
