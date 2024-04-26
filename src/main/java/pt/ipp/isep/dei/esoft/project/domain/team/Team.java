@@ -52,6 +52,10 @@ public class Team {
         return new Team(this.collaboratorsTeam, this.skillsSelected, this.maxSizeTeam,this.minSizeTeam);
     }
 
+    public boolean isPossible() {
+        return collaboratorsTeam.size()<=maxSizeTeam && collaboratorsTeam.size()>=minSizeTeam;
+    }
+
     /*public List<Collaborator> getTeamListBySkills(Skill skillsSelected){
 
     }*/
