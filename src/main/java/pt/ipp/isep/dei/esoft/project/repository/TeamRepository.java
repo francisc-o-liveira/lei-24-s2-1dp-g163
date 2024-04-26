@@ -16,8 +16,6 @@ public class TeamRepository {
         teams = new ArrayList<>();
     }
 
-
-
     public Optional<Team> addTeam(Team team){
         Optional<Team> newTeam = Optional.empty();
         boolean operationSucess = false;
