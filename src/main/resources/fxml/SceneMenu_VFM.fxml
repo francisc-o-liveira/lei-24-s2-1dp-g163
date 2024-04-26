@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.VFManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.VFManagerUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -55,12 +49,12 @@
                                     </font>
                                 </Label>
                                 <Line endX="86.5" layoutX="117.0" layoutY="171.0" startX="-107.0" stroke="WHITE" />
-                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Home">
+                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" onAction="#reload" prefHeight="26.0" prefWidth="125.0" text="Home">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="HOME" />
                                     </graphic>
                                 </Button>
-                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false">
+                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false" onAction="#doLogout">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="SIGN_OUT" size="2em" />
                                     </graphic>
@@ -116,7 +110,7 @@
                                                                 <Image url="@../kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
                                                             </image>
                                                         </ImageView>
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="71.0" layoutY="185.0" onAction="#manageSkills" prefHeight="29.0" prefWidth="133.0" text="Manage Vehicles">
+                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="71.0" layoutY="185.0" onAction="#manageVehicles" prefHeight="29.0" prefWidth="133.0" text="Manage Vehicles">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
@@ -148,7 +142,7 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="56.0" layoutY="178.0" onAction="#manageJobs" prefHeight="29.0" prefWidth="154.0" text="Manage Equiment">
+                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="56.0" layoutY="178.0" onAction="#manageEquipment" prefHeight="29.0" prefWidth="154.0" text="Manage Equiment">
                                                             <font>
                                                                 <Font size="15.0" />
                                                             </font>

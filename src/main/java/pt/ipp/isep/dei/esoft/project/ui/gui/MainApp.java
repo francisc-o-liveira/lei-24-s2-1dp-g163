@@ -31,12 +31,12 @@ public class MainApp extends Application {
                 public void handle(WindowEvent event) {
                     Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
 
-                    alerta.setTitle("Aplicação");
-                    alerta.setHeaderText("Confirmação da ação.");
-                    alerta.setContentText("Deseja mesmo encerrar a aplicação?");
+                    alerta.setTitle("Confirmation");
+                    alerta.setHeaderText("Closing Application");
+                    alerta.setContentText("Do you wish to close the app?");
 
-                    ((Button) alerta.getDialogPane().lookupButton(ButtonType.OK)).setText("Sim");
-                    ((Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Não");
+                    ((Button) alerta.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+                    ((Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
                     if (alerta.showAndWait().get() == ButtonType.CANCEL) {
                         event.consume();

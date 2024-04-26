@@ -1,72 +1,90 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
-import javax.swing.*;
 import java.io.IOException;
+import java.util.*;
 
 public class HRManagerUI {
+
+    public Stage stage = LoginUI.getMainStage();
+
 
     @FXML
     public void reloadPage(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-        Stage stage= new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        Stage stage= new Stage();
-        stage.setScene(scene);
-        stage.show();
+        Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
+
+        popUp.setHeaderText("Logging Out");
+        popUp.setContentText("Do you wish to log out?");
+        ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+        ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+        if (popUp.showAndWait().get() == ButtonType.OK) {
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
+            Parent root= fxmlLoader.load();
+            Scene scene= new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
+
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageJobs.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewJobs.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-        Stage stage= new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     public void manageSkills(ActionEvent event)throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageSkills.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewSkills.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-        Stage stage= new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     public void manageCollaborators(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageCollaborators.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewRegisterCollaboratorll.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-        Stage stage= new Stage();
         stage.setScene(scene);
         stage.show();
     }
 
     @FXML
     public void manageTeams(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageTeams.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewTeams.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-        Stage stage= new Stage();
         stage.setScene(scene);
         stage.show();
     }
