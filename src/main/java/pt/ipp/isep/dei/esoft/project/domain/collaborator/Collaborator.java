@@ -13,7 +13,7 @@ public class Collaborator {
     private String addressZipCode;
     private String addressCity;
     private int phoneNumber;
-    private DocType docType;
+    private DocType.Type docType;
     private int docIDNumber;
     private String email;
     private JobCategory jobCategory;
@@ -28,7 +28,7 @@ public class Collaborator {
      * @param statusType represent the new status for the collaborator
      * @return
      */
-    public boolean setStatus(StatusType statusType) {
+    public void setStatus(StatusType statusType) {
         this.statusType=statusType;
     }
 
