@@ -88,4 +88,8 @@ public class VehicleRepository{
        return !vehicleList.contains(vehicle);
 
     }
+
+    public Vehicle.Type[] getVehicleTypeList() {
+        return Vehicle.Type.values();
+    }
 }

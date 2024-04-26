@@ -63,13 +63,9 @@ public class RegisterCollaboratorUI implements Runnable{
 
     private JobCategory displayAndSelectJobCategory() {
         List<JobCategory> jobCategoryList = ctrl.getJobCategoryList();
-
-        int listSize = jobCategoryList.size();
         int indexOfJobCategory = -1;
-
         Scanner input = new Scanner(System.in);
-
-        while (indexOfJobCategory < 1 || indexOfJobCategory > listSize) {
+        while (indexOfJobCategory < 1 || indexOfJobCategory > jobCategoryList.size()) {
             displayJobCategoryOptions(jobCategoryList);
             System.out.print("Select a task category: ");
             indexOfJobCategory = input.nextInt();
