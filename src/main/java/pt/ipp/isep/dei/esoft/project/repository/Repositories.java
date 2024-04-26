@@ -61,6 +61,5 @@ public class Repositories {
         return jobCategoryRepository;
     }
 
-    public VehicleRepository getVehicleRepository() { return vehicleRepository;}
-    }
+    public VehicleRepository getVehicleRepository() {return vehicleRepository;}
 }
