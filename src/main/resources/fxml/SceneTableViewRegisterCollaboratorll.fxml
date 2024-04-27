@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ManageCollaboratorsUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ManageCollaboratorsUI">
    <children>
       <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
       <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -93,13 +85,13 @@
                                         <TableColumn prefWidth="58.1673583984375" text="Name" />
                                           <TableColumn prefWidth="101.11575317382812" text="Date of Birthday" />
                                           <TableColumn prefWidth="98.2449951171875" text="Admission Date" />
-                                          <TableColumn fx:id="zipCode" prefWidth="75.0" text="Zipcode" />
-                                          <TableColumn fx:id="addressStreet" prefWidth="89.528076171875" text="Adress Street" />
-                                          <TableColumn fx:id="addressCity" prefWidth="75.0" text="Adress City" />
-                                          <TableColumn fx:id="email" prefWidth="75.0" text="Email" />
-                                          <TableColumn fx:id="phoneNumber" prefWidth="106.1224365234375" text="Phone Number #" />
-                                          <TableColumn fx:id="docType" prefWidth="76.09100341796875" text="ID Doc Type" />
-                                          <TableColumn fx:id="idNumber" prefWidth="71.40899658203125" text="ID Number" />
+                                          <TableColumn prefWidth="75.0" text="Zipcode" />
+                                          <TableColumn prefWidth="89.528076171875" text="Adress Street" />
+                                          <TableColumn prefWidth="75.0" text="Adress City" />
+                                          <TableColumn prefWidth="75.0" text="Email" />
+                                          <TableColumn prefWidth="106.1224365234375" text="Phone Number #" />
+                                          <TableColumn prefWidth="76.09100341796875" text="ID Doc Type" />
+                                          <TableColumn prefWidth="71.40899658203125" text="ID Number" />
                                       </columns>
                                     </TableView>
                                     <TextField layoutX="15.0" layoutY="21.0" prefHeight="26.0" prefWidth="276.0" promptText="   Search" />
@@ -117,7 +109,7 @@
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <DatePicker layoutX="125.0" layoutY="373.0" prefHeight="26.0" prefWidth="172.0" />
+                              <DatePicker fx:id="dateBirthday" layoutX="125.0" layoutY="373.0" prefHeight="26.0" prefWidth="172.0" />
                               <Label layoutX="19.0" layoutY="413.0" prefHeight="18.0" prefWidth="101.0" text="Admission Date:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -128,19 +120,19 @@
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="127.0" layoutY="449.0" prefHeight="26.0" prefWidth="169.0" />
+                              <TextField fx:id="addressZipCode" layoutX="127.0" layoutY="449.0" prefHeight="26.0" prefWidth="169.0" />
                               <Label layoutX="35.0" layoutY="488.0" prefHeight="18.0" prefWidth="89.0" text="Adress Street:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="126.0" layoutY="484.0" prefHeight="26.0" prefWidth="170.0" />
+                              <TextField fx:id="addressStreet" layoutX="126.0" layoutY="484.0" prefHeight="26.0" prefWidth="170.0" />
                               <Label layoutX="370.0" layoutY="337.0" prefHeight="18.0" prefWidth="78.0" text="Adress City:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="452.0" layoutY="333.0" />
+                              <TextField fx:id="addressCity" layoutX="452.0" layoutY="333.0" />
                               <Label layoutX="400.0" layoutY="375.0" prefHeight="18.0" prefWidth="39.0" text="Email:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -149,7 +141,7 @@
                                     <Insets />
                                  </opaqueInsets>
                               </Label>
-                              <TextField layoutX="451.0" layoutY="371.0" />
+                              <TextField fx:id="email" layoutX="451.0" layoutY="371.0" />
                               <Label layoutX="329.0" layoutY="413.0" prefHeight="18.0" prefWidth="109.0" text="Phone Number#:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -158,7 +150,7 @@
                                     <Insets />
                                  </opaqueInsets>
                               </Label>
-                              <TextField layoutX="452.0" layoutY="409.0" />
+                              <TextField fx:id="phoneNumber" layoutX="452.0" layoutY="409.0" />
                               <Label layoutX="353.0" layoutY="453.0" prefHeight="18.0" prefWidth="84.0" text="ID Doc Type:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
@@ -176,30 +168,30 @@
                                     <Insets />
                                  </opaqueInsets>
                               </Label>
-                              <TextField layoutX="451.0" layoutY="484.0" />
-                              <Button layoutX="757.0" layoutY="479.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: B7D5B2;" text="Update">
+                              <TextField fx:id="docIDNumber" layoutX="451.0" layoutY="484.0" />
+                              <Button layoutX="757.0" layoutY="479.0" mnemonicParsing="false" onAction="#btnUpdateCollaborator" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: B7D5B2;" text="Update">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="658.0" layoutY="480.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="92.0" style="-fx-background-color: D87DAB;" text="Edit">
+                              <Button layoutX="658.0" layoutY="480.0" mnemonicParsing="false" onAction="#btnEditCollaborator" prefHeight="34.0" prefWidth="92.0" style="-fx-background-color: D87DAB;" text="Edit">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="759.0" layoutY="438.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: ADD8E6;" text="Add">
+                              <Button layoutX="759.0" layoutY="438.0" mnemonicParsing="false" onAction="#btnAddCollaborator" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: ADD8E6;" text="Add">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="657.0" layoutY="438.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: FF9688;" text="Remove">
+                              <Button layoutX="657.0" layoutY="438.0" mnemonicParsing="false" onAction="#btnRemoveCollaborator" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: FF9688;" text="Remove">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <SplitMenuButton layoutX="451.0" layoutY="449.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="161.0" text="SplitMenuButton">
+                              <SplitMenuButton fx:id="selectDocType" layoutX="451.0" layoutY="449.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="161.0" text="SplitMenuButton">
                                 <items>
                                   <MenuItem mnemonicParsing="false" text="Action 1" />
                                   <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                               </SplitMenuButton>
-                              <DatePicker layoutX="126.0" layoutY="411.0" prefHeight="26.0" prefWidth="170.0" />
+                              <DatePicker fx:id="dateAdmission" layoutX="126.0" layoutY="411.0" prefHeight="26.0" prefWidth="170.0" />
                            </children>
                            <effect>
                               <DropShadow />
