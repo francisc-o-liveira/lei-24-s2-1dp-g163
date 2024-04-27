@@ -94,8 +94,8 @@
                                           <TableColumn prefWidth="164.5" text="Name" />
                                           <TableColumn prefWidth="165.5" text="ID Number" />
                                           <TableColumn fx:id="zipCode" minWidth="0.0" prefWidth="147.0" text="DocType" />
-                                          <TableColumn fx:id="addressStreet" minWidth="0.0" prefWidth="144.0" text="Jobb Category " />
-                                          <TableColumn fx:id="addressCity" minWidth="0.0" prefWidth="134.5" text="Vier Details" />
+                                          <TableColumn fx:id="addressStreet" minWidth="0.0" prefWidth="144.0" text="Job Category " />
+                                          <TableColumn fx:id="addressCity" minWidth="0.0" prefWidth="134.5" text="View Details" />
                                       </columns>
                                     </TableView>
                                     <TextField layoutX="15.0" layoutY="21.0" prefHeight="26.0" prefWidth="276.0" promptText="   Search" />
