@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,5 +92,12 @@ public class VehicleRepository{
 
     public Vehicle.Type[] getVehicleTypeList() {
         return Vehicle.Type.values();
+    }
+
+    public Optional<Vehicle> registerVehicle(String brand, String model, Date acquisitionDate, Date registerDate, int currentKM, int checkupFrequency, double grossWeight, int tare, String plate, Vehicle.Type type) {
+        Optional<Vehicle> newVehicle = Optional.empty();
+        Vehicle vehicle = new Vehicle(brand,model,type,tare,grossWeight,currentKM,registerDate,acquisitionDate,checkupFrequency,plate);
+        newVehicle = addVehicle(vehicle);
+        return newVehicle;
     }
 }

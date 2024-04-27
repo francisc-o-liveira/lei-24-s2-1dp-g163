@@ -3,6 +3,9 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
+
+import java.util.Optional;
 
 public class RegisterVehicleController {
 
@@ -18,5 +21,9 @@ public class RegisterVehicleController {
 
     public Vehicle.Type[] getVehicleTypeValues() {
         return vehicleRepository.getVehicleTypeList();
+    }
+
+    public Optional<Vehicle> registerVehicle(String brand, String model, Date acquisitionDate, Date registerDate, int currentKM, int checkupFrequency, double grossWeight, int tare, String plate, Vehicle.Type type) {
+        return vehicleRepository.registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type);
     }
 }

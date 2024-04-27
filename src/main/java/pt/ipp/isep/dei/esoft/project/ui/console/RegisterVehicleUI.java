@@ -39,7 +39,7 @@ public class RegisterVehicleUI {
     }
 
     private void submitData() {
-        Optional<Vehicle> vehicle = getController().registerVehicle();
+        Optional<Vehicle> vehicle = getController().registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type);
         if (vehicle.isPresent()) {
             System.out.println("\nCollaborator successfully created!");
         } else {
@@ -94,15 +94,15 @@ public class RegisterVehicleUI {
 
     private double registerGrossWeigth() {
         Scanner scan = new Scanner(System.in);
-        int grossWeight = 0;
-        boolean validKm=false;
-        while (!validKm){
+        double grossWeight = 0;
+        boolean validGross=false;
+        while (!validGross){
             System.out.print("Gross-Weight of the Vehicle: ");
-            grossWeight = scan.nextInt();
+            grossWeight = scan.nextDouble();
             if(grossWeight>0 && grossWeight<=7000){
                 throw new IllegalArgumentException("The introduced Gross-Weight is incorrect.");
             } else {
-                validKm=true;
+                validGross=true;
             }
         }
         return grossWeight;
