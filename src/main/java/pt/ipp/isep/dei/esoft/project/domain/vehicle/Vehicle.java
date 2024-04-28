@@ -83,6 +83,18 @@ public class Vehicle {
         return save;
     }
 
+    public Date getAcquisitionDate() {
+        return acquisitionDate;
+    }
+
+    public List<CheckUp> getCheckUpList() {
+        return checkUpList;
+    }
+
+    public StatusType getStatusType() {
+        return statusType;
+    }
+
     public Date getacquisitionnDate() {
         return acquisitionDate;
     }
