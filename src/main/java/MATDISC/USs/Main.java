@@ -1,4 +1,4 @@
-package MATDISC.US013;
+package MATDISC.USs;
 
 import org.knowm.xchart.*;
 import org.knowm.xchart.style.Styler;
