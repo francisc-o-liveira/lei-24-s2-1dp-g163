@@ -136,4 +136,14 @@ public class VehicleRepository{
     public Vehicle getVehicleByIndex(int selectedPlate) {
         return vehicleList.get(selectedPlate-1);
     }
+
+    public List<Vehicle> getVehicleNeedingCheckUp() {
+        List<Vehicle> vehiclesNeedingCheckUp=new ArrayList<>();
+        for(Vehicle v : vehicleList){
+            if(v.isCloseToCheck()){
+                vehiclesNeedingCheckUp.add(v);
+            }
+        }
+        return vehiclesNeedingCheckUp;
+    }
 }
