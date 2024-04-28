@@ -99,9 +99,24 @@
                                  </font>
                               </Label>
                               <TextField layoutX="105.0" layoutY="350.0" />
-                              <Button layoutX="722.0" layoutY="444.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="106.0" text="Update">
+                              <Button layoutX="747.0" layoutY="480.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: B7D5B2;" text="Update">
                                  <font>
-                                    <Font name="System Bold" size="14.0" />
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="747.0" layoutY="435.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: ADD8E6;" text="Add">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="635.0" layoutY="435.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: FF9688;" text="Remove">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="634.0" layoutY="480.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="97.0" style="-fx-background-color: D87DAB;" text="Edit">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
                                  </font>
                               </Button>
                            </children>
