@@ -10,11 +10,23 @@ import java.util.List;
 
 public class RegisterSkillController {
 
+    /**
+     * This method control a register of an skill by her name
+     * @param skillName of the Skill
+     */
+
     public void RegisterSkill(String skillName){
         verifySkillName(skillName);
         Skill skill=new Skill(skillName);
         Repositories.getInstance().getSkillRepository().registerSkill(skillName);
     }
+
+
+
+
+
+    // UI METHOD IS NOT FOR HERE
+
 
     private void verifySkillName(String skillName) {
         if(skillName.trim().isEmpty()){
@@ -28,7 +40,9 @@ public class RegisterSkillController {
         }
     }
 
+    /**
+     * This method return an List of Skill's existent on the skillRepository
+     * @return an existent List of Skills
+     */
     public List<Skill> getSkillList(){return Repositories.getInstance().getSkillRepository().getSkillList();}
-
-    public ArrayList<DocType.Type> getDocTypeList(){return new ArrayList<>(Arrays.asList(DocType.Type.values()));}
-}
+  }
