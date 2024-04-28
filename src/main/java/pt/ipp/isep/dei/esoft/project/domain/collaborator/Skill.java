@@ -26,4 +26,8 @@ public class Skill {
     public Skill clone() {
         return new Skill(this.skillName);
     }
+
+    public void setSkillName(String skillName) {
+        this.skillName = skillName;
+    }
 }

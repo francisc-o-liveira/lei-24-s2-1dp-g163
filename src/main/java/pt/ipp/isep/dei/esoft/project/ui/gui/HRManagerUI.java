@@ -52,6 +52,8 @@ public class HRManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageJobsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setJobCategoryTable();
     }
 
     @FXML
@@ -61,15 +63,19 @@ public class HRManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageSkillsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setSkillTable();
     }
 
     @FXML
     public void manageCollaborators(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewRegisterCollaboratorll.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewRegisterCollaborator.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageCollaboratorsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setTableCollaborators();
     }
 
     @FXML
@@ -79,5 +85,8 @@ public class HRManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        /*ManageTeamsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setTableTeams();
+         */
     }
 }
