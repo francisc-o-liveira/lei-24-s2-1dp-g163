@@ -19,10 +19,11 @@ public class AdminUI implements Runnable {
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("1 - Create Task", new CreateTaskUI()));
-        options.add(new MenuItem("2 - Manage Teams", new ShowTextUI("You have chosen Option 2.")));
-        options.add(new MenuItem("3 - Manage Collaborators", new ShowTextUI("You have chosen Option 3.")));
-        options.add(new MenuItem("4 - Manage Vehicles", new ShowTextUI("You have chosen Option 4.")));
-
+        options.add(new MenuItem("2 - Manage Teams", new ManageTeamsUI()));
+        options.add(new MenuItem("3 - Manage Collaborators", new ManageCollaboratorsUI()));
+        options.add(new MenuItem("4 - Manage Vehicles", new ManageVehiclesUI()));
+        options.add(new MenuItem("5 - Manage JobCategories", new ManageVehiclesUI()));
+        options.add(new MenuItem("6 - Manage Skills", new ManageVehiclesUI()));
         int option = 0;
         do {
             option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
