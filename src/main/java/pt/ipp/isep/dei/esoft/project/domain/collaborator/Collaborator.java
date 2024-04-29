@@ -18,6 +18,111 @@ public class Collaborator {
     private String email;
     private JobCategory jobCategory;
     private List<Skill> skills;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public Date getAdmissionDate() {
+        return admissionDate;
+    }
+
+    public void setAdmissionDate(Date admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddressZipCode() {
+        return addressZipCode;
+    }
+
+    public void setAddressZipCode(String addressZipCode) {
+        this.addressZipCode = addressZipCode;
+    }
+
+    public String getAddressCity() {
+        return addressCity;
+    }
+
+    public void setAddressCity(String addressCity) {
+        this.addressCity = addressCity;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public DocType.Type getDocType() {
+        return docType;
+    }
+
+    public void setDocType(DocType.Type docType) {
+        this.docType = docType;
+    }
+
+    public void setDocIDNumber(int docIDNumber) {
+        this.docIDNumber = docIDNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public JobCategory getJobCategory() {
+        return jobCategory;
+    }
+
+    public void setJobCategory(JobCategory jobCategory) {
+        this.jobCategory = jobCategory;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public StatusType getStatusType() {
+        return statusType;
+    }
+
+    public void setStatusType(StatusType statusType) {
+        this.statusType = statusType;
+    }
+
+    public List<Skill> getSKILLS_BY_OMISSION() {
+        return SKILLS_BY_OMISSION;
+    }
+
+    public void setSKILLS_BY_OMISSION(List<Skill> SKILLS_BY_OMISSION) {
+        this.SKILLS_BY_OMISSION = SKILLS_BY_OMISSION;
+    }
+
     public enum StatusType {Active,NotActive}
     private StatusType statusType;
     private List<Skill> SKILLS_BY_OMISSION=null;
