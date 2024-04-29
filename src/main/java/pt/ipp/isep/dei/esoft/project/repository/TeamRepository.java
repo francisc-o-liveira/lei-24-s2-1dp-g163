@@ -64,12 +64,14 @@ public class TeamRepository {
         Team create = new Team(maxSizeTeam,minSizeTeam,skillsSelected);
             boolean[][] YesOrNoSkill = getCollabOrderWithMoreSkill(skillsSelected,collaboratorsForTeam);
             for (int i = 0; i < YesOrNoSkill.length; i++){
-                if(!create.addCollaborator(collaboratorsForTeam.get(i))){
-                    throw new RuntimeException("Impossible to create Team with this size");
-                }
-                for(int h = 0; h < generatedTrue.length; h++){
-                    if (YesOrNoSkill[i][h]){
-                        generatedTrue[h]--;
+                if(collabororatorUpgradeTeam(YesOrNoSkill[i], generatedTrue)){
+                    if(!create.addCollaborator(collaboratorsForTeam.get(i))){
+                        throw new RuntimeException("Impossible to create Team with this size");
+                    }
+                    for(int h = 0; h < generatedTrue.length; h++){
+                        if (YesOrNoSkill[i][h]){
+                            generatedTrue[h]--;
+                        }
                     }
                 }
                 if(teamIsCompleted(generatedTrue)){
@@ -80,6 +82,18 @@ public class TeamRepository {
                 teamGenerated = Optional.of(create);
             }
     return teamGenerated;
+    }
+
+    private boolean collabororatorUpgradeTeam(boolean[] yesOrNoSkill, int[] generatedTrue) {
+        if (generatedTrue.length==0){
+            return true;
+        }
+        for(int k : generatedTrue){
+            if(k>0 && yesOrNoSkill[k]){
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean teamIsPossible(Team create) {
