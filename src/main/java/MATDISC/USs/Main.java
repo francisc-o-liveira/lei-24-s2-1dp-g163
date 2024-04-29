@@ -16,7 +16,7 @@ public class Main {
     private static final String pathDestination = "C:/Program Files/";
     public static String fileName;
 
-    public static final String pathName = "src/main/java/MATDISC/US013/";
+    public static final String pathName = "src/main/java/MATDISC/USs/";
 
     public static final String FILENAME_PER_OMISSION = "..NONE..";
 
@@ -28,22 +28,26 @@ public class Main {
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
         ArrayList<Double> executionTimes = new ArrayList<>();
-
         ArrayList<Double> sizeInput = new ArrayList<>();
-
 
         while (option != 0) {
             option = askOptionShowOptions();
             switch (option) {
                 case 1:
                     filename = askFileName();
-
-
                     try {
                         edges = readFromFile(filename);
+                        createInputFile(edges);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case 2:
+                    if (edges == null) {
+                        System.out.println("No file has been loaded!");
+                        break;
+                    }
+                    startTime = System.nanoTime();
                     try {
                         if (edges != null) {
                             sortArrayListPrimitivePerPrice(edges);
@@ -53,39 +57,28 @@ public class Main {
                     }catch (FileNotFoundException e){
                         System.out.println("File Empty, not found any Edge on this file");
                     }
-                    break;
-                case 2:
-                    if (edges == null) {
-                        System.out.println("Nenhum arquivo carregado ainda!");
-                        break;
-                    }
-                    startTime = System.nanoTime();
                     result = kruskalAlgorithm(edges);
-                    try {
-                         createResultFile(result);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
                     endTime = System.nanoTime();
                     long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
                     executionTimes.add((double) executionTime);
+                    try {
+                        createResultFile(result,executionTime);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     sizeInput.add((double) (edges != null ? edges.size() : 0));
                     break;
                 case 3:
                     plotGraphAndShow(executionTimes, sizeInput);
                     break;
-                case 4:
+                /*case 4:
                     InstallGrapgViz();
-                    break;
+                    break;*/
                 case 0:
                     break;
             }
 
         }
-
-        // Calculate the execution time in milliseconds
-
-
     }
 
     public static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
@@ -111,18 +104,6 @@ public class Main {
             new SwingWrapper<>(chart).displayChart();
 
         }
-    }
-
-    private static int getTheHighest(ArrayList<Double> executionTimes) {
-        double highestValue = 0;
-        int indexValue = 0;
-        for (int i = 0; i < executionTimes.size(); i++) {
-            if (executionTimes.get(i) > highestValue) {
-                highestValue = executionTimes.get(i);
-                indexValue = i;
-            }
-        }
-        return indexValue;
     }
 
     public static String askFileName() {
@@ -272,8 +253,39 @@ public class Main {
         return -1;
     }
 
-    public static void createResultFile(ArrayList<Edge> edges) throws IOException {
+    public static void createResultFile(ArrayList<Edge> edges, long execTime) throws IOException {
         FileWriter fileDot= new FileWriter("graph.dot");
+        FileWriter result=new FileWriter("result.csv");
+        int price = 0;
+        String line="graph US13 {\n" ;
+        fileDot.write(line);
+        for(int i=0; i<edges.size(); i++){
+            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            fileDot.write(string);
+            String line1=String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price+=edges.get(i).getPrice();
+            result.write(line1);
+        }
+        String line2="}";
+        fileDot.write(line2);
+        String line3=String.format("Cost: %s%n", price);
+        String line4=String.format("Number of edges: %d%n", edges.size());
+        String line5=String.format("Time of execution: %d%n ms", execTime);
+        result.write(line3);
+        result.write(line4);
+        result.write(line5);
+        fileDot.close();
+        result.close();
+        try{
+            String resultingFile="result_graph.png";
+            createGraph("graph.dot", resultingFile);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void createInputFile(ArrayList<Edge> edges) throws IOException {
+        FileWriter fileDot= new FileWriter("graphinput.dot");
         FileWriter result=new FileWriter("result.csv");
         int price = 0;
         String line="graph US13 {\n" ;
@@ -292,20 +304,26 @@ public class Main {
         fileDot.close();
         result.close();
         try{
-            createGraph("graph.dot");
+            createInputGraph("graphinput.dot");
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public static void createGraph(String fileName) throws IOException{
-        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o result_graph.png";
+    public static void createGraph(String fileName, String resultingFile) throws IOException{
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o " +resultingFile;
+        Runtime rt = Runtime.getRuntime();
+        Process prcs = rt.exec(command);
+    }
+
+    public static void createInputGraph(String fileName) throws IOException{
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o input_graph.png";
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
     }
 
 
-    public static void InstallGrapgViz() {
+    /*public static void InstallGrapgViz() {
         System.out.println("Instalação GraphViz");
         File test = new File(pathDestination + "/GraphViz");
         if (!test.canExecute()) {
@@ -347,5 +365,5 @@ public class Main {
             }
             zis.closeEntry();
         }
-    }
+    }*/
 }
