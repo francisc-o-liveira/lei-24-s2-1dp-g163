@@ -8,9 +8,9 @@ autonumber
 'hide footbox
 actor "VFM" as VFM
 participant ":VehicleUI" as UI
-participant ":VehicleController" as CTRL
+participant ":VehicleCheckUpController" as CTRL
 participant ":Repositories" as Repositories
-participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+participant "vehicleCheckUpRepository\n:VehicleCheckUpRepository" as VehicleCheckUpRepository
 participant "vehicle\n:Vehicle" as Vehicle
 
 activate VFM
@@ -18,46 +18,55 @@ activate VFM
     VFM -> UI : asks the list of vehicles for check-up
     activate UI
 
-        UI -> CTRL : getVehicleCheckUpList()
-        activate CTRL
+    UI -> CTRL : getVehicleCheckUpList()
+    activate CTRL
 
-        CTRL -> Repositories : getInstance()
-        activate Repositories
+    CTRL -> Repositories : getInstance()
+    activate Repositories
 
-        CTRL -> Repositories : getVehicleCheckUpList()
+    Repositories -> CTRL : repositories
+    deactivate Repositories
 
-        Repositories -> VehicleRepository : getVehicleCheckUpList()
+    CTRL -> VehicleCheckUpRepository : getVehicleCheckUpRepository()
+    activate VehicleCheckUpRepository
 
-        VehicleRepository -> Repositories : vehicleCheckUpList
+    VehicleCheckUpRepository -> CTRL :vehicleCheckUpRepository
+    deactivate VehicleCheckUpRepository
 
-        CTRL -> Repositories : getVehicleRepository()
+    CTRL -> Repositories : getVehicleCheckUpList()
 
-        Repositories -> VehicleRepository : getVehicleRepository()
+    Repositories -> VehicleCheckUpRepository : getVehicleCheckUpList()
 
-        VehicleRepository --> Repositories : vehicleRepository
-        deactivate VehicleRepository
+    VehicleCheckUpRepository -> Repositories : vehicleCheckUpList
 
-        Repositories --> CTRL: repositories
+    CTRL -> Repositories : getVehicleRepository()
 
-        VehicleRepository -> Vehicle: createVehicle()
+    Repositories -> VehicleCheckUpRepository : getVehicleRepository()
 
-        Vehicle -> VehicleRepository: addVehicle(vehicle)
+    VehicleCheckUpRepository --> Repositories : vehicleCheckUpRepository
+    deactivate VehicleCheckUpRepository
 
-        VehicleRepository --> Repositories : true / vehicle
+    Repositories --> CTRL: repositories
 
-        Repositories --> CTRL : true / vehicle
-        deactivate Repositories
+    VehicleCheckUpRepository -> Vehicle: createVehicle()
 
-        deactivate VehicleRepository
+    Vehicle -> VehicleCheckUpRepository: addVehicle(vehicle)
 
-        CTRL --> UI: true / vehicle
-        deactivate CTRL
+    VehicleCheckUpRepository --> Repositories : true / vehicle
 
-        UI -> VFM : shows the list of vehicles
+    Repositories --> CTRL : true / vehicle
+    deactivate Repositories
 
-        VFM -> UI : confirms data
+    deactivate VehicleCheckUpRepository
 
-        UI -> VFM : displays operation success
+    CTRL --> UI: true / vehicle
+    deactivate CTRL
+
+    UI -> VFM : shows the list of vehicles
+
+    VFM -> UI : confirms data
+
+    UI -> VFM : displays operation success
     deactivate UI
 
 deactivate VFM

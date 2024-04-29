@@ -10,6 +10,7 @@ actor "VFM" as VFM
 participant ":RegisterVehicleUI" as UI
 participant ":RegisterVehicleController" as CTRL
 participant ":Repositories" as Repositories
+participant "repositories:Repositories" as Repo
 participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
 participant "vehicle\n:Vehicle" as Vehicle
 
@@ -27,11 +28,11 @@ activate VFM
     Repositories --> CTRL: repositories
     deactivate Repositories
 
-    CTRL -> VehicleRepository : getVehicleRepository()
-    activate VehicleRepository
+    CTRL -> Repo : getVehicleRepository()
+    activate Repo
 
-    VehicleRepository -> CTRL : vehicleRepository
-    deactivate VehicleRepository
+    Repo -> CTRL : vehicleRepository
+        deactivate Repo
 
     deactivate CTRL
 
