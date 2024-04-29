@@ -3,17 +3,24 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class RegisterSkillController {
 
-    public void RegisterSkill(String skillName){
+    private SkillRepository skillRepository;
+
+    public boolean RegisterSkill(String skillName){
         verifySkillName(skillName);
-        Skill skill=new Skill(skillName);
-        Repositories.getInstance().getSkillRepository().registerSkill(skillName);
+        Optional<Skill> newSkill = Repositories.getInstance().getSkillRepository().registerSkill(skillName);
+        if (newSkill.isPresent()){
+            return true;
+        }
+        return false;
     }
 
     private void verifySkillName(String skillName) {

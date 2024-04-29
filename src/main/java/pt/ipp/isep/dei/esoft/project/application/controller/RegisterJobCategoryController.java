@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 
 //Verified By Francisco
@@ -35,10 +36,17 @@ public class RegisterJobCategoryController {
 
     /**
      * Register Job Category Method
-     * @param jobname represent the Job Category name
+     *
+     * @param jobName represent the Job Category name
+     * @return true if jobCategory is created
      */
-    public void registerJobCategory(String jobname){
-        jobCategoryRepository.registerJobCategory(jobname);
+    public boolean registerJobCategory(String jobName){
+        Optional<JobCategory> jobCategory= jobCategoryRepository.registerJobCategory(jobName);
+        if(jobCategory.isPresent()){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**
