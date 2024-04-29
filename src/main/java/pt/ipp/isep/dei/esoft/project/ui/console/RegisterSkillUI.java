@@ -36,7 +36,7 @@ public class RegisterSkillUI implements Runnable {
         Scanner scan = new Scanner(System.in);
         String skillName = null;
         do{
-            System.out.print("Please input the Job Category Name:");
+            System.out.print("Please input the Skill Name:");
             skillName=scan.nextLine();
         }while(!nameVerify(skillName));
         return skillName;

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /** This class represents the UI to assign a skill (or skills) to a collaborator*/
-public class AssignSkillsUI {
+public class AssignSkillsUI implements Runnable {
 
     /**The parameters needed to assign skills to a collaborator
      */
@@ -34,6 +34,7 @@ public class AssignSkillsUI {
         return ctrl;
     }
 
+    @Override
     public void run(){
         System.out.print("--------- Assignment of Skills ---------\n");
         ctrl.getDataNeededToAssign();
@@ -62,9 +63,9 @@ public class AssignSkillsUI {
     private void submitsData(){
         Optional<Collaborator> CollaboratorSkillAdded =getController().assignSkills(collaborator,skillName);
         if(CollaboratorSkillAdded.isPresent()){
-            System.out.print("Skill added!");
+            System.out.print("\nSkill added!\n");
         } else {
-            System.out.print("Skill was not added");
+            System.out.print("\nSkill was not added\n");
         }
     }
 
