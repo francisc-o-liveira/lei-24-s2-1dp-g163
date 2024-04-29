@@ -39,7 +39,6 @@ public class Main {
                 case 1:
                     filename = askFileName();
 
-
                     try {
                         edges = readFromFile(filename);
                     } catch (IOException e) {
@@ -54,10 +53,10 @@ public class Main {
                     }
                     startTime = System.nanoTime();
                     result = kruskalAlgorithm(edges);
-                    try{
+                    try {
                         createResultFile(result);
                         //createCSVFile(result);
-                    } catch (IOException e){
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     endTime = System.nanoTime();
@@ -71,12 +70,8 @@ public class Main {
                 case 0:
                     break;
             }
-
         }
-
         // Calculate the execution time in milliseconds
-
-
     }
 
     public static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
@@ -263,32 +258,32 @@ public class Main {
     }
 
     public static void createResultFile(ArrayList<Edge> edges) throws IOException {
-        FileWriter fileDot= new FileWriter("graph.dot");
-        FileWriter result=new FileWriter("result.csv");
+        FileWriter fileDot = new FileWriter("graph.dot");
+        FileWriter result = new FileWriter("result.csv");
         int price = 0;
-        String line="graph US13 {\n" ;
+        String line = "graph US13 {\n";
         fileDot.write(line);
-        for(int i=0; i<edges.size(); i++){
-            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+        for (int i = 0; i < edges.size(); i++) {
+            String string = String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
             fileDot.write(string);
-            String line1=String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
-            price+=edges.get(i).getPrice();
+            String line1 = String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price += edges.get(i).getPrice();
             result.write(line1);
         }
-        String line2="}";
+        String line2 = "}";
         fileDot.write(line2);
-        String line3=String.format("Cost: %s", price);
+        String line3 = String.format("Cost: %s", price);
         result.write(line3);
         fileDot.close();
         result.close();
-        try{
+        try {
             createGraph("graph.dot");
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void createGraph(String fileName) throws IOException{
+    public static void createGraph(String fileName) throws IOException {
         String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o result_graph.png";
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
