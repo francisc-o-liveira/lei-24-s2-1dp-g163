@@ -31,6 +31,11 @@ public class DocType {
         return valueVerify;
     }
 
+    @Override
+    public String toString(){
+        return String.format("%s", docType);
+    }
+
 }
 
 

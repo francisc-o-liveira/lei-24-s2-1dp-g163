@@ -34,6 +34,8 @@ public class Collaborator {
 
     public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
         this.name=name;
+        this.birthday=birthday;
+        this.admissionDate=admissionDate;
         this.address=address;
         this.addressZipCode=addressZipCode;
         this.addressCity=addressCity;
@@ -114,7 +116,20 @@ public class Collaborator {
         return this.docIDNumber;
     }
 
-
+    @Override
+    public String toString(){
+        return String.format("Name: %s\n" +
+                "Birthday: %s\n" +
+                "Admission Date: %s\n" +
+                "Address: %s, %s, %s\n" +
+                "Phone Number: %s\n" +
+                "Document Type: %s\n" +
+                "Document ID Number: %d\n" +
+                "Email: %s\n" +
+                "Job Category: %s\n" +
+                "Status Type: %s\n" +
+                "Skills: %s\n", name, birthday, admissionDate, address, addressCity, addressZipCode, phoneNumber, docType, docIDNumber, email, jobCategory, statusType, skills);
+    }
 
 
 }
