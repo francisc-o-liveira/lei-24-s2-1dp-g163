@@ -48,4 +48,8 @@ public class RegisterJobCategoryController {
     public List<JobCategory> getJobCategoriesList(){
         return jobCategoryRepository.getJobCategoryList();
     }
+
+    public void removeJobCategory(JobCategory jobCategory){
+        getJobCategoriesList().remove(jobCategory);
+    }
 }

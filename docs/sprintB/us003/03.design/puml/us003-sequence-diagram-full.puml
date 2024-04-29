@@ -98,14 +98,27 @@ activate HRM
     UI --> HRM : requests data
     deactivate UI
 
+    HRM --> UI : types requested data(docIDNumber)
+    activate UI
+
+    UI --> CTRL : validateDocType(docType, docTypeNumber)
+    activate CTRL
 
 
+    CTRL -> DocType : validateDocType(docType, docTypeNumber)
+    activate DocType
+
+    DocType --> CTRL : true/false
+    deactivate DocType
+
+    CTRL --> UI : true/false
+    deactivate CTRL
+
+    UI --> HRM : requested data
+    deactivate UI
 
 
-
-
-
-    HRM -> UI : types requested data (name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, number of ID card)
+    HRM -> UI : types requested data (name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number)
     activate UI
 
 
@@ -119,14 +132,6 @@ activate HRM
         UI -> CTRL : registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
         activate CTRL
 
-
-
-
-                            CTRL -> DocType : validateDocType(docType, docTypeNumber)
-                            activate DocType
-
-                                DocType --> CTRL : true/false
-                            deactivate DocType
 
 
 

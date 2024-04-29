@@ -6,14 +6,11 @@ public class Repositories {
     private final Organization organizationRepository;
     private final TaskCategoryRepository taskCategoryRepository;
     private final AuthenticationRepository authenticationRepository;
-
     private final JobCategoryRepository jobCategoryRepository;
-
     private final CollaboratorRepository collaboratorRepository;
-
     private final TeamRepository teamRepository;
-
     private final SkillRepository skillRepository;
+    private final VehicleRepository vehicleRepository;
 
     private Repositories() {
         organizationRepository = new Organization();
@@ -23,6 +20,7 @@ public class Repositories {
         jobCategoryRepository = new JobCategoryRepository();
         teamRepository = new TeamRepository();
         collaboratorRepository = new CollaboratorRepository();
+        vehicleRepository = new VehicleRepository();
 
     }
 
@@ -62,4 +60,6 @@ public class Repositories {
     public JobCategoryRepository getJobCategoryRepository() {
         return jobCategoryRepository;
     }
+
+    public VehicleRepository getVehicleRepository() {return vehicleRepository;}
 }

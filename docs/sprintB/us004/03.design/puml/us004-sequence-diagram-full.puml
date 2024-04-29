@@ -14,8 +14,7 @@ participant "repositories:Repositories" as reposRepos
 participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
 participant "skillRepository:SkillRepository" as SkillRepo
 
-participant "hrm:HRM" as HRM
-participant "colaborator:Colaborator" as Colaborator
+participant "collaborator:Collaborator" as Collaborator
 
 activate HRManager
 
@@ -24,12 +23,20 @@ activate UI
 
 UI -> Controller** : create
 
+UI -> Controller : getDataNeededToAssignSkills()
 activate Controller
+
 Controller -> Repos : getInstance()
 activate Repos
 
 Repos --> Controller : repositories
 deactivate Repos
+
+Controller -> reposRepos : getSkillRepository()
+activate reposRepos
+
+reposRepos --> Controller : skillRepository
+deactivate reposRepos
 
 Controller -> reposRepos : getCollaboratorRepository()
 activate reposRepos
@@ -37,104 +44,72 @@ activate reposRepos
 reposRepos --> Controller : collaboratorRepository
 deactivate reposRepos
 
-Controller -> EmpRepo : checkHRManager(userEmail)
+Controller -> EmpRepo : getCollaboratorList()
 activate EmpRepo
 
-EmpRepo -> HRM : isHRM(userEmail)
-activate HRM
-
-HRM --> EmpRepo : Authorization Status (true/false)
-deactivate HRM
-
-EmpRepo --> Controller : Authorization Status (true/false)
+EmpRepo --> Controller : collaboratorList
 deactivate EmpRepo
 
-alt Authorization Status is False
-    Controller --> UI : Not Authorized (false)
-    deactivate Controller
+Controller --> UI : collaboratorList
+deactivate Controller
 
-    UI --> HRManager : Display Not Authorized Message
-    deactivate UI
 
-else Authorization Status is True
-    Controller --> UI : Authorized (true)
-    activate Controller
-    activate UI
+UI --> HRManager : Displays Collaborator list
+deactivate UI
 
-    UI -> Controller : getCollaboratorIDList()
+HRManager -> UI : Selects Collaborator
+activate UI
 
-    Controller -> EmpRepo : fetchCollaboratorIDs()
-    activate EmpRepo
+UI -> Controller : getAvailableSkillsList(collaborator)
+activate Controller
 
-    EmpRepo --> Controller : Collaborators IDs
-    deactivate EmpRepo
+Controller -> EmpRepo : getAvailableSkillsList(Collaborator)
+activate EmpRepo
 
-    Controller --> UI : Displays Collaborator ID list
-    deactivate Controller
-   
-    UI --> HRManager : Displays Collaborator ID list
-    deactivate UI
+EmpRepo --> Controller : CollaboratorSkillsList
+deactivate EmpRepo
 
-    HRManager -> UI : Selects Collaborator ID number
-    activate UI
+Controller -> SkillRepo : getAllSkills()
+activate SkillRepo
 
-    UI -> Controller : getCollaboratorDetails(ID)
-    activate Controller
+SkillRepo --> Controller : allSkillsList
+deactivate SkillRepo
 
-    Controller -> EmpRepo : fetchCollaboratorDetails(CollaboratorID)
-    activate EmpRepo
-
-    EmpRepo --> Controller : Collaborator Name with Skills
-    deactivate EmpRepo
-
-    Controller -> reposRepos : getSkillRepository()
-    activate reposRepos
-
-    reposRepos --> Controller : skillRepository
-    deactivate reposRepos
-
-    Controller -> SkillRepo : getAllSkills()
-    activate SkillRepo
-
-    SkillRepo --> Controller : All Skills
-    deactivate SkillRepo
-
-    loop over each Skill not assigned to Collaborator
-        Controller -> Controller : filterAssignedSkills(Collaborator Skills, All Skills)
-    end
-
-    Controller --> UI : Displays Available Skills to Assign
-    deactivate Controller
-
-    UI --> HRManager : Displays Available Skills to Assign
-    deactivate UI
-
-    HRManager -> UI : Confirms Skill Assignment for Selected Skills
-    activate UI
-
-    UI -> Controller : assignSkills(CollaboratorID, Skill(s) name(s))
-    activate Controller
-
-    Controller -> EmpRepo : assignSkillToCollaborator(CollaboratorID, Skill(s) Name(s))
-    activate EmpRepo
-
-    loop over each Selected Skill
-        EmpRepo -> Colaborator : assignSkill(Skill Name)
-        activate Colaborator
-
-        Colaborator --> EmpRepo : Assignment Success
-        deactivate Colaborator
-    end
-
-    EmpRepo --> Controller : Operation Success for Skill
-    deactivate EmpRepo
-
-    Controller --> UI : Operation Success
-    deactivate Controller
-
-    UI --> HRManager : Displays Operation Success Message
-    deactivate UI
-
+loop over each Skill not assigned to Collaborator
+    Controller -> Controller : filterAssignedSkills(CollaboratorSkillsList, allSkillsList)
 end
+
+Controller --> UI : availableSkillsList
+deactivate Controller
+
+UI --> HRManager : Displays Available Skills to Assign
+deactivate UI
+
+HRManager -> UI : Confirms Skill Assignment for Selected Skills
+activate UI
+
+UI -> Controller : assignSkills(collaborator, skillName)
+activate Controller
+
+Controller -> EmpRepo : assignSkillToCollaborator(collaborator, skillName)
+activate EmpRepo
+
+
+EmpRepo -> Collaborator : assignSkill(skillName)
+activate Collaborator
+
+Collaborator --> EmpRepo : true
+deactivate Collaborator
+
+
+EmpRepo --> Controller : true
+deactivate EmpRepo
+
+Controller --> UI : true
+deactivate Controller
+
+UI --> HRManager : Displays Operation Success Message
+deactivate UI
+
 
 @enduml

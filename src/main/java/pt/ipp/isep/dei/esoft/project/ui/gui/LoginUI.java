@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -32,12 +29,16 @@ public class LoginUI {
     private Button forgotPassword;
     private static int attemps=4;
 
-    public Stage mainStage;
+    public static Stage mainStage;
 
     private final AuthenticationController ctrl = new AuthenticationController();
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
+    }
+
+    public static Stage getMainStage(){
+        return mainStage;
     }
 
     @FXML

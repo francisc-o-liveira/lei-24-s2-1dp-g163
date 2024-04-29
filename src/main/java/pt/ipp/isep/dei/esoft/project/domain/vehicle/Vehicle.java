@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.RejectedExecutionException;
 
 public class Vehicle {
     private String brand;
@@ -15,7 +16,7 @@ public class Vehicle {
     private double grossWeight;
     private int currentKm;
     private Date registerDate;
-    private Date acquisionDate;
+    private Date acquisitionDate;
     private int frequencyCheckKm;
     private List<CheckUp> checkUpList;
     public enum StatusType {Use,NotUse}
@@ -30,10 +31,19 @@ public class Vehicle {
         this.grossWeight=grossWeight;
         this.currentKm=currentKm;
         this.registerDate=registerDate;
-        this.acquisionDate=acquisionDate;
+        this.acquisitionDate=acquisionDate;
         this.frequencyCheckKm=frequencyCheckKm;
-        this.plate=plate;
         this.statusType=StatusType.NotUse;
+        if (verifyPlate(plate)){
+            this.plate=plate;
+        }else {
+            throw new RejectedExecutionException("Plate dont correspont with the Acquisition Date ");
+        }
+    }
+
+    private boolean verifyPlate(String plate) {
+        //IMPLEMENTATION OF VERIFY PLATE NEED TO BE DONE IN WHERE
+        return true;
     }
 
     public StatusType getStatus() {
@@ -73,8 +83,20 @@ public class Vehicle {
         return save;
     }
 
-    public Date getAcquisionDate() {
-        return acquisionDate;
+    public Date getAcquisitionDate() {
+        return acquisitionDate;
+    }
+
+    public List<CheckUp> getCheckUpList() {
+        return checkUpList;
+    }
+
+    public StatusType getStatusType() {
+        return statusType;
+    }
+
+    public Date getacquisitionnDate() {
+        return acquisitionDate;
     }
 
     public Date getRegisterDate() {

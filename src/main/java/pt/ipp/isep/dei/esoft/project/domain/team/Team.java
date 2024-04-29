@@ -7,13 +7,36 @@ import java.util.List;
 
 public class Team {
     private List<Collaborator> collaboratorsTeam;
-    private int sizeTeam;
+    private int maxSizeTeam;
+    private int minSizeTeam;
     private List<Skill> skillsSelected;
 
-    public Team(List<Collaborator> collaboratorsTeam, int sizeTeam, List<Skill> skillsSelected){
-        this.collaboratorsTeam=collaboratorsTeam;
-        this.sizeTeam=sizeTeam;
+    public Team(int maxSize, int minSize, List<Skill> skillsSelected){
+        this.maxSizeTeam=maxSize;
+        this.minSizeTeam=minSize;
         this.skillsSelected=skillsSelected;
+    }
+
+    /**
+     * For clone method only
+     * @param collaboratorsTeam
+     * @param skillsSelected
+     * @param maxSizeTeam
+     * @param minSizeTeam
+     */
+    public Team(List<Collaborator> collaboratorsTeam, List<Skill> skillsSelected,int maxSizeTeam, int minSizeTeam){
+        this.collaboratorsTeam=collaboratorsTeam;
+        this.skillsSelected=skillsSelected;
+        this.maxSizeTeam=maxSizeTeam;
+        this.minSizeTeam=minSizeTeam;
+    }
+
+    public boolean addCollaborator(Collaborator collab){
+        if(this.maxSizeTeam<collaboratorsTeam.size()){
+            collaboratorsTeam.add(collab);
+            return true;
+        }
+        return false;
     }
 
 
@@ -26,7 +49,11 @@ public class Team {
     }
 
     public Team clone(){
-        return new Team(this.collaboratorsTeam, this.sizeTeam, this.skillsSelected);
+        return new Team(this.collaboratorsTeam, this.skillsSelected, this.maxSizeTeam,this.minSizeTeam);
+    }
+
+    public boolean isPossible() {
+        return collaboratorsTeam.size()<=maxSizeTeam && collaboratorsTeam.size()>=minSizeTeam;
     }
 
     /*public List<Collaborator> getTeamListBySkills(Skill skillsSelected){

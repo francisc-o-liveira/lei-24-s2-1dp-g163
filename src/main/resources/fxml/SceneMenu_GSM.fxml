@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.GSManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.GSManagerUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -43,18 +49,18 @@
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="30.0" layoutY="123.0" text="GreenSpaceManager" textFill="WHITE">
+                                <Label layoutX="28.0" layoutY="130.0" text="GreenSpaceManager" textFill="WHITE">
                                     <font>
                                         <Font name="Tahoma Bold" size="14.0" />
                                     </font>
                                 </Label>
                                 <Line endX="86.5" layoutX="117.0" layoutY="171.0" startX="-107.0" stroke="WHITE" />
-                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Home">
+                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" onAction="#reloadPage" prefHeight="26.0" prefWidth="125.0" text="Home">
                                     <graphic>
-                                        <FontAwesomeIconView glyphName="HOME" />
+                                        <FontAwesomeIconView glyphName="HOME" text="" />
                                     </graphic>
                                 </Button>
-                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false">
+                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false" onAction="#doLogout">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="SIGN_OUT" size="2em" />
                                     </graphic>
@@ -64,6 +70,8 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
+                        <Button layoutX="34.0" layoutY="278.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="System Configs" />
+                        <FontAwesomeIconView glyphName="PLUS" layoutX="45.0" layoutY="297.0" text="" />
                             </children>
                         </AnchorPane>
                     </children>
@@ -189,7 +197,7 @@
                                                 <DropShadow />
                                             </effect>
                                             <children>
-                                                <AnchorPane accessibleRole="BUTTON" layoutX="14.0" layoutY="19.0" prefHeight="231.0" prefWidth="273.0" style="-fx-background-color: #1C4741;">
+                                                <AnchorPane accessibleRole="BUTTON" layoutX="16.0" layoutY="19.0" prefHeight="231.0" prefWidth="273.0" style="-fx-background-color: #1C4741;">
                                                     <children>
                                                         <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                                             <fill>
@@ -210,16 +218,16 @@
                                                             </fill>
                                                         </Circle>
                                                         <FontAwesomeIconView glyphName="USERS" layoutX="102.0" layoutY="132.0" size="5em" />
-                                                        <Button blendMode="MULTIPLY" layoutX="78.0" layoutY="181.0" onAction="#manageTeams" prefHeight="29.0" prefWidth="117.0" text="Manage Teams">
+                                                        <Button blendMode="MULTIPLY" layoutX="73.0" layoutY="181.0" onAction="#manageTeams" prefHeight="29.0" prefWidth="127.0" text="Manage Teams">
                                                             <font>
                                                                 <Font size="15.0" />
                                                             </font>
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
-                                    <AnchorPane accessibleRole="BUTTON" layoutX="304.0" layoutY="19.0" prefHeight="231.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
+                                    <AnchorPane layoutX="301.0" layoutY="20.0" prefHeight="227.0" prefWidth="266.0" style="-fx-background-color: #1C4741;">
                                        <children>
-                                          <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                          <Circle layoutX="133.0" layoutY="106.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                              <fill>
                                                 <LinearGradient endX="1.0" endY="1.0">
                                                    <stops>
@@ -237,16 +245,26 @@
                                                 </LinearGradient>
                                              </fill>
                                           </Circle>
-                                          <Button blendMode="MULTIPLY" layoutX="78.0" layoutY="181.0" onAction="#manageTeams" prefHeight="29.0" prefWidth="117.0" text="Manage Vehicles">
+                                          <ImageView fitHeight="72.0" fitWidth="82.0" layoutX="96.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../pngegg.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="55.0" layoutY="178.0" onAction="#manageJobs" prefHeight="31.0" prefWidth="154.0" text="Manage Equipment">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
                                           </Button>
+                                          <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="94.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../pngegg.png" />
+                                             </image>
+                                          </ImageView>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane accessibleRole="BUTTON" layoutX="592.0" layoutY="19.0" prefHeight="231.0" prefWidth="258.0" style="-fx-background-color: #1C4741;">
+                                    <AnchorPane layoutX="587.0" layoutY="19.0" prefHeight="228.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
                                        <children>
-                                          <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                          <Circle layoutX="144.0" layoutY="102.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                              <fill>
                                                 <LinearGradient endX="1.0" endY="1.0">
                                                    <stops>
@@ -264,9 +282,10 @@
                                                 </LinearGradient>
                                              </fill>
                                           </Circle>
-                                          <Button blendMode="MULTIPLY" layoutX="67.0" layoutY="185.0" onAction="#manageTeams" prefHeight="31.0" prefWidth="140.0" text="Manage Equiment">
+                                          <FontAwesomeIconView glyphName="USER" layoutX="120.0" layoutY="125.0" size="5em" />
+                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageCollaborators" prefHeight="29.0" prefWidth="165.0" text="Manage Vehicles">
                                              <font>
-                                                <Font size="15.0" />
+                                                <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Button>
                                        </children>

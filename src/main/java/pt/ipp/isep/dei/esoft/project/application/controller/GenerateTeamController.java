@@ -6,33 +6,22 @@ import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
-import pt.ipp.isep.dei.esoft.project.ui.console.utils.GenerateTeamUI;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GenerateTeamController{
     public TeamRepository teamRepository;
     public CollaboratorRepository collaboratorRepository;
     public SkillRepository skillRepository;
 
-    /** Method to generate a team according to the List of Skills given
+    /**
+     * Method to generate a team according to the List of Skills given
      *
-     * @param collaborators
-     * @param sizeTeam
-     * @param skillsSelected
-     * @param maxSize
      */
-    public void generateTeam(List<Collaborator> collaborators, int sizeTeam, List<Skill> skillsSelected, int maxSize){
+    public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill){
             List<Collaborator> collaboratorsForTeam=getCollaboratorsNotActiveBySkills(skillsSelected);
-            List<Collaborator> collaboratorsTeam= new ArrayList<>();
-            for(Collaborator c : collaboratorsForTeam){
-                if(GenerateTeamUI.getSelected(c) && sizeTeam<maxSize){
-                    collaboratorsTeam.add(c);
-                    sizeTeam++;
-                }
-            }
-            Team team=new Team(collaboratorsTeam,sizeTeam,skillsSelected);
+            return teamRepository.generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,numberCollabForSkill,collaboratorsForTeam);
     }
 
     /**Gets the list of not active collaborators by the list of Skills needed
@@ -83,6 +72,14 @@ public class GenerateTeamController{
      */
     public List<Team> getTeams(){
         return teamRepository.getTeams();
+    }
+
+    public boolean saveTeam(Team teamCreated) {
+        boolean operationSucess=teamRepository.saveTeam(teamCreated);
+        if (operationSucess){
+            activateCollaborators(teamCreated);
+        }
+        return operationSucess;
     }
 
     /*private (...) getHRMFromSession()*/

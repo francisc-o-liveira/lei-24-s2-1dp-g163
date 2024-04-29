@@ -1,4 +1,4 @@
-package MATDISC.US013;
+package MATDISC.USs;
 
 
 public class Edge {

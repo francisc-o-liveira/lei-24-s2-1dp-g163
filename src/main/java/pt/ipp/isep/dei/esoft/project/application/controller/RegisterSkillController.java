@@ -30,5 +30,9 @@ public class RegisterSkillController {
 
     public List<Skill> getSkillList(){return Repositories.getInstance().getSkillRepository().getSkillList();}
 
+    public void removeFromList(Skill skillName){
+        Repositories.getInstance().getSkillRepository().getSkillList().remove(skillName);
+    }
+
     public ArrayList<DocType.Type> getDocTypeList(){return new ArrayList<>(Arrays.asList(DocType.Type.values()));}
 }

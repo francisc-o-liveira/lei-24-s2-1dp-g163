@@ -13,7 +13,7 @@ public class Collaborator {
     private String addressZipCode;
     private String addressCity;
     private int phoneNumber;
-    private DocType docType;
+    private DocType.Type docType;
     private int docIDNumber;
     private String email;
     private JobCategory jobCategory;
@@ -24,13 +24,15 @@ public class Collaborator {
 
     /**
      * This method it is for trade the statusType
+     *
      * @param statusType represent the new status for the collaborator
+     * @return
      */
     public void setStatus(StatusType statusType) {
         this.statusType=statusType;
     }
 
-    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType docType, int docIDNumber, JobCategory jobCategory){
+    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
         this.name=name;
         this.address=address;
         this.addressZipCode=addressZipCode;
