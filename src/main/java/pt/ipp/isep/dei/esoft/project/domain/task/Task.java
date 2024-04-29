@@ -46,6 +46,6 @@ public class Task {
      */
     public Task clone() {
         return new Task(this.reference, this.description, this.informalDescription, this.technicalDescription,
-                this.duration, this.cost, this.taskCategory, this.employee);
+                this.duration, this.cost, this.taskCategory);
     }
 }
