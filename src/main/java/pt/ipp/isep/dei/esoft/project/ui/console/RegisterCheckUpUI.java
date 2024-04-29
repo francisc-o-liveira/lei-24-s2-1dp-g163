@@ -14,7 +14,7 @@ import java.util.Scanner;
  * Classe responsável pela interacção com o utilizador para o registo de
  * verificações técnicas (CheckUps) dos veículos.
  */
-public class RegisterCheckUpUI {
+public class RegisterCheckUpUI implements Runnable {
     private RegisterCheckUpController ctrl;
     private Scanner scanner;
     private Vehicle vehicleToCheckUp;

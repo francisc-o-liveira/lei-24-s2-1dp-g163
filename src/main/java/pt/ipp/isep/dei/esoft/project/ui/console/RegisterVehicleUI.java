@@ -7,7 +7,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class RegisterVehicleUI {
+public class RegisterVehicleUI  implements Runnable{
     private String brand;
     private String model;
     private String plate;
