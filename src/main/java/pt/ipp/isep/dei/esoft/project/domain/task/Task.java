@@ -44,7 +44,7 @@ public class Task {
      *
      * @return A clone of the current instance.
      */
-    
+
     public Task clone() {
         return new Task(this.reference, this.description, this.informalDescription, this.technicalDescription,
                 this.duration, this.cost, this.taskCategory);

@@ -9,7 +9,7 @@ public class Main {
      * This method correspond the RunProgram Method.
      * @param args it is ignored
      */
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.run();
 
