@@ -31,8 +31,8 @@ activate VFM
     CTRL -> Repo : getVehicleRepository()
     activate Repo
 
-    Repo -> CTRL : vehicleRepository
-        deactivate Repo
+    Repo --> CTRL : vehicleRepository
+    deactivate Repo
 
     deactivate CTRL
 
@@ -61,7 +61,7 @@ activate VFM
     CTRL --> UI: true / vehicle
     deactivate CTRL
 
-    UI -> VFM : displays operation success
+    UI --> VFM : displays operation success
     deactivate UI
 
 deactivate VFM

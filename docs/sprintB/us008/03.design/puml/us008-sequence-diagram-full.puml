@@ -7,11 +7,13 @@ autonumber
 
 'hide footbox
 actor "VFM" as VFM
-participant ":VehicleUI" as UI
+participant ":VehicleCheckUpUI" as UI
+
 participant ":VehicleCheckUpController" as CTRL
+
 participant ":Repositories" as Repositories
+participant "Repositories" as Repos
 participant "vehicleCheckUpRepository\n:VehicleCheckUpRepository" as VehicleCheckUpRepository
-participant "vehicle\n:Vehicle" as Vehicle
 
 activate VFM
 
@@ -24,49 +26,31 @@ activate VFM
     CTRL -> Repositories : getInstance()
     activate Repositories
 
-    Repositories -> CTRL : repositories
+    Repositories --> CTRL : repositories
     deactivate Repositories
 
-    CTRL -> VehicleCheckUpRepository : getVehicleCheckUpRepository()
+    CTRL -> Repos : getVehicleCheckUpRepository()
+    activate Repos
+
+    Repos --> CTRL :vehicleCheckUpRepository
+    deactivate Repos
+
+    CTRL -> VehicleCheckUpRepository : getVehicleCheckUpList()
     activate VehicleCheckUpRepository
 
-    VehicleCheckUpRepository -> CTRL :vehicleCheckUpRepository
+    VehicleCheckUpRepository --> CTRL : vehicleCheckUpList
     deactivate VehicleCheckUpRepository
-
-    CTRL -> Repositories : getVehicleCheckUpList()
-
-    Repositories -> VehicleCheckUpRepository : getVehicleCheckUpList()
-
-    VehicleCheckUpRepository -> Repositories : vehicleCheckUpList
-
-    CTRL -> Repositories : getVehicleRepository()
-
-    Repositories -> VehicleCheckUpRepository : getVehicleRepository()
-
-    VehicleCheckUpRepository --> Repositories : vehicleCheckUpRepository
-    deactivate VehicleCheckUpRepository
-
-    Repositories --> CTRL: repositories
-
-    VehicleCheckUpRepository -> Vehicle: createVehicle()
-
-    Vehicle -> VehicleCheckUpRepository: addVehicle(vehicle)
-
-    VehicleCheckUpRepository --> Repositories : true / vehicle
-
-    Repositories --> CTRL : true / vehicle
-    deactivate Repositories
 
     deactivate VehicleCheckUpRepository
 
-    CTRL --> UI: true / vehicle
+    CTRL --> UI: true / vehicleCheckUpList
     deactivate CTRL
 
-    UI -> VFM : shows the list of vehicles
+    UI --> VFM : shows the list of vehicles
 
-    VFM -> UI : confirms data
+    VFM -> UI : ask to confirm data
 
-    UI -> VFM : displays operation success
+    UI --> VFM : displays operation success
     deactivate UI
 
 deactivate VFM
