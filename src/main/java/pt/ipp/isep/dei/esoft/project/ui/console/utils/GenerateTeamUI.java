@@ -95,7 +95,7 @@ public class GenerateTeamUI {
                 System.out.println("1 ---- Continue");
                 System.out.println("2 ---- Add more");
                 next = scan.nextInt();
-            }while (next<0 || next>2);
+            }while (next<=0 || next>2);
         }while (next != 1);
         return collectSkill;
     }
@@ -104,25 +104,13 @@ public class GenerateTeamUI {
         Scanner scan = new Scanner(System.in);
         int maxSize = 0;
         int minSize = 0;
-        while(minSize<1 && maxSize>minSize){
+        while(minSize<1 || maxSize>minSize){
             System.out.print("Introduce the Minimum Size for the Team: ");
             minSize = scan.nextInt();
         }
-        while(maxSize>minSize){
+        do{
             System.out.print("Introduce the Maximum Size for the Team: ");
             maxSize = scan.nextInt();
-        }
-    }
-
-    public static boolean getSelected(Collaborator c){
-        Scanner scan=new Scanner(System.in);
-        boolean collaboratorSelected=false;
-        System.out.print("Select?");
-        int option=scan.nextInt();
-        if(option==1){
-            collaboratorSelected=true;
-        }
-        return collaboratorSelected;
-
+        }while(maxSize<minSize);
     }
 }
