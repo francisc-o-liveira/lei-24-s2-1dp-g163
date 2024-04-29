@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 import pt.ipp.isep.dei.esoft.project.ui.console.CreateTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
+import pt.ipp.isep.dei.esoft.project.ui.gui.ManageJobsUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +16,9 @@ public class HRManagerUI implements Runnable{
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("1 - Create Task", new CreateTaskUI()));
         options.add(new MenuItem("2 - Manage Teams", new ShowTextUI("You have chosen Option 2.")));
-        options.add(new MenuItem("3 - Manage Collaborators", new ShowTextUI("You have chosen Option 3.")));
-        options.add(new MenuItem("4 - Manage Vehicles", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("3 - Manage Collaborators", new ManageCollaboratorsUI()));
+        options.add(new MenuItem("4 - Manage JobCategory´s", new ManageJobCategorysUI()));
+        options.add(new MenuItem("5 - Manage JobCategory´s", new ManageSkillsUI()));
 
         int option = 0;
         do {

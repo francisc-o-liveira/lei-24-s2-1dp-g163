@@ -7,7 +7,7 @@ import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class RegisterJobCategoryUI {
+public class RegisterJobCategoryUI implements Runnable {
     private String jobCategoryName;
 
     private RegisterJobCategoryController ctrl;

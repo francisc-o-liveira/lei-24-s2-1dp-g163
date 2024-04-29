@@ -4,7 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillControl
 
 import java.util.Scanner;
 
-public class RegisterSkillUI {
+public class RegisterSkillUI implements Runnable {
     private String skillName;
 
     private RegisterSkillController ctrl;
