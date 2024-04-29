@@ -146,4 +146,22 @@ public class Vehicle {
     public boolean equals(Object obj) {
             return this.plate == ((Vehicle) obj).plate;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Vehicle:\n" +
+                        "Brand: %s\n" +
+                        "Model: %s\n" +
+                        "Type: %s\n" +
+                        "Tare: %d\n" +
+                        "Plate: %s\n" +
+                        "Gross Weight: %.2f\n" +
+                        "Current Km: %d\n" +
+                        "Register Date: %s\n" +
+                        "Acquisition Date: %s\n" +
+                        "Frequency Check Km: %d\n" +
+                        "Check Up List: %s\n" +
+                        "Status Type: %s\n",
+                brand, model, type, tare, plate, grossWeight, currentKm, registerDate, acquisitionDate, frequencyCheckKm, checkUpList, statusType);
+    }
 }

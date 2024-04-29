@@ -18,4 +18,10 @@ public class CheckUp {
     public int getKmOfCheck() {
         return kmOfCheck;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Km of Check-Up: %d\n" +
+                "Date of Check-Up: %s\n", kmOfCheck, dateOfCheck);
+    }
 }

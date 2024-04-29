@@ -56,6 +56,14 @@ public class Team {
         return collaboratorsTeam.size()<=maxSizeTeam && collaboratorsTeam.size()>=minSizeTeam;
     }
 
+    @Override
+    public String toString(){
+        return String.format("Collaborators Team: %s\n" +
+                "Max Size Team: %d\n" +
+                "Min Size Team: %d\n" +
+                "Skills Selected: %s\n", collaboratorsTeam, maxSizeTeam, minSizeTeam, skillsSelected);
+    }
+
     /*public List<Collaborator> getTeamListBySkills(Skill skillsSelected){
 
     }*/
