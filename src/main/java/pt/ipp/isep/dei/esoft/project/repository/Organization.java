@@ -9,20 +9,36 @@ import java.util.List;
 import java.util.Optional;
 
 public class Organization{
+    private static final String NAME_PER_OMISSION = "MusgoSublime";
+    private static final String EMAIL_PREFIX_PER_OMISSION = "@this.app" ;
+    private static final String VAT_NUMBER_PER_OMISSION = "0000000000";
+    private static final String PHONE_PER_OMISSION = "0123456789";
     private final List<Employee> employees;
     private final List<Task> tasks;
     private String name;
-    private String website;
+    private String vatNumber;
     private String phone;
-    private String email;
+    private String emailPrefix;
 
     /**
      * This method is the constructor of the organization.
      *
      */
+    public Organization(String vatNumber) {
+        employees = new ArrayList<>();
+        tasks = new ArrayList<>();
+        name=NAME_PER_OMISSION;
+        this.vatNumber=vatNumber;
+        emailPrefix=EMAIL_PREFIX_PER_OMISSION;
+        phone=PHONE_PER_OMISSION;
+    }
     public Organization() {
         employees = new ArrayList<>();
         tasks = new ArrayList<>();
+        name=NAME_PER_OMISSION;
+        emailPrefix=EMAIL_PREFIX_PER_OMISSION;
+        vatNumber=VAT_NUMBER_PER_OMISSION;
+        phone=PHONE_PER_OMISSION;
     }
 
     /**
@@ -45,12 +61,11 @@ public class Organization{
      * @param duration             The duration of the task to be created.
      * @param cost                 The cost of the task to be created.
      * @param taskCategory         The task category of the task to be created.
-     * @param employee             The employee of the task to be created.
      * @return
      */
     public Optional<Task> createTask(String reference, String description, String informalDescription,
                                      String technicalDescription, int duration, double cost,
-                                     TaskCategory taskCategory, Employee employee) {
+                                     TaskCategory taskCategory) {
 
         //TODO: we could also check if the employee works for the organization before proceeding
         //checkIfEmployeeWorksForOrganization(employee);
@@ -60,7 +75,7 @@ public class Organization{
         Optional<Task> optionalValue = Optional.empty();
 
         Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                taskCategory, employee);
+                taskCategory);
 
         if (addTask(task)) {
             optionalValue = Optional.of(task);
@@ -123,10 +138,11 @@ public class Organization{
 
 
     //add employee to organization
-    public boolean addEmployee(Employee employee) {
+    public boolean addEmployee(String name, String position, String phone, String email) {
+        Employee newEmployee = new Employee(name, position, phone, email);
         boolean success = false;
-        if (validateEmployee(employee)) {
-            success = employees.add(employee);
+        if (validateEmployee(newEmployee)) {
+            success = employees.add(newEmployee);
         }
         return success;
     }

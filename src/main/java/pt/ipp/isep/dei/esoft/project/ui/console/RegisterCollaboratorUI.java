@@ -42,7 +42,6 @@ public class RegisterCollaboratorUI implements Runnable{
 
     public void run(){
         System.out.print("--------- Register a Collaborator ---------\n");
-        ctrl.getDataNeededToRegister();
         jobCategory=displayAndSelectJobCategory();
         docType=displayAndVerifyDocType();
         docIDNumber=registerDocIDNumber();
@@ -205,11 +204,8 @@ public class RegisterCollaboratorUI implements Runnable{
      */
     public Type displayAndVerifyDocType(){
         Type[] types = ctrl.getDocTypeList();
-
         Scanner scan = new Scanner(System.in);
         int docIDNumber;
-
-
             System.out.print("Select one of the following types of document of identification: \n");
             for(int i = 0; i < types.length; i++){
                 System.out.printf("%d --- %s%n", i+1,types[i]);

@@ -11,14 +11,10 @@ public class Task {
     private String technicalDescription;
     private int duration;
     private double cost;
-
     private TaskCategory taskCategory;
 
-    private Employee employee;
-
     public Task(String reference, String description, String informalDescription, String technicalDescription,
-                int duration, double cost, TaskCategory taskCategory, Employee employee) {
-
+                int duration, double cost, TaskCategory taskCategory) {
         validateReference(reference);
         this.reference = reference;
         this.description = description;
@@ -27,7 +23,6 @@ public class Task {
         this.duration = duration;
         this.cost = cost;
         this.taskCategory = taskCategory;
-        this.employee = employee;
     }
 
     private void validateReference(String reference) {
@@ -37,21 +32,10 @@ public class Task {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Task)) {
-            return false;
-        }
-        Task task = (Task) o;
-        return reference.equals(task.reference) && employee.equals(task.employee);
-    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reference, employee);
+        return Objects.hash(reference);
     }
 
 

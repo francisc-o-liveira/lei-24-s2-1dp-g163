@@ -19,7 +19,6 @@ public class HRManagerUI implements Runnable{
         options.add(new MenuItem("3 - Manage Collaborators", new ManageCollaboratorsUI()));
         options.add(new MenuItem("4 - Manage JobCategory´s", new ManageJobCategorysUI()));
         options.add(new MenuItem("5 - Manage JobCategory´s", new ManageSkillsUI()));
-
         int option = 0;
         do {
             option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
