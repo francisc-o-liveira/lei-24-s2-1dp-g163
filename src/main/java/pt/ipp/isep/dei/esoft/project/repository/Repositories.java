@@ -21,7 +21,6 @@ public class Repositories {
         teamRepository = new TeamRepository();
         collaboratorRepository = new CollaboratorRepository();
         vehicleRepository = new VehicleRepository();
-
     }
 
     public static Repositories getInstance() {

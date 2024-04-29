@@ -17,10 +17,14 @@ public class ShowVehicleListUI implements Runnable{
         showDataAsked();
     }
 
-    private void showDataAsked() {
+    private void showDataAsked()  {
         List<Vehicle> vehicleList = ctrl.getVehicleList();
-        for (Vehicle v : vehicleList){
-            System.out.println(v);
+        if (vehicleList == null) {
+            System.out.println("Dont exist any Vehicle register on the System.");
+        }else{
+            for (Vehicle v : vehicleList){
+                System.out.println(v);
+            }
         }
     }
 }

@@ -12,6 +12,10 @@ public class RegisterVehicleController {
 
     private VehicleRepository vehicleRepository;
 
+    public RegisterVehicleController(){
+        getVehicleRepository();
+    }
+
     public void getVehicleRepository() {
         if (vehicleRepository == null) {
             Repositories repositories = Repositories.getInstance();

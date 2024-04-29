@@ -22,7 +22,6 @@ public class ManageVehiclesUI implements Runnable{
         options.add(new MenuItem("4 - Show Check Up List", new CheckUpListUI()));
         options.add(new MenuItem("5 - Register a CheckUp", new RegisterCheckUpUI()));
         options.add(new MenuItem("6 - Register update Kilometers", new ManageVehiclesUI()));
-        options.add(new MenuItem("7 - Return MainMenu", getUserMainUI()));
         int option = 0;
         do {
             option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
