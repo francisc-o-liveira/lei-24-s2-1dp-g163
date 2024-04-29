@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 import pt.ipp.isep.dei.esoft.project.ui.console.*;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,5 +18,13 @@ public class ManageVehiclesUI implements Runnable{
         options.add(new MenuItem("4 - Show CheckUp List", new CheckUpListUI()));
         options.add(new MenuItem("5 - Register a CheckUp", new RegisterCheckUpUI()));
         options.add(new MenuItem("6 - Register update Kilometers", new ManageVehiclesUI()));
+        int option = 0;
+        do {
+            option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
+
+            if ((option >= 0) && (option < options.size())) {
+                options.get(option).run();
+            }
+        } while (option != -1);
     }
 }
