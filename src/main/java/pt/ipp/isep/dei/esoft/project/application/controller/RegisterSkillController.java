@@ -5,10 +5,9 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class RegisterSkillController {
 
@@ -42,4 +41,23 @@ public class RegisterSkillController {
     }
 
     public ArrayList<DocType.Type> getDocTypeList(){return new ArrayList<>(Arrays.asList(DocType.Type.values()));}
+
+    public boolean loadSkillsByFile(String fileName) throws FileNotFoundException {
+        File file = new File(fileName);
+        Scanner scan = new Scanner(file);
+        boolean operationSucess=false;
+        boolean operations = true;
+        if (!scan.hasNextLine()){
+            return false;
+        }
+        while(scan.hasNextLine()){
+            String skillName = scan.nextLine();
+            operationSucess=RegisterSkill(skillName);
+            if(!operationSucess){
+                operations=false;
+            }
+        }
+        return operations;
+
+    }
 }
