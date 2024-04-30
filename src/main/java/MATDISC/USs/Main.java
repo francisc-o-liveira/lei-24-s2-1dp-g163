@@ -7,13 +7,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+
+import java.io.IOException;
+
 
 
 public class Main {
-    private static final String pathZip = "../resources/graphVizInstall.zip";
-    private static final String pathDestination = "C:/Program Files/";
     public static String fileName;
 
     public static final String pathName = "src/main/java/MATDISC/USs/";
@@ -71,9 +70,6 @@ public class Main {
                 case 3:
                     plotGraphAndShow(executionTimes, sizeInput);
                     break;
-                /*case 4:
-                    InstallGrapgViz();
-                    break;*/
                 case 0:
                     break;
             }
@@ -85,24 +81,46 @@ public class Main {
         double[] xData = new double[sizeInput.size()];
         double[] yData = new double[sizeInput.size()];
 
-        for (int i = 0; i < executionTimes.size(); i++) {
-            xData[i] = sizeInput.get(i);
-            yData[i] = executionTimes.get(i);
-        }
 
-        if (yData.length != 0 && xData.length != 0) {
-            XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("").yAxisTitle("").build();
+            for (int i = 0; i < executionTimes.size(); i++) {
+                xData[i] = sizeInput.get(i);
+                yData[i] = executionTimes.get(i);
+            }
 
-            // Customize chart
-            chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
-            chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+            if (yData.length != 0 && xData.length != 0) {
+                XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("").yAxisTitle("").build();
 
-            // Add data series
-            XYSeries series = chart.addSeries("Sum", xData, yData);
+                // Customize chart
+                chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+                chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
-            // Show the chart
-            new SwingWrapper<>(chart).displayChart();
+                // Add data series
+                XYSeries series = chart.addSeries("Sum", xData, yData);
 
+                // Show the chart
+                new SwingWrapper<>(chart).displayChart();
+
+            }
+
+            writeDataToCSV(executionTimes, sizeInput);
+
+        System.out.println("Execution times recorded in execution_times.csv");
+    }
+
+    public static void writeDataToCSV(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
+        try (FileWriter csvWriter = new FileWriter("execution_times.csv")) {
+            csvWriter.append("InputSize,ExecutionTime\n"); // CSV header
+
+            for (int i = 0; i < executionTimes.size(); i++) {
+                double inputSize = sizeInput.get(i);
+                double executionTime = executionTimes.get(i);
+                String csvLine = inputSize + "," + executionTime;
+                csvWriter.append(csvLine).append("\n");
+            }
+
+            System.out.println("Execution times recorded in execution_times.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -126,8 +144,7 @@ public class Main {
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
         System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
         System.out.println("----Option 3 : Plot the graph of Execution Time");
-        System.out.println("----Option 4 : Install GraphViz");
-        while (option < 0 || option > 4) {
+        while (option < 0 || option > 3) {
             if (option != -1) {
                 System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
             }
@@ -321,49 +338,4 @@ public class Main {
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
     }
-
-
-    /*public static void InstallGrapgViz() {
-        System.out.println("Instalação GraphViz");
-        File test = new File(pathDestination + "/GraphViz");
-        if (!test.canExecute()) {
-            try {
-                unzip();
-                System.out.println("Descompactação concluída com sucesso.");
-            } catch (IOException e) {
-                System.err.println("Erro ao descompactar o arquivo: " + e.getMessage());
-            }
-        }
-    }
-
-    public static void unzip() throws IOException {
-        byte[] buffer = new byte[1024];
-        // Criar diretório de destino, se não existir
-        File pastaDestino = new File(pathDestination);
-        if (!pastaDestino.exists()) {
-            pastaDestino.mkdirs();
-        }
-        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(pathZip))) {
-            ZipEntry entryZip = zis.getNextEntry();
-            while (entryZip != null) {
-                String fileName = entryZip.getName();
-                File novoArquivo = new File(pathDestination + File.separator + fileName);
-
-                if (entryZip.isDirectory()) {
-                    novoArquivo.mkdirs();
-                } else {
-                    FileOutputStream fos = new FileOutputStream(novoArquivo);
-
-                    int tamanho;
-                    while ((tamanho = zis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, tamanho);
-                    }
-                    fos.close();
-                }
-
-                entryZip = zis.getNextEntry();
-            }
-            zis.closeEntry();
-        }
-    }*/
 }
