@@ -12,12 +12,17 @@ class RegisterCollaboratorControllerTest {
         RegisterCollaboratorController controller = new RegisterCollaboratorController();
         assertTrue(controller.validateDocType(DocType.Type.Passport,1231321223));
     }
+
+    @Test
     void validateDocTypeCitizenCard() {
         RegisterCollaboratorController controller = new RegisterCollaboratorController();
-        assertTrue(controller.validateDocType(DocType.Type.CitizenCard,1231321223));
+        assertTrue(controller.validateDocType(DocType.Type.CitizenCard,1231321279));
     }
+
+    @Test
     void validateDocTypeTaxPayerCard() {
         RegisterCollaboratorController controller = new RegisterCollaboratorController();
-        assertTrue(controller.validateDocType(DocType.Type.TaxPayerCard,1231321223));
+        assertTrue(controller.validateDocType(DocType.Type.TaxPayerCard,1239991223));
     }
+
 }
