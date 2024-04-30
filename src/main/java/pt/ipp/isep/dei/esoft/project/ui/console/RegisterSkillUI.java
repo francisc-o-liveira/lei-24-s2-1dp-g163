@@ -76,8 +76,7 @@ public class RegisterSkillUI implements Runnable {
         String fileName = null;
         File file;
         do{
-            System.out.print("Please input the Skill Name:");
-            fileName=scan.nextLine();
+            fileName=Utils.readLineFromConsole("Please input the Skill Name:");
             file = new File(fileName);
         }while(!file.canExecute());
         return fileName;
@@ -95,7 +94,7 @@ public class RegisterSkillUI implements Runnable {
         do {
             System.out.println("1 - Add Skill by skill name");
             System.out.println("2 - Add Skill's by file");
-            option = scan.nextInt();
+            option = Utils.readIntegerFromConsole("Select an option:");
         }while(option<1 || option>2);
         return option;
     }
@@ -120,9 +119,13 @@ public class RegisterSkillUI implements Runnable {
     private String requestData() {
         Scanner scan = new Scanner(System.in);
         String skillName = null;
-        do{
-            skillName= Utils.readLineFromConsole("\"Please input the Skill Name:\"");
-        }while(!nameVerify(skillName));
+        try {
+            do{
+                skillName= Utils.readLineFromConsole("\"Please input the Skill Name:\"");
+            }while(!nameVerify(skillName));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return skillName;
     }
 
@@ -135,11 +138,11 @@ public class RegisterSkillUI implements Runnable {
     private boolean nameVerify(String skillName) {
         char[] characters = skillName.toCharArray();
         if(characters==null){
-            return false;
+            throw new NullPointerException("The Skill Name is empty please introduce name");
         }
         for(char c : characters){
             if(!Character.isLetter(c)){
-                return false;
+                throw new IllegalArgumentException("The Skill Name dont accept Special Characters or Numbers");
             }
         }
         return true;

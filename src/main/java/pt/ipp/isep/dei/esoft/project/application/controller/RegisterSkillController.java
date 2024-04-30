@@ -14,24 +14,11 @@ public class RegisterSkillController {
     private SkillRepository skillRepository;
 
     public boolean RegisterSkill(String skillName){
-        verifySkillName(skillName);
         Optional<Skill> newSkill = Repositories.getInstance().getSkillRepository().registerSkill(skillName);
         if (newSkill.isPresent()){
             return true;
         }
         return false;
-    }
-
-    private void verifySkillName(String skillName) {
-        if(skillName.trim().isEmpty()){
-            throw new NullPointerException("The Skill Name is empty please introduce name");
-        }
-        char[] testSkill = skillName.trim().toCharArray();
-        for(char x : testSkill){
-            if(!Character.isLetter(x)){
-                throw new IllegalArgumentException("The Skill Name dont accept Special Characters or Numbers");
-            }
-        }
     }
 
     public List<Skill> getSkillList(){return Repositories.getInstance().getSkillRepository().getSkillList();}
