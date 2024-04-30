@@ -22,7 +22,7 @@ public class RegisterCollaboratorUI implements Runnable{
     private String address;
     private String addressZipCode;
     private String addressCity;
-    private int phoneNumber;
+    private String phoneNumber;
     private Type docType;
     private int docIDNumber;
     private String email;
@@ -163,18 +163,21 @@ public class RegisterCollaboratorUI implements Runnable{
         String codePhoneNumber;
         while(!validPhoneNumber){
             System.out.print("Country telephone code: ");
-            codePhoneNumber=scan.next();
+            codePhoneNumber = scan.next();
             System.out.print("Phone number: ");
-            phoneNumber=scan.nextInt();
-            String phone=codePhoneNumber+ phoneNumber;
-            if(!verifyPhoneNumber(phoneNumber)){
+            int phone = scan.nextInt();
+            phoneNumber = codePhoneNumber + phone;
+            if(!verifyCodePhoneNumber(codePhoneNumber) || !verifyPhoneNumber(phone)){
+
                 throw new IllegalArgumentException("The introduced phone number is incorrect.");
-            } else if(!codePhoneNumber.equals("+351") && !verifyInternationalPhoneNumber(phone)) {
-                throw new IllegalArgumentException("The introduced phone number is incorrect.");
-            } else {
+            }else {
                 validPhoneNumber=true;
             }
         }
+    }
+
+    private boolean verifyCodePhoneNumber(String codePhoneNumber) {
+        return codePhoneNumber.split("").length <= 4;
     }
 
     /**Register the e-mail of collaborator
@@ -245,19 +248,6 @@ public class RegisterCollaboratorUI implements Runnable{
                 value=true;
             }
         }
-        String[] domainPrefix;
-        String[] domain;
-        if(value){
-            domainPrefix = email.split("@");
-            value = domainPrefix.length==2;
-            if (value){
-                domain=domainPrefix[1].split(".");
-                value = domain.length==2;
-                if (value){
-                    value= domain[1].equals("com") || domain[1].equals("pt");
-                }
-            }
-        }
         return value;
     }
 
@@ -271,22 +261,7 @@ public class RegisterCollaboratorUI implements Runnable{
         return (phoneNumber%1000000000)>0.9 && (phoneNumber%1000000000)<1 &&( (phoneNumber/10000000)==91 || (phoneNumber/10000000)==92 || (phoneNumber/10000000)==93 || (phoneNumber/10000000)==96 );
     }
 
-    /** Using Java Regex, this method verifies an international phone number
-     *
-     * @param phone of collaborator to validate
-     * @return true if phoneNumber starts with a plus sign followed by 6 to 14 digits with optional spaces between them
-     *
-     * */
 
-    private boolean verifyInternationalPhoneNumber(String phone){
-        String verify="^\\+(?:[0-9] ?){6,14}[0-9]$";
-        Pattern pattern = Pattern.compile(verify);
-        Matcher matcher=pattern.matcher(phone);
-        if(matcher.matches()){
-            return true;
-        }
-        return false;
-    }
 
     /**Verifies if address is correctly inserted
      *

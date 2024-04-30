@@ -146,8 +146,7 @@ public class ManageCollaboratorsUI {
             email.clear();
 
             String newPhoneNumber = phoneNumber.getText();
-            int phoneNew = Integer.parseInt(newPhoneNumber);
-            editedCollaborator.setPhoneNumber(phoneNew);
+            editedCollaborator.setPhoneNumber(newPhoneNumber);
             phoneNumber.clear();
 
             String newCity = addressCity.getText();
