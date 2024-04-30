@@ -47,6 +47,17 @@ class CollaboratorTest {
     }
 
 
+    @Test
+    void verifyNumberWorks(){
+        Collaborator cTest = new Collaborator("Joaquim Antonio",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+        assertEquals(cTest.getPhoneNumber(),"+351916835384");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Collaborator cTest2 = new Collaborator("Joaquim Antonio",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","(+351)916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+        });
+
+    }
+
+
 
 
 
@@ -64,8 +75,9 @@ class CollaboratorTest {
     @Test
     void verifyIfCollaboratorCanHaveLessThan18years(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2008,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+            new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,5,1), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
         });
+        Collaborator test = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,4,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
     }
 
     //COLLABORATOR EMAIL AC5
