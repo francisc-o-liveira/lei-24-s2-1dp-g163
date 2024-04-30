@@ -62,7 +62,7 @@ public class RegisterCollaboratorController {
      * @param jobCategory    of collaborator
      * @return
      */
-    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, int phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory){
+    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, String phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory){
         Optional<Collaborator> newCollab = collaboratorRepository.createCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
         return newCollab;
     }
