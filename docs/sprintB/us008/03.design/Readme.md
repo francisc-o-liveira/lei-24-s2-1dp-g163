@@ -8,22 +8,22 @@ _**Note that SSD - Alternative One is adopted.**_
 
 | Interaction ID | Question: Which class is responsible for... | Answer            | Justification (with patterns)                                                                                 |
 |:-------------|:--------------------------------------------|:------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		| 	... interacting with the actor?            | VehicleUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Step 1  		| 	... interacting with the actor?            | VehicleCheckUpUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
 | 			  	| ... knowing the user using the system?      | UserSession       | IE: cf. A&A component documentation.                                                                          |
-| Step 2  		| 	...knowing which vehicle to show?          | VehicleRepository | IE: the function which shows the list of vehicles are saved on VehicleRepository.                             |
-| Step 3  		| 	...informing operation success?            | VehicleUI         | IE: is responsible for user interactions.                                                                     | 
+| Step 2  		| 	...knowing which vehicle to show?          | VehicleCheckUpRepository | IE: the function which shows the list of vehicles are saved on VehicleRepository.                             |
+| Step 3  		| 	...informing operation success?            | VehicleCheckUpUI         | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator):
 
-* VehicleRepository
+* VehicleCheckUpRepository
 * Vehicle
 
 Other software classes
 
-* VehicleUI
-* VehicleController
+* VehicleCheckUpUI
+* VehicleCheckUpController
 * Repositories
 
 ## 3.2. Sequence Diagram (SD)

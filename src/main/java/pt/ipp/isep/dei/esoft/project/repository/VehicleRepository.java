@@ -146,4 +146,8 @@ public class VehicleRepository{
         }
         return vehiclesNeedingCheckUp;
     }
+
+    public List<Vehicle> getVehicleList() {
+        return vehicleList;
+    }
 }

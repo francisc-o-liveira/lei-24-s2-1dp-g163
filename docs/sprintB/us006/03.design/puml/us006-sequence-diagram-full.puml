@@ -10,13 +10,31 @@ actor "VFM" as VFM
 participant ":RegisterVehicleUI" as UI
 participant ":RegisterVehicleController" as CTRL
 participant ":Repositories" as Repositories
+participant "repositories:Repositories" as Repo
 participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
 participant "vehicle\n:Vehicle" as Vehicle
 
 activate VFM
 
-        VFM -> UI : asks to register a Vehicle
-        activate UI
+    VFM -> UI : asks to register a Vehicle
+    activate UI
+
+    UI -> CTRL** : create
+    activate CTRL
+
+    CTRL -> Repositories : getInstance()
+    activate Repositories
+
+    Repositories --> CTRL: repositories
+    deactivate Repositories
+
+    CTRL -> Repo : getVehicleRepository()
+    activate Repo
+
+    Repo --> CTRL : vehicleRepository
+    deactivate Repo
+
+    deactivate CTRL
 
     UI --> VFM : requests data brand, model, type, tare, gross weight, current km, register date, acquisition date, maintenance/check-up frequency (in kms))
 
@@ -26,41 +44,24 @@ activate VFM
 
     VFM -> UI : confirms data
 
-        UI -> CTRL : registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
-        activate CTRL
+    UI -> CTRL : registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+    activate CTRL
+
+    CTRL -> VehicleRepository: registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+    activate VehicleRepository
+
+    VehicleRepository -> Vehicle**: createVehicle()
+    VehicleRepository -> VehicleRepository: addVehicle(vehicle)
+    VehicleRepository --> Repositories : true / vehicle
 
 
-                            CTRL -> Repositories : getInstance()
-                            activate Repositories
+    Repositories --> CTRL : true / vehicle
+    deactivate VehicleRepository
 
+    CTRL --> UI: true / vehicle
+    deactivate CTRL
 
-                            CTRL -> Repositories : getVehicleRepository()
-                            activate VehicleRepository
-
-                            Repositories -> VehicleRepository : getVehicleRepository()
-
-
-
-                            CTRL -> Repositories: registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
-
-                            Repositories -> VehicleRepository : registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
-                            VehicleRepository -> Vehicle**: create()
-                            VehicleRepository -> VehicleRepository: addVehicle(vehicle)
-                            VehicleRepository --> Repositories : true / vehicle
-
-                            VehicleRepository --> Repositories: vehicleRepository
-                            deactivate VehicleRepository
-
-                            Repositories --> CTRL : true / vehicle
-
-                            Repositories --> CTRL: repositories
-
-
-                    deactivate VehicleRepository
-
-                    CTRL --> UI: true / vehicle
-                    deactivate CTRL
-    UI -> VFM : displays operation success
+    UI --> VFM : displays operation success
     deactivate UI
 
 deactivate VFM

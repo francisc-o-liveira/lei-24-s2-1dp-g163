@@ -70,20 +70,20 @@ public class CreateTaskController {
 
         TaskCategory taskCategory = getTaskCategoryByDescription(taskCategoryDescription);
 
-        Employee employee = getEmployeeFromSession();
+
         Organization organization = getOrganizationRepository();
 
         Optional<Task> newTask = Optional.empty();
 
             newTask = organization.createTask(reference, description, informalDescription, technicalDescription, duration, cost,
-                    taskCategory, employee);
+                    taskCategory);
         return newTask;
     }
 
-    private Employee getEmployeeFromSession() {
-        Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
-        return new Employee(email.getEmail());
-    }
+    //private Employee getEmployeeFromSession() {
+      //  Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
+        //return new Employee(email.getEmail());
+    //}
 
     private TaskCategory getTaskCategoryByDescription(String taskCategoryDescription) {
         TaskCategoryRepository taskCategoryRepository = getTaskCategoryRepository();

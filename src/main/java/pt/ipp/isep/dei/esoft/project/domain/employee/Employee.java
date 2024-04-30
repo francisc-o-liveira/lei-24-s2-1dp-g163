@@ -8,8 +8,15 @@ public class Employee {
     private String position;
     private String phone;
 
-    public Employee(String email) {
+    public Employee(String name, String position, String phone, String email) {
+        this.name = name;
+        this.position = position;
+        this.phone = phone;
         this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
@@ -40,6 +47,6 @@ public class Employee {
      * @return A clone of the current instance.
      */
     public Employee clone() {
-        return new Employee(this.email);
+        return new Employee(this.name,this.position,this.phone,this.email);
     }
 }

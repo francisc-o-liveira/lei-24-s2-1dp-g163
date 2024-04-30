@@ -17,10 +17,8 @@ public class Utils {
     static public String readLineFromConsole(String prompt) {
         try {
             System.out.print("\n" + prompt);
-
             InputStreamReader converter = new InputStreamReader(System.in);
             BufferedReader in = new BufferedReader(converter);
-
             return in.readLine();
         } catch (Exception e) {
             e.printStackTrace();

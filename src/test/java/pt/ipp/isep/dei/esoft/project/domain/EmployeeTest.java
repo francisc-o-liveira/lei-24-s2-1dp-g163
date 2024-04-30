@@ -60,7 +60,6 @@ class EmployeeTest {
         String email = "john.doe@this.compay.org";
         Employee employee = new Employee(email);
         assertTrue(employee.hasEmail(email));
-
     }
 
     @Test
@@ -68,7 +67,6 @@ class EmployeeTest {
         String email = "john.doe@this.company.com";
         Employee employee = new Employee(email);
         assertFalse(employee.hasEmail("jane.doe@this.company.com"));
-
     }
 
     @Test

@@ -5,7 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 
 import java.util.List;
 
-public class CheckUpListUI {
+public class CheckUpListUI implements Runnable {
     private CheckUpListController ctrl;
     private List<Vehicle> vehiclesNeedingCheckUp;
     public CheckUpListUI(){

@@ -96,4 +96,8 @@ public class RegisterCollaboratorController {
     public List<JobCategory> getJobCategoryList() {
         return jobCategoryRepository.getJobCategoryList();
     }
+
+    public void removeFromList(Collaborator collaborator){
+        collaboratorRepository.getCollaboratorList().remove(collaborator);
+    }
 }

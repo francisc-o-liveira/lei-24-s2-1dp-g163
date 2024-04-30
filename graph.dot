@@ -1,0 +1,26 @@
+graph US13 {
+Tilia -- Camelia_e3 [label="3"];
+Carvalho -- Camelia_e1 [label="4"];
+Abrunheiro -- Ginkgo [label="4"];
+Camelia_e1 -- Camelia_e2 [label="4"];
+Camelia_d3 -- Camelia_d2 [label="4"];
+Liquidanbar -- Abrunheiro [label="5"];
+Camelia_e2 -- Camelia_e3 [label="5"];
+Camelia_d4 -- Camelia_d3 [label="5"];
+Sobreiro -- Camelia_d1 [label="5"];
+Camelia_d2 -- Camelia_d1 [label="5"];
+Liquidanbar -- Camelia_e9 [label="6"];
+Camelia_e3 -- Camelia_e4 [label="6"];
+Camelia_e4 -- Camelia_e6 [label="6"];
+Camelia_e8 -- Camelia_e9 [label="6"];
+Camelia_d7 -- Camelia_d6 [label="6"];
+Camelia_d6 -- Camelia_d5 [label="6"];
+Camelia_d5 -- Camelia_d4 [label="6"];
+Folhado -- Camelia_d5 [label="6"];
+Castanheiro_India -- Camelia_e6 [label="7"];
+Olaia -- Liquidanbar [label="7"];
+Camelia_e7 -- Camelia_e8 [label="7"];
+Magnolia -- Camelia_d6 [label="8"];
+Camelia_e3 -- Camelia_d3 [label="10"];
+Camelia_e8 -- Camelia_d6 [label="10"];
+}

@@ -7,7 +7,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class RegisterVehicleUI {
+public class RegisterVehicleUI  implements Runnable{
     private String brand;
     private String model;
     private String plate;
@@ -41,9 +41,9 @@ public class RegisterVehicleUI {
     private void submitData() {
         Optional<Vehicle> vehicle = getController().registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type);
         if (vehicle.isPresent()) {
-            System.out.println("\nCollaborator successfully created!");
+            System.out.println("\nVehicle successfully created!");
         } else {
-            System.out.println("\nCollaborator not created!");
+            System.out.println("\nVehicle not created!");
         }
     }
 
@@ -132,7 +132,7 @@ public class RegisterVehicleUI {
             System.out.print("Current Kilometers of the Vehicle: ");
             currentKM = scan.nextInt();
            if(currentKM>0 && currentKM<1500000){
-                throw new IllegalArgumentException("The introduced model is incorrect.");
+                throw new IllegalArgumentException("The introduced data of current kilometers is incorrect.");
             } else {
                 validKm=true;
             }
@@ -151,7 +151,7 @@ public class RegisterVehicleUI {
             String[] dateFormat = date.split("-");
             registerDate=new Date(Integer.parseInt(dateFormat[0]),Integer.parseInt(dateFormat[1]),Integer.parseInt(dateFormat[2]));
             if(dateFormat.length==3 && acquisitionDate.getYear()>1900){
-                throw new IllegalArgumentException("The introduced date is incorrect.");
+                throw new IllegalArgumentException("The introduced register date is incorrect.");
             } else {
                 validDate=true;
             }
@@ -170,7 +170,7 @@ public class RegisterVehicleUI {
             String[] dateFormat = date.split("-");
             acquisitionDate=new Date(Integer.parseInt(dateFormat[0]),Integer.parseInt(dateFormat[1]),Integer.parseInt(dateFormat[2]));
             if(dateFormat.length==3 && acquisitionDate.getYear()>1900){
-                throw new IllegalArgumentException("The introduced date is incorrect.");
+                throw new IllegalArgumentException("The introduced acquisition date is incorrect.");
             } else {
                 validDate=true;
             }
@@ -206,7 +206,7 @@ public class RegisterVehicleUI {
             System.out.print("Brand of Vehicle: ");
             brand = scan.next();
             if(!verifyBrand(brand)){
-                throw new IllegalArgumentException("The introduced name is incorrect.");
+                throw new IllegalArgumentException("The introduced brand is incorrect.");
             } else {
                 validBrand=true;
             }
@@ -225,7 +225,7 @@ public class RegisterVehicleUI {
         Scanner input = new Scanner(System.in);
         while (indexOfType < 1 || indexOfType > types.length) {
             displayTypeOptions(types);
-            System.out.print("Select a task category: ");
+            System.out.print("Select a vehicle type: ");
             indexOfType = input.nextInt();
         }
         return types[indexOfType-1];

@@ -7,16 +7,15 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+
+import java.io.IOException;
+
 
 
 public class Main {
-    private static final String pathZip = "../resources/graphVizInstall.zip";
-    private static final String pathDestination = "C:/Program Files/";
     public static String fileName;
 
-    public static final String pathName = "src/main/java/MATDISC/US013/";
+    public static final String pathName = "src/main/java/MATDISC/USs/";
 
     public static final String FILENAME_PER_OMISSION = "..NONE..";
 
@@ -28,22 +27,26 @@ public class Main {
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
         ArrayList<Double> executionTimes = new ArrayList<>();
-
         ArrayList<Double> sizeInput = new ArrayList<>();
-
 
         while (option != 0) {
             option = askOptionShowOptions();
             switch (option) {
                 case 1:
                     filename = askFileName();
-
-
                     try {
                         edges = readFromFile(filename);
+                        createInputFile(edges);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    break;
+                case 2:
+                    if (edges == null) {
+                        System.out.println("No file has been loaded!");
+                        break;
+                    }
+                    startTime = System.nanoTime();
                     try {
                         if (edges != null) {
                             sortArrayListPrimitivePerPrice(edges);
@@ -53,76 +56,72 @@ public class Main {
                     }catch (FileNotFoundException e){
                         System.out.println("File Empty, not found any Edge on this file");
                     }
-                    break;
-                case 2:
-                    if (edges == null) {
-                        System.out.println("Nenhum arquivo carregado ainda!");
-                        break;
-                    }
-                    startTime = System.nanoTime();
                     result = kruskalAlgorithm(edges);
-                    try {
-                         createResultFile(result);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
                     endTime = System.nanoTime();
                     long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
                     executionTimes.add((double) executionTime);
+                    try {
+                        createResultFile(result,executionTime);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     sizeInput.add((double) (edges != null ? edges.size() : 0));
                     break;
                 case 3:
                     plotGraphAndShow(executionTimes, sizeInput);
-                    break;
-                case 4:
-                    InstallGrapgViz();
                     break;
                 case 0:
                     break;
             }
 
         }
-
-        // Calculate the execution time in milliseconds
-
-
     }
 
     public static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
         double[] xData = new double[sizeInput.size()];
         double[] yData = new double[sizeInput.size()];
 
-        for (int i = 0; i < executionTimes.size(); i++) {
-            xData[i] = sizeInput.get(i);
-            yData[i] = executionTimes.get(i);
-        }
 
-        if (yData.length != 0 && xData.length != 0) {
-            XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("").yAxisTitle("").build();
+            for (int i = 0; i < executionTimes.size(); i++) {
+                xData[i] = sizeInput.get(i);
+                yData[i] = executionTimes.get(i);
+            }
 
-            // Customize chart
-            chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
-            chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+            if (yData.length != 0 && xData.length != 0) {
+                XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("").yAxisTitle("").build();
 
-            // Add data series
-            XYSeries series = chart.addSeries("Sum", xData, yData);
+                // Customize chart
+                chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
+                chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
-            // Show the chart
-            new SwingWrapper<>(chart).displayChart();
+                // Add data series
+                XYSeries series = chart.addSeries("Sum", xData, yData);
 
-        }
+                // Show the chart
+                new SwingWrapper<>(chart).displayChart();
+
+            }
+
+            writeDataToCSV(executionTimes, sizeInput);
+
+        System.out.println("Execution times recorded in execution_times.csv");
     }
 
-    private static int getTheHighest(ArrayList<Double> executionTimes) {
-        double highestValue = 0;
-        int indexValue = 0;
-        for (int i = 0; i < executionTimes.size(); i++) {
-            if (executionTimes.get(i) > highestValue) {
-                highestValue = executionTimes.get(i);
-                indexValue = i;
+    public static void writeDataToCSV(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
+        try (FileWriter csvWriter = new FileWriter("execution_times.csv")) {
+            csvWriter.append("InputSize,ExecutionTime\n"); // CSV header
+
+            for (int i = 0; i < executionTimes.size(); i++) {
+                double inputSize = sizeInput.get(i);
+                double executionTime = executionTimes.get(i);
+                String csvLine = inputSize + "," + executionTime;
+                csvWriter.append(csvLine).append("\n");
             }
+
+            System.out.println("Execution times recorded in execution_times.csv");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return indexValue;
     }
 
     public static String askFileName() {
@@ -145,8 +144,7 @@ public class Main {
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
         System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
         System.out.println("----Option 3 : Plot the graph of Execution Time");
-        System.out.println("----Option 4 : Install GraphViz");
-        while (option < 0 || option > 4) {
+        while (option < 0 || option > 3) {
             if (option != -1) {
                 System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
             }
@@ -272,8 +270,39 @@ public class Main {
         return -1;
     }
 
-    public static void createResultFile(ArrayList<Edge> edges) throws IOException {
+    public static void createResultFile(ArrayList<Edge> edges, long execTime) throws IOException {
         FileWriter fileDot= new FileWriter("graph.dot");
+        FileWriter result=new FileWriter("result.csv");
+        int price = 0;
+        String line="graph US13 {\n" ;
+        fileDot.write(line);
+        for(int i=0; i<edges.size(); i++){
+            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            fileDot.write(string);
+            String line1=String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price+=edges.get(i).getPrice();
+            result.write(line1);
+        }
+        String line2="}";
+        fileDot.write(line2);
+        String line3=String.format("Cost: %s%n", price);
+        String line4=String.format("Number of edges: %d%n", edges.size());
+        String line5=String.format("Time of execution: %d%n ms", execTime);
+        result.write(line3);
+        result.write(line4);
+        result.write(line5);
+        fileDot.close();
+        result.close();
+        try{
+            String resultingFile="result_graph.png";
+            createGraph("graph.dot", resultingFile);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void createInputFile(ArrayList<Edge> edges) throws IOException {
+        FileWriter fileDot= new FileWriter("graphinput.dot");
         FileWriter result=new FileWriter("result.csv");
         int price = 0;
         String line="graph US13 {\n" ;
@@ -292,60 +321,21 @@ public class Main {
         fileDot.close();
         result.close();
         try{
-            createGraph("graph.dot");
+            createInputGraph("graphinput.dot");
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public static void createGraph(String fileName) throws IOException{
-        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o result_graph.png";
+    public static void createGraph(String fileName, String resultingFile) throws IOException{
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o " +resultingFile;
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
     }
 
-
-    public static void InstallGrapgViz() {
-        System.out.println("Instalação GraphViz");
-        File test = new File(pathDestination + "/GraphViz");
-        if (!test.canExecute()) {
-            try {
-                unzip();
-                System.out.println("Descompactação concluída com sucesso.");
-            } catch (IOException e) {
-                System.err.println("Erro ao descompactar o arquivo: " + e.getMessage());
-            }
-        }
-    }
-
-    public static void unzip() throws IOException {
-        byte[] buffer = new byte[1024];
-        // Criar diretório de destino, se não existir
-        File pastaDestino = new File(pathDestination);
-        if (!pastaDestino.exists()) {
-            pastaDestino.mkdirs();
-        }
-        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(pathZip))) {
-            ZipEntry entryZip = zis.getNextEntry();
-            while (entryZip != null) {
-                String fileName = entryZip.getName();
-                File novoArquivo = new File(pathDestination + File.separator + fileName);
-
-                if (entryZip.isDirectory()) {
-                    novoArquivo.mkdirs();
-                } else {
-                    FileOutputStream fos = new FileOutputStream(novoArquivo);
-
-                    int tamanho;
-                    while ((tamanho = zis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, tamanho);
-                    }
-                    fos.close();
-                }
-
-                entryZip = zis.getNextEntry();
-            }
-            zis.closeEntry();
-        }
+    public static void createInputGraph(String fileName) throws IOException{
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o input_graph.png";
+        Runtime rt = Runtime.getRuntime();
+        Process prcs = rt.exec(command);
     }
 }

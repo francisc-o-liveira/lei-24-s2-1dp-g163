@@ -163,7 +163,7 @@ public class CollaboratorRepository {
      * @return collaborator
      */
 
-    public Collaborator searchForCollaborator(int docIDNumber){
+    public Collaborator searchForCollaboratorByIDNumber(int docIDNumber){
         Collaborator collaboratorFound = null;
         List<Collaborator> collaborators=getCollaboratorList();
         for(Collaborator c : collaborators){
@@ -172,6 +172,41 @@ public class CollaboratorRepository {
             }
         }
         return collaboratorFound;
+    }
+
+    /** The method searches for the Collaborator by their index on the list
+     *
+     * @param index of collaboraator
+     * @return collaborator
+     */
+
+    public Collaborator searchForCollaborator(int index){
+        List<Collaborator> collaborators=getCollaboratorList();
+        Collaborator collaboratorFound=collaborators.get(index);
+
+        return collaboratorFound;
+    }
+
+    /** Gets the list of Skills of Collaborator
+     *
+     * @param collaborator
+     * @return list of Skills the Collaborator has
+     */
+
+    public List<Skill> getCollaboratorSkillsList(Collaborator collaborator){
+        return collaborator.getSkills();
+    }
+
+    /** Assigns a Skill to Collaborator
+     *
+     * @param collaborator
+     * @param skillName
+     * @return collaborator if skill has been assigned
+     */
+
+    public Optional<Collaborator> assignSkill(Collaborator collaborator, Skill skillName){
+        Optional<Collaborator> collabWithSkill=collaborator.setAddSkill(skillName);
+        return collabWithSkill;
     }
 
 }
