@@ -13,9 +13,9 @@ public class ManageEquipmentUI implements Runnable{
     @Override
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("1 - Register Equipment", new ShowTextUI("Register Equipment")));
-        options.add(new MenuItem("2 - Show Equipment List", new ShowTextUI("Show Equipment List")));
-        options.add(new MenuItem("3 - Remove Equipment", new ShowTextUI("Remove Equipment")));
+        options.add(new MenuItem("Register Equipment", new ShowTextUI("Register Equipment")));
+        options.add(new MenuItem("Show Equipment List", new ShowTextUI("Show Equipment List")));
+        options.add(new MenuItem("Remove Equipment", new ShowTextUI("Remove Equipment")));
 
         int option = 0;
         do {
