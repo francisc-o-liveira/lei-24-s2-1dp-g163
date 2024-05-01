@@ -91,7 +91,13 @@ For example, in the address example@mail.com, "example" is the email prefix, and
 
 **Output Data:**
 
-* (In)Success of the operation
+* **Confirmation of Register Collaborator:**
+  - A success notification confirming that the collaborator have been successfully registed.
+* **Warnings or Errors (if applicable):**
+  - Error messages for any issues encountered during the register collaborator process, such non-existent data or duplications ,etc...
+* **Operational Feedback:**
+  - Overall status of the operation (success or failure), with immediate feedback to the HRM.
+
 
 ### 1.6. System Sequence Diagram (SSD)
 

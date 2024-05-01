@@ -59,9 +59,16 @@ The max size of the team (for instance 4) and the skill needed(example): 4 tree 
 
 **Output Data:**
 
-* Warnings of In-success
-* Team of collaborators - List (And the Skills of each Collaborator)
-* (In)Success of the operation
+**Output Data:**
+
+* **Confirmation of Generate Team:**
+    - Team of collaborators - List (And the Skills of each Collaborator)
+* **Warnings or Errors (if applicable):**
+  - Error messages for any issues encountered during the generate team process, such non-existent data or duplications ,etc...
+* **Operational Feedback:**
+    - Overall status of the operation (success or failure), with immediate feedback to the Manager.
+
+    
 
 ### 1.6. System Sequence Diagram (SSD)
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SkillRepository {
-        public List<Skill> skillList;
+        private List<Skill> skillList;
 
     public SkillRepository(){
         skillList = new ArrayList<>();

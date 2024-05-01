@@ -208,7 +208,7 @@ public class CollaboratorRepository {
      * @return collaborator if skill has been assigned
      */
 
-    public Optional<Collaborator> assignSkill(Collaborator collaborator, Skill skillName){
+    public Optional<Collaborator> assignSkill(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
         Optional<Collaborator> collabWithSkill=collaborator.setAddSkill(skillName);
         return collabWithSkill;
     }

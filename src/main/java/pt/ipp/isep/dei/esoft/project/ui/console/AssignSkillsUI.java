@@ -36,12 +36,17 @@ public class AssignSkillsUI implements Runnable {
 
     @Override
     public void run(){
-        System.out.print("--------- Assignment of Skills ---------\n");
-        ctrl.getDataNeededToAssign();
-        displayCollaboratorList();
-        collaborator=setCollaboratorToAssign();
-        displayAndSelectSkillToAssign();
-        submitsData();
+        try {
+            System.out.print("--------- Assignment of Skills ---------\n");
+            ctrl.getDataNeededToAssign();
+            displayCollaboratorList();
+            collaborator=setCollaboratorToAssign();
+            displayAndSelectSkillToAssign();
+            submitsData();
+        }catch (CloneNotSupportedException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     /** Displays the Skills available to assign to Collaborator
@@ -60,7 +65,7 @@ public class AssignSkillsUI implements Runnable {
      *
      */
 
-    private void submitsData(){
+    private void submitsData() throws CloneNotSupportedException {
         Optional<Collaborator> CollaboratorSkillAdded =getController().assignSkills(collaborator,skillName);
         if(CollaboratorSkillAdded.isPresent()){
             System.out.print("\nSkill added!\n");
