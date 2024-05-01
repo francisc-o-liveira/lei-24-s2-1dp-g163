@@ -64,9 +64,15 @@ public class JobCategory {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof JobCategory){
-            return this.getName().equals(((JobCategory) obj).getName());
+    public boolean equals(Object other) {
+        if(this==other){
+            return true;
+        }
+        if(other == null || this.getClass() != other.getClass()){
+            return false;
+        }
+        if (other instanceof JobCategory){
+            return this.getName().equals(((JobCategory) other).getName());
         }
         return false;
     }
