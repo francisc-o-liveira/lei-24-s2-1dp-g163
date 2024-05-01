@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/** Controller to Register a Skill */
 public class RegisterSkillController {
+
 
     private SkillRepository skillRepository;
 

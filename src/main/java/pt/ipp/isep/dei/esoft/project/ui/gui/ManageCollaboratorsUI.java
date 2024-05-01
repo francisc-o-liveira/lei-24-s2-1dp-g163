@@ -241,7 +241,7 @@ public class ManageCollaboratorsUI {
 
                         btn.setOnAction((ActionEvent event) -> {
                             int collaboratorID = Integer.parseInt(docIDNumber.getText());
-                            Collaborator collaborator = ctrl.collaboratorRepository.searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
+                            Collaborator collaborator = ctrl.getCollaboratorRepository().searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
                             try {
                                 showMore(collaborator);
                             } catch (IOException e) {

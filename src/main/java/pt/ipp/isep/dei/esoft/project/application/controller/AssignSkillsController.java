@@ -9,19 +9,21 @@ import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import java.util.List;
 import java.util.Optional;
 
+/** Controller to assign skills*/
 public class AssignSkillsController {
 
-    public CollaboratorRepository collaboratorRepository;
+    /**Repository of Collaborators*/
+    private CollaboratorRepository collaboratorRepository;
 
-    public SkillRepository skillRepository;
+    /**Repository of Skills*/
+    private SkillRepository skillRepository;
 
+    /** Initializes the controllers */
     public AssignSkillsController(){
         getDataNeededToAssign();
     }
 
-    /** Gets the repositories
-     *
-     */
+    /** Gets the repositories from the Repositories Instances */
     public void getDataNeededToAssign(){
         if (skillRepository==null) {
             Repositories repositories=Repositories.getInstance();
@@ -44,7 +46,7 @@ public class AssignSkillsController {
     /** Searches for Collaborator given the index
      *
      * @param index of Collaborator
-     * @return collaborator with that ID Number
+     * @return collaborator on the index given
      */
     public Collaborator getCollaborator(int index){
         return collaboratorRepository.searchForCollaborator(index);
@@ -52,7 +54,7 @@ public class AssignSkillsController {
 
     /** Gets the list of Skills of the collaborator
      *
-     * @param collaborator
+     * @param collaborator to get the skills from
      * @return list of skills of Collaborator
      */
 
@@ -62,7 +64,7 @@ public class AssignSkillsController {
 
     /**Gets the list of all the skills
      *
-     * @return All Skills
+     * @return List of all Skills
      */
 
     public List<Skill> getAllSkills(){
@@ -71,7 +73,7 @@ public class AssignSkillsController {
 
     /** Gets the list of Skills that Collaborator does not have
      *
-     * @param collaborator
+     * @param collaborator that doesn't have the Skills
      * @return list of Skills left to assign to Collaborator
      */
 
@@ -89,7 +91,7 @@ public class AssignSkillsController {
 
     /**This method assigns a Skill to a Collaborator
      *
-     * @return collaborator if skill has been assigned
+     * @return Optional of collaborator if skill has been assigned; null if skills haven't been assigned
      */
     public Optional<Collaborator> assignSkills(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
         return collaboratorRepository.assignSkill(collaborator,skillName);
