@@ -52,15 +52,14 @@ public class ManageJobsUI {
         if (jobCategory.isEmpty()){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Job Category is Empty").show();
             return;
-        } else if(!verifyJobCategory(new JobCategory(jobCategory)).isPresent()){
-            popUpOfVerifications(Alert.AlertType.ERROR, "The Job Category is invalid").show();
-            return;
+        } else {
+            try {
+                ctrl.registerJobCategory(jobCategory);
+            }catch (IllegalArgumentException | CloneNotSupportedException e){
+                // IMPLEMENT POP UP
+            }
         }
-        try {
-            ctrl.registerJobCategory(jobCategory);
-        }catch (IllegalArgumentException | CloneNotSupportedException e){
-            // IMPLEMENT POP UP
-        }
+
 
         introducingJobCategory.clear();
         ObservableList<JobCategory> listForTable= FXCollections.observableArrayList(ctrl.getJobCategoriesList());
@@ -88,19 +87,7 @@ public class ManageJobsUI {
         }
     }
 
-    private Optional<JobCategory> verifyJobCategory(JobCategory jobCategory) {
-        List<JobCategory> jobCategories= ctrl.getJobCategoriesList();
-        Optional<JobCategory> newJobCategory = Optional.empty();
-        boolean operationSucess = false;
-        if (!jobCategories.contains(jobCategory)){
-            operationSucess=true;
-            newJobCategory=Optional.of(jobCategory);
-        }
-        if (!operationSucess){
-            newJobCategory=Optional.empty();
-        }
-        return newJobCategory;
-    }
+
 
     private void putInTextField(){
         JobCategory selectedJobCategory=tableJobCategory.getSelectionModel().getSelectedItem();
