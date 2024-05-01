@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.VFManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.VFManagerUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -76,84 +80,96 @@
                             <children>
                                 <AnchorPane layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
                                     <children>
-                                        <AnchorPane prefHeight="261.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
-                                            <effect>
-                                                <DropShadow />
-                                            </effect></AnchorPane>
-                                        <AnchorPane layoutY="261.0" prefHeight="269.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
+                                        <AnchorPane prefHeight="321.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
                                             <effect>
                                                 <DropShadow />
                                             </effect>
                                  <children>
-                                                <AnchorPane layoutX="105.0" layoutY="-94.0" prefHeight="228.0" prefWidth="274.0" style="-fx-background-color: #1C4741;">
-                                                    <children>
-                                                        <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
-                                                            <fill>
-                                                                <LinearGradient endX="1.0" endY="1.0">
-                                                                    <stops>
-                                                                        <Stop>
-                                                                            <color>
-                                                                                <Color red="0.26499998569488525" green="0.5299999713897705" blue="0.4038897752761841" />
-                                                                            </color>
-                                                                        </Stop>
-                                                                        <Stop offset="1.0">
-                                                                            <color>
-                                                                                <Color red="1.0" green="1.0" blue="1.0" />
-                                                                            </color>
-                                                                        </Stop>
-                                                                    </stops>
-                                                                </LinearGradient>
-                                                            </fill>
-                                                        </Circle>
-                                                        <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="96.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@../kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="71.0" layoutY="185.0" onAction="#manageVehicles" prefHeight="29.0" prefWidth="133.0" text="Manage Vehicles">
-                                                            <font>
-                                                                <Font name="Tahoma" size="15.0" />
-                                                            </font>
-                                                        </Button>
-                                                        <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="93.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@../kisspng-computer-icons-transparency-clip-art-portable-netw-gear-svg-png-icon-free-download-346853-online-5caaa175c13f27.7609127115546863257916.png" />
-                                                            </image>
-                                                        </ImageView>
-                                                    </children>
-                                                </AnchorPane>
-                                                <AnchorPane layoutX="460.0" layoutY="-95.0" prefHeight="227.0" prefWidth="266.0" style="-fx-background-color: #1C4741;">
-                                                    <children>
-                                                        <Circle layoutX="133.0" layoutY="106.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
-                                                            <fill>
-                                                                <LinearGradient endX="1.0" endY="1.0">
-                                                                    <stops>
-                                                                        <Stop>
-                                                                            <color>
-                                                                                <Color red="0.26499998569488525" green="0.5299999713897705" blue="0.4038897752761841" />
-                                                                            </color>
-                                                                        </Stop>
-                                                                        <Stop offset="1.0">
-                                                                            <color>
-                                                                                <Color red="1.0" green="1.0" blue="1.0" />
-                                                                            </color>
-                                                                        </Stop>
-                                                                    </stops>
-                                                                </LinearGradient>
-                                                            </fill>
-                                                        </Circle>
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="56.0" layoutY="178.0" onAction="#manageEquipment" prefHeight="29.0" prefWidth="154.0" text="Manage Equiment">
-                                                            <font>
-                                                                <Font size="15.0" />
-                                                            </font>
-                                                        </Button>
-                                          <ImageView fitHeight="84.0" fitWidth="105.0" layoutX="91.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../pngwing.com.png" />
-                                             </image>
-                                          </ImageView>
-                                                    </children>
-                                                </AnchorPane>
+                                    <TableView layoutX="47.0" layoutY="40.0" prefHeight="255.0" prefWidth="770.0">
+                                      <columns>
+                                        <TableColumn prefWidth="67.78375244140625" text="Brand" />
+                                        <TableColumn prefWidth="71.6756591796875" text="Model" />
+                                          <TableColumn prefWidth="75.17562866210938" text="Type" />
+                                          <TableColumn prefWidth="72.77023315429688" text="Tare" />
+                                          <TableColumn prefWidth="96.28375244140625" text="Gross Weight" />
+                                          <TableColumn prefWidth="69.77020263671875" text="Current km" />
+                                          <TableColumn prefWidth="90.22979736328125" text="Register Date" />
+                                          <TableColumn prefWidth="98.55413818359375" text="Acquisition Date" />
+                                          <TableColumn prefWidth="129.67584228515625" text="Check-up Frequency" />
+                                      </columns>
+                                    </TableView>
+                                 </children></AnchorPane>
+                                        <AnchorPane layoutY="322.0" prefHeight="208.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
+                                            <effect>
+                                                <DropShadow />
+                                            </effect>
+                                 <children>
+                                    <Label layoutX="64.0" layoutY="28.0" text="Brand:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="68.0" layoutY="66.0" text="Model:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="71.0" layoutY="102.0" text="Type:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="72.0" layoutY="135.0" text="Tare:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="23.0" layoutY="167.0" text="Gross Weight:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField layoutX="111.0" layoutY="24.0" />
+                                    <TextField layoutX="111.0" layoutY="62.0" />
+                                    <TextField layoutX="110.0" layoutY="96.0" />
+                                    <TextField layoutX="110.0" layoutY="129.0" />
+                                    <TextField layoutX="111.0" layoutY="162.0" />
+                                    <Label layoutX="377.0" layoutY="29.0" text="Current km:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField layoutX="451.0" layoutY="24.0" prefHeight="26.0" prefWidth="164.0" />
+                                    <Label layoutX="363.0" layoutY="66.0" text="Register Date:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <DatePicker layoutX="453.0" layoutY="62.0" prefHeight="26.0" prefWidth="164.0" />
+                                    <Label layoutX="348.0" layoutY="101.0" text="Acquisition Date:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <DatePicker layoutX="452.0" layoutY="97.0" prefHeight="26.0" prefWidth="164.0" />
+                                    <Label layoutX="319.0" layoutY="134.0" text="Check-up Frequency:">
+                                       <font>
+                                          <Font name="Tahoma" size="13.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField layoutX="451.0" layoutY="130.0" prefHeight="26.0" prefWidth="164.0" />
+                                    <Button layoutX="713.0" layoutY="137.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: FF9688;" text="Remove">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="785.0" layoutY="137.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: ADD8E6;" text="Add" />
+                                    <Button layoutX="714.0" layoutY="174.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: D87DAB;" text="Edit">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="784.0" layoutY="174.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: B7D5B2;" text="Update" />
                                  </children>
                                         </AnchorPane>
                                     </children>
