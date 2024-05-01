@@ -107,7 +107,7 @@ public class ManageCollaboratorsUI {
             messageError.add("The introduced ID Number is incorrect");
         }*/
 
-        if (messageError != null) {
+        if (messageError.isEmpty()) {
             popUpOfVerifications(Alert.AlertType.ERROR, messageError).show();
         } else {
             registerCollaborator();
