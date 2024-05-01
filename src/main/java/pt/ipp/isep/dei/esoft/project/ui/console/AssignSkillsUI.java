@@ -46,7 +46,6 @@ public class AssignSkillsUI implements Runnable {
         }catch (CloneNotSupportedException e){
             System.out.println(e.getMessage());
         }
-
     }
 
     /** Displays the Skills available to assign to Collaborator
