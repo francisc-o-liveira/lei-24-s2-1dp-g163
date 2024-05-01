@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.skill;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class AssignSkillsUI implements Runnable {
             ctrl.getDataNeededToAssign();
             displayCollaboratorList();
             collaborator=setCollaboratorToAssign();
-            displayAndSelectSkillToAssign();
+            skillName = displayAndSelectSkillToAssign();
             submitsData();
         }catch (CloneNotSupportedException e){
             System.out.println(e.getMessage());
@@ -73,19 +74,19 @@ public class AssignSkillsUI implements Runnable {
         }
     }
 
-    /** This method displays and lets the user select the skills to assign to Collaborator
+    /**
+     * This method displays and lets the user select the skills to assign to Collaborator
      *
+     * @return the skill selected by the user to assign to the collaborator
      */
-    public void displayAndSelectSkillToAssign(){
+    public Skill displayAndSelectSkillToAssign(){
         List<Skill> skillsToAssign=ctrl.filterSkillsToAssign(collaborator);
-        displaySkills(skillsToAssign);
-        Scanner scan= new Scanner(System.in);
-        System.out.print("Choose the skills to assign: (press 0 when all the skills have been assigned)\n");
-        while(!scan.next().equals("0")){
-            skillName= new Skill(scan.next());
-            ctrl.assignSkills(collaborator, skillName);
+        Skill skillSelected = null;
+        while(skillSelected==null) {
+            skillSelected = skillsToAssign.get(Utils.showAndSelectIndex(skillsToAssign, "Choose the skills to assign:"));
         }
-        scan.close();
+        return skillSelected;
+
     }
 
 
