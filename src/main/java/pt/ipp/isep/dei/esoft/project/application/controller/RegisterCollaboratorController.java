@@ -72,16 +72,6 @@ public class RegisterCollaboratorController {
     }
 
     /**
-     * This method verify if the docIDNumber is valid to add the user!
-     * @param type the docType (passport, citizen card, ...)
-     * @param docIDNumber the docIDNumber correspondent to the user!
-     * @return true if the idNumber is valid for that type selected
-     */
-    public boolean validateDocType(DocType.Type type, int docIDNumber) {
-        return DocType.verifyDocType(type,docIDNumber);
-    }
-
-    /**
      * This method return the docTypes that exist to register the user
      * @return an Array of Types's of a Enum Type
      */

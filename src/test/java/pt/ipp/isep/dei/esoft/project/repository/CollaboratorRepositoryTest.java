@@ -31,12 +31,6 @@ class CollaboratorRepositoryTest {
         });
     }
 
-    // COLLABORATOR AC2 verify the docIDNumber international
-
-    @Test
-    void verifyDocTypeIDNumber(){
-
-    }
 
     @Test
     void activateCollaborators() {

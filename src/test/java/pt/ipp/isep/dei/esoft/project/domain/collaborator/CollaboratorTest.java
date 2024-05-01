@@ -60,7 +60,14 @@ class CollaboratorTest {
 
 
 
+    // COLLABORATOR AC2 verify the docIDNumber
 
+    @Test
+    void verifyDocTypeIDNumber(){
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Collaborator("Joaquim Manel Mendes Cunha Manuel Silva Oliveira",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,-1972453213,new JobCategory("Gardener"));
+        });
+    }
 
     //COLLABORATOR NAME AC3
     @Test
