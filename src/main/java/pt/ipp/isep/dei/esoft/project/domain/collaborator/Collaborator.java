@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -23,7 +24,7 @@ public class Collaborator{
     private List<Skill> skills;
     public enum StatusType {Active,NotActive}
     private StatusType statusType;
-    private List<Skill> SKILLS_BY_OMISSION=null;
+    private List<Skill> SKILLS_BY_OMISSION=new ArrayList<>();
 
     public String getName() {
         return name;
@@ -123,14 +124,21 @@ public class Collaborator{
     public DocType.Type getDocType() {
         return docType;
     }
+    /**
+     * This method verify if the docIDNumber is valid to add for collaborator
+     * @param docType the docType (passport, citizen card, ...)
+     * @param docIDNumber the docIDNumber correspondent to the collab!
+     */
 
-    public void setDocType(DocType.Type docType) {
-        this.docType = docType;
+    public void setDocType(DocType.Type docType,int docIDNumber) {
+        if (DocType.verifyDocType(docType,docIDNumber)){
+            this.docType = docType;
+            this.docIDNumber = docIDNumber;
+        }else{
+            throw new IllegalArgumentException("Invalid document type: " + docType);
+        }
     }
 
-    public void setDocIDNumber(int docIDNumber) {
-        this.docIDNumber = docIDNumber;
-    }
 
     public String getEmail() {
         return email;
@@ -194,7 +202,7 @@ public class Collaborator{
 
 
     public void setSKILLS_BY_OMISSION(List<Skill> SKILLS_BY_OMISSION) {
-        this.SKILLS_BY_OMISSION = SKILLS_BY_OMISSION;
+        this.skills = SKILLS_BY_OMISSION;
     }
 
 
@@ -216,9 +224,8 @@ public class Collaborator{
         setAddressZipCode(addressZipCode);
         setAddressCity(addressCity);
         setPhoneNumber(phoneNumber);
-        setDocType(docType);
+        setDocType(docType,docIDNumber);
         setEmail(email);
-        setDocIDNumber(docIDNumber);
         setJobCategory(jobCategory);
         setStatusType(StatusType.Active);
         setSKILLS_BY_OMISSION(SKILLS_BY_OMISSION);
@@ -233,8 +240,7 @@ public class Collaborator{
         setAddressCity(addressCity);
         setPhoneNumber(phoneNumber);
         setEmail(email);
-        setDocType(docType);
-        setDocIDNumber(docIDNumber);
+        setDocType(docType,docIDNumber);
         setJobCategory(JOBCATEGORY_OMISSION);
         setStatusType(StatusType.Active);
         setSKILLS_BY_OMISSION(SKILLS_BY_OMISSION);

@@ -9,8 +9,6 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /** This Class represents the UI to register a collaborator */
 public class RegisterCollaboratorUI implements Runnable{
@@ -86,11 +84,11 @@ public class RegisterCollaboratorUI implements Runnable{
      *
      */
     public void requestData(){
-        registerName();
+        name=registerName();
         registerDates();
         registerAddress();
-        registerPhoneNumber();
-        registerEmail();
+        phoneNumber=registerPhoneNumber();
+        email=registerEmail();
     }
     private void submitData() {
         Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
@@ -101,12 +99,16 @@ public class RegisterCollaboratorUI implements Runnable{
         }
     }
 
-    /**Register the name of collaborator
-     *
+    /**
+     * Register the name of collaborator
+     * <p>
      * If the name is longer than six words, the user needs to re-introduce the name
+     *
+     * @return the name registed
      */
-    public void registerName(){
+    public String registerName(){
         boolean validName=false;
+        String name = "";
         while(!validName){
             System.out.print("Name of collaborator: ");
             name = scan.next();
@@ -116,6 +118,7 @@ public class RegisterCollaboratorUI implements Runnable{
                 validName=true;
             }
         }
+        return name;
     }
 
     /**Register the date of birth and the date of admission of collaborator
@@ -153,14 +156,18 @@ public class RegisterCollaboratorUI implements Runnable{
         }
     }
 
-    /**Register the phone number of collaborator
-     *
+    /**
+     * Register the phone number of collaborator
+     * <p>
      * If the phone number is longer than 9 digits or, in the international case, fewer than 6 digits or longer than 14 digits,
      * the user needs to re-introduce it
+     *
+     * @return phone number register by user
      */
-    public void registerPhoneNumber(){
+    public String registerPhoneNumber(){
         boolean validPhoneNumber =false;
         String codePhoneNumber;
+        String phoneNumber = "";
         while(!validPhoneNumber){
             System.out.print("Country telephone code: ");
             codePhoneNumber = scan.next();
@@ -174,18 +181,23 @@ public class RegisterCollaboratorUI implements Runnable{
                 validPhoneNumber=true;
             }
         }
+        return phoneNumber;
     }
 
     private boolean verifyCodePhoneNumber(String codePhoneNumber) {
         return codePhoneNumber.split("").length <= 4;
     }
 
-    /**Register the e-mail of collaborator
-     *
+    /**
+     * Register the e-mail of collaborator
+     * <p>
      * If the e-mail does not a prefix, "@" and a domain, containing a ".", the user needs to re-introduce it
+     *
+     * @return email registed by the user
      */
-    public void registerEmail(){
+    public String registerEmail(){
         boolean validEmail=false;
+        String email = "";
         while(!validEmail){
             System.out.print("E-mail (Format: ): ");
             email=scan.next();
@@ -195,6 +207,7 @@ public class RegisterCollaboratorUI implements Runnable{
                 validEmail=true;
             }
         }
+        return email;
     }
 
     /**

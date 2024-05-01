@@ -17,6 +17,10 @@ import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.Sta
 public class CollaboratorRepository {
     public List<Collaborator> collaboratorList;
 
+    public CollaboratorRepository(){
+        collaboratorList=new ArrayList<>();
+    }
+
     /** The method gets the List of Collaborators
      *
      * @return List of Collaborators

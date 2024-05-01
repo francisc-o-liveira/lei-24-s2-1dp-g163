@@ -14,14 +14,14 @@ public class HRManagerUI implements Runnable{
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("1 - Create Task", new CreateTaskUI()));
-        options.add(new MenuItem("2 - Manage Teams", new ShowTextUI("You have chosen Option 2.")));
-        options.add(new MenuItem("3 - Manage Collaborators", new ManageCollaboratorsUI()));
-        options.add(new MenuItem("4 - Manage JobCategory´s", new ManageJobCategorysUI()));
-        options.add(new MenuItem("5 - Manage JobCategory´s", new ManageSkillsUI()));
+        options.add(new MenuItem("Create Task", new CreateTaskUI()));
+        options.add(new MenuItem("Manage Teams", new ShowTextUI("You have chosen Option 2.")));
+        options.add(new MenuItem("Manage Collaborators", new ManageCollaboratorsUI()));
+        options.add(new MenuItem("Manage JobCategories", new ManageJobCategorysUI()));
+        options.add(new MenuItem("Manage Skills", new ManageSkillsUI()));
         int option = 0;
         do {
-            option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
+            option = Utils.showAndSelectIndex(options, "\n\n--- HUMAN RESOURCES MANAGER MENU -------------------------");
 
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();

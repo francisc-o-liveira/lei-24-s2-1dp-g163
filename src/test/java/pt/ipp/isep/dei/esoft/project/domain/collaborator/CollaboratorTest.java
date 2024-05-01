@@ -9,14 +9,32 @@ class CollaboratorTest {
 
     @Test
     void setStatus() {
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        c1.setStatus(Collaborator.StatusType.NotActive);
+        assertNotNull(c1.getStatus());
     }
 
     @Test
     void setAddSkill() {
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        Skill skill1= new Skill("skill1");
+        c1.setAddSkill(skill1);
+        assertNotNull(c1.getSkills());
     }
 
     @Test
-    void verifyIfHaveSkill() {
+    void verifyIfHaveSkill(){
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        Skill skill1= new Skill("skill1");
+        c1.setAddSkill(skill1);
+        assertTrue(c1.verifyIfHaveSkill(skill1));
+    }
+
+    @Test
+    void verifyIfDontHaveSkill(){
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        Skill skill1= new Skill("skill1");
+        assertFalse(c1.verifyIfHaveSkill(skill1));
     }
     @Test
     void testEqualsSameObject(){
@@ -47,9 +65,27 @@ class CollaboratorTest {
     }
 
 
+    @Test
+    void verifyNumberWorks(){
+        Collaborator cTest = new Collaborator("Joaquim Antonio",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+        assertEquals(cTest.getPhoneNumber(),"+351916835384");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            Collaborator cTest2 = new Collaborator("Joaquim Antonio",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","(+351)916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+        });
+
+    }
 
 
 
+
+    // COLLABORATOR AC2 verify the docIDNumber
+
+    @Test
+    void verifyDocTypeIDNumber(){
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Collaborator("Joaquim Manel Mendes Cunha Manuel Silva Oliveira",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,-1972453213,new JobCategory("Gardener"));
+        });
+    }
 
     //COLLABORATOR NAME AC3
     @Test
@@ -64,8 +100,9 @@ class CollaboratorTest {
     @Test
     void verifyIfCollaboratorCanHaveLessThan18years(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2008,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+            new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,5,1), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
         });
+        Collaborator test = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,4,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
     }
 
     //COLLABORATOR EMAIL AC5
