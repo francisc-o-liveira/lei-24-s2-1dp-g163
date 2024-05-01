@@ -1,16 +1,34 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+/** Domain class for the Skill Object */
 public class Skill {
+
+    /** Name of the Skill */
     private String skillName;
 
+    /** Constructor method for Skill
+     *
+     * @param skillName - name for the skill
+     */
     public Skill(String skillName){
         setSkillName(skillName);
     }
 
+    /** Gets the name of the Skill
+     *
+     * @return name of Skill
+     */
+
     public String getSkillName(){
         return this.skillName;
     }
-
+    /** Method to compare if two Skills are the same
+     *
+     * Two Skills are equal if both have the same name
+     *
+     * @param other - Job Category to be compared along with other
+     * @return true if they are the same
+     */
     @Override
     public boolean equals(Object other){
         if(this==other){

@@ -12,7 +12,7 @@ public class JobCategory {
 
     /**
      * The constructor of JobCategory Object
-     * @param name
+     * @param name of job category
      */
     public JobCategory(String name){
        setName(name);
@@ -43,6 +43,10 @@ public class JobCategory {
         return String.format("Job Category: %s\n", name);
     }
 
+    /** Sets the name for Job Category after verifying it
+     *
+     * @param name for job category
+     */
     public void setName(String name) {
         if (verifyJobName(name)){
             this.name = name;
@@ -51,6 +55,11 @@ public class JobCategory {
         }
     }
 
+    /** Method to verify the name of Job Category
+     *
+     * @param name for the job category
+     * @return true if the name given is not empty and if it only contains characters
+     */
     private boolean verifyJobName(String name) {
         if (name.isEmpty()){
             return false;
@@ -63,6 +72,13 @@ public class JobCategory {
         return true;
     }
 
+    /** Method to compare if two Job Categories are the same
+     *
+     * Two Job Categories are the same if both have the same name
+     *
+     * @param other - Job Category to be compared along with other
+     * @return true if they are the same
+     */
     @Override
     public boolean equals(Object other) {
         if(this==other){
