@@ -22,6 +22,15 @@ public class Collaborator{
     private String email;
     private JobCategory jobCategory;
     private List<Skill> skills;
+
+    public void setDocType(DocType.Type docType) {
+        this.docType = docType;
+    }
+
+    public void setDocIDNumber(int docIDNumber) {
+        this.docIDNumber = docIDNumber;
+    }
+
     public enum StatusType {Active,NotActive}
     private StatusType statusType;
     private List<Skill> SKILLS_BY_OMISSION=new ArrayList<>();
