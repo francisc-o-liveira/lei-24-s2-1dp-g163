@@ -14,9 +14,13 @@ import java.util.Optional;
 import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.Active;
 import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.NotActive;
 
+/** Repository for Collaborator */
 public class CollaboratorRepository {
+
+    /** Variable for the List of Collaborators */
     public List<Collaborator> collaboratorList;
 
+    /** Initializes the list of Collaborators */
     public CollaboratorRepository(){
         collaboratorList=new ArrayList<>();
     }
@@ -30,7 +34,7 @@ public class CollaboratorRepository {
     }
 
     /**
-     * This method creates and instances a new Collaborator after verification made in UI
+     * This method creates and instances a new Collaborator
      * @param name of collaborator
      * @param birthday of collaborator
      * @param admissionDate of collaborator
@@ -43,6 +47,7 @@ public class CollaboratorRepository {
      * @param docIDNumber of collaborator
      * @param jobCategory of collaborator
      *
+     * @return Optional of Collaborator if the Collaborator has been successfully created
      */
 
     public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, String phoneNumber, DocType.Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException{
@@ -53,6 +58,12 @@ public class CollaboratorRepository {
         return newCollab;
     }
 
+    /** Verifies if Collaborator exists and saves it
+     *
+     * @param collab - Collaborator to be created
+     * @return Optional of Collaborator if it has been added to the Collaborator's List
+     * @throws CloneNotSupportedException when Collaborator has already been created
+     */
 
     private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = Optional.empty();
@@ -69,8 +80,8 @@ public class CollaboratorRepository {
 
     /**Adds the collaborator to the List of Collaborators
      *
-     * @param collaborator
-     * @return
+     * @param collaborator to be added
+     * @return Optional of Collaborator if it has been added to the list
      */
     public Optional<Collaborator> addCollaborator(Collaborator collaborator){
         Optional<Collaborator> newCollaborator = Optional.empty();
@@ -84,7 +95,7 @@ public class CollaboratorRepository {
 
     /**Verifies if collaborator does not exist
      *
-     * @param collaborator
+     * @param collaborator to be verified
      * @return true if collaborator does not exist
      */
     private boolean isValidCollaborator(Collaborator collaborator) {
@@ -164,7 +175,7 @@ public class CollaboratorRepository {
     /** The method searches for the Collaborator by their DocIDNumber
      *
      * @param docIDNumber of collaboraator
-     * @return collaborator
+     * @return collaborator found
      */
 
     public Collaborator searchForCollaboratorByIDNumber(int docIDNumber){
@@ -193,7 +204,7 @@ public class CollaboratorRepository {
 
     /** Gets the list of Skills of Collaborator
      *
-     * @param collaborator
+     * @param collaborator to see the Skills
      * @return list of Skills the Collaborator has
      */
 
@@ -203,9 +214,10 @@ public class CollaboratorRepository {
 
     /** Assigns a Skill to Collaborator
      *
-     * @param collaborator
-     * @param skillName
-     * @return collaborator if skill has been assigned
+     * @param collaborator to be assigned a skill
+     * @param skillName - skill to be assigned
+     * @return Optional of Collaborator if skill has been assigned
+     * @throws CloneNotSupportedException if the skill has already been assigned to Collaborator
      */
 
     public Optional<Collaborator> assignSkill(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
