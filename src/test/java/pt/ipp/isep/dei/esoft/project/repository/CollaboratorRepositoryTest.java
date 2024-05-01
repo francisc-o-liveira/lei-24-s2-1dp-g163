@@ -57,7 +57,7 @@ class CollaboratorRepositoryTest {
     }
 
     @Test
-    void getCollaboratorsNotActiveBySkills() {
+    void getCollaboratorsNotActiveBySkills() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         int docIDNumber = 1972321313;
         Skill newSkill = new Skill("podar");
@@ -87,7 +87,7 @@ class CollaboratorRepositoryTest {
     }
 
     @Test
-    void sortCollaboratorsByNumberOfSkills() {
+    void sortCollaboratorsByNumberOfSkills() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         int docIDNumber = 1972321313;
         Skill newSkill = new Skill("podar");
@@ -129,7 +129,7 @@ class CollaboratorRepositoryTest {
     }
 
     @Test
-    void getCollaboratorSkillsList() {
+    void getCollaboratorSkillsList() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         List<Skill> expectedSkills = new ArrayList<Skill>();
         Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
@@ -140,8 +140,13 @@ class CollaboratorRepositoryTest {
         assertEquals(collabSkills,expectedSkills);
     }
 
+
+
+
+
+    // US004 - Assign a Skill to a Collaborator
     @Test
-    void assignSkill() {
+    void assignSkill() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
         Skill skillToAdd = new Skill("carta de ligeiros");

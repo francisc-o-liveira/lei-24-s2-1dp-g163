@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterJobCategoryUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.job.RegisterJobCategoryUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.ShowJobCategoryListUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.job.ShowJobCategoryListUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;

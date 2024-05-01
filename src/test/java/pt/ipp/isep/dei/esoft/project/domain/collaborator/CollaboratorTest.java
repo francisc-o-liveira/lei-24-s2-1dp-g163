@@ -15,7 +15,7 @@ class CollaboratorTest {
     }
 
     @Test
-    void setAddSkill() {
+    void setAddSkill() throws CloneNotSupportedException {
         Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
         Skill skill1= new Skill("skill1");
         c1.setAddSkill(skill1);
@@ -23,7 +23,7 @@ class CollaboratorTest {
     }
 
     @Test
-    void verifyIfHaveSkill(){
+    void verifyIfHaveSkill() throws CloneNotSupportedException {
         Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
         Skill skill1= new Skill("skill1");
         c1.setAddSkill(skill1);

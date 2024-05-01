@@ -275,13 +275,14 @@ public class Collaborator{
      * @param skill represent the skill to assign to the collaborator
      * @return the collaborator if assign the skill to the collaborator
      */
-    public Optional<Collaborator> setAddSkill(Skill skill){
-        Optional<Collaborator> collabWithNewSkill = Optional.empty();
+    public Optional<Collaborator> setAddSkill(Skill skill) throws CloneNotSupportedException {
+        Optional<Collaborator> collabWithNewSkill;
         collabWithNewSkill = Optional.of(this);
         if(!verifyIfHaveSkill(skill)){
             this.skills.add(skill);
         }else {
-            Optional.empty();
+            collabWithNewSkill=Optional.empty();
+            throw new CloneNotSupportedException("The Collaborator already have this Skill");
         }
         return collabWithNewSkill;
     }

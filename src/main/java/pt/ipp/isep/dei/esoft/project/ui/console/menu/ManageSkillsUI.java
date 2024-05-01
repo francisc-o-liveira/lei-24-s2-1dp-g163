@@ -1,7 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterSkillUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.ShowSkillListUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.skill.RegisterSkillUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.skill.ShowSkillListUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
