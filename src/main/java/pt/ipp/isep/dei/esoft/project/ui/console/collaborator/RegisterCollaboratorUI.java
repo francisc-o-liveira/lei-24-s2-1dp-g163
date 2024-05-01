@@ -294,7 +294,7 @@ public class RegisterCollaboratorUI implements Runnable{
      */
 
     private boolean verifyBirthdayAndAdmission(Date birthday, Date admissionDate) {
-        if(birthday.diference(Date.atualDate())>6574){
+        if(birthday.diference(Date.atualDate())>6574 && admissionDate.diference(Date.atualDate())>-100 || admissionDate.diference(Date.atualDate())<100){
             return true;
         }
         return false;
