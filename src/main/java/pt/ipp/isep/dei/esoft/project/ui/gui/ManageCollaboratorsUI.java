@@ -138,7 +138,7 @@ public class ManageCollaboratorsUI {
 
             String newDocIDNumber = docIDNumber.getText();
             int idNew = Integer.parseInt(newDocIDNumber);
-            editedCollaborator.setDocIDNumber(idNew);
+            editedCollaborator.setDocType(docType,idNew);
             docIDNumber.clear();
 
             String newEmail = email.getText();
