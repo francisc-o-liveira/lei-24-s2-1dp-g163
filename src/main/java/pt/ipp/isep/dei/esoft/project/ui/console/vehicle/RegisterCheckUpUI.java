@@ -18,7 +18,7 @@ public class RegisterCheckUpUI implements Runnable {
     private Vehicle vehicleToCheckUp;
     private Date dateOfCheckUp;
 
-    private int currentKm;
+    private double currentKm;
 
     public RegisterCheckUpUI() {
         this.ctrl = new RegisterCheckUpController();
@@ -73,15 +73,15 @@ public class RegisterCheckUpUI implements Runnable {
         return new Date(Integer.parseInt(dateFormat[2]), Integer.parseInt(dateFormat[1]), Integer.parseInt(dateFormat[0]));
     }
 
-        public int registerCurrentKm () {
+        public double registerCurrentKm () {
             int attempts=0;
-            int currentKm;
+            double currentKm;
             do {
                 if(attempts<0){
                     System.out.println("Quilometragem inválida. A quilometragem deve ser maior que o último valor registado e não negativa.");
                 }
                 System.out.print("Introduza a quilometragem atual: ");
-                currentKm = scanner.nextInt();
+                currentKm = scanner.nextDouble();
                 scanner.nextLine(); // Consume the newline
                 attempts--;
             } while (!verifyKilometersFormat(currentKm));
@@ -133,7 +133,7 @@ public class RegisterCheckUpUI implements Runnable {
          * @param currentKms A quilometragem como String.
          * @return Verdadeiro se o formato estiver correto; falso se não estiver.
          */
-        private boolean verifyKilometersFormat ( int currentKms){
+        private boolean verifyKilometersFormat ( double currentKms){
             return currentKms > 0;
         }
     }

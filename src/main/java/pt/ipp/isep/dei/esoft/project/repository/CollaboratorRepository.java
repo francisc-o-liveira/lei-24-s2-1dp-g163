@@ -45,7 +45,7 @@ public class CollaboratorRepository {
      *
      */
 
-    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, String phoneNumber, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
+    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, String phoneNumber, DocType.Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException{
         Optional<Collaborator> newCollab;
         Collaborator collab = new Collaborator(name,birthday,admissionDate,address,addressZipCode,addressCity,phoneNumber,email,docType,docIDNumber,jobCategory);
         newCollab = verifyCollaboratorExistAndSave(collab);
@@ -54,7 +54,7 @@ public class CollaboratorRepository {
     }
 
 
-    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) {
+    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = Optional.empty();
         boolean operationSucess = false;
         if (!collaboratorList.contains(collab)){

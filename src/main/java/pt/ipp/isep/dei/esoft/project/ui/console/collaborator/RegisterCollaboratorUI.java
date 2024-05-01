@@ -39,12 +39,16 @@ public class RegisterCollaboratorUI implements Runnable{
     }
 
     public void run(){
-        System.out.print("--------- Register a Collaborator ---------\n");
-        jobCategory=displayAndSelectJobCategory();
-        docType=displayAndSelectDocType();
-        docIDNumber=registerDocIDNumber();
-        requestData();
-        submitData();
+        try{
+            System.out.print("--------- Register a Collaborator ---------\n");
+            jobCategory=displayAndSelectJobCategory();
+            docType=displayAndSelectDocType();
+            docIDNumber=registerDocIDNumber();
+            requestData();
+            submitData();
+        } catch (CloneNotSupportedException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private int registerDocIDNumber() {
@@ -89,7 +93,7 @@ public class RegisterCollaboratorUI implements Runnable{
         phoneNumber=registerPhoneNumber();
         email=registerEmail();
     }
-    private void submitData() {
+    private void submitData() throws CloneNotSupportedException {
         Optional<Collaborator> collaborator = getController().registerCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode,  phoneNumber, email, docType, docIDNumber, jobCategory);
         if (collaborator.isPresent()) {
             System.out.println("\nCollaborator successfully created!");

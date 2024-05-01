@@ -14,10 +14,10 @@ public class RegisterVehicleUI  implements Runnable{
     private Vehicle.Type type;
     private int tare;
     private double grossWeight;
-    private int currentKM;
+    private double currentKM;
     private Date registerDate;
     private Date acquisitionDate;
-    private int checkupFrequency;
+    private double checkupFrequency;
 
 
     /**Controller*/
@@ -108,13 +108,13 @@ public class RegisterVehicleUI  implements Runnable{
         return grossWeight;
     }
 
-    private int registerFrequency() {
+    private double registerFrequency() {
         Scanner scan = new Scanner(System.in);
-        int frequencyKm = 0;
+        double frequencyKm = 0;
         boolean validKm=false;
         while (!validKm){
             System.out.print("Maintenance Check-Up Kilometers: ");
-            frequencyKm = scan.nextInt();
+            frequencyKm = scan.nextDouble();
             if(frequencyKm>1000 && frequencyKm<=50000){
                 throw new IllegalArgumentException("The introduced Frequency for Check-Up is incorrect.");
             } else {
@@ -124,9 +124,9 @@ public class RegisterVehicleUI  implements Runnable{
         return frequencyKm;
     }
 
-    private int registerCurrentKM() {
+    private double registerCurrentKM() {
         Scanner scan = new Scanner(System.in);
-        int currentKM = 0;
+        double currentKM = 0;
         boolean validKm=false;
         while (!validKm){
             System.out.print("Current Kilometers of the Vehicle: ");

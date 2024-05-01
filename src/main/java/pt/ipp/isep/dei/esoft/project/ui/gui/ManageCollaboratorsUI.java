@@ -38,7 +38,7 @@ public class ManageCollaboratorsUI {
      */
     private Date birthday;
     private Date admissionDate;
-    private DocType typeOfDocument;
+    private DocType.Type typeOfDocument;
     private JobCategory jobCategory;
 
     @FXML
@@ -86,7 +86,38 @@ public class ManageCollaboratorsUI {
 
     @FXML
     public void btnAddCollaborator(ActionEvent event) {
-        List<String> messageError = new ArrayList<>();
+        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
+        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
+        typeOfDocument = (DocType.Type) docType.getValue();
+        String nameCollab= name.getText();
+        String address= addressStreet.getText();
+        String addresszipcode=addressZipCode.getText();
+        String addresscity=addressCity.getText();
+        String e_mail=email.getText();
+        String phone=phoneNumber.getText();
+
+        if(nameCollab.isEmpty() || address.isEmpty() || addresszipcode.isEmpty() || addresscity.isEmpty() || e_mail.isEmpty() || phone.isEmpty()){
+            popUpOfVerifications(Alert.AlertType.ERROR, "The Collaborator is empty");
+        } else {
+            try {
+                ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
+            } catch (CloneNotSupportedException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.");
+            }
+        }
+    }
+
+    public void registerCollaborator() {
+        //jobCategory=(JobCategory) selectedjobCategory.getValue();
+        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
+        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
+        typeOfDocument = (DocType.Type)docType.getValue();
+        //ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);*/
+    }
+
+    /*List<String> messageError = new ArrayList<>();
+
+
         if (!verifyName(name.getText())) {
             messageError.add("The introduced name is invalid");
         }
@@ -105,15 +136,14 @@ public class ManageCollaboratorsUI {
         DocType selectedType = (DocType) docType.getSelectionModel().getSelectedItem();
         /*if (!validDocType(selectedType, Integer.parseInt(docIDNumber.getText()))) {
             messageError.add("The introduced ID Number is incorrect");
-        }*/
+        }
 
         if (messageError.isEmpty()) {
-            popUpOfVerifications(Alert.AlertType.ERROR, messageError).show();
-        } else {
-            registerCollaborator();
-            popUp();
-        }
-    }
+        popUpOfVerifications(Alert.AlertType.ERROR, messageError).show();
+    } else {
+        registerCollaborator();
+        popUp();
+    }*/
 
     @FXML
     public void btnRemoveCollaborator() {
@@ -138,7 +168,8 @@ public class ManageCollaboratorsUI {
 
             String newDocIDNumber = docIDNumber.getText();
             int idNew = Integer.parseInt(newDocIDNumber);
-            editedCollaborator.setDocType(docType,idNew);
+            typeOfDocument = (DocType.Type) docType.getValue();
+            editedCollaborator.setDocType(typeOfDocument,idNew);
             docIDNumber.clear();
 
             String newEmail = email.getText();
@@ -210,7 +241,7 @@ public class ManageCollaboratorsUI {
 
                         btn.setOnAction((ActionEvent event) -> {
                             int collaboratorID = Integer.parseInt(docIDNumber.getText());
-                            Collaborator collaborator = ctrl.collaboratorRepository.searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
+                            Collaborator collaborator = ctrl.getCollaboratorRepository().searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
                             try {
                                 showMore(collaborator);
                             } catch (IOException e) {
@@ -243,15 +274,6 @@ public class ManageCollaboratorsUI {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void registerCollaborator() {
-        //jobCategory=(JobCategory) selectedjobCategory.getValue();
-        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
-        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
-        /*typeOfDocument = (DocType)  docType.getValue();
-        ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), Integer.parseInt(phoneNumber.getText()), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);*/
-    }
-
 
     /*private boolean validDocType(DocType type, int docIDNumber) {
         return ctrl.validateDocType(type, docIDNumber);
@@ -349,16 +371,12 @@ public class ManageCollaboratorsUI {
         return alerta;
     }
 
-    private Alert popUpOfVerifications(Alert.AlertType alertType, List<String> messages) {
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 
         alerta.setTitle("ERROR");
         alerta.setHeaderText("Invalid Data");
-        StringBuilder contentText = new StringBuilder();
-        for (String message : messages) {
-            contentText.append(message).append("\n");
-        }
-        alerta.setContentText(contentText.toString());
+        alerta.setContentText(messages);
 
         return alerta;
     }

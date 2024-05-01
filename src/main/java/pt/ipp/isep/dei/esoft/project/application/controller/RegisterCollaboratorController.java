@@ -18,11 +18,11 @@ public class RegisterCollaboratorController {
     /**
      * This variable represents the Collaborator Repository
      */
-    public CollaboratorRepository collaboratorRepository;
+    private CollaboratorRepository collaboratorRepository;
     /**
      * This variable represents the JobCategory Repository
      */
-    public JobCategoryRepository jobCategoryRepository;
+    private JobCategoryRepository jobCategoryRepository;
 
 
     public RegisterCollaboratorController() {
@@ -46,6 +46,13 @@ public class RegisterCollaboratorController {
         }
     }
 
+    /** Gets the repository of Collaborator
+     * @return Repository of Collaborators
+     */
+
+    public CollaboratorRepository getCollaboratorRepository(){
+        return collaboratorRepository;
+    }
     /**
      * This method registers a collaborator from collaborator's Repository
      *
@@ -60,20 +67,16 @@ public class RegisterCollaboratorController {
      * @param docType        of collaborator
      * @param docIDNumber    of collaborator
      * @param jobCategory    of collaborator
-     * @return
+     * @return Optional of Collaborator if Collaborator has been successfully registered; null if Collaborator wasn't registered
      */
-    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, String phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory){
+    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, String phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException{
         Optional<Collaborator> newCollab = collaboratorRepository.createCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
         return newCollab;
     }
 
-    private void getHRMFromSession(){
-
-    }
-
     /**
      * This method return the docTypes that exist to register the user
-     * @return an Array of Types's of a Enum Type
+     * @return an Array of Types of a Enum Type
      */
     public Type[] getDocTypeList() {
         return DocType.Type.values();
@@ -87,11 +90,24 @@ public class RegisterCollaboratorController {
         return jobCategoryRepository.getJobCategoryList();
     }
 
+    /** Gets the List of Collaborators
+     *
+     * @return List of Collaborators
+     */
     public List<Collaborator> getCollaboratorList(){
         return Repositories.getInstance().getCollaboratorRepository().getCollaboratorList();
     }
 
+    /** Removes a Collaborator from the List
+     *
+     * @param collaborator to remove
+     */
+
     public void removeFromList(Collaborator collaborator){
         collaboratorRepository.getCollaboratorList().remove(collaborator);
     }
+
+    /*private void getHRMFromSession(){
+
+    }*/
 }
