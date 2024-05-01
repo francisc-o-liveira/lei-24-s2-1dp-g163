@@ -9,14 +9,32 @@ class CollaboratorTest {
 
     @Test
     void setStatus() {
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        c1.setStatus(Collaborator.StatusType.NotActive);
+        assertNotNull(c1.getStatus());
     }
 
     @Test
     void setAddSkill() {
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        Skill skill1= new Skill("skill1");
+        c1.setAddSkill(skill1);
+        assertNotNull(c1.getSkills());
     }
 
     @Test
-    void verifyIfHaveSkill() {
+    void verifyIfHaveSkill(){
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        Skill skill1= new Skill("skill1");
+        c1.setAddSkill(skill1);
+        assertTrue(c1.verifyIfHaveSkill(skill1));
+    }
+
+    @Test
+    void verifyIfDontHaveSkill(){
+        Collaborator c1= new Collaborator("Something", new Date(2000,10,10), new Date(2024,5,1), "Rua", "1111-111", "Porto", "+351919888777", "something.s@email.com", DocType.Type.CitizenCard, 888777444, new JobCategory("Job"));
+        Skill skill1= new Skill("skill1");
+        assertFalse(c1.verifyIfHaveSkill(skill1));
     }
     @Test
     void testEqualsSameObject(){
