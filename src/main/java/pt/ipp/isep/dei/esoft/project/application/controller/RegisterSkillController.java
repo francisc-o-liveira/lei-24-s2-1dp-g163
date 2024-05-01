@@ -13,7 +13,7 @@ public class RegisterSkillController {
 
     private SkillRepository skillRepository;
 
-    public boolean RegisterSkill(String skillName){
+    public boolean RegisterSkill(String skillName) throws CloneNotSupportedException {
         Optional<Skill> newSkill = Repositories.getInstance().getSkillRepository().registerSkill(skillName);
         if (newSkill.isPresent()){
             return true;
@@ -29,7 +29,7 @@ public class RegisterSkillController {
 
     public ArrayList<DocType.Type> getDocTypeList(){return new ArrayList<>(Arrays.asList(DocType.Type.values()));}
 
-    public boolean loadSkillsByFile(String fileName) throws FileNotFoundException {
+    public boolean loadSkillsByFile(String fileName) throws FileNotFoundException, CloneNotSupportedException {
         File file = new File(fileName);
         Scanner scan = new Scanner(file);
         boolean operationSucess=false;

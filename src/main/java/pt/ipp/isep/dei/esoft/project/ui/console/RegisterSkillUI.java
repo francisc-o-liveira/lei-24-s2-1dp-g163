@@ -115,36 +115,14 @@ public class RegisterSkillUI implements Runnable {
      * This method request the data needed to register one skill by her name
      * @return the skill name if it is verified
      */
-
     private String requestData() {
         Scanner scan = new Scanner(System.in);
-        String skillName = null;
-        try {
+        String skillName;
             do{
                 skillName= Utils.readLineFromConsole("\"Please input the Skill Name:\"");
-            }while(!nameVerify(skillName));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+            }while(skillName.isEmpty());
         return skillName;
     }
 
-    /**
-     * This method verify the name for the skill
-     * @param skillName receive the skillName introduced by user on console
-     * @return true if the skill name it is valid to register a new Skill
-     */
 
-    private boolean nameVerify(String skillName) {
-        char[] characters = skillName.toCharArray();
-        if(characters==null){
-            throw new NullPointerException("The Skill Name is empty please introduce name");
-        }
-        for(char c : characters){
-            if(!Character.isLetter(c)){
-                throw new IllegalArgumentException("The Skill Name dont accept Special Characters or Numbers");
-            }
-        }
-        return true;
-    }
 }

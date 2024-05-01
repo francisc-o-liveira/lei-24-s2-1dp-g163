@@ -16,15 +16,16 @@ public class DocType {
         boolean valueVerify = false;
         switch (docType) {
             case CitizenCard:
-                if(numberID>0 && numberID<999999999){
+                if(numberID>99999999 && numberID<999999999){
                     valueVerify=true;
                 }
             case TaxPayerCard:
-                if(numberID>0 && numberID<999999999){
+                if(numberID>99999999 && numberID<999999999){
                     valueVerify=true;
                 }
+                //verify number of Serie of Passport don't verify the letters
             case Passport:
-                if(numberID>0 && numberID<999999){
+                if(numberID>99999 && numberID<999999){
                     valueVerify=true;
                 }
         }
