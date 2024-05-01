@@ -19,14 +19,14 @@ public class ShowJobCategoryListUI implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("----- Job Category List -----");
+        System.out.println("----- Job Category List -----\n");
         showDataAsked();
     }
 
     private void showDataAsked() {
         List<JobCategory> jobCategoryList = getController().getJobCategoriesList();
         if (jobCategoryList == null) {
-            System.out.println("Dont exist any Job Category register on the System.");
+            System.out.println("No job categories are registered on the system.");
         }else{
             for (JobCategory j : jobCategoryList){
                 System.out.println(j);
