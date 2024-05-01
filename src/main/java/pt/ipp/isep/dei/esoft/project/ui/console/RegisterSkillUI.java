@@ -39,8 +39,12 @@ public class RegisterSkillUI implements Runnable {
         System.out.println("----- Register a Skill -----");
         int option = selectMethodToAddSkill();
         if (option==1){
-            skillName=requestData();
-            submitsData();
+            try {
+                skillName=requestData();
+                submitsData();
+            }catch (CloneNotSupportedException e){
+                System.out.println("Skill Already Exist / Not Supported");
+            }
         }
         else {
             fileName=requestDataFile();
@@ -48,6 +52,8 @@ public class RegisterSkillUI implements Runnable {
                 submitsDataFile();
             } catch (FileNotFoundException e) {
                 System.out.println("File Not Found");
+            }catch (CloneNotSupportedException e){
+                System.out.println("Skill Already Exist / Not Supported");
             }
         }
     }
@@ -57,7 +63,7 @@ public class RegisterSkillUI implements Runnable {
      * @throws FileNotFoundException if don't find the File
      */
 
-    private void submitsDataFile() throws FileNotFoundException {
+    private void submitsDataFile() throws FileNotFoundException, CloneNotSupportedException {
         boolean value = getController().loadSkillsByFile(fileName);
         if (value) {
             System.out.println("\nSkill's sucessfully loaded!");
@@ -102,13 +108,13 @@ public class RegisterSkillUI implements Runnable {
     /**
      * This method submits the skillName
      */
-    private void submitsData() {
-        boolean value = getController().RegisterSkill(skillName);
-        if (value) {
-            System.out.println("\nSkill successfully registed!");
-        } else {
-            System.out.println("\nSkill not registed!");
-        }
+    private void submitsData() throws CloneNotSupportedException {
+            boolean value = getController().RegisterSkill(skillName);
+            if (value) {
+                System.out.println("\nSkill successfully registed!");
+            } else {
+                System.out.println("\nSkill not registed!");
+            }
     }
 
     /**
