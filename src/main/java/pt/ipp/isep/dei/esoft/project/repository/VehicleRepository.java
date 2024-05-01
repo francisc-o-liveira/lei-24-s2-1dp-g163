@@ -30,6 +30,7 @@ public class VehicleRepository{
             vehicle.setStatus(Use);
         }
     }
+
     public void desactivateVehicle(Vehicle vehicle){
         if(vehicle.getStatus()==Use){
             vehicle.setStatus(NotUse);
@@ -109,7 +110,7 @@ public class VehicleRepository{
      * @param currentKms A quilometragem atual do veículo.
      * @return Verdadeiro se o check-up for adicionado com sucesso, falso caso contrário.
      */
-    public boolean addCheckUp(Vehicle vehicle, Date dateOfCheckUp, int currentKms) {
+    public boolean addCheckUp(Vehicle vehicle, Date dateOfCheckUp, double currentKms) {
         Optional<CheckUp> newCheck = null;
         if (vehicle != null) {
              newCheck = vehicle.registerCheckUp(currentKms, dateOfCheckUp);

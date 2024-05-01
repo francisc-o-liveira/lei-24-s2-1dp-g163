@@ -48,7 +48,7 @@ There is dependency on:
 
 **Output Data:**
 
-*  List of vehicle's needing check-up
+*  List of vehicle's needing check-up (plate number, brand, model, current kms, frequency, last checkup kms, next checkup (optimal) kms)
 * Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)

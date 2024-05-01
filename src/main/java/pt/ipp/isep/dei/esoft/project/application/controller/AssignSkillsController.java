@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public class AssignSkillsController {
 
-    public CollaboratorRepository collaboratorRepository;
+    private CollaboratorRepository collaboratorRepository;
 
-    public SkillRepository skillRepository;
+    private SkillRepository skillRepository;
 
     public AssignSkillsController(){
         getDataNeededToAssign();

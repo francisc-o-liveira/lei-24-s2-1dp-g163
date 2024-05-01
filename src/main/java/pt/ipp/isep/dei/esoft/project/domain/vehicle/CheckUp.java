@@ -3,10 +3,10 @@ package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 public class CheckUp {
-    private int kmOfCheck;
+    private double kmOfCheck;
     private Date dateOfCheck;
 
-    public CheckUp(int kmOfCheck, Date dateOfCheck){
+    public CheckUp(double kmOfCheck, Date dateOfCheck){
         this.dateOfCheck=dateOfCheck;
         this.kmOfCheck=kmOfCheck;
     }
@@ -15,7 +15,7 @@ public class CheckUp {
         return dateOfCheck;
     }
 
-    public int getKmOfCheck() {
+    public double getKmOfCheck() {
         return kmOfCheck;
     }
 

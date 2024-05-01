@@ -14,31 +14,28 @@ public class Vehicle {
     private int tare;
     private String plate;
     private double grossWeight;
-    private int currentKm;
+    private double currentKm;
     private Date registerDate;
     private Date acquisitionDate;
-    private int frequencyCheckKm;
+    private double frequencyCheckKm;
     private List<CheckUp> checkUpList;
     public enum StatusType {Use,NotUse}
     private StatusType statusType;
+    private static final double TAX_FOR_CLOSE_CHECK=0.05;
 
 
     public Vehicle(String brand, String model, Type type, int tare, double grossWeight, int currentKm, Date registerDate, Date acquisionDate, int frequencyCheckKm, String plate){
-        this.brand=brand;
-        this.model=model;
-        this.type=type;
-        this.tare=tare;
-        this.grossWeight=grossWeight;
-        this.currentKm=currentKm;
-        this.registerDate=registerDate;
-        this.acquisitionDate=acquisionDate;
-        this.frequencyCheckKm=frequencyCheckKm;
-        this.statusType=StatusType.NotUse;
-        if (verifyPlate(plate)){
-            this.plate=plate;
-        }else {
-            throw new RejectedExecutionException("Plate dont correspont with the Acquisition Date ");
-        }
+        setBrand(brand);
+        setModel(model);
+        setType(type);
+        setTare(tare);
+        setGrossWeight(grossWeight);
+        setCurrentKm(currentKm);
+        setRegisterDate(registerDate);
+        setAcquisitionDate(acquisionDate);
+        setFrequencyCheckKm(frequencyCheckKm);
+        setStatusType(StatusType.NotUse);
+        setPlate(plate);
     }
 
     private boolean verifyPlate(String plate) {
@@ -50,18 +47,14 @@ public class Vehicle {
         return statusType;
     }
 
-    public void setStatus(StatusType statusType) {
-        this.statusType = statusType;
-    }
-
     public boolean isCloseToCheck(){
-         return (frequencyCheckKm*0.05) >= getKmCloseToCheck();
+         return (frequencyCheckKm*TAX_FOR_CLOSE_CHECK) >= getKmCloseToCheck();
     }
-    public int getKmCloseToCheck() {
+    public double getKmCloseToCheck() {
         return (this.getLastCheckUpKm()  + frequencyCheckKm) - currentKm;
     }
 
-    public Optional<CheckUp> registerCheckUp(int currentKmOfCheck, Date dateOfCheck){
+    public Optional<CheckUp> registerCheckUp(double currentKmOfCheck, Date dateOfCheck){
         Optional <CheckUp> newCheck = Optional.empty();
         boolean operationSucess=false;
         if(currentKmOfCheck>=currentKm && currentKmOfCheck>getLastCheckUpKm() && Date.atualDate().diference(dateOfCheck)<30){
@@ -75,8 +68,8 @@ public class Vehicle {
         return newCheck;
     }
 
-    private int getLastCheckUpKm() {
-        int save = 0;
+    private double getLastCheckUpKm() {
+        double save = 0;
         for(CheckUp c : checkUpList){
             save = c.getKmOfCheck();
         }
@@ -107,17 +100,14 @@ public class Vehicle {
         return grossWeight;
     }
 
-    public int getCurrentKm() {
+    public double getCurrentKm() {
         return currentKm;
     }
 
-    public int getFrequencyCheckKm() {
+    public double getFrequencyCheckKm() {
         return frequencyCheckKm;
     }
 
-    public int getTare() {
-        return tare;
-    }
 
     public String getBrand() {
         return brand;
@@ -134,13 +124,6 @@ public class Vehicle {
         return type;
     }
 
-    public void setCurrentKm(int currentKm) {
-        this.currentKm = currentKm;
-    }
-
-    public void setFrequencyCheckKm(int frequencyCheckKm) {
-        this.frequencyCheckKm = frequencyCheckKm;
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -163,5 +146,78 @@ public class Vehicle {
                         "Check Up List: %s\n" +
                         "Status Type: %s\n",
                 brand, model, type, tare, plate, grossWeight, currentKm, registerDate, acquisitionDate, frequencyCheckKm, checkUpList, statusType);
+    }
+
+    public void setBrand(String brand) {
+        if (verifyModelAndBrand(brand)){
+            this.brand = brand;
+        }else {
+             throw new IllegalArgumentException("Invalid brand");
+        }
+    }
+
+    public void setCurrentKm(double currentKm) {
+        if (currentKm>0){
+            this.currentKm = currentKm;
+        }else {
+            throw new IllegalArgumentException("Invalid current km");
+        }
+    }
+
+    public void setModel(String model) {
+        if(verifyModelAndBrand(model)){
+            this.model = model;
+        }else{
+            throw new IllegalArgumentException("Invalid model name");
+        }
+    }
+
+    private boolean verifyModelAndBrand(String model) {
+        return model.split(" ").length<=3;
+    }
+
+    public void setPlate(String plate) {
+        if (verifyPlate(plate)){
+            this.plate=plate;
+        }else {
+            throw new RejectedExecutionException("Plate dont correspont with the Acquisition Date ");
+        }
+    }
+
+    public void setFrequencyCheckKm(double frequencyCheckKm) {
+        if (frequencyCheckKm >= 1000){
+            this.frequencyCheckKm = frequencyCheckKm;
+        }else {
+            throw new IllegalArgumentException("Frequency Check Km should be greater than 1000");
+        }
+    }
+    public void setTare(int tare) {
+        this.tare = tare;
+    }
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public void setAcquisitionDate(Date acquisitionDate) {
+        if (acquisitionDate.getYear()<1900) {
+            this.acquisitionDate = acquisitionDate;
+        }else {
+            throw new IllegalArgumentException("Acquisition date cannot be less than 1900");
+        }
+
+    }
+
+    public void setGrossWeight(double grossWeight) {
+        if (grossWeight>0){
+            this.grossWeight = grossWeight;
+        }
+    }
+
+    public void setStatusType(StatusType statusType) {
+        this.statusType = statusType;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }
