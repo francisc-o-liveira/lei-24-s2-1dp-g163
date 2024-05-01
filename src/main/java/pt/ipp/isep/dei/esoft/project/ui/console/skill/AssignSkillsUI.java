@@ -49,18 +49,6 @@ public class AssignSkillsUI implements Runnable {
         }
     }
 
-    /** Displays the Skills available to assign to Collaborator
-     *
-     * @param skills that Collaborator does not have
-     */
-
-    public void displaySkills(List<Skill> skills){
-        System.out.printf("Available skills to assign to %s: %n", collaborator);
-        for(Skill s : skills){
-            System.out.print(s+"\n");
-        }
-    }
-
     /** Submits the data if the skill was successfully added
      *
      */
@@ -94,7 +82,7 @@ public class AssignSkillsUI implements Runnable {
      *
      */
     public void displayCollaboratorList(){
-        System.out.printf("Select a collaborator by its index: %n");
+        System.out.printf("------Select a collaborator by its index----- %n");
         System.out.printf("Collaborators: %n");
         for(int i=0; i<ctrl.getCollaboratorList().size(); i++){
             System.out.printf("%d -- %s%n", i+1, ctrl.getCollaboratorList().get(i));
