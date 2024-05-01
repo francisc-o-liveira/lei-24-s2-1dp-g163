@@ -20,7 +20,7 @@ public class ShowSkillListUI implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("----- Skill List -----");
+        System.out.println("----- Skill List -----\n");
         showDataAsked();
     }
 
@@ -28,7 +28,7 @@ public class ShowSkillListUI implements Runnable{
         List<Skill> skillList = getCtrl().getSkillList();
         System.out.println();
         if (skillList == null) {
-            System.out.println("Dont exist any Skill register on the System.");
+            System.out.println("No Skills are registered on the system.");
         }else{
             for (Skill s : skillList){
                 System.out.println(s);
