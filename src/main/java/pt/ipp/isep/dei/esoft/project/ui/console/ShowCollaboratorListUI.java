@@ -26,7 +26,6 @@ public class ShowCollaboratorListUI implements Runnable {
         System.out.print("----- Collaborator List -----\n");
         displayCollabList();
     }
-
     /** Method to display the List of Collaborators */
     public void displayCollabList(){
         List<Collaborator> collaboratorList= getController().getCollaboratorList();
