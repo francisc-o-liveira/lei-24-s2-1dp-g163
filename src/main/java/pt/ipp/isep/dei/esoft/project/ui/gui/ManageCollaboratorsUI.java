@@ -107,7 +107,7 @@ public class ManageCollaboratorsUI {
             messageError.add("The introduced ID Number is incorrect");
         }*/
 
-        if (messageError != null) {
+        if (messageError.isEmpty()) {
             popUpOfVerifications(Alert.AlertType.ERROR, messageError).show();
         } else {
             registerCollaborator();
@@ -138,7 +138,7 @@ public class ManageCollaboratorsUI {
 
             String newDocIDNumber = docIDNumber.getText();
             int idNew = Integer.parseInt(newDocIDNumber);
-            editedCollaborator.setDocIDNumber(idNew);
+            editedCollaborator.setDocType(docType,idNew);
             docIDNumber.clear();
 
             String newEmail = email.getText();

@@ -41,7 +41,7 @@ public class RegisterCollaboratorUI implements Runnable{
     public void run(){
         System.out.print("--------- Register a Collaborator ---------\n");
         jobCategory=displayAndSelectJobCategory();
-        docType=displayAndVerifyDocType();
+        docType=displayAndSelectDocType();
         docIDNumber=registerDocIDNumber();
         requestData();
         submitData();
@@ -51,9 +51,8 @@ public class RegisterCollaboratorUI implements Runnable{
         System.out.print("ID Number from Document of Identification: ");
         boolean operationSuccess = false;
         int docIDNumber = 0;
-        while(!operationSuccess) {
+        while(docIDNumber <= 0) {
             docIDNumber = scan.nextInt();
-            operationSuccess = validDocType(docType, docIDNumber);
         }
         return docIDNumber;
     }
@@ -218,16 +217,16 @@ public class RegisterCollaboratorUI implements Runnable{
      *
      * @return
      */
-    public Type displayAndVerifyDocType(){
+    public Type displayAndSelectDocType(){
         Type[] types = ctrl.getDocTypeList();
         Scanner scan = new Scanner(System.in);
-        int docIDNumber;
+
             System.out.print("Select one of the following types of document of identification: \n");
             for(int i = 0; i < types.length; i++){
                 System.out.printf("%d --- %s%n", i+1,types[i]);
             }
             int option = -1;
-            while(option<1 && option>3){
+            while(option<1 || option>3){
                 option=scan.nextInt();
             }
 
@@ -239,10 +238,6 @@ public class RegisterCollaboratorUI implements Runnable{
      * @param docIDNumber represent the value introduce by User to register Collaborator
      * @return true if verify the value by there docType
      */
-
-    private boolean validDocType(Type type, int docIDNumber) {
-        return ctrl.validateDocType(type,docIDNumber);
-    }
 
 
 

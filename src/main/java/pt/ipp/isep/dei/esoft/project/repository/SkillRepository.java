@@ -13,7 +13,7 @@ public class SkillRepository {
         skillList = new ArrayList<>();
     }
 
-    public Optional<Skill> registerSkill(String skillName){
+    public Optional<Skill> registerSkill(String skillName) throws CloneNotSupportedException {
         Optional<Skill> optionalValue = Optional.empty();
         Skill skill = new Skill(skillName);
         if (verifyIfExistAndSave(skill)) {
@@ -22,12 +22,13 @@ public class SkillRepository {
         return optionalValue;
 
     }
-    public boolean verifyIfExistAndSave(Skill skill) {
-        Optional<Skill> newSkill;
+
+    public boolean verifyIfExistAndSave(Skill skill) throws CloneNotSupportedException {
         boolean operationSuccess = false;
         if (validateSkill(skill)) {
-            newSkill = Optional.of(skill.clone());
-            operationSuccess = skillList.add(newSkill.get());
+            operationSuccess = skillList.add(skill);
+        }else {
+            throw new CloneNotSupportedException("This Skill already exists");
         }
         return operationSuccess;
     }

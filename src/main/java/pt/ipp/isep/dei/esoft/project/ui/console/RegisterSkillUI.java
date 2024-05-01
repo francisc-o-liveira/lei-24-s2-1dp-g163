@@ -39,8 +39,12 @@ public class RegisterSkillUI implements Runnable {
         System.out.println("----- Register a Skill -----");
         int option = selectMethodToAddSkill();
         if (option==1){
-            skillName=requestData();
-            submitsData();
+            try {
+                skillName=requestData();
+                submitsData();
+            }catch (CloneNotSupportedException e){
+                System.out.println("Skill Already Exist / Not Supported");
+            }
         }
         else {
             fileName=requestDataFile();
@@ -48,16 +52,19 @@ public class RegisterSkillUI implements Runnable {
                 submitsDataFile();
             } catch (FileNotFoundException e) {
                 System.out.println("File Not Found");
+            }catch (CloneNotSupportedException e){
+                System.out.println("Skill Already Exist / Not Supported");
             }
         }
     }
 
     /**
      * This method submits the data file with skills to loaded to the program
-     * @throws FileNotFoundException if don't find the File
+     * @throws FileNotFoundException don't find the File
+     * @throws CloneNotSupportedException if the skill name already exist
      */
 
-    private void submitsDataFile() throws FileNotFoundException {
+    private void submitsDataFile() throws FileNotFoundException, CloneNotSupportedException {
         boolean value = getController().loadSkillsByFile(fileName);
         if (value) {
             System.out.println("\nSkill's sucessfully loaded!");
@@ -102,49 +109,27 @@ public class RegisterSkillUI implements Runnable {
     /**
      * This method submits the skillName
      */
-    private void submitsData() {
-        boolean value = getController().RegisterSkill(skillName);
-        if (value) {
-            System.out.println("\nSkill successfully registed!");
-        } else {
-            System.out.println("\nSkill not registed!");
-        }
+    private void submitsData() throws CloneNotSupportedException {
+            boolean value = getController().RegisterSkill(skillName);
+            if (value) {
+                System.out.println("\nSkill successfully registed!");
+            } else {
+                System.out.println("\nSkill not registed!");
+            }
     }
 
     /**
      * This method request the data needed to register one skill by her name
      * @return the skill name if it is verified
      */
-
     private String requestData() {
         Scanner scan = new Scanner(System.in);
-        String skillName = null;
-        try {
+        String skillName;
             do{
                 skillName= Utils.readLineFromConsole("\"Please input the Skill Name:\"");
-            }while(!nameVerify(skillName));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+            }while(skillName.isEmpty());
         return skillName;
     }
 
-    /**
-     * This method verify the name for the skill
-     * @param skillName receive the skillName introduced by user on console
-     * @return true if the skill name it is valid to register a new Skill
-     */
 
-    private boolean nameVerify(String skillName) {
-        char[] characters = skillName.toCharArray();
-        if(characters==null){
-            throw new NullPointerException("The Skill Name is empty please introduce name");
-        }
-        for(char c : characters){
-            if(!Character.isLetter(c)){
-                throw new IllegalArgumentException("The Skill Name dont accept Special Characters or Numbers");
-            }
-        }
-        return true;
-    }
 }

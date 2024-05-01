@@ -4,7 +4,7 @@ public class Skill {
     private String skillName;
 
     public Skill(String skillName){
-        this.skillName=skillName;
+        setSkillName(skillName);
     }
 
     public String getSkillName(){
@@ -20,7 +20,7 @@ public class Skill {
             return false;
         }
         Skill otherSkill= (Skill) other;
-        return this.getSkillName()==otherSkill.getSkillName();
+        return this.getSkillName().equals(otherSkill.getSkillName());
     }
 
     public Skill clone() {
@@ -28,7 +28,24 @@ public class Skill {
     }
 
     public void setSkillName(String skillName) {
-        this.skillName = skillName;
+        if(verifySkillName(skillName)){
+            this.skillName = skillName;
+        }else{
+            throw new IllegalArgumentException("Skill name is not valid");
+        }
+    }
+
+    private boolean verifySkillName(String skillName) {
+        boolean value = true;
+        if (skillName==null || skillName.length()==0){
+            value = false;
+        }
+        for (char c : this.skillName.toCharArray()) {
+            if (!Character.isLetter(c)) {
+                value=false;
+            }
+        }
+        return value;
     }
 
     @Override

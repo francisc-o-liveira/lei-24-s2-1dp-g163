@@ -1,6 +1,5 @@
 # US005 - Generate a Team Automatically
 
-
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
@@ -50,12 +49,11 @@ The max size of the team (for instance 4) and the skill needed(example): 4 tree 
 
 ### 1.5 Input and Output Data
 
-**Input Data:**
-
 * Typed data:
     * a max size of the team
     * a min size of the team
-	
+	* a number of collaborators for every skill selected
+  
 * Selected data:
     * a skills set
 
