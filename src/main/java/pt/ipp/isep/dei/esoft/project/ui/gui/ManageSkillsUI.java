@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.ObjectUtils;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 
@@ -50,11 +51,13 @@ public class ManageSkillsUI {
         if (skillName.isEmpty()){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is Empty").show();
             return;
-        } else if(!verifySkillName(skillName)){
-            popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is invalid").show();
-            return;
+        } else {
+            try{
+                ctrl.RegisterSkill(skillName);
+            } catch (NullPointerException | CloneNotSupportedException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is invalid").show();
+            }
         }
-        ctrl.RegisterSkill(skillName);
         introducingSkill.clear();
         ObservableList<Skill> listForTable= FXCollections.observableArrayList(ctrl.getSkillList());
         tableSkills.getItems().clear();

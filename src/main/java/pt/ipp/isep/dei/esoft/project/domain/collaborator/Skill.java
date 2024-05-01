@@ -40,7 +40,7 @@ public class Skill {
         if (skillName==null || skillName.length()==0){
             value = false;
         }
-        for (char c : this.skillName.toCharArray()) {
+        for (char c : skillName.toCharArray()) {
             if (!Character.isLetter(c)) {
                 value=false;
             }

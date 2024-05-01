@@ -55,12 +55,10 @@ public class ManageJobsUI {
         } else {
             try {
                 ctrl.registerJobCategory(jobCategory);
-            }catch (IllegalArgumentException | CloneNotSupportedException e){
-                // IMPLEMENT POP UP
+            }catch (CloneNotSupportedException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, "The Job Category already exists.");
             }
         }
-
-
         introducingJobCategory.clear();
         ObservableList<JobCategory> listForTable= FXCollections.observableArrayList(ctrl.getJobCategoriesList());
         tableJobCategory.getItems().clear();
