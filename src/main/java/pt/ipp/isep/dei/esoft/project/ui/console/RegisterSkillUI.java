@@ -60,7 +60,8 @@ public class RegisterSkillUI implements Runnable {
 
     /**
      * This method submits the data file with skills to loaded to the program
-     * @throws FileNotFoundException if don't find the File
+     * @throws FileNotFoundException don't find the File
+     * @throws CloneNotSupportedException if the skill name already exist
      */
 
     private void submitsDataFile() throws FileNotFoundException, CloneNotSupportedException {
