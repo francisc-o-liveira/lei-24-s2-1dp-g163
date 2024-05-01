@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.collaborator;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
 
@@ -129,13 +130,14 @@ public class RegisterCollaboratorUI implements Runnable{
      * If the collaborator is younger than 18 years old, the user needs to re-introduce the dates
      */
     public void registerDates(){
-            System.out.print("Date of birth (Format: YYYY MM DD): ");
-            birthday.setData(scan.nextInt(), scan.nextInt(), scan.nextInt());
-            System.out.print("Date of admission (Format: YYYY MM DD): ");
-            admissionDate.setData(scan.nextInt(), scan.nextInt(), scan.nextInt());
-            if(!verifyBirthdayAndAdmission(birthday, admissionDate)){
-                throw new IllegalArgumentException("The collaborator cannot be under 18.");
-            }
+        do{
+            String lineDate=Utils.readLineFromConsole("Date of birth (Format: YYYY/MM/DD): ");
+            String[] arrayDate=lineDate.split("/");
+            birthday.setData(Integer.parseInt(arrayDate[0]),Integer.parseInt(arrayDate[1]),Integer.parseInt(arrayDate[2]));
+            String lineDateAd=Utils.readLineFromConsole("Date of admission (Format: YYYY/MM/DD): ");
+            String[] arrayDateAd=lineDateAd.split("/");
+            admissionDate.setData(Integer.parseInt(arrayDateAd[0]),Integer.parseInt(arrayDateAd[1]),Integer.parseInt(arrayDateAd[2]));
+        }while (!verifyBirthdayAndAdmission(birthday, admissionDate));
     }
 
     /**Register the address of collaborator
