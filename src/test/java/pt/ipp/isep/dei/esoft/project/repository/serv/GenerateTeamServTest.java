@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GenerateTeamServTest{
 
     @Test
-    void generateTeam(){
+    void generateTeam() throws CloneNotSupportedException {
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");
@@ -47,7 +47,7 @@ class GenerateTeamServTest{
         assertNotNull(team.get());
     }
     @Test
-    void generateTeam2(){
+    void generateTeam2() throws CloneNotSupportedException {
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");
@@ -78,7 +78,7 @@ class GenerateTeamServTest{
     }
 
     @Test
-    void generateTeam3(){
+    void generateTeam3() throws CloneNotSupportedException {
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");

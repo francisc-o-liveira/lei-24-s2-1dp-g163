@@ -79,7 +79,6 @@ class CollaboratorTest {
 
 
     // COLLABORATOR AC2 verify the docIDNumber
-
     @Test
     void verifyDocTypeIDNumber(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {

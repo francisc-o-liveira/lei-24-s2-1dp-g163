@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.RejectedExecutionException;
@@ -24,7 +25,7 @@ public class Vehicle {
     private static final double TAX_FOR_CLOSE_CHECK=0.05;
 
 
-    public Vehicle(String brand, String model, Type type, int tare, double grossWeight, int currentKm, Date registerDate, Date acquisionDate, int frequencyCheckKm, String plate){
+    public Vehicle(String brand, String model, Type type, int tare, double grossWeight, double currentKm, Date registerDate, Date acquisionDate, double frequencyCheckKm, String plate, Date date, double lastKmCheck){
         setBrand(brand);
         setModel(model);
         setType(type);
@@ -36,7 +37,27 @@ public class Vehicle {
         setFrequencyCheckKm(frequencyCheckKm);
         setStatusType(StatusType.NotUse);
         setPlate(plate);
+        setLastCheckUp(date,lastKmCheck);
     }
+
+    private void setLastCheckUp(Date date, double lastKmCheck) {
+        checkUpList=new ArrayList<>();
+        if (currentKm<10000 && lastKmCheck==0 && date.compareTo(registerDate)==0){
+            CheckUp defaultCheck = new CheckUp(lastKmCheck,date);
+            checkUpList.add(defaultCheck);
+        } else if (currentKm < 10000) {
+            throw new IllegalArgumentException("The last check up need to be default: Fatal Error UI");
+        }else {
+            if (lastKmCheck<currentKm && lastKmCheck>0 && date.compareTo(registerDate)>0){
+                CheckUp lastCheck = new CheckUp(lastKmCheck,date);
+                checkUpList.add(lastCheck);
+            }else {
+                throw new IllegalArgumentException("The last check up is incorrect to register vehicle");
+            }
+
+        }
+    }
+
 
     private boolean verifyPlate(String plate) {
         //IMPLEMENTATION OF VERIFY PLATE NEED TO BE DONE IN WHERE
@@ -199,7 +220,7 @@ public class Vehicle {
     }
 
     public void setAcquisitionDate(Date acquisitionDate) {
-        if (acquisitionDate.getYear()<1900) {
+        if (acquisitionDate.getYear()>1900) {
             this.acquisitionDate = acquisitionDate;
         }else {
             throw new IllegalArgumentException("Acquisition date cannot be less than 1900");
@@ -208,8 +229,10 @@ public class Vehicle {
     }
 
     public void setGrossWeight(double grossWeight) {
-        if (grossWeight>0){
+        if (grossWeight>tare){
             this.grossWeight = grossWeight;
+        }else {
+            throw new IllegalArgumentException("Gross Weight cannot be less than tare");
         }
     }
 

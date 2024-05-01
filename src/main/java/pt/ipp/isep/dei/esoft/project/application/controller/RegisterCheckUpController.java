@@ -5,14 +5,11 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * This class have the reponsability to Register a Check Up (Controller)
+ * This class have the responsibility to Register a Check-Up (Controller)
  */
 public class RegisterCheckUpController {
     private final VehicleRepository vehicleRepository;
@@ -43,7 +40,7 @@ public class RegisterCheckUpController {
      * @return a Optional List of all the check-up's made by the vehicle selected to add a new check-up if have been approved
      * or return null if fail
      */
-    public Optional<Object> addCheckUp(Vehicle vehicle, Date date, int currentKms) {
+    public Optional<Object> addCheckUp(Vehicle vehicle, Date date, double currentKms) {
         if (vehicleRepository.addCheckUp(vehicle, date, currentKms)) {
             return Optional.of(vehicleRepository.getCheckUpDetailsList(vehicle));
         } else {

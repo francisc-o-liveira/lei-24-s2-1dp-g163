@@ -20,7 +20,7 @@ class TeamRepositoryTest {
 
 
     @Test
-    void addTeamAndGetTeamListTest(){
+    void addTeamAndGetTeamListTest() throws CloneNotSupportedException {
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");

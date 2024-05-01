@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.Optional;
@@ -18,6 +19,8 @@ public class RegisterVehicleUI  implements Runnable{
     private Date registerDate;
     private Date acquisitionDate;
     private double checkupFrequency;
+    private double lastCheckUpKm;
+    private Date lastCheckUpDate;
 
 
     /**Controller*/
@@ -39,7 +42,7 @@ public class RegisterVehicleUI  implements Runnable{
     }
 
     private void submitData() {
-        Optional<Vehicle> vehicle = getController().registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type);
+        Optional<Vehicle> vehicle = getController().registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type,lastCheckUpDate,lastCheckUpKm);
         if (vehicle.isPresent()) {
             System.out.println("\nVehicle successfully created!");
         } else {
@@ -57,6 +60,48 @@ public class RegisterVehicleUI  implements Runnable{
         this.grossWeight=registerGrossWeigth();
         this.tare=registerTare();
         this.plate=registerPlate();  // Validation go to the Domain Vehicle
+        if (currentKM>10000){
+            this.lastCheckUpKm=registerLastCheckUpKm();
+            this.lastCheckUpDate=registerLastCheckDate();
+        }else {
+            defaultCheckUp();
+        }
+    }
+
+    private Date registerLastCheckDate() {
+        Date lastCheckUpDate = null;
+        String lastCheckUpDateString;
+        boolean validLastCheck=false;
+        while (!validLastCheck){
+            lastCheckUpDateString= Utils.readLineFromConsole("Introduce last check date: DD/MM/YYYY");
+            String[]dateConstructor = lastCheckUpDateString.split("/");
+            lastCheckUpDate=new Date(Integer.parseInt(dateConstructor[2]),Integer.parseInt(dateConstructor[1]),Integer.parseInt(dateConstructor[0]));
+            if (lastCheckUpDate.compareTo(registerDate)>0){
+                validLastCheck=true;
+            }else {
+                System.out.println("\nInvalid Last Check Up Km!");
+            }
+        }
+        return lastCheckUpDate;
+    }
+
+    private void defaultCheckUp() {
+        this.lastCheckUpDate=this.registerDate;
+        this.lastCheckUpKm=0;
+    }
+
+    private double registerLastCheckUpKm() {
+        double lastCheckKM = 0;
+        boolean validLastCheck=false;
+        while (!validLastCheck){
+            lastCheckKM= Utils.readDoubleFromConsole("Introduce Last Check Up Km: ");
+            if (lastCheckKM<currentKM && lastCheckKM>0){
+                validLastCheck=true;
+            }else {
+                System.out.println("\nInvalid Last Check Up Km!");
+            }
+        }
+        return lastCheckKM;
     }
 
     private String registerPlate() {

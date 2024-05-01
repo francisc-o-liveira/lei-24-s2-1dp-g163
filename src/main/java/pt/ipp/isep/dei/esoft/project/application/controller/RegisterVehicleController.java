@@ -28,8 +28,8 @@ public class RegisterVehicleController {
         return vehicleRepository.getVehicleTypeList();
     }
 
-    public Optional<Vehicle> registerVehicle(String brand, String model, Date acquisitionDate, Date registerDate, int currentKM, int checkupFrequency, double grossWeight, int tare, String plate, Vehicle.Type type) {
-        return vehicleRepository.registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type);
+    public Optional<Vehicle> registerVehicle(String brand, String model, Date acquisitionDate, Date registerDate, double currentKM, double checkupFrequency, double grossWeight, int tare, String plate, Vehicle.Type type, Date lastCheckUpDate, double lastCheckUpKm) {
+        return vehicleRepository.registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type,lastCheckUpDate,lastCheckUpKm);
     }
 
     public List<Vehicle> getVehicleList() {
