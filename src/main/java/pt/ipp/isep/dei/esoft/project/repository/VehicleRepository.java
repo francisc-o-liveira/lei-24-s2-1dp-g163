@@ -27,13 +27,13 @@ public class VehicleRepository{
 
     public void activateVehicle(Vehicle vehicle){
         if(vehicle.getStatus()==NotUse){
-            vehicle.setStatus(Use);
+            vehicle.setStatusType(Use);
         }
     }
 
     public void desactivateVehicle(Vehicle vehicle){
         if(vehicle.getStatus()==Use){
-            vehicle.setStatus(NotUse);
+            vehicle.setStatusType(NotUse);
         }
     }
 
