@@ -18,7 +18,7 @@ public class AssignSkillsUI implements Runnable {
     private Skill skillName;
 
     /**The controller */
-    public AssignSkillsController ctrl;
+    private AssignSkillsController ctrl;
 
     /** Initializes the controller
      *
