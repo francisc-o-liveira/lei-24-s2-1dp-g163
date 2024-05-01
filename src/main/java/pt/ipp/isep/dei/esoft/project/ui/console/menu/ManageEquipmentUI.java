@@ -1,9 +1,6 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.ManageCollaboratorsUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.ManageTeamsUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.ManageVehiclesUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.MenuItem;
+import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;

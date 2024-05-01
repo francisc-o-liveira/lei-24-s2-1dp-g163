@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.system;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.OrganizationController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;

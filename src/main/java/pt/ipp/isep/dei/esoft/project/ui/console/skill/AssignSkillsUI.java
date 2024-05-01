@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.skill;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;

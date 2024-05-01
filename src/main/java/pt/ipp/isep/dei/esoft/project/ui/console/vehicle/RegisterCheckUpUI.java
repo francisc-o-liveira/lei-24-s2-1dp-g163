@@ -1,8 +1,6 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCheckUpController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 

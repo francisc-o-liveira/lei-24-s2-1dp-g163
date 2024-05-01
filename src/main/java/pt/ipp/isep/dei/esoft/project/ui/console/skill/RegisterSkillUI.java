@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.skill;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;

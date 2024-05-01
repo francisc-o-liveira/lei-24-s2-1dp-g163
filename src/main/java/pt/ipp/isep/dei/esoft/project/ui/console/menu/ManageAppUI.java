@@ -1,6 +1,7 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.menu.MenuItem;
+import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.system.RegisterManageUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;

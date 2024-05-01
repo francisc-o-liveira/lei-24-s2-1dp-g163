@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.console;
+package pt.ipp.isep.dei.esoft.project.ui.console.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.CheckUpListController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;

@@ -3,6 +3,10 @@ package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.CheckUpListUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterCheckUpUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterVehicleUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.ShowVehicleListUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.ArrayList;
