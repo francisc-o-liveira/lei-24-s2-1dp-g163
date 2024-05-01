@@ -13,7 +13,6 @@ class JobCategoryTest {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             new JobCategory("2313@SkillTest");
         });
-
     }
 
     // AC3 - To register a job is mandatory input the job name.
