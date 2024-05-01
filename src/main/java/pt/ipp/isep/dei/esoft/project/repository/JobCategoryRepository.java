@@ -20,7 +20,7 @@ public class JobCategoryRepository {
      * @param jobCategoryName represent the name introduced by the user
      * @return the new job category if there are saved on the jobCategories List and successful been created.
      */
-    public Optional<JobCategory> registerJobCategory(String jobCategoryName){
+    public Optional<JobCategory> registerJobCategory(String jobCategoryName) throws CloneNotSupportedException {
         Optional<JobCategory> newJobCategory =Optional.empty();
         JobCategory jobCategory = new JobCategory(jobCategoryName);
         newJobCategory=verifyJobCategoryExistAndSave(jobCategory);
@@ -34,7 +34,7 @@ public class JobCategoryRepository {
      * @return the JobCategory if save them on the List
      */
 
-    private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) {
+    private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) throws CloneNotSupportedException {
        Optional<JobCategory> newJobCategory = Optional.empty();
        boolean operationSucess = false;
         if (!jobCategories.contains(jobCategory)){
@@ -43,6 +43,7 @@ public class JobCategoryRepository {
         }
         if (!operationSucess){
             newJobCategory=Optional.empty();
+            throw new CloneNotSupportedException("This Job Category already Exist");
         }
         return newJobCategory;
     }

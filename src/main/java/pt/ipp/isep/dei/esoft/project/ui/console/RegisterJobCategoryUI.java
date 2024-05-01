@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterJobCategoryController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.Optional;
 import java.util.Scanner;
@@ -21,12 +22,17 @@ public class RegisterJobCategoryUI implements Runnable {
     }
 
     public void run(){
-        System.out.println("----- Register a Job Category -----");
-        jobCategoryName=requestData();
-        submitsData();
+        try {
+            System.out.println("----- Register a Job Category -----");
+            jobCategoryName=requestData();
+            submitsData();
+        }catch (IllegalArgumentException | CloneNotSupportedException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
-    private void submitsData() {
+    private void submitsData() throws CloneNotSupportedException {
         boolean value = getController().registerJobCategory(jobCategoryName);
         if (value) {
             System.out.println("\nJobCategory successfully registed!");
@@ -37,25 +43,11 @@ public class RegisterJobCategoryUI implements Runnable {
 
     private String requestData() {
         Scanner scan = new Scanner(System.in);
-        String jobName = null;
+        String jobName;
         do{
-            System.out.print("Please input the Job Category Name:");
-            jobName=scan.nextLine();
-        }while(!nameVerify(jobName));
+            jobName= Utils.readLineFromConsole("Please input the Job Category Name:");
+        }while(jobName.isEmpty());
         return jobName;
-    }
-
-    private boolean nameVerify(String jobName) {
-        char[] characters = jobName.toCharArray();
-        if (characters==null){
-            return false;
-        }
-        for(char c : characters){
-            if (!Character.isLetter(c)){
-                return false;
-            }
-        }
-        return true;
     }
 
 }

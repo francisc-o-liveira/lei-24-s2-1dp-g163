@@ -56,7 +56,12 @@ public class ManageJobsUI {
             popUpOfVerifications(Alert.AlertType.ERROR, "The Job Category is invalid").show();
             return;
         }
-        ctrl.registerJobCategory(jobCategory);
+        try {
+            ctrl.registerJobCategory(jobCategory);
+        }catch (IllegalArgumentException | CloneNotSupportedException e){
+            // IMPLEMENT POP UP
+        }
+
         introducingJobCategory.clear();
         ObservableList<JobCategory> listForTable= FXCollections.observableArrayList(ctrl.getJobCategoriesList());
         tableJobCategory.getItems().clear();

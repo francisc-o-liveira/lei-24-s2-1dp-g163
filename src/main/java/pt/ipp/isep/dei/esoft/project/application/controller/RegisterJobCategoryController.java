@@ -40,7 +40,7 @@ public class RegisterJobCategoryController {
      * @param jobName represent the Job Category name
      * @return true if jobCategory is created
      */
-    public boolean registerJobCategory(String jobName){
+    public boolean registerJobCategory(String jobName) throws CloneNotSupportedException {
         Optional<JobCategory> jobCategory= jobCategoryRepository.registerJobCategory(jobName);
         if(jobCategory.isPresent()){
             return true;

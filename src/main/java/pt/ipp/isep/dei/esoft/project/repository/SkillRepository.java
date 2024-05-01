@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class SkillRepository {
-    public List<Skill> skillList;
+        public List<Skill> skillList;
 
     public SkillRepository(){
         skillList = new ArrayList<>();
@@ -23,7 +23,7 @@ public class SkillRepository {
 
     }
 
-    public boolean verifyIfExistAndSave(Skill skill) throws CloneNotSupportedException {
+    private boolean verifyIfExistAndSave(Skill skill) throws CloneNotSupportedException {
         boolean operationSuccess = false;
         if (validateSkill(skill)) {
             operationSuccess = skillList.add(skill);

@@ -15,7 +15,7 @@ public class JobCategory {
      * @param name
      */
     public JobCategory(String name){
-        this.name=name;
+       setName(name);
     }
 
     /**
@@ -44,6 +44,22 @@ public class JobCategory {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (verifyJobName(name)){
+            this.name = name;
+        }else{
+            throw new IllegalArgumentException("Invalid Job Category name");
+        }
+    }
+
+    private boolean verifyJobName(String name) {
+        if (name.isEmpty()){
+            return false;
+        }
+        for(char c : name.toCharArray()){
+            if(!Character.isLetter(c)){
+                return false;
+            }
+        }
+        return true;
     }
 }
