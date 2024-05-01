@@ -4,16 +4,42 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
+import pt.ipp.isep.dei.esoft.project.repository.serv.GenerateTeamServ;
 
 import java.util.List;
 import java.util.Optional;
 
 public class GenerateTeamController{
     public TeamRepository teamRepository;
+    public GenerateTeamServ serv;
     public CollaboratorRepository collaboratorRepository;
     public SkillRepository skillRepository;
+
+    public GenerateTeamController() {
+        getDataNeededToGenereta();
+    }
+
+    private void getDataNeededToGenereta() {
+        if (skillRepository== null) {
+            Repositories repositories = Repositories.getInstance();
+            // Getting the JobCategory Repository
+            skillRepository = repositories.getSkillRepository();
+        }
+        if (teamRepository== null) {
+            Repositories repositories = Repositories.getInstance();
+            // Getting the JobCategory Repository
+            teamRepository = repositories.getTeamRepository();
+        }
+        if (collaboratorRepository == null) {
+            Repositories repositories = Repositories.getInstance();
+            // Getting the Collaborator Repository
+            collaboratorRepository = repositories.getCollaboratorRepository();
+        }
+        serv = new GenerateTeamServ();
+    }
 
     /**
      * Method to generate a team according to the List of Skills given
@@ -21,7 +47,7 @@ public class GenerateTeamController{
      */
     public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill){
             List<Collaborator> collaboratorsForTeam=getCollaboratorsNotActiveBySkills(skillsSelected);
-            return teamRepository.generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,numberCollabForSkill,collaboratorsForTeam);
+            return serv.generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,numberCollabForSkill,collaboratorsForTeam);
     }
 
     /**Gets the list of not active collaborators by the list of Skills needed

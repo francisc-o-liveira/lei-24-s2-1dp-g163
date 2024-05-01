@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -23,7 +24,7 @@ public class Collaborator{
     private List<Skill> skills;
     public enum StatusType {Active,NotActive}
     private StatusType statusType;
-    private List<Skill> SKILLS_BY_OMISSION=null;
+    private List<Skill> SKILLS_BY_OMISSION=new ArrayList<>();
 
     public String getName() {
         return name;
@@ -194,7 +195,7 @@ public class Collaborator{
 
 
     public void setSKILLS_BY_OMISSION(List<Skill> SKILLS_BY_OMISSION) {
-        this.SKILLS_BY_OMISSION = SKILLS_BY_OMISSION;
+        this.skills = SKILLS_BY_OMISSION;
     }
 
 

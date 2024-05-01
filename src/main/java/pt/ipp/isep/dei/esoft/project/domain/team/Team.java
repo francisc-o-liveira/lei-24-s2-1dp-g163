@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain.team;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
@@ -12,6 +13,7 @@ public class Team {
     private List<Skill> skillsSelected;
 
     public Team(int maxSize, int minSize, List<Skill> skillsSelected){
+        collaboratorsTeam = new ArrayList<Collaborator>();
         this.maxSizeTeam=maxSize;
         this.minSizeTeam=minSize;
         this.skillsSelected=skillsSelected;
@@ -32,7 +34,7 @@ public class Team {
     }
 
     public boolean addCollaborator(Collaborator collab){
-        if(this.maxSizeTeam<collaboratorsTeam.size()){
+        if(this.maxSizeTeam>collaboratorsTeam.size()){
             collaboratorsTeam.add(collab);
             return true;
         }
@@ -62,6 +64,10 @@ public class Team {
                 "Max Size Team: %d\n" +
                 "Min Size Team: %d\n" +
                 "Skills Selected: %s\n", collaboratorsTeam, maxSizeTeam, minSizeTeam, skillsSelected);
+    }
+
+    public int getSize(){
+        return collaboratorsTeam.size();
     }
 
     /*public List<Collaborator> getTeamListBySkills(Skill skillsSelected){
