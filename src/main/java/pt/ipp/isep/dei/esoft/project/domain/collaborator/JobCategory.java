@@ -40,7 +40,7 @@ public class JobCategory {
      */
     @Override
     public String toString() {
-        return String.format("Job Category: %s\n", name);
+        return String.format("%s\n", name);
     }
 
     /** Sets the name for Job Category after verifying it
