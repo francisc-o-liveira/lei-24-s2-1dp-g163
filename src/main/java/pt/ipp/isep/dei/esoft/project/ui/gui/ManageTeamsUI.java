@@ -42,8 +42,17 @@ public class ManageTeamsUI {
         Team selectedTeam= tableViewTeams.getSelectionModel().getSelectedItem();
 
         if(selectedTeam != null){
-            tableViewTeams.getItems().remove(selectedTeam);
-            //ctrl.removeFromList(selectedTeam); -- method to be added in controller
+            Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+
+            popUp.setHeaderText("Removing Team");
+            popUp.setContentText("Do you want to remove this team?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                tableViewTeams.getItems().remove(selectedTeam);
+                ctrl.removeTeam(selectedTeam);
+            }
         }
     }
 
