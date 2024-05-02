@@ -44,20 +44,25 @@ public class GSManagerUI {
 
     @FXML
     public void manageVehicles(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneManage_Vehicles.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewVehicles.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageVehiclesUI ctrlUI=fxmlLoader.getController();
+        ctrlUI.setTableVehicles();
     }
 
     @FXML
     public void manageEquipment(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneManage_Equipment.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewEquipment.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        /*ManageEquipment ctrlUI=fxmlLoader.getController();
+        ctrlUI.setTableEquipment();
+         */
     }
 
     @FXML
@@ -71,31 +76,34 @@ public class GSManagerUI {
 
     @FXML
     public void manageSkills(ActionEvent event)throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageSkills.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewSkill.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageSkillsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setSkillTable();
     }
 
     @FXML
     public void manageCollaborators(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageCollaborators.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewRegisterCollaborator.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageCollaboratorsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setTableCollaborators();
     }
 
     @FXML
     public void manageTeams(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_GenerateTeams.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewManageTeams.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void reloadPage(ActionEvent event) {
+        ManageTeamsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setTableTeams();
     }
 }
