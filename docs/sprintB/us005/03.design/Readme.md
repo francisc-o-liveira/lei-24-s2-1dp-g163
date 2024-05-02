@@ -11,10 +11,6 @@ _**Note that SSD - Alternative One is adopted.**_
 | Step 1  		     | 	... interacting with the actor?                           | GenerateTeamUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
 | 			  		        | 	... coordinating the US?                                  | GenerateTeamController | Controller:  Pure Fabrication(Rule 3)                                                                         |
 | 			  		        | ... instantiating a new Team?                              | TeamRepository         | Creator (Rule 1): in the DM Organization has a Task.                                                          |
-| 			  	         |                                                            |                        |                                                                                                               |
-| 			  		        | 							                                                    |                        |                                                                                                               |
-| 			  		        | 							                                                    |                        |                                                                                                               |
-| 		             | 							                                                    |                        |                                                                                                               |
 | Step 2  		     | 	...saving the inputted data?                              | Team                   | IE: object created in step 1 has its own data.                                                                |
 | Step 3  		     | 	...knowing the Skills to show?                            | Repositories           | IE: Skills are defined by the HRMs. Information Expert(Rule 2)                                                |
 | Step 4  		     | 	... saving the selected skill?                            | Team                   | IE: The team have a SkillSet.                                                                                 |
@@ -32,7 +28,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 * TeamRepository
 * Team
 
-Other software classes (i.e Information Expert) identified:
+Other software classes (i.e. Information Expert) identified:
 
 * Repositories
 * SkillRepository
