@@ -140,9 +140,9 @@ public class ManageSkillsUI {
         FXMLLoader fxmlLoader ;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.getDescription().equals(ctrlAuth.ROLE_HRM)){
+            if (role.equals(ctrlAuth.ROLE_HRM)){
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-            } else if (role.getDescription().equals(ctrlAuth.ROLE_VFM)) {
+            } else if (role.equals(ctrlAuth.ROLE_HRM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
             }else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));

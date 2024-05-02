@@ -162,8 +162,5 @@ public class ManageJobsUI {
         }catch (ArrayIndexOutOfBoundsException e){
             popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
         }
-
     }
-
-
 }

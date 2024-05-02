@@ -8,22 +8,22 @@ participant ":Organization" as ORG
 participant ":Team" as Team
 autonumber 17
 
--> CTRL: generateTeam(maxSizeTeam,minSizeTeam,skillSet)(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee )
+-> CTRL: generateTeam(maxSizeTeam,minSizeTeam,skillSet,numberCollabForSkill)
 
 autonumber 17.1
-activate ORG
+activate CTRL
     group Generate Team
 
 
 
-                   CTRL -> ORG:generateTeam(maxSizeTeam,minSizeTeam,skillSet)
+                   CTRL -> ORG:generateTeam(maxSizeTeam,minSizeTeam,skillSet,numberCollabForSkill)
                    activate ORG
 
                        ORG -> Team**: create()
 
                        loop Until you have the full team
 
-                       ORG -> ORG: validateCollaborator(collaboratorNotActivateList, skillSet)
+                       ORG -> ORG: validateCollaborator(collaboratorNotActivateList, skillSet,numberCollabForSkill)
                        activate ORG
 
                            ORG -> Team: addCollaborator(collaborator)
