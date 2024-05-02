@@ -85,15 +85,12 @@
                                  <children>
                                     <TableView layoutX="47.0" layoutY="40.0" prefHeight="398.0" prefWidth="770.0">
                                       <columns>
-                                        <TableColumn prefWidth="67.78375244140625" text="Brand" />
-                                        <TableColumn prefWidth="71.6756591796875" text="Model" />
-                                          <TableColumn prefWidth="75.17562866210938" text="Type" />
-                                          <TableColumn prefWidth="72.77023315429688" text="Tare" />
-                                          <TableColumn prefWidth="96.28375244140625" text="Gross Weight" />
-                                          <TableColumn prefWidth="69.77020263671875" text="Current km" />
-                                          <TableColumn prefWidth="90.22979736328125" text="Register Date" />
-                                          <TableColumn prefWidth="98.55413818359375" text="Acquisition Date" />
-                                          <TableColumn prefWidth="129.67584228515625" text="Check-up Frequency" />
+                                        <TableColumn prefWidth="116.0" text="Brand" />
+                                        <TableColumn prefWidth="120.0" text="Model" />
+                                          <TableColumn prefWidth="134.5" text="Type" />
+                                          <TableColumn prefWidth="136.0" text="Current km" />
+                                          <TableColumn prefWidth="139.0" text="Check-up Frequency" />
+                                          <TableColumn prefWidth="123.5" text="Maintenance" />
                                       </columns>
                                     </TableView>
                                     <Button layoutX="713.0" layoutY="458.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: FF9688;" text="Remove">
