@@ -1,37 +1,42 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
-/** Domain class for the Skill Object */
+/**
+ * Domain class representing a Skill object.
+ */
 public class Skill {
 
-    /** Name of the Skill */
+    /** Name of the skill */
     private String skillName;
 
-    /** Constructor method for Skill
+    /**
+     * Constructs a Skill object with the specified name.
      *
-     * @param skillName - name for the skill
+     * @param skillName The name of the skill.
      */
     public Skill(String skillName){
         setSkillName(skillName);
     }
 
-    /** Gets the name of the Skill
+    /**
+     * Retrieves the name of the skill.
      *
-     * @return name of Skill
+     * @return The name of the skill.
      */
-
     public String getSkillName(){
         return this.skillName;
     }
-    /** Method to compare if two Skills are the same
+
+    /**
+     * Compares if two skills are equal.
      *
-     * Two Skills are equal if both have the same name
+     * Two skills are considered equal if they have the same name.
      *
-     * @param other - Job Category to be compared along with other
-     * @return true if they are the same
+     * @param other The object to compare with.
+     * @return True if the skills are equal, otherwise false.
      */
     @Override
     public boolean equals(Object other){
-        if(this==other){
+        if(this == other){
             return true;
         }
         if(other == null || this.getClass() != other.getClass()){
@@ -41,10 +46,21 @@ public class Skill {
         return this.getSkillName().equals(otherSkill.getSkillName());
     }
 
+    /**
+     * Clones the current Skill object.
+     *
+     * @return A new Skill object with the same name as the current skill.
+     */
     public Skill clone() {
         return new Skill(this.skillName);
     }
 
+    /**
+     * Sets the name of the skill.
+     *
+     * @param skillName The name of the skill to set.
+     * @throws IllegalArgumentException if the provided skill name is not valid.
+     */
     public void setSkillName(String skillName) {
         if(verifySkillName(skillName)){
             this.skillName = skillName;
@@ -55,17 +71,22 @@ public class Skill {
 
     private boolean verifySkillName(String skillName) {
         boolean value = true;
-        if (skillName==null || skillName.length()==0){
+        if (skillName == null || skillName.length() == 0){
             value = false;
         }
         for (char c : skillName.toCharArray()) {
             if (!Character.isLetter(c)) {
-                value=false;
+                value = false;
             }
         }
         return value;
     }
 
+    /**
+     * Returns a string representation of the skill.
+     *
+     * @return A string containing the name of the skill.
+     */
     @Override
     public String toString(){
         return String.format("Skill: %s\n ", skillName);
