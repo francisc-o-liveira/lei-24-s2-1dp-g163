@@ -80,13 +80,12 @@ public class HRManagerUI {
 
     @FXML
     public void manageTeams(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewTeams.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewManageTeams.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-        /*ManageTeamsUI ctrlUI = fxmlLoader.getController();
+        ManageTeamsUI ctrlUI = fxmlLoader.getController();
         ctrlUI.setTableTeams();
-         */
     }
 }
