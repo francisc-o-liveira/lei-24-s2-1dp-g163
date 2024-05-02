@@ -106,15 +106,6 @@ public class ManageSkillsUI {
         introducingSkill.setText(editSkill);
     }
 
-    private boolean verifySkillName(String skillName) {
-        char[] testSkill = skillName.trim().toCharArray();
-        for(char x : testSkill){
-            if(!Character.isLetter(x)){
-                return false;
-            }
-        }
-        return true;
-    }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
         Alert alerta = new Alert(alertType);
