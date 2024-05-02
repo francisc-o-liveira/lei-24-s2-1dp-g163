@@ -18,7 +18,7 @@ class VehicleTest {
     @Test
     void registerCheckUp() {
         Vehicle v = new Vehicle("VW","Golf", Vehicle.Type.LigeiroPassageiros,1200,1500,150000,new Date(2005,10,1),new Date(2010,12,3),10000,"15-RD-LR",new Date(2010,10,1),100000);
-        Optional<CheckUp> operation =v.registerCheckUp(155555,new Date(2024,4,29), mainetanceKm);
+        Optional<CheckUp> operation =v.registerCheckUp(155555,new Date(2024,4,29), 10000);
         assertTrue(operation.isPresent());
     }
 }
