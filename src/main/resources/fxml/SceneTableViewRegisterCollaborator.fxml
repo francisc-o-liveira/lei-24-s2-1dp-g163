@@ -82,7 +82,6 @@
                                  <children>
                                     <TableView fx:id="tableCollaborators" editable="true" layoutX="19.0" layoutY="68.0" prefHeight="220.0" prefWidth="824.0">
                                       <columns>
-                                        <TableColumn fx:id="columnSelect" prefWidth="39.0" text="select" />
                                           <TableColumn fx:id="columnIDNumber" prefWidth="112.39999389648438" text="ID Number" />
                                           <TableColumn fx:id="columnDocType" prefWidth="106.0" text="Type of ID" />
                                           <TableColumn fx:id="columnName" minWidth="0.0" prefWidth="236.5999755859375" text="Name" />
@@ -182,7 +181,7 @@
                                  </font></Button>
                               <DatePicker fx:id="dateAdmission" layoutX="126.0" layoutY="411.0" prefHeight="26.0" prefWidth="170.0" />
                               <ComboBox fx:id="docType" layoutX="453.0" layoutY="449.0" prefHeight="26.0" prefWidth="161.0" />
-                              <ComboBox fx:id="selectedJobCategory" layoutX="684.0" layoutY="333.0" prefWidth="150.0" />
+                              <ComboBox fx:id="selectedjobCategory" layoutX="684.0" layoutY="333.0" prefWidth="150.0" />
                               <Label layoutX="615.0" layoutY="337.0" text="Job Category">
                                  <font>
                                     <Font name="Tahoma" size="12.0" />

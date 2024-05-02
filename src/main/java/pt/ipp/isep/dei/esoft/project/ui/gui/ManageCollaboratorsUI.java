@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -97,17 +98,26 @@ public class ManageCollaboratorsUI {
         String phone=phoneNumber.getText();
 
         if(nameCollab.isEmpty() || address.isEmpty() || addresszipcode.isEmpty() || addresscity.isEmpty() || e_mail.isEmpty() || phone.isEmpty()){
-            popUpOfVerifications(Alert.AlertType.ERROR, "The Collaborator is empty");
+            popUpOfVerifications(Alert.AlertType.ERROR, "The Collaborator is empty").show();
         } else {
             try {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
                 popUp();
             } catch (CloneNotSupportedException e){
-                popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.");
+                popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
             }catch (IllegalArgumentException e){
-                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage());
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
+        name.clear();
+        addressZipCode.clear();
+        addressStreet.clear();
+        addressCity.clear();
+        email.clear();
+        phoneNumber.clear();
+        ObservableList<Collaborator> listForTable= FXCollections.observableArrayList(ctrl.getCollaboratorList());
+        tableCollaborators.getItems().clear();
+        tableCollaborators.setItems(listForTable);
     }
 
     @FXML
@@ -200,10 +210,8 @@ public class ManageCollaboratorsUI {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnIDNumber.setCellValueFactory(new PropertyValueFactory<>("docIDNumber"));
         columnDocType.setCellValueFactory(new PropertyValueFactory<>("docType"));
-        columnJobCategory.setCellValueFactory(new PropertyValueFactory<>("jobCategory"));
+        columnJobCategory.setCellValueFactory(new PropertyValueFactory<>("JobCategory"));
 
-        columnSelect.setCellValueFactory(new PropertyValueFactory<>("selected"));
-        columnSelect.setCellFactory(CheckBoxTableCell.forTableColumn(columnSelect));
         columnButtonsDetails.setCellFactory(new Callback<
                 TableColumn<Collaborator, Void>, TableCell<Collaborator, Void>>() {
             @Override
