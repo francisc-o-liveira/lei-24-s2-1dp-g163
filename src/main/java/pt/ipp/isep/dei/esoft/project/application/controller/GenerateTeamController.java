@@ -8,6 +8,7 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 import pt.ipp.isep.dei.esoft.project.repository.serv.GenerateTeamServ;
+import pt.ipp.isep.dei.esoft.project.repository.serv.GenerateTeamServClass;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class GenerateTeamController{
     /** Repository of Skills */
     private SkillRepository skillRepository;
 
-    private GenerateTeamServ serv;
+    private GenerateTeamServClass serv;
 
     /** Initializes the controller */
     public GenerateTeamController() {
@@ -48,7 +49,7 @@ public class GenerateTeamController{
             // Getting the Collaborator Repository
             collaboratorRepository = repositories.getCollaboratorRepository();
         }
-        serv = new GenerateTeamServ();
+        serv = new GenerateTeamServClass();
     }
 
     /**
@@ -58,6 +59,7 @@ public class GenerateTeamController{
      */
     public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill){
             List<Collaborator> collaboratorsForTeam=getCollaboratorsNotActiveBySkills(skillsSelected);
+
             return serv.generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,numberCollabForSkill,collaboratorsForTeam);
     }
 

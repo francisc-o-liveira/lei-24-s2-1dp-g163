@@ -42,7 +42,7 @@ class GenerateTeamServTest{
         collaboratorsForTeam.add(collab1);
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
-        GenerateTeamServ serv = new GenerateTeamServ();
+        GenerateTeamServClass serv = new GenerateTeamServClass();
         Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
         assertNotNull(team.get());
     }
@@ -72,7 +72,7 @@ class GenerateTeamServTest{
         collaboratorsForTeam.add(collab1);
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
-        GenerateTeamServ serv = new GenerateTeamServ();
+        GenerateTeamServClass serv = new GenerateTeamServClass();
         Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
         assertNotNull(team.get());
     }
@@ -103,7 +103,7 @@ class GenerateTeamServTest{
         collaboratorsForTeam.add(collab1);
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
-        GenerateTeamServ serv = new GenerateTeamServ();
+        GenerateTeamServClass serv = new GenerateTeamServClass();
         Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
         assertNotNull(team.get());
     }
