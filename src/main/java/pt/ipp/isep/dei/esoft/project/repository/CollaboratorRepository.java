@@ -50,11 +50,10 @@ public class CollaboratorRepository {
      * @return Optional of Collaborator if the Collaborator has been successfully created
      */
 
-    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, String phoneNumber, DocType.Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException{
-        Optional<Collaborator> newCollab;
+    public Optional<Collaborator> createCollaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String email, String phoneNumber, DocType.Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException {
+        Optional<Collaborator> newCollab = Optional.empty();
         Collaborator collab = new Collaborator(name,birthday,admissionDate,address,addressZipCode,addressCity,phoneNumber,email,docType,docIDNumber,jobCategory);
         newCollab = verifyCollaboratorExistAndSave(collab);
-        addCollaborator(collab);
         return newCollab;
     }
 
@@ -73,7 +72,7 @@ public class CollaboratorRepository {
             newCollab=Optional.of(collab);
         }
         if (!operationSucess){
-            newCollab=Optional.empty();
+            throw new CloneNotSupportedException();
         }
         return newCollab;
     }

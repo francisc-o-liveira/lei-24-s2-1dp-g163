@@ -31,6 +31,7 @@ public class RegisterCollaboratorUI implements Runnable{
     
     /**Controller*/
     public RegisterCollaboratorController ctrl;
+
     public RegisterCollaboratorUI() {
         ctrl= new RegisterCollaboratorController();
     }
@@ -40,16 +41,17 @@ public class RegisterCollaboratorUI implements Runnable{
     }
 
     public void run(){
-        try{
+        try {
             System.out.print("--------- Register a Collaborator ---------\n");
             jobCategory=displayAndSelectJobCategory();
             docType=displayAndSelectDocType();
             docIDNumber=registerDocIDNumber();
             requestData();
             submitData();
-        } catch (CloneNotSupportedException e){
+        }catch (IllegalArgumentException | CloneNotSupportedException e){
             System.out.println(e.getMessage());
         }
+
     }
 
     private int registerDocIDNumber() {
