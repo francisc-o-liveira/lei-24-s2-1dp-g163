@@ -62,6 +62,6 @@ public class RegisterJobCategoryController {
      * @param jobCategory to be removed
      */
     public void removeJobCategory(JobCategory jobCategory){
-        getJobCategoriesList().remove(jobCategory);
+        jobCategoryRepository.removeJobCategory(jobCategory);
     }
 }

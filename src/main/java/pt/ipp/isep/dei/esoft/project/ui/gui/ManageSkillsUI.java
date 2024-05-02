@@ -56,7 +56,7 @@ public class ManageSkillsUI {
                 ctrl.RegisterSkill(skillName);
             } catch (NullPointerException | CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is invalid").show();
-            }catch (IllegalArgumentException e){
+            } catch (RuntimeException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
