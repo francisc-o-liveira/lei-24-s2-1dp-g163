@@ -33,10 +33,11 @@ public class ManageJobsUI {
 
     public RegisterJobCategoryController ctrl;
 
-    private AuthenticationController ctrlAuth;
+    public AuthenticationController ctrlAuth;
 
     public ManageJobsUI(){
         ctrl=new RegisterJobCategoryController();
+        ctrlAuth=new AuthenticationController();
     }
 
     public void setJobCategoryTable(){
