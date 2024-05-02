@@ -9,14 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository class for managing teams.
+ */
 public class TeamRepository {
 
     private List<Team> teams;
 
+    /**
+     * Constructs a new TeamRepository.
+     */
     public TeamRepository(){
         teams = new ArrayList<>();
     }
 
+    /**
+     * Adds a team to the repository.
+     *
+     * @param team the team to be added
+     * @return an Optional containing the added Team, if successful, otherwise an empty Optional
+     */
     public Optional<Team> addTeam(Team team){
         Optional<Team> newTeam = Optional.empty();
         boolean operationSucess = false;
@@ -35,6 +47,12 @@ public class TeamRepository {
         return isValid;
     }
 
+    /**
+     * Removes a team from the repository.
+     *
+     * @param team the team to be removed
+     * @return the list of teams after removal
+     */
     public List<Team> removeTeam(Team team){
         if (teams.contains(team)){
             teams.remove(team);
@@ -42,11 +60,17 @@ public class TeamRepository {
         return teams;
     }
 
+    /**
+     * Retrieves teams with specified skills.
+     *
+     * @param skills list of skills to filter teams by
+     * @return list of teams with the specified skills
+     */
     public List<Team> getTeamBySkill(List<Skill> skills){
         List<Team> teamWithSkills=new ArrayList<>();
         for(int i=0; i<skills.size(); i++){
             for(Team team : teams){
-                if(team.getSkills()==skills.get(i)){
+                if(team.getSkills().equals(skills.get(i))){
                     teamWithSkills.add(team);
                 }
             }
@@ -54,12 +78,21 @@ public class TeamRepository {
         return teamWithSkills;
     }
 
+    /**
+     * Retrieves all teams in the repository.
+     *
+     * @return the list of all teams in the repository
+     */
     public List<Team> getTeams(){
         return teams;
     }
 
-
-
+    /**
+     * Saves a team to the repository.
+     *
+     * @param teamCreated the team to be saved
+     * @return true if the team is successfully saved, otherwise false
+     */
     public boolean saveTeam(Team teamCreated) {
         return teams.add(teamCreated);
     }

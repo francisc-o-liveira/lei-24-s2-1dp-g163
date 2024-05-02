@@ -27,13 +27,13 @@ public class GenerateTeamController{
 
     /** Initializes the controller */
     public GenerateTeamController() {
-        getDataNeededToGenereta();
+        getDataNeededToGenerate();
     }
 
     /** Gets the repositories from Repositories Instances to generate a team
      *
      */
-    private void getDataNeededToGenereta() {
+    private void getDataNeededToGenerate() {
         if (skillRepository== null) {
             Repositories repositories = Repositories.getInstance();
             // Getting the JobCategory Repository
