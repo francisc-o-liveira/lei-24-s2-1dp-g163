@@ -2,7 +2,7 @@
 
 ## 4. Tests 
 
-**Test 1:** Check that is not possible to create an instance of skill with a special digits.
+**Test 1:** Check that is not possible to create an instance of skill with a special digits.- AC1
 
 	 @Test
     void verifySkillNameDontCanHaveSpecialCharactersOrNumber() {
@@ -11,7 +11,7 @@
         });
     }
 
-**Test 2:**  Check that is not possible to create an instance of skill with a null skill name. 
+**Test 2:**  Check that is not possible to create an instance of skill with a null skill name.- AC3 
 
 	@Test
     void verifySkillNameNullPointer() {
@@ -206,13 +206,11 @@ public class SkillRepository {
 ```
 
 
-## 6. Integration and Demo 
-
-* A new option on the Employee menu options was added.
-
-* For demo purposes some tasks are bootstrapped while system starts.
+## 6. Integration and Demo
+* For demo purposes some skills are bootstrapped while system starts.
 
 
 ## 7. Observations
+* With the implementation, as the team was ahead of schedule, it was decided that due to JavaFX, exceptions were handled in the UI, so "try{}catch(){}" started to be carried out in the UI at console level as well, as it was not possible to have two ways of catch the exceptions for the two different UI types.
 
-n/a
+* Some verifications simples are maded in UI, because are simple verifications.
