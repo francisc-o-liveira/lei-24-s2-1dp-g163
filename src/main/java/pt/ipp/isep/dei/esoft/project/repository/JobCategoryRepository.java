@@ -7,7 +7,6 @@ import java.util.Optional;
 /**
  * Represent the JobCategoryRepository
  */
-//Verified By Francisco
 public class JobCategoryRepository {
     private final List<JobCategory> jobCategories;
 

@@ -70,7 +70,7 @@ public class VehicleRepository{
         }
     }
 
-    public Optional<Vehicle> addVehicle(Vehicle vehicle){
+    public Optional<Vehicle> addVehicle(Vehicle vehicle) throws CloneNotSupportedException {
         Optional<Vehicle> newVehicle = Optional.empty();
         newVehicle = Optional.of(vehicle);
         boolean operationSucess = false;
@@ -78,7 +78,7 @@ public class VehicleRepository{
             operationSucess = saveVehicle(vehicle);
         }
         if (!operationSucess){
-            newVehicle=Optional.empty();
+            throw new CloneNotSupportedException("Vehicle already exist on the System");
         }
         return newVehicle;
     }
@@ -96,7 +96,7 @@ public class VehicleRepository{
         return Vehicle.Type.values();
     }
 
-    public Optional<Vehicle> registerVehicle(String brand, String model, Date acquisitionDate, Date registerDate, double currentKM, double checkupFrequency, double grossWeight, int tare, String plate, Vehicle.Type type,Date lastCheck, double lastCheckUpKm) {
+    public Optional<Vehicle> registerVehicle(String brand, String model, Date acquisitionDate, Date registerDate, double currentKM, double checkupFrequency, double grossWeight, int tare, String plate, Vehicle.Type type,Date lastCheck, double lastCheckUpKm) throws CloneNotSupportedException {
         Optional<Vehicle> newVehicle = Optional.empty();
         Vehicle vehicle = new Vehicle(brand,model,type,tare,grossWeight,currentKM,registerDate,acquisitionDate,checkupFrequency,plate,lastCheck,lastCheckUpKm);
         newVehicle = addVehicle(vehicle);
@@ -114,6 +114,8 @@ public class VehicleRepository{
         Optional<CheckUp> newCheck = null;
         if (vehicle != null) {
              newCheck = vehicle.registerCheckUp(currentKms, dateOfCheckUp);
+        }else{
+            throw new IllegalArgumentException("Vehicle not found");
         }
         if(newCheck.isPresent()){
             return true;

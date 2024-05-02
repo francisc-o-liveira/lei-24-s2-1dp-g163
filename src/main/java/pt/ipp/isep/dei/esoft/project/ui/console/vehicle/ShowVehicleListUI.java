@@ -19,7 +19,7 @@ public class ShowVehicleListUI implements Runnable{
 
     private void showDataAsked()  {
         List<Vehicle> vehicleList = ctrl.getVehicleList();
-        if (vehicleList == null) {
+        if (vehicleList == null || vehicleList.isEmpty()) {
             System.out.println("Dont exist any Vehicle register on the System.");
         }else{
             for (Vehicle v : vehicleList){

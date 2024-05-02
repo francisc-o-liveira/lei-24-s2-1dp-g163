@@ -9,6 +9,9 @@ import java.util.Optional;
 
 public class GenerateTeamServ {
     public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, List<Collaborator> collaboratorsForTeam) {
+        if(collaboratorsForTeam==null || collaboratorsForTeam.isEmpty()){
+            throw new RuntimeException("Dont exist collaborators to generate any Team with this Skills.");
+        }
         Optional<Team> teamGenerated = Optional.empty();
         getSkillByOrder(skillsSelected,numberCollabForSkill);
         int[] generatedTrue=getNumberSkill(numberCollabForSkill);
@@ -31,6 +34,7 @@ public class GenerateTeamServ {
         }
         if(teamIsPossible(create)){
             teamGenerated = Optional.of(create);
+            throw new RuntimeException("Team impossible to create with this data");
         }
         return teamGenerated;
     }
@@ -105,9 +109,12 @@ public class GenerateTeamServ {
     }
 
     private int[] getNumberSkill(List<Integer> numberCollabForSkill) {
-        int[] numb = new int[numberCollabForSkill.size()];
-        for (int i = 0; i < numberCollabForSkill.size(); i++) {
-            numb[i]=numberCollabForSkill.get(i);
+        int[] numb = new int[0];
+        if (numberCollabForSkill!=null){
+            numb = new int[numberCollabForSkill.size()];
+            for (int i = 0; i < numberCollabForSkill.size(); i++) {
+                numb[i]=numberCollabForSkill.get(i);
+            }
         }
         return numb;
     }

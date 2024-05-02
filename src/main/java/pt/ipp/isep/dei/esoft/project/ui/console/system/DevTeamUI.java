@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.console.team;
+package pt.ipp.isep.dei.esoft.project.ui.console.system;
 
 /**
  * @author Paulo Maio pam@isep.ipp.pt
@@ -6,7 +6,6 @@ package pt.ipp.isep.dei.esoft.project.ui.console.team;
 public class DevTeamUI implements Runnable {
 
     public DevTeamUI() {
-
     }
 
     public void run() {

@@ -29,7 +29,7 @@ public class ShowTeamsListUI implements Runnable{
     public void displayTeamsList(){
         List<Team> teamList=getController().getTeams();
         if(teamList==null){
-            System.out.print("No collaborators are registered on the system.");
+            System.out.print("No teams registed or generated on the system.");
         } else {
             for(Team t : teamList){
                 System.out.println(t+"\n");
