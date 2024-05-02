@@ -227,4 +227,12 @@ public class CollaboratorRepository {
         return collabWithSkill;
     }
 
+    public void removeFromList(Collaborator collaborator){
+        if(collaboratorList.contains(collaborator)){
+            collaboratorList.remove(collaborator);
+        } else {
+            throw new RuntimeException("This Collaborator does not exist in the Repository");
+        }
+    }
+
 }

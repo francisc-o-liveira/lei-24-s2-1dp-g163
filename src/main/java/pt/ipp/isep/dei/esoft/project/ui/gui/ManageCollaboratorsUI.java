@@ -101,6 +101,7 @@ public class ManageCollaboratorsUI {
         } else {
             try {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
+                popUp();
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.");
             }catch (IllegalArgumentException e){
@@ -109,50 +110,21 @@ public class ManageCollaboratorsUI {
         }
     }
 
-    public void registerCollaborator() {
-        //jobCategory=(JobCategory) selectedjobCategory.getValue();
-        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
-        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
-        typeOfDocument = (DocType.Type)docType.getValue();
-        //ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);*/
-    }
-
-    /*List<String> messageError = new ArrayList<>();
-
-
-        if (!verifyName(name.getText())) {
-            messageError.add("The introduced name is invalid");
-        }
-        if (!verifyAddress(addressStreet.getText(), addressZipCode.getText(), addressCity.getText())) {
-            messageError.add("The introduced address is invalid");
-        }
-        if (!verifyEmail(email.getText())) {
-            messageError.add("The introduced email is invalid");
-        }
-        if (!verifyPhoneNumber(Integer.parseInt(phoneNumber.getText()))) {
-            messageError.add("The introduced phone number is incorrect.");
-        } else if (!phoneNumber.getText().contains("+351") && !verifyInternationalPhoneNumber(phoneNumber.getText())) {
-            messageError.add("The introduced phone number is incorrect.");
-        }
-
-        DocType selectedType = (DocType) docType.getSelectionModel().getSelectedItem();
-        /*if (!validDocType(selectedType, Integer.parseInt(docIDNumber.getText()))) {
-            messageError.add("The introduced ID Number is incorrect");
-        }
-
-        if (messageError.isEmpty()) {
-        popUpOfVerifications(Alert.AlertType.ERROR, messageError).show();
-    } else {
-        registerCollaborator();
-        popUp();
-    }*/
-
     @FXML
     public void btnRemoveCollaborator() {
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
         if (selectedCollaborator != null) {
-            tableCollaborators.getItems().remove(selectedCollaborator);
-            ctrl.removeFromList(selectedCollaborator);
+            Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+
+            popUp.setHeaderText("Removing Collaborator");
+            popUp.setContentText("Do you want to remove this collaborator?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                tableCollaborators.getItems().remove(selectedCollaborator);
+                ctrl.removeFromList(selectedCollaborator);
+            }
         }
     }
 
@@ -275,93 +247,6 @@ public class ManageCollaboratorsUI {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-    }
-
-    /*private boolean validDocType(DocType type, int docIDNumber) {
-        return ctrl.validateDocType(type, docIDNumber);
-    }*/
-
-
-    /**
-     * Verifies if e-mail is correctly inserted
-     *
-     * @param email of collaborator
-     * @return true if e-mail is correct
-     */
-
-    private boolean verifyEmail(String email) {
-        boolean value = false;
-        String[] check = email.split("");
-        for (String letter : check) {
-            if (letter.equals("@")) {
-                value = true;
-            }
-        }
-        String[] domainPrefix;
-        String[] domain;
-        if (value) {
-            domainPrefix = email.split("@");
-            value = domainPrefix.length == 2;
-            if (value) {
-                domain = domainPrefix[1].split(".");
-                value = domain.length == 2;
-                if (value) {
-                    value = domain[1].equals("com") || domain[1].equals("pt");
-                }
-            }
-        }
-        return value;
-    }
-
-    /**
-     * Verifies if phone number is correctly inserted
-     *
-     * @param phoneNumber of collaborator
-     * @return true if phoneNumber is correct
-     */
-
-    private boolean verifyPhoneNumber(int phoneNumber) {
-        return (phoneNumber % 1000000000) > 0.9 && (phoneNumber % 1000000000) < 1 && ((phoneNumber / 10000000) == 91 || (phoneNumber / 10000000) == 92 || (phoneNumber / 10000000) == 93 || (phoneNumber / 10000000) == 96);
-    }
-
-    /**
-     * Using Java Regex, this method verifies an international phone number
-     *
-     * @param phone of collaborator to validate
-     * @return true if phoneNumber starts with a plus sign followed by 6 to 14 digits with optional spaces between them
-     */
-
-    private boolean verifyInternationalPhoneNumber(String phone) {
-        String verify = "^\\+(?:[0-9] ?){6,14}[0-9]$";
-        Pattern pattern = Pattern.compile(verify);
-        Matcher matcher = pattern.matcher(phone);
-        if (matcher.matches()) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Verifies if address is correctly inserted
-     *
-     * @param address        of collaborator
-     * @param addressZipCode of collaborator
-     * @param addressCity    of collaborator
-     * @return true if address is correct
-     */
-    private boolean verifyAddress(String address, String addressZipCode, String addressCity) {
-        return (addressZipCode.split("-").length == 2 && addressCity.split(" ").length < 5);
-    }
-
-    /**
-     * Verifies if the name is valid
-     *
-     * @param name of collaborator
-     * @return true if name contains six words or fewer
-     */
-    private boolean verifyName(String name) {
-        String[] arrayNeedSize = name.split(" ");
-        return arrayNeedSize.length <= 6;
     }
 
     private Alert popUp() {

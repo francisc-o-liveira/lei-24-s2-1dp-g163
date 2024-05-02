@@ -106,4 +106,16 @@ public class Team {
                 "Skills Selected: %s\n", collaboratorsTeam, maxSizeTeam, minSizeTeam, skillsSelected);
     }
 
+    @Override
+    public boolean equals(Object other){
+        if(this==other){
+            return true;
+        }
+        if(other == null || this.getClass() != other.getClass()){
+            return false;
+        }
+        Team otherTeam= (Team) other;
+        return this.getTeamList()==otherTeam.getTeamList();
+    }
+
 }

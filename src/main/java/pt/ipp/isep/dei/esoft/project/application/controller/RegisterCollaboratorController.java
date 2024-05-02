@@ -104,7 +104,7 @@ public class RegisterCollaboratorController {
      */
 
     public void removeFromList(Collaborator collaborator){
-        collaboratorRepository.getCollaboratorList().remove(collaborator);
+        collaboratorRepository.removeFromList(collaborator);
     }
 
     /*private void getHRMFromSession(){
