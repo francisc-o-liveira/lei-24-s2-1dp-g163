@@ -75,9 +75,14 @@ public class Vehicle {
         return (this.getLastCheckUpKm()  + frequencyCheckKm) - currentKm;
     }
 
-    public Optional<CheckUp> registerCheckUp(double currentKmOfCheck, Date dateOfCheck){
+    public Optional<CheckUp> registerCheckUp(double currentKmOfCheck, Date dateOfCheck, double mainetanceKm){
         Optional <CheckUp> newCheck = Optional.empty();
         boolean operationSucess=false;
+        if (mainetanceKm==0){
+            operationSucess=true;
+        }else {
+            this.frequencyCheckKm=mainetanceKm;
+        }
         if(currentKmOfCheck>=currentKm && currentKmOfCheck>getLastCheckUpKm() && Date.atualDate().diference(dateOfCheck)<30){
             CheckUp regist = new CheckUp(currentKmOfCheck,dateOfCheck);
             newCheck = Optional.of(regist);

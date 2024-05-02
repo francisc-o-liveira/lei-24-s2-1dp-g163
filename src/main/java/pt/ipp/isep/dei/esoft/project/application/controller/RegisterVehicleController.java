@@ -32,7 +32,12 @@ public class RegisterVehicleController {
         return vehicleRepository.registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type,lastCheckUpDate,lastCheckUpKm);
     }
 
+
     public List<Vehicle> getVehicleList() {
         return vehicleRepository.getVehicleList();
+    }
+
+    public boolean removeVehicleFromList(Vehicle selectedVehicle) {
+       return vehicleRepository.removeVehicle(selectedVehicle);
     }
 }

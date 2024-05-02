@@ -28,6 +28,7 @@ public class ManageSkillsUI {
     @FXML
     public TableColumn<Skill, String> colSkills;
 
+
     public RegisterSkillController ctrl;
 
     public ManageSkillsUI(){

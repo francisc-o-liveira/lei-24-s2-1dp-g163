@@ -110,10 +110,10 @@ public class VehicleRepository{
      * @param currentKms A quilometragem atual do veículo.
      * @return Verdadeiro se o check-up for adicionado com sucesso, falso caso contrário.
      */
-    public boolean addCheckUp(Vehicle vehicle, Date dateOfCheckUp, double currentKms) {
+    public boolean addCheckUp(Vehicle vehicle, Date dateOfCheckUp, double currentKms, double mainetanceKm) {
         Optional<CheckUp> newCheck = null;
         if (vehicle != null) {
-             newCheck = vehicle.registerCheckUp(currentKms, dateOfCheckUp);
+             newCheck = vehicle.registerCheckUp(currentKms, dateOfCheckUp, mainetanceKm);
         }else{
             throw new IllegalArgumentException("Vehicle not found");
         }
@@ -152,5 +152,13 @@ public class VehicleRepository{
 
     public List<Vehicle> getVehicleList() {
         return vehicleList;
+    }
+
+    public boolean removeVehicle(Vehicle selectedVehicle) {
+        if(vehicleList.contains(selectedVehicle)){
+            return vehicleList.remove(selectedVehicle);
+        }else {
+            throw new RuntimeException("Vehicle not found");
+        }
     }
 }

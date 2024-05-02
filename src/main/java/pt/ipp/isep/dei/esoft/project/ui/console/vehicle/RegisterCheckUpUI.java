@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCheckUpController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class RegisterCheckUpUI implements Runnable {
     private Scanner scanner;
     private Vehicle vehicleToCheckUp;
     private Date dateOfCheckUp;
+    private double mainetanceKm;
 
     private double currentKm;
 
@@ -43,7 +45,7 @@ public class RegisterCheckUpUI implements Runnable {
     }
 
     private void submitsData() {
-        Optional<Object> checkUpList = getController().addCheckUp(vehicleToCheckUp,dateOfCheckUp,currentKm);
+        Optional<Object> checkUpList = getController().addCheckUp(vehicleToCheckUp,dateOfCheckUp,currentKm,mainetanceKm);
         if (checkUpList.isPresent()) {
             System.out.println("\nCheck Up successfully registed!");
         } else {
@@ -59,6 +61,26 @@ public class RegisterCheckUpUI implements Runnable {
         vehicleToCheckUp = displayPlatesListAndSelectOne();
         dateOfCheckUp = registerDateCheckUp();
         currentKm = registerCurrentKm();
+        mainetanceKm=askIfWantNewFrequency();
+    }
+
+    private double askIfWantNewFrequency() {
+        double mainetanceKm;
+        int option=-1;
+        do {
+            System.out.println("You want the same or want a new frequency check up km?");
+            System.out.println("1-- New Frequency of Check Up");
+            System.out.println("2-- Same Frequency of Check Up");
+            option= Utils.readIntegerFromConsole("Select option:");
+        }while (option<1 || option>2);
+        if(option==2){
+            do{
+                mainetanceKm=Utils.readIntegerFromConsole("Enter new frequency check up km: ");
+            }while(mainetanceKm<5000 || mainetanceKm>100000);
+            return mainetanceKm;
+        }else{
+            return 0;
+        }
     }
 
     private Date registerDateCheckUp() {
