@@ -70,8 +70,16 @@ public class ManageSkillsUI {
     public void btnRemove(){
         Skill selectedSkill = tableSkills.getSelectionModel().getSelectedItem();
         if(selectedSkill != null){
-            tableSkills.getItems().remove(selectedSkill);
-            ctrl.removeFromList(selectedSkill);
+            Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+            popUp.setHeaderText("Removing Skill");
+            popUp.setContentText("Do you want to remove the skill?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                tableSkills.getItems().remove(selectedSkill);
+                ctrl.removeFromList(selectedSkill);
+            }
         }
     }
 
