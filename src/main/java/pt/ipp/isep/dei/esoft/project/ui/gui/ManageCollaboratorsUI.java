@@ -16,11 +16,13 @@ import javafx.stage.Stage;
 
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class ManageCollaboratorsUI {
 
     public Stage stage = LoginUI.getMainStage();
     public RegisterCollaboratorController ctrl;
+    public AuthenticationController ctrlAuth;
 
 
     /**
@@ -83,6 +86,7 @@ public class ManageCollaboratorsUI {
 
     public ManageCollaboratorsUI() {
         ctrl = new RegisterCollaboratorController();
+        ctrlAuth= new AuthenticationController();
     }
 
     @FXML
@@ -296,10 +300,23 @@ public class ManageCollaboratorsUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader fxmlLoader ;
+        try {
+            UserRoleDTO role = ctrlAuth.getAtualUserRole();
+            if (role.equals(ctrlAuth.ROLE_HRM)){
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+            } else if (role.equals(ctrlAuth.ROLE_HRM)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+            }else {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+            }
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (ArrayIndexOutOfBoundsException e){
+            popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
+        }
+
     }
 }

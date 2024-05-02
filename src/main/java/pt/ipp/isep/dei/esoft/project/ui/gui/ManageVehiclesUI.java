@@ -9,8 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 
@@ -22,6 +24,7 @@ public class ManageVehiclesUI {
     public TextField introducingVehicleNameField;
 
     public RegisterVehicleController ctrl;
+    public AuthenticationController ctrlAuth;
     @FXML
     public TableView<Vehicle> tableViewVehicles;
 
@@ -41,6 +44,7 @@ public class ManageVehiclesUI {
 
     public ManageVehiclesUI(){
         ctrl=new RegisterVehicleController();
+        ctrlAuth=new AuthenticationController();
     }
 
     public void setTableVehicles(){
@@ -120,11 +124,23 @@ public class ManageVehiclesUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader fxmlLoader ;
+        try {
+            UserRoleDTO role = ctrlAuth.getAtualUserRole();
+            if (role.equals(ctrlAuth.ROLE_HRM)){
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+            } else if (role.equals(ctrlAuth.ROLE_HRM)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+            }else {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+            }
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (ArrayIndexOutOfBoundsException e){
+            popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
+        }
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {

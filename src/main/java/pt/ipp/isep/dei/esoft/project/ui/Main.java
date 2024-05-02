@@ -12,7 +12,6 @@ public class Main {
     public static void main(String[] args){
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.run();
-
         try {
             MainApp.main(args);
         }catch (Exception e) {
