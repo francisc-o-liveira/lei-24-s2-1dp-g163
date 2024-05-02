@@ -65,6 +65,11 @@ public class SkillRepository {
         return isValid;
     }
 
+    /**
+     * This method remove the skill selected by user
+     * @param skill to be removed from the system
+     */
+
     public void removeSkill(Skill skill){
         if(skillList.contains(skill)){
             skillList.remove(skill);
