@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.VFManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.HRManagerUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -45,13 +45,13 @@
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="29.0" layoutY="130.0" text="VehicleFleetManager" textFill="WHITE">
+                                <Label layoutX="9.0" layoutY="130.0" text="HumanResourcesManager" textFill="WHITE">
                                     <font>
                                         <Font name="Tahoma Bold" size="14.0" />
                                     </font>
                                 </Label>
                                 <Line endX="86.5" layoutX="117.0" layoutY="171.0" startX="-107.0" stroke="WHITE" />
-                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" onAction="#reload" prefHeight="26.0" prefWidth="125.0" text="Home">
+                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" onAction="#reloadPage" prefHeight="26.0" prefWidth="125.0" text="Home">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="HOME" />
                                     </graphic>
@@ -78,34 +78,13 @@
                             <children>
                                 <AnchorPane layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
                                     <children>
-                                        <AnchorPane prefHeight="530.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
-                                            <effect>
-                                                <DropShadow />
-                                            </effect>
-                                 <children>
-                                    <TableView layoutX="47.0" layoutY="40.0" prefHeight="398.0" prefWidth="770.0">
-                                      <columns>
-                                        <TableColumn prefWidth="116.0" text="Brand" />
-                                        <TableColumn prefWidth="120.0" text="Model" />
-                                          <TableColumn prefWidth="134.5" text="Type" />
-                                          <TableColumn prefWidth="136.0" text="Current km" />
-                                          <TableColumn prefWidth="139.0" text="Check-up Frequency" />
-                                          <TableColumn prefWidth="123.5" text="Maintenance" />
-                                      </columns>
-                                    </TableView>
-                                    <Button layoutX="713.0" layoutY="458.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: FF9688;" text="Remove">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Button>
-                                    <Button layoutX="786.0" layoutY="457.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: ADD8E6;" text="Add" />
-                                    <Button layoutX="714.0" layoutY="491.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: D87DAB;" text="Edit">
-                                       <font>
-                                          <Font name="System Bold" size="13.0" />
-                                       </font>
-                                    </Button>
-                                    <Button layoutX="786.0" layoutY="490.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: B7D5B2;" text="Update" />
-                                 </children></AnchorPane>
+                              <TableView layoutX="38.0" layoutY="38.0" prefHeight="415.0" prefWidth="776.0">
+                                <columns>
+                                  <TableColumn prefWidth="775.0" text="List of Teams" />
+                                </columns>
+                              </TableView>
+                              <Button layoutX="696.0" layoutY="485.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" style="-fx-background-color: FF9688;" text="Remove" />
+                              <Button layoutX="779.0" layoutY="485.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add" />
                                     </children>
                                     <effect>
                                         <DropShadow />
