@@ -49,6 +49,8 @@ public class VFManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageVehiclesUI ctrlUI=fxmlLoader.getController();
+        ctrlUI.setTableVehicles();
     }
 
     @FXML
@@ -58,5 +60,8 @@ public class VFManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        /*ManageEquipment ctrlUI=fxmlLoader.getController();
+        ctrlUI.setTableEquipment();
+         */
     }
 }
