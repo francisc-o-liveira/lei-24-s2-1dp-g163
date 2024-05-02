@@ -98,7 +98,7 @@ public class RegisterJobCategoryController {
 ### Class JobCategoryRepository
 
 ```java
-* Represent the JobCategoryRepository
+/** Represent the JobCategoryRepository
  */
 public class JobCategoryRepository {
     private final List<JobCategory> jobCategories;
