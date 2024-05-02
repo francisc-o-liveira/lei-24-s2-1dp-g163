@@ -127,6 +127,10 @@ public class GenerateTeamController{
         return collaboratorRepository.getCollaboratorsNotActive();
     }
 
+    public void removeTeam(Team team){
+        teamRepository.removeTeam(team);
+    }
+
     /*private (...) getHRMFromSession()*/
 
 }
