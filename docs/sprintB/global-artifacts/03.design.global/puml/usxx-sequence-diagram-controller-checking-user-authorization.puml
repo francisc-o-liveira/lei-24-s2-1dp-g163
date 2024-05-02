@@ -6,7 +6,7 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-participant ":{NameOfUC}Controller" as CTRL
+participant ":AuthenticationController" as CTRL
 participant "ApplicationSession" as APPSESSIONC
 participant "appSession\n:ApplicationSession" as APPSESSIONI
 participant "currentSession\n:UserSession" as CURSESSION
