@@ -61,8 +61,8 @@ public class ManageCollaboratorsUI {
     private TextField phoneNumber;
     @FXML
     private ComboBox docType;
-    //@FXML
-    //private ComboBox selectedjobCategory;
+    @FXML
+    private ComboBox selectedjobCategory;
 
     @FXML
     public TableView<Collaborator> tableCollaborators;
@@ -223,7 +223,7 @@ public class ManageCollaboratorsUI {
     public void setTableCollaborators() {
         ComboBox<DocType> cbxStatus = new ComboBox<>();
         docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
-        //selectedjobCategory.setItems(FXCollections.observableArrayList(ctrl.getJobCategoryList()));
+        selectedjobCategory.setItems(FXCollections.observableArrayList(ctrl.getJobCategoryList()));
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnIDNumber.setCellValueFactory(new PropertyValueFactory<>("docIDNumber"));

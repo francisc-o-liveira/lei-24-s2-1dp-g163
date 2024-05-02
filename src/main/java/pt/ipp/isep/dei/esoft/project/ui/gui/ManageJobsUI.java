@@ -55,8 +55,10 @@ public class ManageJobsUI {
         } else {
             try {
                 ctrl.registerJobCategory(jobCategory);
-            }catch (CloneNotSupportedException e){
-                popUpOfVerifications(Alert.AlertType.ERROR, "The Job Category already exists.");
+            }catch (NullPointerException | CloneNotSupportedException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, "The Job Category already exists.").show();
+            } catch (IllegalArgumentException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
         introducingJobCategory.clear();
@@ -69,8 +71,22 @@ public class ManageJobsUI {
     public void btnRemove(){
         JobCategory selectedJobCategory = tableJobCategory.getSelectionModel().getSelectedItem();
         if(selectedJobCategory != null){
-            tableJobCategory.getItems().remove(selectedJobCategory);
-            ctrl.removeJobCategory(selectedJobCategory);
+            Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
+
+            popUp.setHeaderText("Removing Job Category");
+            popUp.setContentText("Do you want to remove this Job Category?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                try{
+                tableJobCategory.getItems().remove(selectedJobCategory);
+                ctrl.removeJobCategory(selectedJobCategory);
+                } catch (RuntimeException e){
+                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+                }
+            }
+
         }
     }
 

@@ -24,11 +24,11 @@ public class Employee {
     }
 
     public void setPhone(String phone) {
-        if (verifyPhone(phone)){
+        //if (verifyPhone(phone)){
             this.phone=phone;
-        }else {
+        /*}else {
             throw new IllegalArgumentException("Phone number is invalid please try again");
-        }
+        }*/
     }
 
     private boolean verifyPhone(String phone) {

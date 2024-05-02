@@ -22,11 +22,6 @@ public class LoginUI {
     @FXML
     private PasswordField passwordLogin;
 
-    @FXML
-    private Button doLogin;
-
-    @FXML
-    private Button forgotPassword;
     private static int attemps=4;
 
     public static Stage mainStage;
