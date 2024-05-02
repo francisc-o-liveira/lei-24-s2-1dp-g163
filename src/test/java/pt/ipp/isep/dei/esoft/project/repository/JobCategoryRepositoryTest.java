@@ -10,7 +10,7 @@ class JobCategoryRepositoryTest {
     void registerJobCategory() {
         JobCategoryRepository jobCategoryRepository = new JobCategoryRepository();
         try {
-           jobCategoryRepository.registerJobCategory("Java");
+            jobCategoryRepository.registerJobCategory("Java");
         } catch (CloneNotSupportedException e) {
             System.out.println(e.getMessage());
         }
