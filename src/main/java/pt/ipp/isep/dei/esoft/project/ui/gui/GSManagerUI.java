@@ -72,6 +72,8 @@ public class GSManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
+        ManageJobsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setJobCategoryTable();
     }
 
     @FXML
