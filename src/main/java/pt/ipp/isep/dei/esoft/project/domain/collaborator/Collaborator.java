@@ -464,5 +464,18 @@ public class Collaborator{
                 "Skills: %s\n", name, birthday, admissionDate, address, addressCity, addressZipCode, phoneNumber, docType, docIDNumber, email, jobCategory, statusType, skills);
     }
 
+    @Override
+    public boolean equals(Object other){
+        if(this==other){
+            return true;
+        }
+        if(other == null || this.getClass() != other.getClass()){
+            return false;
+        }
+        Collaborator otherCollab=(Collaborator) other;
+
+        return this.getDocIDNumber()==otherCollab.getDocIDNumber();
+    }
+
 
 }
