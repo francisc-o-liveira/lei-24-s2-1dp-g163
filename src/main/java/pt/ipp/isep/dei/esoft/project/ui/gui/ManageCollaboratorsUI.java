@@ -69,8 +69,6 @@ public class ManageCollaboratorsUI {
     public TableView<Collaborator> tableCollaborators;
 
     @FXML
-    public TableColumn<Collaborator, Boolean> columnSelect;
-    @FXML
     public TableColumn<Collaborator, Integer> columnIDNumber;
     @FXML
     public TableColumn<Collaborator, DocType> columnDocType;
@@ -90,6 +88,7 @@ public class ManageCollaboratorsUI {
         admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
         birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
         typeOfDocument = (DocType.Type) docType.getValue();
+        jobCategory=(JobCategory) selectedjobCategory.getValue();
         String nameCollab= name.getText();
         String address= addressStreet.getText();
         String addresszipcode=addressZipCode.getText();
@@ -101,7 +100,7 @@ public class ManageCollaboratorsUI {
             popUpOfVerifications(Alert.AlertType.ERROR, "The Collaborator is empty").show();
         } else {
             try {
-                ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
+                ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
                 popUp();
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
@@ -115,6 +114,11 @@ public class ManageCollaboratorsUI {
         addressCity.clear();
         email.clear();
         phoneNumber.clear();
+        docIDNumber.clear();
+        dateBirthday.setValue(null);
+        dateAdmission.setValue(null);
+        docType.getSelectionModel().clearSelection();
+        selectedjobCategory.getSelectionModel().clearSelection();
         ObservableList<Collaborator> listForTable= FXCollections.observableArrayList(ctrl.getCollaboratorList());
         tableCollaborators.getItems().clear();
         tableCollaborators.setItems(listForTable);
@@ -210,7 +214,7 @@ public class ManageCollaboratorsUI {
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnIDNumber.setCellValueFactory(new PropertyValueFactory<>("docIDNumber"));
         columnDocType.setCellValueFactory(new PropertyValueFactory<>("docType"));
-        columnJobCategory.setCellValueFactory(new PropertyValueFactory<>("JobCategory"));
+        columnJobCategory.setCellValueFactory(new PropertyValueFactory<>("jobCategory"));
 
         columnButtonsDetails.setCellFactory(new Callback<
                 TableColumn<Collaborator, Void>, TableCell<Collaborator, Void>>() {
