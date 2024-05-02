@@ -65,7 +65,9 @@ public class Main {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    sizeInput.add((double) (edges != null ? edges.size() : 0));
+                    //sizeInput.add((double) (edges != null ? edges.size() : 0));
+                    ArrayList<Point> vertices=numberOfVertices(edges);
+                    sizeInput.add((double)vertices.size());
                     break;
                 case 3:
 
@@ -238,7 +240,7 @@ public class Main {
     public static void createExecutionTimeFile(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) throws IOException{
         FileWriter exectimesFile= new FileWriter("execution_times.csv");
         for(int i=0; i<executionTimes.size(); i++){
-            String line=String.format("%f; %f%n", sizeInput.get(i), executionTimes.get(i));
+            String line=String.format("%.2f; %.2f%n", sizeInput.get(i), executionTimes.get(i));
             exectimesFile.write(line);
         }
         exectimesFile.close();
