@@ -64,4 +64,12 @@ public class SkillRepository {
         boolean isValid = !skillList.contains(skill);
         return isValid;
     }
+
+    public void removeSkill(Skill skill){
+        if(skillList.contains(skill)){
+            skillList.remove(skill);
+        }else{
+            throw new RuntimeException("This Skill does not exist in the Repository");
+        }
+    }
 }
