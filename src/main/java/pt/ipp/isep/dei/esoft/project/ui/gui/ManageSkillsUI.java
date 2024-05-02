@@ -12,7 +12,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.ObjectUtils;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 
@@ -31,8 +33,11 @@ public class ManageSkillsUI {
 
     public RegisterSkillController ctrl;
 
+    public AuthenticationController ctrlAuth;
+
     public ManageSkillsUI(){
         ctrl=new RegisterSkillController();
+        ctrlAuth=new AuthenticationController();
     }
 
     public void setSkillTable(){
@@ -141,10 +146,22 @@ public class ManageSkillsUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader fxmlLoader ;
+        try {
+            UserRoleDTO role = ctrlAuth.getAtualUserRole();
+            if (role.equals(ctrlAuth.ROLE_HRM)){
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+            } else if (role.equals(ctrlAuth.ROLE_HRM)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+            }else {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+            }
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (ArrayIndexOutOfBoundsException e){
+            popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
+        }
     }
 }
