@@ -34,14 +34,18 @@ public class RegisterVehicleUI  implements Runnable{
     }
 
     public void run(){
-        System.out.print("--------- Register a Vehicle ---------\n");
-        ctrl.getVehicleRepository();
-        type=displayAndSelectVehicleType();
-        requestData();
-        submitData();
+        try {
+            System.out.print("--------- Register a Vehicle ---------\n");
+            ctrl.getVehicleRepository();
+            type=displayAndSelectVehicleType();
+            requestData();
+            submitData();
+        }catch (IllegalArgumentException | CloneNotSupportedException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-    private void submitData() {
+    private void submitData() throws CloneNotSupportedException {
         Optional<Vehicle> vehicle = getController().registerVehicle(brand,model,acquisitionDate,registerDate,currentKM,checkupFrequency,grossWeight,tare,plate,type,lastCheckUpDate,lastCheckUpKm);
         if (vehicle.isPresent()) {
             System.out.println("\nVehicle successfully created!");

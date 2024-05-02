@@ -33,9 +33,13 @@ public class RegisterCheckUpUI implements Runnable {
      * Inicia o processo interativo de registo de um novo CheckUp.
      */
     public void run() {
-        System.out.println("--- Register a Check Up of a Vehicle ---");
-        requestData();
-        submitsData();
+        try {
+            System.out.println("--- Register a Check Up of a Vehicle ---");
+            requestData();
+            submitsData();
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void submitsData() {

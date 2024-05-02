@@ -84,7 +84,7 @@ public class Vehicle {
             operationSucess=this.checkUpList.add(regist);
         }
         if(!operationSucess){
-            newCheck=Optional.empty();
+            throw new RejectedExecutionException("The check up could not be registered because of data(current Kilometers of check up and date of check up)");
         }
         return newCheck;
     }

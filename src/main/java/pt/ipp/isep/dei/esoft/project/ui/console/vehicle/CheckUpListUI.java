@@ -23,7 +23,7 @@ public class CheckUpListUI implements Runnable {
     }
 
     private void showData() {
-        if(vehiclesNeedingCheckUp==null){
+        if(vehiclesNeedingCheckUp==null || vehiclesNeedingCheckUp.isEmpty()){
             System.out.println("Dont exist vehicles needing to make a maintenance");
         }else {
             int i = 0;

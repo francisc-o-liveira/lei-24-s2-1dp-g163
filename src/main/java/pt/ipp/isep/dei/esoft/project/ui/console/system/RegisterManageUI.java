@@ -23,14 +23,19 @@ public class RegisterManageUI implements Runnable{
     }
     @Override
     public void run() {
-        System.out.print("--------- Register a Manager ---------\n");
-        requestData();
-        submitsData();
+        try {
+            System.out.print("--------- Register a Manager ---------\n");
+            requestData();
+            submitsData();
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private void submitsData() {
-        if(ctrlUser.addUserWithRole(managerName,managerEmail,managerPassword,userRole)){
-            ctrlOrg.addEmployee(managerName,userRole,managerPhone,managerEmail);
+        if (ctrlOrg.addEmployee(managerName,userRole,managerPhone,managerEmail)){
+            ctrlUser.addUserWithRole(managerName,managerEmail,managerPassword,userRole);
         }
     }
 
@@ -119,7 +124,7 @@ public class RegisterManageUI implements Runnable{
             System.out.printf("%d --- %s%n", i+1,roles.get(i));
         }
         int option = -1;
-        while(option<1 && option>3){
+        while(option<1 || option>3){
             option=scan.nextInt();
         }
         return roles.get(option-1);

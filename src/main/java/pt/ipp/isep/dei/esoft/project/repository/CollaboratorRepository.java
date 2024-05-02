@@ -141,6 +141,9 @@ public class CollaboratorRepository {
 
     public List<Collaborator> getCollaboratorsNotActiveBySkills(List<Skill> skill){
         List<Collaborator> collaboratorNotActiveBySkills=new ArrayList<>();
+        if (skill==null || skill.isEmpty()){
+            return getCollaboratorsNotActive();
+        }
         for(int i=0; i<skill.size(); i++){
             for(Collaborator c : collaboratorList){
                 if(c.getStatus()==NotActive && c.verifyIfHaveSkill(skill.get(i))){
@@ -220,7 +223,7 @@ public class CollaboratorRepository {
      */
 
     public Optional<Collaborator> assignSkill(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
-        Optional<Collaborator> collabWithSkill=collaborator.setAddSkill(skillName);
+        Optional<Collaborator> collabWithSkill = collaborator.setAddSkill(skillName);
         return collabWithSkill;
     }
 

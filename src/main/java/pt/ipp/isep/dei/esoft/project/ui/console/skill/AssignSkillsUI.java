@@ -44,7 +44,7 @@ public class AssignSkillsUI implements Runnable {
             collaborator=setCollaboratorToAssign();
             skillName = displayAndSelectSkillToAssign();
             submitsData();
-        }catch (CloneNotSupportedException e){
+        }catch (CloneNotSupportedException | IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }

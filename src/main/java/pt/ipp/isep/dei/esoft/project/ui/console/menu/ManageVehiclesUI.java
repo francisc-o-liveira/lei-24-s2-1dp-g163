@@ -25,7 +25,7 @@ public class ManageVehiclesUI implements Runnable{
         options.add(new MenuItem("Add Vehicle", new RegisterVehicleUI()));
         options.add(new MenuItem("Show Check Up List", new CheckUpListUI()));
         options.add(new MenuItem("Register a CheckUp", new RegisterCheckUpUI()));
-        options.add(new MenuItem("Register update Kilometers", new ManageVehiclesUI()));
+        options.add(new MenuItem("Register update Kilometers", new ShowTextUI("Implementing.......")));
         int option = 0;
         do {
             option = Utils.showAndSelectIndex(options, "\n\n--- Manage Vehicles -------------------------");

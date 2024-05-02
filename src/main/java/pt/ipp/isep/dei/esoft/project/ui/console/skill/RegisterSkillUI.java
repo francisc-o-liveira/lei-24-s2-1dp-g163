@@ -44,6 +44,8 @@ public class RegisterSkillUI implements Runnable {
                 submitsData();
             }catch (CloneNotSupportedException e){
                 System.out.println("Skill Already Exist / Not Supported");
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
             }
         }
         else {

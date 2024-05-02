@@ -1,16 +1,16 @@
-package pt.ipp.isep.dei.esoft.project.ui.console.utils;
+package pt.ipp.isep.dei.esoft.project.ui.console.team;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.GenerateTeamController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class GenerateTeamUI {
+public class GenerateTeamUI implements Runnable {
     private static final int MAX_COLLABS_FOR_SKILL = 20;
 
     public GenerateTeamController ctrl;
@@ -49,12 +49,16 @@ public class GenerateTeamUI {
      * This is the main method
      */
     public void run(){
-        System.out.println("Generate a Team Automatically");
-        requestData();
-        skillsSelected = showSelectData();
-        numberCollabForSkill = showAndRequestData();
-        teamCreated=submitsDataAndShow();
-        requestDataOrConfirmation();
+        try {
+            System.out.println("Generate a Team Automatically");
+            requestData();
+            skillsSelected = showSelectData();
+            numberCollabForSkill = showAndRequestData();
+            teamCreated=submitsDataAndShow();
+            requestDataOrConfirmation();
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void requestDataOrConfirmation() {
@@ -66,7 +70,7 @@ public class GenerateTeamUI {
             }
             System.out.println("1 - Confirm Team Operation");
             System.out.println("2 - Edit Team Operation");
-            option=Utils.readIntegerFromConsole("Introduce option:");
+            option= Utils.readIntegerFromConsole("Introduce option:");
         }while (option<=0 || option>1);
         if(option==1){
             submitsData();
