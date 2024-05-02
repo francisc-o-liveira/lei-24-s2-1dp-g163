@@ -30,7 +30,7 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="353.0" layoutY="38.0" text="Adress City:">
+      <Label layoutX="345.0" layoutY="38.0" text="Address City:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>

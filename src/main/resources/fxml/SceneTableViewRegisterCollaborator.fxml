@@ -130,7 +130,7 @@
                                  </font>
                               </Label>
                               <TextField fx:id="addressStreet" layoutX="126.0" layoutY="484.0" prefHeight="26.0" prefWidth="170.0" />
-                              <Label layoutX="370.0" layoutY="337.0" prefHeight="18.0" prefWidth="78.0" text="Adress City:">
+                              <Label layoutX="358.0" layoutY="337.0" prefHeight="18.0" prefWidth="90.0" text="Address City:">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>
