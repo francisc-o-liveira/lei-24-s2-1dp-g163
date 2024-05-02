@@ -69,7 +69,7 @@ public class RegisterCollaboratorController {
      * @param jobCategory    of collaborator
      * @return Optional of Collaborator if Collaborator has been successfully registered; null if Collaborator wasn't registered
      */
-    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, String phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException{
+    public Optional<Collaborator> registerCollaborator(String name, Date birthday, Date admissionDate, String address, String addressCity, String addressZipCode, String phoneNumber, String email, Type docType, int docIDNumber, JobCategory jobCategory) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = collaboratorRepository.createCollaborator(name, birthday, admissionDate, address, addressCity, addressZipCode, email, phoneNumber, docType, docIDNumber, jobCategory);
         return newCollab;
     }

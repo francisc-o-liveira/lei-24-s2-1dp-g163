@@ -103,6 +103,8 @@ public class ManageCollaboratorsUI {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.");
+            }catch (IllegalArgumentException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage());
             }
         }
     }
