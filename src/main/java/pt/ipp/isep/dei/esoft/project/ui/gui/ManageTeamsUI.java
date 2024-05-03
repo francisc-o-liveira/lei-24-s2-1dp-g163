@@ -155,9 +155,9 @@ public class ManageTeamsUI {
         FXMLLoader fxmlLoader ;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.equals(ctrlAuth.ROLE_HRM)){
+            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-            } else if (role.equals(ctrlAuth.ROLE_HRM)) {
+            } else if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
             }else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
