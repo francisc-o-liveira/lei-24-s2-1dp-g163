@@ -22,6 +22,7 @@ public class ViewDetailsVehicleUI {
 
     public RegisterVehicleController ctrl;
 
+    Vehicle selectedVehicle;
 
     @FXML
     private DatePicker acquisitionDate;
@@ -163,7 +164,51 @@ public class ViewDetailsVehicleUI {
 
     @FXML
     void btnEdit(ActionEvent event) {
+        if(selectedVehicle != null){
+            String newBrand=brand.getText();
+            selectedVehicle.setBrand(newBrand);
+            brand.clear();
 
+            String newModel=model.getText();
+            selectedVehicle.setModel(newModel);
+            model.clear();
+
+            String newPlate=plate.getText();
+            selectedVehicle.setPlate(newPlate);
+            plate.clear();
+
+            String newTare= tare.getText();
+            int nTare=Integer.parseInt(newTare);
+            selectedVehicle.setTare(nTare);
+            tare.clear();
+
+            String newGW=grossWeight.getText();
+            double nGW=Double.parseDouble(newGW);
+            selectedVehicle.setGrossWeight(nGW);
+            grossWeight.clear();
+
+            String newCurrent=currentKms.getText();
+            double nCK=Double.parseDouble(newCurrent);
+            selectedVehicle.setCurrentKm(nCK);
+            currentKms.clear();
+
+            String newFreq=checkupFrequency.getText();
+            double nF=Double.parseDouble(newFreq);
+            selectedVehicle.setFrequencyCheckKm(nF);
+            checkupFrequency.clear();
+
+            selectedVehicle.setRegisterDate(new Date(registerDate.getValue().getYear(),registerDate.getValue().getMonthValue(),registerDate.getValue().getDayOfMonth()));
+            registerDate.setValue(null);
+
+            selectedVehicle.setAcquisitionDate(new Date(acquisitionDate.getValue().getYear(), acquisitionDate.getValue().getMonthValue(), acquisitionDate.getValue().getDayOfMonth()));
+            acquisitionDate.setValue(null);
+
+            //the other two fields need to be defined in here
+        }
+    }
+
+    public void showSelectedVehicle(Vehicle selectedVehicle){
+        this.selectedVehicle=selectedVehicle;
     }
 
     @FXML

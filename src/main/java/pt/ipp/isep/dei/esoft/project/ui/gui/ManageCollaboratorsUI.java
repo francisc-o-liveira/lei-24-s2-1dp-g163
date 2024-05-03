@@ -59,11 +59,6 @@ public class ManageCollaboratorsUI {
         ctrlAuth= new AuthenticationController();
     }
 
-    public TableView<Collaborator> getTableCollaborators(){
-        setTableCollaborators();
-        return tableCollaborators;
-    }
-
     public Stage getStageToViewDetails(){
         return stageToViewDetails;
     }
@@ -112,10 +107,6 @@ public class ManageCollaboratorsUI {
         uiToAdd.setTableAssignSkills();
         uiToAdd.putInTextFields(selectedCollaborator);
         uiToAdd.showCollaboratorSelected(selectedCollaborator);
-    }
-
-    public Collaborator getSelectedCollaborator(){
-        return tableCollaborators.getSelectionModel().getSelectedItem();
     }
 
     public void setTableCollaborators() {

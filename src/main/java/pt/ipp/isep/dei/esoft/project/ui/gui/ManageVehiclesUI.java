@@ -173,6 +173,8 @@ public class ManageVehiclesUI {
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
         ui.setTable();
+        Vehicle selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
+        ui.showSelectedVehicle(selectedVehicle);
     }
 
     @FXML
