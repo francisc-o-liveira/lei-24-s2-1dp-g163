@@ -20,6 +20,7 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 
 import javax.print.Doc;
@@ -257,16 +258,6 @@ public class ManageCollaboratorsUI {
     }
 
     @FXML
-    public void goBack(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    /*@FXML --- this should eb the correct one to use; needs alterations
     public void goBack(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader ;
         try {
@@ -285,6 +276,15 @@ public class ManageCollaboratorsUI {
         }catch (ArrayIndexOutOfBoundsException e){
             popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
         }
+    }
 
-    }*/
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
+        Alert alerta = new Alert(alertType);
+
+        alerta.setTitle("ERROR");
+        alerta.setHeaderText("Invalid Data");
+        alerta.setContentText(message);
+
+        return alerta;
+    }
 }
