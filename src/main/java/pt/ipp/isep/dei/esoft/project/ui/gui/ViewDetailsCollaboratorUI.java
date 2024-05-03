@@ -119,17 +119,13 @@ public class ViewDetailsCollaboratorUI {
             try {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
                 popUp().show();
+                manageTable.getTableCollaborators().refresh();
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
             }catch (IllegalArgumentException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
-
-        ObservableList<Collaborator> listForTable= FXCollections.observableArrayList(ctrl.getCollaboratorList());
-        manageTable.getTableCollaborators().getItems().clear();
-        manageTable.getTableCollaborators().setItems(listForTable);
-
     }
 
     @FXML

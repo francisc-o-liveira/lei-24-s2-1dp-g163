@@ -85,6 +85,7 @@ public class ManageCollaboratorsUI {
     @FXML
     public TableColumn<Collaborator, Void> columnButtonsDetails;
 
+    ObservableList<Collaborator> collaboratorObservableList=FXCollections.observableArrayList();
     public ManageCollaboratorsUI() {
         ctrl = new RegisterCollaboratorController();
         ctrlAuth= new AuthenticationController();
@@ -225,6 +226,10 @@ public class ManageCollaboratorsUI {
                 };
             }
         });
+        for(Collaborator c : ctrl.getCollaboratorList()){
+            collaboratorObservableList.add(c);
+        }
+        tableCollaborators.setItems(collaboratorObservableList);
     }
 
     //see this again later
