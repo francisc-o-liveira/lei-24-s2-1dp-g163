@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -17,6 +20,7 @@ public class GenerateTeamsUI {
 
     public Stage stage= new Stage();
     public GenerateTeamController ctrl;
+    ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
 
     List<Skill> skills= new ArrayList<>();
     @FXML
@@ -39,28 +43,27 @@ public class GenerateTeamsUI {
         ctrl = new GenerateTeamController();
         skillsSelectedForTeam= new ArrayList<>();
         numberCollabsPerSkill= new ArrayList<>();
-
     }
     public void setTableViewTeam(){
-        Skill skill1=new Skill("skill1");
-        Skill skill2= new Skill("skill2");
-        skills.add(skill1);
-        skills.add(skill2);
+        Skill skill1=new Skill("skill");
+        Skill skill2= new Skill("skil");
 
         colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
-        colSelect.setCellValueFactory(new PropertyValueFactory<>("selectedForTheTeam"));
+        colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkill());
         colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
 
-        for(Skill s : skills){
-            tableViewTeam.getItems().add(s);
-        }
+
+        skillsToChoose.add(skill1);
+        skillsToChoose.add(skill2);
+
+        tableViewTeam.setItems(skillsToChoose);
     }
 
     public void getSkillsAndCollabs(){
-        for(Skill s : skills){
-            if(colSelect.getCellObservableValue(s).getValue()){
+        skillsSelectedForTeam.clear();
+        for (Skill s : skillsToChoose) {
+            if (s.selectedSkill().get()==true) {
                 skillsSelectedForTeam.add(s);
-                numberCollabsPerSkill.add(colNumberCollabs.getCellObservableValue(s).getValue());
             }
         }
     }
@@ -73,7 +76,7 @@ public class GenerateTeamsUI {
         try{
             ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill);
         } catch (RuntimeException e){
-            popUpOfVerifications(Alert.AlertType.ERROR, "");
+            popUpOfVerifications(Alert.AlertType.ERROR, "").show();
         }
     }
 
