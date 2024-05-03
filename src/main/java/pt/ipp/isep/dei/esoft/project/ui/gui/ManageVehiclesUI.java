@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,8 +13,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
@@ -98,8 +95,6 @@ public class ManageVehiclesUI {
         for(Vehicle v : ctrl.getVehicleList()){
             vehiclesObservableList.add(v);
         }
-
-        tableViewVehicles.setOnMouseClicked(mouseEvent -> putInTextField());
     }
 
     public void showMore(Vehicle vehicle) throws IOException {
@@ -109,18 +104,11 @@ public class ManageVehiclesUI {
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
         ViewDetailsVehicleUI ui= fxmlLoader.getController();
-        ui.putInTextFields(getSelectedCollaborator());
+        ui.putInTextFields(getSelectedVehicle());
     }
 
-    public Vehicle getSelectedCollaborator(){
+    public Vehicle getSelectedVehicle(){
         return tableViewVehicles.getSelectionModel().getSelectedItem();
-    }
-
-
-    private void putInTextField(){
-        Vehicle selectVehicle = tableViewVehicles.getSelectionModel().getSelectedItem();
-        String editVehicle = selectVehicle.getBrand();
-        introducingVehicleNameField.setText(editVehicle);
     }
 
     @FXML
@@ -170,6 +158,8 @@ public class ManageVehiclesUI {
         Stage otherStage= new Stage();
         otherStage.setScene(scene);
         otherStage.show();
+        ViewDetailsVehicleUI ui=fxmlLoader.getController();
+        ui.setComboBox();
     }
 
     //this scene needs to have the details already in the text fields
@@ -181,6 +171,12 @@ public class ManageVehiclesUI {
         Stage otherStage= new Stage();
         otherStage.setScene(scene);
         otherStage.show();
+    }
+
+    @FXML
+    public void btnReload(ActionEvent event){
+        tableViewVehicles.getItems().clear();
+        setTableVehicles();
     }
 
     @FXML

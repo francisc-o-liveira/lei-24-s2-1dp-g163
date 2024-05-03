@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,11 @@ public class Vehicle {
         }
         private Type type;
 
-        /** The tare weight of the vehicle. */
+    public int getTare() {
+        return tare;
+    }
+
+    /** The tare weight of the vehicle. */
         private int tare;
 
         /** The license plate of the vehicle. */
@@ -449,5 +454,26 @@ public class Vehicle {
     public void setType(Type type) {
         this.type = type;
     }
+
+    public static LocalDate convertToJavaLocalDate(Date date) {
+
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+
+        return LocalDate.of(year, month, day);
+    }
+
+    public LocalDate getRegisterDateLocal(){
+        return convertToJavaLocalDate(registerDate);
+    }
+
+    public LocalDate getAcquisitionDateLocal(){
+        return convertToJavaLocalDate(acquisitionDate);
+    }
+
+    /*public LocalDate getKmCloseToCheckLocal(){
+        return convertToJavaLocalDate();
+    }*/
 
 }

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ManageVehiclesUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ManageVehiclesUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -94,7 +98,10 @@
                                           <Font name="System Bold" size="13.0" />
                                        </font>
                                     </Button>
-                                    <Button layoutX="784.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: ADD8E6;" text="Add" />
+                                    <Button layoutX="784.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: ADD8E6;" text="Add">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Button>
                                     <Button layoutX="604.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: D87DAB;" text="Edit">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
@@ -108,10 +115,15 @@
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font></Button>
-                                    <Button layoutX="573.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnUpdateKm" style="-fx-background-color: FFE0B2;" text="Update Kilometers">
+                                    <Button layoutX="521.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnUpdateKm" prefHeight="27.0" prefWidth="184.0" style="-fx-background-color: FFE0B2;" text="Update Kilometers">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font></Button>
+                                    <Button layoutX="523.0" layoutY="448.0" mnemonicParsing="false" onAction="#btnReload" style="-fx-background-color: #9DCC9B;" text="Reload">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Button>
                                  </children></AnchorPane>
                                     </children>
                                     <effect>
