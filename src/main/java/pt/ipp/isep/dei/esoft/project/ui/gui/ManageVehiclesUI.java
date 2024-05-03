@@ -110,7 +110,7 @@ public class ManageVehiclesUI {
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
-        ViewDetailsVehicleUi ui= fxmlLoader.getController();
+        ViewDetailsVehicleUI ui= fxmlLoader.getController();
         ui.putInTextFields(getSelectedCollaborator());
     }
 
