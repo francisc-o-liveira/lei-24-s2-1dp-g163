@@ -111,6 +111,7 @@ public class ManageCollaboratorsUI {
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
+        setTableCollaborators();
     }
 
     @FXML
