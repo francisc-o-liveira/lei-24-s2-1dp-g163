@@ -123,8 +123,15 @@ public class Vehicle {
      * @return true if the plate is valid, otherwise false
      */
     private boolean verifyPlate(String plate) {
-        // IMPLEMENTATION OF VERIFY PLATE NEEDS TO BE DONE HERE
-        return true;
+        if(registerDate.getYear()>1936 && registerDate.getYear() < 1993){
+            return plate.matches("^[A-Z]{2}-\\d{2}-\\d{2}$");
+        } else if (registerDate.getYear()>1992 && registerDate.getYear()<2005) {
+            return plate.matches("^\\d{2}-\\d{2}-[A-Z]{2}$");
+        } else if (registerDate.getYear()>2004 && registerDate.getYear()<2020) {
+            return plate.matches("^\\d{2}-[A-Z]{2}-\\d{2}$");
+        }else {
+            return plate.matches("^[A-Z]{2}-\\d{2}-[A-Z]{2}$");
+        }
     }
 
     /**
