@@ -79,14 +79,13 @@
          </font>
       </Label>
       <TextField layoutX="135.0" layoutY="227.0" prefHeight="26.0" prefWidth="141.0" />
-      <ChoiceBox layoutX="134.0" layoutY="96.0" prefWidth="150.0" />
       <TableView layoutX="335.0" layoutY="54.0" prefHeight="200.0" prefWidth="239.0">
         <columns>
           <TableColumn prefWidth="123.20001220703125" text="Check Up Kilometers" />
           <TableColumn prefWidth="112.19998168945312" text="Date of Check" />
         </columns>
       </TableView>
-      <Label layoutX="342.0" layoutY="25.0" text="Check Up History " textFill="#16b75b">
+      <Label layoutX="336.0" layoutY="25.0" text="Check Up History " textFill="#16b75b">
          <font>
             <Font name="Tahoma Bold" size="15.0" />
          </font>
@@ -96,5 +95,6 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
+      <ComboBox layoutX="134.0" layoutY="97.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
