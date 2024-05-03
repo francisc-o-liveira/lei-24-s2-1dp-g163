@@ -34,7 +34,6 @@ public class GenerateTeamsUI {
 
     public AuthenticationController ctrlAuth;
 
-    List<Skill> skills= new ArrayList<>();
     @FXML
     public TableView<Skill> tableViewTeam;
     @FXML
@@ -136,7 +135,4 @@ public class GenerateTeamsUI {
 
         return alerta;
     }
-
-
-
 }
