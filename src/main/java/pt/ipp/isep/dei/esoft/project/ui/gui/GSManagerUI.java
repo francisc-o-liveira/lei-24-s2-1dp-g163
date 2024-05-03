@@ -9,11 +9,17 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 
 import java.io.IOException;
 
 public class GSManagerUI {
     public Stage stage = LoginUI.getMainStage();
+    public AuthenticationController ctrlAuth;
+
+    public GSManagerUI(){
+        ctrlAuth = new AuthenticationController();
+    }
 
     @FXML
     public void reload(ActionEvent event) throws IOException {
@@ -34,6 +40,7 @@ public class GSManagerUI {
         ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
+            ctrlAuth.doLogout();
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
             Parent root= fxmlLoader.load();
             Scene scene= new Scene(root);
@@ -67,7 +74,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ManageJobs.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewJobs.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);

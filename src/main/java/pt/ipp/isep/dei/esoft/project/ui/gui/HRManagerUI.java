@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 
 
 import java.io.IOException;
@@ -17,6 +18,11 @@ public class HRManagerUI {
 
     public Stage stage = LoginUI.getMainStage();
 
+    public AuthenticationController ctrlAuth;
+
+    public HRManagerUI(){
+        ctrlAuth = new AuthenticationController();
+    }
 
     @FXML
     public void reloadPage(ActionEvent event) throws IOException {
@@ -37,6 +43,7 @@ public class HRManagerUI {
         ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
+            ctrlAuth.doLogout();
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
             Parent root= fxmlLoader.load();
             Scene scene= new Scene(root);

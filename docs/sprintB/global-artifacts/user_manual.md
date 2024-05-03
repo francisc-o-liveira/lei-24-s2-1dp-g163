@@ -172,7 +172,7 @@ can:
 
 ## Green Space Manager (GSM)
 
-When you open and login in the User Portal app,(there are 2 possible paths) the GSM
+When you open and login in the User Portal app,(there are 6 possible paths) the GSM
 can:
 
 * See the Report Faults of the Green Spaces - The Manager can access the report faults made by the users of the Green Space

@@ -294,6 +294,7 @@ public class ManageCollaboratorsUI {
         ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
+            ctrlAuth.doLogout();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

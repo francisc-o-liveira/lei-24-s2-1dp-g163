@@ -21,7 +21,7 @@ public class RegisterSkillController {
      * Constructs a RegisterSkillController object.
      */
     public RegisterSkillController(){
-        skillRepository=new SkillRepository();
+        skillRepository=Repositories.getInstance().getSkillRepository();
     }
 
     /**
