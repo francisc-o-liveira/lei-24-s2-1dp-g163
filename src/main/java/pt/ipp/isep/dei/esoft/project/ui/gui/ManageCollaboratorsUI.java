@@ -111,6 +111,7 @@ public class ManageCollaboratorsUI {
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
+        uiToAdd.setMainScene(this);
     }
 
     @FXML
@@ -291,5 +292,10 @@ public class ManageCollaboratorsUI {
         alerta.setContentText(message);
 
         return alerta;
+    }
+
+    public void handleStageClosed() {
+        setTableClean();
+        setTableCollaborators();
     }
 }

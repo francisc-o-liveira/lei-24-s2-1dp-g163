@@ -88,11 +88,22 @@ public class ViewDetailsCollaboratorUI {
 
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
 
+    private ManageCollaboratorsUI mainScene;
+
     public ViewDetailsCollaboratorUI(){
         ctrl=new RegisterCollaboratorController();
         ctrlSkills= new AssignSkillsController();
         manageTable= new ManageCollaboratorsUI();
         stage=manageTable.getStageToViewDetails();
+    }
+
+    public void setMainScene(ManageCollaboratorsUI mainScene){
+        this.mainScene=mainScene;
+    }
+
+    @FXML
+    public void onClose() {
+        mainScene.handleStageClosed();
     }
 
     public void setComboBoxes(){
