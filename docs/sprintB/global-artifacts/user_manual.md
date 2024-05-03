@@ -120,8 +120,11 @@ history. Task assignment has the ability to assign specific tasks to collaborato
 their progress. The integrated schedule allows for efficient activity scheduling and management of important
 events. In summary, the Green Space Management System offers a comprehensive and effective solution for all
 management needs in green space environments.
+Below is a figure that illustrates an overview of the application:
 
 
+![diagrama da aplicação](imagesUserManual/diagramaAplicacao.png)
+Figure 1: General application diagram
 
 
 # System Requirements
@@ -168,7 +171,7 @@ can:
 
 ## Green Space Manager (GSM)
 
-When you open and login in the User Portal app,(there are 6 possible paths) the GSM
+When you open and login in the User Portal app,(there are 2 possible paths) the GSM
 can:
 
 * See the Report Faults of the Green Spaces - The Manager can access the report faults made by the users of the Green Space
