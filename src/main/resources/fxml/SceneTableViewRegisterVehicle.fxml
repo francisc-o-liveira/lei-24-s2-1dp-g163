@@ -104,11 +104,11 @@
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font></CheckBox>
-                                    <Button layoutX="725.0" layoutY="489.0" mnemonicParsing="false" style="-fx-background-color: #9DCC9B;" text="Register Check-Up">
+                                    <Button layoutX="725.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnRegisterCheck" style="-fx-background-color: #9DCC9B;" text="Register Check-Up">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font></Button>
-                                    <Button layoutX="573.0" layoutY="489.0" mnemonicParsing="false" style="-fx-background-color: FFE0B2;" text="Update Kilometers">
+                                    <Button layoutX="573.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnUpdateKm" style="-fx-background-color: FFE0B2;" text="Update Kilometers">
                                        <font>
                                           <Font name="System Bold" size="13.0" />
                                        </font></Button>
