@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import pt.ipp.isep.dei.esoft.project.application.controller.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
@@ -62,6 +65,16 @@ public class GenerateTeamsUI {
         colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkill());
         colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
 
+        colNumberCollabs.setCellValueFactory(new PropertyValueFactory<>("numberCollabsPerSkill"));
+        colNumberCollabs.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        colNumberCollabs.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Skill, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Skill, Integer> event) {
+                Skill skill=event.getRowValue();
+                skill.setNumberCollabsPerSkill(event.getNewValue());
+            }
+        });
+
 
         skillsToChoose.add(skill1);
         skillsToChoose.add(skill2);
@@ -74,6 +87,7 @@ public class GenerateTeamsUI {
         for (Skill s : skillsToChoose) {
             if (s.selectedSkill().get()==true) {
                 skillsSelectedForTeam.add(s);
+                numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
             }
         }
     }

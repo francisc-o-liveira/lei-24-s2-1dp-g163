@@ -4,6 +4,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
@@ -18,6 +19,7 @@ public class Skill {
     private final BooleanProperty selecting;
 
     private boolean selectedForTeam;
+
 
     private IntegerProperty numberCollabsPerSkill;
     /**
@@ -120,6 +122,13 @@ public class Skill {
     }
 
     public void setNumberCollabsPerSkill(Integer number){
+        if (numberCollabsPerSkill == null) {
+            numberCollabsPerSkill = new SimpleIntegerProperty();
+        }
         this.numberCollabsPerSkill.set(number);
+    }
+
+    public IntegerProperty numberCollabsPerSkillProperty() {
+        return numberCollabsPerSkill;
     }
 }
