@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ViewDetailsCollaboratorUI">
    <children>
       <Label layoutX="8.0" layoutY="92.0" text="Date of Birthday:">
          <font>
@@ -22,7 +16,7 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <TextField layoutX="112.0" layoutY="20.0" prefHeight="26.0" prefWidth="141.0" />
+      <TextField fx:id="name" layoutX="112.0" layoutY="20.0" prefHeight="26.0" prefWidth="141.0" />
       <Label layoutX="57.0" layoutY="195.0" text="Zipcode:">
          <font>
             <Font name="Tahoma" size="13.0" />
@@ -48,23 +42,23 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <DatePicker layoutX="112.0" layoutY="87.0" prefHeight="26.0" prefWidth="147.0" />
-      <DatePicker layoutX="110.0" layoutY="124.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="110.0" layoutY="190.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="110.0" layoutY="158.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="110.0" layoutY="223.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="110.0" layoutY="258.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button layoutX="215.0" layoutY="444.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: B7D5B2;" text="Assign">
+      <DatePicker fx:id="dateBirthday" layoutX="112.0" layoutY="87.0" prefHeight="26.0" prefWidth="147.0" />
+      <DatePicker fx:id="dateAdmission" layoutX="110.0" layoutY="124.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="addressZipCode" layoutX="110.0" layoutY="190.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="addressCity" layoutX="110.0" layoutY="158.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="phoneNumber" layoutX="110.0" layoutY="223.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField fx:id="addressStreet" layoutX="110.0" layoutY="258.0" prefHeight="26.0" prefWidth="150.0" />
+      <Button layoutX="215.0" layoutY="444.0" mnemonicParsing="false" onAction="#btnAssign" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: B7D5B2;" text="Assign">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="19.0" layoutY="443.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: ADD8E6;" text="Add">
+      <Button layoutX="19.0" layoutY="443.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: ADD8E6;" text="Add">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="117.0" layoutY="444.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: D87DAB;" text="Edit">
+      <Button layoutX="117.0" layoutY="444.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: D87DAB;" text="Edit">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -74,7 +68,7 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <TextField layoutX="109.0" layoutY="54.0" prefHeight="26.0" prefWidth="147.0" />
+      <TextField fx:id="email" layoutX="109.0" layoutY="54.0" prefHeight="26.0" prefWidth="147.0" />
       <Label layoutX="8.0" layoutY="330.0" prefHeight="19.0" prefWidth="147.0" text="Identification Document:">
          <font>
             <Font name="Tahoma" size="13.0" />
@@ -90,15 +84,15 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <ComboBox layoutX="153.0" layoutY="327.0" prefHeight="26.0" prefWidth="106.0" />
-      <TableView layoutX="327.0" layoutY="46.0" prefHeight="440.0" prefWidth="462.0">
+      <ComboBox fx:id="docType" layoutX="153.0" layoutY="327.0" prefHeight="26.0" prefWidth="106.0" />
+      <TableView fx:id="tableAssignSkills" layoutX="327.0" layoutY="46.0" prefHeight="440.0" prefWidth="462.0">
         <columns>
-          <TableColumn prefWidth="41.0" text="select" />
-          <TableColumn prefWidth="420.0" text="Skills for collaborators" />
+          <TableColumn fx:id="colSelect" prefWidth="41.0" text="select" />
+          <TableColumn fx:id="colSkills" prefWidth="420.0" text="Skills for collaborators" />
         </columns>
       </TableView>
       <Label layoutX="405.0" layoutY="12.0" prefHeight="26.0" prefWidth="306.0" text="Select the skills you wish to assign to the collaborators:" />
-      <ComboBox layoutX="111.0" layoutY="292.0" prefWidth="150.0" />
-      <TextField layoutX="150.0" layoutY="360.0" prefHeight="26.0" prefWidth="113.0" />
+      <ComboBox fx:id="selectedjobCategory" layoutX="111.0" layoutY="292.0" prefWidth="150.0" />
+      <TextField fx:id="docIDNumber" layoutX="150.0" layoutY="360.0" prefHeight="26.0" prefWidth="113.0" />
    </children>
 </AnchorPane>

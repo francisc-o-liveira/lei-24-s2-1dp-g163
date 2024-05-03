@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,20 +19,22 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Authen
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
+
+import javax.print.Doc;
+import javax.swing.text.View;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class ManageCollaboratorsUI {
 
     public Stage stage = LoginUI.getMainStage();
     public RegisterCollaboratorController ctrl;
+    public ViewDetailsCollaboratorUI viewDetailsCollaboratorUI;
     public AuthenticationController ctrlAuth;
 
 
@@ -87,45 +88,21 @@ public class ManageCollaboratorsUI {
         ctrlAuth= new AuthenticationController();
     }
 
-    @FXML
-    public void btnAddCollaborator(ActionEvent event) {
-        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
-        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
-        typeOfDocument = (DocType.Type) docType.getValue();
-        jobCategory=(JobCategory) selectedjobCategory.getValue();
-        String nameCollab= name.getText();
-        String address= addressStreet.getText();
-        String addresszipcode=addressZipCode.getText();
-        String addresscity=addressCity.getText();
-        String e_mail=email.getText();
-        String phone=phoneNumber.getText();
+    public TableView<Collaborator> getTableCollaborators(){
+        setTableCollaborators();
+        return tableCollaborators;
+    }
 
-        if(nameCollab.isEmpty() || address.isEmpty() || addresszipcode.isEmpty() || addresscity.isEmpty() || e_mail.isEmpty() || phone.isEmpty()){
-            popUpOfVerifications(Alert.AlertType.ERROR, "The Collaborator is empty").show();
-        } else {
-            try {
-                ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
-                popUp();
-            } catch (CloneNotSupportedException e){
-                popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
-            }catch (IllegalArgumentException e){
-                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-            }
-        }
-        name.clear();
-        addressZipCode.clear();
-        addressStreet.clear();
-        addressCity.clear();
-        email.clear();
-        phoneNumber.clear();
-        docIDNumber.clear();
-        dateBirthday.setValue(null);
-        dateAdmission.setValue(null);
-        docType.getSelectionModel().clearSelection();
-        selectedjobCategory.getSelectionModel().clearSelection();
-        ObservableList<Collaborator> listForTable= FXCollections.observableArrayList(ctrl.getCollaboratorList());
-        tableCollaborators.getItems().clear();
-        tableCollaborators.setItems(listForTable);
+    @FXML
+    public void btnAddCollaborator(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        uiToAdd.setComboBoxes();
     }
 
     @FXML
@@ -147,41 +124,20 @@ public class ManageCollaboratorsUI {
     }
 
     @FXML
-    public void btnEditCollaborator() {
-        Collaborator editedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
-        if (editedCollaborator != null) {
-            String newName = name.getText();
-            editedCollaborator.setName(newName);
-            name.clear();
+    public void btnEditCollaborator() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
+        uiToAdd.putInTextFields(selectedCollaborator);
+    }
 
-            String newZipCode = addressZipCode.getText();
-            editedCollaborator.setAddressZipCode(newZipCode);
-            addressZipCode.clear();
-
-            String newDocIDNumber = docIDNumber.getText();
-            int idNew = Integer.parseInt(newDocIDNumber);
-            typeOfDocument = (DocType.Type) docType.getValue();
-            editedCollaborator.setDocType(typeOfDocument,idNew);
-            docIDNumber.clear();
-
-            String newEmail = email.getText();
-            editedCollaborator.setEmail(newEmail);
-            email.clear();
-
-            String newPhoneNumber = phoneNumber.getText();
-            editedCollaborator.setPhoneNumber(newPhoneNumber);
-            phoneNumber.clear();
-
-            String newCity = addressCity.getText();
-            editedCollaborator.setAddressCity(newCity);
-            addressCity.clear();
-
-            String newStreet = addressStreet.getText();
-            editedCollaborator.setAddress(newStreet);
-            addressStreet.clear();
-
-            tableCollaborators.refresh();
-        }
+    public Collaborator getSelectedCollaborator(){
+        return tableCollaborators.getSelectionModel().getSelectedItem();
     }
 
     private void putInTextFields() {
@@ -207,13 +163,22 @@ public class ManageCollaboratorsUI {
 
         String editZipCode = selectedCollaborator.getAddressZipCode();
         addressZipCode.setText(editZipCode);
+
+        LocalDate birthday = selectedCollaborator.getBirthdayLocal();
+        dateBirthday.setValue(birthday);
+
+        LocalDate admissionDate = selectedCollaborator.getAdmissionDateLocal();
+        dateAdmission.setValue(admissionDate);
+
+        DocType.Type typeOfDocument = selectedCollaborator.getDocType();
+        docType.setValue(typeOfDocument);
+
+        JobCategory jobCategory = selectedCollaborator.getJobCategory();
+        selectedjobCategory.setValue(jobCategory);
     }
 
 
     public void setTableCollaborators() {
-        ComboBox<DocType> cbxStatus = new ComboBox<>();
-        docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
-        selectedjobCategory.setItems(FXCollections.observableArrayList(ctrl.getJobCategoryList()));
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnIDNumber.setCellValueFactory(new PropertyValueFactory<>("docIDNumber"));
@@ -252,36 +217,34 @@ public class ManageCollaboratorsUI {
                 };
             }
         });
-        tableCollaborators.setOnMouseClicked(mouseEvent -> putInTextFields());
+        List<Collaborator> collabList = new ArrayList<>();
+        Date birthday1 = new Date(1990, 5, 15);
+        Date admissionDate1 = new Date(2020, 3, 10);
+        DocType.Type docType1 = DocType.Type.CitizenCard;
+        JobCategory jobCategory1 = new JobCategory("Software"); // Assuming JobCategory constructor takes job title
+        Collaborator collaborator1 = new Collaborator("John Doe", birthday1, admissionDate1, "123 Main St", "12345", "New York", "+3511234567890", "john.doe@example.com", docType1, 123456789, jobCategory1);
+        Date birthday2 = new Date(1985, 8, 25);
+        Date admissionDate2 = new Date(2018, 7, 20);
+        DocType.Type docType2 = DocType.Type.CitizenCard;
+        JobCategory jobCategory2 = new JobCategory("Marketing");
+        Collaborator collaborator2 = new Collaborator("Jane Smith", birthday2, admissionDate2, "456 Oak St", "54321", "Los Angeles", "+351987654321", "jane.smith@example.com", docType2, 987654321, jobCategory2);
+        collabList.add(collaborator1);
+        collabList.add(collaborator2);
+        for(Collaborator c : collabList){
+            tableCollaborators.getItems().add(c);
+        }
     }
 
     //see this again later
     public void showMore(Collaborator collab) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hi.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-    }
-
-    private Alert popUp() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-
-        alerta.setHeaderText("Information");
-        alerta.setContentText("Collaborator added!");
-
-        return alerta;
-    }
-
-    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
-        Alert alerta = new Alert(alertType);
-
-        alerta.setTitle("ERROR");
-        alerta.setHeaderText("Invalid Data");
-        alerta.setContentText(messages);
-
-        return alerta;
+        ViewDetailsCollaboratorUI ui=fxmlLoader.getController();
+        ui.putInTextFields(getSelectedCollaborator());
     }
 
     @FXML
@@ -304,6 +267,16 @@ public class ManageCollaboratorsUI {
     }
 
     @FXML
+    public void goBack(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader;
+        fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /*@FXML --- this should eb the correct one to use; needs alterations
     public void goBack(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader ;
         try {
@@ -323,5 +296,5 @@ public class ManageCollaboratorsUI {
             popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
         }
 
-    }
+    }*/
 }

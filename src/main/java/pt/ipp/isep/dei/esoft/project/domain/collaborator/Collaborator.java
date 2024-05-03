@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -475,6 +476,23 @@ public class Collaborator{
         Collaborator otherCollab=(Collaborator) other;
 
         return this.getDocIDNumber()==otherCollab.getDocIDNumber();
+    }
+
+    public static LocalDate convertToJavaLocalDate(Date date) {
+
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+
+        return LocalDate.of(year, month, day);
+    }
+
+    public LocalDate getBirthdayLocal() {
+        return convertToJavaLocalDate(this.birthday);
+    }
+
+    public LocalDate getAdmissionDateLocal(){
+        return convertToJavaLocalDate(this.admissionDate);
     }
 
 

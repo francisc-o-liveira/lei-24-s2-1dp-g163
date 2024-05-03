@@ -1,0 +1,227 @@
+package pt.ipp.isep.dei.esoft.project.ui.gui;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import javafx.util.Callback;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
+
+
+import javax.print.Doc;
+import java.io.IOException;
+import java.time.LocalDate;
+
+public class ViewDetailsCollaboratorUI {
+
+    public RegisterCollaboratorController ctrl;
+    public ManageCollaboratorsUI manageTable;
+    private Date birthday;
+    private Date admissionDate;
+    private DocType.Type typeOfDocument;
+    private JobCategory jobCategory;
+    @FXML
+    private TextField addressCity;
+
+    @FXML
+    private TextField addressStreet;
+
+    @FXML
+    private TextField addressZipCode;
+
+    @FXML
+    private TableColumn<Skill, Boolean> colSelect;
+
+    @FXML
+    private TableColumn<Skill, Skill> colSkills;
+
+    @FXML
+    private DatePicker dateAdmission;
+
+    @FXML
+    private DatePicker dateBirthday;
+
+    @FXML
+    private TextField docIDNumber;
+
+    @FXML
+    private ComboBox<DocType.Type> docType;
+
+    @FXML
+    private TextField email;
+
+    @FXML
+    private TextField name;
+
+    @FXML
+    private TextField phoneNumber;
+
+    @FXML
+    private ComboBox<JobCategory> selectedjobCategory;
+
+    @FXML
+    private TableView<Skill> tableAssignSkills;
+
+    public ViewDetailsCollaboratorUI(){
+        ctrl=new RegisterCollaboratorController();
+        manageTable= new ManageCollaboratorsUI();
+    }
+
+    public void setComboBoxes(){
+        docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
+        selectedjobCategory.setItems(FXCollections.observableArrayList(ctrl.getJobCategoryList()));
+    }
+
+    @FXML
+    public void btnAdd(ActionEvent event) {
+        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
+        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
+        typeOfDocument = docType.getValue();
+        jobCategory=selectedjobCategory.getValue();
+        String nameCollab= name.getText();
+        String address= addressStreet.getText();
+        String addresszipcode=addressZipCode.getText();
+        String addresscity=addressCity.getText();
+        String e_mail=email.getText();
+        String phone=phoneNumber.getText();
+
+        if(nameCollab.isEmpty() || address.isEmpty() || addresszipcode.isEmpty() || addresscity.isEmpty() || e_mail.isEmpty() || phone.isEmpty()){
+            popUpOfVerifications(Alert.AlertType.ERROR, "The Collaborator is empty").show();
+        } else {
+            try {
+                ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
+                popUp();
+            } catch (CloneNotSupportedException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
+            }catch (IllegalArgumentException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        }
+
+        ObservableList<Collaborator> listForTable= FXCollections.observableArrayList(ctrl.getCollaboratorList());
+        manageTable.getTableCollaborators().getItems().clear();
+        manageTable.getTableCollaborators().setItems(listForTable);
+
+    }
+
+    @FXML
+    public void btnAssign(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void btnEdit(ActionEvent event) {
+        Collaborator editedCollaborator = manageTable.getSelectedCollaborator();
+        if (editedCollaborator != null) {
+            String newName = name.getText();
+            editedCollaborator.setName(newName);
+            name.clear();
+
+            String newZipCode = addressZipCode.getText();
+            editedCollaborator.setAddressZipCode(newZipCode);
+            addressZipCode.clear();
+
+            String newDocIDNumber = docIDNumber.getText();
+            int idNew = Integer.parseInt(newDocIDNumber);
+            typeOfDocument = (DocType.Type) docType.getValue();
+            editedCollaborator.setDocType(typeOfDocument,idNew);
+            docIDNumber.clear();
+            docType.getSelectionModel().clearSelection();
+
+            String newEmail = email.getText();
+            editedCollaborator.setEmail(newEmail);
+            email.clear();
+
+            String newPhoneNumber = phoneNumber.getText();
+            editedCollaborator.setPhoneNumber(newPhoneNumber);
+            phoneNumber.clear();
+
+            String newCity = addressCity.getText();
+            editedCollaborator.setAddressCity(newCity);
+            addressCity.clear();
+
+            String newStreet = addressStreet.getText();
+            editedCollaborator.setAddress(newStreet);
+            addressStreet.clear();
+
+            editedCollaborator.setBirthday(new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth()));
+            dateBirthday.setValue(null);
+            editedCollaborator.setAdmissionDate(new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth()));
+            dateAdmission.setValue(null);
+
+            editedCollaborator.setJobCategory(selectedjobCategory.getValue());
+            selectedjobCategory.getSelectionModel().clearSelection();
+
+            manageTable.getTableCollaborators().refresh();
+        }
+    }
+
+    public void putInTextFields(Collaborator selectedCollaborator) {
+
+        String editName = selectedCollaborator.getName();
+        name.setText(editName);
+
+        String editDocIDNumber = String.valueOf(selectedCollaborator.getDocIDNumber());
+        docIDNumber.setText(editDocIDNumber);
+
+        String editEmail = selectedCollaborator.getEmail();
+        email.setText(editEmail);
+
+        String editPhoneNumber = String.valueOf(selectedCollaborator.getPhoneNumber());
+        phoneNumber.setText(editPhoneNumber);
+
+        String editCity = selectedCollaborator.getAddressCity();
+        addressCity.setText(editCity);
+
+        String editStreet = selectedCollaborator.getAddress();
+        addressStreet.setText(editStreet);
+
+        String editZipCode = selectedCollaborator.getAddressZipCode();
+        addressZipCode.setText(editZipCode);
+
+        LocalDate birthday = selectedCollaborator.getBirthdayLocal();
+        dateBirthday.setValue(birthday);
+
+        LocalDate admissionDate = selectedCollaborator.getAdmissionDateLocal();
+        dateAdmission.setValue(admissionDate);
+
+        DocType.Type typeOfDocument = selectedCollaborator.getDocType();
+        docType.setValue(typeOfDocument);
+
+        JobCategory jobCategory = selectedCollaborator.getJobCategory();
+        selectedjobCategory.setValue(jobCategory);
+    }
+
+    private Alert popUp() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+
+        alerta.setHeaderText("Information");
+        alerta.setContentText("Collaborator added!");
+
+        return alerta;
+    }
+
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
+        Alert alerta = new Alert(alertType);
+
+        alerta.setTitle("ERROR");
+        alerta.setHeaderText("Invalid Data");
+        alerta.setContentText(messages);
+
+        return alerta;
+    }
+}
