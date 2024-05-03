@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.gui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
@@ -88,7 +90,6 @@ public class ViewDetailsCollaboratorUI {
 
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
 
-    private ManageCollaboratorsUI mainScene;
 
     public ViewDetailsCollaboratorUI(){
         ctrl=new RegisterCollaboratorController();
@@ -97,14 +98,6 @@ public class ViewDetailsCollaboratorUI {
         stage=manageTable.getStageToViewDetails();
     }
 
-    public void setMainScene(ManageCollaboratorsUI mainScene){
-        this.mainScene=mainScene;
-    }
-
-    @FXML
-    public void onClose() {
-        mainScene.handleStageClosed();
-    }
 
     public void setComboBoxes(){
         docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
@@ -130,13 +123,13 @@ public class ViewDetailsCollaboratorUI {
             try {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
                 popUp().show();
-                manageTable.getTableCollaborators().refresh();
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
             }catch (IllegalArgumentException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
+
     }
 
     @FXML
