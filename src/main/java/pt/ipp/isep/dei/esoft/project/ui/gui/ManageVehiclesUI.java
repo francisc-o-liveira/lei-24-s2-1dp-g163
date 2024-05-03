@@ -1,15 +1,20 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -19,6 +24,7 @@ import java.io.IOException;
 public class ManageVehiclesUI {
 
     public Stage stage=LoginUI.getMainStage();
+    public Stage stageToViewDetails = new Stage();
 
     @FXML
     public TextField introducingVehicleNameField;
@@ -41,6 +47,10 @@ public class ManageVehiclesUI {
 
     public TableColumn<Vehicle, String> colMaintenance;
 
+    @FXML
+    public TableColumn<Collaborator, Void> colButtonsDetails;
+
+    ObservableList<Vehicle> vehiclesObservableList= FXCollections.observableArrayList();
 
     public ManageVehiclesUI(){
         ctrl=new RegisterVehicleController();
@@ -48,14 +58,64 @@ public class ManageVehiclesUI {
     }
 
     public void setTableVehicles(){
-        colBrand.setCellValueFactory(cellData -> {
-            return new SimpleStringProperty(cellData.getValue().getBrand());
-        });
-        tableViewVehicles.getItems().clear();
+        colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colCurrentKm.setCellValueFactory(new PropertyValueFactory<>("currentKm"));
+        colCheckUpFreq.setCellValueFactory(new PropertyValueFactory<>("checkUpFreq"));
+        colMaintenance.setCellValueFactory(new PropertyValueFactory<>("maintenance"));
+        colButtonsDetails.setCellValueFactory(new Callback<
+                TableColumn.CellDataFeatures<Vehicle, Void>, TableCell<Vehicle, Void>>() {
+            @Override
+            public TableCell<Vehicle, Void> call(TableColumn.CellDataFeatures<Vehicle, Void> vehicleVoidCellDataFeatures) {
+                return new TableCell<Vehicle, Void>() {
+                    private final javafx.scene.control.Button btn = new Button("View Details");
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            String plate = Integer.parseInt(docIDNumber.getText());
+                            Vehicle vehicle = ctrl.getCollaboratorRepository().searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
+                            try {
+                                showMore(vehicle);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+
+
+
+
+        }});
         for(Vehicle v : ctrl.getVehicleList()){
-            tableViewVehicles.getItems().add(v);
+            vehiclesObservableList.add(v);
         }
+
         tableViewVehicles.setOnMouseClicked(mouseEvent -> putInTextField());
+    }
+
+    public void showMore(Vehicle vehicle) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stageToViewDetails.setScene(scene);
+        stageToViewDetails.show();
+        ViewDetailsVehicleUi ui= fxmlLoader.getController();
+        ui.putInTextFields(getSelectedCollaborator());
+    }
+
+    public Vehicle getSelectedCollaborator(){
+        return tableViewVehicles.getSelectionModel().getSelectedItem();
     }
 
 
@@ -145,7 +205,7 @@ public class ManageVehiclesUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader ;
+        FXMLLoader fxmlLoader;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
