@@ -85,7 +85,7 @@
          </font>
       </Label>
       <ComboBox fx:id="docType" layoutX="153.0" layoutY="327.0" prefHeight="26.0" prefWidth="106.0" />
-      <TableView fx:id="tableAssignSkills" layoutX="327.0" layoutY="46.0" prefHeight="440.0" prefWidth="462.0">
+      <TableView editable="true" fx:id="tableAssignSkills" layoutX="327.0" layoutY="46.0" prefHeight="440.0" prefWidth="462.0">
         <columns>
           <TableColumn fx:id="colSelect" prefWidth="41.0" text="select" />
           <TableColumn fx:id="colSkills" prefWidth="420.0" text="Skills for collaborators" />

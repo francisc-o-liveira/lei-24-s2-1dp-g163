@@ -8,11 +8,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
@@ -25,11 +27,17 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import javax.print.Doc;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ViewDetailsCollaboratorUI {
 
     public RegisterCollaboratorController ctrl;
+    public AssignSkillsController ctrlSkills;
+
     public ManageCollaboratorsUI manageTable;
+    public Stage stage;
     private Date birthday;
     private Date admissionDate;
     private DocType.Type typeOfDocument;
@@ -76,9 +84,15 @@ public class ViewDetailsCollaboratorUI {
     @FXML
     private TableView<Skill> tableAssignSkills;
 
+    public List<Skill> skillsToAssign=new ArrayList<>();
+
+    ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
+
     public ViewDetailsCollaboratorUI(){
         ctrl=new RegisterCollaboratorController();
+        ctrlSkills= new AssignSkillsController();
         manageTable= new ManageCollaboratorsUI();
+        stage=manageTable.getStageToViewDetails();
     }
 
     public void setComboBoxes(){
@@ -104,7 +118,7 @@ public class ViewDetailsCollaboratorUI {
         } else {
             try {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
-                popUp();
+                popUp().show();
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
             }catch (IllegalArgumentException e){
@@ -120,7 +134,35 @@ public class ViewDetailsCollaboratorUI {
 
     @FXML
     public void btnAssign(ActionEvent event) {
+        getSkillsToAssign();
+            Collaborator collaboratorAssigning=ctrl.getCollaboratorRepository().searchForCollaboratorByIDNumber(Integer.parseInt(docIDNumber.getText()));
+            for(Skill skill : skillsToAssign){
+                try{
+                    ctrlSkills.assignSkills(collaboratorAssigning, skill);
+                    popUpSkills().show();
+                } catch (CloneNotSupportedException e) {
+                    popUpOfVerifications(Alert.AlertType.ERROR, "s").show();
+                }
+            }
+    }
 
+    public void getSkillsToAssign(){
+        for (Skill s : skillsToChoose) {
+            if (s.selectedSkill().get()==true) {
+                skillsToAssign.add(s);
+            }
+        }
+    }
+
+    public void setTableAssignSkills(){
+        colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
+        colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkill());
+        colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
+
+        for(Skill skill : ctrlSkills.getAllSkills()){
+            skillsToChoose.add(skill);
+        }
+        tableAssignSkills.setItems(skillsToChoose);
     }
 
     @FXML
@@ -207,12 +249,19 @@ public class ViewDetailsCollaboratorUI {
     }
 
     private Alert popUp() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Information");
+        alert.setContentText("Collaborator added!");
 
-        alerta.setHeaderText("Information");
-        alerta.setContentText("Collaborator added!");
+        return alert;
+    }
 
-        return alerta;
+    private Alert popUpSkills() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Information");
+        alert.setContentText("Skills added!");
+
+        return alert;
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {

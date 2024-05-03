@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 /**
  * Domain class representing a Skill object.
  */
@@ -8,6 +11,9 @@ public class Skill {
     /** Name of the skill */
     private String skillName;
 
+    private final BooleanProperty selecting;
+
+    private boolean selectedForTeam;
     /**
      * Constructs a Skill object with the specified name.
      *
@@ -15,6 +21,13 @@ public class Skill {
      */
     public Skill(String skillName){
         setSkillName(skillName);
+        this.selecting = new SimpleBooleanProperty(false);
+
+        this.selecting.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                selectedForTeam=true;
+            }
+        });
     }
 
     /**
@@ -90,5 +103,9 @@ public class Skill {
     @Override
     public String toString(){
         return String.format("Skill: %s\n ", skillName);
+    }
+
+    public BooleanProperty selectedSkill(){
+        return selecting;
     }
 }

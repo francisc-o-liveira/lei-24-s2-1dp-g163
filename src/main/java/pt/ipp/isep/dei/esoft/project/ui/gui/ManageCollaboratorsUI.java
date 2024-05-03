@@ -33,6 +33,7 @@ import java.util.List;
 public class ManageCollaboratorsUI {
 
     public Stage stage = LoginUI.getMainStage();
+    public Stage stageToViewDetails = new Stage();
     public RegisterCollaboratorController ctrl;
     public ViewDetailsCollaboratorUI viewDetailsCollaboratorUI;
     public AuthenticationController ctrlAuth;
@@ -93,6 +94,10 @@ public class ManageCollaboratorsUI {
         return tableCollaborators;
     }
 
+    public Stage getStageToViewDetails(){
+        return stageToViewDetails;
+    }
+
     @FXML
     public void btnAddCollaborator(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
@@ -102,6 +107,7 @@ public class ManageCollaboratorsUI {
         stage.setScene(scene);
         stage.show();
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
     }
 
@@ -133,6 +139,7 @@ public class ManageCollaboratorsUI {
         stage.show();
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
+        uiToAdd.setTableAssignSkills();
         uiToAdd.putInTextFields(selectedCollaborator);
     }
 
@@ -217,22 +224,6 @@ public class ManageCollaboratorsUI {
                 };
             }
         });
-        List<Collaborator> collabList = new ArrayList<>();
-        Date birthday1 = new Date(1990, 5, 15);
-        Date admissionDate1 = new Date(2020, 3, 10);
-        DocType.Type docType1 = DocType.Type.CitizenCard;
-        JobCategory jobCategory1 = new JobCategory("Software"); // Assuming JobCategory constructor takes job title
-        Collaborator collaborator1 = new Collaborator("John Doe", birthday1, admissionDate1, "123 Main St", "12345", "New York", "+3511234567890", "john.doe@example.com", docType1, 123456789, jobCategory1);
-        Date birthday2 = new Date(1985, 8, 25);
-        Date admissionDate2 = new Date(2018, 7, 20);
-        DocType.Type docType2 = DocType.Type.CitizenCard;
-        JobCategory jobCategory2 = new JobCategory("Marketing");
-        Collaborator collaborator2 = new Collaborator("Jane Smith", birthday2, admissionDate2, "456 Oak St", "54321", "Los Angeles", "+351987654321", "jane.smith@example.com", docType2, 987654321, jobCategory2);
-        collabList.add(collaborator1);
-        collabList.add(collaborator2);
-        for(Collaborator c : collabList){
-            tableCollaborators.getItems().add(c);
-        }
     }
 
     //see this again later
@@ -240,9 +231,8 @@ public class ManageCollaboratorsUI {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+        stageToViewDetails.setScene(scene);
+        stageToViewDetails.show();
         ViewDetailsCollaboratorUI ui=fxmlLoader.getController();
         ui.putInTextFields(getSelectedCollaborator());
     }
