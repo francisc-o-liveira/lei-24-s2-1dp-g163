@@ -1,75 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="25.0" layoutY="92.0" text="Date of Birthday:">
+      <Label layoutX="8.0" layoutY="92.0" text="Date of Birthday:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="142.0" text="Admission Date:">
+      <Label layoutX="10.0" layoutY="129.0" text="Admission Date:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <TextField layoutX="135.0" layoutY="33.0" prefHeight="26.0" prefWidth="141.0" />
-      <Label layoutX="75.0" layoutY="192.0" text="Zipcode:">
+      <TextField layoutX="112.0" layoutY="20.0" prefHeight="26.0" prefWidth="141.0" />
+      <Label layoutX="57.0" layoutY="195.0" text="Zipcode:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="337.0" layoutY="142.0" text="Adress Street:">
+      <Label layoutX="23.0" layoutY="263.0" prefHeight="0.0" prefWidth="82.0" text="Adress Street:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="345.0" layoutY="38.0" text="Address City:">
+      <Label layoutX="31.0" layoutY="163.0" text="Address City:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="89.0" layoutY="38.0" text="Email:">
+      <Label layoutX="64.0" layoutY="59.0" text="Email:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <Label layoutX="321.0" layoutY="92.0" text="Phone Number#:">
+      <Label layoutX="7.0" layoutY="228.0" text="Phone Number#:">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Label>
-      <DatePicker layoutX="135.0" layoutY="87.0" prefHeight="26.0" prefWidth="147.0" />
-      <DatePicker layoutX="131.0" layoutY="137.0" prefHeight="26.0" prefWidth="150.0" />
-      <TextField layoutX="129.0" layoutY="187.0" prefHeight="26.0" prefWidth="156.0" />
-      <TextField layoutX="433.0" layoutY="33.0" prefHeight="26.0" prefWidth="141.0" />
-      <TextField layoutX="433.0" layoutY="87.0" prefHeight="26.0" prefWidth="141.0" />
-      <TextField layoutX="432.0" layoutY="137.0" prefHeight="26.0" prefWidth="141.0" />
-      <Button layoutX="505.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: B7D5B2;" text="Update">
+      <DatePicker layoutX="112.0" layoutY="87.0" prefHeight="26.0" prefWidth="147.0" />
+      <DatePicker layoutX="110.0" layoutY="124.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField layoutX="110.0" layoutY="190.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField layoutX="110.0" layoutY="158.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField layoutX="110.0" layoutY="223.0" prefHeight="26.0" prefWidth="150.0" />
+      <TextField layoutX="110.0" layoutY="258.0" prefHeight="26.0" prefWidth="150.0" />
+      <Button layoutX="191.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: B7D5B2;" text="Assign">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="406.0" layoutY="304.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: FF9688;" text="Remove">
+      <Button layoutX="10.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: ADD8E6;" text="Add">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="504.0" layoutY="304.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: ADD8E6;" text="Add">
+      <Button layoutX="100.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: D87DAB;" text="Edit">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="406.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: D87DAB;" text="Edit">
+      <Label layoutX="63.0" layoutY="25.0" prefHeight="16.0" prefWidth="38.0" text="Name:">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="Tahoma" size="13.0" />
          </font>
-      </Button>
+      </Label>
+      <TextField layoutX="109.0" layoutY="54.0" prefHeight="26.0" prefWidth="147.0" />
+      <Label layoutX="271.0" layoutY="25.0" prefHeight="16.0" prefWidth="197.0" text="Type of Identification Document:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="312.0" layoutY="59.0" prefHeight="16.0" prefWidth="147.0" text="Number of Identification:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="24.0" layoutY="296.0" text="Job Category:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <TextField layoutX="111.0" layoutY="291.0" prefHeight="26.0" prefWidth="150.0" />
+      <ComboBox layoutX="468.0" layoutY="20.0" prefHeight="26.0" prefWidth="118.0" />
+      <ComboBox layoutX="468.0" layoutY="54.0" prefHeight="26.0" prefWidth="118.0" />
+      <TableView layoutX="285.0" layoutY="131.0" prefHeight="257.0" prefWidth="307.0">
+        <columns>
+          <TableColumn prefWidth="41.0" text="select" />
+          <TableColumn prefWidth="265.0" text="Skills for collaborators" />
+        </columns>
+      </TableView>
+      <Label layoutX="297.0" layoutY="100.0" prefHeight="26.0" prefWidth="283.0" text="Select the skills you wish to assign to the collaborators:">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
