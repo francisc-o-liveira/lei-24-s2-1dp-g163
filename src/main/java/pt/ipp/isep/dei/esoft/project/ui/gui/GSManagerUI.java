@@ -51,6 +51,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageVehicles(ActionEvent event) throws IOException {
+        /*
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewVehicles.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
@@ -58,6 +59,17 @@ public class GSManagerUI {
         stage.show();
         ManageVehiclesUI ctrlUI=fxmlLoader.getController();
         ctrlUI.setTableVehicles();
+         */
+        popUpOfVerifications(Alert.AlertType.INFORMATION,"Implementing ...");
+    }
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
+        Alert alerta = new Alert(alertType);
+
+        alerta.setTitle("ERROR");
+        alerta.setHeaderText("Invalid Data");
+        alerta.setContentText(messages);
+
+        return alerta;
     }
 
     @FXML

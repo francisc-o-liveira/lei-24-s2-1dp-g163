@@ -31,6 +31,15 @@ public class VFManagerUI {
         stage.setScene(scene);
         stage.show();
     }
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
+        Alert alerta = new Alert(alertType);
+
+        alerta.setTitle("ERROR");
+        alerta.setHeaderText("Invalid Data");
+        alerta.setContentText(messages);
+
+        return alerta;
+    }
 
     @FXML
     private void doLogout(ActionEvent event) throws IOException{
@@ -63,6 +72,7 @@ public class VFManagerUI {
 
     @FXML
     public void manageEquipment(ActionEvent event) throws IOException {
+        /*
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewEquipment.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
@@ -71,5 +81,6 @@ public class VFManagerUI {
         /*ManageEquipment ctrlUI=fxmlLoader.getController();
         ctrlUI.setTableEquipment();
          */
+        popUpOfVerifications(Alert.AlertType.INFORMATION,"Implementing...");
     }
 }
