@@ -1,10 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
@@ -13,6 +15,7 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterVehicleUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class ViewDetailsVehicleUI {
@@ -56,7 +59,7 @@ public class ViewDetailsVehicleUI {
     private TextField lastCheckKm;
 
     @FXML
-    private TableColumn<CheckUp, Date> colCheckKm;
+    private TableColumn<CheckUp, Double> colCheckKm;
 
     @FXML
     private TableColumn<CheckUp, Date> colDateCheck;
@@ -103,6 +106,32 @@ public class ViewDetailsVehicleUI {
         //correct this to get the right information
         /*LocalDate editedDateCheck=selectedVehicle.getKmCloseToCheckLocal();
         lastDateCheck.setValue(editedDateCheck);*/
+    }
+
+    public void setTable(){
+        colCheckKm.setCellValueFactory(new PropertyValueFactory<>("checkKm"));
+
+        /*colDateCheck.setCellValueFactory(cellData -> {
+            //SimpleObjectProperty<Date> property = new SimpleObjectProperty<>(cellData.getValue().getDateCheck());
+            //return property;
+        });*/
+        /// ^^ correct this to display the right info
+
+        colDateCheck.setCellFactory(column -> {
+            return new TableCell<CheckUp, Date>() {
+                private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+                @Override
+                protected void updateItem(Date item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(format.format(item));
+                    }
+                }
+            };
+        });
     }
 
 

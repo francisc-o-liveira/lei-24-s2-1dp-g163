@@ -162,7 +162,7 @@ public class ManageVehiclesUI {
         ui.setComboBox();
     }
 
-    //this scene needs to have the details already in the text fields
+
     @FXML
     public void btnEdit() throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
@@ -171,6 +171,8 @@ public class ManageVehiclesUI {
         Stage otherStage= new Stage();
         otherStage.setScene(scene);
         otherStage.show();
+        ViewDetailsVehicleUI ui=fxmlLoader.getController();
+        ui.setTable();
     }
 
     @FXML
