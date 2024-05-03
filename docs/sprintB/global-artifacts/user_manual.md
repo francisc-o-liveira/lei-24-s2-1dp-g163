@@ -120,6 +120,10 @@ history. Task assignment has the ability to assign specific tasks to collaborato
 their progress. The integrated schedule allows for efficient activity scheduling and management of important
 events. In summary, the Green Space Management System offers a comprehensive and effective solution for all
 management needs in green space environments.
+Below is a figure that illustrates an overview of the application:
+
+
+![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
 
 
