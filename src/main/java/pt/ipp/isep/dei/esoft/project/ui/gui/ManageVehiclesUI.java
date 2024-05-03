@@ -48,7 +48,7 @@ public class ManageVehiclesUI {
     public TableColumn<Vehicle, String> colMaintenance;
 
     @FXML
-    public TableColumn<Collaborator, Void> colButtonsDetails;
+    public TableColumn<Vehicle, Void> colButtonsDetails;
 
     ObservableList<Vehicle> vehiclesObservableList= FXCollections.observableArrayList();
 
@@ -64,16 +64,16 @@ public class ManageVehiclesUI {
         colCurrentKm.setCellValueFactory(new PropertyValueFactory<>("currentKm"));
         colCheckUpFreq.setCellValueFactory(new PropertyValueFactory<>("checkUpFreq"));
         colMaintenance.setCellValueFactory(new PropertyValueFactory<>("maintenance"));
-        colButtonsDetails.setCellValueFactory(new Callback<
-                TableColumn.CellDataFeatures<Vehicle, Void>, TableCell<Vehicle, Void>>() {
+        colButtonsDetails.setCellFactory(new Callback<
+                TableColumn<Vehicle, Void>, TableCell<Vehicle, Void>>() {
             @Override
-            public TableCell<Vehicle, Void> call(TableColumn.CellDataFeatures<Vehicle, Void> vehicleVoidCellDataFeatures) {
+            public TableCell<Vehicle, Void> call(TableColumn<Vehicle, Void> param) {
                 return new TableCell<Vehicle, Void>() {
-                    private final javafx.scene.control.Button btn = new Button("View Details");
+                    private final Button btn = new Button("View Details");
+
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            String plate = docIDNumber.getText();
-                            Vehicle vehicle = ctrl.getVehicleRepository().searchForVehicleByPlate(plate); //this thing cannot be accessed like this
+                            Vehicle vehicle = getTableView().getItems().get(getIndex());
                             try {
                                 showMore(vehicle);
                             } catch (IOException e) {
@@ -92,11 +92,9 @@ public class ManageVehiclesUI {
                         }
                     }
                 };
+            }
+        });
 
-
-
-
-        }});
         for(Vehicle v : ctrl.getVehicleList()){
             vehiclesObservableList.add(v);
         }
