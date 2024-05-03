@@ -75,12 +75,12 @@
                      <children>
                         <AnchorPane layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
                            <children>
-                              <AnchorPane prefHeight="308.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
+                              <AnchorPane prefHeight="529.0" prefWidth="866.0" style="-fx-background-color: FFFFFF;">
                                  <effect>
                                     <DropShadow />
                                  </effect>
                                  <children>
-                                    <TableView fx:id="tableCollaborators" editable="true" layoutX="19.0" layoutY="68.0" prefHeight="220.0" prefWidth="824.0">
+                                    <TableView fx:id="tableCollaborators" editable="true" layoutX="19.0" layoutY="68.0" prefHeight="404.0" prefWidth="824.0">
                                       <columns>
                                           <TableColumn fx:id="columnIDNumber" prefWidth="112.39999389648438" text="ID Number" />
                                           <TableColumn fx:id="columnDocType" prefWidth="106.0" text="Type of ID" />
@@ -93,77 +93,7 @@
                                     <FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="38.0" size="1.2em" text="" wrappingWidth="10.07341194152832" />
                                  </children>
                               </AnchorPane>
-                              <Label layoutX="78.0" layoutY="337.0" text="Name:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="name" layoutX="126.0" layoutY="333.0" prefHeight="26.0" prefWidth="171.0" />
-                              <Label layoutX="14.0" layoutY="375.0" text="Date of Birthday:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="dateBirthday" layoutX="125.0" layoutY="373.0" prefHeight="26.0" prefWidth="172.0" />
-                              <Label layoutX="19.0" layoutY="413.0" prefHeight="18.0" prefWidth="101.0" text="Admission Date:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="65.0" layoutY="453.0" prefHeight="18.0" prefWidth="56.0" text="Zipcode:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="addressZipCode" layoutX="127.0" layoutY="449.0" prefHeight="26.0" prefWidth="169.0" />
-                              <Label layoutX="35.0" layoutY="488.0" prefHeight="18.0" prefWidth="89.0" text="Adress Street:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="addressStreet" layoutX="126.0" layoutY="484.0" prefHeight="26.0" prefWidth="170.0" />
-                              <Label layoutX="358.0" layoutY="337.0" prefHeight="18.0" prefWidth="90.0" text="Address City:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="addressCity" layoutX="452.0" layoutY="333.0" />
-                              <Label layoutX="400.0" layoutY="375.0" prefHeight="18.0" prefWidth="39.0" text="Email:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Label>
-                              <TextField fx:id="email" layoutX="451.0" layoutY="371.0" />
-                              <Label layoutX="329.0" layoutY="413.0" prefHeight="18.0" prefWidth="109.0" text="Phone Number#:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Label>
-                              <TextField fx:id="phoneNumber" layoutX="452.0" layoutY="409.0" />
-                              <Label layoutX="353.0" layoutY="453.0" prefHeight="18.0" prefWidth="84.0" text="ID Doc Type:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Label>
-                              <Label layoutX="361.0" layoutY="488.0" prefHeight="18.0" prefWidth="78.0" text="ID Number:">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </Label>
-                              <TextField fx:id="docIDNumber" layoutX="451.0" layoutY="484.0" />
-                              <Button layoutX="757.0" layoutY="479.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: B7D5B2;" text="Update">
+                              <Button layoutX="757.0" layoutY="479.0" mnemonicParsing="false" onAction="#btnUpdate" prefHeight="36.0" prefWidth="94.0" style="-fx-background-color: B7D5B2;" text="Update">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
@@ -171,22 +101,14 @@
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="759.0" layoutY="438.0" mnemonicParsing="false" onAction="#btnAddCollaborator" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: ADD8E6;" text="Add">
+                              <Button layoutX="453.0" layoutY="479.0" mnemonicParsing="false" onAction="#btnAddCollaborator" prefHeight="36.0" prefWidth="90.0" style="-fx-background-color: ADD8E6;" text="Add">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <Button layoutX="657.0" layoutY="438.0" mnemonicParsing="false" onAction="#btnRemoveCollaborator" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: FF9688;" text="Remove">
+                              <Button layoutX="555.0" layoutY="478.0" mnemonicParsing="false" onAction="#btnRemoveCollaborator" prefHeight="37.0" prefWidth="91.0" style="-fx-background-color: FF9688;" text="Remove">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font></Button>
-                              <DatePicker fx:id="dateAdmission" layoutX="126.0" layoutY="411.0" prefHeight="26.0" prefWidth="170.0" />
-                              <ComboBox fx:id="docType" layoutX="453.0" layoutY="449.0" prefHeight="26.0" prefWidth="161.0" />
-                              <ComboBox fx:id="selectedjobCategory" layoutX="695.0" layoutY="333.0" prefWidth="150.0" />
-                              <Label layoutX="612.0" layoutY="337.0" text="Job Category">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
                            </children>
                            <effect>
                               <DropShadow />

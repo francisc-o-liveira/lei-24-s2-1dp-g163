@@ -39,38 +39,6 @@ public class ManageCollaboratorsUI {
     public ViewDetailsCollaboratorUI viewDetailsCollaboratorUI;
     public AuthenticationController ctrlAuth;
 
-
-    /**
-     * All the parameters needed to register a collaborator
-     */
-    private Date birthday;
-    private Date admissionDate;
-    private DocType.Type typeOfDocument;
-    private JobCategory jobCategory;
-
-    @FXML
-    private TextField addressCity;
-    @FXML
-    private TextField addressStreet;
-    @FXML
-    private TextField addressZipCode;
-    @FXML
-    private DatePicker dateAdmission;
-    @FXML
-    private DatePicker dateBirthday;
-    @FXML
-    private TextField docIDNumber;
-    @FXML
-    private TextField email;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField phoneNumber;
-    @FXML
-    private ComboBox docType;
-    @FXML
-    private ComboBox selectedjobCategory;
-
     @FXML
     public TableView<Collaborator> tableCollaborators;
 
@@ -111,7 +79,6 @@ public class ManageCollaboratorsUI {
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
-        uiToAdd.setMainScene(this);
     }
 
     @FXML
@@ -150,44 +117,6 @@ public class ManageCollaboratorsUI {
         return tableCollaborators.getSelectionModel().getSelectedItem();
     }
 
-    private void putInTextFields() {
-        Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
-
-        String editName = selectedCollaborator.getName();
-        name.setText(editName);
-
-        String editDocIDNumber = String.valueOf(selectedCollaborator.getDocIDNumber());
-        docIDNumber.setText(editDocIDNumber);
-
-        String editEmail = selectedCollaborator.getEmail();
-        email.setText(editEmail);
-
-        String editPhoneNumber = String.valueOf(selectedCollaborator.getPhoneNumber());
-        phoneNumber.setText(editPhoneNumber);
-
-        String editCity = selectedCollaborator.getAddressCity();
-        addressCity.setText(editCity);
-
-        String editStreet = selectedCollaborator.getAddress();
-        addressStreet.setText(editStreet);
-
-        String editZipCode = selectedCollaborator.getAddressZipCode();
-        addressZipCode.setText(editZipCode);
-
-        LocalDate birthday = selectedCollaborator.getBirthdayLocal();
-        dateBirthday.setValue(birthday);
-
-        LocalDate admissionDate = selectedCollaborator.getAdmissionDateLocal();
-        dateAdmission.setValue(admissionDate);
-
-        DocType.Type typeOfDocument = selectedCollaborator.getDocType();
-        docType.setValue(typeOfDocument);
-
-        JobCategory jobCategory = selectedCollaborator.getJobCategory();
-        selectedjobCategory.setValue(jobCategory);
-    }
-
-
     public void setTableCollaborators() {
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -205,8 +134,7 @@ public class ManageCollaboratorsUI {
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
-                            int collaboratorID = Integer.parseInt(docIDNumber.getText());
-                            Collaborator collaborator = ctrl.getCollaboratorRepository().searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
+                            Collaborator collaborator = tableCollaborators.getSelectionModel().getSelectedItem();
                             try {
                                 showMore(collaborator);
                             } catch (IOException e) {
@@ -233,7 +161,6 @@ public class ManageCollaboratorsUI {
         tableCollaborators.setItems(collaboratorObservableList);
     }
 
-    //see this again later
     public void showMore(Collaborator collab) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
@@ -241,7 +168,7 @@ public class ManageCollaboratorsUI {
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
         ViewDetailsCollaboratorUI ui=fxmlLoader.getController();
-        ui.putInTextFields(getSelectedCollaborator());
+        ui.putInTextFields(collab);
     }
 
     @FXML
@@ -294,8 +221,9 @@ public class ManageCollaboratorsUI {
         return alerta;
     }
 
-    public void handleStageClosed() {
-        setTableClean();
+    @FXML
+    public void btnUpdate(ActionEvent event){
+        tableCollaborators.getItems().clear();
         setTableCollaborators();
     }
 }
