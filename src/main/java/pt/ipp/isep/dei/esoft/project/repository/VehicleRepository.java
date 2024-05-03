@@ -18,11 +18,22 @@ import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.No
 public class VehicleRepository {
     private List<Vehicle> vehicleList;
 
+
+    public Vehicle searchForVehicleByPlate(String plate){
+        for (Vehicle vehicle : vehicleList) {
+            if(vehicle.getPlate().equals(plate)){
+                return vehicle;
+            }
+        }
+        throw new RuntimeException("No vehicle found with plate " + plate);
+    }
+
     /**
      * Retrieves a list of vehicles that are not currently active.
      *
      * @return A list of inactive vehicles.
      */
+
     public List<Vehicle> getVehicleNotActive() {
         List<Vehicle> vehicleNotActive = new ArrayList<>();
         for (Vehicle c : vehicleList) {
