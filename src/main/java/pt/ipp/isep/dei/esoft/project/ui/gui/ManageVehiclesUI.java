@@ -72,8 +72,8 @@ public class ManageVehiclesUI {
                     private final javafx.scene.control.Button btn = new Button("View Details");
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            String plate = Integer.parseInt(docIDNumber.getText());
-                            Vehicle vehicle = ctrl.getCollaboratorRepository().searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
+                            String plate = docIDNumber.getText();
+                            Vehicle vehicle = ctrl.getVehicleRepository().searchForVehicleByPlate(plate); //this thing cannot be accessed like this
                             try {
                                 showMore(vehicle);
                             } catch (IOException e) {
