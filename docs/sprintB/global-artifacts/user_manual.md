@@ -123,9 +123,8 @@ management needs in green space environments.
 Below is a figure that illustrates an overview of the application:
 
 
-![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
-
-
+![diagrama da aplicação](imagesUserManual/diagramaAplicacao.png)
+Figure 1: General application diagram
 
 
 # System Requirements
@@ -172,7 +171,7 @@ can:
 
 ## Green Space Manager (GSM)
 
-When you open and login in the User Portal app,(there are 6 possible paths) the GSM
+When you open and login in the User Portal app,(there are 2 possible paths) the GSM
 can:
 
 * See the Report Faults of the Green Spaces - The Manager can access the report faults made by the users of the Green Space
