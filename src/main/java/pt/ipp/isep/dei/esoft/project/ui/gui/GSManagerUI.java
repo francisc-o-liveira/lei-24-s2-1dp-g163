@@ -72,14 +72,15 @@ public class GSManagerUI {
 
     @FXML
     public void manageEquipment(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewEquipment.fxml"));
+        /*FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewEquipment.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-        /*ManageEquipment ctrlUI=fxmlLoader.getController();
+        ManageEquipment ctrlUI=fxmlLoader.getController();
         ctrlUI.setTableEquipment();
          */
+        popUpOfVerifications(Alert.AlertType.INFORMATION,"Implementing ...");
     }
 
     @FXML

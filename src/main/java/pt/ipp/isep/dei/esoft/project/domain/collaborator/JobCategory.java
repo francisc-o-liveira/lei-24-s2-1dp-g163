@@ -65,7 +65,7 @@ public class JobCategory {
             return false;
         }
         for(char c : name.toCharArray()){
-            if(!Character.isLetter(c)){
+            if(!Character.isLetter(c) && !Character.isSpace(c)){
                 return false;
             }
         }

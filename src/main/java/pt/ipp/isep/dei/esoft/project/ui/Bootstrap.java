@@ -1,12 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
 import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
-import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Organization;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.TaskCategoryRepository;
+import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 public class Bootstrap implements Runnable {
 
@@ -15,6 +15,38 @@ public class Bootstrap implements Runnable {
         addTaskCategories();
         addOrganization();
         addUsers();
+        try {
+            addSkills();
+            addJobCategories();
+            addCollaborators();
+        } catch (CloneNotSupportedException e) {
+            System.out.println("erro inicializando");
+        }
+    }
+
+    private void addSkills() throws CloneNotSupportedException {
+        SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
+        skillRepository.registerSkill("Plant Identification");
+        skillRepository.registerSkill("Pruning");
+        skillRepository.registerSkill("Pest and Disease Management");
+        skillRepository.registerSkill("Watering Skills");
+        skillRepository.registerSkill("Seasonal Planning");
+        skillRepository.registerSkill("Tool Maintenance");
+    }
+
+    private void addJobCategories() throws CloneNotSupportedException {
+        JobCategoryRepository jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
+        jobCategoryRepository.registerJobCategory("Gardener");
+        jobCategoryRepository.registerJobCategory("Gardener Specialist");
+        jobCategoryRepository.registerJobCategory("Pruner");
+        jobCategoryRepository.registerJobCategory("Electrician");
+    }
+
+    private void addCollaborators() throws CloneNotSupportedException {
+        CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+        collaboratorRepository.createCollaborator("Joaquim Mendes",new Date(1999,10,5),new Date(2024,5,2),"Rua das moinas","4630-132","Penafiel","joaquim@gmail.com","+351916834123", DocType.Type.CitizenCard,123456789,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
+        collaboratorRepository.createCollaborator("Maria Silva",new Date(1985,3,15),new Date(2024,1,10),"123 Main Street","12345","London","maria.silva@gmail.com","+441234567890", DocType.Type.Passport,987655,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
+
     }
 
     private void addOrganization(){

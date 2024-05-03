@@ -88,7 +88,7 @@ public class Skill {
             value = false;
         }
         for (char c : skillName.toCharArray()) {
-            if (!Character.isLetter(c)) {
+            if (!Character.isLetter(c) && !Character.isSpace(c)) {
                 value = false;
             }
         }
