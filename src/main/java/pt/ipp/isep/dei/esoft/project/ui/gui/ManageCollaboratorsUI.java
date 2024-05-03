@@ -111,6 +111,7 @@ public class ManageCollaboratorsUI {
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
         uiToAdd.setTableAssignSkills();
         uiToAdd.putInTextFields(selectedCollaborator);
+        uiToAdd.showCollaboratorSelected(selectedCollaborator);
     }
 
     public Collaborator getSelectedCollaborator(){

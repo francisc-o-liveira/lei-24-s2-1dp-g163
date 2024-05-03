@@ -89,6 +89,7 @@ public class ViewDetailsCollaboratorUI {
     public List<Skill> skillsToAssign=new ArrayList<>();
 
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
+    Collaborator editedCollaborator;
 
 
     public ViewDetailsCollaboratorUI(){
@@ -167,7 +168,6 @@ public class ViewDetailsCollaboratorUI {
 
     @FXML
     public void btnEdit(ActionEvent event) {
-        Collaborator editedCollaborator = manageTable.getSelectedCollaborator();
         if (editedCollaborator != null) {
             String newName = name.getText();
             editedCollaborator.setName(newName);
@@ -207,11 +207,12 @@ public class ViewDetailsCollaboratorUI {
 
             editedCollaborator.setJobCategory(selectedjobCategory.getValue());
             selectedjobCategory.getSelectionModel().clearSelection();
-
-            manageTable.getTableCollaborators().refresh();
         }
     }
 
+    public void showCollaboratorSelected(Collaborator selectedCollaborator){
+        editedCollaborator=selectedCollaborator;
+    }
     public void putInTextFields(Collaborator selectedCollaborator) {
 
         String editName = selectedCollaborator.getName();
