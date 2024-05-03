@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="190.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.SceneUpdateKm">
+<AnchorPane prefHeight="190.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.SceneUpdateKm">
    <children>
-      <TextField layoutX="85.0" layoutY="53.0" />
-      <DatePicker layoutX="78.0" layoutY="91.0" />
+      <TextField layoutX="105.0" layoutY="104.0" prefHeight="26.0" prefWidth="166.0" />
+      <DatePicker layoutX="105.0" layoutY="56.0" prefHeight="26.0" prefWidth="166.0" />
+      <Label layoutX="14.0" layoutY="61.0" text="Date of update:" />
+      <Label layoutX="34.0" layoutY="109.0" text="Current km:" />
+      <Label layoutX="13.0" layoutY="14.0" text="Update of kilometers" textFill="#046f4d">
+         <font>
+            <Font name="Tahoma Bold" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
