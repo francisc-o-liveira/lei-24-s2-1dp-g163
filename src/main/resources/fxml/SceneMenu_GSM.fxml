@@ -64,7 +64,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                        <Button layoutX="34.0" layoutY="278.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="System Configs" />
+                        <Button layoutX="37.0" layoutY="278.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="System Configs" />
                         <FontAwesomeIconView glyphName="PLUS" layoutX="45.0" layoutY="297.0" text="" />
                             </children>
                         </AnchorPane>
