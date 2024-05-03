@@ -66,6 +66,26 @@ public class ManageVehiclesUI {
     }
 
     @FXML
+    public void btnUpdateKm() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_UpdateKm.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage otherStage= new Stage();
+        otherStage.setScene(scene);
+        otherStage.show();
+    }
+
+    @FXML
+    public void btnRegisterCheck() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage otherStage= new Stage();
+        otherStage.setScene(scene);
+        otherStage.show();
+    }
+
+    @FXML
     public void btnRemove(){
         Vehicle selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
         boolean operationSuccess = false;

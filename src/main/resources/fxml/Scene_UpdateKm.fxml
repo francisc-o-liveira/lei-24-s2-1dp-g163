@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="190.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.SceneUpdateKm">
+   <children>
+      <TextField layoutX="85.0" layoutY="53.0" />
+      <DatePicker layoutX="78.0" layoutY="91.0" />
+   </children>
+</AnchorPane>
