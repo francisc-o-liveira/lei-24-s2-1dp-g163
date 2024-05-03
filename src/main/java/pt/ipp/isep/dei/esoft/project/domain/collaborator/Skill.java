@@ -1,7 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 /**
  * Domain class representing a Skill object.
@@ -14,6 +18,8 @@ public class Skill {
     private final BooleanProperty selecting;
 
     private boolean selectedForTeam;
+
+    private IntegerProperty numberCollabsPerSkill;
     /**
      * Constructs a Skill object with the specified name.
      *
@@ -107,5 +113,13 @@ public class Skill {
 
     public BooleanProperty selectedSkill(){
         return selecting;
+    }
+
+    public IntegerProperty getNumberCollabsPerSkill(){
+        return numberCollabsPerSkill;
+    }
+
+    public void setNumberCollabsPerSkill(Integer number){
+        this.numberCollabsPerSkill.set(number);
     }
 }

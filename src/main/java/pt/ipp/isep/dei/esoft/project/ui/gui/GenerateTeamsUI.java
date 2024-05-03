@@ -82,9 +82,10 @@ public class GenerateTeamsUI {
     public void btnGenerateTeam(){
         int maxTeamSize=Integer.parseInt(maximumTeamSize.getText());
         int minTeamSize=Integer.parseInt(minimumTeamSize.getText());
+        String teamName = null;
         getSkillsAndCollabs();
         try{
-            ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill);
+            ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
         } catch (RuntimeException e){
             popUpOfVerifications(Alert.AlertType.ERROR, "").show();
         }

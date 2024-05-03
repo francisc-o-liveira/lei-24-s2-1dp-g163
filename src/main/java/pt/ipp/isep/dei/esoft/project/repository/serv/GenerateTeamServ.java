@@ -22,7 +22,7 @@ public interface GenerateTeamServ {
      * @param collaboratorsForTeam list of available collaborators to form the team
      * @return an Optional containing the generated Team, if successful, otherwise an empty Optional
      */
-    public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, List<Collaborator> collaboratorsForTeam);
+    public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, List<Collaborator> collaboratorsForTeam, String teamName);
 
     /**
      * Determines the order of collaborators with the most skills.

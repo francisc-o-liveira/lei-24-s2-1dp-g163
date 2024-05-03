@@ -20,6 +20,7 @@ public class GenerateTeamUI implements Runnable {
 
     private List<Skill> skillsSelected;
     private List<Integer> numberCollabForSkill;
+    private String teamName;
     /**
      * This instance represent the team created by the Generate Team Serv.
      */
@@ -52,6 +53,7 @@ public class GenerateTeamUI implements Runnable {
         try {
             System.out.println("Generate a Team Automatically");
             requestData();
+            teamName= showAndRequestName();
             skillsSelected = showSelectData();
             numberCollabForSkill = showAndRequestData();
             teamCreated=submitsDataAndShow();
@@ -106,13 +108,21 @@ public class GenerateTeamUI implements Runnable {
         return numbCollabPerSkill;
     }
 
+    public String showAndRequestName(){
+        System.out.println("Introduce the name for the team: ");
+        Scanner scanner=new Scanner(System.in);
+        String name;
+        name=scanner.next();
+        return name;
+    }
+
     /**
      * This method submits the data introduced by the user and generate the team, after this show the team if it is generated
      * @return Team Object
      */
 
     private Team submitsDataAndShow() {
-        Optional<Team> team = getController().generateTeam(minSize,maxSize,skillsSelected,numberCollabForSkill);
+        Optional<Team> team = getController().generateTeam(minSize,maxSize,skillsSelected,numberCollabForSkill, teamName);
         if (team.isPresent()) {
             System.out.println("\nTeam successfully created!");
             System.out.println(team.get());

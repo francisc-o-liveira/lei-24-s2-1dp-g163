@@ -14,6 +14,7 @@ public class Team {
     private int maxSizeTeam;
     private int minSizeTeam;
     private List<Skill> skillsSelected;
+    private String teamName;
 
     /** Constructor method to create a team
      *
@@ -21,11 +22,12 @@ public class Team {
      * @param minSize of a team
      * @param skillsSelected needed for the team
      */
-    public Team(int maxSize, int minSize, List<Skill> skillsSelected){
+    public Team(int maxSize, int minSize, List<Skill> skillsSelected, String teamName){
         collaboratorsTeam = new ArrayList<Collaborator>();
         this.maxSizeTeam=maxSize;
         this.minSizeTeam=minSize;
         this.skillsSelected=skillsSelected;
+        this.teamName=teamName;
     }
 
     /**
@@ -35,11 +37,12 @@ public class Team {
      * @param maxSizeTeam
      * @param minSizeTeam
      */
-    public Team(List<Collaborator> collaboratorsTeam, List<Skill> skillsSelected,int maxSizeTeam, int minSizeTeam){
+    public Team(List<Collaborator> collaboratorsTeam, List<Skill> skillsSelected,int maxSizeTeam, int minSizeTeam, String teamName){
         this.collaboratorsTeam=collaboratorsTeam;
         this.skillsSelected=skillsSelected;
         this.maxSizeTeam=maxSizeTeam;
         this.minSizeTeam=minSizeTeam;
+        this.teamName=teamName;
     }
 
     /** Method to add a collaborator to the team
@@ -83,7 +86,7 @@ public class Team {
 
     /** Clone method of Team */
     public Team clone(){
-        return new Team(this.collaboratorsTeam, this.skillsSelected, this.maxSizeTeam,this.minSizeTeam);
+        return new Team(this.collaboratorsTeam, this.skillsSelected, this.maxSizeTeam,this.minSizeTeam, this.teamName);
     }
 
     /** Checks if it is possible to create the Team
@@ -116,6 +119,10 @@ public class Team {
         }
         Team otherTeam= (Team) other;
         return this.getTeamList()==otherTeam.getTeamList();
+    }
+
+    public String getTeamName(){
+        return teamName;
     }
 
 }

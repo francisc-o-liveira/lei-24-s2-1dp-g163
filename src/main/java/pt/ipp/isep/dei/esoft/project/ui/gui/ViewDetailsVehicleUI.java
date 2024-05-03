@@ -9,7 +9,7 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import java.awt.*;
 
 public class ViewDetailsVehicleUI {
-    @FXML
+    /*@FXML
     private TextField brand;
 
     @FXML
@@ -52,7 +52,7 @@ public class ViewDetailsVehicleUI {
     private TableColumn<Vehicle, String> checkUpKilometers;
 
     @FXML
-    private TableColumn<Vehicle, String> dateOfCheck;
+    private TableColumn<Vehicle, String> dateOfCheck;*/
 
 
 

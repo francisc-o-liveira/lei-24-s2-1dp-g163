@@ -32,7 +32,7 @@ public class ManageTeamsUI {
     public TableView<Team> tableViewTeams;
 
     @FXML
-    public TableColumn<Team, Collaborator> colTeams;
+    public TableColumn<Team, String> colTeams;
 
     public ManageTeamsUI(){
         ctrl= new GenerateTeamController();
@@ -71,7 +71,7 @@ public class ManageTeamsUI {
     }
 
     public void setTableTeams(){
-        colTeams.setCellValueFactory(new PropertyValueFactory<>("teamList"));
+        colTeams.setCellValueFactory(new PropertyValueFactory<>("teamName"));
         List<Team> teamList= new ArrayList<>();
         List<Skill> skillsSelected1 = new ArrayList<>();
 // Assuming you have some skills already initialized
@@ -79,7 +79,7 @@ public class ManageTeamsUI {
         skillsSelected1.add(new Skill("JavaProgramming"));
         skillsSelected1.add(new Skill("DatabaseManagement"));
 
-        Team team1 = new Team(5, 3, skillsSelected1);
+        Team team1 = new Team(5, 3, skillsSelected1, "team1");
 
 // Assuming you have some collaborators already initialized
 // Add collaborators to the team
@@ -94,7 +94,7 @@ public class ManageTeamsUI {
         skillsSelected2.add(new Skill("ProjectManagement"));
         skillsSelected2.add(new Skill("Communication"));
 
-        Team team2 = new Team(4, 2, skillsSelected2);
+        Team team2 = new Team(4, 2, skillsSelected2, "team2");
 
 // Assuming you have some collaborators already initialized
 // Add collaborators to the team
@@ -108,8 +108,6 @@ public class ManageTeamsUI {
         for(Team t : teamList){
             tableViewTeams.getItems().add(t);
         }
-
-
     }
 
     @FXML
@@ -129,15 +127,6 @@ public class ManageTeamsUI {
             stage.setScene(scene);
             stage.show();
         }
-    }
-
-    private Alert popUp() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-
-        alerta.setHeaderText("Information");
-        alerta.setContentText("Collaborator added!");
-
-        return alerta;
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {

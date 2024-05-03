@@ -9,14 +9,14 @@ import java.util.Optional;
 
 public class GenerateTeamServClass implements GenerateTeamServ{
 
-    public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, List<Collaborator> collaboratorsForTeam) {
+    public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, List<Collaborator> collaboratorsForTeam, String teamName) {
         if(collaboratorsForTeam==null || collaboratorsForTeam.isEmpty()){
             throw new RuntimeException("Dont exist collaborators to generate any Team with this Skills.");
         }
         Optional<Team> teamGenerated = Optional.empty();
         getSkillByOrder(skillsSelected,numberCollabForSkill);
         int[] generatedTrue=getNumberSkill(numberCollabForSkill);
-        Team create = new Team(maxSizeTeam,minSizeTeam,skillsSelected);
+        Team create = new Team(maxSizeTeam,minSizeTeam,skillsSelected,teamName);
         boolean[][] YesOrNoSkill = getCollabOrderWithMoreSkill(skillsSelected,collaboratorsForTeam);
         for (int i = 0; i < YesOrNoSkill.length; i++){
             if(collabororatorUpgradeTeam(YesOrNoSkill[i], generatedTrue)){
