@@ -79,6 +79,7 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM,AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_GSM);
         authenticationRepository.addUserWithRole("HRM","hrm@this.app","hrm", AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserWithRole("VFM","vfm@this.app","vfm", AuthenticationController.ROLE_VFM);
         //TODO: COMO ADICIONAR UTILIZADORES
     }
 }
