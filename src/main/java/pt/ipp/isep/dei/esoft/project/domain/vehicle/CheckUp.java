@@ -24,4 +24,16 @@ public class CheckUp {
         return String.format("Km of Check-Up: %d\n" +
                 "Date of Check-Up: %s\n", kmOfCheck, dateOfCheck);
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(this==other){
+            return true;
+        }
+        if(other==null || this.getClass() != other.getClass()){
+            return false;
+        }
+        CheckUp otherCheck= (CheckUp) other;
+        return this.getDateOfCheck()==otherCheck.getDateOfCheck() && this.getKmOfCheck()== otherCheck.getKmOfCheck();
+    }
 }

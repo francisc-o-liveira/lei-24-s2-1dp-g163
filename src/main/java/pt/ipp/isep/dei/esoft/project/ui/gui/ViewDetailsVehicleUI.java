@@ -5,8 +5,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCheckUpController;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
@@ -15,14 +20,29 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterVehicleUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class ViewDetailsVehicleUI {
 
     public RegisterVehicleController ctrl;
+    public RegisterCheckUpController ctrlCheck;
 
     Vehicle selectedVehicle;
+
+    private String vBrand;
+    private String vModel;
+    private String vPlate;
+    private int vTare;
+    private double vGrossWeight;
+    private double vCurrentKm;
+    private double vFrequencyCheck;
+    private Date vRegister;
+    private Date vAcquisition;
+    private Vehicle.Type vType;
+    private Date vlastDateCheck;
+    private double vlastCheckKm;
 
     @FXML
     private DatePicker acquisitionDate;
@@ -55,9 +75,15 @@ public class ViewDetailsVehicleUI {
     private ComboBox<Vehicle.Type> type;
 
     @FXML
-    private DatePicker lastDateCheck;
+    private DatePicker checkDate;
+
     @FXML
-    private TextField lastCheckKm;
+    private TextField checkUpKMs;
+    @FXML
+    private TextField updateCurrentKm;
+
+    @FXML
+    private DatePicker updateDate;
 
     @FXML
     private TableColumn<CheckUp, Double> colCheckKm;
@@ -70,6 +96,7 @@ public class ViewDetailsVehicleUI {
 
     public ViewDetailsVehicleUI(){
         ctrl = new RegisterVehicleController();
+        ctrlCheck= new RegisterCheckUpController();
     }
 
     public void setComboBox(){
@@ -103,20 +130,15 @@ public class ViewDetailsVehicleUI {
 
         LocalDate editedDateAcquisition=selectedVehicle.getAcquisitionDateLocal();
         acquisitionDate.setValue(editedDateAcquisition);
-
-        //correct this to get the right information
-        /*LocalDate editedDateCheck=selectedVehicle.getKmCloseToCheckLocal();
-        lastDateCheck.setValue(editedDateCheck);*/
     }
 
     public void setTable(){
         colCheckKm.setCellValueFactory(new PropertyValueFactory<>("checkKm"));
 
-        /*colDateCheck.setCellValueFactory(cellData -> {
-            //SimpleObjectProperty<Date> property = new SimpleObjectProperty<>(cellData.getValue().getDateCheck());
-            //return property;
-        });*/
-        /// ^^ correct this to display the right info
+        colDateCheck.setCellValueFactory(cellData -> {
+            SimpleObjectProperty<Date> property = new SimpleObjectProperty<>(cellData.getValue().getDateOfCheck());
+            return property;
+        });
 
         colDateCheck.setCellFactory(column -> {
             return new TableCell<CheckUp, Date>() {
@@ -138,27 +160,32 @@ public class ViewDetailsVehicleUI {
 
     @FXML
     public void btnAdd(ActionEvent event) {
-        String vBrand= brand.getText();
-        String vModel= model.getText();
-        String vPlate= plate.getText();
-        int vTare= Integer.parseInt(tare.getText());
-        double vGrossWeight= Double.parseDouble(grossWeight.getText());
-        double vCurrentKm=Double.parseDouble(currentKms.getText());
-        double vFrequencyCheck=Double.parseDouble(checkupFrequency.getText());
-        Date vRegister=new Date(registerDate.getValue().getYear(),registerDate.getValue().getMonthValue(),registerDate.getValue().getDayOfMonth());
-        Date vAcquisition=new Date(acquisitionDate.getValue().getYear(), acquisitionDate.getValue().getMonthValue(), acquisitionDate.getValue().getDayOfMonth());
-        Vehicle.Type vType=type.getValue();
-        Date vlastDateCheck=new Date(lastDateCheck.getValue().getYear(),lastDateCheck.getValue().getMonthValue(),lastDateCheck.getValue().getDayOfMonth());
-        double vlastCheckKm=Double.parseDouble(lastCheckKm.getText());
+        vBrand= brand.getText();
+        vModel= model.getText();
+        vPlate= plate.getText();
+        vTare= Integer.parseInt(tare.getText());
+        vGrossWeight= Double.parseDouble(grossWeight.getText());
+        vCurrentKm=Double.parseDouble(currentKms.getText());
+        vFrequencyCheck=Double.parseDouble(checkupFrequency.getText());
+        vRegister=new Date(registerDate.getValue().getYear(),registerDate.getValue().getMonthValue(),registerDate.getValue().getDayOfMonth());
+        vAcquisition=new Date(acquisitionDate.getValue().getYear(), acquisitionDate.getValue().getMonthValue(), acquisitionDate.getValue().getDayOfMonth());
+        vType=type.getValue();
 
         if(vBrand.isEmpty() || vModel.isEmpty() || vPlate.isEmpty() || vTare == 0 || vGrossWeight == 0.0 || vCurrentKm == 0.0 || vFrequencyCheck == 0.0){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Vehicle is empty").show();
         } else {
-            /*try{
-                //ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
-            } catch (CloneNotSupportedException e){
-                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-            }*/
+            submitData();
+        }
+    }
+
+    @FXML
+    public void btnRegisterCheck(ActionEvent event){
+        vlastDateCheck=new Date(checkDate.getValue().getYear(),checkDate.getValue().getMonthValue(),checkDate.getValue().getDayOfMonth());
+        vlastCheckKm=Double.parseDouble(checkUpKMs.getText());
+        if(vlastCheckKm==0){
+            popUpOfVerifications(Alert.AlertType.ERROR, "The data is incorrect").show();
+        } else {
+            submitData();
         }
     }
 
@@ -202,8 +229,14 @@ public class ViewDetailsVehicleUI {
 
             selectedVehicle.setAcquisitionDate(new Date(acquisitionDate.getValue().getYear(), acquisitionDate.getValue().getMonthValue(), acquisitionDate.getValue().getDayOfMonth()));
             acquisitionDate.setValue(null);
+        }
+    }
 
-            //the other two fields need to be defined in here
+    public void submitData(){
+        try{
+            ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
+        } catch (CloneNotSupportedException e){
+            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
@@ -217,21 +250,26 @@ public class ViewDetailsVehicleUI {
         if (selectedCheck != null) {
             Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
 
-            popUp.setHeaderText("Removing Collaborator");
-            popUp.setContentText("Do you want to remove this collaborator?");
+            popUp.setHeaderText("Removing Check Up");
+            popUp.setContentText("Do you want to remove this Check-Up?");
             ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
             ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
             if (popUp.showAndWait().get() == ButtonType.OK) {
                 tableCheckUp.getItems().remove(selectedCheck);
-                //ctrl.removeFromList(selectedCheck); -- need this method on the controller
+                ctrlCheck.removeFromList(selectedVehicle,selectedCheck);
             }
         }
     }
 
     @FXML
-    void addCheckUp(ActionEvent event) {
-        //??????????????????????
+    void addCheckUp(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage=new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
@@ -242,5 +280,9 @@ public class ViewDetailsVehicleUI {
         alerta.setContentText(messages);
 
         return alerta;
+    }
+
+    public void submitDataUpdate(){
+
     }
 }

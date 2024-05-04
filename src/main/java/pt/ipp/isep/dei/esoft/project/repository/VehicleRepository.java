@@ -269,4 +269,12 @@ public class VehicleRepository {
             throw new RuntimeException("Vehicle not found");
         }
     }
+
+    public boolean removeFromListCheckUp(Vehicle vehicle,CheckUp checkUp){
+        if (vehicle.getCheckUpList().contains(checkUp)) {
+            return vehicle.getCheckUpList().remove(checkUp);
+        } else {
+            throw new RuntimeException("Check Up not found");
+        }
+    }
 }

@@ -465,8 +465,4 @@ public class Vehicle {
         return convertToJavaLocalDate(acquisitionDate);
     }
 
-    /*public LocalDate getKmCloseToCheckLocal(){
-        return convertToJavaLocalDate();
-    }*/
-
 }

@@ -1,7 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -20,6 +23,7 @@ import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ManageVehiclesUI {
 
@@ -45,6 +49,8 @@ public class ManageVehiclesUI {
 
     @FXML
     public TableColumn<Vehicle, Void> colButtonsDetails;
+
+    @FXML public CheckBox closeToCheck;
 
     ObservableList<Vehicle> vehiclesObservableList= FXCollections.observableArrayList();
 
@@ -210,6 +216,7 @@ public class ManageVehiclesUI {
         ui.setTable();
         Vehicle selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
         ui.showSelectedVehicle(selectedVehicle);
+        ui.putInTextFields(getSelectedVehicle());
     }
 
     @FXML
@@ -255,6 +262,43 @@ public class ManageVehiclesUI {
         }catch (ArrayIndexOutOfBoundsException e){
             popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
         }
+    }
+
+    @FXML
+    public void btnRegisterCheck(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage=new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void btnUpdateKm(ActionEvent event)throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_UpdateKm.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage=new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void filterVehicles(ActionEvent event){
+        FilteredList<Vehicle> filteredList = new FilteredList<>(vehiclesObservableList);
+
+        Predicate<Vehicle> closeVehicles = Vehicle::isCloseToCheck;
+
+        filteredList.predicateProperty().bind(
+                Bindings.createObjectBinding(
+                        () -> closeToCheck.isSelected() ? closeVehicles : null,
+                        closeToCheck.selectedProperty()
+                )
+        );
+
+        tableViewVehicles.setItems(filteredList);
+
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {

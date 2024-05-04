@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="213.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.SceneRegisterCheckVehicle">
+<AnchorPane prefHeight="213.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ViewDetailsVehicleUI">
    <children>
       <Label layoutX="16.0" layoutY="14.0" text="Register Check Up" textFill="#046f4d">
          <font>
@@ -12,8 +12,9 @@
          </font></Label>
       <Label layoutX="25.0" layoutY="61.0" text="Check Up Kilometers:" />
       <Label layoutX="58.0" layoutY="98.0" text="Date Of Check:" />
-      <CheckBox layoutX="14.0" layoutY="126.0" mnemonicParsing="false" text="Edit Mainetance Km" />
-      <DatePicker layoutX="140.0" layoutY="95.0" />
-      <TextField layoutX="140.0" layoutY="59.0" />
+      <CheckBox layoutX="14.0" layoutY="126.0" mnemonicParsing="false" text="Edit Maintenance Km" />
+      <DatePicker fx:id="checkDate" layoutX="140.0" layoutY="95.0" />
+      <TextField fx:id="checkUpKMs" layoutX="140.0" layoutY="59.0" />
+      <Button layoutX="250.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnRegisterCheck" text="Register" />
    </children>
 </AnchorPane>

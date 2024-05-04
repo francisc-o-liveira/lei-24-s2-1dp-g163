@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
@@ -57,5 +59,9 @@ public class RegisterCheckUpController {
 
     public Vehicle getVehicleByIndex(int selectedPlate) {
         return vehicleRepository.getVehicleByIndex(selectedPlate);
+    }
+
+    public void removeFromList(Vehicle vehicle,CheckUp checkUp){
+        vehicleRepository.removeFromListCheckUp(vehicle,checkUp);
     }
 }
