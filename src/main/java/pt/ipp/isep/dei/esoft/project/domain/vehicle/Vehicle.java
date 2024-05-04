@@ -311,16 +311,9 @@ public class Vehicle {
                         "Brand: %s\n" +
                         "Model: %s\n" +
                         "Type: %s\n" +
-                        "Tare: %d\n" +
-                        "Plate: %s\n" +
-                        "Gross Weight: %.2f\n" +
                         "Current Km: %.2f\n" +
-                        "Register Date: %s\n" +
-                        "Acquisition Date: %s\n" +
-                        "Frequency Check Km: %.2f\n" +
-                        "Check Up List: %s\n" +
-                        "Status Type: %s\n",
-                brand, model, type, tare, plate, grossWeight, currentKm, registerDate, acquisitionDate, frequencyCheckKm, checkUpList, statusType);
+                        "Frequency Check Km: %.2f\n",
+                brand, model, type, currentKm,  frequencyCheckKm);
     }
 
     /**

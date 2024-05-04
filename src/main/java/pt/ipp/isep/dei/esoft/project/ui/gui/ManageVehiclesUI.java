@@ -14,17 +14,17 @@ import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ManageVehiclesUI {
 
     public Stage stage=LoginUI.getMainStage();
     public Stage stageToViewDetails = new Stage();
-
-    @FXML
-    public TextField introducingVehicleNameField;
 
     public RegisterVehicleController ctrl;
     public AuthenticationController ctrlAuth;
@@ -34,15 +34,14 @@ public class ManageVehiclesUI {
     @FXML
     public TableColumn<Vehicle, String> colBrand;
 
+    @FXML
     public TableColumn<Vehicle, String> colModel;
-
-    public TableColumn<Vehicle, String> colType;
-
-    public TableColumn<Vehicle, String> colCurrentKm;
-
-    public TableColumn<Vehicle, String> colCheckUpFreq;
-
-    public TableColumn<Vehicle, String> colMaintenance;
+    @FXML
+    public TableColumn<Vehicle, Vehicle.Type> colType;
+    @FXML
+    public TableColumn<Vehicle, Double> colCurrentKm;
+    @FXML
+    public TableColumn<Vehicle, Double> colCheckUpFreq;
 
     @FXML
     public TableColumn<Vehicle, Void> colButtonsDetails;
@@ -55,12 +54,11 @@ public class ManageVehiclesUI {
     }
 
     public void setTableVehicles(){
-        colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colCurrentKm.setCellValueFactory(new PropertyValueFactory<>("currentKm"));
-        colCheckUpFreq.setCellValueFactory(new PropertyValueFactory<>("checkUpFreq"));
-        colMaintenance.setCellValueFactory(new PropertyValueFactory<>("maintenance"));
+        colBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
+        colModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        colCurrentKm.setCellValueFactory(new PropertyValueFactory<>("CurrentKm"));
+        colCheckUpFreq.setCellValueFactory(new PropertyValueFactory<>("FrequencyCheckKm"));
         colButtonsDetails.setCellFactory(new Callback<
                 TableColumn<Vehicle, Void>, TableCell<Vehicle, Void>>() {
             @Override
@@ -70,7 +68,7 @@ public class ManageVehiclesUI {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Vehicle vehicle = getTableView().getItems().get(getIndex());
+                            Vehicle vehicle = tableViewVehicles.getSelectionModel().getSelectedItem();
                             try {
                                 showMore(vehicle);
                             } catch (IOException e) {
@@ -92,9 +90,46 @@ public class ManageVehiclesUI {
             }
         });
 
-        for(Vehicle v : ctrl.getVehicleList()){
-            vehiclesObservableList.add(v);
-        }
+        // Creating example vehicles
+        Vehicle vehicle1 = new Vehicle(
+                "Toyota",
+                "Camry",
+                Vehicle.Type.LightPassenger,
+                1500,
+                2000,
+                50000,
+                new Date(2022,5,11), // Register Date
+                new Date(2023,5,12),// Acquisition Date
+                10000,"AB-12-AA",
+                new Date(2024,1,20),
+                10000
+        );
+
+        Vehicle vehicle2 = new Vehicle(
+                "Honda",
+                "Civic",
+                Vehicle.Type.LightPassenger,
+                1400,  // Tare
+                1800,  // Gross Weight
+                60000, // Current Km
+                new Date(2021, 8, 15), // Register Date
+                new Date(2022, 9, 20), // Acquisition Date
+                12000, // Frequency Check Km
+                "XY-34-SS", // Plate
+                new Date(2023, 3, 10), // Last check-up date
+                8000 // Frequency Check Km for next check-up
+        );
+
+
+        // Adding vehicles to a list
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList.add(vehicle1);
+        vehicleList.add(vehicle2);
+
+
+        //needs to be ctrl.getVehicleList()
+        vehiclesObservableList.addAll(vehicleList);
+        tableViewVehicles.setItems(vehiclesObservableList);
     }
 
     public void showMore(Vehicle vehicle) throws IOException {
