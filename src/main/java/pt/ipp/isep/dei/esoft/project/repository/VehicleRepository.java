@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -278,7 +279,7 @@ public class VehicleRepository {
         }
     }
 
-    public boolean addUpdateKmToVehicle(Vehicle selectedVehicle, double km) {
+    public boolean addUpdateKmToVehicle(Vehicle selectedVehicle, double km) throws IOException {
         selectedVehicle.setCurrentKm(km);
         if (selectedVehicle.getCurrentKm()==km){
             return true;
