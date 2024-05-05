@@ -84,4 +84,8 @@ public class RegisterVehicleController {
     public boolean removeVehicleFromList(Vehicle selectedVehicle) {
         return vehicleRepository.removeVehicle(selectedVehicle);
     }
+
+    public boolean updateKm(Vehicle selectedVehicle, double km) {
+        return vehicleRepository.addUpdateKmToVehicle(selectedVehicle,km);
+    }
 }

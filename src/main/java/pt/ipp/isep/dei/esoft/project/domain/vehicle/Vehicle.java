@@ -335,7 +335,7 @@ public class Vehicle {
      * @throws IllegalArgumentException if the current kilometres is invalid
      */
     public void setCurrentKm(double currentKm) {
-        if (currentKm > 0) {
+        if (currentKm > 0 && currentKm > this.currentKm) {
             this.currentKm = currentKm;
         } else {
             throw new IllegalArgumentException("Invalid current km");

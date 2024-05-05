@@ -277,4 +277,13 @@ public class VehicleRepository {
             throw new RuntimeException("Check Up not found");
         }
     }
+
+    public boolean addUpdateKmToVehicle(Vehicle selectedVehicle, double km) {
+        selectedVehicle.setCurrentKm(km);
+        if (selectedVehicle.getCurrentKm()==km){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
