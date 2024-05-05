@@ -85,6 +85,12 @@ public class RegisterVehicleController {
         return vehicleRepository.removeVehicle(selectedVehicle);
     }
 
+    /**
+     * Update Kilometers in a vehicle
+     * @param selectedVehicle the vehicle to be updated the kilometers
+     * @param km the actual current kilometers
+     * @return true if update the kilometers
+     */
     public boolean updateKm(Vehicle selectedVehicle, double km) {
         return vehicleRepository.addUpdateKmToVehicle(selectedVehicle,km);
     }
