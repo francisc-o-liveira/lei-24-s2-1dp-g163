@@ -1,38 +1,134 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
+/**
+ * Domain class representing a Skill object.
+ */
 public class Skill {
+
+    /** Name of the skill */
     private String skillName;
 
+    private final BooleanProperty selecting;
+
+    private boolean selectedForTeam;
+
+
+    private IntegerProperty numberCollabsPerSkill;
+    /**
+     * Constructs a Skill object with the specified name.
+     *
+     * @param skillName The name of the skill.
+     */
     public Skill(String skillName){
-        this.skillName=skillName;
+        setSkillName(skillName);
+        this.selecting = new SimpleBooleanProperty(false);
+
+        this.selecting.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                selectedForTeam=true;
+            }
+        });
     }
 
+    /**
+     * Retrieves the name of the skill.
+     *
+     * @return The name of the skill.
+     */
     public String getSkillName(){
         return this.skillName;
     }
 
+    /**
+     * Compares if two skills are equal.
+     *
+     * Two skills are considered equal if they have the same name.
+     *
+     * @param other The object to compare with.
+     * @return True if the skills are equal, otherwise false.
+     */
     @Override
     public boolean equals(Object other){
-        if(this==other){
+        if(this == other){
             return true;
         }
         if(other == null || this.getClass() != other.getClass()){
             return false;
         }
         Skill otherSkill= (Skill) other;
-        return this.getSkillName()==otherSkill.getSkillName();
+        return this.getSkillName().equals(otherSkill.getSkillName());
     }
 
+    /**
+     * Clones the current Skill object.
+     *
+     * @return A new Skill object with the same name as the current skill.
+     */
     public Skill clone() {
         return new Skill(this.skillName);
     }
 
+    /**
+     * Sets the name of the skill.
+     *
+     * @param skillName The name of the skill to set.
+     * @throws IllegalArgumentException if the provided skill name is not valid.
+     */
     public void setSkillName(String skillName) {
-        this.skillName = skillName;
+        if(verifySkillName(skillName)){
+            this.skillName = skillName;
+        }else{
+            throw new IllegalArgumentException("Skill name is not valid");
+        }
     }
 
+    private boolean verifySkillName(String skillName) {
+        boolean value = true;
+        if (skillName == null || skillName.length() == 0){
+            value = false;
+        }
+        for (char c : skillName.toCharArray()) {
+            if (!Character.isLetter(c) && !Character.isSpace(c)) {
+                value = false;
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Returns a string representation of the skill.
+     *
+     * @return A string containing the name of the skill.
+     */
     @Override
     public String toString(){
         return String.format("Skill: %s\n ", skillName);
+    }
+
+    public BooleanProperty selectedSkill(){
+        return selecting;
+    }
+
+    public IntegerProperty getNumberCollabsPerSkill(){
+        return numberCollabsPerSkill;
+    }
+
+    public void setNumberCollabsPerSkill(Integer number){
+        if (numberCollabsPerSkill == null) {
+            numberCollabsPerSkill = new SimpleIntegerProperty();
+        }
+        this.numberCollabsPerSkill.set(number);
+    }
+
+    public IntegerProperty numberCollabsPerSkillProperty() {
+        return numberCollabsPerSkill;
     }
 }

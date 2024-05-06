@@ -10,8 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.ObjectUtils;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 
@@ -27,10 +30,14 @@ public class ManageSkillsUI {
     @FXML
     public TableColumn<Skill, String> colSkills;
 
+
     public RegisterSkillController ctrl;
+
+    public AuthenticationController ctrlAuth;
 
     public ManageSkillsUI(){
         ctrl=new RegisterSkillController();
+        ctrlAuth=new AuthenticationController();
     }
 
     public void setSkillTable(){
@@ -50,11 +57,15 @@ public class ManageSkillsUI {
         if (skillName.isEmpty()){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is Empty").show();
             return;
-        } else if(!verifySkillName(skillName)){
-            popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is invalid").show();
-            return;
+        } else {
+            try{
+                ctrl.RegisterSkill(skillName);
+            } catch (NullPointerException | CloneNotSupportedException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is invalid").show();
+            } catch (RuntimeException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
         }
-        ctrl.RegisterSkill(skillName);
         introducingSkill.clear();
         ObservableList<Skill> listForTable= FXCollections.observableArrayList(ctrl.getSkillList());
         tableSkills.getItems().clear();
@@ -65,8 +76,16 @@ public class ManageSkillsUI {
     public void btnRemove(){
         Skill selectedSkill = tableSkills.getSelectionModel().getSelectedItem();
         if(selectedSkill != null){
-            tableSkills.getItems().remove(selectedSkill);
-            ctrl.removeFromList(selectedSkill);
+            Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+            popUp.setHeaderText("Removing Skill");
+            popUp.setContentText("Do you want to remove the skill?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                tableSkills.getItems().remove(selectedSkill);
+                ctrl.removeFromList(selectedSkill);
+            }
         }
     }
 
@@ -87,15 +106,6 @@ public class ManageSkillsUI {
         introducingSkill.setText(editSkill);
     }
 
-    private boolean verifySkillName(String skillName) {
-        char[] testSkill = skillName.trim().toCharArray();
-        for(char x : testSkill){
-            if(!Character.isLetter(x)){
-                return false;
-            }
-        }
-        return true;
-    }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
         Alert alerta = new Alert(alertType);
@@ -117,6 +127,7 @@ public class ManageSkillsUI {
         ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
+            ctrlAuth.doLogout();
             FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
             Parent root= fxmlLoader.load();
             Scene scene= new Scene(root);
@@ -127,10 +138,22 @@ public class ManageSkillsUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader fxmlLoader ;
+        try {
+            UserRoleDTO role = ctrlAuth.getAtualUserRole();
+            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+            } else if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+            }else {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+            }
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (ArrayIndexOutOfBoundsException e){
+            popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
+        }
     }
 }

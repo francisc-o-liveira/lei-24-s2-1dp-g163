@@ -13,14 +13,14 @@ public class VFManagerUI implements Runnable{
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("1 - Create Task", new CreateTaskUI()));
-        options.add(new MenuItem("2 - Manage Teams", new ShowTextUI("You have chosen Option 2.")));
-        options.add(new MenuItem("3 - Manage Collaborators", new ShowTextUI("You have chosen Option 3.")));
-        options.add(new MenuItem("4 - Manage Vehicles", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("Create Task", new CreateTaskUI()));
+        options.add(new MenuItem("Manage Teams", new ShowTextUI("You have chosen Option 2.")));
+        options.add(new MenuItem("Manage Collaborators", new ShowTextUI("You have chosen Option 3.")));
+        options.add(new MenuItem("Manage Vehicles", new ShowTextUI("You have chosen Option 4.")));
 
         int option = 0;
         do {
-            option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
+            option = Utils.showAndSelectIndex(options, "\n\n--- VEHICLES AND EQUIPMENT FLEET MANAGER MENU -------------------------");
 
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();

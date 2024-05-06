@@ -6,8 +6,12 @@ module pt.ipp.isep.dei.esoft.project.ui.gui {
     requires java.logging;
     requires org.knowm.xchart;
     requires java.desktop;
-
+    requires jdk.jshell;
 
     opens pt.ipp.isep.dei.esoft.project.ui.gui to javafx.fxml;
+
+    opens pt.ipp.isep.dei.esoft.project.domain.collaborator to javafx.base;
+    opens pt.ipp.isep.dei.esoft.project.domain.team to javafx.base;
+    opens pt.ipp.isep.dei.esoft.project.domain.vehicle to javafx.base;
     exports pt.ipp.isep.dei.esoft.project.ui.gui;
 }

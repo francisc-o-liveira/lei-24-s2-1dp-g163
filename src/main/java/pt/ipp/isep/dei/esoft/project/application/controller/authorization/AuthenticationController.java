@@ -30,11 +30,23 @@ public class AuthenticationController {
         }
     }
 
+    public UserRoleDTO getAtualUserRole(){
+        return selectsRole(getUserRoles());
+    }
+
     public List<UserRoleDTO> getUserRoles() {
         if (authenticationRepository.getCurrentUserSession().isLoggedIn()) {
             return authenticationRepository.getCurrentUserSession().getUserRoles();
         }
         return null;
+    }
+
+    private UserRoleDTO selectsRole(List<UserRoleDTO> roles) {
+        if (roles.size() == 1) {
+            return roles.get(0);
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     public boolean addUserWithRole(String managerName, String managerEmail, String managerPassword, String userRole){

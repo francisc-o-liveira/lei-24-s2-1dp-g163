@@ -1,6 +1,5 @@
 # US005 - Generate a Team Automatically
 
-
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
@@ -50,20 +49,26 @@ The max size of the team (for instance 4) and the skill needed(example): 4 tree 
 
 ### 1.5 Input and Output Data
 
-**Input Data:**
-
 * Typed data:
     * a max size of the team
     * a min size of the team
-	
+	* a number of collaborators for every skill selected
+  
 * Selected data:
     * a skills set
 
 **Output Data:**
 
-* Warnings of In-success
-* Team of collaborators - List (And the Skills of each Collaborator)
-* (In)Success of the operation
+**Output Data:**
+
+* **Confirmation of Generate Team:**
+    - Team of collaborators - List (And the Skills of each Collaborator)
+* **Warnings or Errors (if applicable):**
+  - Error messages for any issues encountered during the generate team process, such non-existent data or duplications ,etc...
+* **Operational Feedback:**
+    - Overall status of the operation (success or failure), with immediate feedback to the Manager.
+
+    
 
 ### 1.6. System Sequence Diagram (SSD)
 

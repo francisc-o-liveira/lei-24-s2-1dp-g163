@@ -3,6 +3,10 @@ package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.CheckUpListUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterCheckUpUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterVehicleUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.ShowVehicleListUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.ArrayList;
@@ -16,15 +20,15 @@ public class ManageVehiclesUI implements Runnable{
     @Override
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("1 - Show Vehicle List", new ShowVehicleListUI()));
-        options.add(new MenuItem("2 - Remove Vehicle", new ShowTextUI("Implementing.......")));
-        options.add(new MenuItem("3 - Add Vehicle", new RegisterVehicleUI()));
-        options.add(new MenuItem("4 - Show Check Up List", new CheckUpListUI()));
-        options.add(new MenuItem("5 - Register a CheckUp", new RegisterCheckUpUI()));
-        options.add(new MenuItem("6 - Register update Kilometers", new ManageVehiclesUI()));
+        options.add(new MenuItem("Show Vehicle List", new ShowVehicleListUI()));
+        options.add(new MenuItem("Remove Vehicle", new ShowTextUI("Implementing.......")));
+        options.add(new MenuItem("Add Vehicle", new RegisterVehicleUI()));
+        options.add(new MenuItem("Show Check Up List", new CheckUpListUI()));
+        options.add(new MenuItem("Register a CheckUp", new RegisterCheckUpUI()));
+        options.add(new MenuItem("Register update Kilometers", new ShowTextUI("Implementing.......")));
         int option = 0;
         do {
-            option = Utils.showAndSelectIndex(options, "\n\n--- ADMIN MENU -------------------------");
+            option = Utils.showAndSelectIndex(options, "\n\n--- Manage Vehicles -------------------------");
 
             if ((option >= 0) && (option < options.size())) {
                 options.get(option).run();

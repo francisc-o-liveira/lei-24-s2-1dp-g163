@@ -2,205 +2,275 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class Collaborator {
+/**  Domain Class for Collaborator Object */
+public class Collaborator{
+
+    /** Parameters needed for Collaborator */
     private String name;
     private Date birthday;
     private Date admissionDate;
     private String address;
     private String addressZipCode;
     private String addressCity;
-    private int phoneNumber;
+    private String phoneNumber;
     private DocType.Type docType;
     private int docIDNumber;
     private String email;
     private JobCategory jobCategory;
     private List<Skill> skills;
+    public enum StatusType {Active,NotActive}
+    private StatusType statusType;
 
+    /** When created, the Collaborator does not own any skills */
+    private List<Skill> SKILLS_BY_OMISSION=new ArrayList<>();
+    private static final JobCategory JOBCATEGORY_OMISSION = new JobCategory("NONE");
+
+    /** Gets the name of collaborator
+     *
+     * @return name of collaborator
+     */
     public String getName() {
         return name;
     }
 
+    /** Sets the name of collaborator after verification
+     *
+     * A name is only valid if it is shorter than 6 words and only contains characters
+     * @param name of Collaborator
+     */
     public void setName(String name) {
-        this.name = name;
+        if (name.split(" ").length<=6 && verifyIsOnlyCharacter(name)){
+            this.name = name;
+        }else {
+            throw new IllegalArgumentException("Invalid name: " + name);
+        }
     }
+
+    /** Method to verify if the name only contains characters
+     *
+     * @param name of Collaborator
+     * @return true if the name only contains characters
+     */
+    private boolean verifyIsOnlyCharacter(String name) {
+        char[] chars = name.replaceAll("\\s", "").toCharArray();
+        for (char c : chars){
+            if (!Character.isLetter(c)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** Gets the birthday of Collaborator
+     *
+     * @return date of birth of Collaborator
+     */
 
     public Date getBirthday() {
         return birthday;
     }
 
+    /** Sets the birthday of Collaborator after verifying if Collaborator is older than 18 years
+     *
+     */
+
     public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+        if (birthday.diference(Date.atualDate())>6574){
+            this.birthday = birthday;
+        }else {
+            throw new IllegalArgumentException("Invalid birthday: " + birthday);
+        }
     }
+
+    /** Gets the date of admission of Collaborator
+     *
+     * @return admission date of Collaborator
+     */
 
     public Date getAdmissionDate() {
         return admissionDate;
     }
 
+    /** Sets the date of admission of Collaborator */
     public void setAdmissionDate(Date admissionDate) {
         this.admissionDate = admissionDate;
     }
+
+    /** Gets the address of Collaborator
+     *
+     * @return Collaborator's address
+     */
 
     public String getAddress() {
         return address;
     }
 
+    /** Sets the address of Collaborator
+     *
+     * @param address of Collaborator
+     */
+
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /** Gets the zip code of the address of Collaborator
+     *
+     * @return Collaborator's zip code
+     */
     public String getAddressZipCode() {
         return addressZipCode;
     }
+
+    /** Sets the zip code of the address of Collaborator
+     *
+     * @param addressZipCode of Collaborator
+     */
 
     public void setAddressZipCode(String addressZipCode) {
         this.addressZipCode = addressZipCode;
     }
 
+    /** Gets the city of the address of Collaborator
+     *
+     * @return Collaborator's city address
+     */
     public String getAddressCity() {
         return addressCity;
     }
 
+    /** Sets the city of the address of Collaborator
+     *
+     * @param addressCity of Collaborator
+     */
     public void setAddressCity(String addressCity) {
         this.addressCity = addressCity;
     }
 
-    public int getPhoneNumber() {
+    /** Gets the phone number of Collaborator
+     *
+     * @return Collaborator's phone number
+     */
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    /** Sets the phone number of Collaborator
+     *
+     * @param phoneNumber of Collaborator
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        if(verifyPhoneNumber(phoneNumber)){
+            this.phoneNumber = phoneNumber;
+        }else {
+            throw new IllegalArgumentException("Invalid phone number: " + phoneNumber);
+        }
     }
+
+    /** Using Java Regex, this method verifies a phone number
+     *
+     * @param phoneNumber of collaborator to validate
+     * @return true if phoneNumber starts with a plus sign followed by 6 to 14 digits with optional spaces between them
+     * */
+
+    private boolean verifyPhoneNumber(String phoneNumber) {
+        String verify="^\\+(?:[0-9] ?){6,14}[0-9]$";
+        Pattern pattern = Pattern.compile(verify);
+        Matcher matcher=pattern.matcher(phoneNumber);
+        if(matcher.matches()){
+            return true;
+        }
+        return false;
+    }
+
+    /** Gets the type of identification document
+     *
+     * @return type of identification document
+     */
 
     public DocType.Type getDocType() {
         return docType;
     }
+    /**
+     * This method verify if the docIDNumber is valid to add for collaborator
+     * @param docType type of identification document  (passport, citizen card, ...)
+     * @param docIDNumber the identification number from the document correspondent to the Collaborator
+     */
 
-    public void setDocType(DocType.Type docType) {
-        this.docType = docType;
+    public void setDocType(DocType.Type docType,int docIDNumber) {
+        if (DocType.verifyDocType(docType,docIDNumber)){
+            this.docType = docType;
+            this.docIDNumber = docIDNumber;
+        }else{
+            throw new IllegalArgumentException("Invalid document type: " + docType);
+        }
     }
 
-    public void setDocIDNumber(int docIDNumber) {
-        this.docIDNumber = docIDNumber;
-    }
 
+    /** Gets the e-mail address of Collaborator
+     *
+     * @return Collaborator's e-mail address
+     */
     public String getEmail() {
         return email;
     }
 
+    /** Sets the e-mail address of Collaborator after being verified
+     *
+     * @param email of Collaborator
+     */
+
     public void setEmail(String email) {
-        this.email = email;
+        if(verifyEmail(email)){
+            this.email = email;
+        }else {
+            throw new IllegalArgumentException("Invalid email: " + email);
+        }
     }
+    /**Verifies if e-mail is correctly inserted
+     *
+     *  An e-mail is correct if it contains the "@" followed by a domain and if it has a prefix
+     * @param email of collaborator
+     * @return true if e-mail is correct
+     */
+    private boolean verifyEmail(String email) {
+        boolean value = false;
+        String[] check = email.split("");
+        for(String letter: check){
+            if(letter.equals("@")){
+                value=true;
+            }
+        }
+        String[] domainPrefix;
+        String[] domain;
+        if(value){
+            domainPrefix = email.split("@");
+            value = domainPrefix.length==2;
+            if (value){
+                domain=domainPrefix[1].split("\\.");
+                value = domain.length==2;
+                if (value){
+                    value= domain[1].equals("com") || domain[1].equals("pt");
+                }
+            }
+        }
+        return value;
+    }
+
+    /** Gets the Job Category of Collaborator
+     *
+     * @return Collaborator's Job Category
+     */
 
     public JobCategory getJobCategory() {
         return jobCategory;
-    }
-
-    public void setJobCategory(JobCategory jobCategory) {
-        this.jobCategory = jobCategory;
-    }
-
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
-    }
-
-    public StatusType getStatusType() {
-        return statusType;
-    }
-
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
-    }
-
-    public List<Skill> getSKILLS_BY_OMISSION() {
-        return SKILLS_BY_OMISSION;
-    }
-
-    public void setSKILLS_BY_OMISSION(List<Skill> SKILLS_BY_OMISSION) {
-        this.SKILLS_BY_OMISSION = SKILLS_BY_OMISSION;
-    }
-
-    public enum StatusType {Active,NotActive}
-    private StatusType statusType;
-    private List<Skill> SKILLS_BY_OMISSION=null;
-
-    /**
-     * This method it is for trade the statusType
-     *
-     * @param statusType represent the new status for the collaborator
-     * @return
-     */
-    public void setStatus(StatusType statusType) {
-        this.statusType=statusType;
-    }
-
-    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, int phoneNumber, String email, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
-        this.name=name;
-        this.birthday=birthday;
-        this.admissionDate=admissionDate;
-        this.address=address;
-        this.addressZipCode=addressZipCode;
-        this.addressCity=addressCity;
-        this.phoneNumber=phoneNumber;
-        this.docType=docType;
-        this.docIDNumber=docIDNumber;
-        this.jobCategory=jobCategory;
-        this.statusType=StatusType.NotActive;
-        this.skills=SKILLS_BY_OMISSION;
-
-    }
-
-    /**
-     * Return the number of Skills
-     * @return number Skills in the collaborator
-     */
-
-    public int getNumberOfSkills(){
-        int count=0;
-        if(skills != null){
-            for(Skill s : skills){
-                count++;
-            }
-        }
-        return count;
-    }
-
-    /**
-     * This method is for get the status of collaborator{Activate or NotActivate}
-     * @return
-     */
-    public StatusType getStatus(){
-        return this.statusType;
-    }
-
-
-    /**
-     *  This method is for add Skills to the collaborator and verify if the collaborator already have the Skill (Assign Skill)
-     * @param skill represent the skill to assign to the collaborator
-     * @return the collaborator if assign the skill to the collaborator
-     */
-    public Optional<Collaborator> setAddSkill(Skill skill){
-        Optional<Collaborator> collabWithNewSkill = Optional.empty();
-        collabWithNewSkill = Optional.of(this);
-        if(!verifyIfHaveSkill(skill)){
-            this.skills.add(skill);
-        }else {
-            Optional.empty();
-        }
-        return collabWithNewSkill;
-    }
-
-    /**
-     * This method verify if the collaborator have or no one skill selected by user
-     * @param skill selected by the user to check if the collab have or no
-     * @return true if the collab have this skill
-     */
-
-    public boolean verifyIfHaveSkill(Skill skill) {
-        return skills.contains(skill);
     }
 
     /**
@@ -213,14 +283,173 @@ public class Collaborator {
     }
 
     /**
-     * This method is for get the DocIDNumber of the collaborator
-     * @return the docIDNumber
+     * This method gets the identification number of Collaborator
+     * @return Collaborators' identification number
      */
 
     public int getDocIDNumber(){
         return this.docIDNumber;
     }
 
+    /**
+     * Returns the number of Skills of Collaborator
+     * @return quantity of Skills Collaborator has
+     */
+
+    public int getNumberOfSkills(){
+        int count=0;
+        if(skills != null){
+            for(Skill s : skills){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /** Gets the Status of a Collaborator
+     *
+     * @return Collaborators' Status
+     */
+    public StatusType getStatus(){
+        return this.statusType;
+    }
+
+    /** Sets the Job Category for Collaborator
+     *
+     * @param jobCategory to be assigned to Collaborator
+     */
+
+    public void setJobCategory(JobCategory jobCategory) {
+        this.jobCategory = jobCategory;
+    }
+
+    /** Sets the skills to Collaborator
+     *
+     * @param skills for Collaborator
+     */
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    /** Sets the Status of a Collaborator
+     *
+     * @param statusType for Collaborator
+     */
+
+    public void setStatusType(StatusType statusType) {
+        this.statusType = statusType;
+    }
+
+    /** When created, the Collaborator doesn't own any skills
+     *
+     * @param SKILLS_BY_OMISSION
+     */
+    public void setSKILLS_BY_OMISSION(List<Skill> SKILLS_BY_OMISSION) {
+        this.skills = SKILLS_BY_OMISSION;
+    }
+
+
+    /**
+     * This method changes the status of Collaborator
+     *
+     * @param statusType represent the new status for the collaborator
+     * @return
+     */
+    public void setStatus(StatusType statusType) {
+        this.statusType=statusType;
+    }
+
+    /** Constructor method for Collaborator
+     *
+     * @param name of Collaborator
+     * @param birthday of Collaborator
+     * @param admissionDate of Collaborator
+     * @param address of Collaborator
+     * @param addressZipCode of Collaborator
+     * @param addressCity of Collaborator
+     * @param phoneNumber of Collaborator
+     * @param email of Collaborator
+     * @param docType of Collaborator
+     * @param docIDNumber of Collaborator
+     * @param jobCategory of Collaborator
+     */
+    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String phoneNumber, String email, DocType.Type docType, int docIDNumber, JobCategory jobCategory){
+        setName(name);
+        setBirthday(birthday);
+        setAdmissionDate(admissionDate);
+        setAddress(address);
+        setAddressZipCode(addressZipCode);
+        setAddressCity(addressCity);
+        setPhoneNumber(phoneNumber);
+        setDocType(docType,docIDNumber);
+        setEmail(email);
+        setJobCategory(jobCategory);
+        setStatusType(StatusType.Active);
+        setSKILLS_BY_OMISSION(SKILLS_BY_OMISSION);
+    }
+
+    /** Constructor method for Collaborator if a Job Category is not selected
+     *
+     * @param name of Collaborator
+     * @param birthday of Collaborator
+     * @param admissionDate of Collaborator
+     * @param address of Collaborator
+     * @param addressZipCode of Collaborator
+     * @param addressCity of Collaborator
+     * @param phoneNumber of Collaborator
+     * @param email of Collaborator
+     * @param docType of Collaborator
+     * @param docIDNumber of Collaborator
+     *
+     */
+    public Collaborator(String name, Date birthday, Date admissionDate, String address, String addressZipCode, String addressCity, String phoneNumber, String email, DocType.Type docType, int docIDNumber) {
+        setName(name);
+        setBirthday(birthday);
+        setAdmissionDate(admissionDate);
+        setAddress(address);
+        setAddressZipCode(addressZipCode);
+        setAddressCity(addressCity);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
+        setDocType(docType,docIDNumber);
+        setJobCategory(JOBCATEGORY_OMISSION);
+        setStatusType(StatusType.Active);
+        setSKILLS_BY_OMISSION(SKILLS_BY_OMISSION);
+    }
+
+
+    /**
+     *  This method to add Skills to the collaborator and verify if the collaborator already has the Skill (Assign Skill)
+     * @param skill represent the skill to assign to the collaborator
+     * @return the collaborator if skill has been assigned
+     */
+    public Optional<Collaborator> setAddSkill(Skill skill) throws CloneNotSupportedException {
+        Optional<Collaborator> collabWithNewSkill;
+        collabWithNewSkill = Optional.of(this);
+        if(!verifyIfHaveSkill(skill)){
+            this.skills.add(skill);
+        }else {
+            collabWithNewSkill=Optional.empty();
+            throw new CloneNotSupportedException("The Collaborator already have this Skill");
+        }
+        return collabWithNewSkill;
+    }
+
+    /**
+     * This method verifies if the collaborator has or not the skill selected by user
+     * @param skill selected by the user to check if Collaborator has the skill
+     * @return true if Collaborator has this skill
+     */
+
+    public boolean verifyIfHaveSkill(Skill skill) {
+        return skills.contains(skill);
+    }
+
+    /** Method to get the data of Collaborator in a String
+     *
+     * @return String with the data of Collaborator
+     */
     @Override
     public String toString(){
         return String.format("Name: %s\n" +
@@ -234,6 +463,36 @@ public class Collaborator {
                 "Job Category: %s\n" +
                 "Status Type: %s\n" +
                 "Skills: %s\n", name, birthday, admissionDate, address, addressCity, addressZipCode, phoneNumber, docType, docIDNumber, email, jobCategory, statusType, skills);
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if(this==other){
+            return true;
+        }
+        if(other == null || this.getClass() != other.getClass()){
+            return false;
+        }
+        Collaborator otherCollab=(Collaborator) other;
+
+        return this.getDocIDNumber()==otherCollab.getDocIDNumber();
+    }
+
+    public static LocalDate convertToJavaLocalDate(Date date) {
+
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+
+        return LocalDate.of(year, month, day);
+    }
+
+    public LocalDate getBirthdayLocal() {
+        return convertToJavaLocalDate(this.birthday);
+    }
+
+    public LocalDate getAdmissionDateLocal(){
+        return convertToJavaLocalDate(this.admissionDate);
     }
 
 

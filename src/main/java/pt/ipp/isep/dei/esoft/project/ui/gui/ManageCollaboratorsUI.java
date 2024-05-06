@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,67 +9,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
+
+import javax.print.Doc;
+import javax.swing.text.View;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class ManageCollaboratorsUI {
 
     public Stage stage = LoginUI.getMainStage();
+    public Stage stageToViewDetails = new Stage();
     public RegisterCollaboratorController ctrl;
-
-
-    /**
-     * All the parameters needed to register a collaborator
-     */
-    private Date birthday;
-    private Date admissionDate;
-    private DocType typeOfDocument;
-    private JobCategory jobCategory;
-
-    @FXML
-    private TextField addressCity;
-    @FXML
-    private TextField addressStreet;
-    @FXML
-    private TextField addressZipCode;
-    @FXML
-    private DatePicker dateAdmission;
-    @FXML
-    private DatePicker dateBirthday;
-    @FXML
-    private TextField docIDNumber;
-    @FXML
-    private TextField email;
-    @FXML
-    private TextField name;
-    @FXML
-    private TextField phoneNumber;
-    @FXML
-    private ComboBox docType;
-    //@FXML
-    //private ComboBox selectedjobCategory;
+    public ViewDetailsCollaboratorUI viewDetailsCollaboratorUI;
+    public AuthenticationController ctrlAuth;
 
     @FXML
     public TableView<Collaborator> tableCollaborators;
 
-    @FXML
-    public TableColumn<Collaborator, Boolean> columnSelect;
     @FXML
     public TableColumn<Collaborator, Integer> columnIDNumber;
     @FXML
@@ -80,126 +53,69 @@ public class ManageCollaboratorsUI {
     @FXML
     public TableColumn<Collaborator, Void> columnButtonsDetails;
 
+    ObservableList<Collaborator> collaboratorObservableList=FXCollections.observableArrayList();
     public ManageCollaboratorsUI() {
         ctrl = new RegisterCollaboratorController();
+        ctrlAuth= new AuthenticationController();
+    }
+
+    public Stage getStageToViewDetails(){
+        return stageToViewDetails;
     }
 
     @FXML
-    public void btnAddCollaborator(ActionEvent event) {
-        List<String> messageError = new ArrayList<>();
-        if (!verifyName(name.getText())) {
-            messageError.add("The introduced name is invalid");
-        }
-        if (!verifyAddress(addressStreet.getText(), addressZipCode.getText(), addressCity.getText())) {
-            messageError.add("The introduced address is invalid");
-        }
-        if (!verifyEmail(email.getText())) {
-            messageError.add("The introduced email is invalid");
-        }
-        if (!verifyPhoneNumber(Integer.parseInt(phoneNumber.getText()))) {
-            messageError.add("The introduced phone number is incorrect.");
-        } else if (!phoneNumber.getText().contains("+351") && !verifyInternationalPhoneNumber(phoneNumber.getText())) {
-            messageError.add("The introduced phone number is incorrect.");
-        }
-
-        DocType selectedType = (DocType) docType.getSelectionModel().getSelectedItem();
-        /*if (!validDocType(selectedType, Integer.parseInt(docIDNumber.getText()))) {
-            messageError.add("The introduced ID Number is incorrect");
-        }*/
-
-        if (messageError != null) {
-            popUpOfVerifications(Alert.AlertType.ERROR, messageError).show();
-        } else {
-            registerCollaborator();
-            popUp();
-        }
+    public void btnAddCollaborator(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        uiToAdd.setTableAssignSkills();
+        uiToAdd.setComboBoxes();
     }
 
     @FXML
     public void btnRemoveCollaborator() {
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
         if (selectedCollaborator != null) {
-            tableCollaborators.getItems().remove(selectedCollaborator);
-            ctrl.removeFromList(selectedCollaborator);
+            Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+
+            popUp.setHeaderText("Removing Collaborator");
+            popUp.setContentText("Do you want to remove this collaborator?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                tableCollaborators.getItems().remove(selectedCollaborator);
+                ctrl.removeFromList(selectedCollaborator);
+            }
         }
     }
 
     @FXML
-    public void btnEditCollaborator() {
-        Collaborator editedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
-        if (editedCollaborator != null) {
-            String newName = name.getText();
-            editedCollaborator.setName(newName);
-            name.clear();
-
-            String newZipCode = addressZipCode.getText();
-            editedCollaborator.setAddressZipCode(newZipCode);
-            addressZipCode.clear();
-
-            String newDocIDNumber = docIDNumber.getText();
-            int idNew = Integer.parseInt(newDocIDNumber);
-            editedCollaborator.setDocIDNumber(idNew);
-            docIDNumber.clear();
-
-            String newEmail = email.getText();
-            editedCollaborator.setEmail(newEmail);
-            email.clear();
-
-            String newPhoneNumber = phoneNumber.getText();
-            int phoneNew = Integer.parseInt(newPhoneNumber);
-            editedCollaborator.setPhoneNumber(phoneNew);
-            phoneNumber.clear();
-
-            String newCity = addressCity.getText();
-            editedCollaborator.setAddressCity(newCity);
-            addressCity.clear();
-
-            String newStreet = addressStreet.getText();
-            editedCollaborator.setAddress(newStreet);
-            addressStreet.clear();
-
-            tableCollaborators.refresh();
-        }
-    }
-
-    private void putInTextFields() {
+    public void btnEditCollaborator() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
-
-        String editName = selectedCollaborator.getName();
-        name.setText(editName);
-
-        String editDocIDNumber = String.valueOf(selectedCollaborator.getDocIDNumber());
-        docIDNumber.setText(editDocIDNumber);
-
-        String editEmail = selectedCollaborator.getEmail();
-        email.setText(editEmail);
-
-        String editPhoneNumber = String.valueOf(selectedCollaborator.getPhoneNumber());
-        phoneNumber.setText(editPhoneNumber);
-
-        String editCity = selectedCollaborator.getAddressCity();
-        addressCity.setText(editCity);
-
-        String editStreet = selectedCollaborator.getAddress();
-        addressStreet.setText(editStreet);
-
-        String editZipCode = selectedCollaborator.getAddressZipCode();
-        addressZipCode.setText(editZipCode);
+        uiToAdd.setTableAssignSkills();
+        uiToAdd.putInTextFields(selectedCollaborator);
+        uiToAdd.showCollaboratorSelected(selectedCollaborator);
     }
-
 
     public void setTableCollaborators() {
-        ComboBox<DocType> cbxStatus = new ComboBox<>();
-        docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
-        //selectedjobCategory.setItems(FXCollections.observableArrayList(ctrl.getJobCategoryList()));
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnIDNumber.setCellValueFactory(new PropertyValueFactory<>("docIDNumber"));
         columnDocType.setCellValueFactory(new PropertyValueFactory<>("docType"));
         columnJobCategory.setCellValueFactory(new PropertyValueFactory<>("jobCategory"));
 
-        columnSelect.setCellValueFactory(new PropertyValueFactory<>("selected"));
-        columnSelect.setCellFactory(CheckBoxTableCell.forTableColumn(columnSelect));
         columnButtonsDetails.setCellFactory(new Callback<
                 TableColumn<Collaborator, Void>, TableCell<Collaborator, Void>>() {
             @Override
@@ -210,8 +126,7 @@ public class ManageCollaboratorsUI {
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
-                            int collaboratorID = Integer.parseInt(docIDNumber.getText());
-                            Collaborator collaborator = ctrl.collaboratorRepository.searchForCollaborator(collaboratorID); //this thing cannot be accessed like this
+                            Collaborator collaborator = tableCollaborators.getSelectionModel().getSelectedItem();
                             try {
                                 showMore(collaborator);
                             } catch (IOException e) {
@@ -232,136 +147,20 @@ public class ManageCollaboratorsUI {
                 };
             }
         });
-        tableCollaborators.setOnMouseClicked(mouseEvent -> putInTextFields());
+        for(Collaborator c : ctrl.getCollaboratorList()){
+            collaboratorObservableList.add(c);
+        }
+        tableCollaborators.setItems(collaboratorObservableList);
     }
 
-    //see this again later
     public void showMore(Collaborator collab) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hi.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void registerCollaborator() {
-        //jobCategory=(JobCategory) selectedjobCategory.getValue();
-        admissionDate = new Date(dateAdmission.getValue().getYear(), dateAdmission.getValue().getMonthValue(), dateAdmission.getValue().getDayOfMonth());
-        birthday = new Date(dateBirthday.getValue().getYear(), dateBirthday.getValue().getMonthValue(), dateBirthday.getValue().getDayOfMonth());
-        /*typeOfDocument = (DocType)  docType.getValue();
-        ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressCity.getText(), addressZipCode.getText(), Integer.parseInt(phoneNumber.getText()), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);*/
-    }
-
-
-    /*private boolean validDocType(DocType type, int docIDNumber) {
-        return ctrl.validateDocType(type, docIDNumber);
-    }*/
-
-
-    /**
-     * Verifies if e-mail is correctly inserted
-     *
-     * @param email of collaborator
-     * @return true if e-mail is correct
-     */
-
-    private boolean verifyEmail(String email) {
-        boolean value = false;
-        String[] check = email.split("");
-        for (String letter : check) {
-            if (letter.equals("@")) {
-                value = true;
-            }
-        }
-        String[] domainPrefix;
-        String[] domain;
-        if (value) {
-            domainPrefix = email.split("@");
-            value = domainPrefix.length == 2;
-            if (value) {
-                domain = domainPrefix[1].split(".");
-                value = domain.length == 2;
-                if (value) {
-                    value = domain[1].equals("com") || domain[1].equals("pt");
-                }
-            }
-        }
-        return value;
-    }
-
-    /**
-     * Verifies if phone number is correctly inserted
-     *
-     * @param phoneNumber of collaborator
-     * @return true if phoneNumber is correct
-     */
-
-    private boolean verifyPhoneNumber(int phoneNumber) {
-        return (phoneNumber % 1000000000) > 0.9 && (phoneNumber % 1000000000) < 1 && ((phoneNumber / 10000000) == 91 || (phoneNumber / 10000000) == 92 || (phoneNumber / 10000000) == 93 || (phoneNumber / 10000000) == 96);
-    }
-
-    /**
-     * Using Java Regex, this method verifies an international phone number
-     *
-     * @param phone of collaborator to validate
-     * @return true if phoneNumber starts with a plus sign followed by 6 to 14 digits with optional spaces between them
-     */
-
-    private boolean verifyInternationalPhoneNumber(String phone) {
-        String verify = "^\\+(?:[0-9] ?){6,14}[0-9]$";
-        Pattern pattern = Pattern.compile(verify);
-        Matcher matcher = pattern.matcher(phone);
-        if (matcher.matches()) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Verifies if address is correctly inserted
-     *
-     * @param address        of collaborator
-     * @param addressZipCode of collaborator
-     * @param addressCity    of collaborator
-     * @return true if address is correct
-     */
-    private boolean verifyAddress(String address, String addressZipCode, String addressCity) {
-        return (addressZipCode.split("-").length == 2 && addressCity.split(" ").length < 5);
-    }
-
-    /**
-     * Verifies if the name is valid
-     *
-     * @param name of collaborator
-     * @return true if name contains six words or fewer
-     */
-    private boolean verifyName(String name) {
-        String[] arrayNeedSize = name.split(" ");
-        return arrayNeedSize.length <= 6;
-    }
-
-    private Alert popUp() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-
-        alerta.setHeaderText("Information");
-        alerta.setContentText("Collaborator added!");
-
-        return alerta;
-    }
-
-    private Alert popUpOfVerifications(Alert.AlertType alertType, List<String> messages) {
-        Alert alerta = new Alert(alertType);
-
-        alerta.setTitle("ERROR");
-        alerta.setHeaderText("Invalid Data");
-        StringBuilder contentText = new StringBuilder();
-        for (String message : messages) {
-            contentText.append(message).append("\n");
-        }
-        alerta.setContentText(contentText.toString());
-
-        return alerta;
+        stageToViewDetails.setScene(scene);
+        stageToViewDetails.show();
+        ViewDetailsCollaboratorUI ui=fxmlLoader.getController();
+        ui.putInTextFields(collab);
     }
 
     @FXML
@@ -374,6 +173,7 @@ public class ManageCollaboratorsUI {
         ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
+            ctrlAuth.doLogout();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -384,10 +184,38 @@ public class ManageCollaboratorsUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        FXMLLoader fxmlLoader ;
+        try {
+            UserRoleDTO role = ctrlAuth.getAtualUserRole();
+            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+            } else if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+            }else {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+            }
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }catch (ArrayIndexOutOfBoundsException e){
+            popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
+        }
+    }
+
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
+        Alert alerta = new Alert(alertType);
+
+        alerta.setTitle("ERROR");
+        alerta.setHeaderText("Invalid Data");
+        alerta.setContentText(message);
+
+        return alerta;
+    }
+
+    @FXML
+    public void btnUpdate(ActionEvent event){
+        tableCollaborators.getItems().clear();
+        setTableCollaborators();
     }
 }

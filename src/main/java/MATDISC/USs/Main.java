@@ -65,10 +65,18 @@ public class Main {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    sizeInput.add((double) (edges != null ? edges.size() : 0));
+                    //sizeInput.add((double) (edges != null ? edges.size() : 0));
+                    ArrayList<Point> vertices=numberOfVertices(edges);
+                    sizeInput.add((double)vertices.size());
                     break;
                 case 3:
-                    plotGraphAndShow(executionTimes, sizeInput);
+
+                    try{
+                        createExecutionTimeFile(executionTimes,sizeInput);
+                        plotGraphAndShow();
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 0:
                     break;
@@ -77,51 +85,10 @@ public class Main {
         }
     }
 
-    public static void plotGraphAndShow(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
-        double[] xData = new double[sizeInput.size()];
-        double[] yData = new double[sizeInput.size()];
-
-
-            for (int i = 0; i < executionTimes.size(); i++) {
-                xData[i] = sizeInput.get(i);
-                yData[i] = executionTimes.get(i);
-            }
-
-            if (yData.length != 0 && xData.length != 0) {
-                XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("Input Size").yAxisTitle("Execution Time").build();
-
-                // Customize chart
-                chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
-                chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-
-                // Add data series
-                XYSeries series = chart.addSeries("Sum", xData, yData);
-
-                // Show the chart
-                new SwingWrapper<>(chart).displayChart();
-
-            }
-
-            writeDataToCSV(executionTimes, sizeInput);
-
-        System.out.println("Execution times recorded in execution_times.csv");
-    }
-
-    public static void writeDataToCSV(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) {
-        try (FileWriter csvWriter = new FileWriter("execution_times.csv")) {
-            csvWriter.append("InputSize,ExecutionTime\n"); // CSV header
-
-            for (int i = 0; i < executionTimes.size(); i++) {
-                double inputSize = sizeInput.get(i);
-                double executionTime = executionTimes.get(i);
-                String csvLine = inputSize + "," + executionTime;
-                csvWriter.append(csvLine).append("\n");
-            }
-
-            System.out.println("Execution times recorded in execution_times.csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void plotGraphAndShow() throws IOException{
+        String command = "C:\\Program Files\\gnuplot\\bin\\gnuplot script_plotGraph.gp";
+        Runtime rt = Runtime.getRuntime();
+        Process prcs = rt.exec(command);
     }
 
     public static String askFileName() {
@@ -268,6 +235,15 @@ public class Main {
             }
         }
         return -1;
+    }
+
+    public static void createExecutionTimeFile(ArrayList<Double> executionTimes, ArrayList<Double> sizeInput) throws IOException{
+        FileWriter exectimesFile= new FileWriter("execution_times.csv");
+        for(int i=0; i<executionTimes.size(); i++){
+            String line=String.format("%.2f; %.2f%n", sizeInput.get(i), executionTimes.get(i));
+            exectimesFile.write(line);
+        }
+        exectimesFile.close();
     }
 
     public static void createResultFile(ArrayList<Edge> edges, long execTime) throws IOException {

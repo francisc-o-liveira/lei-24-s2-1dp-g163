@@ -1,8 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.isep.lei.esoft.auth.domain.model.Email;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +19,7 @@ public class RegisterJobCategoryController {
     public JobCategoryRepository jobCategoryRepository;
 
     /**
-     * When create the Controller, the jobCategory instance is taken from repositories
+     * When the controller is created, the jobCategory instance is taken from repositories
      */
     public RegisterJobCategoryController(){
         getJobCategoryRepository();
@@ -35,12 +38,12 @@ public class RegisterJobCategoryController {
     }
 
     /**
-     * Register Job Category Method
+     * Method to register a Job Category
      *
-     * @param jobName represent the Job Category name
+     * @param jobName represents the Job Category name
      * @return true if jobCategory is created
      */
-    public boolean registerJobCategory(String jobName){
+    public boolean registerJobCategory(String jobName) throws CloneNotSupportedException {
         Optional<JobCategory> jobCategory= jobCategoryRepository.registerJobCategory(jobName);
         if(jobCategory.isPresent()){
             return true;
@@ -51,13 +54,19 @@ public class RegisterJobCategoryController {
 
     /**
      * Get from Job Category Repository all the Job Categories in a List
-     * @return a List of JobCategory's
+     * @return a List of JobCategories
      */
     public List<JobCategory> getJobCategoriesList(){
         return jobCategoryRepository.getJobCategoryList();
     }
 
+    /** Removes a Job Category from the List of Job Categories
+     *
+     * @param jobCategory to be removed
+     */
     public void removeJobCategory(JobCategory jobCategory){
-        getJobCategoriesList().remove(jobCategory);
+        jobCategoryRepository.removeJobCategory(jobCategory);
     }
+
+
 }

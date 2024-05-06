@@ -35,7 +35,7 @@ or tractors; tree pruning; application of phytopharmaceuticals.
 
 * **AC1:** A skill name can’t have special characters or digits.
 * **AC2:** All required fields must be filled in.
-* **AC3:** To register a skill is mandatory input the skill name. 
+* **AC3:** To register a skill is mandatory input the skill name.
 * **AC4:** When creating a skill with an existing name, the system must reject such operation.
 
 ### 1.4. Found out Dependencies

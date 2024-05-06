@@ -22,11 +22,6 @@ public class LoginUI {
     @FXML
     private PasswordField passwordLogin;
 
-    @FXML
-    private Button doLogin;
-
-    @FXML
-    private Button forgotPassword;
     private static int attemps=4;
 
     public static Stage mainStage;
@@ -103,7 +98,7 @@ public class LoginUI {
     }
 
     public void showVFManagerUI() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ManageTeams.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);

@@ -12,7 +12,7 @@ class UserSession
   +isLoggedInWithRole(USER_ROLE)
 }
 
-class "{NameOfUC}Controller" {
+class "AuthenticationController" {
     + {NameOfUC}Controller()
     + methodX(...)
 }
@@ -20,8 +20,8 @@ class "{NameOfUC}Controller" {
 class "{NameOfUC}UI" {
 }
 
-"{NameOfUC}UI" ..> "{NameOfUC}Controller"
-"{NameOfUC}Controller" ..> ApplicationSession
-"{NameOfUC}Controller" ..> UserSession
+"{NameOfUC}UI" ..> "AuthenticationController"
+"AuthenticationController" ..> ApplicationSession
+"AuthenticationController" ..> UserSession
 
 @enduml
