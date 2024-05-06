@@ -20,7 +20,7 @@ class UserSession
     + getUserEmail()
 }
 
-class Employee {
+class VFM {
     - name
     - email
     - position
@@ -49,18 +49,20 @@ class VehicleRepository {
 
 
 class Repositories {
-    - Repositories()
     + getInstance() : Repositories
-    + getVehicleRepository()
+    + getVehicleRepository() : VehicleRepository
 }
 
-class VehicleController {
-    + VehicleController(vehicleRepository)
-    + registerVehicle()
-    - getEmployeeFromSession()
+class RegisterVehicleController {
+    - VehicleRepository vehicleRepository
+    + RegisterVehicleController(vehicleRepository)
+    + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms)))
+    + getVehicleList()
+    + removeVehicleFromList(selectedVehicle)
+    + updateKm(selectedVehicle, km)
 }
 
-note right of VehicleController
+note right of RegisterVehicleController
     - userEmail is obtained
     from the user session
     - categoryDescription
@@ -72,20 +74,20 @@ note bottom of VehicleRepository
     the vehicle list
 end note
 
-Repositories -> "1" VehicleRepository
-Repositories -> Repositories : instance
+Repositories "1" --> "1" VehicleRepository
+Repositories "1" -> "1" Repositories
 
-ApplicationSession -> ApplicationSession : instance
+ApplicationSession --> ApplicationSession
 ApplicationSession --> "1" UserSession : userSession
 
-VehicleUI .> VehicleController
+RegisterVehicleUI "1" --> "1" RegisterVehicleController
 
-VehicleController .> Repositories : repositories
-VehicleController ..> ApplicationSession
-VehicleController ..> UserSession
-VehicleController ..> VehicleRepository : VehicleRepository
+RegisterVehicleController .> Repositories
+RegisterVehicleController ..> ApplicationSession
+RegisterVehicleController ..> UserSession
+RegisterVehicleController "1" --> "1" VehicleRepository
 
-Vehicle --> Employee : createdBy
+Vehicle --> VFM : createdBy
 
 VehicleRepository "1" --> "*" Vehicle : vehicles
 
