@@ -7,20 +7,20 @@ autonumber
 
 'hide footbox
 actor "VFM" as VFM
-participant ":VehicleCheckUpUI" as UI
+participant ":CheckUpListUI" as UI
 
-participant ":VehicleCheckUpController" as CTRL
+participant ":CheckUpListController" as CTRL
 
 participant ":Repositories" as Repositories
 participant "Repositories" as Repos
-participant "vehicleCheckUpRepository\n:VehicleCheckUpRepository" as VehicleCheckUpRepository
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
 
 activate VFM
 
     VFM -> UI : asks the list of vehicles for check-up
     activate UI
 
-    UI -> CTRL : getVehicleCheckUpList()
+    UI -> CTRL : getCheckUpList()
     activate CTRL
 
     CTRL -> Repositories : getInstance()
@@ -29,19 +29,19 @@ activate VFM
     Repositories --> CTRL : repositories
     deactivate Repositories
 
-    CTRL -> Repos : getVehicleCheckUpRepository()
+    CTRL -> Repos : getVehicleRepository()
     activate Repos
 
-    Repos --> CTRL :vehicleCheckUpRepository
+    Repos --> CTRL :VehicleRepository
     deactivate Repos
 
-    CTRL -> VehicleCheckUpRepository : getVehicleCheckUpList()
-    activate VehicleCheckUpRepository
+    CTRL -> VehicleRepository : getCheckUpList()
+    activate VehicleRepository
 
-    VehicleCheckUpRepository --> CTRL : vehicleCheckUpList
-    deactivate VehicleCheckUpRepository
+    VehicleRepository --> CTRL : vehicleCheckUpList
+    deactivate VehicleRepository
 
-    deactivate VehicleCheckUpRepository
+    deactivate VehicleRepository
 
     CTRL --> UI: true / vehicleCheckUpList
     deactivate CTRL

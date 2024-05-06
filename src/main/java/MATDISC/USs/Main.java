@@ -88,7 +88,7 @@ public class Main {
             }
 
             if (yData.length != 0 && xData.length != 0) {
-                XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("").yAxisTitle("").build();
+                XYChart chart = new XYChartBuilder().width(800).height(600).title("Gráfico").xAxisTitle("Input Size").yAxisTitle("Execution Time").build();
 
                 // Customize chart
                 chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);

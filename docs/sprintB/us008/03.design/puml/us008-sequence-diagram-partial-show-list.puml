@@ -3,17 +3,17 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "vehicleController\n:VehicleController" as VC
+participant "checkUpListController\n:CheckUpListController" as VC
 participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
 
 autonumber 16
--> VC: getCehckUpList()
+-> VC: getCheckUpList()
 
 autonumber 16.1
 activate VC
     group Check-Up List
 
-        VC -> VehicleRepository**: getVehicleCehckUpList()
+        VC -> VehicleRepository**: getCheckUpList()
 
         VehicleRepository -> VC : vehicleCheckUpList
 

@@ -44,7 +44,7 @@ class Vehicle {
 
 
 
-class VehicleCheckUpRepository {
+class VehicleRepository {
     + getVehicleByBrand(brand)
     + getVehicleCehckUpList()
 
@@ -57,12 +57,12 @@ class Repositories {
     + getVehicleRepository()
 }
 
-class VehicleCheckUpController {
-    + VehicleCheckUpController(vehicleRepository)
+class CheckUpListController {
+    + CheckUpListController(vehicleRepository)
     - getEmployeeFromSession()
 }
 
-note right of VehicleCheckUpController
+note right of CheckUpListController
     - userEmail is obtained
     from the user session
     - categoryDescription
@@ -70,31 +70,31 @@ note right of VehicleCheckUpController
 
 end note
 
-note bottom of VehicleCheckUpRepository
+note bottom of VehicleRepository
     - used for displaying
     the vehicle list
 end note
 
-class VehicleCheckUpUI {
+class CheckUpListUI {
 }
 
 
-Repositories -> "1" VehicleCheckUpRepository
+Repositories -> "1" VehicleRepository
 Repositories -> Repositories : instance
 
 ApplicationSession -> ApplicationSession : instance
 ApplicationSession --> "1" UserSession : userSession
 
-VehicleCheckUpUI .> VehicleCheckUpController
+CheckUpListUI .> CheckUpListController
 
-VehicleCheckUpController .> Repositories : repositories
-VehicleCheckUpController ..> ApplicationSession
-VehicleCheckUpController ..> UserSession
-VehicleCheckUpController ..> VehicleCheckUpRepository : VehicleCheckUpRepository
-VehicleCheckUpController ..> VehicleCheckUpRepository : VehicleCheckUpRepository
+CheckUpListController .> Repositories : repositories
+CheckUpListController ..> ApplicationSession
+CheckUpListController ..> UserSession
+CheckUpListController ..> VehicleRepository : VehicleRepository
+CheckUpListController ..> VehicleRepository : VehicleRepository
 
 Vehicle --> Employee : createdBy
 
-VehicleCheckUpRepository "1" --> "*" Vehicle : vehicles
+VehicleRepository "1" --> "*" Vehicle : vehicles
 
 @enduml
