@@ -465,6 +465,14 @@ public class Collaborator{
                 "Skills: %s\n", name, birthday, admissionDate, address, addressCity, addressZipCode, phoneNumber, docType, docIDNumber, email, jobCategory, statusType, skills);
     }
 
+    /** Method to compare if two Collaborators are the same
+     *
+     * Two Collaborators are the same if both have the same ID Number
+     *
+     * @param other - Collaborator to be compared along with other
+     * @return true if they are the same
+     */
+
     @Override
     public boolean equals(Object other){
         if(this==other){
@@ -478,6 +486,12 @@ public class Collaborator{
         return this.getDocIDNumber()==otherCollab.getDocIDNumber();
     }
 
+    /** Converts a date to LocalDate format
+     *
+     * @param date to converted
+     * @return date in LocalDate format
+     */
+
     public static LocalDate convertToJavaLocalDate(Date date) {
 
         int year = date.getYear();
@@ -487,9 +501,19 @@ public class Collaborator{
         return LocalDate.of(year, month, day);
     }
 
+    /** Gets the birthday date in LocalDate format
+     *
+     * @return birthday in LocalDate format
+     */
+
     public LocalDate getBirthdayLocal() {
         return convertToJavaLocalDate(this.birthday);
     }
+
+    /** Gets the admission date in LocalDate format
+     *
+     * @return admission date in LocalDate format
+     */
 
     public LocalDate getAdmissionDateLocal(){
         return convertToJavaLocalDate(this.admissionDate);

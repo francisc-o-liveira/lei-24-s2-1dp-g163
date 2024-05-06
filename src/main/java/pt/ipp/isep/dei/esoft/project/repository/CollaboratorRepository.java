@@ -227,6 +227,11 @@ public class CollaboratorRepository {
         return collabWithSkill;
     }
 
+    /** Removes a collaborator from the list of collaborators
+     *
+     * @param collaborator to be removed
+     */
+
     public void removeFromList(Collaborator collaborator){
         if(collaboratorList.contains(collaborator)){
             collaboratorList.remove(collaborator);

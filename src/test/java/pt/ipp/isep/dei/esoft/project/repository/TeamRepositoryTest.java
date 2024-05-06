@@ -22,6 +22,7 @@ class TeamRepositoryTest {
 
     @Test
     void addTeamAndGetTeamListTest() throws CloneNotSupportedException {
+        String name="";
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill");
         Skill skill2 = new Skill("Skillll");
@@ -47,7 +48,7 @@ class TeamRepositoryTest {
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
         GenerateTeamServClass serv = new GenerateTeamServClass();
-        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
+        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam,name);
 
         TeamRepository repo = new TeamRepository();
 

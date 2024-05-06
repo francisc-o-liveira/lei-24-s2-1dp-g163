@@ -17,7 +17,8 @@ class TeamTest {
     @Test
     void addCollaborator() {
         List<Skill> skillList  = new ArrayList<>();
-        Team team = new Team(4,1,skillList);
+        String name="";
+        Team team = new Team(4,1,skillList,name);
         Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,743626422,new JobCategory("Garder"));
         assertTrue(team.addCollaborator(cTest2));
     }
@@ -25,7 +26,8 @@ class TeamTest {
     @Test
     void getTeamList() {
         List<Skill> skillList  = new ArrayList<>();
-        Team team = new Team(4,1,skillList);
+        String name="";
+        Team team = new Team(4,1,skillList,name);
         Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,743626422,new JobCategory("Garder"));
         team.addCollaborator(cTest2);
         List<Collaborator>expectResult=new ArrayList<>();

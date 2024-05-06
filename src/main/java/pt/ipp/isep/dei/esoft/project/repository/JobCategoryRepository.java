@@ -57,6 +57,11 @@ public class JobCategoryRepository {
         return List.copyOf(jobCategories);
     }
 
+    /** Removes the job category from list of job categories
+     *
+     * @param jobCategory to be removed
+     *
+     */
     public void removeJobCategory(JobCategory jobCategory) {
         if (jobCategories.contains(jobCategory)){
             jobCategories.remove(jobCategory);
