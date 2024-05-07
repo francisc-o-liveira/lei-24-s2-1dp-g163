@@ -46,6 +46,8 @@ public class GenerateTeamsUI {
     public TextField maximumTeamSize;
     @FXML
     public TextField minimumTeamSize;
+    @FXML
+    public TextField nameForTeam;
 
     private List<Skill> skillsSelectedForTeam;
     private List<Integer> numberCollabsPerSkill;
@@ -55,13 +57,12 @@ public class GenerateTeamsUI {
         ctrl = new GenerateTeamController();
         skillsSelectedForTeam= new ArrayList<>();
         numberCollabsPerSkill= new ArrayList<>();
+        skillsToChoose.addAll(ctrl.getSkillList());
     }
     public void setTableViewTeam(){
-        Skill skill1=new Skill("skill");
-        Skill skill2= new Skill("skil");
 
         colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
-        colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkill());
+        colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkillForTeam());
         colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
 
         colNumberCollabs.setCellValueFactory(new PropertyValueFactory<>("numberCollabsPerSkill"));
@@ -74,17 +75,13 @@ public class GenerateTeamsUI {
             }
         });
 
-
-        skillsToChoose.add(skill1);
-        skillsToChoose.add(skill2);
-
         tableViewTeam.setItems(skillsToChoose);
     }
 
     public void getSkillsAndCollabs(){
         skillsSelectedForTeam.clear();
         for (Skill s : skillsToChoose) {
-            if (s.selectedSkill().get()==true) {
+            if (s.selectedSkillForTeam().get()==true) {
                 skillsSelectedForTeam.add(s);
                 numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
             }
@@ -95,12 +92,12 @@ public class GenerateTeamsUI {
     public void btnGenerateTeam(){
         int maxTeamSize=Integer.parseInt(maximumTeamSize.getText());
         int minTeamSize=Integer.parseInt(minimumTeamSize.getText());
-        String teamName = null;
+        String teamName = nameForTeam.getText();
         getSkillsAndCollabs();
         try{
             ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
         } catch (RuntimeException e){
-            popUpOfVerifications(Alert.AlertType.ERROR, "").show();
+            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 

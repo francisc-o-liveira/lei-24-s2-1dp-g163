@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
@@ -27,12 +28,17 @@ public class ManageTeamsUI {
     public Stage stage= LoginUI.getMainStage();
     public GenerateTeamController ctrl;
     public AuthenticationController ctrlAuth;
+    public Stage stageToViewDetails = new Stage();
 
     @FXML
     public TableView<Team> tableViewTeams;
 
     @FXML
     public TableColumn<Team, String> colTeams;
+    @FXML
+    public TableColumn<Team, Void> colViewDetails;
+
+    private Team selectedTeam;
 
     public ManageTeamsUI(){
         ctrl= new GenerateTeamController();
@@ -72,6 +78,37 @@ public class ManageTeamsUI {
 
     public void setTableTeams(){
         colTeams.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        colViewDetails.setCellFactory(new Callback<
+                TableColumn<Team, Void>, TableCell<Team, Void>>() {
+            @Override
+            public TableCell<Team, Void> call(TableColumn<Team, Void> param) {
+                return new TableCell<Team, Void>() {
+                    private final javafx.scene.control.Button btn = new Button("View Details");
+
+                    {
+
+                        btn.setOnAction((ActionEvent event) -> {
+                            selectedTeam = tableViewTeams.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                            try {
+                                showMore(selectedTeam);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        });
         List<Team> teamList= new ArrayList<>();
         List<Skill> skillsSelected1 = new ArrayList<>();
 // Assuming you have some skills already initialized
@@ -108,6 +145,18 @@ public class ManageTeamsUI {
         for(Team t : teamList){
             tableViewTeams.getItems().add(t);
         }
+    }
+
+    public void showMore(Team team) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsTeam.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stageToViewDetails.setScene(scene);
+        stageToViewDetails.show();
+        ViewDetailsTeamUI ui=fxmlLoader.getController();
+        ui.showTeamSelected(selectedTeam);
+        ui.setTableSkills();
+        ui.setTableCollabs();
     }
 
     @FXML

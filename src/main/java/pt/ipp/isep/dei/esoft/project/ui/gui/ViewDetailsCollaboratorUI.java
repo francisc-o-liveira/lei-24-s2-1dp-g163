@@ -91,7 +91,6 @@ public class ViewDetailsCollaboratorUI {
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
     Collaborator editedCollaborator;
 
-
     public ViewDetailsCollaboratorUI(){
         ctrl=new RegisterCollaboratorController();
         ctrlSkills= new AssignSkillsController();
@@ -161,13 +160,16 @@ public class ViewDetailsCollaboratorUI {
         colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
 
         for(Skill skill : ctrlSkills.getAllSkills()){
-            skillsToChoose.add(skill);
+            //if(!editedCollaborator.verifyIfHaveSkill(skill)){
+                skillsToChoose.add(skill);
+            //}
         }
         tableAssignSkills.setItems(skillsToChoose);
     }
 
     @FXML
     public void btnEdit(ActionEvent event) {
+        try{
         if (editedCollaborator != null) {
             String newName = name.getText();
             editedCollaborator.setName(newName);
@@ -207,6 +209,9 @@ public class ViewDetailsCollaboratorUI {
 
             editedCollaborator.setJobCategory(selectedjobCategory.getValue());
             selectedjobCategory.getSelectionModel().clearSelection();
+        }
+        } catch (IllegalArgumentException e){
+            popUpOfVerifications(Alert.AlertType.ERROR,e.getMessage()).show();
         }
     }
 

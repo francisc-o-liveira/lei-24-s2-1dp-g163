@@ -54,6 +54,7 @@ public class ManageCollaboratorsUI {
     public TableColumn<Collaborator, Void> columnButtonsDetails;
 
     ObservableList<Collaborator> collaboratorObservableList=FXCollections.observableArrayList();
+    Collaborator selectedCollaboratorForEdit;
     public ManageCollaboratorsUI() {
         ctrl = new RegisterCollaboratorController();
         ctrlAuth= new AuthenticationController();
@@ -91,6 +92,8 @@ public class ManageCollaboratorsUI {
                 tableCollaborators.getItems().remove(selectedCollaborator);
                 ctrl.removeFromList(selectedCollaborator);
             }
+        } else {
+            popUpOfVerifications(Alert.AlertType.ERROR, "Select a Collaborator to remove.").show();
         }
     }
 
@@ -101,13 +104,20 @@ public class ManageCollaboratorsUI {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.show();
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
-        uiToAdd.setTableAssignSkills();
-        uiToAdd.putInTextFields(selectedCollaborator);
-        uiToAdd.showCollaboratorSelected(selectedCollaborator);
+        try{
+            stage.show();
+            uiToAdd.setTableAssignSkills();
+            uiToAdd.setComboBoxes();
+            uiToAdd.putInTextFields(selectedCollaborator);
+            uiToAdd.showCollaboratorSelected(selectedCollaboratorForEdit);
+        } catch (NullPointerException e){
+            popUpOfVerifications(Alert.AlertType.ERROR, "Select a Collaborator to edit.").show();
+        }
     }
+
+
 
     public void setTableCollaborators() {
 
@@ -126,9 +136,9 @@ public class ManageCollaboratorsUI {
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
-                            Collaborator collaborator = tableCollaborators.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                            selectedCollaboratorForEdit = tableCollaborators.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
                             try {
-                                showMore(collaborator);
+                                showMore(selectedCollaboratorForEdit);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -160,7 +170,10 @@ public class ManageCollaboratorsUI {
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
         ViewDetailsCollaboratorUI ui=fxmlLoader.getController();
+        ui.setComboBoxes();
         ui.putInTextFields(collab);
+        ui.showCollaboratorSelected(selectedCollaboratorForEdit);
+        ui.setTableAssignSkills();
     }
 
     @FXML
