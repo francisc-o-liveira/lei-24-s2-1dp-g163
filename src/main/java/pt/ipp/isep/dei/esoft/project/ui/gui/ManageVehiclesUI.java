@@ -74,7 +74,7 @@ public class ManageVehiclesUI {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Vehicle vehicle = tableViewVehicles.getSelectionModel().getSelectedItem();
+                            Vehicle vehicle = tableViewVehicles.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
                             try {
                                 showMore(vehicle);
                             } catch (IOException e) {

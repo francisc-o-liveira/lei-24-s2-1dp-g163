@@ -126,7 +126,7 @@ public class ManageCollaboratorsUI {
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
-                            Collaborator collaborator = tableCollaborators.getSelectionModel().getSelectedItem();
+                            Collaborator collaborator = tableCollaborators.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
                             try {
                                 showMore(collaborator);
                             } catch (IOException e) {
