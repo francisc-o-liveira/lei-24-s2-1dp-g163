@@ -133,8 +133,8 @@ public class ManageVehiclesUI {
         vehicleList.add(vehicle2);
 
 
-        //needs to be ctrl.getVehicleList()
-        vehiclesObservableList.addAll(vehicleList);
+
+        vehiclesObservableList.addAll(ctrl.getVehicleList());
         tableViewVehicles.setItems(vehiclesObservableList);
     }
 
@@ -177,7 +177,6 @@ public class ManageVehiclesUI {
         Vehicle selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
         boolean operationSuccess = false;
         if(selectedVehicle != null){
-            //should have a pop-up to confirm removal
             tableViewVehicles.getItems().remove(selectedVehicle);
             try{
                 operationSuccess=ctrl.removeVehicleFromList(selectedVehicle);

@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,7 +92,7 @@ public class RegisterVehicleController {
      * @param km the actual current kilometers
      * @return true if update the kilometers
      */
-    public boolean updateKm(Vehicle selectedVehicle, double km) {
+    public boolean updateKm(Vehicle selectedVehicle, double km) throws IOException {
         return vehicleRepository.addUpdateKmToVehicle(selectedVehicle,km);
     }
 }

@@ -21,6 +21,7 @@ public class Team {
      * @param maxSize of a team
      * @param minSize of a team
      * @param skillsSelected needed for the team
+     * @param teamName for the team
      */
     public Team(int maxSize, int minSize, List<Skill> skillsSelected, String teamName){
         collaboratorsTeam = new ArrayList<Collaborator>();
@@ -36,6 +37,7 @@ public class Team {
      * @param skillsSelected
      * @param maxSizeTeam
      * @param minSizeTeam
+     * @param teamName
      */
     public Team(List<Collaborator> collaboratorsTeam, List<Skill> skillsSelected,int maxSizeTeam, int minSizeTeam, String teamName){
         this.collaboratorsTeam=collaboratorsTeam;
@@ -108,7 +110,13 @@ public class Team {
                 "Min Size Team: %d\n" +
                 "Skills Selected: %s\n", collaboratorsTeam, maxSizeTeam, minSizeTeam, skillsSelected);
     }
-
+    /** Method to compare if two Teams are the same
+     *
+     * Two Teams are the same if both have the same list of collaborators
+     *
+     * @param other - Team to be compared along with other
+     * @return true if they are the same
+     */
     @Override
     public boolean equals(Object other){
         if(this==other){
@@ -121,6 +129,10 @@ public class Team {
         return this.getTeamList()==otherTeam.getTeamList();
     }
 
+    /** Gets the team's name
+     *
+     * @return name of the team
+     */
     public String getTeamName(){
         return teamName;
     }

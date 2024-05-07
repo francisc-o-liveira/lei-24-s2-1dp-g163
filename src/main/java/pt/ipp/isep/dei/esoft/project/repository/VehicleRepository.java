@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -270,6 +271,13 @@ public class VehicleRepository {
         }
     }
 
+    /** Removes a Check-Up from the list of Check-Ups of Vehicle
+     *
+     * @param vehicle to remove check-up from
+     * @param checkUp being removed
+     * @return true if check-up has been removed
+     */
+
     public boolean removeFromListCheckUp(Vehicle vehicle,CheckUp checkUp){
         if (vehicle.getCheckUpList().contains(checkUp)) {
             return vehicle.getCheckUpList().remove(checkUp);
@@ -278,7 +286,15 @@ public class VehicleRepository {
         }
     }
 
-    public boolean addUpdateKmToVehicle(Vehicle selectedVehicle, double km) {
+    /** Updates the kilometers of a vehicle
+     *
+     * @param selectedVehicle to add kilometers
+     * @param km to add to vehicle
+     * @return true if kilometers have been added
+     * @throws IOException if kilometers have not been updated
+     */
+
+    public boolean addUpdateKmToVehicle(Vehicle selectedVehicle, double km) throws IOException {
         selectedVehicle.setCurrentKm(km);
         if (selectedVehicle.getCurrentKm()==km){
             return true;

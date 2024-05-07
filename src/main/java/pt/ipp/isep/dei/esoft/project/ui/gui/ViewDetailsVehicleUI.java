@@ -130,6 +130,9 @@ public class ViewDetailsVehicleUI {
 
         LocalDate editedDateAcquisition=selectedVehicle.getAcquisitionDateLocal();
         acquisitionDate.setValue(editedDateAcquisition);
+
+        Vehicle.Type typeOfVehicle = selectedVehicle.getType();
+        type.setValue(typeOfVehicle);
     }
 
     public void setTable(){
@@ -159,7 +162,7 @@ public class ViewDetailsVehicleUI {
 
 
     @FXML
-    public void btnAdd(ActionEvent event) {
+    public void btnAdd(ActionEvent event) throws IOException {
         vBrand= brand.getText();
         vModel= model.getText();
         vPlate= plate.getText();
@@ -174,7 +177,27 @@ public class ViewDetailsVehicleUI {
         if(vBrand.isEmpty() || vModel.isEmpty() || vPlate.isEmpty() || vTare == 0 || vGrossWeight == 0.0 || vCurrentKm == 0.0 || vFrequencyCheck == 0.0){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Vehicle is empty").show();
         } else {
-            submitData();
+            if(vCurrentKm<10000){
+                try{
+                    ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType, vRegister, 0);
+                } catch (CloneNotSupportedException e){
+                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+                }
+            } else {
+                try{
+                    popUpOfVerifications(Alert.AlertType.ERROR, "Vehicle needs the last data of check-up").show();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
+                    Parent root = fxmlLoader.load();
+                    Scene scene = new Scene(root);
+                    Stage otherStage= new Stage();
+                    otherStage.setScene(scene);
+                    otherStage.show();
+                    ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
+                } catch (CloneNotSupportedException e){
+                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+                }
+            }
+
         }
     }
 
@@ -184,8 +207,6 @@ public class ViewDetailsVehicleUI {
         vlastCheckKm=Double.parseDouble(checkUpKMs.getText());
         if(vlastCheckKm==0){
             popUpOfVerifications(Alert.AlertType.ERROR, "The data is incorrect").show();
-        } else {
-            submitData();
         }
     }
 
@@ -232,14 +253,6 @@ public class ViewDetailsVehicleUI {
         }
     }
 
-    public void submitData(){
-        try{
-            ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
-        } catch (CloneNotSupportedException e){
-            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-    }
-
     public void showSelectedVehicle(Vehicle selectedVehicle){
         this.selectedVehicle=selectedVehicle;
     }
@@ -282,7 +295,13 @@ public class ViewDetailsVehicleUI {
         return alerta;
     }
 
-    public void submitDataUpdate(){
+    @FXML
+    public void submitDataUpdate(ActionEvent event){
+        try{
+            ctrl.updateKm(selectedVehicle, Double.parseDouble(updateCurrentKm.getText()));
+        } catch (IOException e){
+            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
 
     }
 }

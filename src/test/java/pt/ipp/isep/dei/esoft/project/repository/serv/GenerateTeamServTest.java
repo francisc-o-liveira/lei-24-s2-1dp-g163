@@ -18,6 +18,7 @@ class GenerateTeamServTest{
 
     @Test
     void generateTeam() throws CloneNotSupportedException {
+        String name="";
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");
@@ -43,11 +44,12 @@ class GenerateTeamServTest{
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
         GenerateTeamServClass serv = new GenerateTeamServClass();
-        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
+        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam,name);
         assertNotNull(team.get());
     }
     @Test
     void generateTeam2() throws CloneNotSupportedException {
+        String name="";
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");
@@ -73,12 +75,13 @@ class GenerateTeamServTest{
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
         GenerateTeamServClass serv = new GenerateTeamServClass();
-        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
+        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam,name);
         assertNotNull(team.get());
     }
 
     @Test
     void generateTeam3() throws CloneNotSupportedException {
+        String name="";
         ArrayList<Skill> skillsSelected = new ArrayList<>();
         Skill skill1 = new Skill("Skill 1");
         Skill skill2 = new Skill("Skill 2");
@@ -104,7 +107,7 @@ class GenerateTeamServTest{
         collaboratorsForTeam.add(collab2);
         collaboratorsForTeam.add(collab3);
         GenerateTeamServClass serv = new GenerateTeamServClass();
-        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam);
+        Optional<Team> team = serv.generateTeam(2,4,skillsSelected,numbCollabForSkill,collaboratorsForTeam,name);
         assertNotNull(team.get());
     }
 }

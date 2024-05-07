@@ -61,6 +61,11 @@ public class RegisterCheckUpController {
         return vehicleRepository.getVehicleByIndex(selectedPlate);
     }
 
+    /** Removes a vehicle from the list
+     *
+     * @param vehicle to be removed
+     * @param checkUp of vehicle to be removed
+     */
     public void removeFromList(Vehicle vehicle,CheckUp checkUp){
         vehicleRepository.removeFromListCheckUp(vehicle,checkUp);
     }

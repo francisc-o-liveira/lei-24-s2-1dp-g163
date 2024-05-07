@@ -6,16 +6,13 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...   | Answer            | Justification (with patterns)             |
-|:---------------|:----------------------------------------------|:------------------|:------------------------------------------|
-| Step 1	        | ...interacting with the actor?                | VehicleUI         | Pure Fabrication                          |
-| 			  	         | ...coordinating the US?                       | VehicleController | Controller                                |
-| 			  	         | ... knowing the user using the system?        	 | UserSession       |                                           |
-| Step 2 		      | ...saving the input data?                     | Vehicle           | IE: object created in step 1 has its own data.|                                                |                                                      |             |                                           |
-| Step 3 		      | ...display all data?                          | VehicleUI         |                                           |
-| Step 4  		     | ...accepts confirmation?                      | VehicleUI         | Pure Fabrication                          |                                       |                                                                                      | 
-| 			            | ...saving the created data?                   | VehicleRepository | Owns all the vehicles                     | 
-| Step 5  		     | ...informing operation success?               | VehicleUI         | IE: is responsible for user interactions. | 
+| Interaction ID                      | Question: Which class is responsible for...               | Answer            | Justification (with patterns)                                     |
+|:------------------------------------|:----------------------------------------------------------|:------------------|:------------------------------------------------------------------|
+| Step 1: Ask to register a vehicle?	| ... initiating the vehicle registration process?          | VehicleUI         | Pure Fabrication (a UI class created to handle user interaction)|
+| Step 2: getInstance()		       | ... obtaining the singleton instance of the Repositories? | Repositories      | Creator (creates and manages instances of objects)          |                                                |                                                      |             |                                           |
+| Step 3: createVehicle() 		       | ... creating a vehicle                                    | Vehicle           | Creator (creates a new instances of the vehicle)               |
+| Step 4: addVehicle()                | ...add a vehicle?                                         | VehicleRepository | Information Expert                                                |                                                                                      | 
+| Step 5: confirms data               | ...ask to confirm data                                    | VehicleUI         | Pure Fabrication (a UI class created to handle user interaction). | 
 
 ### Systematization ##
 
@@ -26,8 +23,8 @@ According to the taken rationale, the conceptual classes promoted to software cl
 
 Other software classes
 
-* VehicleUI
-* VehicleController
+* RegisterVehicleUI
+* RegisterVehicleController
 * Repositories
 
 
