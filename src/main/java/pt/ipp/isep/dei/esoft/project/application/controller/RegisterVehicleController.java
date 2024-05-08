@@ -95,4 +95,11 @@ public class RegisterVehicleController {
     public boolean updateKm(Vehicle selectedVehicle, double km) throws IOException {
         return vehicleRepository.addUpdateKmToVehicle(selectedVehicle,km);
     }
+
+    /**Gets the list of vehicles needing check-up
+     *
+     */
+    public List<Vehicle> getVehiclesNeedingCheckUp(){
+        return vehicleRepository.getVehicleNeedingCheckUp();
+    }
 }

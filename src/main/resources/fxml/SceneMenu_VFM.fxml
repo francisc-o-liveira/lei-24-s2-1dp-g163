@@ -144,7 +144,7 @@
                                                         </Circle>
                                                         <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="56.0" layoutY="178.0" onAction="#manageEquipment" prefHeight="29.0" prefWidth="154.0" text="Manage Equiment">
                                                             <font>
-                                                                <Font size="15.0" />
+                                                                <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Button>
                                           <ImageView fitHeight="84.0" fitWidth="105.0" layoutX="91.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">

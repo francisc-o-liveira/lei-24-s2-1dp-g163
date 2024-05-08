@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,11 +20,8 @@ public class ViewDetailsTeamUI {
     public Team selectedTeam;
     public GenerateTeamController ctrl;
 
-    public ObservableList<Collaborator> collabsOfTeam = FXCollections.observableArrayList();
-    public ObservableList<Skill> skillsOfTeam= FXCollections.observableArrayList();
-
     @FXML
-    private TableColumn<Team, String> colCollabs;
+    private TableColumn<Collaborator, String> colCollabs;
 
     @FXML
     private TableColumn<Skill, String> colSkills;
@@ -37,21 +37,13 @@ public class ViewDetailsTeamUI {
     }
 
     public void setTableCollabs(){
-        colCollabs.setCellValueFactory(new PropertyValueFactory<>("TeamList")); // the retrieval cannot be made with this property!!
-        for(Collaborator c : selectedTeam.getTeamList()){
-            collabsOfTeam.add(c);
-        }
-
-        tableCollabs.getItems().addAll(collabsOfTeam);
+        colCollabs.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableCollabs.getItems().addAll(selectedTeam.getObservableTeamList());
     }
 
     public void setTableSkills(){
-        colSkills.setCellValueFactory(new PropertyValueFactory<>("TeamList")); // the retrieval cannot be made with this property!!
-        for(Skill s : selectedTeam.getSkills()){
-            skillsOfTeam.add(s);
-        }
-
-        tableSkills.getItems().addAll(skillsOfTeam);
+        colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
+        tableSkills.getItems().addAll(selectedTeam.getObservableSkillList());
     }
     public void showTeamSelected(Team team){
         selectedTeam=team;

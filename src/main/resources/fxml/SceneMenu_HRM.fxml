@@ -67,7 +67,7 @@
                                 </Button>
                                 <Label layoutX="58.0" layoutY="523.0" text="Logout" textFill="WHITE">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -114,7 +114,7 @@
                                           </ImageView>
                                           <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="178.0" onAction="#manageJobs" prefHeight="29.0" prefWidth="109.0" text="Manage Jobs">
                                              <font>
-                                                <Font size="15.0" />
+                                                <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Button>
                                           <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="94.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
@@ -218,7 +218,7 @@
                                                         <FontAwesomeIconView glyphName="USERS" layoutX="102.0" layoutY="132.0" size="5em" />
                                           <Button blendMode="MULTIPLY" layoutX="73.0" layoutY="181.0" onAction="#manageTeams" prefHeight="29.0" prefWidth="127.0" text="Manage Teams">
                                              <font>
-                                                <Font size="15.0" />
+                                                <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Button>
                                                     </children>

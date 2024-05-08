@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain.team;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 
@@ -136,5 +138,30 @@ public class Team {
     public String getTeamName(){
         return teamName;
     }
+
+    /** Gets the ObservableList to fill the list with collaborators of a team
+     *
+     * @return list of Collaborators of a Team for TableView
+     */
+    public ObservableList<Collaborator> getObservableTeamList(){
+        ObservableList<Collaborator> collabsOfTeam = FXCollections.observableArrayList();
+        for(Collaborator c : getTeamList()){
+            collabsOfTeam.add(c);
+        }
+        return collabsOfTeam;
+    }
+
+    /** Gets the ObservableList to fill the list with skills of a team
+     *
+     * @return list of Skills of a Team for TableView
+     */
+    public ObservableList<Skill> getObservableSkillList(){
+        ObservableList<Skill> skillsOfTeam = FXCollections.observableArrayList();
+        for(Skill c : getSkills()){
+            skillsOfTeam.add(c);
+        }
+        return skillsOfTeam;
+    }
+
 
 }

@@ -50,7 +50,7 @@ public class ManageVehiclesUI {
     @FXML
     public TableColumn<Vehicle, Void> colButtonsDetails;
 
-    @FXML public CheckBox closeToCheck;
+    @FXML public CheckBox vehiclesCheckUp;
 
     ObservableList<Vehicle> vehiclesObservableList= FXCollections.observableArrayList();
 
@@ -103,7 +103,7 @@ public class ManageVehiclesUI {
                 Vehicle.Type.LightPassenger,
                 1500,
                 2000,
-                50000,
+                59998,
                 new Date(2022,5,11), // Register Date
                 new Date(2023,5,12),// Acquisition Date
                 10000,"AB-12-AA",
@@ -285,18 +285,16 @@ public class ManageVehiclesUI {
 
     @FXML
     public void filterVehicles(ActionEvent event){
-        FilteredList<Vehicle> filteredList = new FilteredList<>(vehiclesObservableList);
-
-        Predicate<Vehicle> closeVehicles = Vehicle::isCloseToCheck;
-
-        filteredList.predicateProperty().bind(
-                Bindings.createObjectBinding(
-                        () -> closeToCheck.isSelected() ? closeVehicles : null,
-                        closeToCheck.selectedProperty()
-                )
-        );
-
-        tableViewVehicles.setItems(filteredList);
+        if(vehiclesCheckUp.isSelected()){
+        List<Vehicle> vehiclesNeedingCheckUp=ctrl.getVehiclesNeedingCheckUp();
+        tableViewVehicles.getItems().clear();
+        ObservableList<Vehicle> vehiclesCheckUp=FXCollections.observableArrayList();
+        vehiclesCheckUp.addAll(vehiclesNeedingCheckUp);
+        tableViewVehicles.setItems(vehiclesCheckUp);
+        } else {
+            tableViewVehicles.getItems().clear();
+            setTableVehicles();
+        }
 
     }
 
