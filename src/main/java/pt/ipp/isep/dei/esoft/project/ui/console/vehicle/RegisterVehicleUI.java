@@ -193,7 +193,7 @@ public class RegisterVehicleUI  implements Runnable{
         Scanner scan = new Scanner(System.in);
         String date;
         Date registerDate = null;
-        boolean validDate=false;
+        boolean validDate = false;
         while (!validDate){
             System.out.print("Register Date of Vehicle: ");
             date = scan.nextLine();
