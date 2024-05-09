@@ -180,7 +180,7 @@ public class RegisterVehicleUI  implements Runnable{
         while (!validKm){
             System.out.print("Current Kilometers of the Vehicle: ");
             currentKM = scan.nextInt();
-           if(currentKM>0 && currentKM<1500000){
+           if(currentKM<0 || currentKM>1500000){
                 throw new IllegalArgumentException("The introduced data of current kilometers is incorrect.");
             } else {
                 validKm=true;
