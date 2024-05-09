@@ -11,15 +11,11 @@ actor "VFM" as FleetManager
 
 
 participant ":RegisterCheckUpUI" as UI
-participant ":RegistMaintenanceController" as Controller
+participant ":RegisterCheckUpController" as Controller
 
 participant "Repositories" as Repos
 participant "repositories:Repositories" as Repo
 participant "vehicleRepository:VehicleRepository" as VehicleRepo
-participant "collaboratorRepository:CollaboratorRepository" as CollabRepo
-
-
-participant "vfm:VFM" as VFM
 participant "vehicle:Vehicle" as Vehicle
 participant "checkup:Checkup" as Checkup
 
@@ -54,30 +50,32 @@ deactivate VehicleRepo
 Controller --> UI : vehiclePlates
 deactivate Controller
 
-UI --> FleetManager : Displays Plates list and Requests Date of Maintenande and Current Kilometers
+UI --> FleetManager : Show Plates, Request Date of Check Up and Current Kilometers and Frequency Option
 deactivate UI
 
-FleetManager -> UI : Selects a Plate, Provides Date of Maintenance and Current Kilometers and Submits
+FleetManager -> UI : Selects a Plate, Provides Check Up Info, Changes Check Up Frequency and Submits
 activate UI
 
 UI -> UI : verifyCheckUpDateFormat(date)
-UI -> Controller : validateCheckUpDate(date)
-activate Controller
-
-Controller -> UI : true
-deactivate Controller
+UI -> UI : validateCheckUpDate(date)
 
 UI -> UI : verifyKilometersFormat(currentKms)
 
 UI -> Controller : validateKilometers(currentKms, selectedPlate)
 activate Controller
 
+Controller -> VehicleRepo: getLastKmForVehicle(plate)
+activate VehicleRepo
+
+VehicleRepo -> Controller: currentKm
+deactivate VehicleRepo
+
 Controller -> UI : true
 deactivate Controller
 
-UI -> Controller : addCheckUp(selectedPlate, date, currentKms)
+UI -> Controller : addCheckUp(selectedPlate, date, currentKms, maintenanceKm)
 activate Controller
-Controller -> VehicleRepo : addCheckUp(plate, date, currentKms)
+Controller -> VehicleRepo : addCheckUp(plate, date, currentKms, maintenanceKm)
 activate VehicleRepo
 
 VehicleRepo -> Vehicle : findVehicleByPlate(plate)
@@ -86,7 +84,7 @@ activate Vehicle
 Vehicle -> VehicleRepo : vehicle
 deactivate Vehicle
 
-VehicleRepo -> Vehicle : addCheckUp(currentKms, date)
+VehicleRepo -> Vehicle : addCheckUp(currentKms, date, maintenanceKm)
 activate Vehicle
 Vehicle -> Checkup** : new CheckUp(km, date)
 activate Checkup

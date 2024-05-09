@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":RegisterCheckUpController" as Controller
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+
+
+autonumber 10
+
+-> Controller : validateKilometers(currentKms, selectedPlate)
+autonumber 10.1
+activate Controller
+
+group Get Vehicle Current Kilometers
+    Controller -> VehicleRepo: getLastKmForVehicle(plate)
+    activate VehicleRepo
+
+    VehicleRepo -> Controller: currentKm
+    deactivate VehicleRepo
+end
+
+autonumber 11
+
+<-- Controller  : true
+deactivate Controller
+
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title UI Sequence Diagram (SSD) for Registering Vehicle Maintenance
+
+autonumber
+
+actor "VFM" as FleetManager
+
+
+participant ":RegisterCheckUpUI" as UI
+participant ":RegisterCheckUpController" as Controller
+
+activate FleetManager
+
+
+FleetManager -> UI : Asks to register a maintenance
+activate UI
+
+UI -> Controller** : create
+
+UI -> Controller : getDataNeededToRegisterCheckUp()
+activate Controller
+
+ref over Controller
+    Get Vehicles Plates List
+end ref
+
+Controller --> UI : vehiclePlates
+deactivate Controller
+
+UI --> FleetManager : Show Plates, Request Date of Check Up and Current Kilometers and Frequency Option
+deactivate UI
+
+FleetManager -> UI : Selects a Plate, Provides Check Up Info, Changes Check Up Frequency and Submits
+activate UI
+
+UI -> UI : verifyCheckUpDateFormat(date)
+UI -> UI : validateCheckUpDate(date)
+
+
+UI -> UI : verifyKilometersFormat(currentKms)
+
+UI -> Controller : validateKilometers(currentKms, selectedPlate)
+activate Controller
+
+ref over Controller
+    Get Vehicle Current Kilometers
+end ref
+
+Controller -> UI : true
+deactivate Controller
+
+UI -> Controller : addCheckUp(selectedPlate, date, currentKms, maintenanceKm)
+activate Controller
+
+ref over Controller
+    Register Maintenance
+end ref
+
+Controller -> UI : Success
+deactivate Controller
+
+UI --> FleetManager : Confirms registration success
+deactivate UI
+
+@enduml
