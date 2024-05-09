@@ -54,6 +54,8 @@ public class ManageVehiclesUI {
 
     ObservableList<Vehicle> vehiclesObservableList= FXCollections.observableArrayList();
 
+    Vehicle selectedVehicle;
+
     public ManageVehiclesUI(){
         ctrl=new RegisterVehicleController();
         ctrlAuth=new AuthenticationController();
@@ -74,9 +76,9 @@ public class ManageVehiclesUI {
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
-                            Vehicle vehicle = tableViewVehicles.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                            selectedVehicle = tableViewVehicles.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
                             try {
-                                showMore(vehicle);
+                                showMore(selectedVehicle);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -149,7 +151,7 @@ public class ManageVehiclesUI {
     }
 
     public Vehicle getSelectedVehicle(){
-        return tableViewVehicles.getSelectionModel().getSelectedItem();
+        return selectedVehicle;
     }
 
     @FXML
@@ -213,7 +215,6 @@ public class ManageVehiclesUI {
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
         ui.setTable();
-        Vehicle selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
         ui.showSelectedVehicle(selectedVehicle);
         ui.putInTextFields(getSelectedVehicle());
     }
