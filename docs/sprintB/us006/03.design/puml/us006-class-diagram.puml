@@ -17,27 +17,24 @@ class ApplicationSession
 
 class UserSession
 {
-    + getUserEmail()
 }
 
 class VFM {
-    - name
     - email
-    - position
-    - phone
+    - password
 }
 
 class Vehicle {
-    - String brand
-    - String model
-    - Integer plate
-    - String type
-    - Integer tare
-    - String grossWeight
-    - Integer currenteKM
-    - String registerDate
-    - String acquisitionDate
-    - Integer checkupFrequency
+    - brand: String
+    - model: String
+    - plate: int
+    - type: String
+    - tare: int
+    - grossWeight: String
+    - currenteKM: int
+    - registerDate: Date
+    - acquisitionDate: Date
+    - frequencyCheckKm: int
 
     + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
 }
@@ -45,37 +42,25 @@ class Vehicle {
 
 
 class VehicleRepository {
+    + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+
 }
 
 
 class Repositories {
+    - Repositories()
     + getInstance() : Repositories
     + getVehicleRepository() : VehicleRepository
 }
 
 class RegisterVehicleController {
     - VehicleRepository vehicleRepository
-    + RegisterVehicleController(vehicleRepository)
+    + RegisterVehicleController()
     + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms)))
-    + getVehicleList()
-    + removeVehicleFromList(selectedVehicle)
-    + updateKm(selectedVehicle, km)
 }
 
-note right of RegisterVehicleController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
-
-note bottom of VehicleRepository
-    - used for displaying
-    the vehicle list
-end note
-
 Repositories "1" --> "1" VehicleRepository
-Repositories "1" -> "1" Repositories
+Repositories -> Repositories : instance
 
 ApplicationSession --> ApplicationSession
 ApplicationSession --> "1" UserSession : userSession

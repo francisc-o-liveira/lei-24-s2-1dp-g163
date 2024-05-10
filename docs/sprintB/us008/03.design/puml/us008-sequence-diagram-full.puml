@@ -38,12 +38,18 @@ activate VFM
     CTRL -> VehicleRepository : getCheckUpList()
     activate VehicleRepository
 
-    VehicleRepository --> CTRL : vehicleCheckUpList
+    VehicleRepository -> Vehicle : getCheckUpList()
+    activate Vehicle
+
+    Vehicle -> VehicleRepository : checkUpList
+    deactivate Vehicle
+
+    VehicleRepository --> CTRL : checkUpList
     deactivate VehicleRepository
 
     deactivate VehicleRepository
 
-    CTRL --> UI: true / vehicleCheckUpList
+    CTRL --> UI: true / checkUpList
     deactivate CTRL
 
     UI --> VFM : shows the list of vehicles
