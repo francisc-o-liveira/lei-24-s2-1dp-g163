@@ -256,6 +256,10 @@ When you open and login in the Software,(there are 8 possible paths) the HRM can
 * Create a Team of Collaborators - The HRM can create a Team of Collaborators
 * Generate a Team of Collaborators - The HRM can generate a Team of Collaborators
 
+![menu HRM](imagesUserManual/HRM_menu.png)
+Image 14: HRM menu
+
+
 #### Register a Collaborator
 ##### Syntax Notes:
 + Name : Can have maximum of 6 words.
@@ -315,6 +319,10 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 * Register Machines - The VFM can register new Machine for the System
 * Register a Maintenance Check-Up of a Vehicle - The VFM can register a Check-Up of a Vehicle
 * See the Vehicles Check-Up List - The VFM can see the all Vehicles needing to make a check-up
+
+![VFM menu](imagesUserManual/VFM_menu.png)
+Image 15: VFM menu
+
 
 #### Register a Vehicle
 ##### Syntax Notes:
