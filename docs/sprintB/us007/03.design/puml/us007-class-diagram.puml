@@ -3,12 +3,10 @@
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
-
 skinparam classAttributeIconSize 0
 
 class Repositories {
     - static instance : Repositories
-    - vehicleRepository : VehicleRepository
     + getInstance() : Repositories
     + getVehicleRepository() : VehicleRepository
     - Repositories()
@@ -20,23 +18,14 @@ class VehicleRepository {
     + getVehiclePlateList() : List<String>
     + addCheckUp(plate : String, dateAsString : String, currentKms : double, maintenanceKm: double) : boolean
     + findVehicleByPlate(plate : String) : Vehicle
-    + convertStringToDate(dateAsString : String) : Date
-    + getCheckUpDetailsList(plate : String) : List<String>
-    + getLastKmForVehicle(plate : String) : int
+    + getLastKmForVehicle(plate : String) : double
 }
 
 class RegisterCheckUpUI {
-    - controller : RegisterCheckUpController
-    + startCheckUpProcess()
-    + processCheckUpRegistration()
-    + displayPlatesList(plates : List<String>)
-    + verifyCheckUpDateFormat(date : String) : boolean
-    + verifyKilometersFormat(kms : String) : boolean
 }
 
 class RegisterCheckUpController {
     - repositories : Repositories
-    + RegisterCheckUpController()
     + getDataNeededToRegisterCheckUp() : List<String>
     + validateCheckUpDate(date : String) : boolean
     + validateKilometers(kms : double, plate : String) : boolean
@@ -49,7 +38,6 @@ class Vehicle {
     - frequencyCheckKm : double
     - checkUpList : List<CheckUp>
     + addCheckUp(km : double, date : Date)
-    + getVehicleCheck UpDetailsList() : List<String>
     + getCurrentKm() : double
     + getPlate() : String
 }
@@ -63,8 +51,11 @@ class CheckUp {
 
 RegisterCheckUpUI ..> RegisterCheckUpController
 RegisterCheckUpController ..> Repositories: repositories
-Repositories "1" *-- "1" VehicleRepository
-VehicleRepository "1" o-- "*" Vehicle
-Vehicle "1" *-- "*" CheckUp
+Repositories --> "1" VehicleRepository
+VehicleRepository --> "*" Vehicle: vehicles
+Vehicle "1" --> "*" CheckUp
+Repositories --> Repositories : instance
+RegisterCheckUpController ..> VehicleRepository : vehicleRepository
+
 
 @enduml

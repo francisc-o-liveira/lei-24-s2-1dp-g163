@@ -1,79 +1,79 @@
-@startuml
-'skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
-skinparam linetype polyline
-'skinparam linetype orto
+    @startuml
+    'skinparam monochrome true
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    'skinparam linetype orto
 
-skinparam classAttributeIconSize 0
+    skinparam classAttributeIconSize 0
 
-'left to right direction
+    'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
-}
+    class ApplicationSession
+    {
+        + static getInstance()
+        + getCurrentSession()
+    }
 
-class UserSession
-{
-}
+    class UserSession
+    {
+    }
 
-class VFM {
-    - email
-    - password
-}
+    class VFM {
+        - email
+        - password
+    }
 
-class Vehicle {
-    - brand: String
-    - model: String
-    - plate: int
-    - type: String
-    - tare: int
-    - grossWeight: String
-    - currenteKM: int
-    - registerDate: Date
-    - acquisitionDate: Date
-    - frequencyCheckKm: int
+    class Vehicle {
+        - brand: String
+        - model: String
+        - plate: int
+        - type: String
+        - tare: int
+        - grossWeight: String
+        - currenteKM: int
+        - registerDate: Date
+        - acquisitionDate: Date
+        - frequencyCheckKm: int
 
-    + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
-}
-
-
-
-class VehicleRepository {
-    + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
-
-}
+        + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
+    }
 
 
-class Repositories {
-    - Repositories()
-    + getInstance() : Repositories
-    + getVehicleRepository() : VehicleRepository
-}
 
-class RegisterVehicleController {
-    - VehicleRepository vehicleRepository
-    + RegisterVehicleController()
-    + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms)))
-}
+    class VehicleRepository {
+        + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
 
-Repositories "1" --> "1" VehicleRepository
-Repositories -> Repositories : instance
+    }
 
-ApplicationSession --> ApplicationSession
-ApplicationSession --> "1" UserSession : userSession
 
-RegisterVehicleUI "1" --> "1" RegisterVehicleController
+    class Repositories {
+        - Repositories()
+        + getInstance() : Repositories
+        + getVehicleRepository() : VehicleRepository
+    }
 
-RegisterVehicleController .> Repositories
-RegisterVehicleController ..> ApplicationSession
-RegisterVehicleController ..> UserSession
-RegisterVehicleController "1" --> "1" VehicleRepository
+    class RegisterVehicleController {
+        - VehicleRepository vehicleRepository
+        + RegisterVehicleController()
+        + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms)))
+    }
 
-Vehicle --> VFM : createdBy
+    Repositories "1" --> "1" VehicleRepository
+    Repositories -> Repositories : instance
 
-VehicleRepository "1" --> "*" Vehicle : vehicles
+    ApplicationSession --> ApplicationSession
+    ApplicationSession --> "1" UserSession : userSession
 
-@enduml
+    RegisterVehicleUI "1" --> "1" RegisterVehicleController
+
+    RegisterVehicleController .> Repositories
+    RegisterVehicleController ..> ApplicationSession
+    RegisterVehicleController ..> UserSession
+    RegisterVehicleController "1" --> "1" VehicleRepository
+
+    Vehicle --> VFM : createdBy
+
+    VehicleRepository "1" --> "*" Vehicle : vehicles
+
+    @enduml

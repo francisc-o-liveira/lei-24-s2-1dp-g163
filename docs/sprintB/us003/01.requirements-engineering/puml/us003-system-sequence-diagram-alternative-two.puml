@@ -32,9 +32,7 @@ activate Manager
 
     Manager -> System : types requested data
     activate System
-    alt System Verification
-    System --> System : verify data
-    end
+
         System --> Manager :shows all data and requests confirmation
     deactivate System
 

@@ -63,7 +63,7 @@
     UI -> Controller : getAvailableSkillsList(collaborator)
     activate Controller
 
-    Controller -> EmpRepo : getAvailableSkillsList(Collaborator)
+    Controller -> EmpRepo : getAvailableSkillsList(collaborator)
     activate EmpRepo
 
     EmpRepo --> Controller : CollaboratorSkillsList

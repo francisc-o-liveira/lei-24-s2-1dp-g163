@@ -12,31 +12,22 @@ skinparam classAttributeIconSize 0
 class SkillRepository {
     - skillList : List<Skill>
     + SkillRepository()
-    + registerSkill(skillName : String) : Optional<Skill>
     + getSkillList() : List<Skill>
-    + removeSkill(skill : Skill) : void
+    + getAllSkills() : List<Skill> 
 }
 
 class AssignSkillsUI {
-    - ctrl : AssignSkillsController
-    - collaborator : Collaborator
-    - skillName : Skill
-    + AssignSkillsUI()
-    + run() : void
-    + displayAndSelectSkillToAssign() : Skill
-    + displayCollaboratorList() : void
-    + setCollaboratorToAssign() : Collaborator
-    + submitsData() : void
 }
 
 class AssignSkillsController {
     - collaboratorRepository : CollaboratorRepository
     - skillRepository : SkillRepository
     + AssignSkillsController()
-    + getDataNeededToAssign() : void
+    + getDataNeededToAssignSkills() : void
     + getCollaboratorList() : List<Collaborator>
     + getCollaborator(index : int) : Collaborator
-    + filterSkillsToAssign(collaborator : Collaborator) : List<Skill>
+    + getAvailableSkillsList(Collaborator) : List<Skill> 
+    + filterAssignedSkills(assignedSkills : List<Skill>, allSkills : List<Skill>) : List<Skill> 
     + assignSkills(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator>
 }
 
@@ -44,45 +35,36 @@ class CollaboratorRepository {
     - collaboratorList : List<Collaborator>
     + CollaboratorRepository()
     + getCollaboratorList() : List<Collaborator>
-    + createCollaborator(...) : Optional<Collaborator>
-    + addCollaborator(collaborator : Collaborator) : Optional<Collaborator>
-    + removeFromList(collaborator : Collaborator) : void
-    + assignSkill(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator>
-    + getCollaboratorsNotActive() : List<Collaborator>
-    + activateCollaborators(team : Team) : boolean
+    + assignSkill(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator> 
+    + getAvailableSkillsList(Collaborator) : List<Skill> 
 }
 
 class Collaborator {
-    - name : String
-    - birthday : Date
-    - admissionDate : Date
-    - address : String
-    - addressZipCode : String
-    - addressCity : String
-    - phoneNumber : String
-    - docType : DocType.Type
     - docIDNumber : int
-    - email : String
-    - jobCategory : JobCategory
     - skills : List<Skill>
-    - statusType : StatusType
-    + Collaborator(...)
-    + setName(name : String) : void
-    + setBirthday(birthday : Date) : void
     + setSkills(skills : List<Skill>) : void
-    + getStatus() : StatusType
-    + getEmail() : String
+    + assignSkill(skill : Skill) : boolean 
 }
 
 class Skill {
     - name : String
 }
 
-AssignSkillsUI *-- "1" AssignSkillsController : Composition
-AssignSkillsController --> "1" Repositories : uses >
-AssignSkillsController --> "1" SkillRepository : uses >
-AssignSkillsController --> "1" CollaboratorRepository : uses >
-SkillRepository o-- "*" Skill : contains
-CollaboratorRepository o-- "*" Collaborator : contains
+class Repositories {
+    - static instance : Repositories
+    + getInstance() : Repositories
+    + getSkillRepository() : SkillRepository
+    + getCollaboratorRepository() : CollaboratorRepository
+    - Repositories()
+}
+
+AssignSkillsUI ..> AssignSkillsController
+AssignSkillsController ..> Repositories : repositories
+AssignSkillsController ..> SkillRepository : skillRepository
+AssignSkillsController ..> CollaboratorRepository : collaboratorRepository
+SkillRepository "1" --> "*" Skill 
+CollaboratorRepository "1" --> "*" Collaborator 
+Repositories --> Repositories : instance
+Collaborator "*" --> "*" Skill
 
 @enduml

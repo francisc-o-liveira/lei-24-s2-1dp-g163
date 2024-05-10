@@ -86,7 +86,7 @@ deactivate Vehicle
 
 VehicleRepo -> Vehicle : addCheckUp(currentKms, date, maintenanceKm)
 activate Vehicle
-Vehicle -> Checkup** : new CheckUp(km, date)
+Vehicle -> Checkup** : create(km, date)
 activate Checkup
 
 Checkup -> Vehicle : Created and Added to the Check Up List of the Vehicle which was under maintenance 
