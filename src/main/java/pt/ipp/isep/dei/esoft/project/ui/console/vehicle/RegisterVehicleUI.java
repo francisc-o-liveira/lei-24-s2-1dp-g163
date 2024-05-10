@@ -83,7 +83,7 @@ public class RegisterVehicleUI  implements Runnable{
             if (lastCheckUpDate.compareTo(registerDate)>0){
                 validLastCheck=true;
             }else {
-                System.out.println("\nInvalid Last Check Up Km!");
+                System.out.println("\nInvalid Last Check Up Date!");
             }
         }
         return lastCheckUpDate;
@@ -113,10 +113,9 @@ public class RegisterVehicleUI  implements Runnable{
         String plate = null;
         boolean validPlate=false;
         while (!validPlate){
-            System.out.print("Plate of the Vehicle: ");
-            plate = scan.nextLine();
+            plate=Utils.readLineFromConsole("Plate of the Vehicle: ");
             String[] plateFormat = plate.split("-");
-            if(plateFormat.length==3 && acquisitionDate.getYear()>1900){
+            if(plateFormat.length==3 && acquisitionDate.getYear()<1900){
                 throw new IllegalArgumentException("The introduced Plate is incorrect.");
             } else {
                 validPlate=true;
@@ -130,8 +129,7 @@ public class RegisterVehicleUI  implements Runnable{
         int tare = 0;
         boolean validTare=false;
         while (!validTare){
-            System.out.print("Tare of the Vehicle: ");
-            tare = scan.nextInt();
+            tare = Utils.readIntegerFromConsole("Tare of the Vehicle: ");
             if(tare>0 && tare<=7000){
                 throw new IllegalArgumentException("The introduced Tare is incorrect.");
             } else {
@@ -162,8 +160,7 @@ public class RegisterVehicleUI  implements Runnable{
         double frequencyKm = 0;
         boolean validKm=false;
         while (!validKm){
-            System.out.print("Maintenance Check-Up Kilometers: ");
-            frequencyKm = scan.nextDouble();
+            frequencyKm = Utils.readDoubleFromConsole("Maintenance Check-Up Kilometers: ");
             if(frequencyKm>1000 && frequencyKm<=50000){
                 throw new IllegalArgumentException("The introduced Frequency for Check-Up is incorrect.");
             } else {
@@ -178,8 +175,7 @@ public class RegisterVehicleUI  implements Runnable{
         double currentKM = 0;
         boolean validKm=false;
         while (!validKm){
-            System.out.print("Current Kilometers of the Vehicle: ");
-            currentKM = scan.nextInt();
+            currentKM = Utils.readDoubleFromConsole("Current Kilometers of the Vehicle: ");
            if(currentKM<0 || currentKM>1500000){
                 throw new IllegalArgumentException("The introduced data of current kilometers is incorrect.");
             } else {
@@ -195,11 +191,10 @@ public class RegisterVehicleUI  implements Runnable{
         Date registerDate = null;
         boolean validDate = false;
         while (!validDate){
-            System.out.print("Register Date of Vehicle: ");
-            date = scan.nextLine();
-            String[] dateFormat = date.split("-");
+            date = Utils.readLineFromConsole("Register Date of Vehicle: ");
+            String[] dateFormat = date.split("/");
             registerDate=new Date(Integer.parseInt(dateFormat[0]),Integer.parseInt(dateFormat[1]),Integer.parseInt(dateFormat[2]));
-            if(dateFormat.length==3 && acquisitionDate.getYear()>1900){
+            if(dateFormat.length==3 && registerDate.getYear()<1900){
                 throw new IllegalArgumentException("The introduced register date is incorrect.");
             } else {
                 validDate=true;
@@ -214,11 +209,10 @@ public class RegisterVehicleUI  implements Runnable{
         Date acquisitionDate = null;
         boolean validDate=false;
         while (!validDate){
-            System.out.print("Acquisition Date of the Vehicle: ");
-            date = scan.nextLine();
-            String[] dateFormat = date.split("-");
+            date = Utils.readLineFromConsole("Acquisition Date of the Vehicle: ");
+            String[] dateFormat = date.split("/");
             acquisitionDate=new Date(Integer.parseInt(dateFormat[0]),Integer.parseInt(dateFormat[1]),Integer.parseInt(dateFormat[2]));
-            if(dateFormat.length==3 && acquisitionDate.getYear()>1900){
+            if(dateFormat.length==3 && acquisitionDate.getYear()<1900){
                 throw new IllegalArgumentException("The introduced acquisition date is incorrect.");
             } else {
                 validDate=true;
@@ -232,8 +226,7 @@ public class RegisterVehicleUI  implements Runnable{
         String model = null;
         boolean validModel=false;
         while(!validModel){
-            System.out.print("Model of Vehicle: ");
-            model = scan.next();
+            model = Utils.readLineFromConsole("Model of Vehicle: ");
             if(!verifyModel(model)){
                 throw new IllegalArgumentException("The introduced model is incorrect.");
             } else {
@@ -252,8 +245,7 @@ public class RegisterVehicleUI  implements Runnable{
         String brand = null;
         boolean validBrand=false;
         while(!validBrand){
-            System.out.print("Brand of Vehicle: ");
-            brand = scan.next();
+            brand = Utils.readLineFromConsole("Brand of Vehicle: ");
             if(!verifyBrand(brand)){
                 throw new IllegalArgumentException("The introduced brand is incorrect.");
             } else {
@@ -282,7 +274,7 @@ public class RegisterVehicleUI  implements Runnable{
 
     private void displayTypeOptions(Vehicle.Type[] types) {
         for (int i=0;i<types.length;i++) {
-            System.out.println("  " + i+1 + " - " + types[i]);
+            System.out.println(i+1 + " - " + types[i]);
         }
     }
 }
