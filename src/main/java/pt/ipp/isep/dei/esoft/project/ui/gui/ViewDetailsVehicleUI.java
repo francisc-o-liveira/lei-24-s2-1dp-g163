@@ -33,7 +33,7 @@ public class ViewDetailsVehicleUI {
     public RegisterVehicleController ctrl;
     public RegisterCheckUpController ctrlCheck;
 
-    Vehicle selectedVehicle;
+    private Vehicle selectedVehicle;
 
     private String vBrand;
     private String vModel;
@@ -149,6 +149,7 @@ public class ViewDetailsVehicleUI {
     }
 
     public void setTable(Vehicle vehicle){
+        this.selectedVehicle=vehicle;
         colCheckKm.setCellValueFactory(new PropertyValueFactory<>("kmOfCheck"));
         colDateCheck.setCellValueFactory(new PropertyValueFactory<>("dateOfCheck"));
         checkUpObservableList.addAll(vehicle.getCheckUpList());
@@ -225,37 +226,37 @@ public class ViewDetailsVehicleUI {
 
             String newModel=model.getText();
             selectedVehicle.setModel(newModel);
-            model.clear();
+            model.setText(selectedVehicle.getModel());
 
             String newPlate=plate.getText();
             selectedVehicle.setPlate(newPlate);
-            plate.clear();
+            plate.setText(selectedVehicle.getPlate());
 
             String newTare= tare.getText();
             int nTare=Integer.parseInt(newTare);
             selectedVehicle.setTare(nTare);
-            tare.clear();
+            tare.setText(Integer.toString(selectedVehicle.getTare()));
 
             String newGW=grossWeight.getText();
             double nGW=Double.parseDouble(newGW);
             selectedVehicle.setGrossWeight(nGW);
-            grossWeight.clear();
+            grossWeight.setText(Double.toString(selectedVehicle.getGrossWeight()));
 
             String newCurrent=currentKms.getText();
             double nCK=Double.parseDouble(newCurrent);
             selectedVehicle.setCurrentKm(nCK);
-            currentKms.clear();
+            currentKms.setText(Double.toString(selectedVehicle.getCurrentKm()));
 
             String newFreq=checkupFrequency.getText();
             double nF=Double.parseDouble(newFreq);
             selectedVehicle.setFrequencyCheckKm(nF);
-            checkupFrequency.clear();
+            checkupFrequency.setText(Double.toString(selectedVehicle.getFrequencyCheckKm()));
 
             selectedVehicle.setRegisterDate(new Date(registerDate.getValue().getYear(),registerDate.getValue().getMonthValue(),registerDate.getValue().getDayOfMonth()));
-            registerDate.setValue(null);
+            registerDate.setValue(selectedVehicle.getRegisterDateLocal());
 
             selectedVehicle.setAcquisitionDate(new Date(acquisitionDate.getValue().getYear(), acquisitionDate.getValue().getMonthValue(), acquisitionDate.getValue().getDayOfMonth()));
-            acquisitionDate.setValue(null);
+            acquisitionDate.setValue(selectedVehicle.getAcquisitionDateLocal());
         }
     }
 
