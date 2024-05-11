@@ -99,7 +99,7 @@ class CollaboratorTest {
     @Test
     void verifyIfCollaboratorCanHaveLessThan18years(){
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,5,1), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
+            new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,6,30), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
         });
         Collaborator test = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2006,4,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
     }
