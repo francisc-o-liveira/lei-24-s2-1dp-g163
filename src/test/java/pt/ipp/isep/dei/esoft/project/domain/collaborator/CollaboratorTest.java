@@ -60,7 +60,7 @@ class CollaboratorTest {
     @Test
     void testEqualsDifferentJobCategory(){
         Collaborator cTest = new Collaborator("Joaquim Antonio",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
-        Collaborator cTest2 = new Collaborator("Joaquim",new Date(2001,10,29), new Date(2024,01,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Electrician"));
+        Collaborator cTest2 = new Collaborator("Joaquim",new Date(2001,10,29), new Date(2024,01,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197233231,new JobCategory("Electrician"));
         assertNotEquals(cTest,cTest2);
     }
 
