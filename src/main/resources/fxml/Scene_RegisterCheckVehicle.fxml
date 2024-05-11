@@ -8,17 +8,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="213.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ViewDetailsVehicleUI">
+<AnchorPane prefHeight="300.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ViewDetailsVehicleUI">
    <children>
       <Label layoutX="16.0" layoutY="14.0" text="Register Check Up" textFill="#046f4d">
          <font>
             <Font name="Tahoma Bold" size="16.0" />
-         </font></Label>
+         </font>
+      </Label>
       <Label layoutX="8.0" layoutY="64.0" text="Check Up Kilometers:" />
       <Label layoutX="42.0" layoutY="98.0" text="Date Of Check:" />
-      <CheckBox layoutX="14.0" layoutY="126.0" mnemonicParsing="false" text="Edit Maintenance Km" />
+      <CheckBox fx:id="maintenanceCheckBox" onAction="#showMaintenance" layoutX="14.0" layoutY="126.0" mnemonicParsing="false" text="Edit Maintenance Km" />
       <DatePicker fx:id="checkDate" layoutX="127.0" layoutY="94.0" />
       <TextField fx:id="checkUpKMs" layoutX="127.0" layoutY="60.0" prefHeight="26.0" prefWidth="186.0" />
-      <Button layoutX="250.0" layoutY="161.0" mnemonicParsing="false" onAction="#btnRegisterCheck" text="Register" />
+      <Button layoutX="253.0" layoutY="203.0" mnemonicParsing="false" onAction="#btnRegisterCheck" text="Register" />
+      <TextField fx:id="maintenanceUp" layoutX="140.0" layoutY="150.0" prefHeight="26.0" prefWidth="175.0" visible="false" />
+      <Label fx:id="newMaintenanceCheck" layoutX="14.0" layoutY="155.0" text="New Maintenance Km: " visible="false" />
    </children>
 </AnchorPane>

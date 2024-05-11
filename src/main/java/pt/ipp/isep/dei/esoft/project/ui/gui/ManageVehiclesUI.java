@@ -109,6 +109,7 @@ public class ManageVehiclesUI {
         stageToViewDetails.show();
         ViewDetailsVehicleUI ui= fxmlLoader.getController();
         ui.putInTextFields(getSelectedVehicle());
+        ui.setTable(selectedVehicle);
     }
 
     public Vehicle getSelectedVehicle(){
@@ -175,9 +176,9 @@ public class ManageVehiclesUI {
         otherStage.setScene(scene);
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
-        ui.setTable();
         ui.showSelectedVehicle(selectedVehicle);
         ui.putInTextFields(getSelectedVehicle());
+        ui.setTable(selectedVehicle);
     }
 
     @FXML

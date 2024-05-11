@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCheckUpController;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
@@ -23,6 +26,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.concurrent.RejectedExecutionException;
 
 public class ViewDetailsVehicleUI {
 
@@ -43,6 +47,7 @@ public class ViewDetailsVehicleUI {
     private Vehicle.Type vType;
     private Date vlastDateCheck;
     private double vlastCheckKm;
+    private double updateMaintenance;
 
     @FXML
     private DatePicker acquisitionDate;
@@ -92,6 +97,14 @@ public class ViewDetailsVehicleUI {
     private TableColumn<CheckUp, Date> colDateCheck;
     @FXML
     private TableView<CheckUp> tableCheckUp;
+    @FXML
+    private CheckBox maintenanceCheckBox;
+    @FXML
+    private  TextField maintenanceUp;
+    @FXML
+    private Label newMaintenanceCheck;
+
+    private ObservableList<CheckUp> checkUpObservableList=FXCollections.observableArrayList();
 
 
     public ViewDetailsVehicleUI(){
@@ -135,29 +148,11 @@ public class ViewDetailsVehicleUI {
         type.setValue(typeOfVehicle);
     }
 
-    public void setTable(){
-        colCheckKm.setCellValueFactory(new PropertyValueFactory<>("checkKm"));
-
-        colDateCheck.setCellValueFactory(cellData -> {
-            SimpleObjectProperty<Date> property = new SimpleObjectProperty<>(cellData.getValue().getDateOfCheck());
-            return property;
-        });
-
-        colDateCheck.setCellFactory(column -> {
-            return new TableCell<CheckUp, Date>() {
-                private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-                @Override
-                protected void updateItem(Date item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        setText(format.format(item));
-                    }
-                }
-            };
-        });
+    public void setTable(Vehicle vehicle){
+        colCheckKm.setCellValueFactory(new PropertyValueFactory<>("kmOfCheck"));
+        colDateCheck.setCellValueFactory(new PropertyValueFactory<>("dateOfCheck"));
+        checkUpObservableList.addAll(vehicle.getCheckUpList());
+        tableCheckUp.setItems(checkUpObservableList);
     }
 
 
@@ -205,8 +200,19 @@ public class ViewDetailsVehicleUI {
     public void btnRegisterCheck(ActionEvent event){
         vlastDateCheck=new Date(checkDate.getValue().getYear(),checkDate.getValue().getMonthValue(),checkDate.getValue().getDayOfMonth());
         vlastCheckKm=Double.parseDouble(checkUpKMs.getText());
-        if(vlastCheckKm==0){
+        if(maintenanceUp.isVisible()){
+            updateMaintenance=Double.parseDouble(maintenanceUp.getText());
+        } else {
+            updateMaintenance=0;
+        }
+        if(vlastCheckKm<=0 || checkDate.getValue()==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "The data is incorrect").show();
+        } else {
+            try{
+                ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
+            } catch (RejectedExecutionException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
         }
     }
 
@@ -283,6 +289,17 @@ public class ViewDetailsVehicleUI {
         Stage stage=new Stage();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public void showMaintenance(ActionEvent event){
+        if(maintenanceCheckBox.isSelected()){
+            maintenanceUp.setVisible(true);
+            newMaintenanceCheck.setVisible(true);
+        } else {
+            maintenanceUp.setVisible(false);
+            newMaintenanceCheck.setVisible(false);
+        }
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {

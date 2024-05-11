@@ -140,8 +140,7 @@ public class Date implements Comparable<Date> {
      */
     @Override
     public String toString() {
-        return String.format("%s, %d de %s de %d", diaDaSemana(), day,
-                nameMonth[month], year);
+        return String.format("%04d/%02d/%02d", year, month, day);
     }
 
     /**
