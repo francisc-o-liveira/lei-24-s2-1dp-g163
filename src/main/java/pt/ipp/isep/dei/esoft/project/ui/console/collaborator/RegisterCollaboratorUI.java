@@ -132,6 +132,8 @@ public class RegisterCollaboratorUI implements Runnable{
      * If the collaborator is younger than 18 years old, the user needs to re-introduce the dates
      */
     public void registerDates(){
+        Date birthday = new Date();
+        Date admissionDate = new Date();
         do{
             String lineDate=Utils.readLineFromConsole("Date of birth (Format: YYYY/MM/DD): ");
             String[] arrayDate=lineDate.split("/");
@@ -140,6 +142,8 @@ public class RegisterCollaboratorUI implements Runnable{
             String[] arrayDateAd=lineDateAd.split("/");
             admissionDate.setData(Integer.parseInt(arrayDateAd[0]),Integer.parseInt(arrayDateAd[1]),Integer.parseInt(arrayDateAd[2]));
         }while (!verifyBirthdayAndAdmission(birthday, admissionDate));
+        this.birthday=birthday;
+        this.admissionDate=admissionDate;
     }
 
     /**Register the address of collaborator
@@ -149,13 +153,10 @@ public class RegisterCollaboratorUI implements Runnable{
     public void registerAddress(){
         boolean validAddress=false;
         while(!validAddress){
-            System.out.print("Address of collaborator: ");
-            address= scan.next();
-            System.out.print("City: ");
-            addressCity= scan.next();
-            System.out.print("Zip Code (Format: XXXX-XXX): ");
-            addressZipCode= scan.next();
-            if(!verifyAddress(address,addressCity,addressZipCode)){
+            address= Utils.readLineFromConsole("Address of collaborator: ");
+            addressCity= Utils.readLineFromConsole("City of collaborator: ");
+            addressZipCode= Utils.readLineFromConsole("Zip code of collaborator: ");
+            if(!verifyAddress(address,addressZipCode,addressCity)){
                 throw new IllegalArgumentException("The introduced address is incorrect.");
             } else {
                 validAddress=true;
@@ -176,10 +177,8 @@ public class RegisterCollaboratorUI implements Runnable{
         String codePhoneNumber;
         String phoneNumber = "";
         while(!validPhoneNumber){
-            System.out.print("Country telephone code: ");
-            codePhoneNumber = scan.next();
-            System.out.print("Phone number: ");
-            int phone = scan.nextInt();
+            codePhoneNumber = Utils.readLineFromConsole("Country telephone code(Format: +XXX):");
+            int phone = Utils.readIntegerFromConsole("Phone number:");
             phoneNumber = codePhoneNumber + phone;
             if(!verifyCodePhoneNumber(codePhoneNumber) || !verifyPhoneNumber(phone)){
 
@@ -287,7 +286,7 @@ public class RegisterCollaboratorUI implements Runnable{
      * @return true if address is correct
      */
     private boolean verifyAddress(String address, String addressZipCode, String addressCity) {
-        return (addressZipCode.split("-").length==2 && addressCity.split(" ").length<5);
+        return (addressZipCode.split("-").length==2 && addressCity.split(" ").length<6);
     }
 
     /**Verifies if the date of birth and date of admission is correctly inserted
