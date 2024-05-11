@@ -192,10 +192,6 @@ public class RegisterCollaboratorUI implements Runnable{
         return phoneNumber;
     }
 
-    private boolean verifyCodePhoneNumber(String codePhoneNumber) {
-        return codePhoneNumber.split("").length <= 4;
-    }
-
     /**
      * Register the e-mail of collaborator
      * <p>
