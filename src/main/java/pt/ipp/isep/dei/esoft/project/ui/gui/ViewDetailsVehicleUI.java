@@ -26,6 +26,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.concurrent.RejectedExecutionException;
 
 public class ViewDetailsVehicleUI {
@@ -33,7 +34,7 @@ public class ViewDetailsVehicleUI {
     public RegisterVehicleController ctrl;
     public RegisterCheckUpController ctrlCheck;
 
-    private Vehicle selectedVehicle;
+    private static Vehicle selectedVehicle;
 
     private String vBrand;
     private String vModel;
@@ -117,6 +118,7 @@ public class ViewDetailsVehicleUI {
     }
 
     public void putInTextFields(Vehicle selectedVehicle){
+        this.selectedVehicle = selectedVehicle;
         String editedBrand=selectedVehicle.getBrand();
         brand.setText(editedBrand);
 
@@ -210,7 +212,13 @@ public class ViewDetailsVehicleUI {
             popUpOfVerifications(Alert.AlertType.ERROR, "The data is incorrect").show();
         } else {
             try{
-                ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
+                Optional<Object> opt =ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
+                if(opt.isPresent()){
+                    popUpOfVerifications(Alert.AlertType.CONFIRMATION,"Check up successful registed").show();
+                }else {
+                    popUpOfVerifications(Alert.AlertType.INFORMATION,"Check up failed to register").show();
+                }
+
             } catch (RejectedExecutionException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
