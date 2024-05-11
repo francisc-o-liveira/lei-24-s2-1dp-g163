@@ -140,6 +140,8 @@ public class ViewDetailsCollaboratorUI {
                 try{
                     ctrlSkills.assignSkills(collaboratorAssigning, skill);
                     popUpSkills().show();
+                    tableAssignSkills.getItems().clear();
+                    setTableAssignSkills();
                 } catch (CloneNotSupportedException e) {
                     popUpOfVerifications(Alert.AlertType.ERROR, "s").show();
                 }
@@ -160,9 +162,10 @@ public class ViewDetailsCollaboratorUI {
         colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
 
         for(Skill skill : ctrlSkills.getAllSkills()){
-            //if(!editedCollaborator.verifyIfHaveSkill(skill)){
+            if(!editedCollaborator.verifyIfHaveSkill(skill)){
                 skillsToChoose.add(skill);
-            //}
+                skill.setSelecting(false);
+            }
         }
         tableAssignSkills.setItems(skillsToChoose);
     }

@@ -169,4 +169,8 @@ public class Skill {
     public IntegerProperty numberCollabsPerSkillProperty() {
         return numberCollabsPerSkill;
     }
+
+    public void setSelecting(boolean value){
+        this.selecting.set(value);
+    }
 }
