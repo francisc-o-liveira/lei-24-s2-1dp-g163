@@ -385,7 +385,7 @@ public class Collaborator{
         setDocType(docType,docIDNumber);
         setEmail(email);
         setJobCategory(jobCategory);
-        setStatusType(StatusType.Active);
+        setStatusType(StatusType.NotActive);
         setSKILLS_BY_OMISSION(SKILLS_BY_OMISSION);
     }
 
@@ -414,7 +414,7 @@ public class Collaborator{
         setEmail(email);
         setDocType(docType,docIDNumber);
         setJobCategory(JOBCATEGORY_OMISSION);
-        setStatusType(StatusType.Active);
+        setStatusType(StatusType.NotActive);
         setSKILLS_BY_OMISSION(SKILLS_BY_OMISSION);
     }
 
