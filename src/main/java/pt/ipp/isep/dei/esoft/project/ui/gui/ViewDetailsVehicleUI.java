@@ -117,8 +117,11 @@ public class ViewDetailsVehicleUI {
         type.setItems(FXCollections.observableArrayList(Vehicle.Type.values()));
     }
 
+    public void setSelectedVehicle(Vehicle selectedVehicle){
+        ViewDetailsVehicleUI.selectedVehicle =selectedVehicle;
+    }
+
     public void putInTextFields(Vehicle selectedVehicle){
-        this.selectedVehicle = selectedVehicle;
         String editedBrand=selectedVehicle.getBrand();
         brand.setText(editedBrand);
 
@@ -151,7 +154,6 @@ public class ViewDetailsVehicleUI {
     }
 
     public void setTable(Vehicle vehicle){
-        this.selectedVehicle=vehicle;
         colCheckKm.setCellValueFactory(new PropertyValueFactory<>("kmOfCheck"));
         colDateCheck.setCellValueFactory(new PropertyValueFactory<>("dateOfCheck"));
         checkUpObservableList.addAll(vehicle.getCheckUpList());
@@ -214,6 +216,7 @@ public class ViewDetailsVehicleUI {
             try{
                 Optional<Object> opt =ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
                 if(opt.isPresent()){
+                    setTable(this.selectedVehicle);
                     popUpOfVerifications(Alert.AlertType.CONFIRMATION,"Check up successful registed").show();
                 }else {
                     popUpOfVerifications(Alert.AlertType.INFORMATION,"Check up failed to register").show();
@@ -323,8 +326,14 @@ public class ViewDetailsVehicleUI {
 
     @FXML
     public void submitDataUpdate(ActionEvent event){
-        try{
-            ctrl.updateKm(selectedVehicle, Double.parseDouble(updateCurrentKm.getText()));
+        try {
+            if (ctrl.updateKm(selectedVehicle, Double.parseDouble(updateCurrentKm.getText()))) {
+                popUpOfVerifications(Alert.AlertType.CONFIRMATION, "Current Kilometers Update Successfully");
+            } else {
+                popUpOfVerifications(Alert.AlertType.ERROR, "Current Kilometers Update Failed");
+            }
+        }catch (IllegalArgumentException | NullPointerException e) {
+            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage());
         } catch (IOException e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }

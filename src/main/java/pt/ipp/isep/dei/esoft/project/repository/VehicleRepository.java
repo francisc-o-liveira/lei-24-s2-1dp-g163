@@ -318,6 +318,9 @@ public class VehicleRepository {
      */
 
     public boolean addUpdateKmToVehicle(Vehicle selectedVehicle, double km) throws IOException {
+        if (selectedVehicle == null) {
+            throw new NullPointerException("Vehicle not selected please close window and try again");
+        }
         selectedVehicle.setCurrentKm(km);
         if (selectedVehicle.getCurrentKm()==km){
             return true;

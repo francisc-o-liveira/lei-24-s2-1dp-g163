@@ -108,11 +108,13 @@ public class ManageVehiclesUI {
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
         ViewDetailsVehicleUI ui= fxmlLoader.getController();
+        ui.setSelectedVehicle(getSelectedVehicle());
         ui.putInTextFields(getSelectedVehicle());
-        ui.setTable(selectedVehicle);
+        ui.setTable(getSelectedVehicle());
     }
 
     public Vehicle getSelectedVehicle(){
+        this.selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
         return selectedVehicle;
     }
 
@@ -124,17 +126,10 @@ public class ManageVehiclesUI {
         Stage otherStage= new Stage();
         otherStage.setScene(scene);
         otherStage.show();
+        ViewDetailsVehicleUI ui= fxmlLoader.getController();
+        ui.setSelectedVehicle(getSelectedVehicle());
     }
 
-    @FXML
-    public void btnRegisterCheck() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        Stage otherStage= new Stage();
-        otherStage.setScene(scene);
-        otherStage.show();
-    }
 
     @FXML
     public void btnRemove(){
@@ -176,9 +171,10 @@ public class ManageVehiclesUI {
         otherStage.setScene(scene);
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
-        ui.showSelectedVehicle(selectedVehicle);
+        ui.setSelectedVehicle(getSelectedVehicle());
+        ui.showSelectedVehicle(getSelectedVehicle());
         ui.putInTextFields(getSelectedVehicle());
-        ui.setTable(selectedVehicle);
+        ui.setTable(getSelectedVehicle());
     }
 
     @FXML
@@ -227,16 +223,6 @@ public class ManageVehiclesUI {
     }
 
     @FXML
-    public void btnRegisterCheck(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        Stage stage=new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
     public void btnUpdateKm(ActionEvent event)throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_UpdateKm.fxml"));
         Parent root = fxmlLoader.load();
@@ -244,6 +230,8 @@ public class ManageVehiclesUI {
         Stage stage=new Stage();
         stage.setScene(scene);
         stage.show();
+        ViewDetailsVehicleUI ui=fxmlLoader.getController();
+        ui.setSelectedVehicle(getSelectedVehicle());
     }
 
     @FXML
