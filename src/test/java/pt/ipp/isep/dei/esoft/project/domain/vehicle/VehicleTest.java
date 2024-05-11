@@ -12,13 +12,13 @@ class VehicleTest {
 
     @Test
     void isCloseToCheck() {
-        Vehicle v = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-LR", new Date(2010, 10, 1), 140000);
+        Vehicle v = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-15", new Date(2010, 10, 1), 140000);
         assertTrue(v.isCloseToCheck());
     }
 
     @Test
     void registerCheckUp() {
-        Vehicle v = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-LR", new Date(2010, 10, 1), 100000);
+        Vehicle v = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-15", new Date(2010, 10, 1), 100000);
         Optional<CheckUp> operation = v.registerCheckUp(155555, new Date(2024, 4, 29), 10000);
         assertTrue(operation.isPresent());
     }
@@ -26,8 +26,8 @@ class VehicleTest {
     //AC2- Vehicle cannot be the same
     @Test
     void verifyEquals() {
-        Vehicle v1 = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-LR", new Date(2010, 10, 1), 140000);
-        Vehicle v2 = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-LR", new Date(2010, 10, 1), 140000);
+        Vehicle v1 = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-15", new Date(2010, 10, 1), 140000);
+        Vehicle v2 = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-15", new Date(2010, 10, 1), 140000);
         assertTrue(v1.equals(v2));
 
     }
@@ -61,7 +61,7 @@ class VehicleTest {
     @Test
     //AC2- US8 - Vehicles that need a checkup have a difference minor than 5%
     void verifyCloseToCheck(){
-        Vehicle v = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 149700, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-LR", new Date(2010, 10, 1), 140000);
+        Vehicle v = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 149700, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-15", new Date(2010, 10, 1), 140000);
         assertTrue(v.isCloseToCheck());
     }
 }

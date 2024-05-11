@@ -14,9 +14,8 @@ public class VFManagerUI implements Runnable{
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Create Task", new CreateTaskUI()));
-        options.add(new MenuItem("Manage Teams", new ShowTextUI("You have chosen Option 2.")));
-        options.add(new MenuItem("Manage Collaborators", new ShowTextUI("You have chosen Option 3.")));
-        options.add(new MenuItem("Manage Vehicles", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("Manage Vehicles", new ManageVehiclesUI()));
+        options.add(new MenuItem("Manage Equipment", new ManageEquipmentUI()));
 
         int option = 0;
         do {

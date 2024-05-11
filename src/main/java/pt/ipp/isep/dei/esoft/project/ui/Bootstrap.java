@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
 import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
@@ -19,6 +20,7 @@ public class Bootstrap implements Runnable {
             addSkills();
             addJobCategories();
             addCollaborators();
+            addVehicles();
         } catch (CloneNotSupportedException e) {
             System.out.println("erro inicializando");
         }
@@ -47,6 +49,12 @@ public class Bootstrap implements Runnable {
         collaboratorRepository.createCollaborator("Joaquim Mendes",new Date(1999,10,5),new Date(2024,5,2),"Rua das moinas","4630-132","Penafiel","joaquim@gmail.com","+351916834123", DocType.Type.CitizenCard,123456789,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
         collaboratorRepository.createCollaborator("Maria Silva",new Date(1985,3,15),new Date(2024,1,10),"123 Main Street","12345","London","maria.silva@gmail.com","+441234567890", DocType.Type.Passport,987655,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
 
+    }
+
+    private void addVehicles() throws CloneNotSupportedException{
+        VehicleRepository vehicleRepository=Repositories.getInstance().getVehicleRepository();
+        vehicleRepository.registerVehicle("Audi", "R8", new Date(2023,10,10), new Date(2020,10,10), 500000, 100000, 10000, 9000, "AB-12-AB", Vehicle.Type.LightPassenger, new Date(2024,1,1), 400000);
+        vehicleRepository.registerVehicle("Mercedes", "AMG", new Date(2022,5,5), new Date(2016,10,10), 390000, 100000, 10000, 9000, "20-XX-20", Vehicle.Type.LightPassenger, new Date(2024,1,1), 295000);
     }
 
     private void addOrganization(){
