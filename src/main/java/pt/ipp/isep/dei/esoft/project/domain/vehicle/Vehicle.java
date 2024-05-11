@@ -179,7 +179,7 @@ public class Vehicle {
         } else {
             this.frequencyCheckKm = maintenanceKm;
         }
-        if (currentKmOfCheck >= currentKm && currentKmOfCheck > getLastCheckUpKm() && dateOfCheck.diference(Date.atualDate()) < 30) {
+        if (currentKmOfCheck >= currentKm && currentKmOfCheck > getLastCheckUpKm() && dateOfCheck.diference(Date.atualDate()) > 30) {
             CheckUp regist = new CheckUp(currentKmOfCheck, dateOfCheck);
             newCheck = Optional.of(regist);
             operationSuccess = this.checkUpList.add(regist);

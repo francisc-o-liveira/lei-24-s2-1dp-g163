@@ -15,7 +15,7 @@ public class HRManagerUI implements Runnable{
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
         options.add(new MenuItem("Create Task", new CreateTaskUI()));
-        options.add(new MenuItem("Manage Teams", new ShowTextUI("You have chosen Option 2.")));
+        options.add(new MenuItem("Manage Teams", new ManageTeamsUI()));
         options.add(new MenuItem("Manage Collaborators", new ManageCollaboratorsUI()));
         options.add(new MenuItem("Manage JobCategories", new ManageJobCategorysUI()));
         options.add(new MenuItem("Manage Skills", new ManageSkillsUI()));

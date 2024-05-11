@@ -17,9 +17,21 @@ import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.No
  * It handles vehicle registration, activation, deactivation, check-ups, and retrieval.
  */
 public class VehicleRepository {
+
+    /**Variable for the list of Vehicles */
     private List<Vehicle> vehicleList;
 
+    /** Initializes the list of Vehicles*/
+    public VehicleRepository(){
+        vehicleList=new ArrayList<>();
+    }
 
+    /** Method to search for a Vehicle based on the plate
+     *
+     * @param plate of the vehicle
+     * @return the vehicle
+     * @throws RuntimeException if a Vehicle with the given plate does not exist
+     */
     public Vehicle searchForVehicleByPlate(String plate){
         for (Vehicle vehicle : vehicleList) {
             if(vehicle.getPlate().equals(plate)){
@@ -136,9 +148,20 @@ public class VehicleRepository {
         return newVehicle;
     }
 
+    /** Adds a vehicle to the list of Vehicles
+     *
+     * @param vehicle to be added
+     * @return true if vehicle has been added
+     */
     private boolean saveVehicle(Vehicle vehicle) {
         return vehicleList.add(vehicle);
     }
+
+    /** Checks if a vehicle already exists on the list of vehicles
+     *
+     * @param vehicle to be checked
+     * @return true if vehicle does not exist on the list
+     */
 
     private boolean isValidVehicle(Vehicle vehicle) {
         return !vehicleList.contains(vehicle);
@@ -182,7 +205,7 @@ public class VehicleRepository {
      * Registers a check-up for a vehicle based on its plate number.
      *
      * @param vehicle       The vehicle to register the check-up for.
-     * @param dateOfCheckUp The date of the check-up in the format "DD/MM/YYYY".
+     * @param dateOfCheckUp The date of the check-up in the format "YYYY/MM/DD".
      * @param currentKms    The current kilometers of the vehicle.
      * @param maintenanceKm The kilometers for maintenance purposes.
      * @return True if the check-up is successfully added, false otherwise.

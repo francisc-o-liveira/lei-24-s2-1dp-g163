@@ -15,7 +15,6 @@ import java.util.Scanner;
  */
 public class RegisterCheckUpUI implements Runnable {
     private RegisterCheckUpController ctrl;
-    private Scanner scanner;
     private Vehicle vehicleToCheckUp;
     private Date dateOfCheckUp;
     private double mainetanceKm;
@@ -24,7 +23,6 @@ public class RegisterCheckUpUI implements Runnable {
 
     public RegisterCheckUpUI() {
         this.ctrl = new RegisterCheckUpController();
-        this.scanner = new Scanner(System.in);
     }
 
     public RegisterCheckUpController getController(){
@@ -47,9 +45,9 @@ public class RegisterCheckUpUI implements Runnable {
     private void submitsData() {
         Optional<Object> checkUpList = getController().addCheckUp(vehicleToCheckUp,dateOfCheckUp,currentKm,mainetanceKm);
         if (checkUpList.isPresent()) {
-            System.out.println("\nCheck Up successfully registed!");
+            System.out.println("\nCheck Up successfully registered!");
         } else {
-            System.out.println("\nCheck Up Not Registed!");
+            System.out.println("\nCheck Up Not Registered!");
         }
     }
 
@@ -69,8 +67,8 @@ public class RegisterCheckUpUI implements Runnable {
         int option=-1;
         do {
             System.out.println("You want the same or want a new frequency check up km?");
-            System.out.println("1-- New Frequency of Check Up");
-            System.out.println("2-- Same Frequency of Check Up");
+            System.out.println("1-- Same Frequency of Check Up");
+            System.out.println("2-- New Frequency of Check Up");
             option= Utils.readIntegerFromConsole("Select option:");
         }while (option<1 || option>2);
         if(option==2){
@@ -90,7 +88,7 @@ public class RegisterCheckUpUI implements Runnable {
             if(!showError){
                 System.out.println("Incorrect Date Format. ");
             }
-            date = Utils.readLineFromConsole("Introduce the Check Up Date (DD/MM/AAAA): ");
+            date = Utils.readLineFromConsole("Introduce the Check Up Date (YYYY/MM/DD): ");
             showError=false;
         }while(verifyCheckUpDateFormat(date));
         String[]dateFormat = date.split("/");
@@ -129,11 +127,10 @@ public class RegisterCheckUpUI implements Runnable {
                 int i = 0;
                 for (String plate : vehiclePlates) {
                     i++;
-                    System.out.printf("---%d --- %s", i, plate);
+                    System.out.printf("---%d --- %s%n", i, plate);
                 }
 
-                System.out.print("Introduce the option of the plate for the CheckUp Vehicle: ");
-                selectedPlate = scanner.nextInt();
+                selectedPlate = Utils.readIntegerFromConsole("Introduce the option of the plate for the CheckUp Vehicle: ");
 
             } while (selectedPlate < 0 || selectedPlate > vehiclePlates.size());
             return ctrl.getVehicleByIndex(selectedPlate);

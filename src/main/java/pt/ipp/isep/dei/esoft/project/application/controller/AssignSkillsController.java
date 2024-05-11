@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +80,7 @@ public class AssignSkillsController {
     public List<Skill> filterSkillsToAssign(Collaborator collaborator){
         List<Skill> collaboratorSkills=getCollaboratorSkills(collaborator);
         List<Skill> allSkills=getAllSkills();
-        List<Skill> skillsLeftToAssign = null;
+        List<Skill> skillsLeftToAssign = new ArrayList<>();
         for(Skill skill : allSkills){
             if(!collaboratorSkills.contains(skill)){
                 skillsLeftToAssign.add(skill);

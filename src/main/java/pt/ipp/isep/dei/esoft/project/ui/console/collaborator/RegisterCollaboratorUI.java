@@ -10,6 +10,8 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType.Type;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** This Class represents the UI to register a collaborator */
 public class RegisterCollaboratorUI implements Runnable{
@@ -180,7 +182,7 @@ public class RegisterCollaboratorUI implements Runnable{
             codePhoneNumber = Utils.readLineFromConsole("Country telephone code(Format: +XXX):");
             int phone = Utils.readIntegerFromConsole("Phone number:");
             phoneNumber = codePhoneNumber + phone;
-            if(!verifyCodePhoneNumber(codePhoneNumber) || !verifyPhoneNumber(phone)){
+            if(!verifyPhoneNumber(phoneNumber)){
 
                 throw new IllegalArgumentException("The introduced phone number is incorrect.");
             }else {
@@ -188,10 +190,6 @@ public class RegisterCollaboratorUI implements Runnable{
             }
         }
         return phoneNumber;
-    }
-
-    private boolean verifyCodePhoneNumber(String codePhoneNumber) {
-        return codePhoneNumber.split("").length <= 4;
     }
 
     /**
@@ -272,8 +270,14 @@ public class RegisterCollaboratorUI implements Runnable{
      * @return true if phoneNumber is correct
      */
 
-    private boolean verifyPhoneNumber(int phoneNumber) {
-        return (phoneNumber%1000000000)>0.9 && (phoneNumber%1000000000)<1 &&( (phoneNumber/10000000)==91 || (phoneNumber/10000000)==92 || (phoneNumber/10000000)==93 || (phoneNumber/10000000)==96 );
+    private boolean verifyPhoneNumber(String phoneNumber) {
+        String verify="^\\+(?:[0-9] ?){6,14}[0-9]$";
+        Pattern pattern = Pattern.compile(verify);
+        Matcher matcher=pattern.matcher(phoneNumber);
+        if(matcher.matches()){
+            return true;
+        }
+        return false;
     }
 
 
