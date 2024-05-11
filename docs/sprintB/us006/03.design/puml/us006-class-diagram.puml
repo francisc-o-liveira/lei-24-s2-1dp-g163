@@ -1,94 +1,79 @@
-@startuml
-'skinparam monochrome true
-skinparam packageStyle rectangle
-skinparam shadowing false
-skinparam linetype polyline
-'skinparam linetype orto
+    @startuml
+    'skinparam monochrome true
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    'skinparam linetype orto
 
-skinparam classAttributeIconSize 0
+    skinparam classAttributeIconSize 0
 
-'left to right direction
+    'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
-}
+    class ApplicationSession
+    {
+        + static getInstance()
+        + getCurrentSession()
+    }
 
-class UserSession
-{
-    + getUserEmail()
-}
+    class UserSession
+    {
+    }
 
-class VFM {
-    - name
-    - email
-    - position
-    - phone
-}
+    class VFM {
+        - email
+        - password
+    }
 
-class Vehicle {
-    - String brand
-    - String model
-    - Integer plate
-    - String type
-    - Integer tare
-    - String grossWeight
-    - Integer currenteKM
-    - String registerDate
-    - String acquisitionDate
-    - Integer checkupFrequency
+    class Vehicle {
+        - brand: String
+        - model: String
+        - plate: int
+        - type: String
+        - tare: int
+        - grossWeight: String
+        - currenteKM: int
+        - registerDate: Date
+        - acquisitionDate: Date
+        - frequencyCheckKm: int
 
-    + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
-}
+        + Vehicle(brand, model, plate, type, tare, grossWeight, currenteKM, registerDate, acquisitionDate, checkupFrequency)
+    }
 
 
 
-class VehicleRepository {
-}
+    class VehicleRepository {
+        + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+
+    }
 
 
-class Repositories {
-    + getInstance() : Repositories
-    + getVehicleRepository() : VehicleRepository
-}
+    class Repositories {
+        - Repositories()
+        + getInstance() : Repositories
+        + getVehicleRepository() : VehicleRepository
+    }
 
-class RegisterVehicleController {
-    - VehicleRepository vehicleRepository
-    + RegisterVehicleController(vehicleRepository)
-    + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms)))
-    + getVehicleList()
-    + removeVehicleFromList(selectedVehicle)
-    + updateKm(selectedVehicle, km)
-}
+    class RegisterVehicleController {
+        - VehicleRepository vehicleRepository
+        + RegisterVehicleController()
+        + registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms)))
+    }
 
-note right of RegisterVehicleController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
+    Repositories "1" --> "1" VehicleRepository
+    Repositories -> Repositories : instance
 
-note bottom of VehicleRepository
-    - used for displaying
-    the vehicle list
-end note
+    ApplicationSession --> ApplicationSession
+    ApplicationSession --> "1" UserSession : userSession
 
-Repositories "1" --> "1" VehicleRepository
-Repositories "1" -> "1" Repositories
+    RegisterVehicleUI "1" --> "1" RegisterVehicleController
 
-ApplicationSession --> ApplicationSession
-ApplicationSession --> "1" UserSession : userSession
+    RegisterVehicleController .> Repositories
+    RegisterVehicleController ..> ApplicationSession
+    RegisterVehicleController ..> UserSession
+    RegisterVehicleController "1" --> "1" VehicleRepository
 
-RegisterVehicleUI "1" --> "1" RegisterVehicleController
+    Vehicle --> VFM : createdBy
 
-RegisterVehicleController .> Repositories
-RegisterVehicleController ..> ApplicationSession
-RegisterVehicleController ..> UserSession
-RegisterVehicleController "1" --> "1" VehicleRepository
+    VehicleRepository "1" --> "*" Vehicle : vehicles
 
-Vehicle --> VFM : createdBy
-
-VehicleRepository "1" --> "*" Vehicle : vehicles
-
-@enduml
+    @enduml

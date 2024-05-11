@@ -124,7 +124,7 @@ Below is a figure that illustrates an overview of the application:
 
 
 ![diagrama da aplicação](imagesUserManual/diagramaAplicacao.png)
-Figure 1: General application diagram
+Image 1: General application diagram
 
 
 # System Requirements
@@ -148,6 +148,10 @@ can:
 + Name : Should contain at least 8 characters
 + Email : Should contain an e-mail prefix, before the "@" symbol, and e-mail domain, after the "@" symbol.
 + Password : Should contain at least 12 characters, with special characters included and upper case characters.
+
+Step 1- Do login and enter your cards according syntax notes:
+![login](imagesUserManual/login.png)
+Image 2- Do login (login UI) 
 
 
 ### Signed
@@ -182,10 +186,61 @@ When you open and login in the software, (there are 6 possible paths), the GSM c
 
 * Manage the Vehicles - The Manager can oversee and administer vehicles used for green space management.(including Check-Up List and Check Up register)
 * Manage the Collaborators - The Manager can handle the administration and organization of collaborators involved in green space management.
-* Manage the Job's Category - The Manager can define and organize different job categories related to green space management.
+* Manage the Jobs - The Manager can define and organize different job categories related to green space management.
 * Manage the Skills - The Manager can oversee and modify skills related to green space management.
-* Create and Manage Tasks -The Manager can create, assign, and monitor tasks related to green space management.
-* Manage Agenda - The Manager can schedule and coordinate activities and events related to green space management.
+* Manage Teams - The manager can create teams according to the number of members (maximum and minimum team size) and the set of skills that employees have.
+* Manage the equipment - The manager can can control the most used park equipment.
+
+
+![portal_GSM](imagesUserManual/portal_GSM.png)
+Image 3: GSM menu
+
+If the GSM (or HRM) clicks on the "Manage Skills" option, it will enter this menu where it can register skills:
+![register skills](imagesUserManual/manageSkills_option.png)
+Image 4: "Manage Skills" option
+
+If the GSM (or HRM) clicks on the "Manage Jobs" option, it will enter this menu where it can register jobs:
+![register jobs](imagesUserManual/manageJobs_option.png)
+Image 5: "Manage Jobs" option
+
+If the GSM (or HRM) clicks on the "Manage Collaborators" option, it will enter this menu where it can register collaborators:
+![register collaborators](imagesUserManual/manageCollaborators_option.png)
+Image 6:"Manage Collaborators" option
+
+If GSM (or HRM) clicks on the "view details" option, it will access a window in which, in addition to recording the characteristics of collaborators, it can assign skills to them.
+![register collaborators](imagesUserManual/viewDetails_manageCollaborators.png)
+Image 7: Manage Collaborators- "View Details" option
+
+If the GSM (or HRM) clicks on the "Manage Teams" option, it will enter this menu where he can see the teams that already exist.
+![manage teams](imagesUserManual/manageTeams_option.png)
+Image 8: "Manage Teams" option
+
+If GSM (or HRM) clicks on the "view details" option, it will access a window in which, he can see the collaborators and their skills in the created team.
+![manage teams](imagesUserManual/viewDetails_manageTeams.png)
+Image 8: Manage Teams- "View Details" option
+
+If GSM (or HRM), in the Manage Teams menu, clicks on the "Add" button he can generate a team  according to the number of members (maximum and minimum team size) and the set of skills that collaborators have.
+![manage teams](imagesUserManual/generateTeam.png)
+Image 9: Manage Teams- "Add" button (generate teams)
+
+
+"Manage equipment" option- Next Sprint
+
+If GSM ( or VFM) clicks on the "Manage Vehicles" option, it will enter this menu where he can see some vehicle characteristics.
+![manage vehicles](imagesUserManual/manageVehicles_option.png)
+Image 10: "Manage Vehicle" option
+
+If GSM (or VFM) clicks on the "view details" option, it will access a window in which he can edit vehicle characteristics as well as access and add information related to the vehicle check-up.
+![manage vehicles](imagesUserManual/viewDetails_manageVehicles.png)
+Image 11: Manage Vehicles- "View Details" option
+
+If GSM (or VFM), in the Manage Vehicles menu clicks on the "Update kilometers" button it will access this window where he can update vehicle kilometers.
+![manage vehicles](imagesUserManual/updateKm_button.png)
+Image 12: Manage Vehicles- "Update kilometers" button
+
+If GSM (or VFM), in the Manage Vehicles menu clicks on the "Register check-up" button, it will access this window where he can do the vehicle check-up.
+![manage vehicles](imagesUserManual/registerCheck_button.png)
+Image 13: Manage Vehicles- "Register check-up" button
 
 
 ## Human Resources Manager (HRM)
@@ -200,6 +255,10 @@ When you open and login in the Software,(there are 8 possible paths) the HRM can
 * Register a Skill - The HRM can register a Skill to be appointed to Collaborators
 * Create a Team of Collaborators - The HRM can create a Team of Collaborators
 * Generate a Team of Collaborators - The HRM can generate a Team of Collaborators
+
+![menu HRM](imagesUserManual/HRM_menu.png)
+Image 14: HRM menu
+
 
 #### Register a Collaborator
 ##### Syntax Notes:
@@ -260,6 +319,10 @@ When you open and login in the Software, (there are 8 possible paths) the HRM ca
 * Register Machines - The VFM can register new Machine for the System
 * Register a Maintenance Check-Up of a Vehicle - The VFM can register a Check-Up of a Vehicle
 * See the Vehicles Check-Up List - The VFM can see the all Vehicles needing to make a check-up
+
+![VFM menu](imagesUserManual/VFM_menu.png)
+Image 15: VFM menu
+
 
 #### Register a Vehicle
 ##### Syntax Notes:

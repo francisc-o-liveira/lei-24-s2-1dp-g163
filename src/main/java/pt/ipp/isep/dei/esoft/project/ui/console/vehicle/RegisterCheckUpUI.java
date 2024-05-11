@@ -88,11 +88,9 @@ public class RegisterCheckUpUI implements Runnable {
         boolean showError = true;
         do{
             if(!showError){
-                System.out.println("Formato de data inválido. Por favor, utilize DD/MM/AAAA. ");
+                System.out.println("Incorrect Date Format. ");
             }
-            System.out.print("Introduza a data do CheckUp (DD/MM/AAAA): ");
-            date = scanner.nextLine();
-            scanner.nextLine(); // Consume the newline
+            date = Utils.readLineFromConsole("Introduce the Check Up Date (DD/MM/AAAA): ");
             showError=false;
         }while(verifyCheckUpDateFormat(date));
         String[]dateFormat = date.split("/");
@@ -104,11 +102,9 @@ public class RegisterCheckUpUI implements Runnable {
             double currentKm;
             do {
                 if(attempts<0){
-                    System.out.println("Quilometragem inválida. A quilometragem deve ser maior que o último valor registado e não negativa.");
+                    System.out.println("Invalid Current Kms.");
                 }
-                System.out.print("Introduza a quilometragem atual: ");
-                currentKm = scanner.nextDouble();
-                scanner.nextLine(); // Consume the newline
+                currentKm = Utils.readDoubleFromConsole("Introduce the Current Kms: ");
                 attempts--;
             } while (!verifyKilometersFormat(currentKm));
             return currentKm;
@@ -123,13 +119,13 @@ public class RegisterCheckUpUI implements Runnable {
         private Vehicle displayPlatesListAndSelectOne () {
             List<String> vehiclePlates = this.ctrl.getDataNeededToRegisterCheckUp();
             if (vehiclePlates.isEmpty()) {
-                System.out.println("Não foram encontrados veículos.");
+                System.out.println("No Vehicles were found.");
             }
 
             boolean completed = false;
             int selectedPlate;
             do {
-                System.out.println("Matrículas dos veículos disponíveis:");
+                System.out.println("Vehicles to Register a Check Up:");
                 int i = 0;
                 for (String plate : vehiclePlates) {
                     i++;
