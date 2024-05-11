@@ -97,45 +97,6 @@ public class ManageVehiclesUI {
                 };
             }
         });
-
-        // Creating example vehicles
-        Vehicle vehicle1 = new Vehicle(
-                "Toyota",
-                "Camry",
-                Vehicle.Type.LightPassenger,
-                1500,
-                2000,
-                59998,
-                new Date(2022,5,11), // Register Date
-                new Date(2023,5,12),// Acquisition Date
-                10000,"AB-12-AA",
-                new Date(2024,1,20),
-                10000
-        );
-
-        Vehicle vehicle2 = new Vehicle(
-                "Honda",
-                "Civic",
-                Vehicle.Type.LightPassenger,
-                1400,  // Tare
-                1800,  // Gross Weight
-                60000, // Current Km
-                new Date(2021, 8, 15), // Register Date
-                new Date(2022, 9, 20), // Acquisition Date
-                12000, // Frequency Check Km
-                "XY-34-SS", // Plate
-                new Date(2023, 3, 10), // Last check-up date
-                8000 // Frequency Check Km for next check-up
-        );
-
-
-        // Adding vehicles to a list
-        List<Vehicle> vehicleList = new ArrayList<>();
-        vehicleList.add(vehicle1);
-        vehicleList.add(vehicle2);
-
-
-
         vehiclesObservableList.addAll(ctrl.getVehicleList());
         tableViewVehicles.setItems(vehiclesObservableList);
     }
@@ -245,12 +206,12 @@ public class ManageVehiclesUI {
 
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader;
+        FXMLLoader fxmlLoader ;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
-            } else if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+            } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
             }else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
@@ -287,11 +248,11 @@ public class ManageVehiclesUI {
     @FXML
     public void filterVehicles(ActionEvent event){
         if(vehiclesCheckUp.isSelected()){
-        List<Vehicle> vehiclesNeedingCheckUp=ctrl.getVehiclesNeedingCheckUp();
-        tableViewVehicles.getItems().clear();
-        ObservableList<Vehicle> vehiclesCheckUp=FXCollections.observableArrayList();
-        vehiclesCheckUp.addAll(vehiclesNeedingCheckUp);
-        tableViewVehicles.setItems(vehiclesCheckUp);
+            List<Vehicle> vehiclesNeedingCheckUp=ctrl.getVehiclesNeedingCheckUp();
+            tableViewVehicles.getItems().clear();
+            ObservableList<Vehicle> vehiclesCheckUp=FXCollections.observableArrayList();
+            vehiclesCheckUp.addAll(vehiclesNeedingCheckUp);
+            tableViewVehicles.setItems(vehiclesCheckUp);
         } else {
             tableViewVehicles.getItems().clear();
             setTableVehicles();
