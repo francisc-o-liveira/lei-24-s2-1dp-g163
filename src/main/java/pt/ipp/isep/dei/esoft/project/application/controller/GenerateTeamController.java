@@ -59,7 +59,6 @@ public class GenerateTeamController{
      */
     public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, String teamName){
             List<Collaborator> collaboratorsForTeam=getCollaboratorsNotActiveBySkills(skillsSelected);
-
             return serv.generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,numberCollabForSkill,collaboratorsForTeam,teamName);
     }
 

@@ -25,7 +25,7 @@ public class Team {
      * @param skillsSelected needed for the team
      * @param teamName for the team
      */
-    public Team(int maxSize, int minSize, List<Skill> skillsSelected, String teamName){
+    public Team(int minSize, int maxSize, List<Skill> skillsSelected, String teamName){
         collaboratorsTeam = new ArrayList<Collaborator>();
         this.maxSizeTeam=maxSize;
         this.minSizeTeam=minSize;

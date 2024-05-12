@@ -95,7 +95,7 @@ public class GenerateTeamsUI {
         String teamName = nameForTeam.getText();
         getSkillsAndCollabs();
         try{
-            ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
+            ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
             popUpOfVerifications(Alert.AlertType.INFORMATION, "Team created!").show();
         } catch (RuntimeException e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
