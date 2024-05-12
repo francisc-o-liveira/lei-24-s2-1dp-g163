@@ -4,30 +4,33 @@
 
 ### 3.1. Rationale
 
+| SSD Interaction ID | Question: Which class is responsible for...                                | Answer                        | Justification (with patterns)        |
+|--------------------|----------------------------------------------------------------------------|-------------------------------|--------------------------------------|
+| 1: Asks to assign skills to a specific collaborator | fetching the collaborator list? | `AssignSkillsController`        | **Controller**: The `AssignSkillsController` retrieves the list of collaborators by calling the `CollaboratorRepository`, acting as the mediator to ensure the UI doesn't directly interact with the data layer. |
+| 2: Displays collaborator list | displaying the collaborator list? | `AssignSkillsUI`               | **Pure Fabrication**: The `AssignSkillsUI` is solely responsible for displaying the collaborator list to the HR Manager, separating the UI concerns from the business logic. |
+| 3: Selects collaborator | receiving selection of collaborator? | `AssignSkillsUI`               | **Pure Fabrication**: Once the HR Manager selects a collaborator, the `AssignSkillsUI` captures this input and forwards it to the controller for further processing. |
+|| fetching collaborator and all skills? | `AssignSkillsController`        | **Controller**: The `AssignSkillsController` coordinates obtaining collaborator/all skills for the selected collaborator, using the ``CollaboratorRepository``/`SkillRepository` to gather unassigned skills. |
+|| filtering out already assigned skills to identify those that are unassigned/available to the collaborator? | `AssignSkillsController`        | **Controller**|
+| 4: Displays Available Skills to Assign | displaying unsigned/available skills to the collaborator? | `AssignSkillsUI`        | **Pure Fabrication** |
+| 5: Selects Skill and Submits | handling the skill selection and assignment process? | `AssignSkillsController`        | **Controller**: Upon receiving the selected skills, the `AssignSkillsController` manages the assignment process by communicating with the `CollaboratorRepository` to update the collaborator's skills. |
+| 6: Displays operation success message | confirming and displaying the success of the skill assignment? | `AssignSkillsUI`               | **Pure Fabrication**: The `AssignSkillsUI` provides feedback to the HR Manager by displaying a success message, concluding the user interaction within the UI. |
 
-| Interaction ID | Question: Which class is responsible for...                                | Answer                            | Justification (with patterns)                                                                                    |
-|:---------------|:----------------------------------------------------------------------------|:----------------------------------|:-----------------------------------------------------------------------------------------------------------------|
-| Step 1 ("Asks to assign skills to a specific collaborator")     | ... interacting with the actor?  | AssignSkillsUI                    | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.    |
-| Step 2 ("Displays Collaborator ID list")                          | ... coordinating the assignment of skills? | AssignSkillsController            | Controller: Acts as a controller to handle the assignment of skills.                                             |
-| Step 3 ("Selects Collaborator ID number")                         | ... showing the list of Collaborator IDs? | CollaboratorRepository            | Information Expert: CollaboratorRepository knows and provides all collaborator IDs.                              |
-| Step 4 ("Displays all Skills Already Assigned to that Collaborator and the Available Skills to Assign") | ... selecting a Collaborator ID?  | Collaborator                      | Information Expert: the selected Collaborator object will hold and manage its own data including ID.             |
-| Step 5 ("Selects Skill Name(s) to assign and confirms")           | ... displaying currently assigned skills and available skills? | SkillRepository                   | Information Expert: SkillRepository is responsible for knowing and displaying all skills.                        |
-| Step 6 ("Assigns Skill(s) to the Collaborator")                   | ... selecting and confirming skill(s) to assign? | Collaborator                      | Information Expert: Collaborator needs to manage its skills, so it adjusts its state based on assigned skills.   |
-| Step 7 ("Displays operation success message")                     | ... assigning the skills to the collaborator and saving this state? | Collaborator                      | Information Expert: Collaborator object is responsible for managing its list of skills.                          |
-| Step 8 ("Operation success feedback")                             | ... informing of operation success? | AssignSkillsUI                    | Pure Fabrication: there is no direct domain model entity that can provide UI interaction feedback.               |
 
 ### Systematization
 
-According to the rationale taken, the conceptual classes promoted to software classes are:
+Software classes (i.e. **Pure Fabrication**) identified: 
 
-- **CollaboratorRepository** (Creator, Information Expert)
-- **Collaborator** (Information Expert)
-- **SkillRepository** (Information Expert)
+* AssignSkillsUI
 
-Other software classes identified:
-- **AssignSkillsUI** (Pure Fabrication)
-- **AssignSkillsController** (Controller)
+Other software classes (i.e. **Controller**) identified: 
 
+* AssignSkillsController
+
+Other software classes (i.e. **Information Expert**) identified: 
+
+* CollaboratorRepository
+* SkillRepository  
+* Collaborator
 
 ## 3.2. Sequence Diagram (SD)
 
@@ -39,19 +42,20 @@ This diagram shows the full sequence of interactions between the classes involve
 
 ### Split Diagrams
 
-The following diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
-
-It uses Interaction Occurrence (a.k.a. Interaction Use).
-
 ![Sequence Diagram - split](svg/us004-sequence-diagram-split.svg)
 
-**Get Job Category List Partial SD**
+**Assign Skill**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us004-sequence-diagram-partial-get-job-category-list.svg)
+![Sequence Diagram - Partial - Get Task Category List](svg/us004-sequence-diagram-partial-assign-skill-list.svg)
 
-**Register a Collaborator Partial SD**
+**Get Available Skills List**
 
-![Sequence Diagram - Partial - Create Task](svg/us004-sequence-diagram-partial-register-collaborator.svg)
+![Sequence Diagram - Partial - Get Task Category Object](svg/us004-sequence-diagram-partial-get-available-skills--list.svg)
+
+**Get Collabotor List**
+
+![Sequence Diagram - Partial - Get Employee](svg/us004-sequence-diagram-partial-get-collabotor-list.svg)
+
 
 ## 3.3. Class Diagram (CD)
 

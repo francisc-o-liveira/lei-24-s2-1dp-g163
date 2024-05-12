@@ -24,7 +24,7 @@
         + getDataNeededToAssignSkills() : void
         + getCollaboratorList() : List<Collaborator>
         + getCollaborator(index : int) : Collaborator
-        + getAvailableSkillsList(Collaborator) : List<Skill> 
+        + getAvailableSkillsList(collaborator : Collaborator) : List<Skill> 
         + filterAssignedSkills(assignedSkills : List<Skill>, allSkills : List<Skill>) : List<Skill> 
         + assignSkills(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator>
     }
@@ -33,7 +33,7 @@
         - collaboratorList : List<Collaborator>
         + getCollaboratorList() : List<Collaborator>
         + assignSkill(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator> 
-        + getAvailableSkillsList(Collaborator) : List<Skill> 
+        + getCollaboratorSkillsList(collaborator : Collaborator) : List<Skill> 
     }
 
     class Collaborator {

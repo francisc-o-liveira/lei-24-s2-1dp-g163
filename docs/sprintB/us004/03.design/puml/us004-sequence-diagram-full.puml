@@ -63,7 +63,7 @@
     UI -> Controller : getAvailableSkillsList(collaborator)
     activate Controller
 
-    Controller -> EmpRepo : getAvailableSkillsList(collaborator)
+    Controller -> EmpRepo : getCollaboratorSkillsList(collaborator)
     activate EmpRepo
 
     EmpRepo --> Controller : CollaboratorSkillsList
@@ -85,7 +85,7 @@
     UI --> HRManager : Displays Available Skills to Assign
     deactivate UI
 
-    HRManager -> UI : Confirms Skill Assignment for Selected Skills
+    HRManager -> UI : Selects Skill and Submits
     activate UI
 
     UI -> Controller : assignSkills(collaborator, skillName)
