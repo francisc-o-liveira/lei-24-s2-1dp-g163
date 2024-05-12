@@ -96,19 +96,17 @@ public class GenerateTeamsUI {
         getSkillsAndCollabs();
         try{
             Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
+            stage.setOnCloseRequest(event -> {
+                if (teamCreated.isPresent()) {
                     Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
-
                     popUp.setHeaderText("Team Created!");
                     popUp.setContentText("Do you wish to add this team?");
                     ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
                     ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
-                    if (popUp.showAndWait().get() == ButtonType.OK) {
+                    Optional<ButtonType> result = popUp.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
                         ctrl.saveTeam(teamCreated.get());
-                        event.consume();
                     }
                 }
             });
