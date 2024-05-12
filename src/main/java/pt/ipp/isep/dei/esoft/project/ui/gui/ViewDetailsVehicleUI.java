@@ -103,6 +103,11 @@ public class ViewDetailsVehicleUI {
     @FXML
     private Button btnEditVehicle;
 
+    @FXML
+    private TextField lastCheckUp;
+    @FXML
+    private DatePicker lastDateCheckUp;
+
     private ObservableList<CheckUp> checkUpObservableList=FXCollections.observableArrayList();
 
 
@@ -191,27 +196,24 @@ public class ViewDetailsVehicleUI {
                 }
             } else {
                 try{
-                    popUpOfVerifications(Alert.AlertType.ERROR, "Vehicle needs the last data of check-up").show();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_DefaultCheckVehicle.fxml"));
-                    Parent root = fxmlLoader.load();
-                    Scene scene = new Scene(root);
-                    Stage otherStage= new Stage();
-                    otherStage.setScene(scene);
-                    otherStage.show();
-                    ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
+                    if(!lastDateCheckUp.isVisible() && !lastCheckUp.isVisible()){
+                    Alert alert=popUpOfVerifications(Alert.AlertType.ERROR, "Vehicle needs the last data of check-up");
+                    ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            lastCheckUp.setVisible(true);
+                            lastDateCheckUp.setVisible(true);
+                            vlastDateCheck=new Date(lastDateCheckUp.getValue().getYear(),lastDateCheckUp.getValue().getMonthValue(),lastDateCheckUp.getValue().getDayOfMonth());
+                            vlastCheckKm=Double.parseDouble(lastCheckUp.getText());
+                            ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
+                        }
+                    }
                 } catch (CloneNotSupportedException e){
                     popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
             }
-
-
-
         }
-    }
-
-    public void setVLastCheckUp(double lastCheckUp, Date lastCheckUpDate){
-        this.vlastCheckKm=lastCheckUp;
-        this.vlastDateCheck=lastCheckUpDate;
     }
 
     @FXML
@@ -226,9 +228,6 @@ public class ViewDetailsVehicleUI {
         if(vlastCheckKm<=0 || checkDate.getValue()==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "The data is incorrect").show();
         } else {
-            if(selectedVehicle==null){
-                return;
-            }
             try{
                 Optional<Object> opt =ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
                 if(opt.isPresent()){
