@@ -4,14 +4,14 @@
 
 The teams consists of students identified in the following table.
 
-| Student Number | Name                            | Curricular Units  |
-|----------------|---------------------------------|-------------------|
-| **1230684**    | Francisco Manuel Silva Oliveira | ALL               |
-| **1210527**    | Diogo Moreira                   | ESOFT/MDISC/MATCP |
-| **1231205**    | Inês Oliveira                   | ALL               |
-| **1231502**    | Tomás Borges                    | ESOFT/MATCP/LAPR2 |
-| **1220804**    | Susana Loureiro                 | PPROG/MATDISC     |
-| **1231502**    | Diogo Gonçalves                 | ESOFT/MATCP/LAPR2 |
+| Student Number | Name                            | Curricular Units    |
+|----------------|---------------------------------|---------------------|
+| **1230684**    | Francisco Manuel Silva Oliveira | ALL                 |
+| **1210527**    | Diogo Moreira                   | ESOFT/MDISC/MATCP   |
+| **1231205**    | Inês Oliveira                   | ALL                 |
+| **1231502**    | Tomás Borges                    | ESOFT/MATCP/LAPR2   |
+| **1220804**    | Susana Loureiro                 | PPROG/MATDISC       |
+| **1231502**    | Diogo Gonçalves                 | PPROG/MATCP/MATDISC |
 
 # 2. Task Distribution ###
 
@@ -28,9 +28,9 @@ was carried out as described in the following table.
 | Domain Model                | [all](sprintA/global-artifacts/02.analysis/analysis.md)                                    | [all](sprintB/global-artifacts/02.analysis/analysis.md)                                    | [all](sprintC/global-artifacts/02.analysis/analysis.md)                                    |
 | US001 (SDP Activities)      | [1231205](sprintA/us001/01.requirements-engineering/Readme.md)                             |                                                                                            |                                                                                            |
 | US002 (SDP Activities)      | [1231205](sprintA/us002/01.requirements-engineering/Readme.md)                             |                                                                                            |                                                                                            |
-| US003 (SDP Activities)      | [1230684](sprintA/us003/01.requirements-engineering/Readme.md)                             | [1230684](sprintA/us005/01.requirements-engineering/Readme.md)                             |                                                                                            |
+| US003 (SDP Activities)      | [1230684](sprintA/us003/01.requirements-engineering/Readme.md)                             | [1230684](sprintB/us005/01.requirements-engineering/Readme.md)                             |                                                                                            |
 | US004 (SDP Activities)      | [1231502](sprintA/us004/01.requirements-engineering/Readme.md)                             |                                                                                            |                                                                                            |
-| US005 (SDP Activities)      | [1230684](sprintA/us005/01.requirements-engineering/Readme.md)                             | [1230684](sprintA/us005/01.requirements-engineering/Readme.md)                             |                                                                                            |
+| US005 (SDP Activities)      | [1230684](sprintA/us005/01.requirements-engineering/Readme.md)                             | [1230684](sprintB/us005/01.requirements-engineering/Readme.md)                             |                                                                                            |
 | US006 (SDP Activities)      | [1210527](sprintA/us006/01.requirements-engineering/Readme.md)                             |                                                                                            |                                                                                            |
 | US007 (SDP Activities)      | [1231502](sprintA/us007/01.requirements-engineering/Readme.md)                             |                                                                                            |                                                                                            |
 | US008 (SDP Activities)      | [1210527](sprintA/us008/01.requirements-engineering/Readme.md)                             |                                                                                            |                                                                                            |
@@ -54,5 +54,5 @@ was carried out as described in the following table.
 | US011 (Text Activities)     |                                                                                            |                                                                                            |                                                                                            |
 | Tests                       |                                                                                            | []                                                                                         |                                                                                            |
 
-
+IMP Activities - Implementing Activities
 
