@@ -78,6 +78,7 @@ public class ViewDetailsCollaboratorUI {
     public List<Skill> skillsToAssign=new ArrayList<>();
 
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
+
     Collaborator editedCollaborator;
 
     public ViewDetailsCollaboratorUI(){
@@ -118,7 +119,6 @@ public class ViewDetailsCollaboratorUI {
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
-
     }
 
     @FXML
@@ -176,7 +176,6 @@ public class ViewDetailsCollaboratorUI {
             typeOfDocument = (DocType.Type) docType.getValue();
             editedCollaborator.setDocType(typeOfDocument,idNew);
             docIDNumber.clear();
-            docType.getSelectionModel().clearSelection();
 
             String newEmail = email.getText();
             editedCollaborator.setEmail(newEmail);
