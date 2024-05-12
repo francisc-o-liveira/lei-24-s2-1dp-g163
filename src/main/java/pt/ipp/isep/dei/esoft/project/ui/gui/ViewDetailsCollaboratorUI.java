@@ -75,6 +75,12 @@ public class ViewDetailsCollaboratorUI {
     @FXML
     private TableView<Skill> tableAssignSkills;
 
+    @FXML
+    private Button btnEditCollaborator;
+
+    @FXML
+    private Button btnAddCollaborator;
+
     public List<Skill> skillsToAssign=new ArrayList<>();
 
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
@@ -92,6 +98,14 @@ public class ViewDetailsCollaboratorUI {
     public void setComboBoxes(){
         docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
         selectedjobCategory.setItems(FXCollections.observableArrayList(ctrl.getJobCategoryList()));
+    }
+
+    public void setBtnEditCollaboratorValue(boolean value){
+        btnEditCollaborator.setVisible(value);
+    }
+
+    public void setBtnAddCollaboratorValue(boolean value){
+        btnAddCollaborator.setVisible(value);
     }
 
     @FXML

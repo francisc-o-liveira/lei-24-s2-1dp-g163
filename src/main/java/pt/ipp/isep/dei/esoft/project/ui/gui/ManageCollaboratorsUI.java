@@ -68,6 +68,7 @@ public class ManageCollaboratorsUI {
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
         uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
+        uiToAdd.setBtnEditCollaboratorValue(false);
     }
 
     @FXML
@@ -105,6 +106,7 @@ public class ManageCollaboratorsUI {
             uiToAdd.setComboBoxes();
             uiToAdd.putInTextFields(selectedCollaborator);
             uiToAdd.showCollaboratorSelected(selectedCollaboratorForEdit);
+            uiToAdd.setBtnAddCollaboratorValue(false);
         } catch (NullPointerException e){
             popUpOfVerifications(Alert.AlertType.ERROR, "Select a Collaborator to edit.").show();
         }
