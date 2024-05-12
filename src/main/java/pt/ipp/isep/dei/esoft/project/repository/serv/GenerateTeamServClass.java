@@ -16,7 +16,7 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         Optional<Team> teamGenerated = Optional.empty();
         getSkillByOrder(skillsSelected,numberCollabForSkill);
         int[] generatedTrue=getNumberSkill(numberCollabForSkill);
-        Team create = new Team(maxSizeTeam,minSizeTeam,skillsSelected,teamName);
+        Team create = new Team(minSizeTeam,maxSizeTeam,skillsSelected,teamName);
         boolean[][] YesOrNoSkill = getCollabOrderWithMoreSkill(skillsSelected,collaboratorsForTeam);
         for (int i = 0; i < YesOrNoSkill.length; i++){
             if(collabororatorUpgradeTeam(YesOrNoSkill[i], generatedTrue)){
