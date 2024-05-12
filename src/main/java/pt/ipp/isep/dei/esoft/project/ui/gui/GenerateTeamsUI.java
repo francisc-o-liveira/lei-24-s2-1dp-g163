@@ -97,7 +97,7 @@ public class GenerateTeamsUI {
         String teamName = nameForTeam.getText();
         getSkillsAndCollabs();
         try{
-            Optional<Team> teamCreated=ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
+            Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
