@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.vehicle;
 
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 
 import java.util.List;

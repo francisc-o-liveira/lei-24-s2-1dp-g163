@@ -9,140 +9,153 @@ hide circle
 hide methods
 title Domain Model Green Spaces Software Management
 
-'class Platform {
-'  -description
-'}
 
 class Organization {
+    name
+    vatNumber
+    phone
+    emailPrefix
 }
 
-class GreenSpace{
+class HRM {
+    name
+    email
+    password
+}
+
+class GSM {
+    name
+    email
+    password
+}
+
+class VFM {
+    name
+    email
+    password
+}
+
+class Skill {
+    name
+}
+
+class JobCategory {
+    name
+}
+
+class Collaborator {
+    name
+    dateOfBirth
+    admissionDate
+    address
+    email
+    phoneNumber
+    docIDNumber
+    status
+    skills
+}
+
+class DocType {
+    type
+}
+
+class Team {
+    maxSize
+    minSize
+}
+
+
+class Vehicle {
+    brand
+    model
+    plate
+    type
+    tare
+    grossWeight
+    currentKM
+    registerDate
+    acquisitionDate
+    frequencyCheckKm
+}
+
+class CheckUp {
+    kmsOfCheck
+    dateOfCheck
+}
+
+class GreenSpace {
     name
     locationStreet
 }
 
 class Task {
+    reference
+    description
+    informalDescription
+    technicalDescription
+    duration
+    cost
+}
+
+class Equipment {
+    nameType
 }
 
 
-class HRM{
-    name
-    email
-    password
-}
 
-class Skill{
-    skillName
-}
-
-class VFM{
-    name
-    email
-    password
-}
-
-class GSM{
-    name
-    email
-    password
-}
-
-class Vehicle{
-    plate
-    brand
-    model
-    type
-    tare
-    grossWeight
-    currentKm
-    registerDate
-    acquisitionDate
-    maintenanceFrequency
-}
-
-class Agenda{
+class Agenda {
     greenSpace
     startDate
     finishDate
 }
 
-class Equipment{
-    nameType
+class TaskCategory {
+    description
 }
 
-class Job{
-    jobName
-}
+HRM "1" -- "*" JobCategory : manages >
+HRM "1" -- "*" Collaborator : employs >
+HRM "1" -- "*" Skill : manages >
+HRM "1" -- "*" Team : generates >
 
-class Machine{
-    nameType
-}
+VFM "1" -- "*" Vehicle : manages >
 
-class Team{
-    skillSet
-    size
-}
+Collaborator "1" -- "1" JobCategory : belongs to >
+Collaborator "1" -- "1" DocType : identified by >
+Collaborator "*" -- "*" Skill : possesses >
 
+Team "1" -- "*" Collaborator : includes >
+Team "1" -- "*" Skill : requires >
 
-class Colaborator {
-    name
-    birthdate
-    admissionDate
-    address
-    mobileNumber
-    email
-    docType
-    docNumber
-}
+Vehicle "1" -- "*" CheckUp : undergoes >
 
+Organization "1" -- "*" Employees : encompasses >
 
+Employees "1" -- "1" HRM : encompasses >
+Employees "1" -- "1" VFM : encompasses >
+Employees "1" -- "1" GSM : encompasses >
 
-Organization "1" -- "1" HRM : has >
-Organization "1" -- "1" VFM : has >
-Organization "1" -- "1" GSM : has >
+GSM "1" -- "*" GreenSpace : creates >
+GSM "1" -- "*" Task : create >
+GSM "1" -- "*" Equipment : manages >
 
-HRM "1" -- "0..*" Colaborator : register >
-HRM "1" -- "0..*" Job : has >
-HRM "1" -- "0..*" Team : creates >
-HRM "1" -- "0..*" Skill : creates >
+GSM "1" -- "*" Agenda : manages >
 
-VFM "1" -- "0..*" Vehicle : manage >
-VFM "1" -- "0..*" Equipment : manage >
-VFM "1" -- "0..*" Machine : manage >
-VFM "1" -- "0..*" Vehicle : manages >
+Task "1" -- "1" TaskCategory : categorized under >
 
-GSM "1" --- "0..*" Colaborator : manage >
-GSM "1" --- "0..*" Vehicle : manage >
-GSM "1" --- "0..*" Team : manage >
-GSM "1" --- "0..*" Task : create >
-GSM "1" --- "0..*" Equipment : manage >
-GSM "1" --- "0..*" Job : manage >
-GSM "1" --- "0..*" Machine : manage >
-GSM "1" - "0..*" Agenda : manage >
-GSM "1" --- "0..*" Skill : manage >
-GSM "1" --- "0..*" GreenSpace : create >
+Task "1" -- "*" Vehicle : utilizes >
+' Task utilizes Vehicle: Especifica que nas tarefas são utilizados veículos.
 
+Task "1" -- "1" GreenSpace : maintains >
+'Task maintains GreenSpace: Indica que as tarefas mantém os espaços verdes.
 
-Task "1" -- "0..*" Vehicle : have >
-Task "1" -- "1" GreenSpace : have >
+Equipment "1" -- "*" Task : facilitates >
+' "Equipment facilitates Task": Indica que o equipamento facilita a execução das tarefas, sugerindo que sem o equipamento adequado, as tarefas poderiam ser mais difíceis de serem realizadas.
+Team "1" -- "*" Equipment : equips >
+' Machine equips Team: Indica que as máquinas equipam as equipas.
 
-Equipment "1" -- "0..*" Task : has >
-
-Colaborator "0..*" -- "0..*" Skill : posesses >
-Colaborator "1" -- "0..*" Team : has >
-
-Job "1" -- "0..*" Colaborator : has >
-
-Team "1" -- "1" Task : has >
-Team "1" -- "1" Agenda : has >
-
-Machine "1" -- "0..*" Team : has >
-
-
-Agenda "1" -- "0..*" Team : has >
-Agenda "1" -- "0..*" Task : have >
-
-
-
+Agenda "1" -- "*" Team : plans >
+Agenda "1" -- "*" Task : schedules >
+'Agenda plans Team and schedules Task: Especifica que a agenda planeia as atividades das equipas e agenda as tarefas.
 
 @enduml

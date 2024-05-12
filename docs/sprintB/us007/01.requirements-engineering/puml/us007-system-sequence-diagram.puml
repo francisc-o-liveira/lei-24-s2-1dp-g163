@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Register Vehicle Check-Up Success Scenario
+title System Sequence Diagram (SSD) - Register Vehicle Maintenance Success Scenario
 
 autonumber
 
@@ -12,17 +12,19 @@ participant ":System" as System
 
 activate FleetManager
 
-    FleetManager -> System : Selects a Vehicle ID and requests to register check-up
+    FleetManager -> System : Asks to register a maintenance
     activate System
 
-    System --> FleetManager : Requests Date of Check-Up, Current Kilometers
+    System --> FleetManager : Show Plates, Request Date of Check-Up and Current Kilometers and Frequency Option
     deactivate System
 
-    FleetManager -> System : Provides Date of Check-Up, Current Kilometers 
+    FleetManager -> System : Selects a Plate, Provides Check-Up Info, Changes Check-up Frequency and Submits 
     activate System
 
+        System -> System : Verify Date of Check-Up
         System -> System : Validate Date of Check-Up
-        System -> System : Validate Current Kilometers format
+        System -> System : Verify Current Kilometers format
+        System -> System : Validate Current Kilometers
 
         System --> FleetManager : Confirms registration success
     deactivate System

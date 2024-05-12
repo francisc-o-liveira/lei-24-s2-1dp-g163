@@ -4,7 +4,7 @@
 
 ### 1.1. User Story Description
 
-As a VFM, I wish to register a vehicle’s maintenance.
+As a (V)FM, I wish to register a vehicle’s maintenance.
 
 ### 1.2. Customer Specifications and Clarifications 
 

@@ -1,11 +1,8 @@
-package pt.ipp.isep.dei.esoft.project.application.controller;
+package pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.isep.lei.esoft.auth.domain.model.Email;
-import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.application.controller;
+package pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
