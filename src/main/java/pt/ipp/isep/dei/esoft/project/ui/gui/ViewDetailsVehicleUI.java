@@ -206,12 +206,13 @@ public class ViewDetailsVehicleUI {
                             vlastDateCheck=new Date(lastDateCheckUp.getValue().getYear(),lastDateCheckUp.getValue().getMonthValue(),lastDateCheckUp.getValue().getDayOfMonth());
                             vlastCheckKm=Double.parseDouble(lastCheckUp.getText());
                         }
+                    }else{
+                        try{
+                            ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
+                        } catch (CloneNotSupportedException e){
+                            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+                        }
                     }
-                try{
-                    ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
-                } catch (CloneNotSupportedException e){
-                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-                }
             }
         }
     }
