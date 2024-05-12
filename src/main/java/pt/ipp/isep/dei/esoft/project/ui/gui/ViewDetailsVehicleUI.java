@@ -195,7 +195,6 @@ public class ViewDetailsVehicleUI {
                     popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
             } else {
-                try{
                     if(!lastDateCheckUp.isVisible() && !lastCheckUp.isVisible()){
                     Alert alert=popUpOfVerifications(Alert.AlertType.ERROR, "Vehicle needs the last data of check-up");
                     ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
@@ -206,9 +205,10 @@ public class ViewDetailsVehicleUI {
                             lastDateCheckUp.setVisible(true);
                             vlastDateCheck=new Date(lastDateCheckUp.getValue().getYear(),lastDateCheckUp.getValue().getMonthValue(),lastDateCheckUp.getValue().getDayOfMonth());
                             vlastCheckKm=Double.parseDouble(lastCheckUp.getText());
-                            ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
                         }
                     }
+                try{
+                    ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
                 } catch (CloneNotSupportedException e){
                     popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
