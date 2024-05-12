@@ -237,6 +237,7 @@ public class ManageVehiclesUI {
         stage.setScene(scene);
         stage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
+        setSelectedVehicle();
         ui.setSelectedVehicle(getSelectedVehicle());
     }
 
