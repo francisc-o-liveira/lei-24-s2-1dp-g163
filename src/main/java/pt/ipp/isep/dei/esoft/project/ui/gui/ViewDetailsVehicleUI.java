@@ -217,7 +217,7 @@ public class ViewDetailsVehicleUI {
                 Optional<Object> opt =ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
                 if(opt.isPresent()){
                     setTable(this.selectedVehicle);
-                    popUpOfVerifications(Alert.AlertType.CONFIRMATION,"Check up successful registed").show();
+                    popUpOfConfirmation(Alert.AlertType.CONFIRMATION,"Check up successful registed").show();
                 }else {
                     popUpOfVerifications(Alert.AlertType.INFORMATION,"Check up failed to register").show();
                 }
@@ -280,7 +280,6 @@ public class ViewDetailsVehicleUI {
         CheckUp selectedCheck = tableCheckUp.getSelectionModel().getSelectedItem();
         if (selectedCheck != null) {
             Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
-
             popUp.setHeaderText("Removing Check Up");
             popUp.setContentText("Do you want to remove this Check-Up?");
             ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
@@ -316,19 +315,27 @@ public class ViewDetailsVehicleUI {
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
-
         alerta.setTitle("ERROR");
         alerta.setHeaderText("Invalid Data");
         alerta.setContentText(messages);
-
         return alerta;
     }
+
+    private Alert popUpOfConfirmation(Alert.AlertType alertType, String messages) {
+        Alert alerta = new Alert(alertType);
+        alerta.setTitle("Confirmation");
+        alerta.setHeaderText("Correct Data");
+        alerta.setContentText(messages);
+        return alerta;
+    }
+
+
 
     @FXML
     public void submitDataUpdate(ActionEvent event){
         try {
             if (ctrl.updateKm(selectedVehicle, Double.parseDouble(updateCurrentKm.getText()))) {
-                popUpOfVerifications(Alert.AlertType.CONFIRMATION, "Current Kilometers Update Successfully").show();
+                popUpOfConfirmation(Alert.AlertType.CONFIRMATION, "Current Kilometers Update Successfully").show();
             } else {
                 popUpOfVerifications(Alert.AlertType.ERROR, "Current Kilometers Update Failed").show();
             }
