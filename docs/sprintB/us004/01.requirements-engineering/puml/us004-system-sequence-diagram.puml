@@ -10,19 +10,19 @@ participant ":System" as System
 
 activate HRManager
 
-HRManager -> System : Asks to assign skills to a specific employee
+HRManager -> System : Asks to assign skills to a specific collaborator
 activate System
 
-System --> HRManager :  Displays Employee ID list
+System --> HRManager :  Displays collaborator list
 deactivate System
 
-HRManager -> System : Selects Employee ID number
+HRManager -> System : Selects collaborator
 activate System
 
-System --> HRManager : Displays all Skills Already Assigned to that Employee and the Available Skills to Assign
+System --> HRManager : Displays Available Skills to Assign
 deactivate System
 
-HRManager -> System : Selects Skill Name(s) to assign and confirms
+HRManager -> System : Confirms Skill Assignment for Selected Skills
 activate System
 
 System -> System : Assigns Skill(s) to the Collaborator
