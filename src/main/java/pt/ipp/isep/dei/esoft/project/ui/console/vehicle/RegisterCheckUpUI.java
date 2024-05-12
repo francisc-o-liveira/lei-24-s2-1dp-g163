@@ -1,13 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.vehicle;
 
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCheckUpController;
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterCheckUpController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 
 /**
  * Classe responsável pela interacção com o utilizador para o registo de

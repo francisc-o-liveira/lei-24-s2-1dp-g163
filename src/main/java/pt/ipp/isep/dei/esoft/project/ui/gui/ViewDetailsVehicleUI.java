@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,20 +10,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCheckUpController;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterCheckUpController;
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
-import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.RegisterVehicleUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.concurrent.RejectedExecutionException;

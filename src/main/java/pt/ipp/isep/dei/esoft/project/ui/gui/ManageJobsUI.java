@@ -10,14 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterJobCategoryController;
+import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterJobCategoryController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 
 public class ManageJobsUI {

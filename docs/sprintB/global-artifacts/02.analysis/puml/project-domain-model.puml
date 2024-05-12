@@ -101,9 +101,7 @@ class Equipment {
     nameType
 }
 
-class Machine {
-    nameType
-}
+
 
 class Agenda {
     greenSpace
@@ -131,15 +129,16 @@ Team "1" -- "*" Skill : requires >
 
 Vehicle "1" -- "*" CheckUp : undergoes >
 
-Organization "1" -- "1" HRM : encompasses >
-Organization "1" -- "1" VFM : encompasses >
-Organization "1" -- "1" GSM : encompasses >
-Organization "1" -- "1" Collaborator : encompasses >
+Organization "1" -- "*" Employees : encompasses >
+
+Employees "1" -- "1" HRM : encompasses >
+Employees "1" -- "1" VFM : encompasses >
+Employees "1" -- "1" GSM : encompasses >
 
 GSM "1" -- "*" GreenSpace : creates >
 GSM "1" -- "*" Task : create >
 GSM "1" -- "*" Equipment : manages >
-GSM "1" -- "*" Machine : manages >
+
 GSM "1" -- "*" Agenda : manages >
 
 Task "1" -- "1" TaskCategory : categorized under >
@@ -152,8 +151,7 @@ Task "1" -- "1" GreenSpace : maintains >
 
 Equipment "1" -- "*" Task : facilitates >
 ' "Equipment facilitates Task": Indica que o equipamento facilita a execução das tarefas, sugerindo que sem o equipamento adequado, as tarefas poderiam ser mais difíceis de serem realizadas.
-
-Machine "1" -- "*" Team : equips >
+Team "1" -- "*" Equipment : equips >
 ' Machine equips Team: Indica que as máquinas equipam as equipas.
 
 Agenda "1" -- "*" Team : plans >

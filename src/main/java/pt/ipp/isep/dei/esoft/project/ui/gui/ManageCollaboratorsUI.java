@@ -10,25 +10,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 
-import javax.print.Doc;
-import javax.swing.text.View;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class ManageCollaboratorsUI {
