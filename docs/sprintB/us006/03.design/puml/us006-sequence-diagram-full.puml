@@ -34,6 +34,9 @@ activate VFM
     Repo --> CTRL : vehicleRepository
     deactivate Repo
 
+    CTRL --> UI : true
+    deactivate Repo
+
     deactivate CTRL
 
     UI --> VFM : requests data brand, model, type, tare, gross weight, current km, register date, acquisition date, maintenance/check-up frequency (in kms))
