@@ -204,7 +204,14 @@ public class ViewDetailsVehicleUI {
                 }
             }
 
+
+
         }
+    }
+
+    public void setVLastCheckUp(double lastCheckUp, Date lastCheckUpDate){
+        this.vlastCheckKm=lastCheckUp;
+        this.vlastDateCheck=lastCheckUpDate;
     }
 
     @FXML
