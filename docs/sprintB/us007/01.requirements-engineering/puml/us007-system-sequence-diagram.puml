@@ -12,21 +12,16 @@ participant ":System" as System
 
 activate FleetManager
 
-    FleetManager -> System : Asks to register a maintenance
-    activate System
+FleetManager -> System : Asks to register a maintenance
+activate System
 
-    System --> FleetManager : Show Plates, Request Date of Check-Up and Current Kilometers and Frequency Option
-    deactivate System
+System --> FleetManager : Show Plates, Request Date of Check-Up and Current Kilometers and Frequency Option
+deactivate System
 
-    FleetManager -> System : Selects a Plate, Provides Check-Up Info, Changes Check-up Frequency and Submits 
-    activate System
+FleetManager -> System : Selects a Plate, Provides Check-Up Info, Changes Check-up Frequency and Submits
+activate System
 
-        System -> System : Verify Date of Check-Up
-        System -> System : Validate Date of Check-Up
-        System -> System : Verify Current Kilometers format
-        System -> System : Validate Current Kilometers
-
-        System --> FleetManager : Confirms registration success
-    deactivate System
+System --> FleetManager : Confirms registration success
+deactivate System
 
 @enduml

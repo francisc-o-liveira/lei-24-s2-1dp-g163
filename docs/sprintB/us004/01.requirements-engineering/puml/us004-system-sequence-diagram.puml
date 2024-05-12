@@ -22,10 +22,9 @@ activate System
 System --> HRManager : Displays Available Skills to Assign
 deactivate System
 
-HRManager -> System : Confirms Skill Assignment for Selected Skills
+HRManager -> System : Selects Skill and Submits
 activate System
 
-System -> System : Assigns Skill(s) to the Collaborator
 System --> HRManager : Displays operation success message
 
 deactivate System
