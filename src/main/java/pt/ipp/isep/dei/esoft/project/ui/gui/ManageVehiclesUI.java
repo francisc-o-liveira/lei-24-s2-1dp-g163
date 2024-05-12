@@ -108,13 +108,17 @@ public class ManageVehiclesUI {
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
         ViewDetailsVehicleUI ui= fxmlLoader.getController();
+        setSelectedVehicle();
         ui.setSelectedVehicle(getSelectedVehicle());
         ui.putInTextFields(getSelectedVehicle());
         ui.setTable(getSelectedVehicle());
     }
 
-    public Vehicle getSelectedVehicle(){
+    public void setSelectedVehicle(){
         this.selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
+    }
+
+    public Vehicle getSelectedVehicle(){
         return selectedVehicle;
     }
 
@@ -127,13 +131,15 @@ public class ManageVehiclesUI {
         otherStage.setScene(scene);
         otherStage.show();
         ViewDetailsVehicleUI ui= fxmlLoader.getController();
+        setSelectedVehicle();
         ui.setSelectedVehicle(getSelectedVehicle());
     }
 
 
     @FXML
     public void btnRemove(){
-        Vehicle selectedVehicle=tableViewVehicles.getSelectionModel().getSelectedItem();
+        setSelectedVehicle();
+        Vehicle selectedVehicle=getSelectedVehicle();
         boolean operationSuccess = false;
         if(selectedVehicle != null){
             tableViewVehicles.getItems().remove(selectedVehicle);
@@ -171,6 +177,7 @@ public class ManageVehiclesUI {
         otherStage.setScene(scene);
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
+        setSelectedVehicle();
         ui.setSelectedVehicle(getSelectedVehicle());
         ui.showSelectedVehicle(getSelectedVehicle());
         ui.putInTextFields(getSelectedVehicle());
