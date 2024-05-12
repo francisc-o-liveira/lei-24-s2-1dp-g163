@@ -151,9 +151,13 @@ public class ViewDetailsCollaboratorUI {
         colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
 
         for(Skill skill : ctrlSkills.getAllSkills()){
-            if(!editedCollaborator.verifyIfHaveSkill(skill)){
-                skillsToChoose.add(skill);
-                skill.setSelecting(false);
+            if(editedCollaborator==null){
+               skillsToChoose.add(skill);
+            } else {
+                if(!editedCollaborator.verifyIfHaveSkill(skill)){
+                    skillsToChoose.add(skill);
+                    skill.setSelecting(false);
+                }
             }
         }
         tableAssignSkills.setItems(skillsToChoose);
