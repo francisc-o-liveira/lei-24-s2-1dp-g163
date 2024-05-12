@@ -165,6 +165,8 @@ public class ManageVehiclesUI {
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
         ui.setComboBox();
+        ui.setBtnAddVehicleToVisibleOrNot(true);
+        ui.setBtnEditVehicleToVisileOrNot(false);
     }
 
 
@@ -183,6 +185,8 @@ public class ManageVehiclesUI {
         ui.putInTextFields(getSelectedVehicle());
         ui.setComboBox();
         ui.setTable(getSelectedVehicle());
+        ui.setBtnAddVehicleToVisibleOrNot(false);
+        ui.setBtnEditVehicleToVisileOrNot(true);
     }
 
     @FXML

@@ -105,6 +105,11 @@ public class ViewDetailsVehicleUI {
     @FXML
     private Label newMaintenanceCheck;
 
+    @FXML
+    private Button btnAddVehicle;
+    @FXML
+    private Button btnEditVehicle;
+
     private ObservableList<CheckUp> checkUpObservableList=FXCollections.observableArrayList();
 
 
@@ -119,6 +124,14 @@ public class ViewDetailsVehicleUI {
 
     public void setSelectedVehicle(Vehicle selectedVehicle){
         ViewDetailsVehicleUI.selectedVehicle =selectedVehicle;
+    }
+
+    public void setBtnAddVehicleToVisibleOrNot(boolean value){
+        btnAddVehicle.setVisible(value);
+    }
+
+    public void setBtnEditVehicleToVisileOrNot(boolean value){
+        btnEditVehicle.setVisible(value);
     }
 
     public void putInTextFields(Vehicle selectedVehicle){
@@ -186,7 +199,7 @@ public class ViewDetailsVehicleUI {
             } else {
                 try{
                     popUpOfVerifications(Alert.AlertType.ERROR, "Vehicle needs the last data of check-up").show();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
                     Parent root = fxmlLoader.load();
                     Scene scene = new Scene(root);
                     Stage otherStage= new Stage();
