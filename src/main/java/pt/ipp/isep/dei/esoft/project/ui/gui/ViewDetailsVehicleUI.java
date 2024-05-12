@@ -192,7 +192,7 @@ public class ViewDetailsVehicleUI {
             } else {
                 try{
                     popUpOfVerifications(Alert.AlertType.ERROR, "Vehicle needs the last data of check-up").show();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_DefaultCheckVehicle.fxml"));
                     Parent root = fxmlLoader.load();
                     Scene scene = new Scene(root);
                     Stage otherStage= new Stage();
