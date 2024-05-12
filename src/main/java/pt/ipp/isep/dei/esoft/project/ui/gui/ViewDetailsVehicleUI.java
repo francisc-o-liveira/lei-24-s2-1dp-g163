@@ -219,6 +219,9 @@ public class ViewDetailsVehicleUI {
         if(vlastCheckKm<=0 || checkDate.getValue()==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "The data is incorrect").show();
         } else {
+            if(selectedVehicle==null){
+                return;
+            }
             try{
                 Optional<Object> opt =ctrlCheck.addCheckUp(selectedVehicle,vlastDateCheck,vlastCheckKm,updateMaintenance);
                 if(opt.isPresent()){
