@@ -151,7 +151,7 @@ public class ManageVehiclesUI {
 
     @FXML
     public void btnAdd() throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_AddVehicle.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage otherStage= new Stage();
@@ -159,8 +159,6 @@ public class ManageVehiclesUI {
         otherStage.show();
         ViewDetailsVehicleUI ui=fxmlLoader.getController();
         ui.setComboBox();
-        ui.setBtnAddVehicleToVisibleOrNot(true);
-        ui.setBtnEditVehicleToVisileOrNot(false);
     }
 
 
