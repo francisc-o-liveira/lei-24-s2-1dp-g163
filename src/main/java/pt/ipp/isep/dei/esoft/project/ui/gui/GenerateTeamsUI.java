@@ -14,6 +14,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.converter.IntegerStringConverter;
 import pt.ipp.isep.dei.esoft.project.application.controller.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
@@ -25,6 +26,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class GenerateTeamsUI {
 
@@ -95,8 +97,24 @@ public class GenerateTeamsUI {
         String teamName = nameForTeam.getText();
         getSkillsAndCollabs();
         try{
-            ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
-            popUpOfVerifications(Alert.AlertType.INFORMATION, "Team created!").show();
+            Optional<Team> teamCreated=ctrl.generateTeam(maxTeamSize, minTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    popUp.setHeaderText("Team Created!");
+                    popUp.setContentText("Do you wish to add this team?");
+                    ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+                    ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+                    if (popUp.showAndWait().get() == ButtonType.OK) {
+                        ctrl.saveTeam(teamCreated.get());
+                        event.consume();
+                    }
+                }
+            });
+
         } catch (RuntimeException e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }

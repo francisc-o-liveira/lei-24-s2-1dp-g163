@@ -111,6 +111,7 @@ public class ManageVehiclesUI {
         ui.setSelectedVehicle(vehicle);
         ui.putInTextFields(vehicle);
         ui.setTable(vehicle);
+        ui.setComboBox();
     }
 
     public void setSelectedVehicle(){
@@ -180,6 +181,7 @@ public class ManageVehiclesUI {
         ui.setSelectedVehicle(getSelectedVehicle());
         ui.showSelectedVehicle(getSelectedVehicle());
         ui.putInTextFields(getSelectedVehicle());
+        ui.setComboBox();
         ui.setTable(getSelectedVehicle());
     }
 
