@@ -132,6 +132,16 @@ Image 1: General application diagram
 (N/A)
 
 # Features
+### Principal Login
+When the Manager arrive at the Login Page of the Green Space Software
+
+Step 1- Do login and enter the cards according syntax notes:
+![login](imagesUserManual/login.png)
+Image 2- Do login (login UI)
+
+
+
+
 ## Green Space User (GSU)
 ### Unsigned
 
@@ -148,10 +158,6 @@ can:
 + Name : Should contain at least 8 characters
 + Email : Should contain an e-mail prefix, before the "@" symbol, and e-mail domain, after the "@" symbol.
 + Password : Should contain at least 12 characters, with special characters included and upper case characters.
-
-Step 1- Do login and enter your cards according syntax notes:
-![login](imagesUserManual/login.png)
-Image 2- Do login (login UI) 
 
 
 ### Signed
