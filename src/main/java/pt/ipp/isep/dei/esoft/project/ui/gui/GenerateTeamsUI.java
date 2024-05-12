@@ -29,6 +29,7 @@ import java.util.Optional;
 public class GenerateTeamsUI {
 
     public Stage stage= new Stage();
+    public Stage stageClose;
     public GenerateTeamController ctrl;
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
 
@@ -52,6 +53,9 @@ public class GenerateTeamsUI {
     private List<Skill> skillsSelectedForTeam;
     private List<Integer> numberCollabsPerSkill;
 
+    public void stageToCloseGenerate(Stage stage){
+        stageClose=stage;
+    }
     public GenerateTeamsUI(){
         ctrlAuth = new AuthenticationController();
         ctrl = new GenerateTeamController();
@@ -96,7 +100,6 @@ public class GenerateTeamsUI {
         getSkillsAndCollabs();
         try{
             Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
-            stage.setOnCloseRequest(event -> {
                 if (teamCreated.isPresent()) {
                     Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
                     popUp.setHeaderText("Team Created!");
@@ -107,10 +110,10 @@ public class GenerateTeamsUI {
                     Optional<ButtonType> result = popUp.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         ctrl.saveTeam(teamCreated.get());
+                        stage.close();
+                        stageClose.close();
                     }
                 }
-            });
-
         } catch (RuntimeException e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }

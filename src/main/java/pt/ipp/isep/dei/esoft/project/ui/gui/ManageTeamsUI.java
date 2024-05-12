@@ -22,6 +22,7 @@ import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ManageTeamsUI {
 
@@ -55,6 +56,7 @@ public class ManageTeamsUI {
         stage.show();
         GenerateTeamsUI ctrlForGenerate= fxmlLoader.getController();
         ctrlForGenerate.setTableViewTeam();
+        ctrlForGenerate.stageToCloseGenerate(stage);
     }
 
     @FXML
@@ -109,40 +111,7 @@ public class ManageTeamsUI {
                 };
             }
         });
-        List<Team> teamList= new ArrayList<>();
-        List<Skill> skillsSelected1 = new ArrayList<>();
-// Assuming you have some skills already initialized
-// Add skills to the list
-        skillsSelected1.add(new Skill("JavaProgramming"));
-        skillsSelected1.add(new Skill("DatabaseManagement"));
-
-        Team team1 = new Team(5, 3, skillsSelected1, "team1");
-
-// Assuming you have some collaborators already initialized
-// Add collaborators to the team
-        Collaborator collaborator1 = new Collaborator("John Doe", new Date(1990, 5, 15), new Date(2020, 3, 10), "123 Main St", "12345", "New York", "+3511234567890", "john.doe@example.com", DocType.Type.CitizenCard, 123456789, new JobCategory("SoftwareEngineer"));
-        Collaborator collaborator2 = new Collaborator("Jane Smith", new Date(1985, 8, 25), new Date(2018, 7, 20), "456 Oak St", "54321", "Los Angeles", "+351987654321", "jane.smith@example.com",DocType.Type.CitizenCard, 987654321, new JobCategory("MarketingSpecialist"));
-
-        team1.addCollaborator(collaborator1);
-        team1.addCollaborator(collaborator2);
-        List<Skill> skillsSelected2 = new ArrayList<>();
-// Assuming you have some skills already initialized
-// Add skills to the list
-        skillsSelected2.add(new Skill("ProjectManagement"));
-        skillsSelected2.add(new Skill("Communication"));
-
-        Team team2 = new Team(4, 2, skillsSelected2, "team2");
-
-// Assuming you have some collaborators already initialized
-// Add collaborators to the team
-        Collaborator collaborator3 = new Collaborator("Alice Johnson", new Date(1988, 10, 30), new Date(2019, 6, 25), "789 Elm St", "67890", "Chicago", "+351987654321", "alice.johnson@example.com",DocType.Type.CitizenCard, 987654321, new JobCategory("ProjectManager"));
-        Collaborator collaborator4 = new Collaborator("Bob Williams", new Date(1992, 4, 12), new Date(2021, 2, 18), "321 Pine St", "54321", "Boston", "+3511234567890", "bob.williams@example.com", DocType.Type.CitizenCard, 123456789, new JobCategory("BusinessAnalyst"));
-
-        team2.addCollaborator(collaborator3);
-        team2.addCollaborator(collaborator4);
-        teamList.add(team1);
-        teamList.add(team2);
-        for(Team t : teamList){
+        for(Team t : ctrl.getTeams()){
             tableViewTeams.getItems().add(t);
         }
     }
@@ -207,6 +176,12 @@ public class ManageTeamsUI {
         }catch (ArrayIndexOutOfBoundsException e){
             popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
         }
+    }
+
+    @FXML
+    public void btnUpdate(ActionEvent event) throws IOException{
+        tableViewTeams.getItems().clear();
+        setTableTeams();
     }
 
 }
