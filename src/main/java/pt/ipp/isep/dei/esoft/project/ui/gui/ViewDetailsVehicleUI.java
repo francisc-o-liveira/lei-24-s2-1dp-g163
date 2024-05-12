@@ -328,12 +328,12 @@ public class ViewDetailsVehicleUI {
     public void submitDataUpdate(ActionEvent event){
         try {
             if (ctrl.updateKm(selectedVehicle, Double.parseDouble(updateCurrentKm.getText()))) {
-                popUpOfVerifications(Alert.AlertType.CONFIRMATION, "Current Kilometers Update Successfully");
+                popUpOfVerifications(Alert.AlertType.CONFIRMATION, "Current Kilometers Update Successfully").show();
             } else {
-                popUpOfVerifications(Alert.AlertType.ERROR, "Current Kilometers Update Failed");
+                popUpOfVerifications(Alert.AlertType.ERROR, "Current Kilometers Update Failed").show();
             }
         }catch (IllegalArgumentException | NullPointerException e) {
-            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage());
+            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (IOException e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }
