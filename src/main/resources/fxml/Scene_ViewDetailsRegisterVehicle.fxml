@@ -35,7 +35,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
-      <Button layoutX="156.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: D87DAB;" text="Edit">
+      <Button fx:id="btnEditVehicle" layoutX="156.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: D87DAB;" text="Edit" visible="false">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
@@ -91,7 +91,7 @@
             <Font name="Tahoma Bold" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="66.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: ADD8E6;" text="Add">
+      <Button fx:id="btnAddVehicle" layoutX="66.0" layoutY="437.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="34.0" prefWidth="80.0" style="-fx-background-color: ADD8E6;" text="Add" visible="false">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
