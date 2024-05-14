@@ -1,0 +1,45 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":AssignSkillsController" as Controller
+
+' participant "Repositories" as Repos
+' participant "repositories:Repositories" as reposRepos
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+'participant "skillRepository:SkillRepository" as SkillRepo
+
+ participant "collaborator:Collaborator" as Collaborator
+
+autonumber 11
+
+-> Controller : assignSkills(collaborator, skillName)
+autonumber 11.1
+activate Controller
+
+group Assign Skill
+
+    Controller -> EmpRepo : assignSkillToCollaborator(collaborator, skillName)
+    activate EmpRepo
+
+
+    EmpRepo -> Collaborator : assignSkill(skillName)
+    activate Collaborator
+
+    Collaborator --> EmpRepo : true
+    deactivate Collaborator
+
+
+    EmpRepo --> Controller : true
+    deactivate EmpRepo 
+end
+
+autonumber 12
+
+<-- Controller  : true
+deactivate Controller
+
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as HRM
+participant ":RegisterJobCategoryUI" as UI
+participant ":RegisterJobCategoryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
+
+
+activate HRM
+
+        HRM -> UI : asks to register a new job
+
+        activate UI
+
+'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+         UI -> HRM : requests data(job name)
+         HRM -> UI : types requested data (job name)
+
+            UI -> CTRL : registerJobCategories(job name)
+
+            activate CTRL
+
+                ref over CTRL
+                        Register a JobCategory
+                end ref
+
+                CTRL --> UI : jobCategoryList
+            deactivate CTRL
+
+
+            UI --> HRM : displays operation success and \n show jobCategoryList
+    deactivate UI
+
+deactivate HRM
+
+@enduml

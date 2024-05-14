@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Register Vehicle Maintenance Success Scenario
+
+autonumber
+
+actor "VFM" as FleetManager
+participant ":System" as System
+
+activate FleetManager
+
+FleetManager -> System : Asks to register a maintenance
+activate System
+
+System --> FleetManager : Show Plates, Request Date of Check-Up and Current Kilometers and Frequency Option
+deactivate System
+
+FleetManager -> System : Selects a Plate, Provides Check-Up Info, Changes Check-up Frequency and Submits
+activate System
+
+System --> FleetManager : Confirms registration success
+deactivate System
+
+@enduml

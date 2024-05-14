@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "vehicleRepository\n:VehicleRepository" as VP
+participant "vehicle\n:Vehicle" as Vehicle
+
+autonumber 16
+-> VP: registerVehicle(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+
+autonumber 16.1
+activate VP
+    group Create Vehicle
+
+        VP -> Vehicle**: create(brand, model, type, tare, gross weight, current km, \nregister date, acquisition date, maintenance/check-up frequency (in kms))
+        VP -> VP: addVehicle (vehicle)
+
+
+    end
+
+    autonumber 17
+    <-- VP : vehicle
+deactivate VP
+
+
+@enduml

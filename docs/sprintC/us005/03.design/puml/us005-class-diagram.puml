@@ -1,0 +1,147 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class HRM {
+}
+
+class Collaborator {
+    - name
+    - date of birthday
+    - admission data
+    - address street zipcode
+    - address city, email
+    - phone number
+    - docType
+    - docIDNumber
+    - jobCategory
+    - StatusType status
+
+    - Enum StatusType={Activate,NotActive}
+
+    + Collaborator(name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory, StatusType NotActive)
+    + activateStatus()
+}
+
+class Skill {
+    - String name
+    + Skill(name)
+}
+
+class CollaboratorRepository {
+    + getCollaboratorNotActivateList()
+    + activateCollaboratorsTeam(team)
+}
+
+class TeamRepository {
+    + saveTeam(team)
+    + getSkillListTeam(team)
+    + getMaxSizeTeam(team)
+    + getMinSizeTeam(team)
+    + generateTeamBySkillSetAndSize(minSizeTeam,maxSizeTeam,skillsSelected, collaboratorStatusNotActivateList,collabsPerSkill)
+    + getTeamList()
+    - validateCollaboratorForTeam(maxSizeTeam,skillSet,collaborator)
+    + validateCollaboratorAddBySkill(collaboratorsNotActivate, team)
+}
+
+
+class Team{
+    -Integer maxSizeTeam
+    -Integer minSizeTeam
+    + Team(maxSizeTeam,minSizeTeam,collaboratorsList,skillsSelected)
+    + getTeamList()
+    + getMaxSize()
+    + getMinSize()
+    + Optional <Team> addCollaborator(collaborator)
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getSkillRepository()
+    + getCollaboratorRepository()
+    + getTeamRepository()
+}
+
+class GenerateTeamController {
+    + GenerateTeamController()
+    + getSkillList()
+    + getCollaboratorsNotActivateList()
+    + generateTeam(minSizeTeam,maxSizeTeam,skillsSelected,collaboratorsNotActivate,collabsPerSkill)
+    + addCollaboratorToTeam(indexCollaborator, collaboratorsNotActivateList, team)
+    - getHRMFromSession()
+    + saveTeam(team)
+}
+
+class SkillRepository{
+    + getSkillList()
+}
+
+note right of GenerateTeamController
+    - userEmail is obtained
+    from the user session
+    - skillList
+    is achieved with skill repository
+end note
+
+note bottom of SkillRepository
+    - used for displaying
+    the job category list
+end note
+
+class GenerateTeamUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+GenerateTeamUI .> GenerateTeamController
+
+GenerateTeamController .> Repositories : repositories
+
+Repositories --> "1" CollaboratorRepository
+Repositories --> "1" SkillRepository
+Repositories --> "1" TeamRepository
+
+GenerateTeamController ..> CollaboratorRepository : CollaboratorRepository
+GenerateTeamController ..> SkillRepository : SkillRepository
+GenerateTeamController ..> TeamRepository : TeamRepository
+
+
+GenerateTeamController ..> "1" CollaboratorRepository : collaboratorRepository
+GenerateTeamController ..> ApplicationSession
+GenerateTeamController ..> UserSession
+
+CollaboratorRepository "1" --> "*" Collaborator : collaborators
+TeamRepository "1" --> "*" Team : teams
+SkillRepository "1" --> "*" Skill : skills
+
+Team --> HRM : generatedBy
+Team "1" --> "1..*" Collaborator : have
+Team "1" --> "*" Skill : skillsRequired
+Collaborator "1" --> "*" Skill : have
+
+ApplicationSession --> "1" UserSession : userSession
+
+TeamRepository --> "*" HRM : employs
+SkillRepository --> "*" HRM : employs
+CollaboratorRepository --> "*" HRM : employs
+
+
+@enduml

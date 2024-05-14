@@ -1,0 +1,66 @@
+    @startuml
+    'skinparam monochrome true
+    skinparam packageStyle rectangle
+    skinparam shadowing false
+    skinparam linetype polyline
+    'skinparam linetype orto
+
+    skinparam classAttributeIconSize 0
+
+    'left to right direction
+
+    class SkillRepository {
+        - skillList : List<Skill>
+        + getAllSkills() : List<Skill> 
+    }
+
+    class AssignSkillsUI {
+    }
+
+    class AssignSkillsController {
+        - collaboratorRepository : CollaboratorRepository
+        - skillRepository : SkillRepository
+        + AssignSkillsController()
+        + getDataNeededToAssignSkills() : void
+        + getCollaboratorList() : List<Collaborator>
+        + getCollaborator(index : int) : Collaborator
+        + getAvailableSkillsList(collaborator : Collaborator) : List<Skill> 
+        + filterAssignedSkills(assignedSkills : List<Skill>, allSkills : List<Skill>) : List<Skill> 
+        + assignSkills(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator>
+    }
+
+    class CollaboratorRepository {
+        - collaboratorList : List<Collaborator>
+        + getCollaboratorList() : List<Collaborator>
+        + assignSkill(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator> 
+        + getCollaboratorSkillsList(collaborator : Collaborator) : List<Skill> 
+    }
+
+    class Collaborator {
+        - docIDNumber : int
+        - skills : List<Skill>
+        + assignSkill(skill : Skill) : boolean 
+    }
+
+    class Skill {
+        - name : String
+    }
+
+    class Repositories {
+        - static instance : Repositories
+        + getInstance() : Repositories
+        + getSkillRepository() : SkillRepository
+        + getCollaboratorRepository() : CollaboratorRepository
+        - Repositories()
+    }
+
+    AssignSkillsUI ..> AssignSkillsController
+    AssignSkillsController ..> Repositories : repositories
+    AssignSkillsController ..> SkillRepository : skillRepository
+    AssignSkillsController ..> CollaboratorRepository : collaboratorRepository
+    SkillRepository "1" --> "*" Skill 
+    CollaboratorRepository "1" --> "*" Collaborator 
+    Repositories --> Repositories : instance
+    Collaborator "*" --> "*" Skill
+
+    @enduml

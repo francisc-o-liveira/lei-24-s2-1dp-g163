@@ -1,0 +1,161 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+'skinparam linetype ortho
+'left to right direction
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+title Domain Model Green Spaces Software Management
+
+
+class Organization {
+    name
+    vatNumber
+    phone
+    emailPrefix
+}
+
+class HRM {
+    name
+    email
+    password
+}
+
+class GSM {
+    name
+    email
+    password
+}
+
+class VFM {
+    name
+    email
+    password
+}
+
+class Skill {
+    name
+}
+
+class JobCategory {
+    name
+}
+
+class Collaborator {
+    name
+    dateOfBirth
+    admissionDate
+    address
+    email
+    phoneNumber
+    docIDNumber
+    status
+    skills
+}
+
+class DocType {
+    type
+}
+
+class Team {
+    maxSize
+    minSize
+}
+
+
+class Vehicle {
+    brand
+    model
+    plate
+    type
+    tare
+    grossWeight
+    currentKM
+    registerDate
+    acquisitionDate
+    frequencyCheckKm
+}
+
+class CheckUp {
+    kmsOfCheck
+    dateOfCheck
+}
+
+class GreenSpace {
+    name
+    locationStreet
+}
+
+class Task {
+    reference
+    description
+    informalDescription
+    technicalDescription
+    duration
+    cost
+}
+
+class Equipment {
+    nameType
+}
+
+
+
+class Agenda {
+    greenSpace
+    startDate
+    finishDate
+}
+
+class TaskCategory {
+    description
+}
+
+HRM "1" -- "*" JobCategory : manages >
+HRM "1" -- "*" Collaborator : employs >
+HRM "1" -- "*" Skill : manages >
+HRM "1" -- "*" Team : generates >
+
+VFM "1" -- "*" Vehicle : manages >
+
+Collaborator "1" -- "1" JobCategory : belongs to >
+Collaborator "1" -- "1" DocType : identified by >
+Collaborator "*" -- "*" Skill : possesses >
+
+Team "1" -- "*" Collaborator : includes >
+Team "1" -- "*" Skill : requires >
+
+Vehicle "1" -- "*" CheckUp : undergoes >
+
+Organization "1" -- "*" Employees : encompasses >
+
+Employees "1" -- "1" HRM : encompasses >
+Employees "1" -- "1" VFM : encompasses >
+Employees "1" -- "1" GSM : encompasses >
+
+GSM "1" -- "*" GreenSpace : creates >
+GSM "1" -- "*" Task : create >
+GSM "1" -- "*" Equipment : manages >
+
+GSM "1" -- "*" Agenda : manages >
+
+Task "1" -- "1" TaskCategory : categorized under >
+
+Task "1" -- "*" Vehicle : utilizes >
+' Task utilizes Vehicle: Especifica que nas tarefas são utilizados veículos.
+
+Task "1" -- "1" GreenSpace : maintains >
+'Task maintains GreenSpace: Indica que as tarefas mantém os espaços verdes.
+
+Equipment "1" -- "*" Task : facilitates >
+' "Equipment facilitates Task": Indica que o equipamento facilita a execução das tarefas, sugerindo que sem o equipamento adequado, as tarefas poderiam ser mais difíceis de serem realizadas.
+Team "1" -- "*" Equipment : equips >
+' Machine equips Team: Indica que as máquinas equipam as equipas.
+
+Agenda "1" -- "*" Team : plans >
+Agenda "1" -- "*" Task : schedules >
+'Agenda plans Team and schedules Task: Especifica que a agenda planeia as atividades das equipas e agenda as tarefas.
+
+@enduml

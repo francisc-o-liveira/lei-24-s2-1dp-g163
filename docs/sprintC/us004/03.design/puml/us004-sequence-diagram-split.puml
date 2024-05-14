@@ -1,0 +1,132 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "HR Manager" as HRManager
+participant "AssignSkillsUI" as UI
+participant ":AssignSkillsController" as Controller
+
+' participant "Repositories" as Repos
+' participant "repositories:Repositories" as reposRepos
+' participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+' participant "skillRepository:SkillRepository" as SkillRepo
+
+' participant "collaborator:Collaborator" as Collaborator
+
+activate HRManager
+
+HRManager -> UI : Asks to assign skills to a specific collaborator
+activate UI
+
+UI -> Controller** : create
+
+UI -> Controller : getDataNeededToAssignSkills()
+activate Controller
+
+ref over Controller
+Get Collaborator List
+end ref
+
+/'
+Controller -> Repos : getInstance()
+activate Repos
+
+Repos --> Controller : repositories
+deactivate Repos
+
+Controller -> reposRepos : getSkillRepository()
+activate reposRepos
+
+reposRepos --> Controller : skillRepository
+deactivate reposRepos
+
+Controller -> reposRepos : getCollaboratorRepository()
+activate reposRepos
+
+reposRepos --> Controller : collaboratorRepository
+deactivate reposRepos
+
+Controller -> EmpRepo : getCollaboratorList()
+activate EmpRepo
+
+EmpRepo --> Controller : collaboratorList
+deactivate EmpRepo '/
+
+
+
+Controller --> UI : collaboratorList
+deactivate Controller
+
+
+UI --> HRManager : Displays Collaborator list
+deactivate UI
+
+HRManager -> UI : Selects Collaborator
+activate UI
+
+UI -> Controller : getAvailableSkillsList(collaborator)
+activate Controller
+
+
+ref over Controller
+Get Available Skills to Assign List
+end ref
+
+/'
+Controller -> EmpRepo : getAvailableSkillsList(Collaborator)
+activate EmpRepo
+
+EmpRepo --> Controller : CollaboratorSkillsList
+deactivate EmpRepo
+
+Controller -> SkillRepo : getAllSkills()
+activate SkillRepo
+
+SkillRepo --> Controller : allSkillsList
+deactivate SkillRepo
+
+loop over each Skill not assigned to Collaborator
+    Controller -> Controller : filterAssignedSkills(CollaboratorSkillsList, allSkillsList)
+    end '/
+
+    Controller --> UI : availableSkillsList
+    deactivate Controller
+
+    UI --> HRManager : Displays Available Skills to Assign
+    deactivate UI
+
+    HRManager -> UI : Confirms Skill Assignment for Selected Skills
+    activate UI
+
+    UI -> Controller : assignSkills(collaborator, skillName)
+    activate Controller
+
+    ref over Controller
+    Assign Skill
+    end ref
+    /'
+    Controller -> EmpRepo : assignSkillToCollaborator(collaborator, skillName)
+    activate EmpRepo
+
+
+    EmpRepo -> Collaborator : assignSkill(skillName)
+    activate Collaborator
+
+    Collaborator --> EmpRepo : true
+    deactivate Collaborator
+
+
+    EmpRepo --> Controller : true
+    deactivate EmpRepo '/
+
+    Controller --> UI : true
+    deactivate Controller
+
+    UI --> HRManager : Displays Operation Success Message
+    deactivate UI
+
+
+    @enduml

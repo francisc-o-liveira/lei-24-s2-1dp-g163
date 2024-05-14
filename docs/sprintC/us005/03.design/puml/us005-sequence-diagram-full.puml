@@ -1,0 +1,250 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as HRM
+participant ":GenerateTeamUI" as UI
+participant ":GenerateTeamController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository\n:SkillRepository" as SkillRepository
+participant "teamRepository\n:TeamRepository" as TeamRepository
+participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
+participant "team\n:Team" as Team
+
+activate HRM
+
+        HRM -> UI : asks to generate a Team automatically
+
+        activate UI
+
+'           UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+
+            UI --> HRM : requests data
+        deactivate UI
+
+        HRM -> UI : types requested data(maxSizeTeam, minSizeTeam)
+        activate UI
+
+
+
+
+    UI -> CTRL : getSkillList()
+                activate CTRL
+
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
+
+                        RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT : getSkillRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL: skillRepository
+                    deactivate PLAT
+
+                    CTRL -> SkillRepository : getSkillList()
+                    activate SkillRepository
+
+                        SkillRepository --> CTRL : skillList
+                    deactivate SkillRepository
+
+    CTRL --> UI : skillList
+    deactivate CTRL
+
+
+
+    UI --> HRM : shows skillList\n and asks to introduce the skill(s)
+    deactivate UI
+    loop While adding skill
+    HRM -> UI : select the skill
+    activate UI
+
+    UI --> HRM : ask number collaborators for skill
+    deactivate UI
+
+    HRM -> UI : submits number of collaborator
+    activate UI
+
+    UI -> UI : collabsPerSkill.add(typedNumber)
+
+        UI --> HRM : shows skillSet and ask if \n want to introduce more or request data
+    deactivate UI
+    end
+    HRM -> UI : submits data
+    activate UI
+
+        UI -> CTRL : generateTeam(maxSizeTeam,minSizeTeam,skillSet,collabsPerSkill)
+        activate CTRL
+
+
+            CTRL -> RepositorySingleton : getInstance()
+                                activate RepositorySingleton
+
+                                    RepositorySingleton --> CTRL: repositories
+                                deactivate RepositorySingleton
+
+                                CTRL -> PLAT : getCollaboratorRepository()
+                                activate PLAT
+
+                                    PLAT --> CTRL: collaboratorRepository
+                                deactivate PLAT
+
+                                CTRL -> CollaboratorRepository : getCollaboratorByStatus()
+                                activate CollaboratorRepository
+
+                                CollaboratorRepository->"List<Collaborator>"** : create()
+
+
+                                CollaboratorRepository -> CollaboratorRepository : verifyStatus()
+                                activate CollaboratorRepository
+
+                                CollaboratorRepository -> "List<Collaborator>" : addCollaborator
+                                deactivate CollaboratorRepository
+                                activate "List<Collaborator>"
+                                "List<Collaborator>" --> CollaboratorRepository
+                                deactivate "List<Collaborator>"
+                                    CollaboratorRepository --> CTRL : collaboratorStatusNotActivateList
+                                deactivate CollaboratorRepository
+
+
+
+            CTRL -> TeamRepository:generateTeamBySkillSetAndSize(maxSizeTeam,minSizeTeam,skillSet,numberCollabForSkill)
+            activate TeamRepository
+
+                TeamRepository -> Team**: create()
+
+                loop Until you have the full team
+                TeamRepository -> TeamRepository: validateCollaboratorBySkill(collaboratorStatusNotActivateList, skillSet,numberCollabForSkill)
+                activate TeamRepository
+
+                    TeamRepository -> Team: addCollaborator(collaborator)
+                    activate Team
+
+                        Team --> TeamRepository
+                    deactivate Team
+
+                    TeamRepository -> TeamRepository : teamIsCompleted()
+
+                    TeamRepository --> TeamRepository
+                deactivate TeamRepository
+                end
+
+                TeamRepository --> CTRL : team / collaboratorNotActivateList
+
+            deactivate TeamRepository
+
+            CTRL --> UI: team / collaboratorNotActivateList
+            deactivate CTRL
+            UI --> HRM : show team and confirm or modify data
+    deactivate UI
+
+    opt Optional Modify the Team Generated
+    HRM -> UI : modify data
+    activate UI
+
+    UI --> HRM : remove or add
+    deactivate UI
+    HRM -> UI : addCollaborator
+    activate UI
+
+    UI -> CTRL : getCollaboratorNotActivateList()
+    activate CTRL
+
+    CTRL --> UI : collaboratorNotActivateList
+    deactivate CTRL
+
+    UI --> HRM : show collaboratorNotActivateList and ask Collaborator to add
+    deactivate UI
+
+    HRM -> UI : indexCollaborator
+    activate UI
+
+    UI -> CTRL : addCollaboratorToTeam(indexCollaborator,team)
+    activate CTRL
+
+    CTRL -> TeamRepository : validateCollaboratorAddBySkill(collaboratorNotActive, team)
+    activate TeamRepository
+
+        TeamRepository -> Team: getSkillListTeam()
+        activate Team
+
+        Team -> TeamRepository: skillSet
+        deactivate Team
+
+        TeamRepository -> Team: getMaxSizeTeam() / (to remove need MinSize)
+        activate Team
+
+        Team -> TeamRepository: maxSizeTeam
+        deactivate Team
+
+        TeamRepository -> TeamRepository : validateCollaboratorForTeam(maxSizeTeam,skillSet,collaborator)
+
+        TeamRepository -> Team: addCollaborator(collaborator)
+                        activate Team
+
+                            Team --> TeamRepository
+                        deactivate Team
+
+
+    TeamRepository --> CTRL : team / collaboratorNotActivateList
+
+
+    deactivate TeamRepository
+
+
+
+    CTRL -> UI : team / collaboratorNotActivateList
+    deactivate CTRL
+                UI --> HRM : show team and confirm or modify data
+        deactivate UI
+
+
+    end
+
+
+    HRM -> UI: confirms data
+    activate UI
+
+
+    UI -> CTRL : saveTeam(team)
+    activate CTRL
+
+    CTRL -> CollaboratorRepository : activateCollaboratorsTeam(team)
+    activate CollaboratorRepository
+    loop [Loop all of the collaborators of the team and activate the status of the collaborator]
+    CollaboratorRepository -> Collaborator : activateStatus()
+    activate Collaborator
+
+    Collaborator -> CollaboratorRepository :
+    deactivate Collaborator
+    end
+    CollaboratorRepository -> CTRL :
+    deactivate CollaboratorRepository
+    CTRL -> TeamRepository : saveTeam(team)
+    activate TeamRepository
+    activate TeamRepository
+    TeamRepository -> TeamRepository : saveTeam(team)
+    deactivate TeamRepository
+
+    TeamRepository --> CTRL : true
+    deactivate TeamRepository
+
+    CTRL --> UI : true
+    deactivate CTRL
+
+    UI --> HRM : success operation
+    deactivate UI
+
+
+deactivate HRM
+
+@enduml
