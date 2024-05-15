@@ -29,6 +29,7 @@ public class ViewDetailsCollaboratorUI {
 
     public ManageCollaboratorsUI manageTable;
     public Stage stage;
+    public Stage stageToAdd;
     private Date birthday;
     private Date admissionDate;
     private DocType.Type typeOfDocument;
@@ -94,6 +95,10 @@ public class ViewDetailsCollaboratorUI {
         stage=manageTable.getStageToViewDetails();
     }
 
+    public void setStageToAdd(Stage stage){
+        this.stageToAdd=stage;
+    }
+
 
     public void setComboBoxes(){
         docType.setItems(FXCollections.observableArrayList(DocType.Type.values()));
@@ -126,7 +131,9 @@ public class ViewDetailsCollaboratorUI {
         } else {
             try {
                 ctrl.registerCollaborator(name.getText(), birthday, admissionDate, addressStreet.getText(), addressZipCode.getText(), addressCity.getText(), phoneNumber.getText(), email.getText(), typeOfDocument, Integer.parseInt(docIDNumber.getText()), jobCategory);
-                popUp().show();
+                if(popUp().showAndWait().get()==ButtonType.OK){
+                    stageToAdd.close();
+                }
             } catch (CloneNotSupportedException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, "This Collaborator already exists.").show();
             }catch (IllegalArgumentException e){

@@ -66,6 +66,7 @@ public class ManageCollaboratorsUI {
         stage.setScene(scene);
         stage.show();
         ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        uiToAdd.setStageToAdd(stage);
         uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
         uiToAdd.setBtnEditCollaboratorValue(false);
