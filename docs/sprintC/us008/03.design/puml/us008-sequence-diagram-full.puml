@@ -1,0 +1,64 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "VFM" as VFM
+participant ":CheckUpListUI" as UI
+
+participant ":CheckUpListController" as CTRL
+
+participant ":Repositories" as Repositories
+participant "Repositories" as Repos
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+
+activate VFM
+
+    VFM -> UI : asks the list of vehicles for check-up
+    activate UI
+
+    UI -> CTRL : getCheckUpList()
+    activate CTRL
+
+    CTRL -> Repositories : getInstance()
+    activate Repositories
+
+    Repositories --> CTRL : repositories
+    deactivate Repositories
+
+    CTRL -> Repos : getVehicleRepository()
+    activate Repos
+
+    Repos --> CTRL :VehicleRepository
+    deactivate Repos
+
+    CTRL -> VehicleRepository : getCheckUpList()
+    activate VehicleRepository
+
+    VehicleRepository -> Vehicle : getCheckUpList()
+    activate Vehicle
+
+    Vehicle -> VehicleRepository : checkUpList
+    deactivate Vehicle
+
+    VehicleRepository --> CTRL : checkUpList
+    deactivate VehicleRepository
+
+    deactivate VehicleRepository
+
+    CTRL --> UI: true / checkUpList
+    deactivate CTRL
+
+    UI --> VFM : shows the list of vehicles
+
+    VFM -> UI : ask to confirm data
+
+    UI --> VFM : displays operation success
+    deactivate UI
+
+deactivate VFM
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":AssignSkillsController" as Controller
+
+' participant "Repositories" as Repos
+' participant "repositories:Repositories" as reposRepos
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+participant "skillRepository:SkillRepository" as SkillRepo
+
+' participant "collaborator:Collaborator" as Collaborator
+
+autonumber 7
+
+-> Controller : getAvailableSkillsList(collaborator)
+autonumber 7.1
+
+activate Controller
+group Get Available Skills List
+    Controller -> EmpRepo : getAvailableSkillsList(Collaborator)
+    activate EmpRepo
+
+    EmpRepo --> Controller : CollaboratorSkillsList
+    deactivate EmpRepo
+
+    Controller -> SkillRepo : getAllSkills()
+    activate SkillRepo
+
+    SkillRepo --> Controller : allSkillsList
+    deactivate SkillRepo
+
+    loop over each Skill not assigned to Collaborator
+        Controller -> Controller : filterAssignedSkills(CollaboratorSkillsList, allSkillsList)
+    end
+end
+
+autonumber 8
+<-- Controller  : availableSkillsList
+deactivate Controller
+
+@enduml

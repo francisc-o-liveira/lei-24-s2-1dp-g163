@@ -1,0 +1,49 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":GenerateTeamController" as CTRL
+participant ":Organization" as ORG
+participant ":Team" as Team
+autonumber 17
+
+-> CTRL: generateTeam(maxSizeTeam,minSizeTeam,skillSet,numberCollabForSkill)
+
+autonumber 17.1
+activate CTRL
+    group Generate Team
+
+
+
+                   CTRL -> ORG:generateTeam(maxSizeTeam,minSizeTeam,skillSet,numberCollabForSkill)
+                   activate ORG
+
+                       ORG -> Team**: create()
+
+                       loop Until you have the full team
+
+                       ORG -> ORG: validateCollaborator(collaboratorNotActivateList, skillSet,numberCollabForSkill)
+                       activate ORG
+
+                           ORG -> Team: addCollaborator(collaborator)
+                           activate Team
+
+                               Team --> ORG
+                           deactivate Team
+
+                           ORG --> ORG
+                       deactivate ORG
+
+                       end
+
+                       ORG --> CTRL : team / collaboratorNotActivateList
+
+                   deactivate ORG
+
+    autonumber 18
+    <-- CTRL : team / collaboratorNotActivateList
+deactivate ORG
+
+
+@enduml

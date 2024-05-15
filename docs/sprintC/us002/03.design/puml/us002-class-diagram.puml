@@ -1,0 +1,85 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class HRM {
+}
+
+class JobCategory {
+    - String name
+    + JobCategory(name)
+}
+
+
+
+class JobCategoryRepository {
+    - List <JobCategory>
+    + getJobCategoryList()
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : repositories
+    + getJobCategoryRepository()
+
+}
+
+class RegisterJobCategoryController{
+    + registerJobCategory(jobCategoryName)
+    + getJobCategoriesList()
+
+}
+
+note right of RegisterJobCategoryController
+    - jobCategory
+    is achieved with job category repository
+end note
+
+note bottom of JobCategoryRepository
+    - used for displaying
+    the job category list
+end note
+
+class RegisterJobCategoryUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+RegisterJobCategoryUI .> RegisterJobCategoryController
+
+RegisterJobCategoryController .> Repositories : repositories
+
+Repositories -> "1" JobCategoryRepository
+RegisterJobCategoryController ..> JobCategory
+RegisterJobCategoryController ..> JobCategoryRepository : JobCategoryRepository
+
+
+ApplicationSession --> "1" UserSession : userSession
+
+RegisterJobCategoryController ..> ApplicationSession
+RegisterJobCategoryController ..> UserSession
+
+JobCategoryRepository "1" --> "*" JobCategory : jobCategory's
+
+JobCategory --> HRM : createdBy
+
+JobCategoryRepository --> "*" HRM : employs
+
+@enduml

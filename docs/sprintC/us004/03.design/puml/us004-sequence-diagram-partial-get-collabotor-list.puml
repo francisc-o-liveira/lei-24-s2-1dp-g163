@@ -1,0 +1,56 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+
+participant ":AssignSkillsController" as Controller
+
+participant "Repositories" as Repos
+participant "repositories:Repositories" as reposRepos
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+' participant "skillRepository:SkillRepository" as SkillRepo
+
+' participant "collaborator:Collaborator" as Collaborator
+
+
+autonumber 3
+
+-> Controller : getDataNeededToAssignSkills()
+autonumber 3.1
+activate Controller
+
+group Get Collaborator List
+    Controller -> Repos : getInstance()
+    activate Repos
+
+    Repos --> Controller : repositories
+    deactivate Repos
+
+    Controller -> reposRepos : getSkillRepository()
+    activate reposRepos
+
+    reposRepos --> Controller : skillRepository
+    deactivate reposRepos
+
+    Controller -> reposRepos : getCollaboratorRepository()
+    activate reposRepos
+
+    reposRepos --> Controller : collaboratorRepository
+    deactivate reposRepos
+
+    Controller -> EmpRepo : getCollaboratorList()
+    activate EmpRepo
+
+    EmpRepo --> Controller : collaboratorList
+    deactivate EmpRepo
+end
+
+autonumber 4
+
+<-- Controller  : collaboratorList
+deactivate Controller
+
+@enduml

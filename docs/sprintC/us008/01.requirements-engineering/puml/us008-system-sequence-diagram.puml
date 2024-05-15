@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "VFM" as VFM
+participant ":System" as System
+
+activate VFM
+
+    VFM -> System : asks the list of vehicles for check-up
+    activate System
+
+        System --> VFM : shows the list of vehicles
+    deactivate System
+
+    VFM -> System : confirms data
+    activate System
+
+        System --> VFM : displays operation success
+    deactivate System
+
+@enduml

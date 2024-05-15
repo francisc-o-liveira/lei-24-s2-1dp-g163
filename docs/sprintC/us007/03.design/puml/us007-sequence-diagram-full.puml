@@ -1,0 +1,107 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title UI Sequence Diagram (SSD) for Registering Vehicle Maintenance
+
+autonumber
+
+actor "VFM" as FleetManager
+
+
+participant ":RegisterCheckUpUI" as UI
+participant ":RegisterCheckUpController" as Controller
+
+participant "Repositories" as Repos
+participant "repositories:Repositories" as Repo
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+participant "vehicle:Vehicle" as Vehicle
+participant "checkup:Checkup" as Checkup
+
+activate FleetManager
+
+
+FleetManager -> UI : Asks to register a maintenance
+activate UI
+
+UI -> Controller** : create
+
+UI -> Controller : getDataNeededToRegisterCheckUp()
+activate Controller
+
+Controller -> Repos : getInstance()
+activate Repos
+
+Repos --> Controller : repositories
+deactivate Repos        
+
+Controller -> Repo : getVehicleRepository()
+activate Repo
+Repo --> Controller : vehicleRepository
+deactivate Repo
+
+Controller -> VehicleRepo : getVehiclePLateList()
+activate VehicleRepo
+
+VehicleRepo --> Controller : plates
+deactivate VehicleRepo
+
+Controller --> UI : vehiclePlates
+deactivate Controller
+
+UI --> FleetManager : Show Plates, Request Date of Check Up and Current Kilometers and Frequency Option
+deactivate UI
+
+FleetManager -> UI : Selects a Plate, Provides Check Up Info, Changes Check Up Frequency and Submits
+activate UI
+
+UI -> UI : verifyCheckUpDateFormat(date)
+UI -> UI : validateCheckUpDate(date)
+
+UI -> UI : verifyKilometersFormat(currentKms)
+
+UI -> Controller : validateKilometers(currentKms, selectedPlate)
+activate Controller
+
+Controller -> VehicleRepo: getLastKmForVehicle(plate)
+activate VehicleRepo
+
+VehicleRepo -> Controller: currentKm
+deactivate VehicleRepo
+
+Controller -> UI : true
+deactivate Controller
+
+UI -> Controller : addCheckUp(selectedPlate, date, currentKms, maintenanceKm)
+activate Controller
+Controller -> VehicleRepo : addCheckUp(plate, date, currentKms, maintenanceKm)
+activate VehicleRepo
+
+VehicleRepo -> Vehicle : findVehicleByPlate(plate)
+activate Vehicle
+
+Vehicle -> VehicleRepo : vehicle
+deactivate Vehicle
+
+VehicleRepo -> Vehicle : addCheckUp(currentKms, date, maintenanceKm)
+activate Vehicle
+Vehicle -> Checkup** : create(km, date)
+activate Checkup
+
+Checkup -> Vehicle : Created and Added to the Check Up List of the Vehicle which was under maintenance 
+deactivate Checkup
+
+Vehicle --> VehicleRepo : Done
+deactivate Vehicle
+
+VehicleRepo --> Controller : true
+deactivate VehicleRepo
+
+Controller -> UI : Success
+deactivate Controller
+
+UI --> FleetManager : Confirms registration success
+deactivate UI
+
+@enduml

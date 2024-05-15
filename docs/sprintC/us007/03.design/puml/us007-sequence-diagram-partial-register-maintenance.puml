@@ -1,0 +1,51 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":RegisterCheckUpController" as Controller
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+participant "vehicle:Vehicle" as Vehicle
+participant "checkup:Checkup" as Checkup
+
+
+autonumber 13
+
+-> Controller : addCheckUp(selectedPlate, date, currentKms, maintenanceKm)
+autonumber 13.1
+activate Controller
+
+group Register Maintenance
+
+    Controller -> VehicleRepo : addCheckUp(plate, date, currentKms, maintenanceKm)
+    activate VehicleRepo
+
+    VehicleRepo -> Vehicle : findVehicleByPlate(plate)
+    activate Vehicle
+
+    Vehicle -> VehicleRepo : vehicle
+    deactivate Vehicle
+
+    VehicleRepo -> Vehicle : addCheckUp(currentKms, date, maintenanceKm)
+    activate Vehicle
+    Vehicle -> Checkup** : create(km, date)
+    activate Checkup
+
+    Checkup -> Vehicle : Created and Added to the Check Up List of the Vehicle which was under maintenance
+    deactivate Checkup
+
+    Vehicle --> VehicleRepo : Done
+    deactivate Vehicle
+
+    VehicleRepo --> Controller : true
+    deactivate VehicleRepo
+end
+
+autonumber 14
+
+<-- Controller  : Success
+deactivate Controller
+
+@enduml

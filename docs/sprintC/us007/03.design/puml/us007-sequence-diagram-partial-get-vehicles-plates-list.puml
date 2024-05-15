@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":RegisterCheckUpController" as Controller
+participant "Repositories" as Repos
+participant "repositories:Repositories" as Repo
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+
+autonumber 3
+
+-> Controller : getDataNeededToRegisterCheckUp()
+autonumber 3.1
+activate Controller
+group Get Vehicles Plates List
+    Controller -> Repos : getInstance()
+    activate Repos
+    Repos --> Controller : repositories
+    deactivate Repos
+
+    Controller -> Repo : getVehicleRepository()
+    activate Repo
+    Repo --> Controller : vehicleRepository
+    deactivate Repo
+
+    Controller -> VehicleRepo : getVehiclePlateList()
+    activate VehicleRepo
+    VehicleRepo --> Controller : plates
+    deactivate VehicleRepo
+end
+
+autonumber 4
+<-- Controller  : vehiclePlates
+deactivate Controller
+
+@enduml
