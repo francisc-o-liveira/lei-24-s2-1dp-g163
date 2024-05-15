@@ -1,6 +1,9 @@
 package MATDISC.USs;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -75,8 +78,8 @@ public class Main {
 
                 case 4:
                     try{
-                        File folder = askFolderName();
-                        for (final File fileEntry : folder.listFiles()) {
+                        Path folder = askFolderName();
+                        for (final File fileEntry : folder.toFile().listFiles()) {
                             if (fileEntry.isDirectory()) {
                                 System.out.println("Error not possible to make multiple folders");
                                 break;
@@ -128,16 +131,27 @@ public class Main {
 
 
 
-    private static File askFolderName() {
-        String folderName;
-        File folder = null;
+    private static Path askFolderName() {
         Scanner scanner = new Scanner(System.in);
-        do {
-            System.out.println("Please enter a path to the folder: ");
-            folderName = scanner.nextLine();
-            folder = new File(folderName);
-        }while (!folder.isDirectory());
-        return folder;
+        Path folderPath = null;
+
+        try {
+            while (true) {
+                System.out.print("Please enter a path to the folder: ");
+                String folderName = scanner.nextLine();
+                folderPath = Paths.get(folderName);
+
+                if (Files.isDirectory(folderPath)) {
+                    break;
+                } else {
+                    System.out.println("The entered path is not a directory. Please try again.");
+                }
+            }
+        } finally {
+            scanner.close();
+        }
+
+        return folderPath;
     }
 
     public static void plotGraphAndShow() throws IOException{
