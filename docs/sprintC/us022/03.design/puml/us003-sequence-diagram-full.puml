@@ -1,0 +1,165 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "HRM" as HRM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
+participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
+participant "collaborator\n:Collaborator" as Collaborator
+
+activate HRM
+
+        HRM -> UI : asks to register a new Collaborator
+
+        activate UI
+
+'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI -> CTRL : getDataNeededToRegister()
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getJobCategoryRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: jobCategoryRepository
+                deactivate PLAT
+
+                CTRL -> PLAT : getCollaboratorRepository()
+                                            activate PLAT
+
+                                                PLAT --> CTRL: CollaboratorRepository
+                                            deactivate PLAT
+
+                CTRL -> JobCategoryRepository : getJobCategoriesList()
+                activate JobCategoryRepository
+
+                    JobCategoryRepository --> CTRL : jobCategoryList
+                deactivate JobCategoryRepository
+
+
+
+
+
+
+
+
+
+                CTRL --> UI : jobCategoryList
+            deactivate CTRL
+
+            UI --> HRM : shows job category list\n and asks to select one
+        deactivate UI
+
+    HRM -> UI : selects a job category
+    activate UI
+
+
+
+
+
+
+    UI -> CTRL : getDocTypeList()
+                activate CTRL
+
+                 CTRL -> DocType : getDocTypesValues()
+                                 activate DocType
+
+                                    DocType --> CTRL : docTypeList
+                                    deactivate DocType
+
+    CTRL --> UI : docTypeList
+    deactivate CTRL
+
+
+
+    UI --> HRM : shows docTypeList\n and asks to select one
+    deactivate UI
+
+    HRM -> UI : selects a docType
+    activate UI
+
+
+    UI --> HRM : requests data
+    deactivate UI
+
+    HRM --> UI : types requested data(docIDNumber)
+    activate UI
+
+    UI --> CTRL : validateDocType(docType, docTypeNumber)
+    activate CTRL
+
+
+    CTRL -> DocType : validateDocType(docType, docTypeNumber)
+    activate DocType
+
+    DocType --> CTRL : true/false
+    deactivate DocType
+
+    CTRL --> UI : true/false
+    deactivate CTRL
+
+    UI --> HRM : requested data
+    deactivate UI
+
+
+    HRM -> UI : types requested data (name, date of birthday, admission data, address street,\n zipcode, address city, email, phone number)
+    activate UI
+
+
+
+        UI --> HRM : shows selected category and requested data
+    deactivate UI
+
+    HRM -> UI : submits data
+    activate UI
+
+        UI -> CTRL : registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number, docType,\n docIDNumber, jobCategory)
+        activate CTRL
+
+
+
+
+            CTRL -> CollaboratorRepository: registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email, phone number,\n docType, docIDNumber, jobCategory)
+            activate CollaboratorRepository
+
+                CollaboratorRepository -> Collaborator**: createCollaborator()
+                CollaboratorRepository -> CollaboratorRepository: addCollaborator(collaborator)
+
+
+                activate CollaboratorRepository
+                    CollaboratorRepository -> CollaboratorRepository: validateCollaborator(collaborator)
+                    activate CollaboratorRepository
+                        CollaboratorRepository --> CollaboratorRepository
+                    deactivate CollaboratorRepository
+
+                    CollaboratorRepository --> CollaboratorRepository
+                deactivate CollaboratorRepository
+
+                CollaboratorRepository --> CTRL : true / collaboratorList
+
+            deactivate CollaboratorRepository
+
+            CTRL --> UI: true / collaboratorList
+            deactivate CTRL
+            UI --> HRM : displays operation success / show collaboratorList
+    deactivate UI
+
+deactivate HRM
+
+@enduml
