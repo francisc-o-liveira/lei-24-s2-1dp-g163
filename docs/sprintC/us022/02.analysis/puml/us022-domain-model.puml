@@ -16,18 +16,15 @@ hide methods
 '  -description
 '}
 
-class jobCategory{
-    jobName
-}
 
-class HRM {
+class GSM {
     name
     email
     password
 }
 
-class Skill {
-    skillName
+class Entry{
+
 }
 
 class Collaborator{
@@ -43,9 +40,25 @@ docType
 docNumber
 }
 
+class Equipment{
+}
 
-HRM "1" - "1" Collaborator: register >
-Collaborator "1" -- "0..*" Skill: have>
-Collaborator "1" -- "1" jobCategory: have>
+class Vehicle{
+}
+
+
+GSM "1" -- "1" Agenda: have >
+
+GSM "1" - "0..*" Entry: register>
+
+Agenda "1" -- "0..*" Entry: have >
+
+Entry "1" -- "1" Team : have >
+
+Entry "1" -- "0..*" Vehicle : have>
+
+Entry "1" -- "0..*" Equipment : have >
+
+Team "1" -- "1..*" Collaborator : have>
 
 @enduml
