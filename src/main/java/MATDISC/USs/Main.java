@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -43,7 +45,6 @@ public class Main {
                     }
                     break;
                 case 2:
-
                     startTime = System.nanoTime();
                     try {
                         if (edges != null) {
@@ -63,9 +64,8 @@ public class Main {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    //sizeInput.add((double) (edges != null ? edges.size() : 0));
                     vertices = numberOfVertices(edges);
-                    sizeInput.add((double)vertices.size());
+                    sizeInput.add((double)edges.size());
                     break;
                 case 3:
                     try{
@@ -79,16 +79,19 @@ public class Main {
                 case 4:
                     try{
                         Path folder = askFolderName();
-                        for (final File fileEntry : folder.toFile().listFiles()) {
+                        File[] files=folder.toFile().listFiles();
+                        sortFiles(files);
+                        for (final File fileEntry : files) {
                             if (fileEntry.isDirectory()) {
                                 System.out.println("Error not possible to make multiple folders");
                                 break;
                             } else {
                                 try {
-                                    // STEP 1
+                                    String[] parts = String.valueOf(fileEntry).split("/");
+                                    filename= parts[parts.length-1];
+
                                     edges = readFromFile(filename);
                                     createInputFile(edges);
-                                    // STEP 2
 
                                     startTime = System.nanoTime();
                                     try {
@@ -109,11 +112,10 @@ public class Main {
                                     } catch (IOException e) {
                                         throw new RuntimeException(e);
                                     }
-                                    //sizeInput.add((double) (edges != null ? edges.size() : 0));
                                     vertices = numberOfVertices(edges);
                                     sizeInput.add((double)vertices.size());
                                 }catch (IOException e){
-                                    System.out.printf("%s ---- Not Complete ---- Error");
+                                    System.out.printf("---- Not Complete ---- Error");
                                 }
                             }
                         }
@@ -129,6 +131,22 @@ public class Main {
         }
     }
 
+    private static void sortFiles(File[] files){
+        Arrays.sort(files, new Comparator<File>() {
+            @Override
+            public int compare(File file1, File file2) {
+                int number1 = extractNumber(file1);
+                int number2 = extractNumber(file2);
+                return Integer.compare(number1, number2);
+            }
+            private int extractNumber(File file) {
+                String fileName = file.getName();
+                int index = fileName.indexOf('_');
+                String numberString = fileName.substring(index + 1, fileName.indexOf('.'));
+                return Integer.parseInt(numberString);
+            }
+        });
+    }
 
 
     private static Path askFolderName() {
