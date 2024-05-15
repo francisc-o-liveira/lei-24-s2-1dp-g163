@@ -122,7 +122,7 @@ public class Main {
                         createExecutionTimeFile(executionTimes,sizeInput);
                         plotGraphAndShow();
                     }catch (IOException e){
-                        System.out.println("Error Ploting Graph of Execution Time");
+                        System.out.println("Error Ploting Graph of Execution Time.");
                     }
                 case 0:
                     break;
