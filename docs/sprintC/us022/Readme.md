@@ -1,9 +1,9 @@
-# US003 - Register a Collaborator with a job
+# US022 - Add a new entry in Agenda
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
 [Analysis](02.analysis/Readme.md)
 
-[Design](../../template/03.design/Readme.md)
+[Design](03.design/Readme.md)
 
-[Tests & Implementation](../../template/04.tests-and-implementation/Readme.md)
+[Tests & Implementation](04.tests-and-implementation/Readme.md)
