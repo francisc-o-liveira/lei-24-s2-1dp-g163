@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ManageVehiclesUI">
+    <children>
+        <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
+        <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <AnchorPane prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane layoutX="255.0" layoutY="-86.0" prefHeight="40.0" prefWidth="1100.0" style="-fx-background-color: FFFFFF;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <FontAwesomeIconView glyphName="USERS" layoutX="14.0" layoutY="29.0" size="1.5em" />
+                                <Label layoutX="43.0" layoutY="13.0" text="Green Space Management System">
+                                    <font>
+                                        <Font name="Tahoma" size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </top>
+            <left>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane layoutX="-14.0" layoutY="87.0" prefHeight="555.0" prefWidth="215.0" style="-fx-background-color: #1C4741;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="68.0" layoutY="92.0" size="7em" text="" />
+                                <Label layoutX="73.0" layoutY="105.0" text="Welcome," textFill="WHITE">
+                                    <font>
+                                        <Font name="Tahoma" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="29.0" layoutY="130.0" text="VehicleFleetManager" textFill="WHITE">
+                                    <font>
+                                        <Font name="Tahoma Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Line endX="86.5" layoutX="117.0" layoutY="171.0" startX="-107.0" stroke="WHITE" />
+                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="125.0" text="Home">
+                                    <graphic>
+                                        <FontAwesomeIconView glyphName="HOME" />
+                                    </graphic>
+                                </Button>
+                                <Button layoutX="10.0" layoutY="514.0" mnemonicParsing="false" onAction="#doLogout">
+                                    <graphic>
+                                        <FontAwesomeIconView glyphName="SIGN_OUT" size="2em" />
+                                    </graphic>
+                                </Button>
+                                <Label layoutX="58.0" layoutY="523.0" text="Logout" textFill="WHITE">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </left>
+            <center>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <AnchorPane focusTraversable="true" layoutX="157.0" layoutY="78.0" prefHeight="555.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
+                                    <children>
+                                        <AnchorPane prefHeight="530.0" prefWidth="865.0" style="-fx-background-color: FFFFFFFF;">
+                                            <effect>
+                                                <DropShadow />
+                                            </effect>
+                                 <children>
+                                    <TableView fx:id="tableViewVehicles" layoutX="47.0" layoutY="40.0" prefHeight="398.0" prefWidth="770.0">
+                                      <columns>
+                                        <TableColumn fx:id="colBrand" prefWidth="116.0" text="Brand" />
+                                        <TableColumn fx:id="colModel" prefWidth="120.0" text="Model" />
+                                          <TableColumn fx:id="colType" prefWidth="134.5" text="Type" />
+                                          <TableColumn fx:id="colCurrentKm" prefWidth="136.0" text="Current km" />
+                                          <TableColumn fx:id="colCheckUpFreq" prefWidth="139.0" text="Check-up Frequency" />
+                                          <TableColumn fx:id="colButtonsDetails" prefWidth="123.5" text="View Details" />
+                                      </columns>
+                                    </TableView>
+                                    <Button layoutX="691.0" layoutY="446.0" mnemonicParsing="false" onAction="#btnRemove" prefHeight="30.0" prefWidth="67.0" style="-fx-background-color: FF9688;" text="Remove">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Button>
+                                    <Button layoutX="784.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: ADD8E6;" text="Add">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Button>
+                                    <Button layoutX="604.0" layoutY="447.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="29.0" prefWidth="65.0" style="-fx-background-color: D87DAB;" text="Edit">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Button>
+                                    <CheckBox fx:id="vehiclesCheckUp" layoutX="47.0" layoutY="14.0" mnemonicParsing="false" onAction="#filterVehicles" text="Vehicles Needing Check-Up Filter">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font></CheckBox>
+                                    <Button layoutX="592.0" layoutY="489.0" mnemonicParsing="false" onAction="#btnUpdateKm" prefHeight="27.0" prefWidth="184.0" style="-fx-background-color: FFE0B2;" text="Update Kilometers">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font></Button>
+                                    <Button layoutX="523.0" layoutY="448.0" mnemonicParsing="false" onAction="#btnReload" style="-fx-background-color: #9DCC9B;" text="Reload">
+                                       <font>
+                                          <Font name="System Bold" size="13.0" />
+                                       </font>
+                                    </Button>
+                                 </children></AnchorPane>
+                                    </children>
+                                    <effect>
+                                        <DropShadow />
+                                    </effect>
+                                </AnchorPane>
+                            </children>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </AnchorPane>
+                    </children>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
