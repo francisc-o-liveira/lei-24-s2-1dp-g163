@@ -17,39 +17,23 @@ As a GSM, I want to add a new entry in the Agenda.
 
 **From the client clarifications:**
 
+> **Question:** To add an entry in Agenda is needed to selected what data? Date,Task,(Team,Vehicles)? 
+>
+> **Answer:** 
+
+> **Question:** It is possible to add an entry for more than one day? Like, if one task need more than one/two days is needed to add the entry for more than one day?
+>
+> **Answer:** 
+
 > **Question:** 
 >
 > **Answer:** 
 
-> **Question:**  
->
-> **Answer:** 
-
-> **Question:** 
->
-> **Answer:** 
-
-
-> **Question:** 
->
-> **Answer:**
 
 > **Question:** 
 >
 > **Answer:**
 
-
-> **Question:** 
-> 
-> **Answer:** 
-
-> **Question:** 
-> 
-> **Answer:** 
-
-> **Question:** 
-> 
->  **Answer:** 
 
 ### 1.3. Acceptance Criteria
 
@@ -64,10 +48,9 @@ As a GSM, I want to add a new entry in the Agenda.
 
 **Input Data:**
 
-* Typed data:
-
 * Selected data:
-   
+  * Task (by name)
+  * Date (interactive UI)
 
 **Output Data:**
 
