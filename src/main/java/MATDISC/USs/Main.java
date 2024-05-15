@@ -25,7 +25,8 @@ public class Main {
         ArrayList<Edge> result;
         ArrayList<Double> executionTimes = new ArrayList<>();
         ArrayList<Double> sizeInput = new ArrayList<>();
-
+        long executionTime;
+        ArrayList<Point> vertices;
         while (option != 0) {
             option = askOptionShowOptions(edges);
             switch (option) {
@@ -52,7 +53,7 @@ public class Main {
                     }
                     result = kruskalAlgorithm(edges);
                     endTime = System.nanoTime();
-                    long executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+                    executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
                     executionTimes.add((double) executionTime);
                     try {
                         createResultFile(result,executionTime);
@@ -60,11 +61,10 @@ public class Main {
                         throw new RuntimeException(e);
                     }
                     //sizeInput.add((double) (edges != null ? edges.size() : 0));
-                    ArrayList<Point> vertices = numberOfVertices(edges);
+                    vertices = numberOfVertices(edges);
                     sizeInput.add((double)vertices.size());
                     break;
                 case 3:
-
                     try{
                         createExecutionTimeFile(executionTimes,sizeInput);
                         plotGraphAndShow();
@@ -72,11 +72,72 @@ public class Main {
                         e.printStackTrace();
                     }
                     break;
+
+                case 4:
+                    try{
+                        File folder = askFolderName();
+                        for (final File fileEntry : folder.listFiles()) {
+                            if (fileEntry.isDirectory()) {
+                                System.out.println("Error not possible to make multiple folders");
+                                break;
+                            } else {
+                                try {
+                                    // STEP 1
+                                    edges = readFromFile(filename);
+                                    createInputFile(edges);
+                                    // STEP 2
+
+                                    startTime = System.nanoTime();
+                                    try {
+                                        if (edges != null) {
+                                            sortArrayListPrimitivePerPrice(edges);
+                                        }else {
+                                            throw new FileNotFoundException("No data has been loaded!");
+                                        }
+                                    }catch (FileNotFoundException e){
+                                        System.out.println(e.getMessage());
+                                    }
+                                    result = kruskalAlgorithm(edges);
+                                    endTime = System.nanoTime();
+                                    executionTime = TimeUnit.NANOSECONDS.toMillis(endTime - startTime);
+                                    executionTimes.add((double) executionTime);
+                                    try {
+                                        createResultFile(result,executionTime);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    //sizeInput.add((double) (edges != null ? edges.size() : 0));
+                                    vertices = numberOfVertices(edges);
+                                    sizeInput.add((double)vertices.size());
+                                }catch (IOException e){
+                                    System.out.printf("%s ---- Not Complete ---- Error");
+                                }
+                            }
+                        }
+                        createExecutionTimeFile(executionTimes,sizeInput);
+                        plotGraphAndShow();
+                    }catch (IOException e){
+                        System.out.println("Error Ploting Graph of Execution Time");
+                    }
                 case 0:
                     break;
             }
 
         }
+    }
+
+
+
+    private static File askFolderName() {
+        String folderName;
+        File folder = null;
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.println("Please enter a path to the folder: ");
+            folderName = scanner.nextLine();
+            folder = new File(folderName);
+        }while (!folder.isDirectory());
+        return folder;
     }
 
     public static void plotGraphAndShow() throws IOException{
@@ -109,7 +170,8 @@ public class Main {
             System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
         }
         System.out.println("----Option 3 : Plot the graph of Execution Time");
-        while (option < 0 || option > 3) {
+        System.out.println("----Option 4 : Read Folder (opt3/4 included)");
+        while (option < 0 || option > 4) {
             if (option != -1) {
                 System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
             }
