@@ -100,7 +100,11 @@ public class Collaborator{
 
     /** Sets the date of admission of Collaborator */
     public void setAdmissionDate(Date admissionDate) {
+        if(admissionDate.compareTo(birthday)>0){
         this.admissionDate = admissionDate;
+        } else {
+            throw new IllegalArgumentException("Invalid admission date: " + admissionDate);
+        }
     }
 
     /** Gets the address of Collaborator
