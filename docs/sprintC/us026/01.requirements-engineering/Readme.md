@@ -1,17 +1,16 @@
-# US003 - Register a Collaborator with a job 
-
+# US026 - Assign on or more Vehicles to an entry in the Agenda
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Human Resources Manager, I want to register a collaborator with a job and fundamental characteristics.
+As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->  
+>  The Agenda is made up of entries that relate to a task (which was previously in the To-Do List),the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
 >	
 
@@ -42,23 +41,21 @@ As a Human Resources Manager, I want to register a collaborator with a job and f
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US002 - I want to register a job" as there must be at least one job category to classify the collaborator being register.
+* There is a dependency on "US022 - As a GSM, I want to add a new entry in the Agenda" is needed to have an entry in the Agenda
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Typed data:
-
 * Selected data:
-   
+    * Vehicle's List
 
 **Output Data:**
 
-* **Confirmation of Register Collaborator:**
-  - A success notification confirming that the collaborator have been successfully registed.
+* **Confirmation of Assign:**
+  - A success notification confirming that the vehicle have been successfully assigned to the Entry.
 * **Warnings or Errors (if applicable):**
-  - Error messages for any issues encountered during the register collaborator process, such non-existent data or duplications ,etc...
+  - Error messages for any issues encountered during the assign vehicle process, such non-existent data or duplications ,etc...
 * **Operational Feedback:**
   - Overall status of the operation (success or failure), with immediate feedback to the HRM.
 
@@ -77,4 +74,4 @@ As a Human Resources Manager, I want to register a collaborator with a job and f
 
 ### 1.7 Other Relevant Remarks
 
-* The register collaborator stays in a "not activate" state in order to distinguish from "activate" collaborators.(admission date)
+N/A

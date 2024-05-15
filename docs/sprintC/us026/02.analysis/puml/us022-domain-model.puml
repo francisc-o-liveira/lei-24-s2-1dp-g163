@@ -28,29 +28,14 @@ class Entry{
     status
 }
 
-class ToDoList{
-}
-
-class Collaborator{
-
-}
-
-class Equipment{
-}
-
 class Vehicle{
+
 }
 
 
 GSM "1" -- "1" Agenda: have >
 
-GSM "1" -- "1" ToDoList: have >
-
-ToDoList "1" -- "0..*" Task: have >
-
-GSM "1" - "0..*" Entry: register>
-
-Entry "1" - "1" Task : have >
+GSM "1" -- "0..*" Vehicle : assign >
 
 Agenda "1" -- "0..*" Entry: have >
 
@@ -60,8 +45,6 @@ Entry "1" -- "0..*" Vehicle : have>
 
 Entry "1" -- "0..*" Equipment : have >
 
-Team "1" -- "1..*" Collaborator : have>
-
-Team "1" -- "0..*" Skills : have>
+Team "1" -- "0..*" Collaborator : have >
 
 @enduml

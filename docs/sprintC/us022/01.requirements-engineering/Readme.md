@@ -52,7 +52,7 @@ As a GSM, I want to add a new entry in the Agenda.
 **Input Data:**
 
 * Selected data:
-  * Task (by name)
+  * Task
   * Date (interactive UI)
 
 **Output Data:**

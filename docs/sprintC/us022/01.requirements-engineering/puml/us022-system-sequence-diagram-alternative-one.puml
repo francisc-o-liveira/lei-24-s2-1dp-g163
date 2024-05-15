@@ -12,10 +12,16 @@ participant ":System" as System
 
 activate Manager 
 
-    Manager -> System : asks to add a new entry on Agenda
+    Manager -> System : asks to add a new Entry on Agenda
     activate System
 
-        System --> Manager : requests data (i.e. Date,Task,Team,Vehicle,...)
+    System --> Manager : show the To Do List and ask to \n select one Task
+    deactivate System
+
+    Manager -> System : select a Task
+    activate System
+
+        System --> Manager : requests data (i.e. Date)
     deactivate System
 
    Manager  -> System : types requested data
