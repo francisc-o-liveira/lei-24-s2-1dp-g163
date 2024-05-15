@@ -1,8 +1,5 @@
 package MATDISC.USs;
 
-import org.knowm.xchart.*;
-import org.knowm.xchart.style.Styler;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -30,7 +27,7 @@ public class Main {
         ArrayList<Double> sizeInput = new ArrayList<>();
 
         while (option != 0) {
-            option = askOptionShowOptions();
+            option = askOptionShowOptions(edges);
             switch (option) {
                 case 1:
                     filename = askFileName();
@@ -42,19 +39,16 @@ public class Main {
                     }
                     break;
                 case 2:
-                    if (edges == null) {
-                        System.out.println("No file has been loaded!");
-                        break;
-                    }
+
                     startTime = System.nanoTime();
                     try {
                         if (edges != null) {
                             sortArrayListPrimitivePerPrice(edges);
                         }else {
-                            throw new FileNotFoundException();
+                            throw new FileNotFoundException("No data has been loaded!");
                         }
                     }catch (FileNotFoundException e){
-                        System.out.println("File Empty, not found any Edge on this file");
+                        System.out.println(e.getMessage());
                     }
                     result = kruskalAlgorithm(edges);
                     endTime = System.nanoTime();
@@ -66,7 +60,7 @@ public class Main {
                         throw new RuntimeException(e);
                     }
                     //sizeInput.add((double) (edges != null ? edges.size() : 0));
-                    ArrayList<Point> vertices=numberOfVertices(edges);
+                    ArrayList<Point> vertices = numberOfVertices(edges);
                     sizeInput.add((double)vertices.size());
                     break;
                 case 3:
@@ -104,12 +98,16 @@ public class Main {
         return filename;
     }
 
-    public static int askOptionShowOptions() {
+    public static int askOptionShowOptions(ArrayList<Edge> edges) {
         Scanner scan = new Scanner(System.in);
         int option = -1;
         System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
-        System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
+        if (edges==null){
+            System.out.println("----Option 2 : Kruskal Algorithm (No Data Loaded)");
+        }else{
+            System.out.println("----Option 2 : Kruskal Algorithm (Data Loaded)");
+        }
         System.out.println("----Option 3 : Plot the graph of Execution Time");
         while (option < 0 || option > 3) {
             if (option != -1) {
@@ -121,30 +119,6 @@ public class Main {
         return option;
     }
 
-    public static ArrayList<Edge> readFromFile(String fileName) throws FileNotFoundException {
-        Scanner scanFile = new Scanner(new File(fileName));
-        String[] line;
-        ArrayList<Edge> edges = new ArrayList<>();
-        while (scanFile.hasNextLine()) {
-            line = scanFile.nextLine().split(";");
-            edges.add(new Edge(new Point(line[0]), new Point(line[1]), Integer.parseInt(line[2])));
-        }
-        return edges;
-    }
-
-    // START US013
-    public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
-        Edge saveEdge;
-        for (int i = 0; i < edges.size() - 1; i++) {
-            for (int j = i + 1; j < edges.size(); j++) {
-                if (edges.get(j).getPrice() < edges.get(i).getPrice()) {
-                    saveEdge = edges.get(i);
-                    edges.set(i, edges.get(j));
-                    edges.set(j, saveEdge);
-                }
-            }
-        }
-    }
 
     // VERTICES == POINTS
     public static ArrayList<Point> numberOfVertices(ArrayList<Edge> edges) {
@@ -174,63 +148,105 @@ public class Main {
         return vertices;
     }
 
+    public static ArrayList<Edge> readFromFile(String fileName) throws FileNotFoundException {
+        Scanner scanFile = new Scanner(new File(fileName));
+        String[] line;
+        ArrayList<Edge> edges = new ArrayList<>();
+        while (scanFile.hasNextLine()) {
+            line = scanFile.nextLine().split(";");
+            edges.add(new Edge(new Point(line[0]), new Point(line[1]), Integer.parseInt(line[2])));
+        }
+        return edges;
+    }
+
+    // START US013
+    public static void sortArrayListPrimitivePerPrice(ArrayList<Edge> edges) {
+        Edge saveEdge;
+        for (int i = 0; i < edges.size() - 1; i++) {
+            for (int j = i + 1; j < edges.size(); j++) {
+                if (edges.get(j).getPrice() < edges.get(i).getPrice()) {
+                    saveEdge = edges.get(i);
+                    edges.set(i, edges.get(j));
+                    edges.set(j, saveEdge);
+                }
+            }
+        }
+    }
+
+    // VERTICES == POINTS
+    private static ArrayList<Point> getVertices(ArrayList<Edge> edges) {
+        ArrayList<Point> vertices = new ArrayList<>();
+        for (Edge edge : edges) {
+            if (!vertices.contains(edge.getP1())) {
+                vertices.add(edge.getP1());
+            }
+            if (!vertices.contains(edge.getP2())) {
+                vertices.add(edge.getP2());
+            }
+        }
+        return vertices;
+    }
+
+    private static int find(int[] parent, int i) {
+        if (parent[i] != i) {
+            parent[i] = find(parent, parent[i]);
+        }
+        return parent[i];
+    }
+
+    private static void union(int[] parent, int[] rank, int x, int y) {
+        int rootX = find(parent, x);
+        int rootY = find(parent, y);
+
+        if (rootX != rootY) {
+            if (rank[rootX] > rank[rootY]) {
+                parent[rootY] = rootX;
+            } else if (rank[rootX] < rank[rootY]) {
+                parent[rootX] = rootY;
+            } else {
+                parent[rootY] = rootX;
+                rank[rootX]++;
+            }
+        }
+    }
+
     public static ArrayList<Edge> kruskalAlgorithm(ArrayList<Edge> edges) {
-        int na = 0;
-        ArrayList<Point> vertices = numberOfVertices(edges);
-        ArrayList<Edge> edgesSave = new ArrayList<>();
-        Point[][] S = new Point[vertices.size()][vertices.size()];
-        distributeInArrayPoints(S, vertices);
+        ArrayList<Edge> result = new ArrayList<>();
 
-        int valueIndexLine1 = 0;
-        int valueIndexLine2 = 0;
-        int valueIndexColumn1 = 0;
-        int valueIndexColumn2 = 0;
-        for (Edge edgeX : edges) {
-            Point x1 = edgeX.getP1();
-            Point x2 = edgeX.getP2();
-            for (int j = 0; j < S[0].length; j++) {
-                for (int k = 0; k < S.length; k++) {
-                    if (x1.equals(S[k][j])) {
-                        valueIndexColumn1 = j;
-                        valueIndexLine1 = k;
-                    }
-                    if (x2.equals(S[k][j])) {
-                        valueIndexColumn2 = j;
-                        valueIndexLine2 = k;
-                    }
-                }
-            }
-            if (valueIndexColumn1 != valueIndexColumn2) {
-                na++;
-                if (na == vertices.size()) {
-                    break;
-                }
-                edgesSave.add(edgeX);
-                int newIndexLine2 = findNull(valueIndexColumn1, S);
-                for (int l = 0; l < S[valueIndexColumn2].length; l++) {
-                    if (S[l][valueIndexColumn2] == null) {
-                        break;
-                    }
-                    S[newIndexLine2][valueIndexColumn1] = S[l][valueIndexColumn2];
-                    S[l][valueIndexColumn2] = null;
-                    newIndexLine2++;
-                }
+        // Get all vertices
+        ArrayList<Point> vertices = getVertices(edges);
+        int V = vertices.size();
+        // Initialize Union-Find structures
+        int[] parent = new int[V];
+        int[] rank = new int[V];
+        for (int i = 0; i < V; i++) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+        // Helper to find index of a vertex in vertices list
+
+
+        // Kruskal's algorithm
+
+        for (Edge edge : edges) {
+            int x = findVertexIndex(edge.getP1(), vertices);
+            int y = findVertexIndex(edge.getP2(), vertices);
+
+            int xRoot = find(parent, x);
+            int yRoot = find(parent, y);
+
+            if (xRoot != yRoot) {
+                result.add(edge);
+                union(parent, rank, xRoot, yRoot);
             }
         }
-        return edgesSave;
+        return result;
     }
 
-    private static void distributeInArrayPoints(Point[][] s, ArrayList<Point> vertices) {
-        int i = 0;
-        for (Point vertice : vertices) {
-            s[0][i] = vertice;
-            i++;
-        }
-    }
 
-    public static int findNull(int column, Point[][] S) {
-        for (int i = 0; i < S[column].length; i++) {
-            if (S[i][column] == null) {
+    private static int findVertexIndex(Point p, ArrayList<Point> vertices) {
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i).equals(p)) {
                 return i;
             }
         }
