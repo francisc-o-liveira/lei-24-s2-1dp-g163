@@ -38,7 +38,7 @@ As a GSM, I want to add a new entry to the To-Do List.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US002 - I want to register a job" as there must be at least one job category to classify the collaborator being register.
+* There is a dependency on "US20 - As a Green Space Manager (GSM), I want to register a green space (garden, medium-sized park or large-sized park) and its respective area."
 
 ### 1.5 Input and Output Data
 
@@ -46,8 +46,7 @@ As a GSM, I want to add a new entry to the To-Do List.
 
 * Typed data:
     * 
-      
-	
+
 * Selected data:
     * urgency degree
 
