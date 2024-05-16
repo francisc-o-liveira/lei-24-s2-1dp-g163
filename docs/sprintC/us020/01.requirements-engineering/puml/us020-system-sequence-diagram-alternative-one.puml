@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "GSM" as Manager
+participant ":System" as System
+
+activate Manager 
+
+    Manager -> System : asks to register a green space
+    activate System
+
+        System --> Manager : requests data (greenSpaceType)
+    deactivate System
+
+   Manager  -> System : selects data
+    activate System
+
+
+    System --> Manager  : requests data (greenSpaceArea)
+        deactivate System
+
+        Manager  -> System : typed requested data
+        activate System
+
+     System --> Manager : confirms data
+
+       Manager  -> System : displays operation success
+
+
+@enduml
