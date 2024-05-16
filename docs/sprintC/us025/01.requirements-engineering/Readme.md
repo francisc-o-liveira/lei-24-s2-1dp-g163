@@ -26,16 +26,13 @@ As a GSM, I want to Cancel an entry in the Agenda.
 
 **Input Data:**
 
-* Typed data:
-    * 
-	
 * Selected data:
-    * 
+    * entry
 
 **Output Data:**
 
-* **Confirmation of cancel entry in the Agenda:**
-  - A success notification confirming that the collaborator have been successfully registed.
+* **Confirmation of canceled entry in the Agenda:**
+  - A success notification confirming that the entry is canceled.
 
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -44,10 +41,6 @@ As a GSM, I want to Cancel an entry in the Agenda.
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative One](svg/us025-system-sequence-diagram-alternative-one.svg)
 
 ### 1.7 Other Relevant Remarks
