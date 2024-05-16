@@ -33,22 +33,19 @@ As a GSM, I want to Postpone an entry in the Agenda to a future date.
 **Input Data:**
 
 * Typed data:
-    * 
-    * 
+    * future date 
   
 	
 * Selected data:
-    * 
-    * 
+    * Agenda entry
 
 **Output Data:**
-
-* **Confirmation of Register Collaborator:**
-  - A success notification confirming that the collaborator have been successfully registed.
+* **Confirmation of Postpone:**
+  - A success notification confirming the future date.
 * **Warnings or Errors (if applicable):**
-  - Error messages for any issues encountered during the register collaborator process, such non-existent data or duplications ,etc...
+  - Error messages for any issues encountered when postponing an Agenda entry.
 * **Operational Feedback:**
-  - Overall status of the operation (success or failure), with immediate feedback to the HRM.
+  - Overall status of the operation (success or failure), with immediate feedback to the GSM.
 
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -57,12 +54,7 @@ As a GSM, I want to Postpone an entry in the Agenda to a future date.
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative One](svg/us024-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
 ### 1.7 Other Relevant Remarks
-
-* 
+N/A
