@@ -28,7 +28,10 @@ class Entry{
     status
 }
 
-
+class Task{
+    greenSpaceAssigned
+    degreeUrgency
+}
 
 class Collaborator{
 
@@ -42,11 +45,11 @@ class Vehicle{
 
 
 
-GSM "1" -- "0..*" Task: have >
+GSM "1" -- "1..*" Task: have >
 
-GSM "1" - "0..*" Entry: register>
+GSM "1" - "1..*" Entry: register >
 
-Entry "1" - "1" Task : extends >
+Entry "1" - "1" Task : extends
 
 Entry "1" -- "0..1" Team : have >
 
