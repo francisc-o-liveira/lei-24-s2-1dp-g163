@@ -21,7 +21,7 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 **From the client clarifications:**
 
 > **Question:** To register a green space, what is the criteria needed to classify it as a medium-sized park or a large-sized park?
-> **Answer:** It's a GSM responsability to decide the classification.
+> **Answer:** It's a GSM responsibility to decide the classification.
 
 
 ### 1.3. Acceptance Criteria
