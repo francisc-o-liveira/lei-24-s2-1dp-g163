@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "GSM" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks to postpone an entry in the Agenda
+    activate System
+
+        System --> Manager : show Agenda entries
+    deactivate System
+
+   Manager  -> System : selects an Agenda entry
+    activate System
+
+    System --> Manager : requests data (future date)
+    deactivate System
+
+    Manager  -> System : types requested data
+        activate System
+
+    alt System Verification
+    System --> System  : verify data
+    end
+
+        System --> Manager  : requests confirmation
+    deactivate System
+
+    Manager  -> System : confirms data
+    activate System
+
+        System --> Manager : displays operation success
+    deactivate System
+
+@enduml
