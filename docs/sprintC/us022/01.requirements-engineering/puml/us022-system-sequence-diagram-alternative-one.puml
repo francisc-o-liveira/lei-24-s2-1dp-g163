@@ -15,10 +15,10 @@ activate Manager
     Manager -> System : asks to add a new Entry on Agenda
     activate System
 
-    System --> Manager : show the To Do List and ask to \n select one Task
+    System --> Manager : show the To Do List and ask to \n select one Entry
     deactivate System
 
-    Manager -> System : select a Task
+    Manager -> System : select a Entry
     activate System
 
         System --> Manager : requests data (i.e. Date)

@@ -32,12 +32,15 @@ class Vehicle{
 
 }
 
+class Task{
 
-GSM "1" -- "1" Agenda: have >
+}
+
+GSM "1" -- "0..*" Entry: have >
+
+Entry "1" - "1" Task : extends
 
 GSM "1" -- "0..*" Vehicle : assign >
-
-Agenda "1" -- "0..*" Entry: have >
 
 Entry "1" -- "0..1" Team : have >
 
