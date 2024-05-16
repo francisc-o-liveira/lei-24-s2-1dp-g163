@@ -1,4 +1,4 @@
-# US026 - Assign on or more Vehicles to an entry in the Agenda
+# US026 - Assign one or more Vehicles to an entry in the Agenda
 
 ## 1. Requirements Engineering
 
@@ -12,9 +12,8 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 >  The Agenda is made up of entries that relate to a task (which was previously in the To-Do List),the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
->	
+>	The Agenda is a crucial mechanism for planning the week’s work. Each entry in the Agenda defines a task (that was previously included in the to-do list). A team will carry out that task in a green space at a certain time interval on a specific date. Comparatively analyzing the Agenda entries and the pending tasks (to-do list) allows you to evaluate the work still to be done, the busyness of the week, and the work performed by a team in a green space at a determined time interval and on a specific date.
 
->	
 
 **From the client clarifications:**
 
@@ -48,7 +47,8 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 **Input Data:**
 
 * Selected data:
-    * Vehicle's List
+  * Entry
+  * Vehicle's
 
 **Output Data:**
 
@@ -57,7 +57,7 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 * **Warnings or Errors (if applicable):**
   - Error messages for any issues encountered during the assign vehicle process, such non-existent data or duplications ,etc...
 * **Operational Feedback:**
-  - Overall status of the operation (success or failure), with immediate feedback to the HRM.
+  - Overall status of the operation (success or failure), with immediate feedback to the GSM.
 
 
 ### 1.6. System Sequence Diagram (SSD)

@@ -7,45 +7,33 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "HRM" as Manager
+actor "GSM" as Manager
 participant ":System" as System
 
 activate Manager 
 
-    Manager -> System : asks to register a new collaborator
+    Manager -> System : asks to assign Vehicles to an Entry
     activate System
 
-        System --> Manager : requests data (i.e. name, date birthday, admission data,\n address, email, phone number, ...)
+        System --> Manager : show To Do list and ask to select one Entry
     deactivate System
 
-   Manager  -> System : types requested data
+    Manager -> System : selects an Entry
     activate System
 
-    alt System Verification
-    System --> System  : verify data
-    end
 
-    System --> Manager  : shows identification card type list and asks to select one
+    System --> Manager  : shows Entry information and Vehicle list \nand ask if want to assign vehicle
         deactivate System
-
-        Manager  -> System : selects a id card type
+loop
+        Manager  -> System : selects a vehicle
         activate System
 
-     System --> Manager : requests data (i.e. taxpayer number/\ncitizen card number/passport number)
+     System --> Manager : ask if want to add more
         deactivate System
 
-       Manager  -> System : types requested data
+        Manager --> System : introduce yes and select another vehicle to assign
         activate System
-
-         alt System Verification
-            System --> System  : verify id card number
-            end
-
-        System --> Manager  : shows job category list and asks to select one
-    deactivate System
-
-    Manager  -> System : selects a job category
-    activate System
+end
 
         System --> Manager  : shows all data and requests confirmation
     deactivate System

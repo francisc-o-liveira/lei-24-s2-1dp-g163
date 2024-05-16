@@ -15,27 +15,13 @@ activate Manager
     Manager -> System : asks to add a new entry on Agenda
     activate System
 
-        System --> Manager : shows Task list and asks to select one
+        System --> Manager : shows task list and asks to select one
     deactivate System
 
-    Manager -> System : selects a Task
+    Manager -> System : selects a task
     activate System
 
-     System --> Manager : shows Team list and asks to select one
-        deactivate System
-
-    Manager -> System : selects a Team
-        activate System
-
-     System --> Manager : show Vehicle List and ask if want to add
-        deactivate System
-    opt
-       Manager -> System : selects the vehicle's
-               activate System
-    end
-        alt
-       System --> System : verify data
-        end
+        System  --> Manager : requests data (timePeriod)
 
         System --> Manager :shows all data and requests confirmation
     deactivate System
