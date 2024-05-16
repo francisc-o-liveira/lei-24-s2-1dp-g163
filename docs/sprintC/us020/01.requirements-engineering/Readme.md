@@ -56,7 +56,8 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_One.svg](svg%2Fus020-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_One.svg)
+![System Sequence Diagram - Alternative One](svg/us020-system-sequence-diagram-alternative-two-System_Sequence_Diagram__SSD____Alternative_One.svg)
+
 
 ### 1.7 Other Relevant Remarks
 N/A
