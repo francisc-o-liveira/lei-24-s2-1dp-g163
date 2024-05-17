@@ -11,7 +11,7 @@ As a GSM, I want to add a new entry in the Agenda.
 
 **From the specifications document:**
 
->   In the daily management, the GSM uses two essential tools: the Agenda and the Task List (aka To-Do List).
+> In the daily management, the GSM uses two essential tools: the Agenda and the Task List (aka To-Do List).
 
 > The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
@@ -20,7 +20,7 @@ As a GSM, I want to add a new entry in the Agenda.
 
 **From the client clarifications:**
 
-> **Question:** To add an entry in Agenda is needed to selected what data? Date,Task,(Team,Vehicles)? 
+> **Question:** To add an entry in Agenda is needed to selected what data? Date?
 >
 > **Answer:** 
 
@@ -28,10 +28,9 @@ As a GSM, I want to add a new entry in the Agenda.
 >
 > **Answer:** 
 
-> **Question:** 
+> **Question:** Can I add an entry that has a time period that already have an existing entry in the Agenda?
 >
 > **Answer:** 
-
 
 > **Question:** 
 >

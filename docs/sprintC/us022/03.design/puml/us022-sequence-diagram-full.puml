@@ -74,6 +74,8 @@ activate GSM
                                         deactivate MAPPER
 
                                         MAPPER -> ListDTO : add(entryDto)
+                                        activate ListDTO
+                                        deactivate ListDTO
 
                                         MAPPER -> CTRL : toDoListDto
                                         deactivate MAPPER
@@ -112,9 +114,9 @@ activate GSM
             activate DTO
             deactivate DTO
 
-            MAPPER -> Entry : setTimePeriod(time)
-            activate Entry
-            deactivate Entry
+            MAPPER -> OBJ : setTimePeriod(time)
+            activate OBJ
+            deactivate OBJ
 
             MAPPER -> EntryRepository : true / false
             deactivate MAPPER
