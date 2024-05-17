@@ -17,11 +17,11 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 **From the client clarifications:**
 
-> **Question:** 
+> **Question:** The GSM can only assign Vehicles without an Entry in the same time ?
 >
 > **Answer:**  
 
-> **Question:**  
+> **Question:**  How many vehicles can have an Entry on maximum value?
 >
 > **Answer:** 
 
