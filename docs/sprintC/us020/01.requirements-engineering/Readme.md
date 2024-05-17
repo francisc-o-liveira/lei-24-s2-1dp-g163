@@ -21,7 +21,16 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 **From the client clarifications:**
 
 > **Question:** To register a green space, what is the criteria needed to classify it as a medium-sized park or a large-sized park?
+> 
 > **Answer:** It's a GSM responsibility to decide the classification.
+
+> **Question:** Can two green spaces have the same name? 
+> 
+> **Answer:** No.
+
+> **Question:** In which unit should the area be measured in?
+> 
+> > **Answer:** Usually, areas are measured in hectares.
 
 
 ### 1.3. Acceptance Criteria
@@ -42,6 +51,8 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 * Typed data:
   * area
+  * address
+  * name
 
 * Selected data:
   *  green space(greenSpaceType- garden, medium-sized or large-sized park)
