@@ -17,6 +17,7 @@ import javafx.stage.WindowEvent;
 import javafx.util.converter.IntegerStringConverter;
 import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -82,12 +83,16 @@ public class GenerateTeamsUI {
         tableViewTeam.setItems(skillsToChoose);
     }
 
-    public void getSkillsAndCollabs(){
+    public void getSkillsAndCollabs() throws IOException{
         skillsSelectedForTeam.clear();
         for (Skill s : skillsToChoose) {
-            if (s.selectedSkillForTeam().get()==true) {
-                skillsSelectedForTeam.add(s);
-                numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
+            if(s.selectedSkillForTeam().get()){
+                if(s.numberCollabsPerSkillProperty() == null){
+                    throw new IOException("Please fill all the necessary fields");
+                }else if (s.numberCollabsPerSkillProperty().get() != 0) {
+                    skillsSelectedForTeam.add(s);
+                    numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
+                }
             }
         }
     }
@@ -97,13 +102,18 @@ public class GenerateTeamsUI {
         int maxTeamSize=Integer.parseInt(maximumTeamSize.getText());
         int minTeamSize=Integer.parseInt(minimumTeamSize.getText());
         String teamName = nameForTeam.getText();
-        getSkillsAndCollabs();
         try{
-            Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
+            getSkillsAndCollabs();
+            try{
+                Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
                 if (teamCreated.isPresent()) {
                     Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
                     popUp.setHeaderText("Team Created!");
-                    popUp.setContentText("Do you wish to add this team?");
+                    StringBuilder contentText = new StringBuilder("Collaborators:\n");
+                    for (Collaborator c : teamCreated.get().getTeamList()) {
+                        contentText.append(String.format("%s%n", c.getName()));
+                    }
+                    popUp.setContentText(contentText.toString() + "\nDo you wish to add this team?");
                     ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
                     ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
 
@@ -114,7 +124,10 @@ public class GenerateTeamsUI {
                         stageClose.close();
                     }
                 }
-        } catch (RuntimeException e){
+            } catch (RuntimeException e){
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+            }
+        } catch (IOException e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }

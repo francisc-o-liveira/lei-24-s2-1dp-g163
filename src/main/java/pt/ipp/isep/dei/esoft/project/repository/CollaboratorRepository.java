@@ -140,17 +140,23 @@ public class CollaboratorRepository {
      */
 
     public List<Collaborator> getCollaboratorsNotActiveBySkills(List<Skill> skill){
+        boolean valueCollabAdd ;
         List<Collaborator> collaboratorNotActiveBySkills=new ArrayList<>();
         if (skill==null || skill.isEmpty()){
             return getCollaboratorsNotActive();
         }
-        for(int i=0; i<skill.size(); i++){
             for(Collaborator c : collaboratorList){
-                if(c.getStatus()==NotActive && c.verifyIfHaveSkill(skill.get(i))){
-                    collaboratorNotActiveBySkills.add(c);
+                valueCollabAdd = false;
+                for(int i=0; i<skill.size(); i++) {
+                    if (c.getStatus() == NotActive && c.verifyIfHaveSkill(skill.get(i))) {
+                        if(!valueCollabAdd){
+                            collaboratorNotActiveBySkills.add(c);
+                            valueCollabAdd = true;
+                        }
+                    }
                 }
             }
-        }
+
         sortCollaboratorsByNumberOfSkills(collaboratorNotActiveBySkills);
         return collaboratorNotActiveBySkills;
     }

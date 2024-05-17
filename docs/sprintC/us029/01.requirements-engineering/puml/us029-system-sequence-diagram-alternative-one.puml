@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "Collaborator" as Collaborator
+participant ":System" as System
+
+activate Collaborator
+
+    Collaborator -> System : asks to show the task's
+    activate System
+
+    System --> Collaborator : shows the task's
+    deactivate System
+
+    Collaborator -> System : selects the task that wants to record the completion
+    activate System
+
+    System --> Collaborator : request confirmation
+    deactivate System
+
+    Collaborator -> System : confirms data
+    activate System
+
+    System --> Collaborator : display operation success
+    deactivate System
+@enduml

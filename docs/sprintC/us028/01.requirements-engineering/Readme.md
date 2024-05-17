@@ -48,13 +48,13 @@ As a Collaborator, I wish to consult the tasks assigned to me.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US002 - I want to register a job" as there must be at least one job category to classify the collaborator being register.
+* 
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Sorted Data:
+* Sorted Options:
   * By Park
   * By Date (Month/Week/Year)
 
