@@ -56,7 +56,7 @@ class AssignEntryOnAgendaController {
     + AssignEntryOnAgendaController()
     + getToDoList()
     + assignEntryOnAgenda()
-    - getHRMFromSession()
+    - getGSMFromSession()
 }
 
 note right of AssignEntryOnAgendaController
