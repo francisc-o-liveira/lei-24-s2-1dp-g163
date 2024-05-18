@@ -52,7 +52,7 @@ class Repositories {
 }
 
 class AssignEntryOnAgendaController {
-    - EntryRepository entryRepository
+    - EntryRepository repository
     + AssignEntryOnAgendaController()
     + getToDoList()
     + assignEntryOnAgenda()
@@ -71,6 +71,16 @@ end note
 class AssignEntryOnAgendaUI {
 }
 
+class EntryMapper{
+    - List<EntryDto>
+    + toModel()
+    + toDto()
+}
+
+class EntryDto{
+}
+
+
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
@@ -79,7 +89,13 @@ AssignEntryOnAgendaUI .> AssignEntryOnAgendaController
 AssignEntryOnAgendaController .> Repositories : repositories
 Repositories "1" --> "1" EntryRepository
 
+EntryRepository  ..>  EntryMapper
+
+EntryMapper --> EntryDto
+
+
 AssignEntryOnAgendaController ..> EntryRepository : EntryRepository
+AssignEntryOnAgendaController ..> EntryMapper : EntryMapper
 
 ApplicationSession --> "1" UserSession : userSession
 AssignEntryOnAgendaController ..> ApplicationSession

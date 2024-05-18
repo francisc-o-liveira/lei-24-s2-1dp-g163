@@ -70,4 +70,4 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 ### 1.7 Other Relevant Remarks
 
-N/A
+* The Collaborator Email need to be unique, because to find the Collaborator in the system is needed to search by email (unique by Collaborator).
