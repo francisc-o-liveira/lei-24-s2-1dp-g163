@@ -15,16 +15,16 @@ activate Manager
     Manager -> System : asks to assign Vehicles to an Entry
     activate System
 
-        System --> Manager : show To Do list and ask to select one Entry
+        System --> Manager : show Agenda Entry list and ask to select one Entry
     deactivate System
 
     Manager -> System : selects an Entry
     activate System
 
-
-    System --> Manager  : shows Entry information and Vehicle list \nand ask if want to assign vehicle
-        deactivate System
 loop
+    System --> Manager  : shows Entry information and Vehicle list \nand ask to select vehicle
+        deactivate System
+
         Manager  -> System : selects a vehicle
         activate System
 
@@ -41,7 +41,7 @@ end
     Manager  -> System : confirms data
     activate System
 
-        System --> Manager : displays operation success / show list of existing collaborators
+        System --> Manager : displays operation success / show Entry in Agenda
     deactivate System
 
 @enduml

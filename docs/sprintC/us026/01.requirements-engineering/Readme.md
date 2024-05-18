@@ -35,8 +35,7 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 ### 1.3. Acceptance Criteria
 
 * **AC1:** 
-* **AC2:** 
-* **AC3:** 
+* **AC2:**
 
 ### 1.4. Found out Dependencies
 
@@ -66,11 +65,8 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us026-system-sequence-diagram-alternative-one.svg)
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 

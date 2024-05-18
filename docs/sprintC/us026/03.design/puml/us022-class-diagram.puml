@@ -1,0 +1,93 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class GSM {
+}
+
+
+class Entry {
+    - List<Vehicles>
+    - Team
+    - TimePeriod
+    - Status
+    + Entry()
+    + setEntry(TimePeriod)
+}
+
+class Task{
+    - GreenSpace
+}
+
+
+class EntryRepository {
+    - List <Entry> : toDoList
+    - List <Entry> : agenda
+
+    + getToDoList()
+    + getAgenda()
+    + setEntryOnAgenda()
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEntryRepository()
+}
+
+class AssignEntryOnAgendaController {
+    - EntryRepository entryRepository
+    + AssignEntryOnAgendaController()
+    + getToDoList()
+    + assignEntryOnAgenda()
+    - getHRMFromSession()
+}
+
+note right of AssignEntryOnAgendaController
+    - entry is achieved with entry repository
+end note
+
+note bottom of EntryRepository
+    - used for displaying
+    the to do list
+end note
+
+class AssignEntryOnAgendaUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AssignEntryOnAgendaUI .> AssignEntryOnAgendaController
+
+AssignEntryOnAgendaController .> Repositories : repositories
+Repositories "1" --> "1" EntryRepository
+
+AssignEntryOnAgendaController ..> EntryRepository : EntryRepository
+
+ApplicationSession --> "1" UserSession : userSession
+AssignEntryOnAgendaController ..> ApplicationSession
+AssignEntryOnAgendaController ..> UserSession
+EntryRepository "1" --> "*" Entry : entry's
+EntryRepository --> "*" GSM : employs
+Entry --> "*" GSM : employs
+Task "1" -> "1" Entry : extends
+
+
+@enduml
