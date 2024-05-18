@@ -122,7 +122,7 @@ activate GSM
             deactivate MAPPER
 
             EntryRepository -> CTRL : true / false
-            deactivate MAPPER
+            deactivate EntryRepository
 
             CTRL -> UI : true / false
             deactivate CTRL
