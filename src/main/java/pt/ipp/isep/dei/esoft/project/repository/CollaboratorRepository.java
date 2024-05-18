@@ -123,8 +123,8 @@ public class CollaboratorRepository {
      * @return
      */
 
-    public boolean activateCollaborators(Team team){
-        for(Collaborator c : team.getTeamList()){
+    public boolean activateCollaborators(List<Collaborator> team){
+        for(Collaborator c : team){
             if(c.getStatus()==NotActive){
                 c.setStatus(Active);
             }

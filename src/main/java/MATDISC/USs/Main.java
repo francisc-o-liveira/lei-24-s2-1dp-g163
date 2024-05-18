@@ -319,9 +319,7 @@ public class Main {
         }
         // Helper to find index of a vertex in vertices list
 
-
         // Kruskal's algorithm
-
         for (Edge edge : edges) {
             int x = findVertexIndex(edge.getP1(), vertices);
             int y = findVertexIndex(edge.getP2(), vertices);

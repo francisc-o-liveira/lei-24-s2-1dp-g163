@@ -7,31 +7,21 @@ title System Sequence Diagram (SSD) - Alternative Two
 
 autonumber
 
-actor "HRM" as Manager
+actor "GSM" as Manager
 participant ":System" as System
 
 activate Manager
 
-    Manager -> System : asks to register a new collaborator
+    Manager -> System : asks to add a new entry on Agenda
     activate System
 
-        System --> Manager : shows job category list and asks to select one
+        System --> Manager : shows task list and asks to select one
     deactivate System
 
-    Manager -> System : selects a job category
+    Manager -> System : selects a task
     activate System
 
-     System --> Manager : shows docType list and asks to select one
-        deactivate System
-
-        Manager -> System : selects a docType
-        activate System
-
-        System --> Manager : requests data (i.e. name, date of birthday, admission data,\n address, email, phone number,docType,(taxpayer number/\ncitizen card number/passport number),...)
-    deactivate System
-
-    Manager -> System : types requested data
-    activate System
+        System  --> Manager : requests data (timePeriod)
 
         System --> Manager :shows all data and requests confirmation
     deactivate System

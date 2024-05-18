@@ -84,7 +84,7 @@ public class GenerateTeamController{
      * @param team - team of selected collaborators
      */
     public void activateCollaborators(Team team){
-        collaboratorRepository.activateCollaborators(team);
+        collaboratorRepository.activateCollaborators(team.getTeamList());
     }
 
     /** Gets list of teams

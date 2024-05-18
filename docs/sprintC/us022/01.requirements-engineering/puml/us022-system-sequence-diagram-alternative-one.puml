@@ -7,15 +7,21 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "HRM" as Manager
+actor "GSM" as Manager
 participant ":System" as System
 
 activate Manager 
 
-    Manager -> System : asks to register a new collaborator
+    Manager -> System : asks to add a new Entry on Agenda
     activate System
 
-        System --> Manager : requests data (i.e. name, date birthday, admission data,\n address, email, phone number, ...)
+    System --> Manager : show the To Do List and ask to \n select one Entry
+    deactivate System
+
+    Manager -> System : select a Entry
+    activate System
+
+        System --> Manager : requests data (i.e. Date)
     deactivate System
 
    Manager  -> System : types requested data
@@ -25,35 +31,13 @@ activate Manager
     System --> System  : verify data
     end
 
-    System --> Manager  : shows identification card type list and asks to select one
-        deactivate System
-
-        Manager  -> System : selects a id card type
-        activate System
-
-     System --> Manager : requests data (i.e. taxpayer number/\ncitizen card number/passport number)
-        deactivate System
-
-       Manager  -> System : types requested data
-        activate System
-
-         alt System Verification
-            System --> System  : verify id card number
-            end
-
-        System --> Manager  : shows job category list and asks to select one
-    deactivate System
-
-    Manager  -> System : selects a job category
-    activate System
-
         System --> Manager  : shows all data and requests confirmation
     deactivate System
 
     Manager  -> System : confirms data
     activate System
 
-        System --> Manager : displays operation success / show list of existing collaborators
+        System --> Manager : displays operation success / show agenda
     deactivate System
 
 @enduml

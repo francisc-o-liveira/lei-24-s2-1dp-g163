@@ -31,12 +31,13 @@ class Skill {
 }
 
 class Collaborator{
-job
-task
 name
+job
 birthdate
 admissionDate
 address
+addressCity
+addressZipCode
 mobileNumber
 email
 docType

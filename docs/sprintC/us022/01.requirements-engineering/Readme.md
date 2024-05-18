@@ -11,45 +11,31 @@ As a GSM, I want to add a new entry in the Agenda.
 
 **From the specifications document:**
 
->   In the daily management, the GSM uses two essential tools: the Agenda and the Task List (aka To-Do List).
+> In the daily management, the GSM uses two essential tools: the Agenda and the Task List (aka To-Do List).
 
->	The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
+> The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
+
+> The Agenda is a crucial mechanism for planning the week’s work. Each entry in the Agenda defines a task (that was previously included in the to-do list). A team will carry out that task in a green space at a certain time interval on a specific date. Comparatively analyzing the Agenda entries and the pending tasks (to-do list) allows you to evaluate the work still to be done, the busyness of the week, and the work performed by a team in a green space at a determined time interval and on a specific date.
+ 
 
 **From the client clarifications:**
 
-> **Question:** 
+> **Question:** To add an entry in Agenda is needed to selected what data? Date?
 >
 > **Answer:** 
 
-> **Question:**  
+> **Question:** It is possible to add an entry for more than one day? Like, if one task need more than one/two days is needed to add the entry for more than one day?
 >
 > **Answer:** 
 
-> **Question:** 
+> **Question:** Can I add an entry that has a time period that already have an existing entry in the Agenda?
 >
 > **Answer:** 
-
-
-> **Question:** 
->
-> **Answer:**
 
 > **Question:** 
 >
 > **Answer:**
 
-
-> **Question:** 
-> 
-> **Answer:** 
-
-> **Question:** 
-> 
-> **Answer:** 
-
-> **Question:** 
-> 
->  **Answer:** 
 
 ### 1.3. Acceptance Criteria
 
@@ -64,10 +50,9 @@ As a GSM, I want to add a new entry in the Agenda.
 
 **Input Data:**
 
-* Typed data:
-
 * Selected data:
-   
+  * Task
+  * Date (interactive UI)
 
 **Output Data:**
 
