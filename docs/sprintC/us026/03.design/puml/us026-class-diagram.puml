@@ -22,9 +22,10 @@ class CollaboratorUser {
 
 
 class Entry {
-    - Team
+    - List<Vehicle>
     + Entry()
-    + getTeam()
+    + setNewVehicle()
+    + removeVehicle()
 }
 
 class Task{
@@ -34,16 +35,18 @@ class Task{
 class EntryRepository {
     - List <Entry> : agenda
 
-    + getEntryByCollaboratorInAgenda()
+    + getAgendaList()
+    + assignVehicleToEntry(vehicle,entry)
+    + verifyIfVehicleIsAvailableTime(vehicle)
 }
 
-class CollaboratorRepository{
-    - List<Collaborator>
+class VehicleRepository{
+    - List<Vehicle>
 
-    + getCollaboratorRegisteredByEmail()
+    + getVehicleList()
 }
 
-class Collaborator {
+class Vehicle {
     - String email
 }
 
@@ -52,14 +55,15 @@ class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getEntryRepository()
-    + getCollaboratorRepository()
+    + getVehicleRepository()
 }
 
-class ViewTaskListAssignedCollabController {
+class AssignedVehicleToEntryController {
     - EntryRepository entryRepository
-    + ViewTaskListAssignedCollabController()
-    + getEntrysAssignedToMe()
-    + getCollaboratorByEmail(email)
+    - VehicleRepository vehicleRepository
+    + AssignedVehicleToEntryController()
+    + getEntrysInAgenda()
+    + getVehicleList()
     - getCollaboratorFromSession()
 }
 
@@ -72,8 +76,17 @@ class EntryMapper{
 class EntryDto{
 }
 
+class VehicleMapper{
+    - List<VehicleDto>
+    + toModel()
+    + toDto()
+}
 
-note right of ViewTaskListAssignedCollabController
+class VehicleDto{
+}
+
+
+note right of AssignedVehicleToEntryController
     - entry is achieved with entry repository
 end note
 
@@ -82,31 +95,36 @@ note bottom of EntryRepository
     the to do list
 end note
 
-class ViewTaskListAssignedCollabUI {
+class AssignedVehicleToEntryUI {
 }
 
 Repositories -> Repositories : instance
 ApplicationSession -> ApplicationSession : instance
 
-ViewTaskListAssignedCollabUI .> ViewTaskListAssignedCollabController
+AssignedVehicleToEntryUI .> AssignedVehicleToEntryController
 
-ViewTaskListAssignedCollabController .> Repositories : repositories
+AssignedVehicleToEntryController .> Repositories : repositories
 Repositories "1" --> "1" EntryRepository
-Repositories "1" --> "1" CollaboratorRepository
+Repositories "1" --> "1" VehicleRepository
 
-ViewTaskListAssignedCollabController ..> EntryRepository : EntryRepository
-ViewTaskListAssignedCollabController ..> EntryMapper : EntryMapper
+AssignedVehicleToEntryController ..> EntryRepository : EntryRepository
+AssignedVehicleToEntryController ..> EntryMapper : EntryMapper
+AssignedVehicleToEntryController ..> VehicleMapper : VehicleMapper
 
 EntryMapper "1" --> "*" EntryDto
 
-CollaboratorRepository "1" --> "*" Collaborator : collaborators
+VehicleRepository "1" --> "*" Vehicle : vehicles
 
 ApplicationSession --> "1" UserSession : userSession
-ViewTaskListAssignedCollabController ..> ApplicationSession
-ViewTaskListAssignedCollabController ..> UserSession
+AssignedVehicleToEntryController ..> ApplicationSession
+AssignedVehicleToEntryController ..> UserSession
 EntryRepository "1" --> "*" Entry : entry's
 EntryRepository --> "*" CollaboratorUser : employs
 EntryRepository ..> EntryMapper
+VehicleRepository ..> VehicleMapper
+
+VehicleMapper "1" --> "*" VehicleDto
+
 Entry --> "*" CollaboratorUser : employs
 Task "1" -> "1" Entry : extends
 
