@@ -22,19 +22,21 @@ As a GSM, I want to add a new entry in the Agenda.
 
 > **Question:** To add an entry in Agenda is needed to selected what data? Date?
 >
-> **Answer:** 
+> **Answer:** The start date only is enough because you have the time expected for the task
 
 > **Question:** It is possible to add an entry for more than one day? Like, if one task need more than one/two days is needed to add the entry for more than one day?
 >
-> **Answer:** 
+> **Answer:** Yes, with the time expected you can consider that one task can need more than one day to taken care.
 
 > **Question:** Can I add an entry that has a time period that already have an existing entry in the Agenda?
 >
-> **Answer:** 
+> **Answer:** Yes, because:
+a) there are many parks to manage
+b) different tasks can be executed at same time in the same park.
 
-> **Question:** 
+> **Question:** How many hours work a Team by day, to consider, how many days need to be taken care of to complete the task? And how much time needs to be taken into consideration for the transport distance to the location of the task?
 >
-> **Answer:**
+> **Answer:** 
 
 
 ### 1.3. Acceptance Criteria
@@ -52,7 +54,7 @@ As a GSM, I want to add a new entry in the Agenda.
 
 * Selected data:
   * Task
-  * Date (interactive UI)
+  * Start-Date 
 
 **Output Data:**
 
