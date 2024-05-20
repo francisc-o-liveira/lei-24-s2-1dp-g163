@@ -6,14 +6,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntryRepository {
-    private List<Entry> entries;
+    private List<Entry> agenda;
+    private List<Entry> toDo;
 
     public EntryRepository() {
-        entries = new ArrayList<Entry>();
+        toDo = new ArrayList<Entry>();
+        agenda = new ArrayList<Entry>();
     }
 
-    public List<Entry> getEntries() {
-        return entries;
+    public List<Entry> getAgenda() {
+        return agenda;
     }
+
+    public List<Entry> getToDo() {
+        return toDo;
+    }
+
 
 }
