@@ -29,11 +29,7 @@ public class SystemConfigsUI {
     @FXML
     private ComboBox<String> roles;
     public void setComboBoxAndStage(Stage stage){
-        ArrayList<String> rolesArray=new ArrayList<>();
-        rolesArray.add("HRM");
-        rolesArray.add("VFM");
-        rolesArray.add("GSM");
-        ObservableList<String> rolesForBox= FXCollections.observableArrayList(rolesArray);
+        ObservableList<String> rolesForBox= FXCollections.observableArrayList(ctrl.getRolesToSelect());
         roles.setItems(rolesForBox);
         this.stage=stage;
     }
