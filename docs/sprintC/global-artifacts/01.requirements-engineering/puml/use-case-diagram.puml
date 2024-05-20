@@ -6,23 +6,25 @@ skinparam packageStyle rectangle
 left to right direction
 
 rectangle "System Actors" as actors {
-    actor "Fleet Manager" as Manager
+    actor "Fleet Vehicle Manager" as VFM
     actor "Human Recourses Manager" as HRM
+    actor "Green Space Manager" as GSM
+    actor "Collaborator" as Colab
 }
 
 
 rectangle "Use Cases" as usecases{
-    note right of Manager
+    note right of VFM
         Who manage Machines, Vehicles and Equipment
     end note
     usecase "UC6 -  Register a vehicle including Brand, Model, Type, Tare, Gross Weight, Current Km,\n Register Date, Acquisition Date, Maintenance/Check-Up Frequency (in Kms)." as UC6
-    Manager --> UC6
+    VFM --> UC6
 
     usecase "UC7 - Register a vehicle's check-up" as UC7
-    Manager --> UC7
+    VFM --> UC7
 
     usecase "UC8 - List the vehicles needing the check-up" as UC8
-    Manager --> UC8
+    VFM --> UC8
 
     note right of HRM
         Who manage Collaborators, Teams, Skills and Jobs
@@ -43,7 +45,54 @@ rectangle "Use Cases" as usecases{
     HRM --> UC5
 
 
+    note right of GSM
+            Who manage the Green Space, Tasks and Entry's
+        end note
 
+    usecase "UC20 - Register a Green Space with area" as UC20
+     GSM --> UC20
+
+     usecase "UC21 - Register a new Task in To-Do List" as UC21
+     GSM --> UC21
+
+
+     usecase "UC22 - Assign a Task in Agenda (Register Entry)" as UC22
+     GSM --> UC22
+
+     usecase "UC23 - Assign a Team to an entry in the Agenda" as UC23
+     GSM --> UC23
+
+     usecase "UC24 - Postpone an entry in the Agenda" as UC24
+          GSM --> UC24
+
+     usecase "UC25 - Cancel an entry in the Agenda" as UC25
+          GSM --> UC25
+
+     usecase "UC26 -  Assign one or more vehicles to an entry in the Agenda" as UC26
+          GSM --> UC26
+
+     usecase "UC27 - List all Green Spaces" as UC27
+          GSM --> UC27
+
+          note right of GSM
+                      Who do and register the completion of the tasks
+                  end note
+
+     usecase "UC28 - Consult the tasks assigned to me between two dates" as UC28
+               Colab --> UC28
+
+    usecase "UC29 - Record the completion of a Task" as UC29
+              Colab --> UC29
+
+
+    usecase "UC29 - Record the completion of a Task" as UC29
+                  Colab --> UC29
+
+    usecase "UC29 - Record the completion of a Task" as UC29
+                  Colab --> UC29
+
+    usecase "UC29 - Record the completion of a Task" as UC29
+                  Colab --> UC29
 
 }
 
