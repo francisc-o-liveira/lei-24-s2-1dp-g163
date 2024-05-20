@@ -207,7 +207,7 @@ activate GSM
             MAPPER -> EntryRepository : entry
             deactivate MAPPER
 
-            EntryRepository -> OBJ : addVehicle(vehicle)
+            EntryRepository -> OBJ : setNewVehicle(vehicle)
             activate OBJ
 
             OBJ -> EntryRepository : true/false
