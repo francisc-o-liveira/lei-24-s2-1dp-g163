@@ -14,6 +14,6 @@ public class OrganizationController {
     }
 
     public boolean addEmployee(String name, String position, String phone, String email){
-        return organization.addEmployee(name, position, phone, email);
+        return organization.addManager(name, position, phone, email);
     }
 }
