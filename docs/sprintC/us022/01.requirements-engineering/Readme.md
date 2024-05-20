@@ -38,6 +38,14 @@ b) different tasks can be executed at same time in the same park.
 >
 > **Answer:** 
 
+> **Question:** When a new entry is added to the ToDo list, the default status of that task will be "pending" or no status at all is considered on ToDo list? Similarly, when a new entry is added to the Agenda, the status of that task will be, by default, set to "planned", right?
+>
+> **Answer:**  "Pending" as default for to-do list entries and "Planned" as default for Agenda entries, sounds good;
+
+> **Question:** What time unit should be used for the duration of the task?
+> 
+> **Answer:** Hour and/or days.
+
 
 ### 1.3. Acceptance Criteria
 

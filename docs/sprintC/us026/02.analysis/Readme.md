@@ -1,4 +1,4 @@
-# US022 - Add a new entry in Agenda
+# US026 - Assign one or more Vehicles to an entry in the Agenda
 
 ## 2. Analysis
 

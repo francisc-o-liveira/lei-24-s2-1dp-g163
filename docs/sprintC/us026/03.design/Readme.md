@@ -1,10 +1,10 @@
-# US003 - Register a Collaborator
+# US026 - Assign one or more Vehicles to an entry in the Agenda
 
 ## 3. Design - User Story Realization 
 
 ### 3.1. Rationale
 
-_**Note that SSD - Alternative Two is adopted.**_
+_**Note that SSD - Alternative One is adopted.**_
 
 | Interaction ID | Question: Which class is responsible for...          | Answer                         | Justification (with patterns)                                                                                 |
 |:---------------|:-----------------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|

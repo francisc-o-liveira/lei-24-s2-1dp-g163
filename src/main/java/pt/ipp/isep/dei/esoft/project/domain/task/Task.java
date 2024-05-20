@@ -1,7 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
-import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
-
 import java.util.Objects;
 
 public class Task {

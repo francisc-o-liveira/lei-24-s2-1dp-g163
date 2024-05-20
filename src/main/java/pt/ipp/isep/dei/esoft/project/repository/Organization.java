@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
+import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
 
@@ -13,8 +13,7 @@ public class Organization{
     private static final String EMAIL_PREFIX_PER_OMISSION = "@this.app" ;
     private static final String VAT_NUMBER_PER_OMISSION = "0000000000";
     private static final String PHONE_PER_OMISSION = "0123456789";
-    private final List<Employee> employees;
-    private final List<Task> tasks;
+    private final List<Manager> managers;
     private String name;
     private String vatNumber;
     private String phone;
@@ -25,16 +24,14 @@ public class Organization{
      *
      */
     public Organization(String vatNumber) {
-        employees = new ArrayList<>();
-        tasks = new ArrayList<>();
+        managers = new ArrayList<>();
         name=NAME_PER_OMISSION;
         this.vatNumber=vatNumber;
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
     }
     public Organization() {
-        employees = new ArrayList<>();
-        tasks = new ArrayList<>();
+        managers = new ArrayList<>();
         name=NAME_PER_OMISSION;
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         vatNumber=VAT_NUMBER_PER_OMISSION;
@@ -42,15 +39,15 @@ public class Organization{
     }
 
     /**
-     * This method checks if an employee works for the organization.
+     * This method checks if a manager works for the organization.
      *
-     * @param employee The employee to be checked.
-     * @return True if the employee works for the organization.
+     * @param manager The manager to be checked.
+     * @return True if the manager works for the organization.
      */
-    public boolean employs(Employee employee) {
-        return employees.contains(employee);
+    public boolean employs(Manager manager) {
+        return managers.contains(manager);
     }
-
+/*
     /**
      * This method creates a new task.
      *
@@ -62,13 +59,13 @@ public class Organization{
      * @param cost                 The cost of the task to be created.
      * @param taskCategory         The task category of the task to be created.
      * @return
-     */
+
     public Optional<Task> createTask(String reference, String description, String informalDescription,
                                      String technicalDescription, int duration, double cost,
                                      TaskCategory taskCategory) {
 
         //TODO: we could also check if the employee works for the organization before proceeding
-        //checkIfEmployeeWorksForOrganization(employee);
+        //checkIfManagerWorksForOrganization(employee);
 
         // When a Task is added, it should fail if the Task already exists in the list of Tasks.
         // In order to not return null if the operation fails, we use the Optional class.
@@ -88,7 +85,7 @@ public class Organization{
      *
      * @param task The task to be added.
      * @return True if the task was added successfully.
-     */
+
     private boolean addTask(Task task) {
         boolean success = false;
         if (validate(task)) {
@@ -104,7 +101,7 @@ public class Organization{
      *
      * @param task The task to be validated.
      * @return True if the task is valid.
-     */
+
     private boolean validate(Task task) {
         return tasksDoNotContain(task);
     }
@@ -114,21 +111,21 @@ public class Organization{
      *
      * @param task The task to be checked.
      * @return True if the task is not in the list of tasks.
-     */
+
     private boolean tasksDoNotContain(Task task) {
         return !tasks.contains(task);
     }
-
+ */
     /**
-     * This methos checks if the organization has an employee with the given email.
+     * These methos check if the organization has an employee with the given email.
      *
      * @param email The email to be checked.
      * @return True if the organization has an employee with the given email.
      */
-    public boolean anyEmployeeHasEmail(String email) {
+    public boolean anyManagerHasEmail(String email) {
         boolean result = false;
-        for (Employee employee : employees) {
-            if (employee.hasEmail(email)) {
+        for (Manager manager : managers) {
+            if (manager.hasEmail(email)) {
                 result = true;
             }
         }
@@ -138,21 +135,21 @@ public class Organization{
 
 
     //add employee to organization
-    public boolean addEmployee(String name, String position, String phone, String email) {
-        Employee newEmployee = new Employee(name, position, phone, email);
+    public boolean addManager(String name, String position, String phone, String email) {
+        Manager newManager = new Manager(name, position, phone, email);
         boolean success = false;
-        if (validateEmployee(newEmployee)) {
-            success = employees.add(newEmployee);
+        if (validateManager(newManager)) {
+            success = managers.add(newManager);
         }
         return success;
     }
 
-    private boolean validateEmployee(Employee employee) {
-        return employeesDoNotContain(employee);
+    private boolean validateManager(Manager manager) {
+        return employeesDoNotContain(manager);
     }
 
-    private boolean employeesDoNotContain(Employee employee) {
-        return !employees.contains(employee);
+    private boolean employeesDoNotContain(Manager manager) {
+        return !managers.contains(manager);
     }
 
     //Clone organization

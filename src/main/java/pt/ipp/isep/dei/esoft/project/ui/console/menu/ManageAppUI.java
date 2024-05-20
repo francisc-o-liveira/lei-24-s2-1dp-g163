@@ -11,8 +11,8 @@ public class ManageAppUI implements Runnable{
     @Override
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Register Manager/Employee", new RegisterManageUI()));
-        options.add(new MenuItem("Remove Manager/Employee", new ShowTextUI("Implementing....")));
+        options.add(new MenuItem("Register Manager/Manager", new RegisterManageUI()));
+        options.add(new MenuItem("Remove Manager/Manager", new ShowTextUI("Implementing....")));
         options.add(new MenuItem("Show Managers/Employees List", new ShowTextUI("Implementing....")));
         options.add(new MenuItem("Manage Organization Data", new ShowTextUI("Implementing....")));
 

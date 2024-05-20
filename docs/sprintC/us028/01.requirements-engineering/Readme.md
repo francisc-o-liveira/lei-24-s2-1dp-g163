@@ -12,7 +12,7 @@ As a Collaborator, I wish to consult the tasks assigned to me.
 
 >  The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
->  Collaborator – a person who is an employee in the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.
+>  Collaborator – a person who is an manager in the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.
 
 >  Tasks are carried out on an occasional or regular basis, in one or more green spaces, for example: tree pruning, installation of an irrigation system, and installation of a lighting system.
 Teams are temporary associations of employees who will carry out a determined set of tasks in one or more green spaces. When creating multipurpose teams, the number of members and the set of skills that must be covered are crucial.

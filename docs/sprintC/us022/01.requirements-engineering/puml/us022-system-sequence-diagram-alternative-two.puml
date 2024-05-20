@@ -21,7 +21,7 @@ activate Manager
     Manager -> System : selects a task
     activate System
 
-        System  --> Manager : requests data (timePeriod)
+        System  --> Manager : requests data (i.e. startDate)
 
         System --> Manager :shows all data and requests confirmation
     deactivate System
