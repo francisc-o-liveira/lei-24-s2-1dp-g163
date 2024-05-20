@@ -85,15 +85,6 @@ rectangle "Use Cases" as usecases{
               Colab --> UC29
 
 
-    usecase "UC29 - Record the completion of a Task" as UC29
-                  Colab --> UC29
-
-    usecase "UC29 - Record the completion of a Task" as UC29
-                  Colab --> UC29
-
-    usecase "UC29 - Record the completion of a Task" as UC29
-                  Colab --> UC29
-
 }
 
 @enduml
