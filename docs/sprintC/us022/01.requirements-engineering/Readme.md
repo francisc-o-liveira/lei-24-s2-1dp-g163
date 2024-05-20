@@ -43,6 +43,8 @@ b) different tasks can be executed at same time in the same park.
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
 * **AC2:** The new entry must exist in the To-Do list.
+* **AC3:** The new entry must be associated with a Date for start the task (startDate)
+* **AC4:** The TimePeriod associated to the task are calculated with the expected duration of the task.
 
 ### 1.4. Found out Dependencies
 

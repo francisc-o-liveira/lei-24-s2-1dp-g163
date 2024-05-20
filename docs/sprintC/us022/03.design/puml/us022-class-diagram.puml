@@ -24,14 +24,16 @@ class GSM {
 class Entry {
     - List<Vehicles>
     - Team
-    - TimePeriod
+    - StartDate
     - Status
     + Entry()
-    + setEntry(TimePeriod)
+    - setStartDate(startDate)
+    + setEntryAgenda(startDate)
 }
 
 class Task{
     - GreenSpace
+    - Integer timeExpected
 }
 
 
@@ -78,6 +80,14 @@ class EntryMapper{
 }
 
 class EntryDto{
+    + timeExpected
+    - setStartDate(startDate)
+    + setEntryAgenda(startDate)
+}
+
+class TaskDto{
+    -GreenSpace
+    -Integer timeExpected
 }
 
 
@@ -103,7 +113,7 @@ AssignEntryOnAgendaController ..> UserSession
 EntryRepository "1" --> "*" Entry : entry's
 EntryRepository --> "*" GSM : employs
 Entry --> "*" GSM : employs
-Task "1" -> "1" Entry : extends
+Task "1" <- "1" Entry : extends
 
 
 @enduml
