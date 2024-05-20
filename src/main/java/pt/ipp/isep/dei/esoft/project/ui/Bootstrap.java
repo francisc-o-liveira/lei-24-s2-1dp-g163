@@ -61,7 +61,7 @@ public class Bootstrap implements Runnable {
         //TODO: add organizations bootstrap here
         //get organization repository
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
-        organizationRepository.addEmployee("ADMIN","GSM","910000000","admin@this.app");
+        organizationRepository.addManager("ADMIN","GSM","910000000","admin@this.app");
     }
 
     private void addTaskCategories() {
@@ -86,6 +86,6 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_GSM);
         authenticationRepository.addUserWithRole("HRM","hrm@this.app","hrm", AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserWithRole("VFM","vfm@this.app","vfm", AuthenticationController.ROLE_VFM);
-        //TODO: COMO ADICIONAR UTILIZADORES
+        //TODO: COMO ADICIONAR UTILIZADORES A APLICAÇAO
     }
 }
