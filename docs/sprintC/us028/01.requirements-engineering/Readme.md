@@ -31,14 +31,6 @@ Teams are temporary associations of employees who will carry out a determined se
 >
 > **Answer:**
 
-> **Question:** 
->
-> **Answer:** 
-
-> **Question:** 
->
-> **Answer:** 
-
 
 ### 1.3. Acceptance Criteria
 
@@ -76,12 +68,12 @@ Teams are temporary associations of employees who will carry out a determined se
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us028-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
 
 #### Alternative Two
 
-![System Sequence Diagram - Alternative Two](svg/us028-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* N/A
+* 
