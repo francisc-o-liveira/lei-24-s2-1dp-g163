@@ -126,4 +126,16 @@ public class GSManagerUI {
         ManageTeamsUI ctrlUI = fxmlLoader.getController();
         ctrlUI.setTableTeams();
     }
+
+    @FXML
+    private void btnSystemConfigs(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_SystemConfigs.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        Stage stageToAdd=new Stage();
+        stageToAdd.setScene(scene);
+        stageToAdd.show();
+        SystemConfigsUI ui =fxmlLoader.getController();
+        ui.setComboBoxAndStage(stageToAdd);
+    }
 }
