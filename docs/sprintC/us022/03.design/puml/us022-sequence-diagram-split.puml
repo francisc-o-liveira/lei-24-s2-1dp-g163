@@ -16,7 +16,6 @@ participant ":Entry" as OBJ
 participant ":EntryDto" as DTO
 
 
-
 activate GSM
 
         GSM -> UI : asks to assign an Entry in Agenda
