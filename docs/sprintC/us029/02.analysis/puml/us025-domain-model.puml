@@ -20,6 +20,12 @@ class Task {
 
 }
 
+class Entry {
+    Status
+}
 
-Collaborator "1" -- "0..*" Task :  >
+
+Collaborator "1" -- "0..*" Entry :  >
+
+Task "1" -- "1" Entry : extends
 @enduml
