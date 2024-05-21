@@ -1,0 +1,72 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class Task {
+
+}
+
+class GreenSpaceRepository{
+}
+
+
+class entryRepository {
+
+}
+
+
+class Repositories {
+        - Repositories()
+        + getInstance() : Repositories
+        + getVehicleRepository() : VehicleRepository
+}
+
+class RegisterTaskController{
+
+}
+
+
+class GreenSpace{
+
+}
+
+ApplicationSession -> ApplicationSession : instance
+ApplicationSession --> "1" UserSession : userSession
+
+GreenSpace --> GreenSpaceRepository
+
+RegisterTaskUI "1" --> "1" RegisterTaskController
+
+
+RegisterTaskController .> Repositories : repositories
+
+RegisterTaskController ..> Task
+RegisterTaskController ..> entryRepository : entryRepository
+RegisterTaskController ..> ApplicationSession
+RegisterTaskController ..> UserSession
+
+
+Repositories -> Repositories : instance
+Repositories -> "1" entryRepository
+
+entryRepository "1" --> "*" Task : Tasks
+GreenSpaceRepository --> Repositories
+
+Task--> GSM : createdBy
+
+@enduml
