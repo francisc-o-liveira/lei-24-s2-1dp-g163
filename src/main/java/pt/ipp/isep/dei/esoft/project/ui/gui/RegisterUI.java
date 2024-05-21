@@ -45,6 +45,11 @@ public class RegisterUI {
         try{
             attemps--;
             regAccount();
+            if(ctrl.userExists(emailLogin.getText())){
+                //Success
+            }else {
+                // Not Success
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
