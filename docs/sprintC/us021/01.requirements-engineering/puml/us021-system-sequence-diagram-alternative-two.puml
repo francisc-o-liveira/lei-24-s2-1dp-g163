@@ -15,16 +15,22 @@ activate Manager
     Manager -> System : asks to add a new entry to the To-Do List
     activate System
 
-    System --> Manager : show degree of urgency list and ask to select one
+    System --> Manager : show green space list and ask to select one
     deactivate System
 
-    Manager -> System : selects the urgency degree
+    Manager -> System : select list
     activate System
 
     System --> Manager : requests data (expected duration)
     deactivate System
 
    Manager  -> System : types data
+    activate System
+
+   System --> Manager : show degree of urgency list and ask to select one
+   deactivate System
+
+   Manager -> System : selects the urgency degree
     activate System
 
    System --> Manager : show data and request confirmation

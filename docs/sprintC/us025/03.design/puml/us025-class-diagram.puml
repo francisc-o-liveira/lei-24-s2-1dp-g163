@@ -17,7 +17,7 @@ class ApplicationSession{
 class UserSession{
 }
 
-class HRM {
+class GSM {
 }
 
 class Skill {
@@ -77,8 +77,6 @@ RegisterSkillController ..> ApplicationSession
 RegisterSkillController ..> UserSession
 
 skillRepository "1" --> "*" Skill : Skills
-
-Skill--> HRM : createdBy
 
 skillRepository --> "*" HRM : employs
 
