@@ -2,6 +2,7 @@ package MATDISC.USs;
 
 import MATDISC.USs.Point;
 import MATDISC.USs.Edge;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -26,7 +27,7 @@ public class MainDjikstra {
         ArrayList<Edge> result;
         Point start;
         Point end;
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         while (option != 0) {
             option = askOptionShowOptions(edges);
             switch (option) {
@@ -42,11 +43,11 @@ public class MainDjikstra {
                 case 2:
                     //needs to be changed to correspond with what the file will be giving
                     System.out.print("What is the starting point: ");
-                    start=new Point(sc.next());
+                    start = new Point(sc.next());
                     System.out.print("What is the ending point: ");
-                    end=new Point(sc.next());
+                    end = new Point(sc.next());
                     sc.close();
-                    result = djisktraAlgorithm(edges,start,end);
+                    result = djisktraAlgorithm(edges, start, end);
                     try {
                         createResultFile(result);
                     } catch (IOException e) {
@@ -183,14 +184,14 @@ public class MainDjikstra {
         int option = -1;
         System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
-        if (edges==null){
+        if (edges == null) {
             System.out.println("----Option 2 : Djikstra Algorithm (No Data Loaded)");
-        }else{
+        } else {
             System.out.println("----Option 2 : Djikstra Algorithm (Data Loaded)");
         }
-        if (edges==null){
+        if (edges == null) {
             System.out.println("----Option 3 : Djikstra Algorithm to One (No Data Loaded)");
-        }else{
+        } else {
             System.out.println("----Option 3 : Djikstra Algorithm to One (Data Loaded)");
         }
         while (option < 0 || option > 3) {
@@ -212,13 +213,16 @@ public class MainDjikstra {
         if (scanFile.hasNextLine()) {
             line = scanFile.nextLine().split(" ");
             sizeArray = line.length;
-             do{
-                 for (int j = i; j < sizeArray; j++) {
-                     edges.add(new Edge(new Point(Integer.toString(i)),new Point(Integer.toString(j)),Integer.parseInt(line[j])));
-                 }
+            do {
+                for (int j = i; j < sizeArray; j++) {
+                    if (Integer.parseInt(line[j]) != 0) {
+                        edges.add(new Edge(new Point(Integer.toString(i)), new Point(Integer.toString(j)), Integer.parseInt(line[j])));
+
+                    }
+                }
                 i++;
-            }while(i<sizeArray);
-        }else{
+            } while (i < sizeArray);
+        } else {
             throw new IOException("The file is empty");
         }
 
@@ -226,67 +230,67 @@ public class MainDjikstra {
     }
 
     public static void createResultFile(ArrayList<Edge> edges) throws IOException {
-        FileWriter fileDot= new FileWriter("graph.dot");
-        FileWriter result=new FileWriter("result.csv");
+        FileWriter fileDot = new FileWriter("graph.dot");
+        FileWriter result = new FileWriter("result.csv");
         int price = 0;
-        String line="graph US13 {\n" ;
+        String line = "graph US13 {\n";
         fileDot.write(line);
-        for(int i=0; i<edges.size(); i++){
-            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+        for (int i = 0; i < edges.size(); i++) {
+            String string = String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
             fileDot.write(string);
-            String line1=String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
-            price+=edges.get(i).getPrice();
+            String line1 = String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price += edges.get(i).getPrice();
             result.write(line1);
         }
-        String line2="}";
+        String line2 = "}";
         fileDot.write(line2);
-        String line3=String.format("Cost: %s%n", price);
-        String line4=String.format("Number of edges: %d%n", edges.size());
+        String line3 = String.format("Cost: %s%n", price);
+        String line4 = String.format("Number of edges: %d%n", edges.size());
         result.write(line3);
         result.write(line4);
         fileDot.close();
         result.close();
-        try{
-            String resultingFile="result_graph.png";
+        try {
+            String resultingFile = "result_graph.png";
             createGraph("graph.dot", resultingFile);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void createInputFile(ArrayList<Edge> edges) throws IOException {
-        FileWriter fileDot= new FileWriter("graphinput.dot");
-        FileWriter result=new FileWriter("result.csv");
+        FileWriter fileDot = new FileWriter("graphinput.dot");
+        FileWriter result = new FileWriter("result.csv");
         int price = 0;
-        String line="graph US13 {\n" ;
+        String line = "graph US13 {\n";
         fileDot.write(line);
-        for(int i=0; i<edges.size(); i++){
-            String string=String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+        for (int i = 0; i < edges.size(); i++) {
+            String string = String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
             fileDot.write(string);
-            String line1=String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
-            price+=edges.get(i).getPrice();
+            String line1 = String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price += edges.get(i).getPrice();
             result.write(line1);
         }
-        String line2="}";
+        String line2 = "}";
         fileDot.write(line2);
-        String line3=String.format("Cost: %s", price);
+        String line3 = String.format("Cost: %s", price);
         result.write(line3);
         fileDot.close();
         result.close();
-        try{
+        try {
             createInputGraph("graphinput.dot");
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void createGraph(String fileName, String resultingFile) throws IOException{
-        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o " +resultingFile;
+    public static void createGraph(String fileName, String resultingFile) throws IOException {
+        String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o " + resultingFile;
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
     }
 
-    public static void createInputGraph(String fileName) throws IOException{
+    public static void createInputGraph(String fileName) throws IOException {
         String command = "C:\\Program Files\\Graphviz\\bin\\dot.exe -Tpng " + fileName + " -o input_graph.png";
         Runtime rt = Runtime.getRuntime();
         Process prcs = rt.exec(command);
