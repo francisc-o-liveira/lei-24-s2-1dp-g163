@@ -65,13 +65,13 @@ public class RegisterUI {
             if (passwordLogin.getText().equals(repeatPasswordLogin.getText()) && ctrl.verifyPassword(passwordLogin.getText())) {
                 switch (roleComboBox.getSelectionModel().getSelectedItem()) {
                     case "GSM":
-                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem());
+                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
                     case "HRM":
-                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem());
+                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
                     case "VFM":
-                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem());
+                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
                     case "Collaborator":
-                        ctrl.registerCollaborator();
+                        ctrl.registerCollaborator(emailLogin.getText(),passwordLogin.getText());
                 }
             }else {
                 throw new IllegalArgumentException("Passwords do not match");

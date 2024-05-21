@@ -152,6 +152,15 @@ public class Organization{
         return !managers.contains(manager);
     }
 
+    public boolean haveManagerWithEmail(String email) {
+        for (Manager manager : managers) {
+            if (manager.hasEmail(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //Clone organization
 
 }

@@ -1,12 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
 
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
+import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 public class RegisterController {
     public static final String ROLE_GSM = "GSM";
     public static final String ROLE_HRM = "HRM";
     public static final String ROLE_VFM = "VFM";
+    public static final String ROLE_COLAB = "COLAB";
 
     private static final int minDigitsPassword = 2;
     private static final int minCapitalPassword = 3;
@@ -14,8 +17,14 @@ public class RegisterController {
     //private final ApplicationSession applicationSession;
     private final AuthenticationRepository authenticationRepository;
 
+    private final CollaboratorRepository collaboratorRepository;
+
+    private final Organization organization;
+
     public RegisterController() {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
+        this.collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+        this.organization= Repositories.getInstance().getOrganizationRepository();
     }
 
     public boolean userExists(String email) {
@@ -41,9 +50,19 @@ public class RegisterController {
         return countCapital >= minCapitalPassword && countDigits >= minDigitsPassword && countAlph >= minAlphPassword;
     }
 
-    public void registerManager(String selectedItem) {
+    public void registerManager(String selectedItem, String email, String password) {
+        if (organization.haveManagerWithEmail(email)){
+            authenticationRepository.addUserWithRole(selectedItem,email,password,selectedItem);
+        }else {
+            throw new IllegalArgumentException("Manager does not exist in the database");
+        }
     }
 
-    public void registerCollaborator() {
+    public void registerCollaborator(String email, String password) {
+        if(collaboratorRepository.haveCollaboratorWithEmail(email)){
+            authenticationRepository.addUserWithRole(ROLE_COLAB,email,password,ROLE_COLAB);
+        }else{
+            throw new IllegalArgumentException("Collaborator does not exist in this organization");
+        }
     }
 }

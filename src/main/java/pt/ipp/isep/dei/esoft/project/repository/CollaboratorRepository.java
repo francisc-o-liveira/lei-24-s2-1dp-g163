@@ -246,4 +246,12 @@ public class CollaboratorRepository {
         }
     }
 
+    public boolean haveCollaboratorWithEmail(String email) {
+        for (Collaborator c : collaboratorList) {
+            if (c.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
