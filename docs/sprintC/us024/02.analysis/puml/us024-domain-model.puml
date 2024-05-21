@@ -36,7 +36,7 @@ class Task{
 
 'Platform "1" -- "*" Organization : has registered >
 'Platform "1" -- "*" Category : defines >
-GSM "1" -- "0..*" Task : Register >
+GSM "1" -- "0..*" Task : have >
 GSM "1" -- "0..*" Entry : Postpones >
 Entry "1" -- "1" Task : extends
 

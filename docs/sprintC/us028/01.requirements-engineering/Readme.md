@@ -19,7 +19,7 @@ Teams are temporary associations of employees who will carry out a determined se
 
 **From the client clarifications:**
 
-> **Question:** What type of Status can the Collaborator see assigned to him!
+> **Question:** What type of Status can the Collaborator see assigned to him?
 >
 > **Answer:** 
 
