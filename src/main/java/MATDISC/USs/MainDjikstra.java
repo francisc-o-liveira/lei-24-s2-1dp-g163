@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EmptyStackException;
 import java.util.Scanner;
 
 
@@ -202,14 +203,25 @@ public class MainDjikstra {
         return option;
     }
 
-    public static ArrayList<Edge> readFromFile(String fileName) throws FileNotFoundException {
+    public static ArrayList<Edge> readFromFile(String fileName) throws IOException {
         Scanner scanFile = new Scanner(new File(fileName));
         String[] line;
         ArrayList<Edge> edges = new ArrayList<>();
-        while (scanFile.hasNextLine()) {
-            line = scanFile.nextLine().split(";");
-            edges.add(new Edge(new Point(line[0]), new Point(line[1]), Integer.parseInt(line[2])));
+        int sizeArray;
+        int i = 0;
+        if (scanFile.hasNextLine()) {
+            line = scanFile.nextLine().split(" ");
+            sizeArray = line.length;
+             do{
+                 for (int j = i; j < sizeArray; j++) {
+                     edges.add(new Edge(new Point(Integer.toString(i)),new Point(Integer.toString(j)),Integer.parseInt(line[j])));
+                 }
+                i++;
+            }while(i<sizeArray);
+        }else{
+            throw new IOException("The file is empty");
         }
+
         return edges;
     }
 
