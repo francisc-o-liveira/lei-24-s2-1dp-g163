@@ -1,0 +1,88 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+
+
+
+participant ":AssignEntryOnAgendaController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant ":Entry" as OBJ
+participant ":EntryDto" as DTO
+participant ":EntryMapper" as MAPPER
+participant "toDoListDto : List<EntryDto>" as ListDTO
+participant "toDoList : List<Entry>" as List
+
+
+autonumber 5
+-> CTRL : getToDoList()
+
+            activate CTRL
+
+                                                    CTRL -> RepositorySingleton : getInstance()
+                                                    activate RepositorySingleton
+
+                                                        RepositorySingleton --> CTRL: repositories
+                                                    deactivate RepositorySingleton
+
+                                                    CTRL -> PLAT : getEntryRepository()
+                                                    activate PLAT
+
+                                                    PLAT -> CTRL : entryRepository
+                                                    deactivate PLAT
+
+                                                    CTRL -> EntryRepository : getToDoList()
+                                                    activate EntryRepository
+
+
+
+                                                    EntryRepository -> List** : create
+
+                                                    note over List : loop to populate loop is omitted
+
+
+
+                                                    EntryRepository -> CTRL : toDoList
+                                                    deactivate EntryRepository
+
+                                                    CTRL -> MAPPER : toDto(toDoList)
+                                                    activate MAPPER
+
+                                                    MAPPER -> ListDTO** : create()
+
+                                                    MAPPER -> List : entry = get(i)
+                                                    activate List
+                                                    deactivate List
+
+                                                    MAPPER -> MAPPER : entryDto = toDTO(entry)
+                                                    activate MAPPER
+
+                                                    MAPPER -> DTO**  : create(...)
+                                                    deactivate MAPPER
+
+                                                    MAPPER -> ListDTO : add(entryDto)
+                                                    activate ListDTO
+                                                    deactivate ListDTO
+
+                                                    MAPPER -> CTRL : toDoListDto
+                                                    deactivate MAPPER
+
+
+ autonumber 15
+    <-- CTRL : toDoListDto
+            deactivate CTRL
+
+
+
+
+
+
+
+@enduml

@@ -5,113 +5,79 @@ skinparam shadowing false
 
 autonumber
 
-actor "HRM" as HRM
-participant ":RegisterCollaboratorUI" as UI
-participant ":RegisterCollaboratorController" as CTRL
+'hide footbox
+actor "GSM" as GSM
+participant ":AssignEntryOnAgendaUI" as UI
+participant ":AssignEntryOnAgendaController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "jobCategoryRepository:\nJobCategoryRepository" as JobCategoryRepository
-participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
-participant "collaborator\n:Collaborator" as Collaborator
-participant "DocType" as DT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant ":Entry" as OBJ
+participant ":EntryDto" as DTO
+participant ":EntryMapper" as MAPPER
+participant "toDoListDto : List<EntryDto>" as ListDTO
+participant "toDoList : List<Entry>" as List
 
-activate HRM
 
-        HRM -> UI : asks to register a Collaborator
+activate GSM
+
+        GSM -> UI : asks to assign an Entry in Agenda
 
         activate UI
 
-'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+'            UI --> GSM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getJobCategories()
+            UI -> CTRL : getToDoList()
             activate CTRL
 
-                ref over CTRL
-                            Get JobCategoryList
+            ref over CTRL : Get the To Do List
 
-                        end ref
 
-                CTRL --> UI : jobCategoryList
+            CTRL -> UI : toDoListDto
             deactivate CTRL
 
-            UI --> HRM : shows job category list\n and asks to select one
-        deactivate UI
+            UI -> GSM : show To Do list and ask to select one Entry
+            deactivate UI
 
-    HRM -> UI : selects a job category
-    activate UI
+            GSM --> UI : select one Entry
+            activate UI
 
+            UI -> GSM : requests data
+            deactivate UI
 
+            GSM --> UI : types requested data (Date startDate)
+            activate UI
 
+            UI -> DTO : setEntryAgenda(startDate)
+            activate DTO
+            DTO -> DTO : setStartDate(startDate)
+            activate DTO
+            deactivate DTO
 
-
-
-    UI -> CTRL : getDocTypeList()
-                activate CTRL
-
-                  ref over CTRL
-                              Get DocTypeList with Class Enum DocType
-                          end ref
-    CTRL --> UI : docTypeList
-    deactivate CTRL
-
-
-
-    UI --> HRM : shows docTypeList\n and asks to select one
-    deactivate UI
-
-    HRM -> UI : selects a docType
-    activate UI
+            deactivate DTO
 
 
-    UI --> HRM : requests data
-    deactivate UI
+            UI -> CTRL : assignEntryOnAgenda(entryDto)
+            activate CTRL
+
+            CTRL -> EntryRepository : assignEntryOnAgenda(entryDto)
+            activate EntryRepository
+
+            ref over EntryRepository: Get Entry equal to DTO again with Task
 
 
 
+            EntryRepository -> CTRL : true / false
+            deactivate EntryRepository
 
-
-
-
-
-    HRM -> UI : types requested data (name, date of birthday, admission data,\n address street, zipcode, address city, email,\n phone number, number of ID card)
-    activate UI
-
-        UI --> HRM : shows selected category and requested data
-    deactivate UI
-
-    HRM -> UI : submits data
-    activate UI
-
-        UI -> CTRL : registerCollaborator(name, date of birthday, admission data,\n address street, zipcode, address city, email,\n phone number, docType, docIDNumber, jobCategory)
-        activate CTRL
-
-
-                            ref over CTRL
-                                        Verify Doc Type with DocType Class
-
-                                    end ref
-
-
-
-            CTRL -> CollaboratorRepository: registerCollaborator(name, date of birthday,\n admission data, address street, zipcode, address city, email, phone number,\n docType, docIDNumber, jobCategory)
-            activate CollaboratorRepository
-
-                ref over CollaboratorRepository
-                            Create and Save Collaborator
-
-                        end ref
-
-                CollaboratorRepository --> CTRL : true / collaboratorList
-
-            deactivate CollaboratorRepository
-
-            CTRL --> UI: true / collaboratorList
+            CTRL -> UI : true / false
             deactivate CTRL
-            UI --> HRM : displays operation success / show collaboratorList
+
+    UI -> GSM : Update Agenda and Show with Entry
     deactivate UI
 
-deactivate HRM
+deactivate GSM
 
 @enduml

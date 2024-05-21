@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant ":Entry" as OBJ
+participant ":EntryDto" as DTO
+participant ":EntryMapper" as MAPPER
+
+
+
+autonumber 3
+
+ -> EntryRepository : assignEntryOnAgenda(entryDto)
+autonumber 3.1
+activate EntryRepository
+    group To Model Mapper
+
+
+                    EntryRepository -> MAPPER : toModel(entryDto, entry)
+                       activate MAPPER
+
+                       MAPPER -> DTO : startDate = getStartDate()
+                       activate DTO
+                       deactivate DTO
+
+
+                       MAPPER -> OBJ : setEntryAgenda(startDate)
+                       activate OBJ
+                       OBJ -> OBJ : setStartDate(startDate)
+                       activate OBJ
+                       deactivate OBJ
+
+                       deactivate OBJ
+
+
+                       MAPPER -> EntryRepository : true / false
+                       deactivate MAPPER
+
+
+    end
+    autonumber 4
+    <- EntryRepository : true / false
+deactivate EntryRepository
+
+
+@enduml

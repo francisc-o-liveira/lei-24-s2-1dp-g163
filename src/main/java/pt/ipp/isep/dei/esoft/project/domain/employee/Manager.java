@@ -6,6 +6,7 @@ public class Manager {
     private String email;
     private String name;
     private String position;
+    private static enum Role{HRM,GSM,VFM}
     private String phone;
 
     public Manager(String name, String position, String phone, String email) {
@@ -13,6 +14,8 @@ public class Manager {
         setPosition(position);
         setPhone(phone);
         setEmail(email);
+
+
     }
 
     public void setName(String name) {
