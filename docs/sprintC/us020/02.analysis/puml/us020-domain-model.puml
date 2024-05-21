@@ -27,9 +27,9 @@ EnumType{Garden
 Large-sized park
 Medium-sized park}
 
-
+name
 address
-areaInMeters
+areaInHectares
 }
 
 

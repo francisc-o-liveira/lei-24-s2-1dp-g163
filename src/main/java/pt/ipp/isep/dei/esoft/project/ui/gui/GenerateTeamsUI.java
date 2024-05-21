@@ -86,13 +86,13 @@ public class GenerateTeamsUI {
     public void getSkillsAndCollabs() throws IOException{
         skillsSelectedForTeam.clear();
         for (Skill s : skillsToChoose) {
-            if (s.selectedSkillForTeam().get()==true && s.numberCollabsPerSkillProperty().get() != 0) {
-                skillsSelectedForTeam.add(s);
-                numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
-            } else if(s.numberCollabsPerSkillProperty() == null){
-                throw new IOException("Please fill all the necessary fields");
-            } else {
-                throw new IOException("Please select the skills.");
+            if(s.selectedSkillForTeam().get()){
+                if(s.numberCollabsPerSkillProperty() == null){
+                    throw new IOException("Please fill all the necessary fields");
+                }else if (s.numberCollabsPerSkillProperty().get() != 0) {
+                    skillsSelectedForTeam.add(s);
+                    numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
+                }
             }
         }
     }

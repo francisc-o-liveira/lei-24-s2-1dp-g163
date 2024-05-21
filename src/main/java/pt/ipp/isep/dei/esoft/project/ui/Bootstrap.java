@@ -2,8 +2,6 @@ package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
 import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.*;
@@ -63,7 +61,7 @@ public class Bootstrap implements Runnable {
         //TODO: add organizations bootstrap here
         //get organization repository
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
-        organizationRepository.addEmployee("ADMIN","GSM","910000000","admin@this.app");
+        organizationRepository.addManager("ADMIN","GSM","910000000","admin@this.app");
     }
 
     private void addTaskCategories() {
@@ -88,6 +86,6 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin", AuthenticationController.ROLE_GSM);
         authenticationRepository.addUserWithRole("HRM","hrm@this.app","hrm", AuthenticationController.ROLE_HRM);
         authenticationRepository.addUserWithRole("VFM","vfm@this.app","vfm", AuthenticationController.ROLE_VFM);
-        //TODO: COMO ADICIONAR UTILIZADORES
+        //TODO: COMO ADICIONAR UTILIZADORES A APLICAÇAO
     }
 }

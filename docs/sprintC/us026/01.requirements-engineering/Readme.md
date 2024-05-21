@@ -1,102 +1,60 @@
-# US003 - Register a Collaborator with a job 
-
+# US026 - Assign one or more Vehicles to an entry in the Agenda
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Human Resources Manager, I want to register a collaborator with a job and fundamental characteristics.
+As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
->   A person who is an collaborator of the organization and carries out design, construction and/or maintenance tasks for green areas, depending on their skills.
+>  The Agenda is made up of entries that relate to a task (which was previously in the To-Do List),the team that will carry out the task, the vehicles/equipment assigned to the task, expected duration, and the status (Planned, Postponed, Canceled, Done).
 
->	Each collaborator is characterized by having a name, birthdate, admission date, address, contact info (mobile and email), ID doc type and respective number should be provided by HRM
+>	The Agenda is a crucial mechanism for planning the week’s work. Each entry in the Agenda defines a task (that was previously included in the to-do list). A team will carry out that task in a green space at a certain time interval on a specific date. Comparatively analyzing the Agenda entries and the pending tasks (to-do list) allows you to evaluate the work still to be done, the busyness of the week, and the work performed by a team in a green space at a determined time interval and on a specific date.
 
->	Thus, an collaborator has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals.
 
 **From the client clarifications:**
 
-> **Question:** When creating a collaborator with an existing name or ID card number ... What the system do?
+> **Question:** The GSM can only assign Vehicles without an Entry in the same time ?
 >
-> **Answer:** It's not common and most improbable to have different individual with same name in the same context, however it’s ID documentation number should be unique for sure.
+> **Answer:** Yes,the vehicle needs to be available in the period, any kind of vehicles can be assigned.
 
-> **Question:**  Is there any limitation regarding the length of the name of the collaborator?
+> **Question:**  How many vehicles can have an Entry on maximum value?
 >
-> **Answer:** According to the Portuguese law a name should contain at maximum six words;
+> **Answer:** 
 
-> **Question:** What characteristics are important to success the register?
+> **Question:** 
 >
-> **Answer:** The collaborator minimum essential data will be name, date of birth, date of admission, address, contact (telephone and email), identification document and number.
+> **Answer:** 
 
-
-> **Question:** Should we consider valid only the birthdates in which the collaborator has more than 18 years?
->
-> **Answer:** Yes
-
-> **Question:** What should be the format for the phone number? 9 numbers?
->
-> **Answer:** Validating 9 digits will be acceptable; validating with international format would be excelent;
-
-
-> **Question:** What is the format for the numbers from the id doc types?
-> 
-> **Answer:** Each doc type has specific formats like taxpayer number, Citizen Card ou passport.
-
-> **Question:** What should be the accepted format for the emails? Should only specific email services be accepted?
-> 
-> **Answer:** A valid email address consists of an email prefix and an email domain, both in acceptable formats.
-The prefix appears to the left of the @ symbol. The domain appears to the right of the @ symbol.
-For example, in the address example@mail.com, "example" is the email prefix, and "mail.com" is the email domain.
-
-> **Question:** What is needed for the address ?  Street, zipcode and a city?
-> 
->  **Answer:** That would be enough.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The ID card number of the collaborator need to be unique in the system.
-* **AC2:** The taxpayer identification number and the citizen card number should be valid.
-* **AC3:** The name of the collaborator can have maximum of 6 words.
-* **AC4:** The age of the collaborator is mandatory be greater than 18.
-* **AC5:** The email address need to have a prefix, "@" and a domain for example: "mail.com" (the domain need to have one ".")
-* **AC6:** The phone number need to have 9 digits and can have an international validation.
-* **AC7:** The collaborator must have at least the name, birthdate, admission date, address, contact info (mobile and email), ID doc type and respective number, should be provided by HRM
+* **AC1:** The Vehicle need to be available in the period of time of the entry
+* **AC2:** 
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US002 - I want to register a job" as there must be at least one job category to classify the collaborator being register.
+* There is a dependency on "US022 - As a GSM, I want to add a new entry in the Agenda" is needed to have an entry in the Agenda to be possible to add a vehicle.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Typed data:
-    * a name
-    * a date of birthday 
-    * an admission data
-    * an address street
-    * an zipcode
-    * an address city
-    * an email
-    * a phone number 
-    * an ID doc type
-    * a number of ID card (depend on ID doc type)
-	
 * Selected data:
-    * a job category
-    * a skill or a skill set (Not Mandatory)
+  * Entry
+  * Vehicle's
 
 **Output Data:**
 
-* **Confirmation of Register Collaborator:**
-  - A success notification confirming that the collaborator have been successfully registed.
+* **Confirmation of Assign:**
+  - A success notification confirming that the vehicle have been successfully assigned to the Entry.
 * **Warnings or Errors (if applicable):**
-  - Error messages for any issues encountered during the register collaborator process, such non-existent data or duplications ,etc...
+  - Error messages for any issues encountered during the assign vehicle process, such non-existent data or duplications ,etc...
 * **Operational Feedback:**
-  - Overall status of the operation (success or failure), with immediate feedback to the HRM.
+  - Overall status of the operation (success or failure), with immediate feedback to the GSM.
 
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -105,12 +63,9 @@ For example, in the address example@mail.com, "example" is the email prefix, and
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us026-system-sequence-diagram-alternative-one.svg)
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The register collaborator stays in a "not activate" state in order to distinguish from "activate" collaborators.(admission date)
+* The Collaborator Email need to be unique, because to find the Collaborator in the system is needed to search by email (unique by Collaborator).

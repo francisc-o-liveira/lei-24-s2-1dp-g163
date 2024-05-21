@@ -22,7 +22,7 @@ activate Manager
     activate System
 
 
-    System --> Manager  : requests data (greenSpaceArea)
+    System --> Manager  : requests data (greenSpaceArea, greenSpaceAddress, greenSpaceName)
         deactivate System
 
         Manager  -> System : typed requested data

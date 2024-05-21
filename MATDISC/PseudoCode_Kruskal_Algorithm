@@ -1,0 +1,84 @@
+// VERTICES == POINTS
+function numberOfVertices(edges):
+    vertices = empty list
+    for each edge in edges:
+        value1 = false
+        value2 = false
+        x1 = edge.getP1()
+        x2 = edge.getP2()
+        for each point in vertices:
+            if x1 == point:
+                value1 = true
+            if x2 == point:
+                value2 = true
+        if not value1:
+            append x1 to vertices
+        if not value2:
+            append x2 to vertices
+    return vertices
+
+function readFromFile(fileName):
+    scanFile = open file fileName
+    edges = empty list
+    while scanFile has next line:
+        line = split(scanFile next line, ";")
+        append new Edge(new Point(line[0]), new Point(line[1]), toInt(line[2])) to edges
+    return edges
+
+// START US013
+function sortArrayListPrimitivePerPrice(edges):
+    for i from 0 to size(edges) - 1:
+        for j from i + 1 to size(edges):
+            if edges[j].getPrice() < edges[i].getPrice():
+                swap edges[i] and edges[j]
+
+function getVertices(edges):
+    vertices = empty list
+    for each edge in edges:
+        if edge.getP1() not in vertices:
+            append edge.getP1() to vertices
+        if edge.getP2() not in vertices:
+            append edge.getP2() to vertices
+    return vertices
+
+function find(parent, i):
+    if parent[i] != i:
+        parent[i] = find(parent, parent[i])
+    return parent[i]
+
+function union(parent, rank, x, y):
+    rootX = find(parent, x)
+    rootY = find(parent, y)
+    if rootX != rootY:
+        if rank[rootX] > rank[rootY]:
+            parent[rootY] = rootX
+        else if rank[rootX] < rank[rootY]:
+            parent[rootX] = rootY
+        else:
+            parent[rootY] = rootX
+            rank[rootX] += 1
+
+function kruskalAlgorithm(edges):
+    result = empty list
+    vertices = getVertices(edges)
+    V = size(vertices)
+    parent = new array of size V
+    rank = new array of size V
+    for i from 0 to V-1:
+        parent[i] = i
+        rank[i] = 0
+    for each edge in edges:
+        x = findVertexIndex(edge.getP1(), vertices)
+        y = findVertexIndex(edge.getP2(), vertices)
+        xRoot = find(parent, x)
+        yRoot = find(parent, y)
+        if xRoot != yRoot:
+            append edge to result
+            union(parent, rank, xRoot, yRoot)
+    return result
+
+function findVertexIndex(p, vertices):
+    for i from 0 to size(vertices):
+        if vertices[i] == p:
+            return i
+    return -1

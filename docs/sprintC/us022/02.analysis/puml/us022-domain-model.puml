@@ -1,0 +1,64 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+'title Domain Model
+
+'class Platform {
+'  -description
+'}
+
+
+class GSM {
+    name
+    email
+    password
+}
+
+class Entry{
+    periodTime
+    status
+}
+
+class Task{
+    greenSpaceAssigned
+    degreeUrgency
+}
+
+class Collaborator{
+
+}
+
+class Equipment{
+}
+
+class Vehicle{
+}
+
+
+
+GSM "1" -- "1..*" Task: have >
+
+GSM "1" - "1..*" Entry: register >
+
+Entry "1" - "1" Task : extends
+
+Entry "1" -- "0..1" Team : have >
+
+Entry "1" -- "0..*" Vehicle : have>
+
+Entry "1" -- "0..*" Equipment : have >
+
+Team "1" -- "1..*" Collaborator : have>
+
+Team "1" -- "0..*" Skills : have>
+
+@enduml

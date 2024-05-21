@@ -1,13 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.employee.Employee;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TaskCategoryRepository;
-import pt.isep.lei.esoft.auth.domain.model.Email;
 
 import java.util.List;
 import java.util.Optional;
@@ -80,9 +78,9 @@ public class CreateTaskController {
         return newTask;
     }
 
-    //private Employee getEmployeeFromSession() {
+    //private Manager getEmployeeFromSession() {
       //  Email email = getAuthenticationRepository().getCurrentUserSession().getUserId();
-        //return new Employee(email.getEmail());
+        //return new Manager(email.getEmail());
     //}
 
     private TaskCategory getTaskCategoryByDescription(String taskCategoryDescription) {

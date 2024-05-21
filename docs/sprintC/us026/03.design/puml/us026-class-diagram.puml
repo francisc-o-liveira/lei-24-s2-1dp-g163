@@ -1,0 +1,132 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class CollaboratorUser {
+}
+
+
+class Entry {
+    - List<Vehicle>
+    + Entry()
+    + setNewVehicle()
+    + removeVehicle()
+}
+
+class Task{
+}
+
+
+class EntryRepository {
+    - List <Entry> : agenda
+
+    + getAgendaList()
+    + assignVehicleToEntry(vehicle,entry)
+    + filterVehiclesNotUseInTime(vehicleList,entryDto)
+}
+
+class VehicleRepository{
+    - List<Vehicle>
+
+    + getVehicleList()
+}
+
+class Vehicle {
+    - String email
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEntryRepository()
+    + getVehicleRepository()
+}
+
+class AssignedVehicleToEntryController {
+    - EntryRepository entryRepository
+    - VehicleRepository vehicleRepository
+    + AssignedVehicleToEntryController()
+    + getEntrysInAgenda()
+    + getVehicleList()
+    - getCollaboratorFromSession()
+}
+
+class EntryMapper{
+    - List<EntryDto>
+    + toModel()
+    + toDto()
+}
+
+class EntryDto{
+}
+
+class VehicleMapper{
+    - List<VehicleDto>
+    + toModel()
+    + toDto()
+}
+
+class VehicleDto{
+}
+
+
+note right of AssignedVehicleToEntryController
+    - entry is achieved with entry repository
+end note
+
+note bottom of EntryRepository
+    - used for displaying
+    the to do list
+end note
+
+class AssignedVehicleToEntryUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+AssignedVehicleToEntryUI .> AssignedVehicleToEntryController
+
+AssignedVehicleToEntryController .> Repositories : repositories
+Repositories "1" --> "1" EntryRepository
+Repositories "1" --> "1" VehicleRepository
+
+AssignedVehicleToEntryController ..> EntryRepository : EntryRepository
+AssignedVehicleToEntryController ..> EntryMapper : EntryMapper
+AssignedVehicleToEntryController ..> VehicleMapper : VehicleMapper
+
+EntryMapper "1" --> "*" EntryDto
+
+VehicleRepository "1" --> "*" Vehicle : vehicles
+
+ApplicationSession --> "1" UserSession : userSession
+AssignedVehicleToEntryController ..> ApplicationSession
+AssignedVehicleToEntryController ..> UserSession
+EntryRepository "1" --> "*" Entry : entry's
+EntryRepository --> "*" CollaboratorUser : employs
+EntryRepository ..> EntryMapper
+VehicleRepository ..> VehicleMapper
+
+VehicleMapper "1" --> "*" VehicleDto
+
+Entry --> "*" CollaboratorUser : employs
+Task "1" -> "1" Entry : extends
+
+
+@enduml

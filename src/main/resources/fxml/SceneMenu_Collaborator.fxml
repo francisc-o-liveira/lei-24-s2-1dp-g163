@@ -83,13 +83,14 @@
                            <children>
                               <TableView layoutX="20.0" layoutY="28.0" prefHeight="419.0" prefWidth="821.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="C1" />
-                                  <TableColumn prefWidth="75.0" text="C2" />
+                                  <TableColumn prefWidth="202.5977325439453" text="Date of the Task" />
+                                    <TableColumn prefWidth="513.4022521972656" text="Task" />
+                                    <TableColumn prefWidth="104.41949462890625" text="select" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="737.0" layoutY="485.0" mnemonicParsing="false" text="Complete Task">
+                              <Button layoutX="717.0" layoutY="484.0" mnemonicParsing="false" style="-fx-background-color: #BDECB6;" text="Complete Task">
                                  <font>
-                                    <Font name="Tahoma" size="14.0" />
+                                    <Font name="Tahoma Bold" size="14.0" />
                                  </font>
                               </Button>
                            </children>

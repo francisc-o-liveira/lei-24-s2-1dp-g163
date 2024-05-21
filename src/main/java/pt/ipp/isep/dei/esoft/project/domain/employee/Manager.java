@@ -2,13 +2,13 @@ package pt.ipp.isep.dei.esoft.project.domain.employee;
 
 import java.util.Objects;
 
-public class Employee {
+public class Manager {
     private String email;
     private String name;
     private String position;
     private String phone;
 
-    public Employee(String name, String position, String phone, String email) {
+    public Manager(String name, String position, String phone, String email) {
         setName(name);
         setPosition(position);
         setPhone(phone);
@@ -64,11 +64,11 @@ public class Employee {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Employee)) {
+        if (!(o instanceof Manager)) {
             return false;
         }
-        Employee employee = (Employee) o;
-        return email.equals(employee.email);
+        Manager manager = (Manager) o;
+        return email.equals(manager.email);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Employee {
      *
      * @return A clone of the current instance.
      */
-    public Employee clone() {
-        return new Employee(this.name,this.position,this.phone,this.email);
+    public Manager clone() {
+        return new Manager(this.name,this.position,this.phone,this.email);
     }
 }
