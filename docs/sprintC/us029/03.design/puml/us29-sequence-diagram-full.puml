@@ -1,0 +1,142 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Collaborator" as Collaborator
+participant ":ViewTaskListAssignedUI" as UI
+participant ":ViewTaskListAssignedController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "toDoList : List<Task>" as List
+
+
+activate Collaborator
+
+        Collaborator -> UI : asks to show the list of tasks assigned to him
+
+        activate UI
+
+'            UI --> GSM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+            UI -> CTRL : getToDoList()
+            activate CTRL
+
+             CTRL -> RepositorySingleton : getInstance()
+                                        activate RepositorySingleton
+
+                                            RepositorySingleton --> CTRL: repositories
+                                        deactivate RepositorySingleton
+
+                                        CTRL -> PLAT : getTaskRepository()
+                                        activate PLAT
+
+                                        PLAT -> CTRL : taskRepository
+                                        deactivate PLAT
+
+                                        CTRL -> TaskRepository : getToDoList()
+                                        activate TaskRepository
+
+
+
+                                        EntryRepository -> List** : create
+
+                                        note over List : loop to populate loop is omitted
+
+
+
+                                       TaskRepository -> CTRL : toDoList
+                                        deactivate TaskRepository
+
+                                        CTRL -> MAPPER : toDto(toDoList)
+                                        activate MAPPER
+
+                                        MAPPER -> ListDTO** : create()
+
+                                        MAPPER -> List : entry = get(i)
+                                        activate List
+                                        deactivate List
+
+                                        MAPPER -> MAPPER : entryDto = toDTO(entry)
+                                        activate MAPPER
+
+                                        MAPPER -> DTO**  : create(...)
+                                        deactivate MAPPER
+
+                                        MAPPER -> ListDTO : add(entryDto)
+                                        activate ListDTO
+                                        deactivate ListDTO
+
+                                        MAPPER -> CTRL : toDoListDto
+                                        deactivate MAPPER
+
+            CTRL -> UI : toDoListDto
+            deactivate CTRL
+
+            UI -> GSM : show To Do list and ask to select one Entry
+            deactivate UI
+
+            GSM --> UI : select one Entry
+            activate UI
+
+            UI -> GSM : requests data
+            deactivate UI
+
+            GSM --> UI : types requested data (Date startDate)
+            activate UI
+
+            UI -> DTO : setEntryAgenda(startDate)
+            activate DTO
+            DTO -> DTO : setStartDate(startDate)
+            activate DTO
+            deactivate DTO
+
+            deactivate DTO
+
+
+            UI -> CTRL : assignEntryOnAgenda(entryDto)
+            activate CTRL
+
+            CTRL -> EntryRepository : assignEntryOnAgenda(entryDto)
+            activate EntryRepository
+
+            ref over EntryRepository: Get Entry equal to DTO again with Task
+
+            EntryRepository -> MAPPER : toModel(entryDto, entry)
+            activate MAPPER
+
+            MAPPER -> DTO : startDate = getStartDate()
+            activate DTO
+            deactivate DTO
+
+
+            MAPPER -> OBJ : setEntryAgenda(startDate)
+            activate OBJ
+            OBJ -> OBJ : setStartDate(startDate)
+            activate OBJ
+            deactivate OBJ
+
+            deactivate OBJ
+
+
+            MAPPER -> EntryRepository : true / false
+            deactivate MAPPER
+
+            EntryRepository -> CTRL : true / false
+            deactivate EntryRepository
+
+            CTRL -> UI : true / false
+            deactivate CTRL
+
+    UI -> GSM : Update Agenda and Show with Entry
+    deactivate UI
+
+deactivate GSM
+
+@enduml
