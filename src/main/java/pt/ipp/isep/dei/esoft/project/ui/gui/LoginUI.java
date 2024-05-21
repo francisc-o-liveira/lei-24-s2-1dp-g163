@@ -85,6 +85,11 @@ public class LoginUI {
     }
 
     @FXML
+    public void btnRegister(ActionEvent event) {
+
+    }
+
+    @FXML
     public void btnForgotPassword(ActionEvent event) {
         popUp(Alert.AlertType.WARNING, "Please Contact the Administrator", "He can unblock your account and trade your password").show();
     }
