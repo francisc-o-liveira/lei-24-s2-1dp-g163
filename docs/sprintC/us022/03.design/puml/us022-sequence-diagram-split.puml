@@ -14,9 +14,7 @@ participant "repositories\n:Repositories" as PLAT
 participant "entryRepository\n:EntryRepository" as EntryRepository
 participant ":Entry" as OBJ
 participant ":EntryDto" as DTO
-participant ":EntryMapper" as MAPPER
-participant "toDoListDto : List<EntryDto>" as ListDTO
-participant "toDoList : List<Entry>" as List
+
 
 
 activate GSM
