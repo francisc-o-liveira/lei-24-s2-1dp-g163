@@ -1,10 +1,14 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.adapters.SendEmailExternalAPI;
 import pt.isep.lei.esoft.auth.AuthFacade;
 import pt.isep.lei.esoft.auth.UserSession;
 
 public class AuthenticationRepository {
+
     private final AuthFacade authenticationFacade;
+
+    private static SendEmailExternalAPI sendEmailExternalAPI;
 
     public AuthenticationRepository() {
         authenticationFacade = new AuthFacade();
@@ -33,4 +37,9 @@ public class AuthenticationRepository {
     public boolean existUser(String email) {
         return authenticationFacade.existsUser(email);
     }
+
+    public static void setSendEmailExternalAPI(SendEmailExternalAPI sendEmailExternalAPI) {
+        AuthenticationRepository.sendEmailExternalAPI = sendEmailExternalAPI;
+    }
+
 }
