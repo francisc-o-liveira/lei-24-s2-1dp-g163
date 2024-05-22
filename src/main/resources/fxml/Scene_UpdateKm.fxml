@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="190.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ViewDetailsVehicleUI">
+<AnchorPane prefHeight="190.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsVehicleUI">
    <children>
       <TextField fx:id="updateCurrentKm" layoutX="105.0" layoutY="104.0" prefHeight="26.0" prefWidth="166.0" />
       <DatePicker fx:id="updateDate" layoutX="105.0" layoutY="56.0" prefHeight="26.0" prefWidth="166.0" />

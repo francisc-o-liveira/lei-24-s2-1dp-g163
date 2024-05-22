@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.details;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +15,7 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.ui.gui.manage.ManageCollaboratorsUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 

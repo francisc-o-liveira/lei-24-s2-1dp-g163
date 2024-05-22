@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.manage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +14,8 @@ import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsVehicleUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class ManageVehiclesUI {
 
-    public Stage stage=LoginUI.getMainStage();
+    public Stage stage= LoginUI.getMainStage();
     public Stage stageToViewDetails = new Stage();
 
     public RegisterVehicleController ctrl;

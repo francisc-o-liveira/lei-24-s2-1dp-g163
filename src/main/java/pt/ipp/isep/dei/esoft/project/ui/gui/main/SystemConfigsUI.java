@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,8 +10,6 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-
-import java.util.ArrayList;
 
 public class SystemConfigsUI {
 

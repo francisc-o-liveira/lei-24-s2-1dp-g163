@@ -5,13 +5,13 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {
 

@@ -1,9 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 import pt.ipp.isep.dei.esoft.project.ui.console.CreateTaskUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
-import pt.ipp.isep.dei.esoft.project.ui.gui.ManageJobsUI;
 
 import java.util.ArrayList;
 import java.util.List;

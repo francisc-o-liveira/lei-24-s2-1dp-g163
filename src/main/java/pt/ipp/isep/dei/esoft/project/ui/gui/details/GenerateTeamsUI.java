@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.details;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +13,6 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.converter.IntegerStringConverter;
 import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;

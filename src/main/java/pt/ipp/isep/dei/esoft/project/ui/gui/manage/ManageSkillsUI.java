@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.manage;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterSkillController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
