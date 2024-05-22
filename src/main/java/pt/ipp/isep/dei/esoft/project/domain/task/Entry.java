@@ -20,8 +20,8 @@ public class Entry extends Task {
     private Team teamAssigned;
 
 
-    public Entry(String reference, String description, String informalDescription, String technicalDescription, int duration, double cost) {
-        super(reference, description, informalDescription, technicalDescription, duration, cost);
+    public Entry(String title String reference, String description, String informalDescription, String technicalDescription, int duration, double cost) {
+        super(title, reference, description, informalDescription, technicalDescription, duration, cost);
         this.status = Status.Planned;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
