@@ -9,10 +9,10 @@ public class Task {
     private String technicalDescription;
     private int duration;
     private double cost;
-    private TaskCategory taskCategory;
+
 
     public Task(String reference, String description, String informalDescription, String technicalDescription,
-                int duration, double cost, TaskCategory taskCategory) {
+                int duration, double cost) {
         validateReference(reference);
         this.reference = reference;
         this.description = description;
@@ -20,7 +20,7 @@ public class Task {
         this.technicalDescription = technicalDescription;
         this.duration = duration;
         this.cost = cost;
-        this.taskCategory = taskCategory;
+
     }
 
     private void validateReference(String reference) {
@@ -45,6 +45,6 @@ public class Task {
 
     public Task clone() {
         return new Task(this.reference, this.description, this.informalDescription, this.technicalDescription,
-                this.duration, this.cost, this.taskCategory);
+                this.duration, this.cost);
     }
 }
