@@ -1,0 +1,116 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+
+participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryController" as CTRL2
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+
+participant ":VehicleDto" as SelectedDTO
+participant "agendaDto : List<VehicleDto>" as ListSelectedDTO
+participant "agenda : List<Vehicle>" as ListSelected
+participant ":VehicleMapper" as SelectedMAPPER
+participant ":Entry" as OBJ
+
+
+autonumber 5
+-> CTRL2 : getDataNeededToModify()
+                     activate CTRL2
+
+
+                      CTRL2 -> RepositorySingleton : getInstance()
+                                                             activate RepositorySingleton
+
+                                                                 RepositorySingleton --> CTRL2: repositories
+                                                             deactivate RepositorySingleton
+
+                                                             CTRL2 -> PLAT : getVehicleRepository()
+                                                             activate PLAT
+
+                                                             PLAT -> CTRL2 : vehicleRepository
+                                                             deactivate PLAT
+
+
+                                                             CTRL2 -> PLAT : getEntryRepository()
+                                                             activate PLAT
+
+                                                             PLAT -> CTRL2 : entryRepository
+                                                             deactivate PLAT
+
+                                                             CTRL2 -> VehicleRepository : getVehicleList()
+                                                             activate VehicleRepository
+
+                                                             VehicleRepository -> ListSelected** : create
+
+                                                             note over ListSelected : loop to populate is omitted
+
+
+
+                                                             VehicleRepository -> CTRL2 : vehicleList
+                                                             deactivate VehicleRepository
+
+                                                             CTRL2 -> EntryRepository : filterVehiclesNotUseInTime(entryDto,vehicleList)
+                                                             activate EntryRepository
+
+                                                             EntryRepository -> EntryRepository  : getEntryInTime(entryDto)
+                                                             activate EntryRepository
+
+                                                             EntryRepository -> OBJ : getVehicleList()
+                                                             activate OBJ
+                                                             deactivate OBJ
+
+                                                             EntryRepository -> CTRL2 : vehicleList
+                                                             deactivate EntryRepository
+
+                                                             deactivate EntryRepository
+
+                                                             loop For every Vehicle
+                                                             CTRL2 -> SelectedMAPPER : toDTO(vehicleListFilter)
+                                                             activate SelectedMAPPER
+
+                                                             SelectedMAPPER -> ListSelectedDTO** : create
+
+                                                             SelectedMAPPER -> ListSelected : vehicle = get(i)
+                                                             activate ListSelected
+                                                             deactivate ListSelected
+
+                                                             SelectedMAPPER -> SelectedMAPPER : vehicleDTO = toDTO(vehicle)
+                                                             activate SelectedMAPPER
+
+                                                             SelectedMAPPER -> SelectedDTO : create(...)
+                                                             deactivate SelectedMAPPER
+
+                                                             SelectedMAPPER -> ListSelectedDTO : add(vehicleDto)
+                                                             activate ListSelectedDTO
+                                                             deactivate ListSelectedDTO
+
+                                                             SelectedMAPPER -> CTRL2 : vehicleDtoList
+                                                             deactivate SelectedMAPPER
+
+                                                             end
+
+
+                                                              note over CTRL2 : other data omitted
+
+
+
+ autonumber 15
+    <-- CTRL2 : vehicleDtoList
+            deactivate CTRL2
+
+
+
+
+
+
+
+@enduml

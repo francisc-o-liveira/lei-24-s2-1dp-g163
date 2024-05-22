@@ -16,7 +16,7 @@ participant "repositories\n:Repositories" as PLAT
 participant "entryRepository\n:EntryRepository" as EntryRepository
 participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
 participant ":Vehicle" as OBJSelected
-participant ":Vehicle" as SelectedDTO
+participant ":VehicleDto" as SelectedDTO
 participant "agendaDto : List<VehicleDto>" as ListSelectedDTO
 participant "agenda : List<Vehicle>" as ListSelected
 participant ":VehicleMapper" as SelectedMAPPER
@@ -39,55 +39,10 @@ activate GSM
 
             UI -> CTRL : getAgendaList()
             activate CTRL
+                        ref over CTRL
+                                Get Agenda Entry's List
+                        end
 
-             CTRL -> RepositorySingleton : getInstance()
-                                        activate RepositorySingleton
-
-                                            RepositorySingleton --> CTRL: repositories
-                                        deactivate RepositorySingleton
-
-
-                                        CTRL -> PLAT : getEntryRepository()
-                                        activate PLAT
-
-                                        PLAT -> CTRL : entryRepository
-                                        deactivate PLAT
-
-                                        CTRL -> EntryRepository : getAgendaList()
-                                        activate EntryRepository
-
-
-
-                                        EntryRepository -> List** : create
-
-                                        note over List : loop to populate is omitted
-
-
-
-                                        EntryRepository -> CTRL : Agenda
-                                        deactivate EntryRepository
-
-                                        CTRL -> MAPPER : toDto(Agenda)
-                                        activate MAPPER
-
-                                        MAPPER -> ListDTO** : create()
-
-                                        MAPPER -> List : entry = get(i)
-                                        activate List
-                                        deactivate List
-
-                                        MAPPER -> MAPPER : entryDto = toDTO(entry)
-                                        activate MAPPER
-
-                                        MAPPER -> DTO**  : create(...)
-                                        deactivate MAPPER
-
-                                        MAPPER -> ListDTO : add(entryDto)
-                                        activate ListDTO
-                                        deactivate ListDTO
-
-                                        MAPPER -> CTRL : agendaDto
-                                        deactivate MAPPER
 
             CTRL -> UI : agendaDto
             deactivate CTRL
