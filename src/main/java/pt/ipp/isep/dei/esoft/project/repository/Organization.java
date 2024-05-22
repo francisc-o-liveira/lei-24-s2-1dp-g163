@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
-import pt.ipp.isep.dei.esoft.project.domain.task.TaskCategory;
 
 import java.util.ArrayList;
 import java.util.List;
