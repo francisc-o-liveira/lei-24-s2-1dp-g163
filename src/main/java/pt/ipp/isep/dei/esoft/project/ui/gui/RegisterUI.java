@@ -38,6 +38,11 @@ public class RegisterUI {
     }
 
     @FXML
+    public void btnLogin(ActionEvent event) {
+        //return to login page
+    }
+
+    @FXML
     public void btnRegister(ActionEvent event) {
         if (attemps==0){
             blockUser();
@@ -56,6 +61,7 @@ public class RegisterUI {
     }
 
     private void regAccount() {
+        boolean value;
         if (emailLogin.getText().isEmpty() || passwordLogin.getText().isEmpty() || repeatPasswordLogin.getText().isEmpty()) {
             throw new IllegalArgumentException("Email or password are required");
         }
@@ -72,12 +78,18 @@ public class RegisterUI {
                         ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
                     case "Collaborator":
                         ctrl.registerCollaborator(emailLogin.getText(),passwordLogin.getText());
+                    default:
+                        value=false;
                 }
             }else {
                 throw new IllegalArgumentException("Passwords do not match");
             }
+            if(value){
+                //success operation popUp register success
+            }
         }
     }
+
 
 
 

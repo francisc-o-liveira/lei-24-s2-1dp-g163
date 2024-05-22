@@ -38,6 +38,11 @@ Other software classes (i.e. Pure Fabrication) identified:
 * AssignEntryOnAgendaUI  
 * AssignEntryOnAgendaController
 
+Other software classes (i.e. Use of Data Transfer Objects (DTO)) identified:
+
+* EntryDTO
+* TaskDTO
+
 ## 3.2. Sequence Diagram (SD)
 
 _**Note that SSD - Alternative One is adopted.**_

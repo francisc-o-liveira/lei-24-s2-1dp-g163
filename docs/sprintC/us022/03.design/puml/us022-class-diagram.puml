@@ -103,6 +103,8 @@ EntryRepository  ..>  EntryMapper
 
 EntryMapper --> EntryDto
 
+EntryDto - TaskDto : extends
+
 
 AssignEntryOnAgendaController ..> EntryRepository : EntryRepository
 AssignEntryOnAgendaController ..> EntryMapper : EntryMapper
