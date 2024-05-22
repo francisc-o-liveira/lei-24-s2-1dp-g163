@@ -36,7 +36,7 @@ b) different tasks can be executed at same time in the same park.
 
 > **Question:** How many hours work a Team by day, to consider, how many days need to be taken care of to complete the task? And how much time needs to be taken into consideration for the transport distance to the location of the task?
 >
-> **Answer:** 
+> **Answer:** This can be loaded by a configuration file don't need to think about that.
 
 > **Question:** When a new entry is added to the ToDo list, the default status of that task will be "pending" or no status at all is considered on ToDo list? Similarly, when a new entry is added to the Agenda, the status of that task will be, by default, set to "planned", right?
 >
@@ -53,6 +53,7 @@ b) different tasks can be executed at same time in the same park.
 * **AC2:** The new entry must exist in the To-Do list.
 * **AC3:** The new entry must be associated with a Date for start the task (startDate)
 * **AC4:** The TimePeriod associated to the task are calculated with the expected duration of the task.
+* **AC5:** The time of work by day for a team need to be load by the configuration file
 
 ### 1.4. Found out Dependencies
 

@@ -23,17 +23,12 @@ As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 
 > **Question:**  How many vehicles can have an Entry on maximum value?
 >
-> **Answer:** 
-
-> **Question:** 
->
-> **Answer:** 
+> **Answer:** The maximum value can be predefined is not proof of concept for this.
 
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The Vehicle need to be available in the period of time of the entry
-* **AC2:** 
 
 ### 1.4. Found out Dependencies
 

@@ -1,5 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.domain.adapters;
-
+/**
+ * The interface Email.
+ */
 public interface SendEmailExternalAPI {
-    public void sendEmail(String to, String subject, String body);
+    /**
+     * Send email.
+     *
+     * @param to  the email
+     * @param subject the title email
+     * @param body the body email
+     */
+    void sendEmail(String to, String subject, String body);
+
 }
