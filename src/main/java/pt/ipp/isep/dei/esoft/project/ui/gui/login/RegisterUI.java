@@ -1,12 +1,18 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.login;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
+
+import java.io.IOException;
 
 public class RegisterUI {
 
@@ -23,45 +29,39 @@ public class RegisterUI {
     @FXML
     private ComboBox<String> roleComboBox;
 
-    private static int attemps=4;
-
     public static Stage mainStage;
 
     private final RegisterController ctrl = new RegisterController();
+    private final AuthenticationController ctrlAuth=new AuthenticationController();
 
-    public void setMainStage(Stage mainStage) {
+    public void setMainStageAndBox(Stage mainStage) {
+        ObservableList<String> roles= FXCollections.observableArrayList(ctrlAuth.getRolesToSelect());
+        roleComboBox.setItems(roles);
         this.mainStage = mainStage;
     }
 
-    public static Stage getMainStage(){
-        return mainStage;
-    }
-
     @FXML
-    public void btnLogin(ActionEvent event) {
-        //return to login page
+    public void btnLogin(ActionEvent event) throws IOException {
+        returnToLogin();
     }
 
     @FXML
     public void btnRegister(ActionEvent event) {
-        if (attemps==0){
-            blockUser();
-        }
         try{
-            attemps--;
             regAccount();
             if(ctrl.userExists(emailLogin.getText())){
-                //Success
-            }else {
-                // Not Success
+                popUp().showAndWait();
+
+                if(popUp().showAndWait().get()==ButtonType.OK){
+                    returnToLogin();
+                }
             }
         }catch (Exception e){
-            e.printStackTrace();
+            popUpExceptions(e.getMessage()).show();
         }
     }
 
     private void regAccount() {
-        boolean value;
         if (emailLogin.getText().isEmpty() || passwordLogin.getText().isEmpty() || repeatPasswordLogin.getText().isEmpty()) {
             throw new IllegalArgumentException("Email or password are required");
         }
@@ -78,24 +78,34 @@ public class RegisterUI {
                         ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
                     case "Collaborator":
                         ctrl.registerCollaborator(emailLogin.getText(),passwordLogin.getText());
-                    default:
-                        value=false;
                 }
             }else {
                 throw new IllegalArgumentException("Passwords do not match");
             }
-            if(value){
-                //success operation popUp register success
-            }
         }
     }
 
+    private Alert popUp(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Information");
+        alert.setContentText("Register completed!");
 
-
-
-
-    private void blockUser() {
+        return alert;
     }
 
+    private Alert popUpExceptions(String message){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Information");
+        alert.setContentText(message);
 
+        return alert;
+    }
+
+    private void returnToLogin()throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        mainStage.setScene(scene);
+        mainStage.show();
+    }
 }

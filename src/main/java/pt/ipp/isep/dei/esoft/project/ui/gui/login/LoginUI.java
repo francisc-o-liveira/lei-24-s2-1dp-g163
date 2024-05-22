@@ -85,8 +85,14 @@ public class LoginUI {
     }
 
     @FXML
-    public void btnRegister(ActionEvent event) {
-
+    public void btnRegister(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneRegister.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        mainStage.setScene(scene);
+        mainStage.show();
+        RegisterUI ui =fxmlLoader.getController();
+        ui.setMainStageAndBox(mainStage);
     }
 
     @FXML
