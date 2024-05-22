@@ -4,16 +4,20 @@ import java.util.Objects;
 
 public class Task {
     private final String reference;
+    private String title;
     private String description;
     private String informalDescription;
     private String technicalDescription;
     private int duration;
     private double cost;
 
+    private enum DegreeUrgency{High,Medium,Low}
 
-    public Task(String reference, String description, String informalDescription, String technicalDescription,
+
+    public Task(String title, String reference, String description, String informalDescription, String technicalDescription,
                 int duration, double cost) {
         validateReference(reference);
+        this.title = title;
         this.reference = reference;
         this.description = description;
         this.informalDescription = informalDescription;
@@ -44,7 +48,7 @@ public class Task {
      */
 
     public Task clone() {
-        return new Task(this.reference, this.description, this.informalDescription, this.technicalDescription,
+        return new Task(this.title,this.reference, this.description, this.informalDescription, this.technicalDescription,
                 this.duration, this.cost);
     }
 }
