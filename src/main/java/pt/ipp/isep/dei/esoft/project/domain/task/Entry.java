@@ -20,7 +20,7 @@ public class Entry extends Task {
     private Team teamAssigned;
 
 
-    public Entry(String title String reference, String description, String informalDescription, String technicalDescription, int duration, double cost) {
+    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, double cost) {
         super(title, reference, description, informalDescription, technicalDescription, duration, cost);
         this.status = Status.Planned;
         this.startDate = null;
