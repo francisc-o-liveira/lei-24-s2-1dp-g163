@@ -23,9 +23,15 @@ class Task{
 class CollaboratorUser {
 }
 
+class Entry {
+    - Team
+    + Entry()
+    + getTeam()
+}
 
-class TaskRepository {
-    - List <Task> : toDoList
+
+class EntryRepository {
+    - List <Entry> : toDoList
 
     + getToDoListsOfCollaborator()
 }
@@ -49,7 +55,7 @@ class Repositories {
 }
 
 class ViewTaskListAssignedCollabController {
-    - TaskRepository taskRepository
+    - EntryRepository entryRepository
     + ViewTaskListAssignedCollabController()
     + getTaskAssignedToMe()
     + getCollaboratorByEmail(email)
@@ -60,10 +66,10 @@ class ViewTaskListAssignedCollabUI {
 }
 
 note right of ViewTaskListAssignedCollabController
-    - task is achieved with task repository
+    - entry is achieved with entry repository
 end note
 
-note bottom of TaskRepository
+note bottom of EntryRepository
     - used for displaying
     the to do list
 end note
@@ -74,10 +80,10 @@ ApplicationSession -> ApplicationSession : instance
 ViewTaskListAssignedCollabUI .> ViewTaskListAssignedCollabController
 
 ViewTaskListAssignedCollabController .> Repositories : repositories
-Repositories "1" --> "1" TaskRepository
+Repositories "1" --> "1" EntryRepository
 Repositories "1" --> "1" CollaboratorRepository
 
-ViewTaskListAssignedCollabController ..> TaskRepository : TaskRepository
+ViewTaskListAssignedCollabController ..> EntryRepository : EntryRepository
 
 
 CollaboratorRepository "1" --> "*" Collaborator : collaborators
@@ -85,10 +91,11 @@ CollaboratorRepository "1" --> "*" Collaborator : collaborators
 ApplicationSession --> "1" UserSession : userSession
 ViewTaskListAssignedCollabController ..> ApplicationSession
 ViewTaskListAssignedCollabController ..> UserSession
-TaskRepository --> "*" CollaboratorUser : employs
+EntryRepository --> "*" CollaboratorUser : employs
+EntryRepository "1" --> "*" Entry : entry's
 
-Task --> "*" CollaboratorUser : employs
-
+Entry --> "*" CollaboratorUser : employs
+Task "1" -> "1" Entry : extends
 
 
 

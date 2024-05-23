@@ -11,7 +11,7 @@ participant ":ViewTaskListAssignedUI" as UI
 participant ":ViewTaskListAssignedController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskRepository\n:TaskRepository" as TaskRepository
+participant "entryRepository\n:EntryRepository" as EntryRepository
 participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
 
 
@@ -33,17 +33,17 @@ activate Collaborator
                                             RepositorySingleton --> CTRL: repositories
                                         deactivate RepositorySingleton
 
-                                        CTRL -> PLAT : getTaskRepository()
+                                        CTRL -> PLAT : getEntryRepository()
                                         activate PLAT
 
-                                        PLAT --> CTRL : taskRepository
+                                        PLAT --> CTRL : entryRepository
                                         deactivate PLAT
 
-                                        CTRL -> TaskRepository : getToDoList()
-                                        activate TaskRepository
+                                        CTRL -> EntryRepository : getToDoList()
+                                        activate EntryRepository
 
-                                        TaskRepository --> CTRL : toDoList
-                                        deactivate TaskRepository
+                                        EntryRepository --> CTRL : toDoList
+                                        deactivate EntryRepository
 
                                         CTRL --> UI : toDoList
                                         deactivate CTRL

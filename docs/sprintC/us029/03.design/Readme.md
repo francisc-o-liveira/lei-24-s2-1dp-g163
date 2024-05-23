@@ -25,7 +25,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 Other software classes (i.e Information Expert) identified:
 
 * Repositories
-* TaskRepository
+* EntryRepository
 
 Other software classes (i.e. Pure Fabrication) identified:
 
