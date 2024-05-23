@@ -29,7 +29,7 @@ public class GmailService implements SendEmailExternalAPI{
     /**
      * Write to file.
      *
-     * @param f      the file where the email will be written
+     * @param f the file where the email will be written
      * @param to  the email of the address
      * @param subject the title email
      * @param body the message content
