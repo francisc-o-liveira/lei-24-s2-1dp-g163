@@ -48,5 +48,6 @@
          </font>
       </Label>
       <TextField fx:id="phoneTxt" layoutX="115.0" layoutY="309.0" />
+      <Button layoutX="435.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnReload" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: B7D5B2;" text="Reload" />
    </children>
 </AnchorPane>
