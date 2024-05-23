@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
+import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+
 import java.util.Objects;
 
 public class Task {
@@ -8,24 +11,47 @@ public class Task {
     private String description;
     private String informalDescription;
     private String technicalDescription;
-    private int duration;
-    private double cost;
+    private int expectedDuration;
+    private GreenSpace greenSpace;
+    private TaskDto.DegreeUrgency degreeUrgency;
 
-    private enum DegreeUrgency{High,Medium,Low}
+
 
 
     public Task(String title, String reference, String description, String informalDescription, String technicalDescription,
-                int duration, double cost) {
+                int expectedDuration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency) {
         validateReference(reference);
+        this.greenSpace = greenSpace;
         this.title = title;
         this.reference = reference;
         this.description = description;
         this.informalDescription = informalDescription;
         this.technicalDescription = technicalDescription;
-        this.duration = duration;
-        this.cost = cost;
-
+        this.expectedDuration = expectedDuration;
+        this.degreeUrgency = degreeUrgency;
     }
+
+    public String getReference() {
+        return reference;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public String getInformalDescription() {
+        return informalDescription;
+    }
+    public String getTechnicalDescription() {
+        return technicalDescription;
+    }
+    public int getDuration() {
+        return expectedDuration;
+    }
+
+
+
 
     private void validateReference(String reference) {
         //TODO: missing from the diagrams
@@ -49,6 +75,6 @@ public class Task {
 
     public Task clone() {
         return new Task(this.title,this.reference, this.description, this.informalDescription, this.technicalDescription,
-                this.duration, this.cost);
+                this.expectedDuration, this.greenSpace,this.degreeUrgency);
     }
 }

@@ -139,5 +139,27 @@ public class GSManagerUI {
         stageToAdd.show();
         SystemConfigsUI ui =fxmlLoader.getController();
         ui.setComboBoxAndStage(stageToAdd);
+        ui.setTableSystemConfigs();
     }
+
+    @FXML
+    public void manageToDoList(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ToDoList.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ManageToDoListUI ui=fxmlLoader.getController();
+        ui.setTableToDoList();
+    }
+
+    /*@FXML
+    public void manageAgenda(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_Agenda.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ManageAgendaUI ui=fxmlLoader.getController();
+    }*/
 }

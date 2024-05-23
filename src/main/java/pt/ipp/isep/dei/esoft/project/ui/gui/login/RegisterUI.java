@@ -14,6 +14,8 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Regist
 
 import java.io.IOException;
 
+import static pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController.ROLE_COLAB;
+
 public class RegisterUI {
 
     @FXML
@@ -35,7 +37,7 @@ public class RegisterUI {
     private final AuthenticationController ctrlAuth=new AuthenticationController();
 
     public void setMainStageAndBox(Stage mainStage) {
-        ObservableList<String> roles= FXCollections.observableArrayList(ctrlAuth.getRolesToSelect());
+        ObservableList<String> roles= FXCollections.observableArrayList(ctrl.getRoles());
         roleComboBox.setItems(roles);
         this.mainStage = mainStage;
     }
@@ -55,6 +57,14 @@ public class RegisterUI {
                 if(popUp().showAndWait().get()==ButtonType.OK){
                     returnToLogin();
                 }
+            } else {
+                String message=String.format("This" + roleComboBox.getValue() + "does not exist. Please contact GSM to add him first.");
+                popUpExceptions(message).show();
+                if(popUpExceptions(message).showAndWait().get()==ButtonType.OK){
+                    emailLogin.clear();
+                    passwordLogin.clear();
+                    repeatPasswordLogin.clear();
+                }
             }
         }catch (Exception e){
             popUpExceptions(e.getMessage()).show();
@@ -69,16 +79,10 @@ public class RegisterUI {
             throw new IllegalArgumentException("User already exists on the System, please login");
         }else {
             if (passwordLogin.getText().equals(repeatPasswordLogin.getText()) && ctrl.verifyPassword(passwordLogin.getText())) {
-                switch (roleComboBox.getSelectionModel().getSelectedItem()) {
-                    case "GSM":
-                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
-                    case "HRM":
-                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
-                    case "VFM":
-                        ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
-                    case "Collaborator":
-                        ctrl.registerCollaborator(emailLogin.getText(),passwordLogin.getText());
+                if(roleComboBox.getValue().equals(ROLE_COLAB)){
+                    ctrl.registerCollaborator(emailLogin.getText(),passwordLogin.getText());
                 }
+                ctrl.registerManager(roleComboBox.getSelectionModel().getSelectedItem(),emailLogin.getText(),passwordLogin.getText());
             }else {
                 throw new IllegalArgumentException("Passwords do not match");
             }

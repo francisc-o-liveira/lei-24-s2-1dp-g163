@@ -6,69 +6,52 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "HRM" as HRM
-participant ":RegisterSkillUI" as UI
-participant ":RegisterSkillController" as CTRL
+actor "GSM" as GSM
+participant ":AgendaUI" as AgendaUI
+participant ":ViewDetailsEntryUI" as UI
+participant ":ViewDetailsEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillRepository:\nSkillRepository" as skillRepository
-participant "Skill:\nSkill" as Skill
+participant "entryRepository:\nEntryRepository" as EntryRepository
+participant ":Entry" as OBJ
+participant ":EntryDto" as EntryDto
+participant ":EntryMapper" as MAPPER
+participant "cancelEntryListDto : List<EntryDto>" as ListDTO
+participant "cancelEntryList : List<Entry>" as List
+participant "Task:\nTask" as Task
 
 
-activate HRM
+activate GSM
 
-        HRM -> UI : asks to register a new skill
+        GSM -> AgendaUI: selects entry
+        activate AgendaUI
 
+        AgendaUI -> UI: create(entryDto)
+        deactivate AgendaUI
         activate UI
 
-'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
-            UI -> CTRL** : create
+        UI -> GSM: shows details and wait
+        deactivate UI
 
-         UI -> HRM : requests data(skill name)
-         HRM -> UI : types requested data (skill name)
+        GSM -> UI : ask to cancel an entry
+        activate UI
 
-            UI -> CTRL : registerSkill(skill name)
+        UI -> CTRL: cancelEntry(entryDto)
+        activate CTRL
 
-            activate CTRL
-            CTRL -> CTRL : verifySkillName(skill name))
+        CTRL --> UI: entryListDto
 
+        UI --> GSM: shows the entrys to cancel
 
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
+        GSM -> UI: select the entry that wants to cancel
 
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
+        UI --> GSM: request confirmation to cancel the entry
 
-                CTRL -> PLAT : getSkillRepository()
-                activate PLAT
+        GSM -> UI: confirms data
 
-                    PLAT --> CTRL: skillRepository
-                deactivate PLAT
+        UI --> GSM : displays operation success
+        deactivate UI
 
-
-                activate skillRepository
-
-
-                    CTRL -> skillRepository : registerSkill (skill name)
-
-                    skillRepository -> Skill** : create()
-
-                    skillRepository -> skillRepository : verifyIfExistAndSave(skill name)
-
-
-
-
-                skillRepository -> CTRL : skillList
-
-
-                CTRL --> UI : skillList
-            deactivate CTRL
-
-
-            UI --> HRM : displays operation success and \n show skillList
-    deactivate UI
-
-deactivate HRM
+deactivate GSM
 
 @enduml

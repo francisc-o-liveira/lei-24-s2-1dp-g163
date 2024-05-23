@@ -18,7 +18,6 @@ public class GreenSpaceDto {
 
     }
 
-
     public double getAreaInHectares() {
         return areaInHectares;
     }

@@ -3,12 +3,17 @@ package pt.ipp.isep.dei.esoft.project.domain.employee;
 import java.util.Objects;
 
 public class Manager {
+
     private String email;
     private String name;
     private String position;
-    private static enum Role{HRM,GSM,VFM}
+    public static enum Role{HRM,GSM,VFM}
     private String phone;
 
+
+    public static Role[] getEnumManagerRoles(){
+        return Role.values();
+    }
     public Manager(String name, String position, String phone, String email) {
         setName(name);
         setPosition(position);
@@ -60,6 +65,13 @@ public class Manager {
 
     public String getEmail() {
         return email;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
     }
 
     @Override
