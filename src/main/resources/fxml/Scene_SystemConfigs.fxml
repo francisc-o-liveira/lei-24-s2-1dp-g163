@@ -7,30 +7,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTeamUI">
+<AnchorPane prefHeight="350.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.main.SystemConfigsUI">
    <children>
-      <Label layoutX="173.0" layoutY="75.0" text="E-mail:">
+      <Label layoutX="174.0" layoutY="82.0" text="Name:">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="223.0" layoutY="71.0" />
-      <Label layoutX="153.0" layoutY="131.0" text="Password:">
+      <TextField fx:id="nameTxt" layoutX="223.0" layoutY="78.0" />
+      <Label layoutX="173.0" layoutY="126.0" text="E-mail:">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="223.0" layoutY="127.0" />
-      <Label layoutX="185.0" layoutY="188.0" text="Role:">
+      <TextField fx:id="emailTxt" layoutX="223.0" layoutY="123.0" />
+      <Label layoutX="154.0" layoutY="166.0" text="Password:">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="407.0" layoutY="247.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add" />
+      <TextField fx:id="passwordTxt" layoutX="223.0" layoutY="162.0" />
+      <Label layoutX="179.0" layoutY="210.0" text="Role:">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="437.0" layoutY="271.0" mnemonicParsing="false" onAction="#addManager" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add" />
       <Label layoutX="25.0" layoutY="20.0" text="System Configurations" textFill="#046f4d">
          <font>
             <Font name="Tahoma Bold" size="16.0" />
          </font></Label>
-      <ComboBox layoutX="223.0" layoutY="184.0" prefHeight="26.0" prefWidth="160.0" />
+      <ComboBox fx:id="roles" layoutX="222.0" layoutY="206.0" prefHeight="26.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
