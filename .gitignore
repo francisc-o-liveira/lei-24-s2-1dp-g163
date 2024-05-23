@@ -28,5 +28,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/target/classes/**
 /target/classes/MATDISC/USs/Main$1.class
 /target/classes/fxml/SceneMenu_Collaborator.fxml
