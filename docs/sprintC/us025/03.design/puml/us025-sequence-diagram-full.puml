@@ -1,4 +1,4 @@
-@startuml
+ç@startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -8,6 +8,7 @@ autonumber
 'hide footbox
 actor "GSM" as GSM
 participant ":AgendaUI" as AgendaUI
+participant ":AgendaController" as AgendaController
 participant ":ViewDetailsEntryUI" as UI
 participant ":ViewDetailsEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
@@ -26,18 +27,47 @@ activate GSM
         GSM -> AgendaUI: selects entry
         activate AgendaUI
 
-        AgendaUI -> UI: create(entryDto)
+        AgendaUI -> AgendaController**: create(entryDto)
         deactivate AgendaUI
-        activate UI
 
-        UI -> GSM: shows details and wait
-        deactivate UI
+        AgendaUI -> GSM: shows details and wait
+        activate AgendaUI
+
+        deactivate AgendaUI
 
         GSM -> UI : ask to cancel an entry
         activate UI
 
-        UI -> CTRL: cancelEntry(entryDto)
+        UI -> CTRL**: cancelEntry(entryDto)
         activate CTRL
+
+        CTRL -> RepositorySingleton: getInstance()
+        activate RepositorySingleton
+
+        RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT: getEntryRepository()
+        activate PLAT
+
+        PLAT --> CTRL: entryRepository
+        deactivate PLAT
+
+        CTRL -> RepositorySingleton: changeEntryStatus(entryDto)
+        activate RepositorySingleton
+
+        RepositorySingleton -> MAPPER: toModel(entryDto)
+        deactivate RepositorySingleton
+
+
+
+
+
+
+
+
+
+
 
         CTRL --> UI: entryListDto
 
