@@ -48,9 +48,12 @@ public class SystemConfigsUI {
     @FXML
     private TableView<Manager> tableSystemConfigs;
 
-    private OrganizationController org=new OrganizationController();
-    private ObservableList<Manager> managers=FXCollections.observableList(org.getManagersList());
+    ObservableList<Manager> managers=FXCollections.observableArrayList();
+    OrganizationController org;
 
+    public SystemConfigsUI(){
+        org=new OrganizationController();
+    }
 
     public void setComboBoxAndStage(Stage stage){
         ObservableList<String> rolesForBox= FXCollections.observableArrayList(ctrl.getRolesToSelect());
@@ -62,6 +65,10 @@ public class SystemConfigsUI {
         colManagers.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colType.setCellValueFactory(new PropertyValueFactory<>("position"));
+
+        for(Manager m : org.getManagersList()){
+            managers.add(m);
+        }
         tableSystemConfigs.setItems(managers);
     }
 

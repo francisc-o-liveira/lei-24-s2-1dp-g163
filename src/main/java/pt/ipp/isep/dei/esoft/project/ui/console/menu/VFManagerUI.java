@@ -1,6 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
-import pt.ipp.isep.dei.esoft.project.ui.console.CreateTaskUI;
+
 import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
@@ -13,7 +13,7 @@ public class VFManagerUI implements Runnable{
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Create Task", new CreateTaskUI()));
+
         options.add(new MenuItem("Manage Vehicles", new ManageVehiclesUI()));
         options.add(new MenuItem("Manage Equipment", new ManageEquipmentUI()));
 

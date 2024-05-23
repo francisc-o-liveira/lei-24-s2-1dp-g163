@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain.employee;
 import java.util.Objects;
 
 public class Manager {
+
     private String email;
     private String name;
     private String position;
@@ -64,6 +65,13 @@ public class Manager {
 
     public String getEmail() {
         return email;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public String getPosition() {
+        return position;
     }
 
     @Override
