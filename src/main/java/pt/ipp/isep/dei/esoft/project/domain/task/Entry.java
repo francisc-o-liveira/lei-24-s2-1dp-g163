@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
@@ -20,8 +21,8 @@ public class Entry extends Task {
     private Team teamAssigned;
 
 
-    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, GreenSpace greenSpace) {
-        super(title, reference, description, informalDescription, technicalDescription, duration, greenSpace);
+    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency) {
+        super(title, reference, description, informalDescription, technicalDescription, duration, greenSpace, degreeUrgency);
         this.status = EntryDto.Status.Planned;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
