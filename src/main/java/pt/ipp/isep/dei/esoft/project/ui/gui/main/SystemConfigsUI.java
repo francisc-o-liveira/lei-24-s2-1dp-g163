@@ -92,11 +92,11 @@ public class SystemConfigsUI {
         String email=emailTxt.getText();
         String role=roles.getValue();
         String phone=phoneTxt.getText();
-
-        org.addEmployee(name,role,phone,email);
-        if(popUp().showAndWait().get()== ButtonType.OK){
-            tableSystemConfigs.getItems().clear();
-            setTableSystemConfigs();
+        try{
+            org.addEmployee(name,role,phone,email); //add exceptions on adding an employee
+            popUp().show();
+        } catch (Exception e){
+            popUpWithMessage(e.getMessage()).show();
         }
     }
 
@@ -116,5 +116,9 @@ public class SystemConfigsUI {
         return alert;
     }
 
-
+    @FXML
+    public void btnReload(ActionEvent event){
+        tableSystemConfigs.getItems().clear();
+        setTableSystemConfigs();
+    }
 }

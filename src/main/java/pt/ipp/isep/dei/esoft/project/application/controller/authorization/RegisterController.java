@@ -5,11 +5,15 @@ import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RegisterController {
     public static final String ROLE_GSM = "GSM";
     public static final String ROLE_HRM = "HRM";
     public static final String ROLE_VFM = "VFM";
     public static final String ROLE_COLAB = "COLAB";
+    public static final List<String> roles=new ArrayList<>();
 
     private static final int minDigitsPassword = 2;
     private static final int minCapitalPassword = 3;
@@ -25,6 +29,10 @@ public class RegisterController {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         this.collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         this.organization= Repositories.getInstance().getOrganizationRepository();
+        roles.add(ROLE_GSM);
+        roles.add(ROLE_HRM);
+        roles.add(ROLE_VFM);
+        roles.add(ROLE_COLAB);
     }
 
     public boolean userExists(String email) {
@@ -64,5 +72,9 @@ public class RegisterController {
         }else{
             throw new IllegalArgumentException("Collaborator does not exist in this organization");
         }
+    }
+
+    public List<String> getRoles(){
+        return roles;
     }
 }
