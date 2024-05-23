@@ -204,5 +204,9 @@ public class Organization{
         return managers;
     }
 
+    public static Manager.Role[] getEnumManagerRoles(){
+        return Manager.getEnumManagerRoles();
+    }
+
     //Clone organization
 }
