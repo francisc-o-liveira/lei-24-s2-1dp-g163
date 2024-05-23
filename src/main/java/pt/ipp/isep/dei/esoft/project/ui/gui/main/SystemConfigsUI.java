@@ -47,8 +47,9 @@ public class SystemConfigsUI {
     private TableColumn<Manager, String> colType;
     @FXML
     private TableView<Manager> tableSystemConfigs;
-    public OrganizationController org;
-    public ObservableList<Manager> managers=FXCollections.observableArrayList();
+
+    ObservableList<Manager> managers=FXCollections.observableArrayList();
+    OrganizationController org;
 
     public SystemConfigsUI(){
         org=new OrganizationController();
