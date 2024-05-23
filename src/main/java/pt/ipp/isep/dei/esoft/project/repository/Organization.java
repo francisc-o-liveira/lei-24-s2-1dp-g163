@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,6 +167,37 @@ public class Organization{
             }
         }
         return false;
+    }
+
+    public Optional<GreenSpace> registerGreenSpace(GreenSpaceDto newGreenSpaceDto) {
+        Optional<GreenSpace> optionalValue = Optional.empty();
+        GreenSpace greenSpace = new GreenSpace(newGreenSpaceDto);
+        if (verifyIfExistAndSave(greenSpace)) {
+            optionalValue = Optional.of(greenSpace);
+        }
+        return optionalValue;
+    }
+
+    private boolean verifyIfExistAndSave(GreenSpace greenSpace) {
+        for (GreenSpace gs : greenSpaces) {
+            if (greenSpace.equals(gs)) {
+                return false;
+            }
+        }
+        return saveGreenSpace(greenSpace);
+    }
+
+    private boolean saveGreenSpace(GreenSpace greenSpace) {
+        return greenSpaces.add(greenSpace);
+    }
+
+    public List<GreenSpaceDto> getGreenSpaceList() {
+        List<GreenSpaceDto> dtos = new ArrayList<>();
+        for (GreenSpace gs : greenSpaces) {
+            GreenSpaceMapper mapper = new GreenSpaceMapper();
+            dtos.add(mapper.greenSpaceToGreenSpaceDto(gs));
+        }
+        return dtos;
     }
 
     //Clone organization
