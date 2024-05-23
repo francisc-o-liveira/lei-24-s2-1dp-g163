@@ -104,4 +104,8 @@ public class Manager {
     public Manager clone() {
         return new Manager(this.name,this.position,this.phone,this.email);
     }
+
+    public String toString(){
+        return String.format("%s %s %s %s", name, email, position,phone);
+    }
 }
