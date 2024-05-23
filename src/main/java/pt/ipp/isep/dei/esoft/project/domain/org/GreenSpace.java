@@ -1,12 +1,16 @@
 package pt.ipp.isep.dei.esoft.project.domain.org;
 
+import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+
 public class GreenSpace {
 
-    private double area;
+
+    public enum  Type{MediumSize,LargeSize,Garden}
+
+    private double areaInHectares;
     private String address;
     private String name;
 
-    private enum Type{MediumSize,LargeSize,Garden}
     private Type type;
 
 
@@ -17,12 +21,19 @@ public class GreenSpace {
         setType(type);
     }
 
+    public GreenSpace(GreenSpaceDto greenSpaceDto) {
+        setArea(greenSpaceDto.getAreaInHectares());
+        setAddress(greenSpaceDto.getAddress());
+        setName(greenSpaceDto.getName());
+        setType(greenSpaceDto.getType());
+    }
+
     private void setType(Type type) {
         this.type = type;
     }
 
     private void setArea(double area) {
-        this.area = area;
+        this.areaInHectares = area;
     }
 
     private void setAddress(String address) {
@@ -34,7 +45,7 @@ public class GreenSpace {
     }
 
     public double getArea() {
-        return area;
+        return areaInHectares;
     }
     public String getAddress() {
         return address;
@@ -49,6 +60,10 @@ public class GreenSpace {
 
     @Override
     public String toString() {
-        return this.name + "----" + this.area + "-----" + this.address;
+        return this.name + "----" + this.areaInHectares + "-----" + this.address;
+    }
+
+    public static final Type[] getEnumGreenSpaceTypes(){
+        return Type.values();
     }
 }

@@ -35,10 +35,14 @@ activate GSM
 
 '            UI --> GSM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
-
+            ref over UI
+                AgendaUI omitted (JavaFx) / View Entry's in Agenda
+            end
 
             UI -> GSM : show Agenda and wait to select one Entry
             deactivate UI
+
+
 
             GSM --> UI : select one Entry
             activate UI
