@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
@@ -11,18 +13,16 @@ public class Entry extends Task {
 
     private Date startDate;
 
-    private enum Status {Planned, Postponed, Canceled,Done};
-
-    private Status status;
+    private EntryDto.Status status;
 
     private List<Vehicle> vehicleList;
 
     private Team teamAssigned;
 
 
-    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, double cost) {
-        super(title, reference, description, informalDescription, technicalDescription, duration, cost);
-        this.status = Status.Planned;
+    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, GreenSpace greenSpace) {
+        super(title, reference, description, informalDescription, technicalDescription, duration, greenSpace);
+        this.status = EntryDto.Status.Planned;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
@@ -33,9 +33,9 @@ public class Entry extends Task {
     }
 
     public void cancelEntry(){
-        if (this.status == Status.Postponed || this.status == Status.Planned){
-            this.status = Status.Canceled;
-        }else if (this.status == Status.Canceled) {
+        if (this.status == EntryDto.Status.Postponed || this.status == EntryDto.Status.Planned){
+            this.status = EntryDto.Status.Canceled;
+        }else if (this.status == EntryDto.Status.Canceled) {
             throw new IllegalArgumentException("This entry is already cancelled");
         }else {
             throw new RuntimeException("Access Impossible");
@@ -43,10 +43,10 @@ public class Entry extends Task {
     }
 
     public void postponeEntry(Date newStartDate){
-        if (this.status == Status.Canceled || this.status == Status.Planned){
-            this.status = Status.Postponed;
+        if (this.status == EntryDto.Status.Canceled || this.status == EntryDto.Status.Planned){
+            this.status = EntryDto.Status.Postponed;
             setStartDate(newStartDate);
-        }else if (this.status == Status.Postponed) {
+        }else if (this.status == EntryDto.Status.Postponed) {
             setStartDate(newStartDate);
         }else {
             throw new RuntimeException("Access Impossible");
@@ -55,6 +55,19 @@ public class Entry extends Task {
 
     private void setStartDate(Date newStartDate) {
         this.startDate = newStartDate;
+    }
+
+    public Date getStartDate() {
+        return this.startDate;
+    }
+    public List<Vehicle> getVehicleList() {
+        return this.vehicleList;
+    }
+    public Team getTeamAssigned() {
+        return this.teamAssigned;
+    }
+    public EntryDto.Status getStatus() {
+        return this.status;
     }
 
 

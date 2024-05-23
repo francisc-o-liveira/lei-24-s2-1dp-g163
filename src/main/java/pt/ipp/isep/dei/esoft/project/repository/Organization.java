@@ -33,6 +33,7 @@ public class Organization{
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
     }
+
     public Organization() {
         managers = new ArrayList<>();
         name=NAME_PER_OMISSION;
