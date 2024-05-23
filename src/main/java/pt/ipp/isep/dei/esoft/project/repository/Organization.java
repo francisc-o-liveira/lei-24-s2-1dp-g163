@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Organization{
     private static final String VAT_NUMBER_PER_OMISSION = "0000000000";
     private static final String PHONE_PER_OMISSION = "0123456789";
     private final List<Manager> managers;
+    private final List<GreenSpace> greenSpaces;
     private String name;
     private String vatNumber;
     private String phone;
@@ -28,6 +30,7 @@ public class Organization{
         this.vatNumber=vatNumber;
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
+        greenSpaces = new ArrayList<>();
     }
     public Organization() {
         managers = new ArrayList<>();
@@ -35,6 +38,11 @@ public class Organization{
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         vatNumber=VAT_NUMBER_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
+        greenSpaces = new ArrayList<>();
+    }
+
+    public static GreenSpace.Type[] getEnumGreenSpaceType(){
+        return GreenSpace.getEnumGreenSpaceTypes();
     }
 
     /**
