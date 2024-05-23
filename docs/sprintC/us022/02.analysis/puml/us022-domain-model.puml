@@ -24,13 +24,14 @@ class GSM {
 }
 
 class Entry{
-    periodTime
+    startDate
     status
 }
 
 class Task{
     greenSpaceAssigned
     degreeUrgency
+    expectedDuration
 }
 
 class Collaborator{
