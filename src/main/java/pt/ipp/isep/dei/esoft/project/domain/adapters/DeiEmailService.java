@@ -3,15 +3,14 @@ package pt.ipp.isep.dei.esoft.project.domain.adapters;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 
-public class GmailService implements SendEmailExternalAPI{
+public class DeiEmailService implements SendEmailExternalAPI {
 
     @Override
     public void sendEmail(String to, String subject, String body) {
 
-
         String fileName = "email.txt";
-
         File f = new File(fileName);
         if (f.exists()) {
             writeToFile(f, to,subject,body);
@@ -39,13 +38,11 @@ public class GmailService implements SendEmailExternalAPI{
     private static void writeToFile(File f, String to, String subject, String body) {
         try {
             FileWriter send = new FileWriter(f, true);
-            send.write("Email Service: Gmail Service\n"+"To:"+to + "\n" + subject + "\n" + body + "\n");
+            send.write("Email Service: Dei Email Service\n"+"To:"+to + "\n" + subject + "\n" + body + "\n");
             send.flush();
             send.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 }

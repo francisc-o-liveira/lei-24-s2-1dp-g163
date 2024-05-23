@@ -9,7 +9,6 @@ import java.io.IOException;
  */
 public class EmailService {
 
-
     /**
      * Send email.
      *
