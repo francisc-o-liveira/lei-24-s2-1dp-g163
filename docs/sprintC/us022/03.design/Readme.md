@@ -10,9 +10,10 @@ _**Note that SSD - Alternative Two is adopted.**_
 |:---------------|:---------------------------------------------------|:------------------------------|:--------------------------------------------------------------------------------------------------------------|
 | Step 1  		     | 	... interacting with the actor?                   | AssignEntryOnAgendaUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
 | 			  		        | 	... coordinating the US?                          | AssignEntryOnAgendaController | Controller                                                                                                    |
-| 			  		        | ... set the Entry?                                 | EntryRepository               | Creator (Rule 1): in the DM CollaboratorRepository.                                                           |
+| 			  		        | ... set the Entry?                                 | EntryRepository               | Creator (Rule 1): in the DM EntryRepository.                                                                  |
 | 		             | 							                                            |                               |                                                                                                               |
 | Step 2  		     | 	...saving the inputted data?                      | Entry                         | IE: object created in step 1 has its own data.                                                                |
+| Step 3  		     | 	...data transfer object?                          | EntryMapper                   | IE: Pattern (Data Transfer Object)                                                                            |
 | Step 3  		     | 	... validating startDate (local validation)? 				 | EntryRepository               | IE:  the status have the verification and attribution method by omission.                                     |
 | Step 4  		     | 	... validating data (local validation)?           | Entry                         | IE: owns its data.                                                                                            | 
 |                | 	... validating all data (global validation)?      | EntryRepository               | IE: knows all Entry's.                                                                                        | 
@@ -42,6 +43,7 @@ Other software classes (i.e. Use of Data Transfer Objects (DTO)) identified:
 
 * EntryDTO
 * TaskDTO
+* EntryMapper
 
 ## 3.2. Sequence Diagram (SD)
 

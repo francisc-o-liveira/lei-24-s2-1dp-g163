@@ -23,8 +23,6 @@ participant ":VehicleMapper" as SelectedMAPPER
 participant ":Entry" as OBJ
 participant ":EntryDto" as DTO
 participant ":EntryMapper" as MAPPER
-participant "agendaDto : List<EntryDto>" as ListDTO
-participant "agenda : List<Entry>" as List
 
 
 activate GSM
