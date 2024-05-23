@@ -9,9 +9,10 @@ public class TaskDto {
 
 
 
-    public TaskDto(String title, String description) {
+    public TaskDto(String title, String description, DegreeUrgency degreeUrgency) {
         this.title = title;
         this.description = description;
+        this.degreeUrgency = degreeUrgency;
     }
 
     public DegreeUrgency getDegreeUrgency() {

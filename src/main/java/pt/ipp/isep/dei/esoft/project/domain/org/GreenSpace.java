@@ -5,7 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 public class GreenSpace {
 
 
-    public enum  Type{MediumSize,LargeSize,Garden}
+    public enum Type{MediumSize,LargeSize,Garden}
 
     private double areaInHectares;
     private String address;

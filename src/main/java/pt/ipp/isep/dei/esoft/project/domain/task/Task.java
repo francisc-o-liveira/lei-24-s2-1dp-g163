@@ -51,7 +51,9 @@ public class Task {
     }
 
 
-
+    public TaskDto.DegreeUrgency getDegreeUrgency() {
+        return degreeUrgency;
+    }
 
     private void validateReference(String reference) {
         //TODO: missing from the diagrams
