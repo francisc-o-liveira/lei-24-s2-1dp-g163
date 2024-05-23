@@ -200,6 +200,9 @@ public class Organization{
         return dtos;
     }
 
-    //Clone organization
+    public List<Manager> getManagers() {
+        return managers;
+    }
 
+    //Clone organization
 }
