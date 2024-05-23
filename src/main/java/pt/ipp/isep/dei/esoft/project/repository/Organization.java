@@ -208,5 +208,13 @@ public class Organization{
         return Manager.getEnumManagerRoles();
     }
 
+    public void removeManager(Manager manager) {
+        if(managers.contains(manager)){
+            managers.remove(manager);
+        } else {
+            throw new RuntimeException("This Collaborator does not exist in the Repository");
+        }
+    }
+
     //Clone organization
 }

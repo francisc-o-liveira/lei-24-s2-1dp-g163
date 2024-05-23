@@ -31,9 +31,8 @@ public class SystemConfigsUI {
 
     @FXML
     private TextField nameTxt;
-
     @FXML
-    private TextField passwordTxt;
+    private TextField phoneTxt;
 
     @FXML
     private ComboBox<String> roles;
@@ -50,7 +49,7 @@ public class SystemConfigsUI {
     private TableView<Manager> tableSystemConfigs;
 
     private OrganizationController org=new OrganizationController();
-    private ObservableList<Manager> managers=FXCollections.observableSet(org.getList());
+    private ObservableList<Manager> managers=FXCollections.observableList(org.getManagersList());
 
 
     public void setComboBoxAndStage(Stage stage){
@@ -69,18 +68,35 @@ public class SystemConfigsUI {
 
     @FXML
     void btnRemove(ActionEvent event) {
+        Manager selectedManager=tableSystemConfigs.getSelectionModel().getSelectedItem();
+        if(selectedManager != null){
 
+        Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+
+        popUp.setHeaderText("Removing Manager");
+        popUp.setContentText("Do you want to remove this manager?");
+        ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+        ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                tableSystemConfigs.getItems().remove(selectedManager);
+                org.removeManager(selectedManager);
+            }
+        } else {
+            popUpWithMessage("Select a manager to remove").showAndWait();
+        }
     }
     @FXML
     void addManager(ActionEvent event) {
         String name=nameTxt.getText();
         String email=emailTxt.getText();
-        String password=passwordTxt.getText();
         String role=roles.getValue();
+        String phone=phoneTxt.getText();
 
-        ctrl.addUserWithRole(name,email,password,role);
+        org.addEmployee(name,role,phone,email);
         if(popUp().showAndWait().get()== ButtonType.OK){
-            stage.close();
+            tableSystemConfigs.getItems().clear();
+            setTableSystemConfigs();
         }
     }
 
@@ -88,6 +104,14 @@ public class SystemConfigsUI {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
         alert.setContentText("Manager added!");
+
+        return alert;
+    }
+
+    private Alert popUpWithMessage(String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("ERROR");
+        alert.setContentText(message);
 
         return alert;
     }
