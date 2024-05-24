@@ -20,61 +20,56 @@ class UserSession{
 class GSM {
 }
 
-class Skill {
-    - String name
-    + Skill(name)
+class Entry {
+    - String stateOfEntry
+}
+
+class EntryDto {
+    - String stateOfEntry
+}
+
+class EntryMapper {
+    - String stateOfEntry
 }
 
 
-
-class skillRepository {
-    - List <Skill>
-    + getSkillList()
+class EntryRepository{
+    + create()
+    + cancelEntry()
 }
 
 
 class Repositories {
     - Repositories()
     + getInstance() : repositories
-    + getSkillRepository()
+    + getEntryRepository()
 
 }
 
-class RegisterSkillController{
-    + registerSkill(skillRepository)
-    + getJSkillList()
-    + getSkillRepository
+class ViewDetailsEntryController{
+    + cancelEntry(entryDto)
 }
 
-note right of RegisterSkillController
-    - skillName
-    is achieved with skill repository
-end note
-
-note bottom of skillRepository
-    - used for displaying
-    the skill list
-end note
-
-class RegisterSkillUI {
+class ViewDetailsEntryUI {
 }
 
 Repositories -> Repositories : instance
+
 ApplicationSession -> ApplicationSession : instance
-
-RegisterSkillUI .> RegisterSkillController
-
-RegisterSkillController .> Repositories : repositories
-
-Repositories -> "1" skillRepository
-RegisterSkillController ..> Skill
-RegisterSkillController ..> skillRepository : skillRepository
-
-
 ApplicationSession --> "1" UserSession : userSession
 
-RegisterSkillController ..> ApplicationSession
-RegisterSkillController ..> UserSession
+ViewDetailsEntryUI .> ViewDetailsEntryController
+
+ViewDetailsEntryController .> Repositories : repositories
+
+Repositories -> "1" skillRepository
+
+
+
+ViewDetailsEntryController ..> Skill
+ViewDetailsEntryController ..> skillRepository : skillRepository
+ViewDetailsEntryController ..> ApplicationSession
+ViewDetailsEntryController ..> UserSession
 
 skillRepository "1" --> "*" Skill : Skills
 

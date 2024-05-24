@@ -12,10 +12,10 @@ participant ":System" as System
 
 activate Collaborator
 
-    Collaborator -> System : asks to show the tasks
+    Collaborator -> System : asks to show the list of tasks
     activate System
 
-    System --> Collaborator : shows the tasks
+    System --> Collaborator : shows the list of tasks
     deactivate System
 
     Collaborator -> System : selects the task that wants to record the completion

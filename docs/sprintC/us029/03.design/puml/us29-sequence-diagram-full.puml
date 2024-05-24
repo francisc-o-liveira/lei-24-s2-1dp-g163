@@ -7,69 +7,94 @@ autonumber
 
 'hide footbox
 actor "Collaborator" as Collaborator
-participant ":ViewTaskListAssignedUI" as UI
-participant ":ViewTaskListAssignedController" as CTRL
+participant ":ViewTaskUI" as UI
+participant ":ViewTaskController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "entryRepository\n:EntryRepository" as EntryRepository
-participant "collaboratorRepository\n:CollaboratorRepository" as CollaboratorRepository
+participant "TaskRepositories\n:TaskRepositories" as TaskRepositories
+participant ":TaskMapper" as MAPPER
+participant "taskListDto : List<TaskDto>" as ListDTO
+participant "List : List<Task>" as List
+participant ":TaskDto" as DTO
+
+
 
 
 
 activate Collaborator
 
-        Collaborator -> UI : asks to show the list of tasks assigned to him
+Collaborator -> UI: ask to show the list of tasks
+activate UI
 
-        activate UI
+UI -> CTRL**: create()
+activate CTRL
 
-            UI -> CTRL** : create
+CTRL -> RepositorySingleton: getInstance()
+activate RepositorySingleton
 
-            UI -> CTRL : getToDoList()
-            activate CTRL
+RepositorySingleton --> CTRL: repositories
+deactivate RepositorySingleton
 
-             CTRL -> RepositorySingleton : getInstance()
-                                        activate RepositorySingleton
+CTRL -> PLAT: getTaskRepository()
+activate PLAT
 
-                                            RepositorySingleton --> CTRL: repositories
-                                        deactivate RepositorySingleton
+PLAT --> CTRL: taskRepository
+deactivate PLAT
 
-                                        CTRL -> PLAT : getEntryRepository()
-                                        activate PLAT
+CTRL -> TaskRepositories: getTaskList()
+activate TaskRepositories
 
-                                        PLAT --> CTRL : entryRepository
-                                        deactivate PLAT
+TaskRepositories -> List: create()
+activate List
 
-                                        CTRL -> EntryRepository : getToDoList()
-                                        activate EntryRepository
-
-                                        EntryRepository --> CTRL : toDoList
-                                        deactivate EntryRepository
-
-                                        CTRL --> UI : toDoList
-                                        deactivate CTRL
-
-                                        UI -> Collaborator : shows toDoList
-                                        deactivate UI
-
-                                        Collaborator -> UI : selects tasks
-                                        activate UI
-
-                                        UI -> CTRL : getTasksDone()
-                                        activate CTRL
-
-                                        CTRL -> CollaboratorRepository : getTasksDone()
-                                        activate CollaboratorRepository
-
-                                        CollaboratorRepository --> CTRL : true
-                                        deactivate CollaboratorRepository
-                                        CTRL --> UI : true
-                                        deactivate CTRL
-                                        UI --> Collaborator : displays success message
-                                        deactivate UI
+TaskRepositories --> CTRL: taskList
 
 
 
+CTRL -> MAPPER: toDto(taskList)
+activate MAPPER
 
+MAPPER -> ListDTO** : create()
+
+MAPPER -> List : task = get(i)
+activate List
+deactivate List
+
+MAPPER -> MAPPER : taskDto = toDTO(task)
+activate MAPPER
+
+MAPPER -> DTO**  : create(...)
+deactivate MAPPER
+
+MAPPER -> ListDTO : add(taskDto)
+activate ListDTO
+deactivate ListDTO
+
+MAPPER --> CTRL : taskListDto
+deactivate MAPPER
+
+CTRL --> UI: taskListDto
+
+
+
+
+
+
+
+
+
+
+
+
+UI --> Collaborator: shows the list of tasks
+
+Collaborator -> UI: selects the task that wants to record the completion
+
+UI --> Collaborator: request confirmation
+
+Collaborator -> UI: confirms data
+
+UI --> Collaborator: display operation success
 
 
 
