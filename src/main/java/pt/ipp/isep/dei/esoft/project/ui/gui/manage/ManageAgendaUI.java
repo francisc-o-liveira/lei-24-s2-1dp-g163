@@ -12,9 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.ZonedDateTime;
 import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,24 +37,12 @@ public class ManageAgendaUI  implements Initializable{
     @FXML
     private AnchorPane calendarAnchorPane;
 
-    public ManageAgendaUI(){
-        ctrlAuth = new AuthenticationController();
-        ctrlEntry=new DetailsEntryAgendaController();
-        view = new VBox();
-        view.setAlignment(Pos.CENTER);
-        view.setSpacing(20); // Increased spacing between components
-        view.getStyleClass().add("calendar");
-        currentYearMonth = YearMonth.now();
-        this.entries = ctrlEntry.getList();
-        drawCalendar(currentYearMonth);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Instantiate CalendarView
-        List<Entry> entries = ctrlEntry.getList();
-        // Populate entries as needed
-        CalendarView calendarView = new CalendarView(entries);
+        ctrlAuth = new AuthenticationController();
+        ctrlEntry=new DetailsEntryAgendaController();
 
         // Add CalendarView to AnchorPane
         view = new VBox();
@@ -68,6 +52,7 @@ public class ManageAgendaUI  implements Initializable{
         calendarAnchorPane.getChildren().add(getView());
         ctrlAuth = new AuthenticationController();
         ctrlEntry=new DetailsEntryAgendaController();
+        this.entries=ctrlEntry.getList();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);
     }
@@ -88,7 +73,6 @@ public class ManageAgendaUI  implements Initializable{
 
         HBox headerBox = new HBox(previousMonthButton, header, nextMonthButton);
         headerBox.setAlignment(Pos.CENTER);
-        headerBox.setSpacing(20); // Increased spacing between components
 
         GridPane calendarGrid = new GridPane();
         calendarGrid.setAlignment(Pos.CENTER);
@@ -115,7 +99,7 @@ public class ManageAgendaUI  implements Initializable{
             VBox dayBox = new VBox();
             dayBox.setAlignment(Pos.TOP_LEFT);
             dayBox.getStyleClass().add("day-cell");
-            dayBox.setPrefWidth(70); // Increased width of day cell
+            dayBox.setPrefWidth(130); // Increased width of day cell
             dayBox.setPrefHeight(70); // Increased height of day cell
             dayBox.getChildren().add(new Label(String.valueOf(day)));
 
@@ -127,6 +111,7 @@ public class ManageAgendaUI  implements Initializable{
             for (Entry entry : dayEntries) {
                 Label entryLabel = new Label(entry.getDescription());
                 entryLabel.getStyleClass().add("event-label");
+                entryLabel.setOnMouseClicked(event -> showEntryDetails(entry)); // Add event handler
                 dayBox.getChildren().add(entryLabel);
             }
 
@@ -140,6 +125,11 @@ public class ManageAgendaUI  implements Initializable{
 
         view.getChildren().addAll(headerBox, calendarGrid);
     }
+
+    private void showEntryDetails(Entry entry) {
+        System.out.println("hello saine :)");
+    }
+
 
     private void changeMonth(int months) {
         currentYearMonth = currentYearMonth.plusMonths(months);

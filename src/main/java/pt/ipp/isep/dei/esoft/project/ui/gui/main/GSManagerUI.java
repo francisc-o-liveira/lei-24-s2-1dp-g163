@@ -134,10 +134,11 @@ public class GSManagerUI {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_Agenda.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         Stage stageToAdd=new Stage();
         stageToAdd.setScene(scene);
         stageToAdd.show();
-        ManageAgendaUI ui=fxmlLoader.getController();
+        //ManageAgendaUI ui=fxmlLoader.getController();
         /*SystemConfigsUI ui =fxmlLoader.getController();
         ui.setComboBoxAndStage(stageToAdd);
         ui.setTableSystemConfigs();*/

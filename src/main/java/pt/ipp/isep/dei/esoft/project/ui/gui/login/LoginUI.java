@@ -37,8 +37,8 @@ public class LoginUI {
     }
 
     @FXML
-    public void uiToShow(ActionEvent event) {
-        if (attemps==0){
+    public void uiToShow(ActionEvent event) throws IOException{
+        /*if (attemps==0){
             blockUser();
         }
         try {
@@ -52,16 +52,16 @@ public class LoginUI {
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
                 showHRManagerUI();
             }
-            if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
+            if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {*/
                 showGSManagerUI();
-            }
+            /*}
         } catch (LoginException e) {
             popUp(Alert.AlertType.WARNING, "Invalid Credentials of Login", "Try Again Please more: " + attemps + " times.").show();
         } catch (ArrayIndexOutOfBoundsException e) {
             popUp(Alert.AlertType.ERROR, "Login Error Program", "Try Again Please").show();
         } catch (IOException e) {
             popUp(Alert.AlertType.ERROR, "Redirect Page By Role Error", "Try Again Please").show();
-        }
+        }*/
     }
 
     private void blockUser() {
