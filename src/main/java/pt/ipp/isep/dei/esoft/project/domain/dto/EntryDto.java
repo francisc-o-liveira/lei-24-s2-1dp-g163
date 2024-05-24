@@ -18,8 +18,8 @@ public class EntryDto extends TaskDto{
 
 
 
-    public EntryDto(Date startDate, Status status, String title, String description, DegreeUrgency degreeUrgency) {
-        super(title, description,degreeUrgency);
+    public EntryDto(Date startDate, Status status, String title, String description) {
+        super(title, description);
         this.startDate = startDate;
         this.status = status;
         this.vehicleList = new ArrayList<Vehicle>();
@@ -27,7 +27,7 @@ public class EntryDto extends TaskDto{
     }
 
     public EntryDto(Date startDate, Status status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, DegreeUrgency degreeUrgency) {
-        super(title, description,degreeUrgency);
+        super(title, description);
         this.startDate = startDate;
         this.status = status;
         this.vehicleList = vehicleList;

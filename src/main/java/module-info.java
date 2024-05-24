@@ -9,7 +9,7 @@ module pt.ipp.isep.dei.esoft.project.ui.gui {
     requires jdk.jshell;
 
     opens pt.ipp.isep.dei.esoft.project.ui.gui to javafx.fxml;
-
+    opens pt.ipp.isep.dei.esoft.project.domain.task to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.domain.collaborator to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.domain.team to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.domain.employee to javafx.base;

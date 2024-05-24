@@ -19,7 +19,7 @@ public class Task {
 
 
     public Task(String title, String reference, String description, String informalDescription, String technicalDescription,
-                int expectedDuration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency) {
+                int expectedDuration/*, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency*/) {
         validateReference(reference);
         this.greenSpace = greenSpace;
         this.title = title;
@@ -27,8 +27,8 @@ public class Task {
         this.description = description;
         this.informalDescription = informalDescription;
         this.technicalDescription = technicalDescription;
-        this.expectedDuration = expectedDuration;
-        this.degreeUrgency = degreeUrgency;
+        /*this.expectedDuration = expectedDuration;
+        this.degreeUrgency = degreeUrgency;*/
     }
 
     public String getReference() {
@@ -51,9 +51,9 @@ public class Task {
     }
 
 
-    public TaskDto.DegreeUrgency getDegreeUrgency() {
+    /*public TaskDto.DegreeUrgency getDegreeUrgency() {
         return degreeUrgency;
-    }
+    }*/
 
     private void validateReference(String reference) {
         //TODO: missing from the diagrams
@@ -77,6 +77,6 @@ public class Task {
 
     public Task clone() {
         return new Task(this.title,this.reference, this.description, this.informalDescription, this.technicalDescription,
-                this.expectedDuration, this.greenSpace,this.degreeUrgency);
+                this.expectedDuration/*, this.greenSpace,this.degreeUrgency*/);
     }
 }

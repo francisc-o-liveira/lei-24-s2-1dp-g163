@@ -21,8 +21,8 @@ public class Entry extends Task {
     private Team teamAssigned;
 
 
-    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency) {
-        super(title, reference, description, informalDescription, technicalDescription, duration, greenSpace, degreeUrgency);
+    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration/* GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency*/) {
+        super(title, reference, description, informalDescription, technicalDescription, duration/*greenSpace, degreeUrgency*/);
         this.status = EntryDto.Status.Planned;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();

@@ -1,0 +1,39 @@
+.calendar {
+    -fx-padding: 10;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.header {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-background-color: #0078d7;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.day-names {
+    -fx-font-size: 12pt;
+    -fx-font-weight: bold;
+    -fx-background-color: #e0e0e0;
+    -fx-alignment: center;
+}
+
+.day-cell {
+    -fx-padding: 5;
+    -fx-alignment: top-left;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+}
+
+.event-label {
+    -fx-background-color: yellow;
+    -fx-padding: 2px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-wrap-text: true;
+}

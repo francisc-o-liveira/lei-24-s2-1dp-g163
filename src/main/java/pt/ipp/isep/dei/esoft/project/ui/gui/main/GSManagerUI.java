@@ -131,15 +131,16 @@ public class GSManagerUI {
 
     @FXML
     private void btnSystemConfigs(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_SystemConfigs.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_Agenda.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         Stage stageToAdd=new Stage();
         stageToAdd.setScene(scene);
         stageToAdd.show();
-        SystemConfigsUI ui =fxmlLoader.getController();
+        ManageAgendaUI ui=fxmlLoader.getController();
+        /*SystemConfigsUI ui =fxmlLoader.getController();
         ui.setComboBoxAndStage(stageToAdd);
-        ui.setTableSystemConfigs();
+        ui.setTableSystemConfigs();*/
     }
 
     @FXML

@@ -13,7 +13,7 @@ public class EntryMapper {
     }
 
     public EntryDto entryToEntryDto(Entry entry){
-        return new EntryDto(entry.getStartDate(),entry.getStatus(),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency());
+        return new EntryDto(entry.getStartDate(),entry.getStatus(),entry.getTitle(),entry.getDescription());
     }
 
     public Entry entryDtoToEntry(EntryDto entryDto){
