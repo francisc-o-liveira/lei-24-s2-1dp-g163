@@ -40,15 +40,12 @@ public class ManageAgendaUI  implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Instantiate CalendarView
         ctrlAuth = new AuthenticationController();
         ctrlEntry=new DetailsEntryAgendaController();
-
-        // Add CalendarView to AnchorPane
         view = new VBox();
         view.setAlignment(Pos.CENTER);
-        view.setSpacing(20); // Increased spacing between components
-        view.getStyleClass().add("calendar");
+        view.setSpacing(20);
+        view.getStyleClass().add("outline");
         calendarAnchorPane.getChildren().add(getView());
         ctrlAuth = new AuthenticationController();
         ctrlEntry=new DetailsEntryAgendaController();
@@ -68,18 +65,21 @@ public class ManageAgendaUI  implements Initializable{
 
         Button previousMonthButton = new Button("<");
         previousMonthButton.setOnAction(e -> changeMonth(-1));
+        previousMonthButton.getStyleClass().add("prevbutton");
         Button nextMonthButton = new Button(">");
         nextMonthButton.setOnAction(e -> changeMonth(1));
+        nextMonthButton.getStyleClass().add("nextbutton");
 
         HBox headerBox = new HBox(previousMonthButton, header, nextMonthButton);
         headerBox.setAlignment(Pos.CENTER);
 
         GridPane calendarGrid = new GridPane();
         calendarGrid.setAlignment(Pos.CENTER);
-        calendarGrid.setGridLinesVisible(true);
+        calendarGrid.setGridLinesVisible(false);
+        calendarGrid.getStyleClass().add("calendar");
 
         // Add day names
-        String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         for (int i = 0; i < dayNames.length; i++) {
             Label dayLabel = new Label(dayNames[i]);
             dayLabel.getStyleClass().add("day-names");
@@ -99,8 +99,8 @@ public class ManageAgendaUI  implements Initializable{
             VBox dayBox = new VBox();
             dayBox.setAlignment(Pos.TOP_LEFT);
             dayBox.getStyleClass().add("day-cell");
-            dayBox.setPrefWidth(130); // Increased width of day cell
-            dayBox.setPrefHeight(70); // Increased height of day cell
+            dayBox.setPrefWidth(130);
+            dayBox.setPrefHeight(70);
             dayBox.getChildren().add(new Label(String.valueOf(day)));
 
             // Find entries for this date
@@ -111,7 +111,7 @@ public class ManageAgendaUI  implements Initializable{
             for (Entry entry : dayEntries) {
                 Label entryLabel = new Label(entry.getDescription());
                 entryLabel.getStyleClass().add("event-label");
-                entryLabel.setOnMouseClicked(event -> showEntryDetails(entry)); // Add event handler
+                entryLabel.setOnMouseClicked(event -> showEntryDetails(entry));
                 dayBox.getChildren().add(entryLabel);
             }
 

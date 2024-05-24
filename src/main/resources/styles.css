@@ -1,34 +1,35 @@
-.calendar {
+.outline{
     -fx-padding: 10;
-    -fx-background-color: #f4f4f4;
-    -fx-border-color: #ccc;
-    -fx-border-radius: 10;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-border-radius: 0;
     -fx-background-radius: 10;
 
+}
+
+.calendar{
+    -fx-border-color: #807a7a;
 }
 
 .header {
     -fx-font-size: 16pt;
     -fx-font-weight: bold;
+    -fx-font-family: Tahoma;
     -fx-padding: 10;
-    -fx-background-color: #0078d7;
-    -fx-text-fill: white;
     -fx-alignment: center;
 }
 
 .day-names {
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
     -fx-font-weight: bold;
-    -fx-background-color: #e0e0e0;
     -fx-alignment: center;
+    -fx-font-family: Tahoma;
 }
 
 .day-cell {
     -fx-padding: 5;
     -fx-alignment: top-left;
-    -fx-border-color: #ccc;
-    -fx-border-width: 1;
-    -fx-border-style: solid;
+    -fx-border-color: #807a7a;
 }
 
 .event-label {
@@ -37,4 +38,22 @@
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-wrap-text: true;
+}
+
+.prevbutton{
+    -fx-border:none;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text:black;
+    -fx-font-family: Tahoma;
+}
+
+.nextbutton{
+    -fx-border:none;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text:black;
+    -fx-font-family: Tahoma;
 }
