@@ -15,10 +15,8 @@ participant "TaskRepositories\n:TaskRepositories" as TaskRepositories
 participant ":TaskMapper" as MAPPER
 participant "taskListDto : List<TaskDto>" as ListDTO
 participant "List : List<Task>" as List
+participant ":Task" as OBJ
 participant ":TaskDto" as DTO
-
-
-
 
 
 activate Collaborator
@@ -75,17 +73,6 @@ deactivate MAPPER
 
 CTRL --> UI: taskListDto
 
-
-
-
-
-
-
-
-
-
-
-
 UI --> Collaborator: shows the list of tasks
 
 Collaborator -> UI: selects the task that wants to record the completion
@@ -94,20 +81,31 @@ UI --> Collaborator: request confirmation
 
 Collaborator -> UI: confirms data
 
+UI -> CTRL: completionTask(taskDto)
+
+CTRL -> TaskRepositories: completionTask(taskDto)
+
+TaskRepositories -> OBJ**: completionTask(taskDto)
+deactivate TaskRepositories
+activate OBJ
+
+OBJ -> DTO: stateOfTask = setStateOfTask()
+activate DTO
+
+DTO --> OBJ: stateOfTask
+deactivate DTO
+
+OBJ --> TaskRepositories: true/false
+deactivate OBJ
+activate TaskRepositories
+
+TaskRepositories --> CTRL: true/false
+deactivate TaskRepositories
+
+CTRL --> UI: true/false
+
 UI --> Collaborator: display operation success
-
-
-
-
-
-
-
-
-
-
-
-
-
+deactivate UI
 
 
 
