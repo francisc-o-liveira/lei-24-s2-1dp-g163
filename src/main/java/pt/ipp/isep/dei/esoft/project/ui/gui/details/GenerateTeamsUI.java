@@ -85,7 +85,7 @@ public class GenerateTeamsUI {
     public void getSkillsAndCollabs() throws IOException{
         skillsSelectedForTeam.clear();
         for (Skill s : skillsToChoose) {
-            if(s.selectedSkillForTeam().get()){
+            if(ctrl.isSkillSelected(s)){
                 if(s.numberCollabsPerSkillProperty() == null){
                     throw new IOException("Please fill all the necessary fields");
                 }else if (s.numberCollabsPerSkillProperty().get() != 0) {

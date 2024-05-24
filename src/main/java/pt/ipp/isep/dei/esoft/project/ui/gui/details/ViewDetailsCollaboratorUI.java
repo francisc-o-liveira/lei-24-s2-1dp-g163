@@ -161,7 +161,7 @@ public class ViewDetailsCollaboratorUI {
 
     public void getSkillsToAssign(){
         for (Skill s : skillsToChoose) {
-            if (s.selectedSkill().get()==true) {
+            if (ctrlSkills.isSkillSelected(s)) {
                 skillsToAssign.add(s);
             }
         }

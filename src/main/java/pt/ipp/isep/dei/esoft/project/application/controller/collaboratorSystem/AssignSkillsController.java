@@ -96,5 +96,9 @@ public class AssignSkillsController {
     public Optional<Collaborator> assignSkills(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
         return collaboratorRepository.assignSkill(collaborator,skillName);
     }
+
+    public boolean isSkillSelected(Skill skill) {
+        return skillRepository.isSkillSelected(skill);
+    }
 }
 

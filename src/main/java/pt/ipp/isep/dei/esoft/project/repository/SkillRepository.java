@@ -77,4 +77,12 @@ public class SkillRepository {
             throw new RuntimeException("This Skill does not exist in the Repository");
         }
     }
+
+    public boolean isSkillSelected(Skill skill) {
+        return skill.selectedSkill().get();
+    }
+
+    public boolean isSkillSelectedForTeam(Skill s) {
+        return s.selectedSkillForTeam().get();
+    }
 }
