@@ -14,31 +14,67 @@ participant ":ViewDetailsEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "entryRepository:\nEntryRepository" as EntryRepository
-participant ":Entry" as OBJ
-participant ":EntryDto" as EntryDto
 participant ":EntryMapper" as MAPPER
 participant "cancelEntryListDto : List<EntryDto>" as ListDTO
+participant "List : List<EntryDto>" as EntryDtoList
 participant "cancelEntryList : List<Entry>" as List
-participant "Task:\nTask" as Task
+participant "entryList : List<Entry>" as EntryList
+participant ":Entry" as OBJ
+participant ":EntryDto" as EntryDto
 
 
 activate GSM
 
-        GSM -> AgendaUI: selects entry
+        GSM -> AgendaUI: ask to show entrys
         activate AgendaUI
 
         AgendaUI -> AgendaController**: create(entryDto)
+        activate AgendaController
+
+
+        AgendaController -> EntryRepository: getEntryByStateList()
+        activate EntryRepository
+
+        EntryRepository -> EntryDtoList**: create()
+
+        EntryRepository --> AgendaController: entryByStateList
+        deactivate EntryRepository
+        deactivate AgendaController
+
+        AgendaController -> MAPPER: toDto(entryList)
+        activate MAPPER
+        activate AgendaController
+
+        MAPPER -> EntryList** : create()
+
+        MAPPER -> EntryList : entry = get(i)
+        activate EntryList
+        deactivate EntryList
+
+        MAPPER -> MAPPER : entryDto = toDTO(entry)
+        activate MAPPER
+
+        MAPPER -> EntryDto**  : create(...)
+        deactivate MAPPER
+
+        MAPPER -> ListDTO : add(entryDto)
+        activate ListDTO
+        deactivate ListDTO
+
+        MAPPER --> AgendaController : entryListDto
+        deactivate MAPPER
+
+        AgendaController --> AgendaUI: entryListDto
+        deactivate AgendaController
+
+        AgendaUI --> GSM: shows details and wait
+
         deactivate AgendaUI
 
-        AgendaUI -> GSM: shows details and wait
-        activate AgendaUI
-
-        deactivate AgendaUI
-
-        GSM -> UI : ask to cancel an entry
+        GSM -> UI : ask and select an entry to cancel
         activate UI
 
-        UI -> CTRL**: cancelEntry(entryDto)
+        UI -> CTRL**: cancel()
         activate CTRL
 
         CTRL -> RepositorySingleton: getInstance()
@@ -53,31 +89,37 @@ activate GSM
         PLAT --> CTRL: entryRepository
         deactivate PLAT
 
-        CTRL -> RepositorySingleton: changeEntryStatus(entryDto)
-        activate RepositorySingleton
-
-        RepositorySingleton -> MAPPER: toModel(entryDto)
-        deactivate RepositorySingleton
-
-
-
-
-
-
-
-
-
-
-
-        CTRL --> UI: entryListDto
-
-        UI --> GSM: shows the entrys to cancel
-
-        GSM -> UI: select the entry that wants to cancel
-
         UI --> GSM: request confirmation to cancel the entry
 
         GSM -> UI: confirms data
+
+        UI -> CTRL: cancelEntry(entryDto)
+
+        CTRL -> EntryRepository: cancelEntry(entryDto)
+        activate EntryRepository
+
+        EntryRepository -> OBJ**: cancelEntry(entryDto)
+        deactivate EntryRepository
+        activate OBJ
+
+
+        OBJ -> EntryDto: stateOfEntry = setStateOfEntry()
+        activate EntryDto
+
+        EntryDto --> OBJ: stateOfEntry
+        deactivate EntryDto
+
+        OBJ --> EntryRepository: true/false
+        deactivate OBJ
+        activate EntryRepository
+
+
+        EntryRepository --> CTRL: true/false
+        deactivate EntryRepository
+
+
+
+        CTRL --> UI: true/false
 
         UI --> GSM : displays operation success
         deactivate UI

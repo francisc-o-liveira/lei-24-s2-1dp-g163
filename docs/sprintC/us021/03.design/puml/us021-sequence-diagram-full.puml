@@ -1,4 +1,4 @@
-@startuml
+6@startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -78,7 +78,7 @@ activate GSM
         activate ListDTO
         deactivate ListDTO
 
-        MAPPER --> CTRL : GreenSpaceListDto
+        MAPPER --> CTRL : greenSpaceListDto
         deactivate MAPPER
 
         CTRL --> UI: greenSpaceListDto
@@ -118,14 +118,33 @@ activate GSM
 
         EntryRepository -> OBJ**: create(entryDto)
         deactivate EntryRepository
+        activate OBJ
 
-        OBJ -> EntryDto: degreeOfUrgency = getDegreeUrgency()
+        OBJ -> EntryDto: stateOfEntry = getStateOfEntry()
+        activate EntryDto
 
-        EntryDto --> OBJ: degreeOfUrgency
+        EntryDto --> OBJ: stateOfEntry
 
         OBJ -> EntryDto: greenSpace = getGreenSpace()
 
         EntryDto --> OBJ: greenSpace
+
+        OBJ -> EntryDto: titleOfEntry = getTitleOfEntry()
+
+        EntryDto --> OBJ: titleOfEntry
+
+        OBJ -> EntryDto: descriptionOfEntry = getDescriptionOfEntry()
+
+        EntryDto --> OBJ: descriptionOfEntry
+
+        OBJ -> EntryDto: approximateExpectedDuration = getApproximateExpectedDuration()
+
+        EntryDto --> OBJ: approximateExpectedDuration
+
+        OBJ -> EntryDto: degreeOfUrgency = getDegreeUrgency()
+
+        EntryDto --> OBJ: degreeOfUrgency
+        deactivate EntryDto
 
         OBJ --> EntryRepository: true/false
 

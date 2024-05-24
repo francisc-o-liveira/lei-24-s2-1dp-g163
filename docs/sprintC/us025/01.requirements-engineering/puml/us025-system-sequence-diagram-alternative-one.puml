@@ -12,13 +12,13 @@ participant ":System" as System
 
 activate Manager 
 
-    Manager -> System : ask to cancel an entry
+    Manager -> System : ask to show entrys
     activate System
 
-    System --> Manager : shows the entrys to cancel
+    System --> Manager : shows detais and wait
     deactivate System
 
-    Manager -> System : select the entry that wants to cancel
+    Manager -> System : ask and select an entry to cancel
     activate System
 
     System --> Manager : request confirmation to cancel the entry
