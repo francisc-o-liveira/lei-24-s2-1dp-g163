@@ -1,4 +1,4 @@
-ç@startuml
+@startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -6,7 +6,7 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "GSM" as GSM
+
 participant ":AgendaUI" as AgendaUI
 participant ":AgendaController" as AgendaController
 participant ":ViewDetailsEntryUI" as UI
@@ -19,13 +19,9 @@ participant "cancelEntryListDto : List<EntryDto>" as ListDTO
 participant "List : List<EntryDto>" as EntryDtoList
 participant "cancelEntryList : List<Entry>" as List
 participant "entryList : List<Entry>" as EntryList
-participant ":Entry" as OBJ
 participant ":EntryDto" as EntryDto
 
-
-activate GSM
-
-        GSM -> AgendaUI: ask to show entrys
+        -> AgendaUI: ask to show entrys
         activate AgendaUI
 
         AgendaUI -> AgendaController**: create(entryDto)
@@ -67,62 +63,7 @@ activate GSM
         AgendaController --> AgendaUI: entryListDto
         deactivate AgendaController
 
-        AgendaUI --> GSM: shows details and wait
-        deactivate AgendaUI
-
-        GSM -> UI : ask and select an entry to cancel
-        activate UI
-
-        UI -> CTRL**: cancel()
-        activate CTRL
-
-        CTRL -> RepositorySingleton: getInstance()
-        activate RepositorySingleton
-
-        RepositorySingleton --> CTRL: repositories
-        deactivate RepositorySingleton
-
-        CTRL -> PLAT: getEntryRepository()
-        activate PLAT
-
-        PLAT --> CTRL: entryRepository
-        deactivate PLAT
-
-        UI --> GSM: request confirmation to cancel the entry
-
-        GSM -> UI: confirms data
-
-        UI -> CTRL: cancelEntry(entryDto)
-
-        CTRL -> EntryRepository: cancelEntry(entryDto)
-        activate EntryRepository
-
-        EntryRepository -> OBJ**: cancelEntry(entryDto)
-        deactivate EntryRepository
-        activate OBJ
 
 
-        OBJ -> EntryDto: stateOfEntry = setStateOfEntry()
-        activate EntryDto
-
-        EntryDto --> OBJ: stateOfEntry
-        deactivate EntryDto
-
-        OBJ --> EntryRepository: true/false
-        deactivate OBJ
-        activate EntryRepository
-
-
-        EntryRepository --> CTRL: true/false
-        deactivate EntryRepository
-
-
-
-        CTRL --> UI: true/false
-
-        UI --> GSM : displays operation success
-        deactivate UI
-
-deactivate GSM
 
 @enduml
