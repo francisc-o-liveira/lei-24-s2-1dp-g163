@@ -33,4 +33,8 @@ public class GreenSpaceDto {
     public GreenSpace.Type getType() {
         return type;
     }
+
+    public String toString(){
+        return getName();
+    }
 }

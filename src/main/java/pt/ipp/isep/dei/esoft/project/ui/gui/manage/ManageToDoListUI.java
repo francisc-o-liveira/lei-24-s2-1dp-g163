@@ -15,7 +15,7 @@ import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
-import pt.ipp.isep.dei.esoft.project.ui.RegisterTaskUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.register.RegisterTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;

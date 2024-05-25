@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.register;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterTaskController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
@@ -15,7 +16,6 @@ import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
