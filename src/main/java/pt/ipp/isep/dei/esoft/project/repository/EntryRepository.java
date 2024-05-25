@@ -19,13 +19,12 @@ public class EntryRepository {
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
     private  static final int HOURS_WORK_PER_OMISSION=8;
-    private static int referenceCount;
+
 
     public EntryRepository() {
         toDo = new ArrayList<Entry>();
         agenda = new ArrayList<Entry>();
         mapper = new EntryMapper();
-        referenceCount=0;
         try {
             timeOfWorkByCollaborators = ApplicationSession.getTimeOfWork();
         }catch (IOException e){
@@ -51,7 +50,7 @@ public class EntryRepository {
 
     public Optional<Entry> registerNewTask(EntryDto entryDto) {
         Optional<Entry> newEntry = Optional.empty();
-        Entry entry = mapper.entryDtoToEntryCreate(entryDto,referenceCount++);
+        Entry entry = mapper.entryDtoToEntryCreate(entryDto);
         newEntry = Optional.of(entry);
         return newEntry;
     }

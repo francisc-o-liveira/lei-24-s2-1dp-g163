@@ -25,7 +25,7 @@ public class Entry extends Task {
     private static int REFERENCE_COUNT = 0;
 
 
-    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState.State status) {
+    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
         validateReference(Integer.toString(REFERENCE_COUNT++));
         this.reference = Integer.toString(REFERENCE_COUNT);
@@ -82,8 +82,8 @@ public class Entry extends Task {
         return this.teamAssigned;
     }
 
-    public EntryState.State getStatus() {
-        return this.status.getState();
+    public EntryState getStatus() {
+        return this.status;
     }
 
     public static DegreeUrgency[] getDegreeOfUrgency(){

@@ -127,9 +127,11 @@ public class CollaboratorRepository {
         for(Collaborator c : team){
             if(c.getStatus()==NotActive){
                 c.setStatus(Active);
+            }else {
+                throw new IllegalArgumentException("Collaborator is active");
             }
         }
-        return false;
+        return true;
     }
 
 

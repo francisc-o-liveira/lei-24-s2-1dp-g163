@@ -19,8 +19,7 @@ public class EntryMapper {
             return new EntryDto(entry.getStartDate(),entry.getStatus(),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()));
     }
 
-
-    public Entry entryDtoToEntryCreate(EntryDto entryDto, int reference){
+    public Entry entryDtoToEntryCreate(EntryDto entryDto){
         return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus());
     }
 }

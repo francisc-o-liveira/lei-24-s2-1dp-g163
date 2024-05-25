@@ -13,13 +13,13 @@ import java.util.List;
 public class EntryDto extends TaskDto{
 
     private Date startDate;
-    private EntryState.State status;
+    private EntryState status;
     private List<Vehicle> vehicleList;
     private Team teamAssigned;
     private int reference;
 
 
-    public EntryDto(Date startDate, EntryState.State status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto) {
+    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto) {
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
         this.status = status;
@@ -30,7 +30,7 @@ public class EntryDto extends TaskDto{
 
 
 
-    public EntryDto(Date startDate, EntryState.State status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, int reference) {
+    public EntryDto(Date startDate, EntryState status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, int reference) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
         this.status = status;
@@ -43,7 +43,7 @@ public class EntryDto extends TaskDto{
         return startDate;
     }
 
-    public EntryState.State getStatus() {
+    public EntryState getStatus() {
         return status;
     }
 }
