@@ -6,27 +6,44 @@ import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Entry extends Task {
 
     private Date startDate;
 
-    private EntryDto.Status status;
+    private EntryState status;
 
     private List<Vehicle> vehicleList;
 
     private Team teamAssigned;
 
+    private final String reference;
 
-    public Entry(String title, String reference, String description, String informalDescription, String technicalDescription, int duration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency) {
-        super(title, reference, description, informalDescription, technicalDescription, duration, greenSpace, degreeUrgency);
-        this.status = EntryDto.Status.Planned;
+
+    public Entry(String title, String reference, String description, Tempo expectedDuration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency, EntryState status) {
+        super(title, description, expectedDuration, greenSpace, degreeUrgency);
+        validateReference(reference);
+        this.reference = reference;
+        this.status = status;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    private void validateReference(String reference) {
+        //TODO: missing from the diagrams
+        if (reference == null || reference.isEmpty()) {
+            throw new IllegalArgumentException("Reference cannot be null or empty.");
+        }
     }
 
     public void assignTeam(Team teamToAssign){
@@ -34,26 +51,23 @@ public class Entry extends Task {
     }
 
     public void cancelEntry(){
-        if (this.status == EntryDto.Status.Postponed || this.status == EntryDto.Status.Planned){
-            this.status = EntryDto.Status.Canceled;
-        }else if (this.status == EntryDto.Status.Canceled) {
-            throw new IllegalArgumentException("This entry is already cancelled");
-        }else {
-            throw new RuntimeException("Access Impossible");
-        }
+        status.cancelEntry();
+        cancelData();
+    }
+
+    private void cancelData() {
+        this.startDate = null;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reference);
     }
 
     public void postponeEntry(Date newStartDate){
-        if (this.status == EntryDto.Status.Canceled || this.status == EntryDto.Status.Planned){
-            this.status = EntryDto.Status.Postponed;
-            setStartDate(newStartDate);
-        }else if (this.status == EntryDto.Status.Postponed) {
-            setStartDate(newStartDate);
-        }else {
-            throw new RuntimeException("Access Impossible");
-        }
+        status.postponeState();
+        setStartDate(newStartDate);
     }
-
     private void setStartDate(Date newStartDate) {
         this.startDate = newStartDate;
     }
@@ -67,8 +81,9 @@ public class Entry extends Task {
     public Team getTeamAssigned() {
         return this.teamAssigned;
     }
-    public EntryDto.Status getStatus() {
-        return this.status;
+
+    public EntryState.State getStatus() {
+        return this.status.getState();
     }
 
 

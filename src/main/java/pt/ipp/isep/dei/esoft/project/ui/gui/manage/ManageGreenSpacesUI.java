@@ -12,10 +12,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
-import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTaskUI;
+import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsGreenSpaceUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
@@ -23,57 +24,53 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ManageToDoListUI implements Initializable {
-
+public class ManageGreenSpacesUI implements Initializable {
     public AuthenticationController ctrlAuth;
-    private DetailsEntryAgendaController ctrl;
+    public RegisterGreenSpaceController ctrl;
     public Stage stage = LoginUI.getMainStage();
-    private ObservableList<TaskDto> taskObservableList= FXCollections.observableArrayList();
-    private TaskDto selectedTask;
 
     @FXML
-    private TableColumn<TaskDto, String> degreeUrgencyCol;
+    private TableColumn<GreenSpaceDto, String> colAddress;
 
     @FXML
-    private TableColumn<TaskDto, Integer> durationCol;
+    private TableColumn<GreenSpaceDto, Double> colArea;
 
     @FXML
-    private TableColumn<TaskDto, String> parkCol;
+    private TableColumn<GreenSpaceDto, String> colName;
 
     @FXML
-    private TableColumn<TaskDto, String> taskCol;
+    private TableColumn<GreenSpaceDto, Void> colDetails;
 
     @FXML
-    private TableColumn<TaskDto, Void> detailsCol;
+    private TableView<GreenSpaceDto> tableGreenSpaces;
 
-    @FXML
-    private TableView<TaskDto> tableToDoList;
+    private GreenSpaceDto selectedGreenSpace;
+    private ObservableList<GreenSpaceDto> greenSpaceObservableList= FXCollections.observableArrayList();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrlAuth=new AuthenticationController();
-        ctrl=new DetailsEntryAgendaController();
-        setTableToDoList();
+        ctrl=new RegisterGreenSpaceController();
+        setTableGreenSpaces();
     }
 
-    public void setTableToDoList(){
-        degreeUrgencyCol.setCellValueFactory(new PropertyValueFactory<>("degreeUrgency"));
-        durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        parkCol.setCellValueFactory(new PropertyValueFactory<>("park"));
-        taskCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        detailsCol.setCellFactory(new Callback<
-                TableColumn<TaskDto, Void>, TableCell<TaskDto, Void>>() {
+    private void setTableGreenSpaces(){
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colArea.setCellValueFactory(new PropertyValueFactory<>("areaInHectares"));
+        colDetails.setCellFactory(new Callback<
+                TableColumn<GreenSpaceDto, Void>, TableCell<GreenSpaceDto, Void>>() {
             @Override
-            public TableCell<TaskDto, Void> call(TableColumn<TaskDto, Void> param) {
-                return new TableCell<TaskDto, Void>() {
+            public TableCell<GreenSpaceDto, Void> call(TableColumn<GreenSpaceDto, Void> param) {
+                return new TableCell<GreenSpaceDto, Void>() {
                     private final javafx.scene.control.Button btn = new Button("View Details");
 
                     {
 
                         btn.setOnAction((ActionEvent event) -> {
-                            selectedTask = tableToDoList.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                            selectedGreenSpace = tableGreenSpaces.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
                             try {
-                                showMore(selectedTask);
+                                showMore(selectedGreenSpace);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -93,24 +90,33 @@ public class ManageToDoListUI implements Initializable {
             }
         });
 
-        /*for(TaskDto t : ctrl.getToDoList()){
-            taskObservableList.add(t);
-        }*/
+        for(GreenSpaceDto greenSpace : ctrl.getGreenSpaces()){
+            greenSpaceObservableList.add(greenSpace);
+        }
 
-        tableToDoList.setItems(taskObservableList);
+        tableGreenSpaces.setItems(greenSpaceObservableList);
 
     }
 
-    public void showMore(TaskDto task) throws IOException {
+    public void showMore(GreenSpaceDto gs) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageViewDetails=new Stage();
         stageViewDetails.setScene(scene);
-        ViewDetailsTaskUI ui=fxmlLoader.getController();
-        ui.setLabels(task);
+        ViewDetailsGreenSpaceUI ui=fxmlLoader.getController();
+        ui.setLabels(gs);
     }
 
+    @FXML
+    void btnRegister(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterGreenSpace.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stageRegister= new Stage();
+        stageRegister.setScene(scene);
+        stageRegister.show();
+    }
 
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
@@ -161,5 +167,4 @@ public class ManageToDoListUI implements Initializable {
 
         return alerta;
     }
-
 }

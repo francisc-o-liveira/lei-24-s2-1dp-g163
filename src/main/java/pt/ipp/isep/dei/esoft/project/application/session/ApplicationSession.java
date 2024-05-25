@@ -4,8 +4,10 @@ import pt.ipp.isep.dei.esoft.project.domain.adapters.EmailService;
 import pt.ipp.isep.dei.esoft.project.domain.adapters.SendEmailExternalAPI;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -15,7 +17,9 @@ public class ApplicationSession {
     private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
     private static final String COMPANY_DESIGNATION = "Company.Designation";
     private static final String EMAIL_DESIGNATION = "SendEmailExternalAPI.Class";
+    private static final String TIME_WORK = "TimeWork";
     private static SendEmailExternalAPI sendEmailExternalAPI;
+    private static Tempo timeOfWork;
 
     private ApplicationSession() {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
@@ -98,5 +102,33 @@ public class ApplicationSession {
             input.close();
         }
         return algorithm;
+    }
+
+    public static Tempo getTimeOfWork() throws IOException {
+        String fileName="src/main/resources/config.properties";
+        InputStream input = new FileInputStream(fileName);
+        String time = "";
+        Tempo tempo = null;
+        try {
+            Properties prop = new Properties();
+            prop.load(input);
+            time= prop.getProperty(TIME_WORK);
+            String[] hoursMinutes = time.split(":");
+            if (verifyTime(hoursMinutes)) {
+                tempo = new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
+            }else {
+                throw new IOException("Invalid time format on config file");
+            }
+            tempo = new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }finally {
+            input.close();
+        }
+        return tempo;
+    }
+
+    private static boolean verifyTime(String[] hoursMinutes) {
+        return (hoursMinutes.length == 2 && Integer.parseInt(hoursMinutes[0])>24 && Integer.parseInt(hoursMinutes[1])>-1 && Integer.parseInt(hoursMinutes[1])<61 && Integer.parseInt(hoursMinutes[0])>-1);
     }
 }
