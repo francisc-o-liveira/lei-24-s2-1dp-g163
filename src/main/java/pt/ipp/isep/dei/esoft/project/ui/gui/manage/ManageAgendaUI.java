@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 public class ManageAgendaUI  implements Initializable{
     public Stage stage = LoginUI.getMainStage();
+    public Stage stageToViewDetails = new Stage();
 
     public AuthenticationController ctrlAuth;
     public DetailsEntryAgendaController ctrlEntry;
@@ -78,7 +79,6 @@ public class ManageAgendaUI  implements Initializable{
         calendarGrid.setGridLinesVisible(false);
         calendarGrid.getStyleClass().add("calendar");
 
-        // Add day names
         String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         for (int i = 0; i < dayNames.length; i++) {
             Label dayLabel = new Label(dayNames[i]);
@@ -86,7 +86,6 @@ public class ManageAgendaUI  implements Initializable{
             calendarGrid.add(dayLabel, i, 0);
         }
 
-        // Add days of the month with entries
         LocalDate firstDayOfMonth = yearMonth.atDay(1);
         int dayOfWeek = firstDayOfMonth.getDayOfWeek().getValue() % 7;
         int daysInMonth = yearMonth.lengthOfMonth();
@@ -103,15 +102,35 @@ public class ManageAgendaUI  implements Initializable{
             dayBox.setPrefHeight(70);
             dayBox.getChildren().add(new Label(String.valueOf(day)));
 
-            // Find entries for this date
             List<Entry> dayEntries = entries.stream()
                     .filter(entry -> entry.getStartDate() != null && LocalDate.of(entry.getStartDate().getYear(), entry.getStartDate().getMonth(), entry.getStartDate().getDay()).equals(date))
                     .collect(Collectors.toList());
 
             for (Entry entry : dayEntries) {
-                Label entryLabel = new Label(entry.getDescription());
+                Label entryLabel = new Label(entry.getDescription()); //needs to be ctrlEntry.getDescription(entry)
                 entryLabel.getStyleClass().add("event-label");
-                entryLabel.setOnMouseClicked(event -> showEntryDetails(entry));
+
+                switch (entry.getStatus()) { //i know it is with the controller
+                    case Postponed:
+                        entryLabel.getStyleClass().add("status-postponed");
+                        break;
+                    case Planned:
+                        entryLabel.getStyleClass().add("status-planned");
+                        break;
+                    case Canceled:
+                        entryLabel.getStyleClass().add("status-canceled");
+                        break;
+                    case Done:
+                        entryLabel.getStyleClass().add("status-done");
+                        break;
+                }
+                entryLabel.setOnMouseClicked(event -> {
+                    try {
+                        showEntryDetails(entry);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
                 dayBox.getChildren().add(entryLabel);
             }
 
@@ -126,14 +145,33 @@ public class ManageAgendaUI  implements Initializable{
         view.getChildren().addAll(headerBox, calendarGrid);
     }
 
-    private void showEntryDetails(Entry entry) {
-        System.out.println("hello saine :)");
+    private void showEntryDetails(Entry entry) throws IOException {
+        System.out.print("to be implemented");
+        /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsEntry.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stageToViewDetails.setScene(scene);
+        stageToViewDetails.show();
+        setLabels(entry); //should be done another ui for this*/
+    }
+
+    private void setLabels(Entry entry){
+        //TODO: to view details and also edit entries
     }
 
 
     private void changeMonth(int months) {
         currentYearMonth = currentYearMonth.plusMonths(months);
         drawCalendar(currentYearMonth);
+    }
+
+    @FXML
+    private void btnAddEntry(ActionEvent event)throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_AddEntry.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

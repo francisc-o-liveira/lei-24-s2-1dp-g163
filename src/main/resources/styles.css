@@ -33,12 +33,28 @@
 }
 
 .event-label {
-    -fx-background-color: yellow;
     -fx-padding: 2px;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-wrap-text: true;
 }
+
+.status-postponed {
+    -fx-background-color: #e5870d;
+}
+
+.status-planned {
+    -fx-background-color: #5e6693;
+}
+
+.status-canceled {
+    -fx-background-color: #a42424;
+}
+
+.status-done {
+    -fx-background-color: #03a136;
+}
+
 
 .prevbutton{
     -fx-border:none;

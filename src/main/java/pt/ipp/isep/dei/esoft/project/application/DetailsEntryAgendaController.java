@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsEntryAgendaController {
-    public List<Entry> getList(){
+    public List<Entry> getList(){ //for testing purposes
         List<Entry> entries = new ArrayList<>();
         // Example entries
         entries.add(new Entry("Title 1", "Ref 1", "Desc 1", "Informal Desc 1", "Tech Desc 1", 60));

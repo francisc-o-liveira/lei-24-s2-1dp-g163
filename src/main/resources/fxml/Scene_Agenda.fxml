@@ -81,7 +81,7 @@
                                         <DropShadow />
                                     </effect>
                            <children>
-                                    <Button layoutX="850.0" layoutY="500.0" text="Add Entry">
+                                    <Button layoutX="850.0" layoutY="600.0" text="Add Entry" onAction="#btnAddEntry">
 
                         </Button>
                            </children>
