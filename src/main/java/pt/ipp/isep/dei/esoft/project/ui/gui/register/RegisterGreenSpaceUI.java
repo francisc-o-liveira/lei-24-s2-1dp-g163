@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui;
+package pt.ipp.isep.dei.esoft.project.ui.gui.register;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

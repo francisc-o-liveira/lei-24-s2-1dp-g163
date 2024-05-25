@@ -79,7 +79,7 @@
                                         <DropShadow />
                                     </effect>
                            <children>
-                              <TableView fx:id="tableToDoList" layoutX="20.0" layoutY="23.0" prefHeight="485.0" prefWidth="822.0">
+                              <TableView fx:id="tableToDoList" layoutX="20.0" layoutY="23.0" prefHeight="436.0" prefWidth="822.0">
                                 <columns>
                                   <TableColumn fx:id="degreeUrgencyCol" prefWidth="140.1999969482422" text="Degree of Urgency" />
                                   <TableColumn fx:id="taskCol" prefWidth="384.5999755859375" text="Task " />
@@ -88,6 +88,8 @@
                                     <TableColumn fx:id="detailsCol" prefWidth="124.79996337890623" text="View Details" />
                                 </columns>
                               </TableView>
+                              <Button layoutX="777.0" layoutY="476.0" mnemonicParsing="false" onAction="#btnRegister" text="Register " />
+                              <Button layoutX="713.0" layoutY="476.0" mnemonicParsing="false" onAction="#btnUpdate" text="Update" />
                            </children>
                                 </AnchorPane>
                             </children>
