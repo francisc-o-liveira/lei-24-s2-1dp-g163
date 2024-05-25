@@ -100,4 +100,8 @@ public class Entry extends Task {
     public void setTeamAssigned(Team teamAssigned) {
         this.teamAssigned = teamAssigned;
     }
+
+    public boolean isCanceled() {
+        return this.status.isCanceled();
+    }
 }

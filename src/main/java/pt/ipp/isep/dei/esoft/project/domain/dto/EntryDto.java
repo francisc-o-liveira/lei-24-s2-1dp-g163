@@ -22,7 +22,7 @@ public class EntryDto extends TaskDto{
     public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
-        this.status = status;
+        setStatus(status);
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
         this.reference = reference;
@@ -32,7 +32,7 @@ public class EntryDto extends TaskDto{
     public EntryDto(Date startDate, EntryState status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
-        this.status = status;
+        setStatus(status);
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
         this.reference = reference;
@@ -65,5 +65,16 @@ public class EntryDto extends TaskDto{
         }else {
             throw new NullPointerException("Start date cannot be null");
         }
+    }
+
+    public void setStatus(EntryState newStatus) {
+        if(status == null){
+            throw new NullPointerException("Status cannot be null");
+        }
+        this.status = newStatus;
+    }
+
+    public void cancel(){
+        this.status.cancelEntry();
     }
 }

@@ -39,6 +39,7 @@ activate GSM
 
             AgendaController -> AgendaUI : agendaDto
             deactivate AgendaController
+
         deactivate AgendaController
         AgendaUI -> GSM : show Agenda and select one Entry
                     deactivate AgendaUI

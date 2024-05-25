@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain.task;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 
 public class  EntryState {
+
     public enum State {Planned, Assigned, Postponed, Canceled,Done}
 
     private State state;
@@ -52,5 +53,7 @@ public class  EntryState {
             throw new RuntimeException("Access Impossible");
         }
     }
-
+    public boolean isCanceled() {
+        return this.state == State.Canceled;
+    }
 }

@@ -35,11 +35,13 @@ public class EntryMapper {
     }
 
     public void entryDtoToEntry(EntryDto entryDto, Entry entry) {
-        if (entry.getStartDate() == null && entryDto.getStartDate() != null){
-            entry.setEntryAgenda(entryDto.getStartDate(),entryDto.getStatus());
-        }else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate())){
-            // postPone entry
-        }else if (entry.getStartDate().equals(entryDto.getStartDate())){
+        if (entry.getStartDate() == null && entryDto.getStartDate() != null) {
+            entry.setEntryAgenda(entryDto.getStartDate(), entryDto.getStatus());
+        } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && entryDto.getStatus().equals(entry.getStatus())) {
+            entry.postponeEntry(entryDto.getStartDate());
+        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus())) {
+            entry.cancelEntry();
+        }else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
             // assign team and assign vehicles
         }else {
             //modify task if it is possible

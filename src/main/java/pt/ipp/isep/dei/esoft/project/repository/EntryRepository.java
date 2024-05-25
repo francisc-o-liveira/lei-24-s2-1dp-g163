@@ -18,7 +18,7 @@ public class EntryRepository {
     private List<Entry> toDo;
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
-    private  static final int HOURS_WORK_PER_OMISSION=8;
+    private static final int HOURS_WORK_PER_OMISSION=8;
     private static int REFERENCE_VALUE;
 
 
@@ -81,6 +81,35 @@ public class EntryRepository {
                 return entry;
             }
         }
-        return null;
+        throw new RuntimeException("Entry not found");
+    }
+
+    public Optional<Entry> cancelEntry(EntryDto entryDto) {
+        Optional<Entry> agendaEntry = Optional.empty();
+        Entry entry = searchForEntryAgenda(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if (entry.isCanceled()){
+            agendaEntry = Optional.of(entry);
+        }
+        return agendaEntry;
+    }
+
+    public Optional<Entry> postponeEntry(EntryDto entryDto) {
+        Optional<Entry> agendaEntry = Optional.empty();
+        Entry entry = searchForEntryAgenda(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if (entry.isCanceled()){
+            agendaEntry = Optional.of(entry);
+        }
+        return agendaEntry;
+    }
+
+    private Entry searchForEntryAgenda(EntryDto entryDto) {
+        for (Entry entry : agenda) {
+            if (entryDto.equals(entry)) {
+                return entry;
+            }
+        }
+        throw new RuntimeException("Entry not found");
     }
 }
