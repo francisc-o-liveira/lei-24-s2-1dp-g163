@@ -16,27 +16,34 @@ public class EntryDto extends TaskDto{
     private EntryState status;
     private List<Vehicle> vehicleList;
     private Team teamAssigned;
-    private int reference;
+    private String reference;
 
 
-    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto) {
+    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
         this.status = status;
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
+        this.reference = reference;
     }
 
 
-
-
-    public EntryDto(Date startDate, EntryState status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, int reference) {
+    public EntryDto(Date startDate, EntryState status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
         this.status = status;
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
         this.reference = reference;
+    }
+
+    public EntryDto(EntryState entryState, String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
+        super(title, description,degreeOfUrgency, timeExpec, greenSpaceDto);
+        this.status = entryState;
+        this.vehicleList = null;
+        this.teamAssigned = null;
+        this.reference = null;
     }
 
     public Date getStartDate() {
@@ -47,7 +54,7 @@ public class EntryDto extends TaskDto{
         return status;
     }
 
-    public int getReference() {
+    public String getReference() {
         return reference;
     }
 

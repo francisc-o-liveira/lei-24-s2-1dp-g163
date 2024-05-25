@@ -12,9 +12,13 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterTaskController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.awt.*;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ResourceBundle;
 
 public class RegisterTaskUI implements Initializable {
@@ -29,7 +33,7 @@ public class RegisterTaskUI implements Initializable {
     private TextField description;
 
     @FXML
-    private ComboBox<String> degreeOfUrgency;
+    private ComboBox<Task.DegreeUrgency> degreeOfUrgency;
 
     @FXML
     private ComboBox<GreenSpaceDto> greenSpaceDtoComboBox;
@@ -41,20 +45,22 @@ public class RegisterTaskUI implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl = new RegisterTaskController();
         greenSpaceDtoComboBox.setItems(FXCollections.observableArrayList(ctrl.getGreenSpaceList()));
+        degreeOfUrgency.setItems(FXCollections.observableArrayList(ctrl.getDegreOfUrgency()));
     }
 
     @FXML
     public void btnRegisterOnAction(ActionEvent event) {
         String title = this.title.getText();
         String description = this.description.getText();
-        String degreeOfUrgency = this.degreeOfUrgency.getValue();
+        Task.DegreeUrgency degreeOfUrgency = this.degreeOfUrgency.getValue();
         String timeExpected = this.timeExpected.getText();
         GreenSpaceDto greenSpaceDto = this.greenSpaceDtoComboBox.getValue();
         if (title==null ||  description==null || degreeOfUrgency==null || timeExpected==null || greenSpaceDto==null) {
             popUpOfVerifications(Alert.AlertType.ERROR,"Please input data in all fields");
         }else {
             try {
-                EntryDto entryDto = new EntryDto();
+                Tempo timeExpec = getTimeForEntry(timeExpected);
+                EntryDto entryDto = new EntryDto(new EntryState(),title,description,degreeOfUrgency,timeExpec,greenSpaceDto);
                 ctrl.registerTaskEntry(entryDto);
                 if(popUp().showAndWait().get()== ButtonType.OK){
                     stage.close();
@@ -63,6 +69,17 @@ public class RegisterTaskUI implements Initializable {
                 popUpOfVerifications(Alert.AlertType.ERROR,e.getMessage()).show();
             }
         }
+    }
+
+    private Tempo getTimeForEntry(String timeExpected) {
+        String[] times = timeExpected.split(":");
+        Tempo time;
+        if (times.length == 2) {
+            time = new Tempo(Integer.parseInt(times[0]),Integer.parseInt(times[1]));
+        }else {
+            throw new IllegalArgumentException("Invalid time format");
+        }
+        return time;
     }
 
     public void setStage(Stage stage){
