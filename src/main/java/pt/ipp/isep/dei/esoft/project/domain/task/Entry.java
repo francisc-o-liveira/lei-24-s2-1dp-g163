@@ -104,4 +104,8 @@ public class Entry extends Task {
     public boolean isCanceled() {
         return this.status.isCanceled();
     }
+
+    public boolean isPostpone() {
+        return this.status.isPostpone();
+    }
 }

@@ -98,7 +98,7 @@ public class EntryRepository {
         Optional<Entry> agendaEntry = Optional.empty();
         Entry entry = searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
-        if (entry.isCanceled()){
+        if (entry.isPostpone()){
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;

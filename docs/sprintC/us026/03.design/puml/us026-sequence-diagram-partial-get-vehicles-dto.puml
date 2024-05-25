@@ -23,7 +23,7 @@ participant ":Entry" as OBJ
 
 
 autonumber 5
--> CTRL2 : getDataNeededToModify()
+-> CTRL2 : getVehicleListPossibleForEntry()
                      activate CTRL2
 
 
@@ -99,7 +99,7 @@ autonumber 5
                                                              end
 
 
-                                                              note over CTRL2 : other data omitted
+
 
 
 

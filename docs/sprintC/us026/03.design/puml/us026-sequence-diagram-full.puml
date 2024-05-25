@@ -59,7 +59,7 @@ activate GSM
 
             UI2 --> CTRL2** : create(entryDto)
 
-            UI2 --> CTRL2 : getDataNeededToModify()
+            UI2 --> CTRL2 : getVehicleListPossibleForEntry()
             activate CTRL2
 
 
@@ -130,7 +130,7 @@ activate GSM
                                                     end
 
 
-                                                     note over CTRL2 : other data omitted
+
 
                                                     CTRL2 -> UI2 : vehicleDtoList
                                                     deactivate CTRL2

@@ -77,4 +77,9 @@ public class EntryDto extends TaskDto{
     public void cancel(){
         this.status.cancelEntry();
     }
+
+    public void postpone(Date newDate) {
+        this.status.postponeState();
+        this.startDate = newDate;
+    }
 }

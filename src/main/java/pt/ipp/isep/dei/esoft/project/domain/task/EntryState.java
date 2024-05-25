@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 
 public class  EntryState {
 
+
     public enum State {Planned, Assigned, Postponed, Canceled,Done}
 
     private State state;
@@ -55,5 +56,8 @@ public class  EntryState {
     }
     public boolean isCanceled() {
         return this.state == State.Canceled;
+    }
+    public boolean isPostpone() {
+        return this.state == State.Postponed;
     }
 }

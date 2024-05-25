@@ -47,5 +47,6 @@ public class EntryMapper {
             //modify task if it is possible
             throw new IllegalArgumentException();
         }
+
     }
 }
