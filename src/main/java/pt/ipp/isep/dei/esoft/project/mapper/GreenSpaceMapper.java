@@ -25,13 +25,13 @@ public class GreenSpaceMapper {
     public GreenSpace greenSpaceDtoToGreenSpace(GreenSpaceDto greenSpaceDto){
          List<GreenSpace> greenSpaces = Repositories.getInstance().getOrganizationRepository().getGreenSpaceList();
         if (greenSpaces == null || greenSpaces.size() == 0){
-            throw new RuntimeException("Dont Find Your Green Space : Fatal Error");
+            throw new RuntimeException("Dont Find Your Green Space - Fatal Error");
         }
          for (GreenSpace greenSpace : greenSpaces) {
              if(greenSpace.equals(greenSpaceDto)){
                  return greenSpace;
              }else {
-                 throw new RuntimeException("Dont Find Your Green Space : Fatal Error");
+                 throw new RuntimeException("Dont Find Your Green Space - Fatal Error");
              }
          }
         return null;
