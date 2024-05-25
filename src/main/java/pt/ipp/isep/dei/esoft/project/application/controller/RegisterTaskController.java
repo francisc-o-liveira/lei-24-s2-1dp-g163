@@ -23,7 +23,6 @@ public class RegisterTaskController {
 
     public List<GreenSpaceDto> getGreenSpaceList(){
         return greenMapper.greenSpaceListToGreenSpaceDto(org.getGreenSpaceList());
-
     }
 
     public static Task.DegreeUrgency[] getDegreOfUrgency(){
@@ -31,7 +30,7 @@ public class RegisterTaskController {
     }
 
     public boolean registerTaskEntry(EntryDto entryDto){
-        if ( entryRepository.registerNewTask(entryDto).isPresent()){
+        if (entryRepository.registerNewTask(entryDto).isPresent()){
            return true;
         }
         return false;
