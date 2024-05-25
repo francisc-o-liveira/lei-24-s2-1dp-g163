@@ -1,3 +1,4 @@
+
 .outline{
     -fx-padding: 10;
     -fx-background-color: rgba(0,0,0,0);
@@ -8,7 +9,8 @@
 }
 
 .calendar{
-    -fx-border-color: #807a7a;
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-text-fill: rgba(68,68,68,0.4);
 }
 
 .header {
@@ -17,6 +19,7 @@
     -fx-font-family: Tahoma;
     -fx-padding: 10;
     -fx-alignment: center;
+    -fx-text-fill: rgba(68,68,68,0.9);
 }
 
 .day-names {
@@ -24,12 +27,15 @@
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-font-family: Tahoma;
+    -fx-text-fill: rgba(68,68,68,0.9);
 }
 
 .day-cell {
     -fx-padding: 5;
     -fx-alignment: top-left;
-    -fx-border-color: #807a7a;
+    -fx-border-color: rgba(68,68,68,0.4);
+    -fx-border-style: solid none;
+    -fx-border-width: 1px;
 }
 
 .event-label {
@@ -56,20 +62,22 @@
 }
 
 
-.prevbutton{
+.prev-button{
     -fx-border:none;
     -fx-font-size: 16pt;
     -fx-font-weight: bold;
     -fx-background-color: rgba(0,0,0,0);
     -fx-text:black;
     -fx-font-family: Tahoma;
+    -fx-text-fill: rgba(68,68,68,0.7);
 }
 
-.nextbutton{
+.next-button{
     -fx-border:none;
     -fx-font-size: 16pt;
     -fx-font-weight: bold;
     -fx-background-color: rgba(0,0,0,0);
     -fx-text:black;
     -fx-font-family: Tahoma;
+    -fx-text-fill: rgba(68,68,68,0.7);
 }

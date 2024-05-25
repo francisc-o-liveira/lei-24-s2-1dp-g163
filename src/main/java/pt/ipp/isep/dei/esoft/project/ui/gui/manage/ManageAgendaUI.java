@@ -66,10 +66,10 @@ public class ManageAgendaUI  implements Initializable{
 
         Button previousMonthButton = new Button("<");
         previousMonthButton.setOnAction(e -> changeMonth(-1));
-        previousMonthButton.getStyleClass().add("prevbutton");
+        previousMonthButton.getStyleClass().add("prev-button");
         Button nextMonthButton = new Button(">");
         nextMonthButton.setOnAction(e -> changeMonth(1));
-        nextMonthButton.getStyleClass().add("nextbutton");
+        nextMonthButton.getStyleClass().add("next-button");
 
         HBox headerBox = new HBox(previousMonthButton, header, nextMonthButton);
         headerBox.setAlignment(Pos.CENTER);
