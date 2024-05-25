@@ -90,6 +90,16 @@ public class Entry extends Task {
         return Task.getDegreeUrgencyValues();
     }
 
+    public void setEntryAgenda(Date startDate, EntryState status) {
+        this.startDate = startDate;
+        this.status = status;
+    }
 
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
+    }
 
+    public void setTeamAssigned(Team teamAssigned) {
+        this.teamAssigned = teamAssigned;
+    }
 }

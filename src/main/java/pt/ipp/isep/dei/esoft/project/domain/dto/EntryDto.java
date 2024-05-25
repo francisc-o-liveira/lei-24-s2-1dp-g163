@@ -46,4 +46,17 @@ public class EntryDto extends TaskDto{
     public EntryState getStatus() {
         return status;
     }
+
+    public int getReference() {
+        return reference;
+    }
+
+    public void setEntryAgenda(Date newDate){
+        if(newDate != null){
+            this.status.assignState();
+            this.startDate = newDate;
+        }else {
+            throw new NullPointerException("Start date cannot be null");
+        }
+    }
 }

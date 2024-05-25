@@ -19,11 +19,20 @@ public class  EntryState {
         this.state = state;
     }
 
+
+    public void assignState(){
+        if(this.state == State.Planned){
+            this.state = State.Assigned;
+        }else{
+            throw new RuntimeException("Access Impossible on this state");
+        }
+    }
+
     public void postponeState(){
         if (this.state == State.Assigned || this.state == State.Planned || this.state == State.Postponed){
             this.state = State.Postponed;
-        }else {
-            throw new RuntimeException("Access Impossible");
+        }else{
+            throw new RuntimeException("Access Impossible on this state");
         }
     }
 
@@ -36,6 +45,12 @@ public class  EntryState {
             throw new RuntimeException("Access Impossible");
         }
     }
-
+    public void doneEntry(){
+        if (this.state == State.Postponed || this.state == State.Assigned){
+            this.state = State.Done;
+        }else {
+            throw new RuntimeException("Access Impossible");
+        }
+    }
 
 }
