@@ -62,4 +62,25 @@ public class EntryRepository {
     private boolean saveNewEntry(Entry entry) {
         return toDo.add(entry);
     }
+
+    public Optional<Entry> assignEntryOnAgenda(EntryDto entryDto) {
+        Optional<Entry> agendaEntry = Optional.empty();
+        Entry entry = searchForEntryToDo(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if (toDo.remove(entry)){
+            if(agenda.add(entry)){
+                agendaEntry = Optional.of(entry);
+            }
+        }
+        return agendaEntry;
+    }
+
+    private Entry searchForEntryToDo(EntryDto entryDto) {
+        for (Entry entry : toDo) {
+            if (entryDto.equals(entry)) {
+                return entry;
+            }
+        }
+        return null;
+    }
 }
