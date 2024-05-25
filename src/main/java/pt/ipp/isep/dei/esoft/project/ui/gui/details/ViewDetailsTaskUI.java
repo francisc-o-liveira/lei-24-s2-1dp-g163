@@ -9,7 +9,6 @@ import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 
 
 public class ViewDetailsTaskUI {
-        public DetailsEntryAgendaController ctrl;
         @FXML
         private Label titleTask;
         @FXML
@@ -25,18 +24,15 @@ public class ViewDetailsTaskUI {
         @FXML
         private Label urgency;
 
-        public ViewDetailsTaskUI(){
-            ctrl=new DetailsEntryAgendaController();
-        }
-
-        public void setLabels(Task task){
-            /*titleTask.setText(ctrl.getTitle(task));
-            descriptionTask.setText(ctrl.getDescription(task));
-            informalTask.setText(ctrl.getInformal(task));
+        public void setLabels(TaskDto task){
+            titleTask.setText(task.getTitle());
+            descriptionTask.setText(task.getDescription());
+            TaskDto.DegreeUrgency typeUrgency=task.getDegreeUrgency();
+            urgency.setText(typeUrgency.name());
+            /*informalTask.setText(ctrl.getInformal(task));
             technicalTask.setText(ctrl.getTechnical(task));
             duration.setText(ctrl.getDuration(task));
-            greenSpace.setText(ctrl.getGreenSpace(task));
-            urgency.setText(ctrl.getUrgency(task));*/
+            greenSpace.setText(ctrl.getGreenSpace(task));*/
         }
 
 

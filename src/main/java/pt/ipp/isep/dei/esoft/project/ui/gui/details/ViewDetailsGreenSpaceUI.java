@@ -10,9 +10,8 @@ import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ViewDetailsGreenSpaceUI implements Initializable{
+public class ViewDetailsGreenSpaceUI{
 
-        public RegisterGreenSpaceController ctrl;
         @FXML
         private Label nameGreenSpace;
         @FXML
@@ -22,17 +21,12 @@ public class ViewDetailsGreenSpaceUI implements Initializable{
         @FXML
         private Label greenSpaceType;
 
-
         public void setLabels(GreenSpaceDto greenSpace){
                 nameGreenSpace.setText(greenSpace.getName());
                 addressGreenSpace.setText(greenSpace.getAddress());
-                greenSpaceType.setText(greenSpace.getType());
-                areaGreenSpace.setText(greenSpace.getAreaInHectares());
-        }
-
-        @Override
-        public void initialize(URL url, ResourceBundle rbl){
-            ctrl=new RegisterGreenSpaceController();
+                GreenSpace.Type type=greenSpace.getType();
+                greenSpaceType.setText(type.name());
+                areaGreenSpace.setText(String.valueOf(greenSpace.getAreaInHectares()));
         }
 
     }
