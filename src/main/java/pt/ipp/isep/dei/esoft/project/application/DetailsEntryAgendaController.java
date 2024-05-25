@@ -16,6 +16,10 @@ public class DetailsEntryAgendaController {
         entries.get(1).postponeEntry(new Date(2024, 5, 15));
         entries.add(new Entry("Title 3", "Ref 3", "Desc 3", "Informal Desc 3", "Tech Desc 3", 90));
         entries.get(2).postponeEntry(new Date(2024, 5, 15));
+        entries.add(new Entry("Title 4", "Ref 3", "Desc 4", "Informal Desc 3", "Tech Desc 3", 90));
+        entries.get(3).postponeEntry(new Date(2024, 5, 15));
+        entries.add(new Entry("Title 5", "Ref 3", "Desc 4", "Informal Desc 3", "Tech Desc 3", 90));
+        entries.get(4).postponeEntry(new Date(2024, 5, 15));
         return entries;
     }
 }

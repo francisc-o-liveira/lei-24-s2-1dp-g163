@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
@@ -106,34 +103,9 @@ public class ManageAgendaUI  implements Initializable{
                     .filter(entry -> entry.getStartDate() != null && LocalDate.of(entry.getStartDate().getYear(), entry.getStartDate().getMonth(), entry.getStartDate().getDay()).equals(date))
                     .collect(Collectors.toList());
 
-            for (Entry entry : dayEntries) {
-                Label entryLabel = new Label(entry.getDescription()); //needs to be ctrlEntry.getDescription(entry)
-                entryLabel.getStyleClass().add("event-label");
-
-                switch (entry.getStatus()) { //i know it is with the controller
-                    case Postponed:
-                        entryLabel.getStyleClass().add("status-postponed");
-                        break;
-                    case Planned:
-                        entryLabel.getStyleClass().add("status-planned");
-                        break;
-                    case Canceled:
-                        entryLabel.getStyleClass().add("status-canceled");
-                        break;
-                    case Done:
-                        entryLabel.getStyleClass().add("status-done");
-                        break;
-                }
-                entryLabel.setOnMouseClicked(event -> {
-                    try {
-                        showEntryDetails(entry);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                dayBox.getChildren().add(entryLabel);
+            if(dayEntries != null){
+                introduceDates(dayEntries,dayBox.getPrefHeight(), dayBox.getPrefWidth(), dayBox);
             }
-
             calendarGrid.add(dayBox, col, row);
             col++;
             if (col > 6) {
@@ -143,6 +115,72 @@ public class ManageAgendaUI  implements Initializable{
         }
 
         view.getChildren().addAll(headerBox, calendarGrid);
+    }
+
+    public void introduceDates(List<Entry> dayEntries, double rectangleHeight, double rectangleWidth, VBox dayBox) {
+        VBox calendarActivityBox = new VBox();
+        for (int k = 0; k < dayEntries.size(); k++) {
+            if (k >= 2) {
+                Label moreActivities = new Label("show more");
+                calendarActivityBox.getChildren().add(moreActivities);
+
+                ContextMenu contextMenu = new ContextMenu();
+                contextMenu.getStyleClass().add("context-menu");
+                for(int i=2; i< dayEntries.size(); i++){
+                    Entry entryDisplay=dayEntries.get(i);
+                    MenuItem menuItem = new MenuItem(entryDisplay.getTitle());
+                    menuItem.getStyleClass().add("menu-item");
+                    menuItem.setOnAction(event -> {
+                        try {
+                            showEntryDetails(entryDisplay);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                    contextMenu.getItems().add(menuItem);
+                }
+
+                moreActivities.setOnMouseClicked(mouseEvent -> {
+                    contextMenu.show(moreActivities, mouseEvent.getScreenX(), mouseEvent.getScreenY());
+                });
+                break;
+            }
+            Entry entry = dayEntries.get(k);
+            Label entryLabel = new Label(entry.getTitle());
+            entryLabel.getStyleClass().add("event-label");
+
+            switch (entry.getStatus()) {
+                case Postponed:
+                    entryLabel.getStyleClass().add("status-postponed");
+                    break;
+                case Planned:
+                    entryLabel.getStyleClass().add("status-planned");
+                    break;
+                case Canceled:
+                    entryLabel.getStyleClass().add("status-canceled");
+                    break;
+                case Done:
+                    entryLabel.getStyleClass().add("status-done");
+                    break;
+            }
+
+            entryLabel.setOnMouseClicked(event -> {
+                try {
+                    showEntryDetails(entry);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            calendarActivityBox.getChildren().add(entryLabel);
+        }
+        calendarActivityBox.getStyleClass().add("show-more");
+        dayBox.getChildren().add(calendarActivityBox);
+    }
+
+    public void showMoreEntries(List<Entry> dayEntries){
+
+
     }
 
     private void showEntryDetails(Entry entry) throws IOException {
