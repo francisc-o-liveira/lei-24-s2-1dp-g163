@@ -27,7 +27,7 @@ public class ViewDetailsTaskUI {
         public void setLabels(TaskDto task){
             titleTask.setText(task.getTitle());
             descriptionTask.setText(task.getDescription());
-            TaskDto.DegreeUrgency typeUrgency=task.getDegreeUrgency();
+            Task.DegreeUrgency typeUrgency=task.getDegreeUrgency();
             urgency.setText(typeUrgency.name());
             /*informalTask.setText(ctrl.getInformal(task));
             technicalTask.setText(ctrl.getTechnical(task));

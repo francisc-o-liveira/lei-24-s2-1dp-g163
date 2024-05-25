@@ -4,19 +4,19 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
-import java.util.Objects;
-
 public class Task {
     private String title;
     private String description;
     private Tempo expectedDuration;
     private GreenSpace greenSpace;
-    private TaskDto.DegreeUrgency degreeUrgency;
+    private DegreeUrgency degreeUrgency;
+    public static enum DegreeUrgency {High,Medium,Low};
 
 
 
 
-    public Task(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency) {
+
+    public Task(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency) {
         this.greenSpace = greenSpace;
         this.title = title;
         this.description = description;
@@ -24,6 +24,9 @@ public class Task {
         this.degreeUrgency = degreeUrgency;
     }
 
+    public GreenSpace getGreenSpace() {
+        return greenSpace;
+    }
 
     public String getTitle() {
         return title;
@@ -31,13 +34,16 @@ public class Task {
     public String getDescription() {
         return description;
     }
-    public Tempo getDuration() {
+    public Tempo getExpectedDuration() {
         return expectedDuration;
     }
 
 
-    public TaskDto.DegreeUrgency getDegreeUrgency() {
-        return degreeUrgency;
+    public static DegreeUrgency[] getDegreeUrgencyValues() {
+        return DegreeUrgency.values();
     }
 
+    public DegreeUrgency getDegreeUrgency() {
+        return degreeUrgency;
+    }
 }

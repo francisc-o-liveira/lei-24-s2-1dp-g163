@@ -66,4 +66,10 @@ public class GreenSpace {
     public static final Type[] getEnumGreenSpaceTypes(){
         return Type.values();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        GreenSpace greenSpace = (GreenSpace) obj;
+        return greenSpace.getName().equals(this.getName()) && greenSpace.getArea() == this.getArea() && greenSpace.getAddress().equals(this.getAddress());
+    }
 }

@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.mapper;
 
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +20,20 @@ public class GreenSpaceMapper {
             greenSpaceDtoList.add(greenSpaceToGreenSpaceDto(greenSpace));
         }
         return greenSpaceDtoList;
+    }
+
+    public GreenSpace greenSpaceDtoToGreenSpace(GreenSpaceDto greenSpaceDto){
+         List<GreenSpace> greenSpaces = Repositories.getInstance().getOrganizationRepository().getGreenSpaceList();
+        if (greenSpaces == null || greenSpaces.size() == 0){
+            throw new RuntimeException("Dont Find Your Green Space : Fatal Error");
+        }
+         for (GreenSpace greenSpace : greenSpaces) {
+             if(greenSpace.equals(greenSpaceDto)){
+                 return greenSpace;
+             }else {
+                 throw new RuntimeException("Dont Find Your Green Space : Fatal Error");
+             }
+         }
+        return null;
     }
 }
