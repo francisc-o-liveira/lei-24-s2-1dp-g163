@@ -72,7 +72,7 @@ public class GSManagerUI {
         return alerta;
     }
 
-    @FXML
+    /*@FXML
     public void manageEquipment(ActionEvent event) throws IOException {
         /*FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewEquipment.fxml"));
         Parent root= fxmlLoader.load();
@@ -81,9 +81,8 @@ public class GSManagerUI {
         stage.show();
         ManageEquipment ctrlUI=fxmlLoader.getController();
         ctrlUI.setTableEquipment();
-         */
         popUpOfVerifications(Alert.AlertType.INFORMATION,"Implementing ...");
-    }
+    }*/
 
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
@@ -153,22 +152,22 @@ public class GSManagerUI {
         ui.setTableToDoList();
     }
 
-    /*@FXML
+    @FXML
     public void manageAgenda(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_Agenda.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-        ManageAgendaUI ui=fxmlLoader.getController();
-    }*/
+        //ManageAgendaUI ui=fxmlLoader.getController();
+    }
 
-    /*@FXML
+    @FXML
     public void manageGreenSpaces(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ListGreenSpaces.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-     */
+    }
 }
