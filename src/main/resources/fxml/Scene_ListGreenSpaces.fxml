@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.main.GSManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.manage.ManageGreenSpacesUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -51,7 +47,7 @@
                                     </font>
                                 </Label>
                                 <Line endX="86.5" layoutX="117.0" layoutY="171.0" startX="-107.0" stroke="WHITE" />
-                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" onAction="#reload" prefHeight="26.0" prefWidth="125.0" text="Home">
+                                <Button layoutX="38.0" layoutY="222.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="125.0" text="Home">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="HOME" text="" />
                                     </graphic>
@@ -66,8 +62,6 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                        <Button layoutX="37.0" layoutY="278.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="System Configs" />
-                        <FontAwesomeIconView glyphName="PLUS" layoutX="45.0" layoutY="297.0" text="" />
                             </children>
                         </AnchorPane>
                     </children>
@@ -83,14 +77,15 @@
                                         <DropShadow />
                                     </effect>
                            <children>
-                              <TableView layoutX="39.0" layoutY="24.0" prefHeight="400.0" prefWidth="779.0">
+                              <TableView fx:id="tableGreenSpaces" layoutX="39.0" layoutY="24.0" prefHeight="400.0" prefWidth="779.0">
                                 <columns>
-                                  <TableColumn prefWidth="258.26556396484375" text="Name" />
-                                  <TableColumn prefWidth="258.73443603515625" text="Address " />
-                                    <TableColumn prefWidth="243.39666748046875" text="Area" />
+                                  <TableColumn fx:id="colName" prefWidth="139.4000244140625" text="Name" />
+                                  <TableColumn fx:id="colAddress" prefWidth="387.5999755859375" text="Address " />
+                                    <TableColumn fx:id="colArea" prefWidth="116.5999755859375" text="Area" />
+                                    <TableColumn fx:id="colDetails" prefWidth="133.60002441406255" text="View Details" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="726.0" layoutY="462.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="92.0" style="-fx-background-color: #BDECB6;" text="Register">
+                              <Button layoutX="726.0" layoutY="462.0" mnemonicParsing="false" onAction="#btnRegister" prefHeight="47.0" prefWidth="92.0" style="-fx-background-color: #BDECB6;" text="Register">
                                  <font>
                                     <Font name="Tahoma" size="14.0" />
                                  </font>

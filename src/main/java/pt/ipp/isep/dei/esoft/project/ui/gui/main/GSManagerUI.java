@@ -162,4 +162,13 @@ public class GSManagerUI {
         stage.show();
         ManageAgendaUI ui=fxmlLoader.getController();
     }*/
+
+    /*@FXML
+    public void manageGreenSpaces(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ListGreenSpaces.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+     */
 }
