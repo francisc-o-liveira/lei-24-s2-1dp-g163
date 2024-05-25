@@ -162,4 +162,23 @@ public class ManageToDoListUI implements Initializable {
         return alerta;
     }
 
+    @FXML
+    public void btnRegister(ActionEvent event)throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterTask.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stageRegister= new Stage();
+        stageRegister.setScene(scene);
+        stageRegister.show();
+        /*RegisterTaskUI ui=fxmlLoader.getController();
+        ui.setStage(stageRegister);
+        ui.set*/
+    }
+
+    @FXML
+    public void btnUpdate(ActionEvent event){
+        tableToDoList.getItems().clear();
+        setTableToDoList();
+    }
+
 }

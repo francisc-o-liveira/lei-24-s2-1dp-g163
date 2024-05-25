@@ -24,7 +24,8 @@ module pt.ipp.isep.dei.esoft.project.ui.gui {
     opens pt.ipp.isep.dei.esoft.project.ui.gui.login to javafx.fxml;
     exports pt.ipp.isep.dei.esoft.project.ui.gui.main;
     opens pt.ipp.isep.dei.esoft.project.ui.gui.main to javafx.fxml;
-
+    exports pt.ipp.isep.dei.esoft.project.ui.gui.register;
+    opens pt.ipp.isep.dei.esoft.project.ui.gui.register to javafx.fxml;
 
 
 }
