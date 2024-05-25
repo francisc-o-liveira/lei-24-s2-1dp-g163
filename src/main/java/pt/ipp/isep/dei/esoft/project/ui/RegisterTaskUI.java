@@ -59,7 +59,7 @@ public class RegisterTaskUI implements Initializable {
                     stage.close();
                 }
             }catch (){
-
+                popUpOfVerifications(Alert.AlertType.ERROR,e.getMessage()).show();
             }
         }
     }
