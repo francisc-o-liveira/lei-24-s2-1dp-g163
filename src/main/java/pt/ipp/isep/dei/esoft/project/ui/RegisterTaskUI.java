@@ -49,7 +49,8 @@ public class RegisterTaskUI implements Initializable {
         String description = this.description.getText();
         String degreeOfUrgency = this.degreeOfUrgency.getValue();
         String timeExpected = this.timeExpected.getText();
-        if (title==null ||  description==null || degreeOfUrgency==null || timeExpected==null) {
+        GreenSpaceDto greenSpaceDto = this.greenSpaceDtoComboBox.getValue();
+        if (title==null ||  description==null || degreeOfUrgency==null || timeExpected==null || greenSpaceDto==null) {
             popUpOfVerifications(Alert.AlertType.ERROR,"Please input data in all fields");
         }else {
             try {
