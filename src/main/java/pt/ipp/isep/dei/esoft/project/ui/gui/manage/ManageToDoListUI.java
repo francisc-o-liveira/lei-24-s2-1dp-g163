@@ -5,25 +5,31 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ManageToDoListUI {
+public class ManageToDoListUI implements Initializable {
 
     public AuthenticationController ctrlAuth;
-    //private TaskController ctrl;
+    private DetailsEntryAgendaController ctrl;
     public Stage stage = LoginUI.getMainStage();
-
-    //private ObservableList<Task> taskObservableList= FXCollections.observableArrayList(ctrl.getToDoList());
+    private ObservableList<Task> taskObservableList= FXCollections.observableArrayList();
+    private Task selectedTask;
 
     @FXML
     private TableColumn<Task, String> degreeUrgencyCol;
@@ -32,26 +38,77 @@ public class ManageToDoListUI {
     private TableColumn<Task, Integer> durationCol;
 
     @FXML
-    private TableColumn<Task, String> parkCol; //this will need to be changed
+    private TableColumn<Task, String> parkCol;
+
+    @FXML
+    private TableColumn<Task, String> taskCol;
+
+    @FXML
+    private TableColumn<Task, Void> detailsCol;
 
     @FXML
     private TableView<Task> tableToDoList;
 
-    @FXML
-    private TableColumn<Task, String> taskCol;
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        ctrlAuth=new AuthenticationController();
+        ctrl=new DetailsEntryAgendaController();
+        setTableToDoList();
+    }
 
     public void setTableToDoList(){
         degreeUrgencyCol.setCellValueFactory(new PropertyValueFactory<>("degreeUrgency"));
         durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
         parkCol.setCellValueFactory(new PropertyValueFactory<>("park"));
         taskCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        detailsCol.setCellFactory(new Callback<
+                TableColumn<Task, Void>, TableCell<Task, Void>>() {
+            @Override
+            public TableCell<Task, Void> call(TableColumn<Task, Void> param) {
+                return new TableCell<Task, Void>() {
+                    private final javafx.scene.control.Button btn = new Button("View Details");
+
+                    {
+
+                        btn.setOnAction((ActionEvent event) -> {
+                            selectedTask = tableToDoList.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                            try {
+                                showMore(selectedTask);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        });
 
         /*for(Task t : ctrl.getToDoList()){
             taskObservableList.add(t);
-        }
+        }*/
 
-        tableToDoList.setItems(taskObservableList);*/
+        tableToDoList.setItems(taskObservableList);
 
+    }
+
+    public void showMore(Task task) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stageViewDetails=new Stage();
+        stageViewDetails.setScene(scene);
+        ViewDetailsTaskUI ui=fxmlLoader.getController();
+        ui.setLabels(task);
     }
 
 

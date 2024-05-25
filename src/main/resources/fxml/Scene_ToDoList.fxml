@@ -81,10 +81,11 @@
                            <children>
                               <TableView fx:id="tableToDoList" layoutX="20.0" layoutY="23.0" prefHeight="485.0" prefWidth="822.0">
                                 <columns>
-                                  <TableColumn fx:id="degreeUrgencyCol" prefWidth="195.0" text="Degree of Urgency" />
-                                  <TableColumn fx:id="taskCol" prefWidth="231.0" text="Task " />
-                                    <TableColumn fx:id="durationCol" prefWidth="200.0" text="Duration" />
-                                    <TableColumn fx:id="parkCol" prefWidth="195.0" text="Park" />
+                                  <TableColumn fx:id="degreeUrgencyCol" prefWidth="140.1999969482422" text="Degree of Urgency" />
+                                  <TableColumn fx:id="taskCol" prefWidth="384.5999755859375" text="Task " />
+                                    <TableColumn fx:id="durationCol" prefWidth="79.5999755859375" text="Duration" />
+                                    <TableColumn fx:id="parkCol" prefWidth="94.20001220703125" text="Park" />
+                                    <TableColumn fx:id="detailsCol" prefWidth="124.79996337890623" text="View Details" />
                                 </columns>
                               </TableView>
                            </children>
