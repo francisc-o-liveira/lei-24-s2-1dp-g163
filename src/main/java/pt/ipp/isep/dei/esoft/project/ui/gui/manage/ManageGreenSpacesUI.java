@@ -99,11 +99,12 @@ public class ManageGreenSpacesUI implements Initializable {
     }
 
     public void showMore(GreenSpaceDto gs) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsGreenSpace.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageViewDetails=new Stage();
         stageViewDetails.setScene(scene);
+        stageViewDetails.show();
         ViewDetailsGreenSpaceUI ui=fxmlLoader.getController();
         ui.setLabels(gs);
     }
