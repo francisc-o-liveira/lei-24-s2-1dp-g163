@@ -35,7 +35,7 @@ public class Entry extends Task {
         this.teamAssigned = null;
     }
 
-    public String getReference() {
+    public String getReference(){
         return reference;
     }
 
