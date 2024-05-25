@@ -22,8 +22,6 @@ public class Entry extends Task {
 
     private final String reference;
 
-    private static int REFERENCE_COUNT = 0;
-
 
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
