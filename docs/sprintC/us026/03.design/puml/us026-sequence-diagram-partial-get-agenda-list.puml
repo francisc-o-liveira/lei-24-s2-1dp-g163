@@ -22,13 +22,13 @@ participant ":EntryMapper" as MAPPER
 participant "agenda : List<Entry>" as List
 autonumber 3
 
- -> CTRL : getAgendaList()
+ -> CTRL** : create()
 autonumber 3.1
 activate CTRL
     group Get Agenda Entry's List
 
 
-            UI -> CTRL** : create
+             -> CTRL** : getAgendaList()
 
                          CTRL -> RepositorySingleton : getInstance()
                                                     activate RepositorySingleton
