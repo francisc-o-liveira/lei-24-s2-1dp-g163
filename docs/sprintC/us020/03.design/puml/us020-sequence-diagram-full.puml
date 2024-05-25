@@ -14,6 +14,8 @@ participant "repositories\n:Repositories" as PLAT
 participant "greenSpaceRepository:\nGreenSpaceRepository" as greenSpaceRepository
 participant ":GreenSpace" as classObj
 participant "greenSpace:GreenSpace" as obj
+participant ":greenSpaceDto" as dto
+
 
 
 
@@ -37,27 +39,12 @@ activate HRM
 
 
 
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
 
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
-
-                CTRL -> PLAT : getGreenSpaceRepository()
-                activate PLAT
-
-                    PLAT --> CTRL: greenSpaceRepository
-                deactivate PLAT
+                ref over CTRL
+                                                Get Green Space Type
+                                        end
 
 
-
-
-                CTRL -> classObj : getEnumGreenSpaceType()
-                activate classObj
-
-                classObj -> CTRL: greenSpaceTypes
-
-                deactivate
 
 
 
@@ -80,15 +67,30 @@ activate HRM
                 HRM -> UI: types requested data
                 activate UI
 
-                UI -> CTRL: registerGreenSpace(greenSpaceArea, greenSpaceAddress, greenSpaceName)
+                UI -> CTRL: registerGreenSpace(greenSpaceDto)
                 activate CTRL
 
-                CTRL -> greenSpaceRepository : registerGreenSpace(greenSpaceArea, greenSpaceAddress, greenSpaceName)
+                CTRL -> greenSpaceRepository : registerGreenSpace(greenSpaceDto)
 
 
 
                 activate greenSpaceRepository
-                greenSpaceRepository -> obj** : create()
+
+                greenSpaceRepository -> obj** : create(dto)
+
+                activate obj
+
+                obj -> dto : name= getGreenSpaceName
+                activate dto
+                obj -> dto : name= getGreenSpaceAddress
+
+                obj -> dto : name= getGreenSpaceArea
+                deactivate dto
+
+
+
+
+
 
                 greenSpaceRepository-> greenSpaceRepository: verifyIfExists(greenSpace)
 

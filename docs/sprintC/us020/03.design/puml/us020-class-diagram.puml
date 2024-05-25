@@ -43,10 +43,6 @@ class RegisterGreenSpaceController{
         + registerGreenSpace()
 
 }
-
-
-
-
 GreenSpaceMapper "1" - "*" GreenSpaceDTO
 GreenSpaceMapper "1" -- "*" GreenSpace
 
