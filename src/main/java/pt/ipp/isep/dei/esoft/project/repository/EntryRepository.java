@@ -1,13 +1,17 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EntryRepository {
     private List<Entry> agenda;
@@ -15,11 +19,13 @@ public class EntryRepository {
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
     private  static final int HOURS_WORK_PER_OMISSION=8;
+    private static int referenceCount;
 
     public EntryRepository() {
         toDo = new ArrayList<Entry>();
         agenda = new ArrayList<Entry>();
         mapper = new EntryMapper();
+        referenceCount=0;
         try {
             timeOfWorkByCollaborators = ApplicationSession.getTimeOfWork();
         }catch (IOException e){
@@ -39,4 +45,14 @@ public class EntryRepository {
     }
 
 
+    public static Task.DegreeUrgency[] getDegreeOfUrgency() {
+        return Entry.getDegreeOfUrgency();
+    }
+
+    public Optional<Entry> registerNewTask(EntryDto entryDto) {
+        Optional<Entry> newEntry = Optional.empty();
+        Entry entry = mapper.entryDtoToEntryCreate(entryDto,referenceCount++);
+        newEntry = Optional.of(entry);
+        return newEntry;
+    }
 }

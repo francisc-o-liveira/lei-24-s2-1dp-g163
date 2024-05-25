@@ -1,7 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
@@ -24,11 +22,13 @@ public class Entry extends Task {
 
     private final String reference;
 
+    private static int REFERENCE_COUNT = 0;
 
-    public Entry(String title, String reference, String description, Tempo expectedDuration, GreenSpace greenSpace, TaskDto.DegreeUrgency degreeUrgency, EntryState status) {
+
+    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState.State status) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
-        validateReference(reference);
-        this.reference = reference;
+        validateReference(Integer.toString(REFERENCE_COUNT++));
+        this.reference = Integer.toString(REFERENCE_COUNT);
         this.status = status;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
@@ -85,6 +85,11 @@ public class Entry extends Task {
     public EntryState.State getStatus() {
         return this.status.getState();
     }
+
+    public static DegreeUrgency[] getDegreeOfUrgency(){
+        return Task.getDegreeUrgencyValues();
+    }
+
 
 
 }
