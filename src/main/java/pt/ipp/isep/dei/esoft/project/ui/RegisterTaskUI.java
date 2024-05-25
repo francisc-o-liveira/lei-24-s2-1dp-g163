@@ -58,7 +58,7 @@ public class RegisterTaskUI implements Initializable {
                 if(popUp().showAndWait().get()== ButtonType.OK){
                     stage.close();
                 }
-            }catch (){
+            }catch (IllegalArgumentException e){
                 popUpOfVerifications(Alert.AlertType.ERROR,e.getMessage()).show();
             }
         }
