@@ -10,11 +10,7 @@ public class Task {
     private Tempo expectedDuration;
     private GreenSpace greenSpace;
     private DegreeUrgency degreeUrgency;
-    public static enum DegreeUrgency {High,Medium,Low};
-
-
-
-
+    public enum DegreeUrgency {High,Medium,Low};
 
     public Task(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency) {
         this.greenSpace = greenSpace;
@@ -23,11 +19,9 @@ public class Task {
         this.expectedDuration = expectedDuration;
         this.degreeUrgency = degreeUrgency;
     }
-
     public GreenSpace getGreenSpace() {
         return greenSpace;
     }
-
     public String getTitle() {
         return title;
     }
@@ -37,12 +31,9 @@ public class Task {
     public Tempo getExpectedDuration() {
         return expectedDuration;
     }
-
-
     public static DegreeUrgency[] getDegreeUrgencyValues() {
         return DegreeUrgency.values();
     }
-
     public DegreeUrgency getDegreeUrgency() {
         return degreeUrgency;
     }

@@ -15,7 +15,7 @@ import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.ui.gui.register.RegisterGreenSpaceUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsGreenSpaceUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -54,7 +54,7 @@ public class ManageGreenSpacesUI implements Initializable {
         setTableGreenSpaces();
     }
 
-    private void setTableGreenSpaces(){
+    public void setTableGreenSpaces(){
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colArea.setCellValueFactory(new PropertyValueFactory<>("areaInHectares"));
@@ -116,6 +116,8 @@ public class ManageGreenSpacesUI implements Initializable {
         Stage stageRegister= new Stage();
         stageRegister.setScene(scene);
         stageRegister.show();
+        RegisterGreenSpaceUI ui=fxmlLoader.getController();
+        ui.setStage(stageRegister);
     }
 
     @FXML
@@ -166,5 +168,11 @@ public class ManageGreenSpacesUI implements Initializable {
         alerta.setContentText(message);
 
         return alerta;
+    }
+
+    @FXML
+    public void update(ActionEvent event){
+        tableGreenSpaces.getItems().clear();
+        setTableGreenSpaces();
     }
 }

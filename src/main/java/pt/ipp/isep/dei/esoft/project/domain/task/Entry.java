@@ -25,17 +25,17 @@ public class Entry extends Task {
     private static int REFERENCE_COUNT = 0;
 
 
-    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState.State status) {
+    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
-        validateReference(Integer.toString(REFERENCE_COUNT++));
-        this.reference = Integer.toString(REFERENCE_COUNT);
+        validateReference(Integer.toString(reference));
+        this.reference = Integer.toString(reference);
         this.status = status;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
     }
 
-    public String getReference() {
+    public String getReference(){
         return reference;
     }
 
@@ -82,14 +82,24 @@ public class Entry extends Task {
         return this.teamAssigned;
     }
 
-    public EntryState.State getStatus() {
-        return this.status.getState();
+    public EntryState getStatus() {
+        return this.status;
     }
 
     public static DegreeUrgency[] getDegreeOfUrgency(){
         return Task.getDegreeUrgencyValues();
     }
 
+    public void setEntryAgenda(Date startDate, EntryState status) {
+        this.startDate = startDate;
+        this.status = status;
+    }
 
+    public void setVehicleList(List<Vehicle> vehicleList) {
+        this.vehicleList = vehicleList;
+    }
 
+    public void setTeamAssigned(Team teamAssigned) {
+        this.teamAssigned = teamAssigned;
+    }
 }

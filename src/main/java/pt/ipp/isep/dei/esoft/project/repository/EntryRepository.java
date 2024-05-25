@@ -19,13 +19,14 @@ public class EntryRepository {
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
     private  static final int HOURS_WORK_PER_OMISSION=8;
-    private static int referenceCount;
+    private static int REFERENCE_VALUE;
+
 
     public EntryRepository() {
         toDo = new ArrayList<Entry>();
         agenda = new ArrayList<Entry>();
         mapper = new EntryMapper();
-        referenceCount=0;
+        REFERENCE_VALUE = 0;
         try {
             timeOfWorkByCollaborators = ApplicationSession.getTimeOfWork();
         }catch (IOException e){
@@ -51,8 +52,35 @@ public class EntryRepository {
 
     public Optional<Entry> registerNewTask(EntryDto entryDto) {
         Optional<Entry> newEntry = Optional.empty();
-        Entry entry = mapper.entryDtoToEntryCreate(entryDto,referenceCount++);
-        newEntry = Optional.of(entry);
+        Entry entry = mapper.entryDtoToEntryCreate(entryDto,REFERENCE_VALUE++);
+            if (saveNewEntry(entry)){
+                newEntry = Optional.of(entry);
+            }
         return newEntry;
+    }
+
+    private boolean saveNewEntry(Entry entry) {
+        return toDo.add(entry);
+    }
+
+    public Optional<Entry> assignEntryOnAgenda(EntryDto entryDto) {
+        Optional<Entry> agendaEntry = Optional.empty();
+        Entry entry = searchForEntryToDo(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if (toDo.remove(entry)){
+            if(agenda.add(entry)){
+                agendaEntry = Optional.of(entry);
+            }
+        }
+        return agendaEntry;
+    }
+
+    private Entry searchForEntryToDo(EntryDto entryDto) {
+        for (Entry entry : toDo) {
+            if (entryDto.equals(entry)) {
+                return entry;
+            }
+        }
+        return null;
     }
 }
