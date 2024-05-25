@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 public class RegisterGreenSpaceUI implements Initializable {
 
     public RegisterGreenSpaceController ctrl;
+
     public Stage stage;
 
     @FXML
@@ -48,7 +49,6 @@ public class RegisterGreenSpaceUI implements Initializable {
         String address=addressGreenSpace.getText();
         String area=areaGreenSpace.getText();
         GreenSpace.Type typeOfGreenSpace=greenSpaceType.getValue();
-
         if(name.isEmpty() || address.isEmpty() || area.isEmpty()){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Green Space is empty").show();
         } else {
@@ -68,7 +68,6 @@ public class RegisterGreenSpaceUI implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
         alert.setContentText("Green Space added!");
-
         return alert;
     }
 

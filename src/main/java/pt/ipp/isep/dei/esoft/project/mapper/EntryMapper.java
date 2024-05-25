@@ -13,10 +13,13 @@ import java.util.List;
  * Class EntryMapper
  */
 public class EntryMapper {
+
     private GreenSpaceMapper mapperSpaces;
+
     public EntryMapper(){
         mapperSpaces = new GreenSpaceMapper();
     }
+
     public List<EntryDto> entryListToEntryDtoList(List<Entry> entryList) {
         List<EntryDto> entryDtoList = new ArrayList<EntryDto>();
         for (Entry entry : entryList) {
