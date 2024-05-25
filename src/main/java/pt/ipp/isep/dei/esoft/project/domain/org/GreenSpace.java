@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain.org;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 
 public class GreenSpace {
@@ -69,7 +70,14 @@ public class GreenSpace {
 
     @Override
     public boolean equals(Object obj) {
+        if(this==obj){
+            return true;
+        }
+        if(obj == null || this.getClass() != obj.getClass()){
+            return false;
+        }
         GreenSpace greenSpace = (GreenSpace) obj;
+
         return greenSpace.getName().equals(this.getName()) && greenSpace.getArea() == this.getArea() && greenSpace.getAddress().equals(this.getAddress());
     }
 }
