@@ -10,14 +10,17 @@ import javafx.scene.control.TextField;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.ui.gui.manage.ManageGreenSpacesUI;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class RegisterGreenSpaceUI implements Initializable {
 
     public RegisterGreenSpaceController ctrl;
+    public Stage stage;
 
     @FXML
     private TextField nameGreenSpace;
@@ -35,8 +38,12 @@ public class RegisterGreenSpaceUI implements Initializable {
         greenSpaceType.setItems(FXCollections.observableArrayList(GreenSpace.getEnumGreenSpaceTypes()));
     }
 
+    public void setStage(Stage stage){
+        this.stage=stage;
+    }
+
     @FXML
-    private void btnRegister(ActionEvent event){
+    public void btnRegister(javafx.event.ActionEvent event){
         String name=nameGreenSpace.getText();
         String address=addressGreenSpace.getText();
         String area=areaGreenSpace.getText();
@@ -48,9 +55,7 @@ public class RegisterGreenSpaceUI implements Initializable {
             try{
                 double areaRegistering=Double.parseDouble(area);
                 ctrl.registerGreenSpace(name,address,areaRegistering,typeOfGreenSpace);
-                popUp().showAndWait();
                 if(popUp().showAndWait().get()==ButtonType.OK){
-                    Stage stage = (Stage) popUp().getDialogPane().getScene().getWindow();
                     stage.close();
                 }
             } catch (Exception e){
@@ -62,7 +67,7 @@ public class RegisterGreenSpaceUI implements Initializable {
     private Alert popUp() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
-        alert.setContentText("Collaborator added!");
+        alert.setContentText("Green Space added!");
 
         return alert;
     }
