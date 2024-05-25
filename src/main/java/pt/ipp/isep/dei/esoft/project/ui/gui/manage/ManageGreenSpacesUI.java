@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsGreenSpaceUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
@@ -29,22 +30,22 @@ public class ManageGreenSpacesUI implements Initializable {
     public Stage stage = LoginUI.getMainStage();
 
     @FXML
-    private TableColumn<GreenSpace, String> colAddress;
+    private TableColumn<GreenSpaceDto, String> colAddress;
 
     @FXML
-    private TableColumn<GreenSpace, Double> colArea;
+    private TableColumn<GreenSpaceDto, Double> colArea;
 
     @FXML
-    private TableColumn<GreenSpace, String> colName;
+    private TableColumn<GreenSpaceDto, String> colName;
 
     @FXML
-    private TableColumn<GreenSpace, Void> colDetails;
+    private TableColumn<GreenSpaceDto, Void> colDetails;
 
     @FXML
-    private TableView<GreenSpace> tableGreenSpaces;
+    private TableView<GreenSpaceDto> tableGreenSpaces;
 
-    private GreenSpace selectedGreenSpace;
-    private ObservableList<GreenSpace> greenSpaceObservableList= FXCollections.observableArrayList();
+    private GreenSpaceDto selectedGreenSpace;
+    private ObservableList<GreenSpaceDto> greenSpaceObservableList= FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,10 +59,10 @@ public class ManageGreenSpacesUI implements Initializable {
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colArea.setCellValueFactory(new PropertyValueFactory<>("areaInHectares"));
         colDetails.setCellFactory(new Callback<
-                TableColumn<GreenSpace, Void>, TableCell<GreenSpace, Void>>() {
+                TableColumn<GreenSpaceDto, Void>, TableCell<GreenSpaceDto, Void>>() {
             @Override
-            public TableCell<GreenSpace, Void> call(TableColumn<GreenSpace, Void> param) {
-                return new TableCell<GreenSpace, Void>() {
+            public TableCell<GreenSpaceDto, Void> call(TableColumn<GreenSpaceDto, Void> param) {
+                return new TableCell<GreenSpaceDto, Void>() {
                     private final javafx.scene.control.Button btn = new Button("View Details");
 
                     {
@@ -89,7 +90,7 @@ public class ManageGreenSpacesUI implements Initializable {
             }
         });
 
-        for(GreenSpace greenSpace : ctrl.getGreenSpaces()){
+        for(GreenSpaceDto greenSpace : ctrl.getGreenSpaces()){
             greenSpaceObservableList.add(greenSpace);
         }
 
@@ -97,7 +98,7 @@ public class ManageGreenSpacesUI implements Initializable {
 
     }
 
-    public void showMore(GreenSpace gs) throws IOException {
+    public void showMore(GreenSpaceDto gs) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);

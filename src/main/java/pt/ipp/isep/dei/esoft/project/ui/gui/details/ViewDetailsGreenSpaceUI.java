@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
+import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 
 import java.net.URL;
@@ -22,11 +23,11 @@ public class ViewDetailsGreenSpaceUI implements Initializable{
         private Label greenSpaceType;
 
 
-        public void setLabels(GreenSpace greenSpace){
-                nameGreenSpace.setText(ctrl.getNameGreenSpace(greenSpace));
-                addressGreenSpace.setText(ctrl.getAddressGreenSpace(greenSpace));
-                greenSpaceType.setText(ctrl.getTypeGreenSpace(greenSpace));
-                areaGreenSpace.setText(ctrl.getAreaGreenSpace(greenSpace));
+        public void setLabels(GreenSpaceDto greenSpace){
+                nameGreenSpace.setText(greenSpace.getName());
+                addressGreenSpace.setText(greenSpace.getAddress());
+                greenSpaceType.setText(greenSpace.getType());
+                areaGreenSpace.setText(greenSpace.getAreaInHectares());
         }
 
         @Override

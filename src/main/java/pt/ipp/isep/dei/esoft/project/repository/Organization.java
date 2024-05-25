@@ -192,13 +192,8 @@ public class Organization{
         return greenSpaces.add(greenSpace);
     }
 
-    public List<GreenSpaceDto> getGreenSpaceList() {
-        List<GreenSpaceDto> dtos = new ArrayList<>();
-        for (GreenSpace gs : greenSpaces) {
-            GreenSpaceMapper mapper = new GreenSpaceMapper();
-            dtos.add(mapper.greenSpaceToGreenSpaceDto(gs));
-        }
-        return dtos;
+    public List<GreenSpace> getGreenSpaceList() {
+        return greenSpaces;
     }
 
     public List<Manager> getManagers() {
