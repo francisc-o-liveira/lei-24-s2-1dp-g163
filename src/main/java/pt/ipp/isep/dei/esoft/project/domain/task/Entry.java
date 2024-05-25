@@ -25,17 +25,17 @@ public class Entry extends Task {
     private static int REFERENCE_COUNT = 0;
 
 
-    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status) {
+    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
-        validateReference(Integer.toString(REFERENCE_COUNT++));
-        this.reference = Integer.toString(REFERENCE_COUNT);
+        validateReference(Integer.toString(reference));
+        this.reference = Integer.toString(reference);
         this.status = status;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
     }
 
-    public String getReference() {
+    public String getReference(){
         return reference;
     }
 
