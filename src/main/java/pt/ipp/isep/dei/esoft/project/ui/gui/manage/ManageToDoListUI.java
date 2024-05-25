@@ -15,6 +15,7 @@ import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
+import pt.ipp.isep.dei.esoft.project.ui.RegisterTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -170,9 +171,8 @@ public class ManageToDoListUI implements Initializable {
         Stage stageRegister= new Stage();
         stageRegister.setScene(scene);
         stageRegister.show();
-        /*RegisterTaskUI ui=fxmlLoader.getController();
+        RegisterTaskUI ui=fxmlLoader.getController();
         ui.setStage(stageRegister);
-        ui.set*/
     }
 
     @FXML

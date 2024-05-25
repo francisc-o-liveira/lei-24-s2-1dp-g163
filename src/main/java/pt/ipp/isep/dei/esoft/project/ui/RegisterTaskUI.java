@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterTaskController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
@@ -18,7 +17,6 @@ import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.awt.*;
 import java.net.URL;
-import java.sql.Time;
 import java.util.ResourceBundle;
 
 public class RegisterTaskUI implements Initializable {
@@ -36,7 +34,7 @@ public class RegisterTaskUI implements Initializable {
     private ComboBox<Task.DegreeUrgency> degreeOfUrgency;
 
     @FXML
-    private ComboBox<GreenSpaceDto> greenSpaceDtoComboBox;
+    private ComboBox<GreenSpaceDto> greenSpace;
 
     @FXML
     private TextField timeExpected;
@@ -44,17 +42,17 @@ public class RegisterTaskUI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl = new RegisterTaskController();
-        greenSpaceDtoComboBox.setItems(FXCollections.observableArrayList(ctrl.getGreenSpaceList()));
+        greenSpace.setItems(FXCollections.observableArrayList(ctrl.getGreenSpaceList()));
         degreeOfUrgency.setItems(FXCollections.observableArrayList(ctrl.getDegreOfUrgency()));
     }
 
     @FXML
-    public void btnRegisterOnAction(ActionEvent event) {
+    public void btnRegister(ActionEvent event) {
         String title = this.title.getText();
         String description = this.description.getText();
         Task.DegreeUrgency degreeOfUrgency = this.degreeOfUrgency.getValue();
         String timeExpected = this.timeExpected.getText();
-        GreenSpaceDto greenSpaceDto = this.greenSpaceDtoComboBox.getValue();
+        GreenSpaceDto greenSpaceDto = this.greenSpace.getValue();
         if (title==null ||  description==null || degreeOfUrgency==null || timeExpected==null || greenSpaceDto==null) {
             popUpOfVerifications(Alert.AlertType.ERROR,"Please input data in all fields");
         }else {
