@@ -12,6 +12,7 @@ module pt.ipp.isep.dei.esoft.project.ui.gui {
 
     opens pt.ipp.isep.dei.esoft.project.domain.collaborator to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.domain.team to javafx.base;
+    opens pt.ipp.isep.dei.esoft.project.domain.dto to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.domain.employee to javafx.base;
     opens pt.ipp.isep.dei.esoft.project.domain.vehicle to javafx.base;
     exports pt.ipp.isep.dei.esoft.project.ui.gui;
