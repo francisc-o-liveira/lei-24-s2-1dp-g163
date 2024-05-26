@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
@@ -111,5 +112,18 @@ public class EntryRepository {
             }
         }
         throw new RuntimeException("Entry not found");
+    }
+
+    public List<Vehicle> filterVehicleNotUseInTime(List<Vehicle> vehicleList,EntryDto entryDto) {
+        Entry entry = searchForEntryAgenda(entryDto);
+        for(Entry entryAgenda : agenda){
+            if(){
+                for (Vehicle vehicle : entryAgenda.getVehicleList()){
+                    if (vehicleList.contains(vehicle)){
+                        vehicleList.remove(vehicle);
+                    }
+                }
+            }
+        }
     }
 }
