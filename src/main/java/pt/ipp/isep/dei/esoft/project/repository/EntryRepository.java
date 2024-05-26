@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
@@ -117,8 +118,9 @@ public class EntryRepository {
 
     public List<Vehicle> filterVehicleNotUseInTime(List<Vehicle> vehicleList,EntryDto entryDto) {
         Entry entry = searchForEntryAgenda(entryDto);
+        ComparatorDates comparatorDates = new ComparatorDates();
         for(Entry entryAgenda : agenda){
-            if(){
+            if(comparatorDates.compare(entry,entryAgenda,timeOfWorkByCollaborators)!=0){
                 for (Vehicle vehicle : entryAgenda.getVehicleList()){
                     if (vehicleList.contains(vehicle)){
                         vehicleList.remove(vehicle);
