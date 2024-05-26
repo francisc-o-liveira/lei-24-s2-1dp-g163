@@ -130,4 +130,8 @@ public class EntryRepository {
         }
         return vehicleList;
     }
+
+    public Tempo getHoursOfWork() {
+        return timeOfWorkByCollaborators;
+    }
 }

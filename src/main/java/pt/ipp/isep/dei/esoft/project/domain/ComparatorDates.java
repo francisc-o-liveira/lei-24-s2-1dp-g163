@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.TimePeriod;
+
 import java.util.Comparator;
 
 /**
@@ -11,8 +13,8 @@ import java.util.Comparator;
 public class ComparatorDates implements Comparator<Entry> {
     @Override
     public int compare(Entry a1, Entry a2) {
-        Date date1 = a1.getStartDate();
-        Date date2 = a2.getStartDate();
+        TimePeriod time1 = a1.getTimePeriod();
+        TimePeriod time2 = a2.getTimePeriod();
         int year1 = date1.getYear();
         int year2 = date2.getYear();
         if (year1 != year2) {

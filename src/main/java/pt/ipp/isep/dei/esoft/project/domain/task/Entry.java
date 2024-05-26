@@ -3,8 +3,10 @@ package pt.ipp.isep.dei.esoft.project.domain.task;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
+import pt.ipp.isep.dei.esoft.project.utilities.TimePeriod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,5 +109,9 @@ public class Entry extends Task {
 
     public boolean isPostpone() {
         return this.status.isPostpone();
+    }
+
+    public TimePeriod getTimePeriod(){
+        return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());
     }
 }
