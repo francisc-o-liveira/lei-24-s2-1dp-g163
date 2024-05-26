@@ -13,8 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.ui.gui.register.RegisterTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
@@ -28,32 +30,34 @@ public class ManageToDoListUI implements Initializable {
 
     public AuthenticationController ctrlAuth;
     private DetailsEntryAgendaController ctrl;
+    private AssignEntryOnAgendaController ctrlForList;
     public Stage stage = LoginUI.getMainStage();
-    private ObservableList<TaskDto> taskObservableList= FXCollections.observableArrayList();
-    private TaskDto selectedTask;
+    private ObservableList<EntryDto> taskObservableList= FXCollections.observableArrayList();
+    private EntryDto selectedTask;
 
     @FXML
-    private TableColumn<TaskDto, String> degreeUrgencyCol;
+    private TableColumn<EntryDto, String> degreeUrgencyCol;
 
     @FXML
-    private TableColumn<TaskDto, Integer> durationCol;
+    private TableColumn<EntryDto, Integer> durationCol;
 
     @FXML
-    private TableColumn<TaskDto, String> parkCol;
+    private TableColumn<EntryDto, String> parkCol;
 
     @FXML
-    private TableColumn<TaskDto, String> taskCol;
+    private TableColumn<EntryDto, String> taskCol;
 
     @FXML
-    private TableColumn<TaskDto, Void> detailsCol;
+    private TableColumn<EntryDto, Void> detailsCol;
 
     @FXML
-    private TableView<TaskDto> tableToDoList;
+    private TableView<EntryDto> tableToDoList;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ctrlAuth=new AuthenticationController();
         ctrl=new DetailsEntryAgendaController();
+        ctrlForList=new AssignEntryOnAgendaController();
         setTableToDoList();
     }
 
@@ -63,10 +67,10 @@ public class ManageToDoListUI implements Initializable {
         parkCol.setCellValueFactory(new PropertyValueFactory<>("park"));
         taskCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         detailsCol.setCellFactory(new Callback<
-                TableColumn<TaskDto, Void>, TableCell<TaskDto, Void>>() {
+                TableColumn<EntryDto, Void>, TableCell<EntryDto, Void>>() {
             @Override
-            public TableCell<TaskDto, Void> call(TableColumn<TaskDto, Void> param) {
-                return new TableCell<TaskDto, Void>() {
+            public TableCell<EntryDto, Void> call(TableColumn<EntryDto, Void> param) {
+                return new TableCell<EntryDto, Void>() {
                     private final javafx.scene.control.Button btn = new Button("View Details");
 
                     {
@@ -94,15 +98,15 @@ public class ManageToDoListUI implements Initializable {
             }
         });
 
-        /*for(TaskDto t : ctrl.getToDoList()){
+        for(EntryDto t : ctrlForList.getToDoList()){
             taskObservableList.add(t);
-        }*/
+        }
 
         tableToDoList.setItems(taskObservableList);
 
     }
 
-    public void showMore(TaskDto task) throws IOException {
+    public void showMore(EntryDto task) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);

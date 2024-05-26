@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.esoft.project.domain.org;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 
+import java.util.Objects;
+
 public class GreenSpace {
 
 
@@ -70,14 +72,18 @@ public class GreenSpace {
 
     @Override
     public boolean equals(Object obj) {
-        if(this==obj){
+        if (this == obj) {
             return true;
         }
-        if(obj == null || this.getClass() != obj.getClass()){
+        if (obj == null || !(obj instanceof GreenSpaceDto)) {
             return false;
         }
-        GreenSpace greenSpace = (GreenSpace) obj;
+        GreenSpaceDto gs = (GreenSpaceDto) obj;
 
-        return greenSpace.getName().equals(this.getName()) && greenSpace.getArea() == this.getArea() && greenSpace.getAddress().equals(this.getAddress());
+        return Objects.equals(this.getName(), gs.getName()) &&
+                Double.compare(this.getArea(), gs.getAreaInHectares()) == 0 &&
+                Objects.equals(this.getAddress(), gs.getAddress()) &&
+                Objects.equals(this.getType(), gs.getType());
     }
+
 }

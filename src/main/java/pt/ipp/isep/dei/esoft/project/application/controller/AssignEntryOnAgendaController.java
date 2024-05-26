@@ -15,6 +15,7 @@ public class AssignEntryOnAgendaController {
 
     public AssignEntryOnAgendaController() {
         entryRepository = Repositories.getInstance().getEntryRepository();
+        mapper=new EntryMapper(); //don't know if this should be done
     }
 
     public List<EntryDto> getToDoList(){
