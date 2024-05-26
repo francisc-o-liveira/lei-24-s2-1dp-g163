@@ -15,21 +15,21 @@ public class ComparatorDates implements Comparator<Entry> {
     public int compare(Entry a1, Entry a2) {
         TimePeriod time1 = a1.getTimePeriod();
         TimePeriod time2 = a2.getTimePeriod();
-        int year1 = date1.getYear();
-        int year2 = date2.getYear();
-        if (year1 != year2) {
-            return Integer.compare(year1, year2);
-        }
+        Date dateStart1=time1.getStartDate();
+        Date dateStart2=time2.getStartDate();
+        Date dateEnd1=time1.getEndDate();
+        Date dateEnd2=time2.getEndDate();
 
-        int month1 = date1.getMonth();
-        int month2 = date2.getMonth();
-        if (month1 != month2) {
-            return Integer.compare(month1, month2);
+        if(dateStart1.compareTo(dateStart2)==0){
+            return 0;
         }
-
-        int day1 = date1.getDay();
-        int day2 = date2.getDay();
-        return Integer.compare(day1, day2);
+        if(dateStart1.compareTo(dateEnd1)>0 || dateStart2.compareTo(dateEnd2)>0){ //data de inicio não pode ser anteiror á data do fim
+            return -1;
+        }
+        if(dateStart1.compareTo(dateStart2)>0){ //data do postpone não pode ser anterior á atual
+            return -1;
+        }
+        return 1;
     }
 
 }
