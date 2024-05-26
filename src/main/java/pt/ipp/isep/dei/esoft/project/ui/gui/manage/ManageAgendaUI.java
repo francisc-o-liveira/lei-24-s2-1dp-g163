@@ -166,7 +166,7 @@ public class ManageAgendaUI  implements Initializable{
             dayBox.setAlignment(Pos.TOP_LEFT);
             dayBox.getStyleClass().add("day-cell");
             dayBox.setPrefWidth(130);
-            dayBox.setPrefHeight(70);
+            dayBox.setPrefHeight(200);
             dayBox.getChildren().add(new Label(String.valueOf(date.getDayOfMonth())));
 
             LocalDate finalDate = date;
@@ -186,9 +186,10 @@ public class ManageAgendaUI  implements Initializable{
 
     public void introduceDates(List<Entry> dayEntries, double rectangleHeight, double rectangleWidth, VBox dayBox) {
         VBox calendarActivityBox = new VBox();
+        calendarActivityBox.setSpacing(5);
         for (int k = 0; k < dayEntries.size(); k++) {
             if (k >= 2) {
-                Label moreActivities = new Label("show more");
+                Label moreActivities = new Label("show more...");
                 calendarActivityBox.getChildren().add(moreActivities);
 
                 ContextMenu contextMenu = new ContextMenu();
@@ -213,7 +214,9 @@ public class ManageAgendaUI  implements Initializable{
                 break;
             }
             Entry entry = dayEntries.get(k);
-            Label entryLabel = new Label(entry.getTitle());
+            String eventBlock=String.format(entry.getStartDate() + "\n" + entry.getTitle());
+            Label entryLabel = new Label(eventBlock);
+            entryLabel.setPrefHeight(50);
             entryLabel.getStyleClass().add("event-label");
 
             switch (entry.getStatus()) {
