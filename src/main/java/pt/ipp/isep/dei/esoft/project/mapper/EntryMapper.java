@@ -35,14 +35,27 @@ public class EntryMapper {
     }
 
     public void entryDtoToEntry(EntryDto entryDto, Entry entry) {
+        // set entry on agenda
         if (entry.getStartDate() == null && entryDto.getStartDate() != null) {
             entry.setEntryAgenda(entryDto.getStartDate(), entryDto.getStatus());
-        } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && entryDto.getStatus().equals(entry.getStatus())) {
+
+            // Postpone
+        } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && !entryDto.getStatus().equals(entry.getStatus())) {
             entry.postponeEntry(entryDto.getStartDate());
+
+
+            // Cancel Entry // Dates equals, but status no
         } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus())) {
             entry.cancelEntry();
+
+            // DATAS IGUAIS E STATUS IGUAIS // POSSIVEL MUDANÇA DE TEAM OU VEICULO
         }else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
-            // assign team and assign vehicles
+            if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
+                entry.setTeamAssigned(entryDto.getTeamAssigned());
+            }
+            if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
+                entry.setVehicleList(entryDto.getVehicleList());
+            }
         }else {
             //modify task if it is possible
             throw new IllegalArgumentException();

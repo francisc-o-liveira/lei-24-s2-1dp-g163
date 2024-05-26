@@ -4,9 +4,9 @@ import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
@@ -42,12 +42,9 @@ public class EntryRepository {
         return agenda;
     }
 
-
-
     public List<Entry> getToDo() {
         return toDo;
     }
-
 
     public static Task.DegreeUrgency[] getDegreeOfUrgency() {
         return Entry.getDegreeOfUrgency();
@@ -153,5 +150,36 @@ public class EntryRepository {
             }
         }
         return false;
+    }
+
+    public Optional<Entry> assignVehicleOnEntry(EntryDto entryDto) {
+        Optional<Entry> agendaEntry = Optional.empty();
+        Entry entry = searchForEntryAgenda(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if (entry.getVehicleList().equals(entryDto.getVehicleList())){
+            agendaEntry = Optional.of(entry);
+        }
+        return agendaEntry;
+    }
+
+    public List<Team> filterTeamNotActivateInTime(List<Team> teams, EntryDto entryDto) {
+        Entry entry = searchForEntryAgenda(entryDto);
+        ComparatorDates comparatorDates = new ComparatorDates();
+        for(Entry entryAgenda : agenda){
+            if(comparatorDates.compare(entry,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
+                teams.remove(entryAgenda.getTeamAssigned());
+            }
+        }
+        return teams;
+    }
+
+    public Optional<Entry> assignTeamOnEntry(EntryDto entryDto) {
+        Optional<Entry> agendaEntry = Optional.empty();
+        Entry entry = searchForEntryAgenda(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if (entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
+            agendaEntry = Optional.of(entry);
+        }
+        return agendaEntry;
     }
 }
