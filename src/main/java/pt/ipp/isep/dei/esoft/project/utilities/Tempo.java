@@ -275,4 +275,6 @@ public class Tempo implements Comparable<Tempo> {
         return horas * 3600 + minutos * 60;
     }
 
+    public int toMinutos(){return horas * 60 + minutos;}
+
 }

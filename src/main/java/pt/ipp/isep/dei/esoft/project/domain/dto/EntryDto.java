@@ -82,4 +82,5 @@ public class EntryDto extends TaskDto{
         this.status.postponeState();
         this.startDate = newDate;
     }
+
 }

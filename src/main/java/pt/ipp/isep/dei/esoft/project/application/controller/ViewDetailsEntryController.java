@@ -34,10 +34,7 @@ public class ViewDetailsEntryController {
         return entryRepository.postponeEntry(entryDto).isPresent();
     }
 
-    public getVehicleListPossibleForEntry(){
-        return vehicleMapper.vehicleListToVehicleDtoList(entryRepository.filterVehicleNotUseInTime(vehicleRepository.getVehicleList()));
+    public getVehicleListPossibleForEntry(EntryDto entryDto){
+        return vehicleMapper.vehicleListToVehicleDtoList(entryRepository.filterVehicleNotUseInTime(vehicleRepository.getVehicleList(),entryDto));
     }
-
-
-
 }

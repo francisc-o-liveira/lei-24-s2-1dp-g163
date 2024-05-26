@@ -95,6 +95,7 @@ public class EntryRepository {
         return agendaEntry;
     }
 
+    // Not Complete need to verify data of others entrys in same time of the postpone date
     public Optional<Entry> postponeEntry(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
         Entry entry = searchForEntryAgenda(entryDto);
