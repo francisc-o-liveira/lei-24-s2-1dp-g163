@@ -82,9 +82,9 @@
                                                     <effect>
                                                         <DropShadow />
                                                     </effect>
-                                       <children>
-                                          <Button layoutX="700.0" layoutY="600.0" mnemonicParsing="false" text="Add Entry" onAction="#btnAddEntry"/>
-                                       </children>
+                                                    <children>
+                                                        <Button layoutX="850.0" layoutY="500.0" mnemonicParsing="false" text="Add Entry" onAction="#btnAddEntry"/>
+                                                    </children>
                                                 </AnchorPane>
                                             </content>
                                         </Tab>
@@ -95,7 +95,7 @@
                                                         <DropShadow />
                                                     </effect>
                                                     <children>
-                                                        <Button layoutX="700.0" layoutY="600.0" mnemonicParsing="false" text="Add Entry" onAction="#btnAddEntry"/>
+                                                        <Button layoutX="850.0" layoutY="500.0" mnemonicParsing="false" text="Add Entry" onAction="#btnAddEntry"/>
                                                     </children>
                                                 </AnchorPane>
                                             </content>
@@ -106,7 +106,6 @@
                             <effect>
                                 <DropShadow />
                             </effect>
-
                         </AnchorPane>
                     </children>
                 </AnchorPane>
