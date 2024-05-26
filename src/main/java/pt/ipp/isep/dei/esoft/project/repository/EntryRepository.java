@@ -128,5 +128,6 @@ public class EntryRepository {
                 }
             }
         }
+        return vehicleList;
     }
 }
