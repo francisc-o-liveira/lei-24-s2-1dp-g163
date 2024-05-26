@@ -1,12 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.mapper.VehicleMapper;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
+
+import java.util.List;
 
 public class ViewDetailsEntryController {
 
@@ -34,10 +37,7 @@ public class ViewDetailsEntryController {
         return entryRepository.postponeEntry(entryDto).isPresent();
     }
 
-    public getVehicleListPossibleForEntry(){
-        return vehicleMapper.vehicleListToVehicleDtoList(entryRepository.filterVehicleNotUseInTime(vehicleRepository.getVehicleList()));
+    public List<VehicleDto> getVehicleListPossibleForEntry(EntryDto entryDto){
+        return vehicleMapper.vehicleListToVehicleDtoList(entryRepository.filterVehicleNotUseInTime(vehicleRepository.getVehicleList(),entryDto));
     }
-
-
-
 }
