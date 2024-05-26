@@ -3,34 +3,51 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.ViewDetailsTeamUI">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.main.SystemConfigsUI">
    <children>
-      <Label layoutX="173.0" layoutY="75.0" text="E-mail:">
+      <Label layoutX="69.0" layoutY="345.0" text="Name:">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="223.0" layoutY="71.0" />
-      <Label layoutX="153.0" layoutY="131.0" text="Password:">
+      <TextField fx:id="nameTxt" layoutX="116.0" layoutY="341.0" />
+      <Label layoutX="67.0" layoutY="387.0" text="E-mail:">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="223.0" layoutY="127.0" />
-      <Label layoutX="185.0" layoutY="188.0" text="Role:">
+      <TextField fx:id="emailTxt" layoutX="116.0" layoutY="383.0" />
+      <Label layoutX="73.0" layoutY="425.0" text="Role:">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="407.0" layoutY="247.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add" />
+      <Button layoutX="602.0" layoutY="434.0" mnemonicParsing="false" onAction="#addManager" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add" />
       <Label layoutX="25.0" layoutY="20.0" text="System Configurations" textFill="#046f4d">
          <font>
             <Font name="Tahoma Bold" size="16.0" />
          </font></Label>
-      <ComboBox layoutX="223.0" layoutY="184.0" prefHeight="26.0" prefWidth="160.0" />
+      <ComboBox fx:id="roles" layoutX="115.0" layoutY="421.0" prefHeight="26.0" prefWidth="150.0" />
+      <Button layoutX="514.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnRemove" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: FF9688;" text="Remove" />
+      <TableView fx:id="tableSystemConfigs" layoutX="27.0" layoutY="64.0" prefHeight="200.0" prefWidth="645.0">
+        <columns>
+          <TableColumn fx:id="colManagers" prefWidth="239.20001792907715" text="Managers" />
+          <TableColumn fx:id="colEmail" prefWidth="288.8000183105469" text="Email" />
+            <TableColumn fx:id="colType" prefWidth="118.39996337890625" text="Type" />
+        </columns>
+      </TableView>
+      <Label layoutX="67.0" layoutY="313.0" text="Phone:">
+         <font>
+            <Font name="Tahoma" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="phoneTxt" layoutX="115.0" layoutY="309.0" />
+      <Button layoutX="435.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnReload" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: B7D5B2;" text="Reload" />
    </children>
 </AnchorPane>

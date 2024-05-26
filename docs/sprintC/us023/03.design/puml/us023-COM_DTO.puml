@@ -1,0 +1,211 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "HR Manager" as HRManager
+participant "AssignTeamEntryAgendaUI" as UI
+participant ":AssignTeamEntryController" as Controller
+
+participant "Repositories" as Repos
+participant "repositories:Repositories" as reposRepos
+participant "TeamRepository:TeamRepository" as TeamRepo
+participant "entryRepository:EntryRepository" as EntryRepo
+participant ":TeamsMapper" as TeamsMapper
+participant ":EntryMapper" as EntryMapper
+
+participant "listTeams:list<Teams>" as listTeams
+participant "listEntry:list<Entry>" as listEntry
+
+participant "TeamsNamesDto:list<String>" as TeamsNamesDto
+participant "objDto:TeamsDto" as TeamsDto
+
+participant "EntryNamesDto:list<Entry>" as EntryNamesDto
+participant "objDto:EntryDto" as EntryDto
+
+
+participant "entry:Entry" as Entry
+
+participant ":EmailService" as EmailService
+
+participant ":ApplicationSession" as ApplicationSession
+participant ":GmailService" as GmailService
+participant ":DeiEmailService" as DeiEmailService
+activate HRManager
+
+HRManager -> UI : Asks to assign a Team to an Entry in the Agenda
+activate UI
+
+UI -> Controller** : create
+
+UI -> Controller : getCollaboratorNames()
+activate Controller
+
+Controller -> Repos : getInstance()
+activate Repos
+
+Repos --> Controller : repositories
+deactivate Repos
+
+Controller -> reposRepos : getSkillRepository()
+activate reposRepos
+
+reposRepos --> Controller : skillRepository
+deactivate reposRepos
+
+Controller -> reposRepos : getCollaboratorRepository()
+activate reposRepos
+
+reposRepos --> Controller : collaboratorRepository
+deactivate reposRepos
+
+Controller -> reposRepos : getEntryRepository()
+activate reposRepos
+
+reposRepos --> Controller : EntryRepository
+deactivate reposRepos
+
+Controller -> TeamRepo : getTeamsList()
+activate TeamRepo
+
+TeamRepo --> Controller : TeamsList
+deactivate TeamRepo
+
+Controller -> TeamsMapper : toDTO(TeamsList)
+activate TeamsMapper
+
+TeamsMapper -> TeamsNamesDto** : create()
+
+loop for each object in TeamsList
+    TeamsMapper -> listTeams : obj = get()
+    activate listTeams
+    deactivate listTeams
+    TeamsMapper -> TeamsMapper: objDto = toDto(obj)
+    activate TeamsMapper
+
+    TeamsMapper -> TeamsDto** : create(...)
+    deactivate TeamsMapper
+    TeamsMapper -> TeamsNamesDto : add(objDto.getName())
+    activate TeamsNamesDto
+    deactivate TeamsNamesDto
+end
+
+deactivate listTeams
+
+TeamsMapper -> Controller : TeamsNamesDto
+deactivate TeamsMapper
+
+Controller -> EntryRepo : getAgendaEntriesList()
+activate EntryRepo
+
+EntryRepo --> Controller : AgendaEntriesList
+deactivate EntryRepo
+
+
+Controller -> EntryMapper : toDTO(getAgendaEntriesList)
+activate EntryMapper
+
+EntryMapper -> EntryNamesDto** : create()
+
+loop for each object in EntryList
+    EntryMapper -> listEntry : obj = get()
+    activate listEntry
+    deactivate listEntry
+    EntryMapper -> EntryMapper: objDto = toDto(obj)
+    activate EntryMapper
+
+    EntryMapper -> EntryDto** : create(...)
+    deactivate EntryMapper
+    EntryMapper -> EntryNamesDto : add(objDto)
+    activate EntryNamesDto
+    deactivate EntryNamesDto
+end
+
+deactivate listEntry
+
+EntryMapper -> Controller : EntriesNamesDto
+deactivate EntryMapper
+
+Controller -> UI : EntriesNamesDto, TeamsNamesDto
+deactivate Controller
+
+UI -> HRManager : Shows Names of Teams and Agenda Entries
+deactivate UI
+
+HRManager -> UI : Selects Team and Assigns to an Agenda Entry
+activate UI
+
+UI -> Controller : assignTeamToEntry(objDto) /' teamName, agendaName '/
+activate Controller
+
+Controller -> EntryRepo : assignTeamToEntry(objDto)
+activate EntryRepo
+
+EntryRepo -> EntryMapper : toModel(objDto)
+activate EntryMapper
+
+EntryMapper -> EntryDto : teamName = getTeamName()
+activate EntryDto
+deactivate EntryDto
+
+EntryMapper -> EntryDto : entryName = getEntryName()
+activate EntryDto
+
+EntryMapper -> TeamRepo : findTeamByName(teamName)
+deactivate EntryDto
+activate TeamRepo
+
+TeamRepo -> EntryMapper  : team
+deactivate TeamRepo
+
+EntryMapper -> EntryRepo : findEntryByName(entryName)
+activate EntryRepo
+
+EntryRepo -> EntryMapper  : entry
+deactivate EntryRepo
+
+EntryMapper -> Entry : assignTeam(team)
+activate Entry
+
+loop for each collaborator in collaboratorsTeam
+    Entry -> EmailService: sendToEmailFile(collaborator.getEmail(), subject, message);
+    activate EmailService
+    EmailService -> ApplicationSession : getEmailService()
+    activate ApplicationSession
+
+
+    ApplicationSession --> EmailService : emailService
+    deactivate ApplicationSession
+
+    alt emailService is GmailService
+        EmailService -> GmailService : sendEmail(member.getEmail(), "Assignment Notification", "You have been assigned to an entry in the agenda.")
+        activate GmailService
+        deactivate GmailService
+    else emailService is DeiEmailService
+        EmailService -> DeiEmailService : sendEmail(member.getEmail(), "Assignment Notification", "You have been assigned to an entry in the agenda.")
+        activate DeiEmailService
+        deactivate DeiEmailService
+
+    end
+end
+deactivate EmailService
+
+
+Entry --> EntryMapper : true
+deactivate Entry
+
+EntryMapper --> EntryRepo : true
+deactivate EntryMapper
+
+EntryRepo --> Controller : true
+deactivate EntryRepo
+
+Controller --> UI : true
+deactivate Controller
+
+UI --> HRManager : Displays Operation Success Message
+deactivate UI
+
+@enduml

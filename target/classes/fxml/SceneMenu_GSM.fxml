@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.GSManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.main.GSManagerUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -70,7 +70,7 @@
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                        <Button layoutX="37.0" layoutY="278.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="131.0" text="System Configs" />
+                        <Button layoutX="37.0" layoutY="278.0" mnemonicParsing="false" onAction="#btnSystemConfigs" prefHeight="26.0" prefWidth="131.0" text="System Configs" />
                         <FontAwesomeIconView glyphName="PLUS" layoutX="45.0" layoutY="297.0" text="" />
                             </children>
                         </AnchorPane>
@@ -84,7 +84,7 @@
                             <children>
                                 <AnchorPane layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
                                     <children>
-                                        <AnchorPane prefHeight="261.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
+                                        <AnchorPane prefHeight="262.0" prefWidth="1172.0" style="-fx-background-color: FFFFFF;">
                                             <effect>
                                                 <DropShadow />
                                             </effect>
@@ -191,8 +191,13 @@
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
+                                    <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="960.0" layoutY="187.0" onAction="#manageToDoList" prefHeight="31.0" prefWidth="154.0" text="Manage Tasks">
+                                       <font>
+                                          <Font name="Tahoma" size="15.0" />
+                                       </font>
+                                    </Button>
                                             </children></AnchorPane>
-                                        <AnchorPane layoutY="261.0" prefHeight="269.0" prefWidth="865.0" style="-fx-background-color: FFFFFF;">
+                                        <AnchorPane layoutY="261.0" prefHeight="270.0" prefWidth="1172.0" style="-fx-background-color: FFFFFF;">
                                             <effect>
                                                 <DropShadow />
                                             </effect>
@@ -250,7 +255,7 @@
                                                 <Image url="@../pngegg.png" />
                                              </image>
                                           </ImageView>
-                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="55.0" layoutY="178.0" onAction="#manageEquipment" prefHeight="31.0" prefWidth="154.0" text="Manage Equipment">
+                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="55.0" layoutY="178.0" onAction="#manageGreenSpaces" prefHeight="31.0" prefWidth="154.0" text="Manage Green Spaces">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
@@ -290,6 +295,11 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
+                                    <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="943.0" layoutY="201.0" onAction="#manageAgenda" prefHeight="31.0" prefWidth="154.0" text="Manage Agenda">
+                                       <font>
+                                          <Font name="Tahoma" size="15.0" />
+                                       </font>
+                                    </Button>
                                             </children>
                                         </AnchorPane>
                                     </children>

@@ -16,9 +16,24 @@ participant ":RegisterCheckUpController" as Controller
 participant "Repositories" as Repos
 participant "repositories:Repositories" as Repo
 participant "vehicleRepository:VehicleRepository" as VehicleRepo
+
+
+participant ":VehicleMapper" as VehicleMapper
+/' participant ":CheckupMapper" as CheckupMapper '/
+
+participant "listVehicle:list<Vehicle>" as listVehicle
+/' participant "listCheckup:list<Checkup>" as listCheckup
+ '/
+participant "VehicleNamesDto:list<String>" as VehicleNamesDto
+participant "objDto:VehicleDto" as VehicleDto
+
+/'participant "availableCheckupsNamesDto:list<String>" as availableCheckupsNamesDto
+participant "objDto:CheckupDto" as CheckupDto
+ '/
+
 participant "vehicle:Vehicle" as Vehicle
 participant "checkup:Checkup" as Checkup
-
+ '/
 activate FleetManager
 
 
@@ -41,13 +56,46 @@ activate Repo
 Repo --> Controller : vehicleRepository
 deactivate Repo
 
-Controller -> VehicleRepo : getVehiclePLateList()
+Controller -> VehicleRepo : getVehicleList()
 activate VehicleRepo
 
-VehicleRepo --> Controller : plates
+VehicleRepo --> Controller : vehicleList
 deactivate VehicleRepo
 
-Controller --> UI : vehiclePlates
+
+
+
+
+
+
+
+
+Controller -> VehicleMapper : toDTO(VehicleList)
+activate VehicleMapper
+
+VehicleMapper -> VehicleNamesDto** : create()
+
+loop for each object in VehicleList
+    VehicleMapper -> listVehicle : obj = get()
+    activate listVehicle
+    deactivate listVehicle
+    VehicleMapper -> VehicleMapper: objDto = toDto(obj)
+    activate VehicleMapper
+
+    VehicleMapper -> VehicleDto** : create(...)
+    deactivate VehicleMapper
+    VehicleMapper -> VehicleNamesDto : add(objDto.getPlate())
+    activate VehicleNamesDto
+    deactivate VehicleNamesDto
+end
+
+deactivate listVehicle
+
+VehicleMapper -> Controller : VehiclesPlatesDto
+deactivate VehicleMapper
+
+
+Controller --> UI : vehiclePlatesDto
 deactivate Controller
 
 UI --> FleetManager : Show Plates, Request Date of Check Up and Current Kilometers and Frequency Option
@@ -64,6 +112,7 @@ UI -> UI : verifyKilometersFormat(currentKms)
 UI -> Controller : validateKilometers(currentKms, selectedPlate)
 activate Controller
 
+
 Controller -> VehicleRepo: getLastKmForVehicle(plate)
 activate VehicleRepo
 
@@ -73,27 +122,60 @@ deactivate VehicleRepo
 Controller -> UI : true
 deactivate Controller
 
-UI -> Controller : addCheckUp(selectedPlate, date, currentKms, maintenanceKm)
+
+
+
+
+
+
+UI -> Controller : addCheckUp(objDto) /' selectedPlate, date, currentKms, maintenanceKm '/
 activate Controller
-Controller -> VehicleRepo : addCheckUp(plate, date, currentKms, maintenanceKm)
+
+Controller -> VehicleRepo : addCheckUp(objDto)
 activate VehicleRepo
 
-VehicleRepo -> Vehicle : findVehicleByPlate(plate)
+VehicleRepo -> VehicleMapper : toModel(objDto)
+activate VehicleMapper
+
+VehicleMapper -> VehicleDto : selectedPlate = getPlate()
+activate VehicleDto
+deactivate VehicleDto
+
+VehicleMapper -> VehicleDto : dateOfCheck = getDate()
+activate VehicleDto
+deactivate VehicleDto
+
+VehicleMapper -> VehicleDto : currentKms = getCurrentKms()
+activate VehicleDto
+deactivate VehicleDto
+
+VehicleMapper -> VehicleDto : maintenanceKm = getMaintenanceKms()
+activate VehicleDto
+deactivate VehicleDto
+
+
+
+
+VehicleMapper -> VehicleRepo : findVehicleByPlate(plate)
+activate VehicleRepo
+
+VehicleRepo -> VehicleMapper : vehicle
+deactivate VehicleRepo
+
+VehicleMapper -> Vehicle : addCheckUp(currentKms, dateOfCheck, maintenanceKms)
 activate Vehicle
 
-Vehicle -> VehicleRepo : vehicle
-deactivate Vehicle
-
-VehicleRepo -> Vehicle : addCheckUp(currentKms, date, maintenanceKm)
-activate Vehicle
-Vehicle -> Checkup** : create(km, date)
+Vehicle -> Checkup** : create(currentKms, dateOfCheck)
 activate Checkup
 
 Checkup -> Vehicle : Created and Added to the Check Up List of the Vehicle which was under maintenance 
 deactivate Checkup
 
-Vehicle --> VehicleRepo : Done
+Vehicle --> VehicleMapper : true
 deactivate Vehicle
+
+VehicleMapper --> VehicleRepo : true
+deactivate VehicleMapper
 
 VehicleRepo --> Controller : true
 deactivate VehicleRepo
