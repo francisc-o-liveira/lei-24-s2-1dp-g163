@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.manage.agendaweekly">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.manage.ManageAgendaUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -90,7 +90,7 @@
                                         </Tab>
                                         <Tab text="Week View">
                                             <content>
-                                                <AnchorPane fx:id="calendarAnchorPane1" layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
+                                                <AnchorPane fx:id="weeklyViewAnchorPane" layoutX="27.0" layoutY="15.0" prefHeight="530.0" prefWidth="862.0" style="-fx-background-color: FFFFFF;">
                                                     <effect>
                                                         <DropShadow />
                                                     </effect>

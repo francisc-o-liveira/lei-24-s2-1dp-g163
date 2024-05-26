@@ -17,6 +17,7 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
@@ -30,10 +31,14 @@ public class ManageAgendaUI  implements Initializable{
     public AuthenticationController ctrlAuth;
     public DetailsEntryAgendaController ctrlEntry;
     private VBox view;
+    private VBox viewWeek;
     private YearMonth currentYearMonth;
+    private LocalDate currentStartDate;
     private List<Entry> entries;
     @FXML
     private AnchorPane calendarAnchorPane;
+    @FXML
+    private AnchorPane weeklyViewAnchorPane;
 
 
     @Override
@@ -41,19 +46,30 @@ public class ManageAgendaUI  implements Initializable{
         ctrlAuth = new AuthenticationController();
         ctrlEntry=new DetailsEntryAgendaController();
         view = new VBox();
+        viewWeek=new VBox();
         view.setAlignment(Pos.CENTER);
         view.setSpacing(20);
         view.getStyleClass().add("outline");
+        viewWeek.setAlignment(Pos.CENTER);
+        viewWeek.setSpacing(20);
+        viewWeek.getStyleClass().add("outline");
         calendarAnchorPane.getChildren().add(getView());
+        weeklyViewAnchorPane.getChildren().add(getViewWeekly());
         ctrlAuth = new AuthenticationController();
         ctrlEntry=new DetailsEntryAgendaController();
         this.entries=ctrlEntry.getList();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);
+        currentStartDate = LocalDate.now().with(DayOfWeek.MONDAY);
+        drawWeeklyCalendar(currentStartDate);
     }
 
     public VBox getView() {
         return view;
+    }
+
+    public VBox getViewWeekly(){
+        return viewWeek;
     }
 
     private void drawCalendar(YearMonth yearMonth) {
@@ -117,6 +133,57 @@ public class ManageAgendaUI  implements Initializable{
         view.getChildren().addAll(headerBox, calendarGrid);
     }
 
+    private void drawWeeklyCalendar(LocalDate startDate) {
+        viewWeek.getChildren().clear();
+        Label header = new Label("Week of " + startDate);
+        header.getStyleClass().add("header");
+
+        Button previousWeekButton = new Button("<");
+        previousWeekButton.setOnAction(e -> changeWeek(-1));
+        previousWeekButton.getStyleClass().add("prev-button");
+        Button nextWeekButton = new Button(">");
+        nextWeekButton.setOnAction(e -> changeWeek(1));
+        nextWeekButton.getStyleClass().add("next-button");
+
+        HBox headerBox = new HBox(previousWeekButton, header, nextWeekButton);
+        headerBox.setAlignment(Pos.CENTER);
+
+        GridPane calendarGrid = new GridPane();
+        calendarGrid.setAlignment(Pos.BOTTOM_CENTER);
+        calendarGrid.setGridLinesVisible(false);
+        calendarGrid.getStyleClass().add("calendar");
+
+        String[] dayNames = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        for (int i = 0; i < dayNames.length; i++) {
+            Label dayLabel = new Label(dayNames[i]);
+            dayLabel.getStyleClass().add("day-names");
+            calendarGrid.add(dayLabel, i, 0);
+        }
+
+        LocalDate date = startDate;
+        for (int col = 0; col < 7; col++) {
+            VBox dayBox = new VBox();
+            dayBox.setAlignment(Pos.TOP_LEFT);
+            dayBox.getStyleClass().add("day-cell");
+            dayBox.setPrefWidth(130);
+            dayBox.setPrefHeight(70);
+            dayBox.getChildren().add(new Label(String.valueOf(date.getDayOfMonth())));
+
+            LocalDate finalDate = date;
+            List<Entry> dayEntries = entries.stream()
+                    .filter(entry -> entry.getStartDate() != null && LocalDate.of(entry.getStartDate().getYear(), entry.getStartDate().getMonth(), entry.getStartDate().getDay()).equals(finalDate))
+                    .collect(Collectors.toList());
+
+            if (dayEntries != null) {
+                introduceDates(dayEntries, dayBox.getPrefHeight(), dayBox.getPrefWidth(), dayBox);
+            }
+            calendarGrid.add(dayBox, col, 1);
+            date = date.plusDays(1);
+        }
+
+        viewWeek.getChildren().addAll(headerBox, calendarGrid);
+    }
+
     public void introduceDates(List<Entry> dayEntries, double rectangleHeight, double rectangleWidth, VBox dayBox) {
         VBox calendarActivityBox = new VBox();
         for (int k = 0; k < dayEntries.size(); k++) {
@@ -178,11 +245,6 @@ public class ManageAgendaUI  implements Initializable{
         dayBox.getChildren().add(calendarActivityBox);
     }
 
-    public void showMoreEntries(List<Entry> dayEntries){
-
-
-    }
-
     private void showEntryDetails(Entry entry) throws IOException {
         System.out.print("to be implemented");
         /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsEntry.fxml"));
@@ -201,6 +263,11 @@ public class ManageAgendaUI  implements Initializable{
     private void changeMonth(int months) {
         currentYearMonth = currentYearMonth.plusMonths(months);
         drawCalendar(currentYearMonth);
+    }
+
+    private void changeWeek(int weeks) {
+        currentStartDate = currentStartDate.plusWeeks(weeks);
+        drawWeeklyCalendar(currentStartDate);
     }
 
     @FXML
