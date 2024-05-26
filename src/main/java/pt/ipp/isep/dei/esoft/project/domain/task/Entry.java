@@ -46,6 +46,10 @@ public class Entry extends Task {
         }
     }
 
+    public void assignVehicle(Vehicle vehicle) {
+        vehicleList.add(vehicle);
+    }
+
     public void assignTeam(Team teamToAssign){
         this.teamAssigned = teamToAssign;
     }

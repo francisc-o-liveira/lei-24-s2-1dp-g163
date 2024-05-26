@@ -111,4 +111,28 @@ public class EntryDto extends TaskDto{
     }
 
 
+    public boolean assignVehicle(Vehicle vehicle) {
+        if(vehicle != null){
+            this.vehicleList.add(vehicle);
+            return true;
+        }else {
+            throw new NullPointerException("Vehicle cannot be null");
+        }
+    }
+
+    public List<Vehicle> getVehicleList() {
+        return this.vehicleList;
+    }
+
+    public Team getTeamAssigned() {
+        return teamAssigned;
+    }
+
+    public void assignTeam(Team team) {
+        if (team!=null){
+            this.teamAssigned = team;
+        }else{
+            throw new NullPointerException("Team cannot be null");
+        }
+    }
 }

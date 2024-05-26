@@ -43,6 +43,12 @@ public class EntryMapper {
             entry.cancelEntry();
         }else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
             // assign team and assign vehicles
+            if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
+
+            }
+            if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
+                entry.setVehicleList(entryDto.getVehicleList());
+            }
         }else {
             //modify task if it is possible
             throw new IllegalArgumentException();
