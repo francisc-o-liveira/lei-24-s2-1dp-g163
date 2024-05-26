@@ -121,7 +121,7 @@ public class EntryRepository {
         Entry entry = searchForEntryAgenda(entryDto);
         ComparatorDates comparatorDates = new ComparatorDates();
         for(Entry entryAgenda : agenda){
-            if(comparatorDates.compare(entry,entryAgenda)==0){ // == 0 significa que ha sobreposiçao das entrys nas datas
+            if(comparatorDates.compare(entry,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
                 for (Vehicle vehicle : entryAgenda.getVehicleList()){
                     if (vehicleList.contains(vehicle)){
                         vehicleList.remove(vehicle);
