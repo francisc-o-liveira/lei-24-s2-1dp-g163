@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.gui.details;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 
@@ -18,7 +19,7 @@ public class ViewDetailsTaskUI {
         @FXML
         private Label urgency;
 
-        public void setLabels(TaskDto task){
+        public void setLabels(EntryDto task){
             titleTask.setText(task.getTitle());
             descriptionTask.setText(task.getDescription());
             Task.DegreeUrgency typeUrgency=task.getDegreeUrgency();
