@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.main.GSManagerUI">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewTaskListCollaboratorUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -80,20 +80,22 @@
                                     <effect>
                                         <DropShadow />
                                     </effect>
-                           <children>
-                              <TableView layoutX="20.0" layoutY="28.0" prefHeight="419.0" prefWidth="821.0">
-                                <columns>
-                                  <TableColumn prefWidth="202.5977325439453" text="Date of the Task" />
-                                    <TableColumn prefWidth="513.4022521972656" text="Task" />
-                                    <TableColumn prefWidth="104.41949462890625" text="select" />
-                                </columns>
-                              </TableView>
-                              <Button layoutX="717.0" layoutY="484.0" mnemonicParsing="false" style="-fx-background-color: #BDECB6;" text="Complete Task">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="14.0" />
-                                 </font>
-                              </Button>
-                           </children>
+                                    <children>
+                                        <TableView fx:id="tableTasks" layoutX="20.0" layoutY="28.0" prefHeight="419.0" prefWidth="821.0">
+                                            <columns>
+                                                <TableColumn fx:id="taskDate" prefWidth="117.59999084472656" text="Date of the Task" />
+                                                <TableColumn fx:id="taskGreenSpace" prefWidth="204.0" text="Green Space" />
+                                                <TableColumn fx:id="taskName" prefWidth="318.4000244140625" text="Task" />
+                                                <TableColumn fx:id="taskStatus" minWidth="0.0" prefWidth="116.800048828125" text="Status" />
+                                                <TableColumn fx:id="taskSelect" prefWidth="63.99981689453125" />
+                                            </columns>
+                                        </TableView>
+                                        <Button layoutX="717.0" layoutY="484.0" mnemonicParsing="false" onAction="#btnComplete" style="-fx-background-color: #BDECB6;" text="Complete Task">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="14.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
                                 </AnchorPane>
                             </children>
                             <effect>

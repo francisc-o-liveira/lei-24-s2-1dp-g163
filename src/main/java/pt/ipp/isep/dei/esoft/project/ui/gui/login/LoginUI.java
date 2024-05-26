@@ -54,6 +54,8 @@ public class LoginUI {
             }
             if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
                 showGSManagerUI();
+            } else {
+                showCollaboratorUI();
             }
         } catch (LoginException e) {
             popUp(Alert.AlertType.WARNING, "Invalid Credentials of Login", "Try Again Please more: " + attemps + " times.").show();
@@ -118,6 +120,14 @@ public class LoginUI {
 
     public void showGSManagerUI() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        mainStage.setScene(scene);
+        mainStage.show();
+    }
+
+    public void showCollaboratorUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_Collaborator.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);

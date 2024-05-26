@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain.dto;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
@@ -17,6 +20,8 @@ public class EntryDto extends TaskDto{
     private List<Vehicle> vehicleList;
     private Team teamAssigned;
     private String reference;
+    private boolean selectedByCollab;
+    private BooleanProperty selecting;
 
 
     public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
@@ -26,6 +31,13 @@ public class EntryDto extends TaskDto{
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
         this.reference = reference;
+        this.selecting = new SimpleBooleanProperty(false);
+
+        this.selecting.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                selectedByCollab=true;
+            }
+        });
     }
 
 
@@ -36,6 +48,13 @@ public class EntryDto extends TaskDto{
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
         this.reference = reference;
+        this.selecting = new SimpleBooleanProperty(false);
+
+        this.selecting.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                selectedByCollab=true;
+            }
+        });
     }
 
     public EntryDto(EntryState entryState, String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
@@ -82,5 +101,14 @@ public class EntryDto extends TaskDto{
         this.status.postponeState();
         this.startDate = newDate;
     }
+
+    public BooleanProperty selectedEntry(){
+        return selecting;
+    }
+
+    public void setSelecting(boolean value){
+        this.selecting.set(value);
+    }
+
 
 }
