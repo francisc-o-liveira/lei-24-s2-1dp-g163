@@ -256,4 +256,13 @@ public class CollaboratorRepository {
         }
         return false;
     }
+
+    public Collaborator getCollaboratorByEmail(String email) {
+        for (Collaborator collaborator : collaboratorList) {
+            if (collaborator.getEmail().equals(email)) {
+                return collaborator;
+            }
+        }
+        throw new RuntimeException("You dont exist in the Repository! Please try again or contact your system administrator");
+    }
 }

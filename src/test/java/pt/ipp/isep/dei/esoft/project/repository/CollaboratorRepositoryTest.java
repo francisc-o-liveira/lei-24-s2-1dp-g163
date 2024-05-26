@@ -51,7 +51,7 @@ class CollaboratorRepositoryTest {
         expectedResult.add(cTest);
         expectedResult.add(cTest2);
 
-        rep.activateCollaborators(team);
+        rep.activateCollaborators(team.getTeamList());
         assertEquals(cTest.getStatus(), Collaborator.StatusType.Active);
         assertEquals(cTest2.getStatus(), Collaborator.StatusType.Active);
         assertEquals(cTest3.getStatus(), Collaborator.StatusType.Active);

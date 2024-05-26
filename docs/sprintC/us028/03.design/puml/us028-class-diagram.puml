@@ -15,6 +15,7 @@ class ApplicationSession{
 }
 
 class UserSession{
+    + getUserEmail()
 }
 
 class CollaboratorUser {

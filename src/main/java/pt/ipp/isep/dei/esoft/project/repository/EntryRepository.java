@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
@@ -120,7 +121,7 @@ public class EntryRepository {
         Entry entry = searchForEntryAgenda(entryDto);
         ComparatorDates comparatorDates = new ComparatorDates();
         for(Entry entryAgenda : agenda){
-            if(comparatorDates.compare(entry,entryAgenda)!=0){
+            if(comparatorDates.compare(entry,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
                 for (Vehicle vehicle : entryAgenda.getVehicleList()){
                     if (vehicleList.contains(vehicle)){
                         vehicleList.remove(vehicle);
@@ -133,5 +134,24 @@ public class EntryRepository {
 
     public Tempo getHoursOfWork() {
         return timeOfWorkByCollaborators;
+    }
+
+    public List<Entry> getEntrysByCollaboratorInAgenda(Collaborator collaboratorByEmail) {
+        List<Entry> entryCollaboratorList = new ArrayList<>();
+        for (Entry entry: agenda){
+            if (entry.getTeamAssigned()!=null && entryHaveCollaborator(entry,collaboratorByEmail)){
+                entryCollaboratorList.add(entry);
+            }
+        }
+        return entryCollaboratorList;
+    }
+
+    private boolean entryHaveCollaborator(Entry entry, Collaborator collaboratorByEmail) {
+        for (Collaborator collaborator : entry.getTeamAssigned().getTeamList()){
+            if (collaborator.getEmail().equals(collaboratorByEmail.getEmail())){
+                return true;
+            }
+        }
+        return false;
     }
 }

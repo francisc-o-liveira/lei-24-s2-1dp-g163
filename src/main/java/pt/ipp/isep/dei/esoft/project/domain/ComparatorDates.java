@@ -19,17 +19,22 @@ public class ComparatorDates implements Comparator<Entry> {
         Date dateStart2=time2.getStartDate();
         Date dateEnd1=time1.getEndDate();
         Date dateEnd2=time2.getEndDate();
-
-        if(dateStart1.compareTo(dateStart2)==0){
+        // Verifica se as datas de início são iguais
+        if (dateStart1.compareTo(dateStart2) == 0) {
             return 0;
         }
-        if(dateStart1.compareTo(dateEnd1)>0 || dateStart2.compareTo(dateEnd2)>0){ //data de inicio não pode ser anteiror á data do fim
+        // Verifica se a data de início é posterior à data de fim em qualquer das entradas
+        if (dateStart1.compareTo(dateEnd1) > 0 || dateStart2.compareTo(dateEnd2) > 0) {
             return -1;
         }
-        if(dateStart1.compareTo(dateStart2)>0){ //data do postpone não pode ser anterior á atual
-            return -1;
+
+        // Verifica se há sobreposição entre os períodos
+        if ((dateStart1.before(dateEnd2) && dateEnd1.after(dateStart2)) || (dateStart2.before(dateEnd1) && dateEnd2.after(dateStart1))) {
+            return 0; // Há sobreposição
         }
-        return 1;
+
+        // Se não houver sobreposição, compará-las pela data de início
+        return dateStart1.compareTo(dateStart2);
     }
 
 }

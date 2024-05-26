@@ -294,4 +294,14 @@ public class Date implements Comparable<Date> {
 
         return totalDias;
     }
+
+
+        public boolean before(Date when) {
+            return this.compareTo(when) < 0;
+        }
+
+        public boolean after(Date when) {
+            return this.compareTo(when) > 0;
+        }
+
 }
