@@ -30,6 +30,14 @@ public class TimePeriod {
         }
         int yearEnd = startDate.getYear()+yearsForEnd;
         endDate = new Date(yearEnd, monthEnd, dayEnd);
-        timeOfWork = timeOfWork;
+        this.timeOfWork = timeOfWork;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
     }
 }
