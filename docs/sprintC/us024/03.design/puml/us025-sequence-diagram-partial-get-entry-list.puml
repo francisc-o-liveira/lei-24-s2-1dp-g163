@@ -28,18 +28,18 @@ participant ":EntryDto" as EntryDto
         activate AgendaController
 
 
-        AgendaController -> EntryRepository: getEntryByStateList()
+        AgendaController -> EntryRepository: getAgendaList()
         activate EntryRepository
 
         EntryRepository -> EntryDtoList**: create()
 
-        EntryRepository --> AgendaController: entryByStateList
+        EntryRepository --> AgendaController: agendaList
         deactivate EntryRepository
-        deactivate AgendaController
+
 
         AgendaController -> MAPPER: toDto(entryList)
         activate MAPPER
-        activate AgendaController
+
 
         MAPPER -> EntryList** : create()
 
@@ -57,10 +57,10 @@ participant ":EntryDto" as EntryDto
         activate ListDTO
         deactivate ListDTO
 
-        MAPPER --> AgendaController : entryListDto
+        MAPPER --> AgendaController : agendaListDto
         deactivate MAPPER
 
-        AgendaController --> AgendaUI: entryListDto
+        AgendaController --> AgendaUI: agendaListDto
         deactivate AgendaController
 
 
