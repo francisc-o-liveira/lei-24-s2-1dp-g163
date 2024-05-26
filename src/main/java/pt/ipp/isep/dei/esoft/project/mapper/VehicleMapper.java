@@ -23,7 +23,7 @@ public class VehicleMapper {
     public Vehicle vehicleDtoToVehicle(VehicleDto vehicleDto) {
         List<Vehicle> vehicles = Repositories.getInstance().getVehicleRepository().getVehicleList();
         for (Vehicle vehicle : vehicles) {
-            if (vehicle.equals(vehicleDto)) {
+            if (vehicleDto.equals(vehicle)) {
                 return vehicle;
             }
         }
