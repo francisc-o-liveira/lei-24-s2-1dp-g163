@@ -5,7 +5,6 @@ public class TimePeriod {
     private Date endDate;
     private Tempo timeOfWork;
 
-
     public TimePeriod(Date date2, Tempo time2, Tempo timeOfWork) {
         int minutes = time2.toMinutos();
         int  minutesTotalByDay = timeOfWork.toMinutos();
