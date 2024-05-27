@@ -36,7 +36,7 @@ activate UserSession
 UserSession --> UI : userEmail
 deactivate UserSession
 
-UI -> Controller : getlistManagedGreenSpaces(userEmail)
+UI -> Controller : getManagedGreenSpacesList(userEmail)
 activate Controller
 
 
