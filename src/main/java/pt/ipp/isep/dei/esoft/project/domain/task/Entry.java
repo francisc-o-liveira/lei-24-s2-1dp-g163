@@ -35,6 +35,17 @@ public class Entry extends Task {
         this.teamAssigned = null;
     }
 
+    // To Create one instance to compare for Postpone
+    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference, List<Vehicle> vehicleList, Team teamAssigned) {
+        super(title, description, expectedDuration, greenSpace, degreeUrgency);
+        validateReference(Integer.toString(reference));
+        this.reference = Integer.toString(reference);
+        this.status = status;
+        this.startDate = null;
+        this.vehicleList = vehicleList;
+        this.teamAssigned = teamAssigned;
+    }
+
     public String getReference(){
         return reference;
     }

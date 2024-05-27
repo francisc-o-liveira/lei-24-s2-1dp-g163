@@ -1,9 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.mapper;
 
 
+import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.ArrayList;
@@ -39,9 +42,22 @@ public class EntryMapper {
         if (entry.getStartDate() == null && entryDto.getStartDate() != null) {
             entry.setEntryAgenda(entryDto.getStartDate(), entryDto.getStatus());
 
-            // Postpone
+            // Postpone Dont now if are working
         } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && !entryDto.getStatus().equals(entry.getStatus())) {
-            entry.postponeEntry(entryDto.getStartDate());
+                boolean value=true;
+                ComparatorDates comparatorDates = new ComparatorDates();
+                Entry entryToCompare = getEntryFromDtoToCompare(entryDto);
+                for(Entry entryAgenda : Repositories.getInstance().getEntryRepository().getAgenda()){
+                    if(comparatorDates.compare(entryToCompare,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
+                        if(haveObjectsOf(entryToCompare,entryAgenda)){
+                            value = false;
+                        }
+                    }
+                }
+                if(value){
+                    entry.postponeEntry(entryDto.getStartDate());
+                }
+
 
 
             // Cancel Entry // Dates equals, but status no
@@ -61,5 +77,23 @@ public class EntryMapper {
             throw new IllegalArgumentException();
         }
 
+    }
+
+    private boolean haveObjectsOf(Entry entryToCompare, Entry entryAgenda) {
+        for (Vehicle vehicle : entryToCompare.getVehicleList()) {
+            for (Vehicle vehicleAgenda : entryAgenda.getVehicleList()) {
+                if(vehicle.equals(vehicleAgenda)){
+                    return true;
+                }
+            }
+        }
+        if (entryToCompare.getTeamAssigned().equals(entryAgenda.getTeamAssigned())) {
+            return true;
+        }
+        return false;
+    }
+
+    private Entry getEntryFromDtoToCompare(EntryDto entryDto) {
+        return new Entry(entryDto.getTitle(), entryDto.getDescription(),entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()) ,entryDto.getDegreeUrgency(), entryDto.getStatus(),-1);
     }
 }
