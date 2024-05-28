@@ -41,7 +41,7 @@ public class ViewDetailsEntryController {
         return entryRepository.cancelEntry(entryDto).isPresent();
     }
 
-    public boolean postEntry(EntryDto entryDto){
+    public boolean postponeEntry(EntryDto entryDto){
         return entryRepository.postponeEntry(entryDto).isPresent();
     }
 
