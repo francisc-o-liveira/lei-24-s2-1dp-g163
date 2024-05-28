@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.register;
+package pt.ipp.isep.dei.esoft.project.ui.gui.entry;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

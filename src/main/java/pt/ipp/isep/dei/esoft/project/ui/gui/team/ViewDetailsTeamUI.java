@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.details;
+package pt.ipp.isep.dei.esoft.project.ui.gui.team;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

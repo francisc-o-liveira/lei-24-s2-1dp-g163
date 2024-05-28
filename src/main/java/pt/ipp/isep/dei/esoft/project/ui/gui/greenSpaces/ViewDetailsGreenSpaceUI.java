@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.details;
+package pt.ipp.isep.dei.esoft.project.ui.gui.greenSpaces;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

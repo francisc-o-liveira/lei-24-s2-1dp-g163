@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.register;
+package pt.ipp.isep.dei.esoft.project.ui.gui.tasks;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

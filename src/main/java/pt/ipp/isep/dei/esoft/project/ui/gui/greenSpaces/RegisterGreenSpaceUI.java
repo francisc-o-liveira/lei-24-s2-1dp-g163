@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.register;
+package pt.ipp.isep.dei.esoft.project.ui.gui.greenSpaces;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -10,10 +10,7 @@ import javafx.scene.control.TextField;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.ui.gui.manage.ManageGreenSpacesUI;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

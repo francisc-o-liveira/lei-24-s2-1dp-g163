@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.main;
+package pt.ipp.isep.dei.esoft.project.ui.gui.menus;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageCollaboratorsUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageJobsUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageSkillsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.manage.*;
+import pt.ipp.isep.dei.esoft.project.ui.gui.tasks.ManageTasksUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.team.ManageTeamsUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.vehicles.ManageVehiclesUI;
 
 import java.io.IOException;
 

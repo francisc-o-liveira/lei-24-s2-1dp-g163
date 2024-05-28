@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.manage;
+package pt.ipp.isep.dei.esoft.project.ui.gui.vehicles;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +15,6 @@ import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.Regist
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsVehicleUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;

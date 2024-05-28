@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.details;
+package pt.ipp.isep.dei.esoft.project.ui.gui.vehicles;
 
 
 import javafx.collections.FXCollections;

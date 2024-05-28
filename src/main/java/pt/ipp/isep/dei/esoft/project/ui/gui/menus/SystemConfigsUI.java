@@ -1,9 +1,7 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.main;
+package pt.ipp.isep.dei.esoft.project.ui.gui.menus;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
-import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,14 +10,6 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.OrganizationController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
-import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
-import pt.isep.lei.esoft.auth.AuthFacade;
-import pt.isep.lei.esoft.auth.domain.model.Email;
-import pt.isep.lei.esoft.auth.domain.model.User;
-import pt.isep.lei.esoft.auth.domain.model.UserRole;
-import pt.isep.lei.esoft.auth.domain.store.UserStore;
-
-import java.util.Collections;
 
 
 public class SystemConfigsUI {

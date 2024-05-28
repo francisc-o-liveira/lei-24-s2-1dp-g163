@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.details;
+package pt.ipp.isep.dei.esoft.project.ui.gui.tasks;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

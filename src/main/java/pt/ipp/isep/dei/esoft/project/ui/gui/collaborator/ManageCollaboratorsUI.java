@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.manage;
+package pt.ipp.isep.dei.esoft.project.ui.gui.collaborator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +19,7 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsCollaboratorUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ViewDetailsCollaboratorUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 

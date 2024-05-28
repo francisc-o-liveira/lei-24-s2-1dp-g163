@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="188.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsVehicleUI">
+<AnchorPane prefHeight="188.0" prefWidth="328.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.vehicles.ViewDetailsVehicleUI">
    <children>
       <Label layoutX="13.0" layoutY="14.0" text="Register the Last Check Up" textFill="#046f4d">
          <font>

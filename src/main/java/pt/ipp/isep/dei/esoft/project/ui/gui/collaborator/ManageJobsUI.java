@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.manage;
+package pt.ipp.isep.dei.esoft.project.ui.gui.collaborator;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

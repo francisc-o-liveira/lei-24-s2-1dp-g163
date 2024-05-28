@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.ui.gui.manage;
+package pt.ipp.isep.dei.esoft.project.ui.gui.team;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +12,7 @@ import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
-import pt.ipp.isep.dei.esoft.project.ui.gui.register.GenerateTeamsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTeamUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
