@@ -1,0 +1,93 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+
+participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryController" as CTRL2
+
+
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+participant "entryRepository:EntryRepository" as EntryRepo
+participant "TeamRepository:TeamRepository" as TeamRepo
+
+
+
+
+participant "entry:Entry" as Entry
+
+participant ":EmailService" as EmailService
+
+participant ":ApplicationSession" as ApplicationSession
+participant ":GmailService" as GmailService
+participant ":DeiEmailService" as DeiEmailService
+activate GSM
+
+ref over GSM : Get details and management options\n of a selected entry on the agenda
+
+GSM -> UI2 : Selects a Team and Assigns it to the Selected Entry
+activate UI2
+
+UI2 -> CTRL2 : assignTeamToEntry(teamName, agendaName)
+activate CTRL2
+
+CTRL2 -> EntryRepo : assignTeamToEntry(teamName, agendaName)
+activate EntryRepo
+
+EntryRepo -> TeamRepo : findTeamByName(teamName)
+activate TeamRepo
+
+TeamRepo -> EntryRepo  : team
+deactivate TeamRepo
+
+EntryRepo -> EntryRepo : findEntryByName(entryName)
+activate EntryRepo
+deactivate EntryRepo
+EntryRepo -> Entry : assignTeam(team)
+activate Entry
+
+loop for each collaborator in collaboratorsTeam
+    Entry -> EmailService: sendToEmailFile(collaborator.getEmail(), subject, message);
+    activate EmailService
+    EmailService -> ApplicationSession : getEmailService()
+    activate ApplicationSession
+
+
+    ApplicationSession --> EmailService : emailService
+    deactivate ApplicationSession
+
+    alt emailService is GmailService
+        EmailService -> GmailService : sendEmail(member.getEmail(), "Assignment Notification", "You have been assigned to an entry in the agenda.")
+        activate GmailService
+        deactivate GmailService
+    else emailService is DeiEmailService
+        EmailService -> DeiEmailService : sendEmail(member.getEmail(), "Assignment Notification", "You have been assigned to an entry in the agenda.")
+        activate DeiEmailService
+        deactivate DeiEmailService
+
+    end
+end
+deactivate EmailService
+
+
+Entry --> EntryRepo : true
+deactivate Entry
+
+
+EntryRepo --> CTRL2 : true
+deactivate EntryRepo
+
+
+CTRL2 --> UI2 : true
+deactivate CTRL2
+
+UI2 --> GSM : Displays Operation Success Message
+deactivate UI2
+
+@enduml

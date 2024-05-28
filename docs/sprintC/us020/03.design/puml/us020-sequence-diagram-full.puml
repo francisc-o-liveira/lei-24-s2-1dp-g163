@@ -21,90 +21,66 @@ participant ":greenSpaceDto" as dto
 
 activate HRM
 
-        HRM -> UI : asks to register a new green space
+HRM -> UI : asks to register a new green space
 
-        activate UI
+activate UI
 
 '            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
-            UI -> CTRL** : create
-            activate CTRL
+'create CTRL
+UI -> CTRL** : create
+activate CTRL
+
+ref over CTRL
+Get Green Space Type
+end
+
+CTRL --> UI: greenSpaceTypes
+
+deactivate
+
+UI -> HRM : requests data (greenSpaceType)
+deactivate UI
+
+HRM -> UI: selects data
+activate UI
+
+
+HRM <- UI: requests data (greenSpaceArea, greenSpaceAddress, greenSpaceName)
+deactivate UI
+HRM -> UI: types requested data
+activate UI
+
+UI -> CTRL: registerGreenSpace(greenSpaceDto)
+activate CTRL
+
+CTRL -> greenSpaceRepository : registerGreenSpace(greenSpaceDto)
+
+activate greenSpaceRepository
+
+greenSpaceRepository -> obj** : create(dto)
+
+activate obj
+
+obj -> dto : name= getGreenSpaceName
+activate dto
+obj -> dto : name= getGreenSpaceAddress
+
+obj -> dto : name= getGreenSpaceArea
+deactivate dto
+
+greenSpaceRepository-> greenSpaceRepository: verifyIfExists(greenSpace)
+
+greenSpaceRepository -> CTRL : GreenSpace
+deactivate greenSpaceRepository
 
 
 
+CTRL --> UI : greenSpace
+deactivate CTRL
 
 
-
-
-
-
-
-
-                ref over CTRL
-                                                Get Green Space Type
-                                        end
-
-
-
-
-
-
-                CTRL --> UI: greenSpaceTypes
-
-               deactivate
-
-
-
-               UI -> HRM : requests data (greenSpaceType)
-               deactivate UI
-
-                HRM -> UI: selects data
-                activate UI
-
-
-                HRM <- UI: requests data (greenSpaceArea, greenSpaceAddress, greenSpaceName)
-                deactivate UI
-                HRM -> UI: types requested data
-                activate UI
-
-                UI -> CTRL: registerGreenSpace(greenSpaceDto)
-                activate CTRL
-
-                CTRL -> greenSpaceRepository : registerGreenSpace(greenSpaceDto)
-
-
-
-                activate greenSpaceRepository
-
-                greenSpaceRepository -> obj** : create(dto)
-
-                activate obj
-
-                obj -> dto : name= getGreenSpaceName
-                activate dto
-                obj -> dto : name= getGreenSpaceAddress
-
-                obj -> dto : name= getGreenSpaceArea
-                deactivate dto
-
-
-
-
-
-
-                greenSpaceRepository-> greenSpaceRepository: verifyIfExists(greenSpace)
-
-                greenSpaceRepository -> CTRL : GreenSpace
-                deactivate greenSpaceRepository
-
-
-
-                CTRL --> UI : greenSpace
-            deactivate CTRL
-
-
-            UI --> HRM : displays operation success
-    deactivate UI
+UI --> HRM : displays operation success
+deactivate UI
 
 deactivate HRM
 

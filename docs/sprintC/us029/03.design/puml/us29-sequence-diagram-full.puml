@@ -7,16 +7,16 @@ autonumber
 
 'hide footbox
 actor "Collaborator" as Collaborator
-participant ":ViewTaskUI" as UI
-participant ":ViewTaskController" as CTRL
+participant ":CompleteTaskUI" as UI
+participant ":CompleteTaskController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "TaskRepositories\n:TaskRepositories" as TaskRepositories
-participant ":TaskMapper" as MAPPER
+/' participant ":TaskMapper" as MAPPER
 participant "taskListDto : List<TaskDto>" as ListDTO
-participant "List : List<Task>" as List
-participant ":Task" as OBJ
-participant ":TaskDto" as DTO
+participant "List : List<Task>" as List 
+participant ":TaskDto" as DTO'/
+participant "task:Task" as OBJ
 
 
 activate Collaborator
@@ -42,67 +42,33 @@ deactivate PLAT
 CTRL -> TaskRepositories: getTaskList()
 activate TaskRepositories
 
-TaskRepositories -> List: create()
-activate List
-
 TaskRepositories --> CTRL: taskList
+deactivate TaskRepositories
 
-
-
-CTRL -> MAPPER: toDto(taskList)
-activate MAPPER
-
-MAPPER -> ListDTO** : create()
-
-MAPPER -> List : task = get(i)
-activate List
-deactivate List
-
-MAPPER -> MAPPER : taskDto = toDTO(task)
-activate MAPPER
-
-MAPPER -> DTO**  : create(...)
-deactivate MAPPER
-
-MAPPER -> ListDTO : add(taskDto)
-activate ListDTO
-deactivate ListDTO
-
-MAPPER --> CTRL : taskListDto
-deactivate MAPPER
-
-CTRL --> UI: taskListDto
+CTRL --> UI: taskList
+deactivate CTRL
 
 UI --> Collaborator: shows the list of tasks
 
-Collaborator -> UI: selects the task that wants to record the completion
+Collaborator -> UI: selects the task that wants to record the completion and submits
 
-UI --> Collaborator: request confirmation
+UI -> CTRL: completeTask(task)
+activate CTRL
 
-Collaborator -> UI: confirms data
+CTRL -> TaskRepositories: completeTask(task)
+activate TaskRepositories
 
-UI -> CTRL: completionTask(taskDto)
-
-CTRL -> TaskRepositories: completionTask(taskDto)
-
-TaskRepositories -> OBJ**: completionTask(taskDto)
-deactivate TaskRepositories
+TaskRepositories -> OBJ: stateOfTask = setStateOfTask()
 activate OBJ
 
-OBJ -> DTO: stateOfTask = setStateOfTask()
-activate DTO
-
-DTO --> OBJ: stateOfTask
-deactivate DTO
-
-OBJ --> TaskRepositories: true/false
+OBJ --> TaskRepositories: true
 deactivate OBJ
-activate TaskRepositories
 
 TaskRepositories --> CTRL: true/false
 deactivate TaskRepositories
 
 CTRL --> UI: true/false
+deactivate CTRL
 
 UI --> Collaborator: display operation success
 deactivate UI

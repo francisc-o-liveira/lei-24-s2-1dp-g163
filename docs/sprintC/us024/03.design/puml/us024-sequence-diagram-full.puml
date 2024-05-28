@@ -1,102 +1,43 @@
-ç@startuml
+@startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
 autonumber
 
-'hide footbox
 actor "GSM" as GSM
-participant ":AgendaUI" as AgendaUI
-participant ":AgendaController" as AgendaController
+
 participant ":ViewDetailsEntryUI" as UI2
 participant ":ViewDetailsEntryController" as CTRL2
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "entryRepository:\nEntryRepository" as EntryRepository
-participant ":EntryMapper" as MAPPER
-participant "List : List<EntryDto>" as EntryDtoList
-participant "entryList : List<Entry>" as EntryList
-participant ":Entry" as OBJ
-participant ":EntryDto" as EntryDto
-
+participant "entry:Entry" as OBJ
 
 activate GSM
 
-        GSM -> AgendaUI: asks to postpone an entry in the Agenda
-        activate AgendaUI
+ref over GSM : Get details and management options\n of a selected entry on the agenda
 
-        AgendaUI -> AgendaController**: create
+GSM-> UI2: Postpones the Entry Starting Date   
+activate UI2
 
+UI2 -> CTRL2: postponeEntry(newStartDate, entry)
+activate CTRL2
 
+CTRL2 -> OBJ: postponeEntry(newStartDate)
+activate OBJ
 
-  AgendaUI -> AgendaController : getAgendaList()
-            activate AgendaController
-                        ref over AgendaController
-                                Get Agenda Entry's List
-                        end
+OBJ -> OBJ: status.postponeState()
+OBJ -> OBJ: setStartDate(newStartDate)
 
+OBJ -> CTRL2: true
 
-            AgendaController -> AgendaUI : agendaDto
-            deactivate AgendaController
+deactivate OBJ
 
-        deactivate AgendaController
-        AgendaUI -> GSM : show Agenda and select one Entry
-                    deactivate AgendaUI
-                     GSM --> AgendaUI : select one Entry
-                                activate AgendaUI
+CTRL2 -> UI2: true
+deactivate CTRL2
 
-                                AgendaUI --> UI2** : create
-                                activate UI2
-                                deactivate AgendaUI
-                                UI2 --> CTRL2** : create(entryDto)
-
-                                            UI2 --> CTRL2 : getDataNeededToModify()
-                                            activate CTRL2
-
-             CTRL2 -> RepositorySingleton : getInstance()
-                                                    activate RepositorySingleton
-
-                                                        RepositorySingleton --> CTRL2: repositories
-                                                    deactivate RepositorySingleton
-
-                                                    CTRL2 -> PLAT : getEntryRepository()
-                                                    activate PLAT
-
-
-                                                    PLAT -> CTRL2 : entryRepository
-                                                    deactivate PLAT
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-deactivate GSM
+UI2 -> GSM: Confirms the Change
+deactivate UI2
 
 @enduml
