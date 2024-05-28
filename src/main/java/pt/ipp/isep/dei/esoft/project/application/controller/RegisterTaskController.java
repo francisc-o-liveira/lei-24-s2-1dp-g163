@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
@@ -17,6 +18,8 @@ public class RegisterTaskController {
 
     private ApplicationSession session;
 
+    private EntryMapper mapper;
+
     private EntryRepository entryRepository;
 
     public RegisterTaskController() {
@@ -24,6 +27,7 @@ public class RegisterTaskController {
         greenMapper = new GreenSpaceMapper();
         entryRepository = new EntryRepository();
         session = ApplicationSession.getInstance();
+        mapper = new EntryMapper();
     }
 
     public List<GreenSpaceDto> getGreenSpaceList(){
@@ -39,6 +43,10 @@ public class RegisterTaskController {
            return true;
         }
         return false;
+    }
+
+    public List<EntryDto> getToDoList(){
+        return mapper.entryListToEntryDtoList(entryRepository.getToDo());
     }
 
     private String getManagerFromSession(){
