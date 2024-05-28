@@ -24,7 +24,7 @@ public class TeamMapper {
 
     public Team teamDtoToTeam(TeamDto teamDto) {
         for (Team t : Repositories.getInstance().getTeamRepository().getTeams()){
-            if (teamDto.equals(t)){
+            if (teamDto.getTeamList().equals(t.getTeamList()) && teamDto.getTeamName().equals(t.getTeamName())){
                 return t;
             }
         }
