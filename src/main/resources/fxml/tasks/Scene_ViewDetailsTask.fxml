@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.tasks.ViewDetailsTaskUI">
+   <children>
+      <Label layoutX="126.0" layoutY="68.0" text="Title:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="87.0" layoutY="117.0" text="Description:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="216.0" text="Green Space:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="99.0" layoutY="167.0" text="Duration:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="263.0" text="Degree Of Urgency:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="titleTask" layoutX="206.0" layoutY="68.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="duration" layoutX="206.0" layoutY="167.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="greenSpace" layoutX="206.0" layoutY="216.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="urgency" layoutX="206.0" layoutY="263.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="descriptionTask" layoutX="206.0" layoutY="117.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

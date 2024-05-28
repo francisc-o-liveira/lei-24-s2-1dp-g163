@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.greenSpaces.ViewDetailsGreenSpaceUI">
+   <children>
+      <Label layoutX="126.0" layoutY="68.0" text="Name:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="129.0" layoutY="117.0" text="Area:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="119.0" layoutY="216.0" text="Address:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="129.0" layoutY="167.0" text="Type:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameGreenSpace" layoutX="206.0" layoutY="68.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="areaGreenSpace" layoutX="206.0" layoutY="117.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="addressGreenSpace" layoutX="206.0" layoutY="216.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="greenSpaceType" layoutX="206.0" layoutY="167.0" text="null">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
