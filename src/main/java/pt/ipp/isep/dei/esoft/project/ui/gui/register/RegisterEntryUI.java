@@ -31,16 +31,12 @@ public class RegisterEntryUI implements Initializable {
     @FXML
     private TableColumn<EntryDto, String> titleTask;
     @FXML
-    private TableColumn<EntryDto, Boolean> selectTask;
-    @FXML
     private DatePicker dateForEntry;
     @FXML
     private ComboBox<EntryState> statusOfEntry;
 
     private ObservableList<EntryState> entryStates=FXCollections.observableArrayList();
 
-
-    //TaskDto needs to take a BooleanProperty
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl = new AssignEntryOnAgendaController();
@@ -53,13 +49,17 @@ public class RegisterEntryUI implements Initializable {
         Date startDate=new Date(dateForEntry.getValue().getYear(),dateForEntry.getValue().getMonthValue(), dateForEntry.getValue().getDayOfMonth());
         selectedTaskDto= tasksForEntry.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
         EntryState state=statusOfEntry.getValue();
+        String ref="smth to then see???";
         if(selectedTaskDto==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "A task needs to be selected").show();
         } else {
             try{
-                EntryDto assigningEntry=new EntryDto(state,selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace(), startDate);
-                //missing arguments in here ^^
+                EntryDto assigningEntry=new EntryDto(startDate,state,selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace(),ref);
                 ctrl.assignEntryOnAgenda(assigningEntry);
+                popUp().show();
+                if(popUp().showAndWait().get()==ButtonType.OK){
+                    stage.close();
+                }
             } catch (Exception e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
@@ -68,12 +68,11 @@ public class RegisterEntryUI implements Initializable {
 
     private void setTableTasks(){
         titleTask.setCellValueFactory(new PropertyValueFactory<>("title"));
-        selectTask.setCellFactory(CheckBoxTableCell.forTableColumn(selectTask));
-
         for(EntryDto t : ctrl.getToDoList()){
-            tasksForTable.add(t);
+            if(t.getStartDate()==null){
+                tasksForTable.add(t);
+            }
         }
-
         tasksForEntry.setItems(tasksForTable);
     }
 
@@ -81,12 +80,10 @@ public class RegisterEntryUI implements Initializable {
         this.stage=stage;
     }
 
-
-
     private Alert popUp() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
-        alert.setContentText("Green Space added!");
+        alert.setContentText("Entry added!");
 
         return alert;
     }

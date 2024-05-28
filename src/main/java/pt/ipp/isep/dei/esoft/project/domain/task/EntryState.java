@@ -5,7 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 public class  EntryState {
 
 
-    public enum State       
+    public enum State{Planned,Postponed,Assigned,Canceled,Done;}
 
     private State state;
 

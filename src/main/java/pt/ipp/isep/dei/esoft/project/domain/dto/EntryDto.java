@@ -2,7 +2,6 @@ package pt.ipp.isep.dei.esoft.project.domain.dto;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
@@ -21,7 +20,7 @@ public class EntryDto extends TaskDto{
     private Team teamAssigned;
     private String reference;
     private boolean selectedByCollab;
-    private BooleanProperty selecting;
+    private BooleanProperty selectingCollab;
 
 
     public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
@@ -31,9 +30,9 @@ public class EntryDto extends TaskDto{
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
         this.reference = reference;
-        this.selecting = new SimpleBooleanProperty(false);
+        this.selectingCollab = new SimpleBooleanProperty(false);
 
-        this.selecting.addListener((obs, oldVal, newVal) -> {
+        this.selectingCollab.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 selectedByCollab=true;
             }
@@ -48,9 +47,9 @@ public class EntryDto extends TaskDto{
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
         this.reference = reference;
-        this.selecting = new SimpleBooleanProperty(false);
+        this.selectingCollab = new SimpleBooleanProperty(false);
 
-        this.selecting.addListener((obs, oldVal, newVal) -> {
+        this.selectingCollab.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 selectedByCollab=true;
             }
@@ -102,15 +101,6 @@ public class EntryDto extends TaskDto{
         this.startDate = newDate;
     }
 
-    public BooleanProperty selectedEntry(){
-        return selecting;
-    }
-
-    public void setSelecting(boolean value){
-        this.selecting.set(value);
-    }
-
-
     public boolean assignVehicle(Vehicle vehicle) {
         if(vehicle != null){
             this.vehicleList.add(vehicle);
@@ -134,5 +124,13 @@ public class EntryDto extends TaskDto{
         }else{
             throw new NullPointerException("Team cannot be null");
         }
+    }
+
+    public BooleanProperty selectedCollab(){
+        return selectingCollab;
+    }
+
+    public void setSelectingCollab(boolean value){
+        this.selectingCollab.set(value);
     }
 }
