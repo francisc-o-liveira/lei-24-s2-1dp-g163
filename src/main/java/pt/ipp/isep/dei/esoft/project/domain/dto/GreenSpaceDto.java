@@ -66,6 +66,8 @@ public class GreenSpaceDto {
 
     public void setAddress(String addressStreet, String addressCity, String addressZipCode) {
         this.addressStreet = addressStreet;
+        this.addressCity=addressCity;
+        this.addressZipCode=addressZipCode;
     }
 
 }
