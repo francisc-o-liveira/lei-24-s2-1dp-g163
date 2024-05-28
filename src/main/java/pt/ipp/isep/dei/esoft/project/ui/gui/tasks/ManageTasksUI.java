@@ -22,6 +22,7 @@ import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ManageTasksUI implements Initializable {
@@ -93,7 +94,7 @@ public class ManageTasksUI implements Initializable {
                 };
             }
         });
-
+        List<EntryDto> tasks=ctrl.getToDoList();
         for(EntryDto t : ctrl.getToDoList()){
             taskObservableList.add(t);
         }
