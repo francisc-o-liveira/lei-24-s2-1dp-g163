@@ -18,9 +18,8 @@ public class TeamMapper {
         return teamDtoList;
     }
 
-    // need to be implemented
     private TeamDto teamToTeamDto(Team team) {
-       return new TeamDto();
+       return new TeamDto(team.getTeamList(),team.getSkills(),team.getTeamName());
     }
 
     public Team teamDtoToTeam(TeamDto teamDto) {

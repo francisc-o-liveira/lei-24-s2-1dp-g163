@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.Use;
-import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.NotUse;
 
 /**
  * The VehicleRepository class manages vehicle data and operations.
@@ -42,44 +40,6 @@ public class VehicleRepository {
     }
 
     /**
-     * Retrieves a list of vehicles that are not currently active.
-     *
-     * @return A list of inactive vehicles.
-     */
-
-    public List<Vehicle> getVehicleNotActive() {
-        List<Vehicle> vehicleNotActive = new ArrayList<>();
-        for (Vehicle c : vehicleList) {
-            if (c.getStatus() == NotUse) {
-                vehicleNotActive.add(c);
-            }
-        }
-        return vehicleNotActive;
-    }
-
-    /**
-     * Activates a specified vehicle.
-     *
-     * @param vehicle The vehicle to activate.
-     */
-    public void activateVehicle(Vehicle vehicle) {
-        if (vehicle.getStatus() == NotUse) {
-            vehicle.setStatusType(Use);
-        }
-    }
-
-    /**
-     * Deactivates a specified vehicle.
-     *
-     * @param vehicle The vehicle to deactivate.
-     */
-    public void deactivateVehicle(Vehicle vehicle) {
-        if (vehicle.getStatus() == Use) {
-            vehicle.setStatusType(NotUse);
-        }
-    }
-
-    /**
      * Retrieves a list of vehicles in need of check-up.
      *
      * @return A list of vehicles needing check-up.
@@ -94,21 +54,6 @@ public class VehicleRepository {
         return vehiclesNeedCheckUp;
     }
 
-    /**
-     * Retrieves a list of vehicles based on their status type.
-     *
-     * @param statusType The status type of the vehicles to retrieve.
-     * @return A list of vehicles with the specified status type.
-     */
-    public List<Vehicle> getVehicleListPerType(Vehicle.StatusType statusType) {
-        ArrayList<Vehicle> vehiclesPerType = new ArrayList<>();
-        for (Vehicle v : vehicleList) {
-            if (v.getStatus() == statusType) {
-                vehiclesPerType.add(v);
-            }
-        }
-        return vehiclesPerType;
-    }
 
     /**
      * Sorts the list of vehicles based on their proximity to the next check-up.
