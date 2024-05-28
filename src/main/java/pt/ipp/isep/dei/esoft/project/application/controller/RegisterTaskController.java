@@ -41,8 +41,8 @@ public class RegisterTaskController {
         return EntryRepository.getDegreeOfUrgency();
     }
 
-    public boolean registerTaskEntry(Date startDate, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference){
-        EntryDto entryDto = new EntryDto(startDate,new EntryState(),title,description,degreeUrgency,expectedDuration,greenSpaceDto,reference);
+    public boolean registerTaskEntry(Date startDate, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto){
+        EntryDto entryDto = new EntryDto(startDate,new EntryState(),title,description,degreeUrgency,expectedDuration,greenSpaceDto);
         if (entryRepository.registerNewTask(entryDto).isPresent()){
            return true;
         }
