@@ -159,7 +159,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageAgenda(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_Agenda.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_Agenda.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
