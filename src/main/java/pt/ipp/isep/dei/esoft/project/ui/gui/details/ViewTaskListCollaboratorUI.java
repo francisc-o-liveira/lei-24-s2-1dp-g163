@@ -64,7 +64,7 @@ public class ViewTaskListCollaboratorUI {
 
         for(EntryDto entry : tasksForCollab){
             tasksOfCollab.add(entry);
-            entry.setSelecting(false);
+            entry.setSelectingCollab(false);
         }
 
         tableTasks.setItems(tasksOfCollab);
@@ -87,7 +87,7 @@ public class ViewTaskListCollaboratorUI {
 
     private void getTasksDone(){
         for (EntryDto entry : tasksForCollab) {
-            if (entry.selectedEntry().get()) {
+            if (entry.selectedCollab().get()) {
                 entriesSelected.add(entry);
             }
         }
@@ -96,7 +96,7 @@ public class ViewTaskListCollaboratorUI {
 
     @FXML
     public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);

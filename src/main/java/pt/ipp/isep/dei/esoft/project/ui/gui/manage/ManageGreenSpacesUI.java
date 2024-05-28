@@ -111,7 +111,7 @@ public class ManageGreenSpacesUI implements Initializable {
 
     @FXML
     void btnRegister(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterGreenSpace.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/green_spaces/Scene_RegisterGreenSpace.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageRegister= new Stage();
@@ -146,11 +146,11 @@ public class ManageGreenSpacesUI implements Initializable {
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
             } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

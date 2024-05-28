@@ -16,7 +16,6 @@ import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.ui.gui.register.RegisterTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.details.ViewDetailsTaskUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
@@ -107,7 +106,7 @@ public class ManageToDoListUI implements Initializable {
     }
 
     public void showMore(EntryDto task) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetails.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageViewDetails=new Stage();
@@ -142,11 +141,11 @@ public class ManageToDoListUI implements Initializable {
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
             } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -169,7 +168,7 @@ public class ManageToDoListUI implements Initializable {
 
     @FXML
     public void btnRegister(ActionEvent event)throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterTask.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tasks/Scene_RegisterTask.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageRegister= new Stage();

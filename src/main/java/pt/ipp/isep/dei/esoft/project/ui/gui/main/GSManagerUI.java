@@ -25,7 +25,7 @@ public class GSManagerUI {
 
     @FXML
     public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -53,7 +53,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageVehicles(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewRegisterVehicle.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/vehicles/SceneTableViewRegisterVehicle.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -86,7 +86,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewJobs.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewJobs.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -97,7 +97,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageSkills(ActionEvent event)throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewSkill.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewSkill.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -108,7 +108,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageCollaborators(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewRegisterCollaborator.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewRegisterCollaborator.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -119,7 +119,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageTeams(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewManageTeams.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/teams/SceneTableViewManageTeams.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -143,7 +143,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageToDoList(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ToDoList.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/tasks/Scene_ToDoList.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -164,7 +164,7 @@ public class GSManagerUI {
 
     @FXML
     public void manageGreenSpaces(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_ListGreenSpaces.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/green_spaces/Scene_ListGreenSpaces.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);

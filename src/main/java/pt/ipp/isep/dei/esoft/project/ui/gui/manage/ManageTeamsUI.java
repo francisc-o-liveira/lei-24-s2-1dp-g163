@@ -43,7 +43,7 @@ public class ManageTeamsUI {
 
     @FXML
     public void btnAdd() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_GenerateTeams.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/teams/Scene_GenerateTeams.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -112,7 +112,7 @@ public class ManageTeamsUI {
     }
 
     public void showMore(Team team) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsTeam.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/teams/Scene_ViewDetailsTeam.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);
@@ -158,11 +158,11 @@ public class ManageTeamsUI {
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
             } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

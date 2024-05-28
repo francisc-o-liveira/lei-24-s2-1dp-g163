@@ -310,7 +310,7 @@ public class ViewDetailsVehicleUI {
 
     @FXML
     void addCheckUp(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_RegisterCheckVehicle.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_RegisterCheckVehicle.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stage=new Stage();

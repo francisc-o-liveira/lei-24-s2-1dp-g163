@@ -43,7 +43,7 @@ public class CollaboratorUI {
     @FXML
     public void seeTasks(ActionEvent event) throws IOException {
         getTasksForCollaborator();
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_TaskListCollaborator.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_TaskListCollaborator.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -54,7 +54,7 @@ public class CollaboratorUI {
 
     @FXML
     public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);

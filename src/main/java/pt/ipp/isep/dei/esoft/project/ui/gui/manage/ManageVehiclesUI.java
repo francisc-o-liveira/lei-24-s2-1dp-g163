@@ -98,7 +98,7 @@ public class ManageVehiclesUI {
     }
 
     public void showMore(Vehicle vehicle) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_ViewDetailsRegisterVehicle.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);
@@ -120,7 +120,7 @@ public class ManageVehiclesUI {
 
     @FXML
     public void btnUpdateKm() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_UpdateKm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_UpdateKm.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage otherStage= new Stage();
@@ -153,7 +153,7 @@ public class ManageVehiclesUI {
 
     @FXML
     public void btnAdd() throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_AddVehicle.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_AddVehicle.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage otherStage= new Stage();
@@ -166,7 +166,7 @@ public class ManageVehiclesUI {
 
     @FXML
     public void btnEdit() throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsRegisterVehicle.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_ViewDetailsRegisterVehicle.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage otherStage= new Stage();
@@ -213,11 +213,11 @@ public class ManageVehiclesUI {
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
             if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
             } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -230,7 +230,7 @@ public class ManageVehiclesUI {
 
     @FXML
     public void btnUpdateKm(ActionEvent event)throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_UpdateKm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_UpdateKm.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stage=new Stage();

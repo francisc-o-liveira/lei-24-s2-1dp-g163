@@ -28,7 +28,7 @@
             <Line endX="100.0" layoutX="114.0" layoutY="177.0" startX="-100.0" stroke="WHITE" />
             <ImageView fitHeight="159.0" fitWidth="118.0" layoutX="55.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../AQUACODE-2-2.png" />
+                  <Image url="@../images/AQUACODE-2-2.png" />
                </image>
             </ImageView>
          </children>

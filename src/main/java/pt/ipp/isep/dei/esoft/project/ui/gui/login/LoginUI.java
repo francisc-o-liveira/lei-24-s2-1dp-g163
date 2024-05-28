@@ -103,7 +103,7 @@ public class LoginUI {
     }
 
     public void showHRManagerUI() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_HRM.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
@@ -111,7 +111,7 @@ public class LoginUI {
     }
 
     public void showVFManagerUI() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_VFM.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
@@ -119,7 +119,7 @@ public class LoginUI {
     }
 
     public void showGSManagerUI() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
