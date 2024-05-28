@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,16 @@ public class EntryDto extends TaskDto{
 
     private Date startDate;
     private Status status;
-    private List<Vehicle> vehicleList;
+    private List<VehicleDto> vehicleList;
+
+    public List<VehicleDto> getVehicleList() {
+        return vehicleList;
+    }
+
+    public Team getTeam() {
+        return teamAssigned;
+    }
+
     private Team teamAssigned;
 
     public static enum Status {Planned, Assigned, Postponed, Canceled,Done};
@@ -22,11 +32,11 @@ public class EntryDto extends TaskDto{
         super(title, description);
         this.startDate = startDate;
         this.status = status;
-        this.vehicleList = new ArrayList<Vehicle>();
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
     }
 
-    public EntryDto(Date startDate, Status status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, DegreeUrgency degreeUrgency) {
+    public EntryDto(Date startDate, Status status, List<VehicleDto> vehicleList, Team teamAssigned,String title, String description, DegreeUrgency degreeUrgency) {
         super(title, description);
         this.startDate = startDate;
         this.status = status;
@@ -41,4 +51,5 @@ public class EntryDto extends TaskDto{
     public Status getStatus() {
         return status;
     }
+
 }
