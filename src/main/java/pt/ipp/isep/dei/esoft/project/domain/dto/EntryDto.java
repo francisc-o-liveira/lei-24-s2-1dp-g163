@@ -22,19 +22,6 @@ public class EntryDto extends TaskDto{
     private boolean selectedByCollab;
     private BooleanProperty selectingCollab;
 
-    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto) {
-        super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
-        this.startDate = startDate;
-        setStatus(status);
-        this.vehicleList = new ArrayList<Vehicle>();
-        this.teamAssigned = null;
-        this.selectingCollab = new SimpleBooleanProperty(false);
-        this.selectingCollab.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selectedByCollab=true;
-            }
-        });
-    }
 
     public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
@@ -76,6 +63,7 @@ public class EntryDto extends TaskDto{
         this.teamAssigned = null;
         this.reference = null;
     }
+
 
     public Date getStartDate() {
         return startDate;
