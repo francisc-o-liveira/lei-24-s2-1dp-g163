@@ -20,13 +20,18 @@ public class ViewDetailsGreenSpaceUI{
         private Label areaGreenSpace;
         @FXML
         private Label greenSpaceType;
+        @FXML
+        private Label addressCityGreenSpace;
+        @FXML
+        private Label addressZipCodeGreenSpace;
 
         public void setLabels(GreenSpaceDto greenSpace){
                 nameGreenSpace.setText(greenSpace.getName());
-                addressGreenSpace.setText(greenSpace.getAddress());
-                GreenSpace.Type type=greenSpace.getType();
+                addressGreenSpace.setText(greenSpace.getAddressStreet());
+                addressCityGreenSpace.setText(greenSpace.getAddressCity());
+                addressZipCodeGreenSpace.setText(greenSpace.getAddressZipCode());
+                GreenSpace.Type type = greenSpace.getType();
                 greenSpaceType.setText(type.name());
                 areaGreenSpace.setText(String.valueOf(greenSpace.getAreaInHectares()));
         }
-
     }

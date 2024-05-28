@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
@@ -14,15 +15,19 @@ public class RegisterTaskController {
     private Organization org;
     private static GreenSpaceMapper greenMapper;
 
+    private ApplicationSession session;
+
     private EntryRepository entryRepository;
+
     public RegisterTaskController() {
         org = Repositories.getInstance().getOrganizationRepository();
         greenMapper = new GreenSpaceMapper();
         entryRepository = new EntryRepository();
+        session = ApplicationSession.getInstance();
     }
 
     public List<GreenSpaceDto> getGreenSpaceList(){
-        return greenMapper.greenSpaceListToGreenSpaceDto(org.getGreenSpaceList());
+        return greenMapper.greenSpaceListToGreenSpaceDto(org.getGreenSpaceListByManagerEmail(getManagerFromSession()));
     }
 
     public static Task.DegreeUrgency[] getDegreOfUrgency(){
@@ -34,5 +39,9 @@ public class RegisterTaskController {
            return true;
         }
         return false;
+    }
+
+    private String getManagerFromSession(){
+        return session.getCurrentSession().getUserEmail();
     }
 }
