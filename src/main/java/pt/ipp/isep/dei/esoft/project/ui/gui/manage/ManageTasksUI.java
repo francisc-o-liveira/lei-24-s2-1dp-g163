@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ManageToDoListUI implements Initializable {
+public class ManageTasksUI implements Initializable {
 
     public AuthenticationController ctrlAuth;
     private DetailsEntryAgendaController ctrl;

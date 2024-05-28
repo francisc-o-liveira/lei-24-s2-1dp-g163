@@ -49,7 +49,7 @@ public class RegisterEntryUI implements Initializable {
         Date startDate=new Date(dateForEntry.getValue().getYear(),dateForEntry.getValue().getMonthValue(), dateForEntry.getValue().getDayOfMonth());
         selectedTaskDto= tasksForEntry.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
         EntryState state=statusOfEntry.getValue();
-        String ref="smth to then see???";
+        String ref="reference"; //needs correction
         if(selectedTaskDto==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "A task needs to be selected").show();
         } else {

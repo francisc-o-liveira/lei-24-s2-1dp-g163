@@ -148,7 +148,7 @@ public class GSManagerUI {
         Scene scene= new Scene(root);
         stage.setScene(scene);
         stage.show();
-        ManageToDoListUI ui=fxmlLoader.getController();
+        ManageTasksUI ui=fxmlLoader.getController();
         ui.setTableToDoList();
     }
 
