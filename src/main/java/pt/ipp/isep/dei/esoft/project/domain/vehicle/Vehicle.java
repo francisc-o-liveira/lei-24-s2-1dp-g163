@@ -55,13 +55,6 @@ public class Vehicle {
         /** The list of check-ups performed on the vehicle. */
         private List<CheckUp> checkUpList;
 
-        /** The status of the vehicle. */
-        public enum StatusType {
-            Use,    // In use
-            NotUse  // Not in use
-        }
-        private StatusType statusType;
-
         /** The tax rate for a close check. */
         private static final double TAX_FOR_CLOSE_CHECK = 0.05;
 
@@ -92,11 +85,9 @@ public class Vehicle {
             setRegisterDate(registerDate);
             setAcquisitionDate(acquisitionDate);
             setFrequencyCheckKm(frequencyCheckKm);
-            setStatusType(StatusType.NotUse);
             setPlate(plate);
             setLastCheckUp(date, lastKmCheck);
         }
-
 
 
     /**
@@ -137,14 +128,6 @@ public class Vehicle {
         }else {
             return plate.matches("^[A-Z]{2}-\\d{2}-[A-Z]{2}$");
         }
-    }
-
-    /**
-     * Retrieves the status of the vehicle.
-     * @return the status of the vehicle
-     */
-    public StatusType getStatus() {
-        return statusType;
     }
 
     /**
@@ -208,14 +191,6 @@ public class Vehicle {
      */
     public List<CheckUp> getCheckUpList() {
         return checkUpList;
-    }
-
-    /**
-     * Retrieves the status type of the vehicle.
-     * @return the status type of the vehicle
-     */
-    public StatusType getStatusType() {
-        return statusType;
     }
 
     /**
@@ -432,13 +407,6 @@ public class Vehicle {
         }
     }
 
-    /**
-     * Sets the status type of the vehicle.
-     * @param statusType the status type to set
-     */
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
-    }
 
     /**
      * Sets the type of the vehicle.

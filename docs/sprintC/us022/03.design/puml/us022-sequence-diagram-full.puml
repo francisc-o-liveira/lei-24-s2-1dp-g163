@@ -58,7 +58,7 @@ activate GSM
                                         EntryRepository -> CTRL : toDoList
                                         deactivate EntryRepository
 
-                                        CTRL -> MAPPER : toDto(toDoList)
+                                        CTRL -> MAPPER : entryListToEntryDtoList(toDoList)
                                         activate MAPPER
 
                                         MAPPER -> ListDTO** : create()

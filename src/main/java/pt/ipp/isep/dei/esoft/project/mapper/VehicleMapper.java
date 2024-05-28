@@ -17,13 +17,13 @@ public class VehicleMapper {
     }
 
     public VehicleDto vehicleToVehicleDto(Vehicle vehicle) {
-        return new VehicleDto();
+        return new VehicleDto(vehicle.getBrand(), vehicle.getModel(), vehicle.getType(), vehicle.getPlate(), vehicle.getCurrentKm(), vehicle.getAcquisitionDate());
     }
 
     public Vehicle vehicleDtoToVehicle(VehicleDto vehicleDto) {
         List<Vehicle> vehicles = Repositories.getInstance().getVehicleRepository().getVehicleList();
         for (Vehicle vehicle : vehicles) {
-            if (vehicleDto.equals(vehicle)) {
+            if (vehicleDto.getPlate().equals(vehicle.getPlate())) {
                 return vehicle;
             }
         }
