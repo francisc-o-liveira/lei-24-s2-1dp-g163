@@ -53,6 +53,23 @@ public class CollaboratorUI {
     }
 
     @FXML
+    public void btnCompleteTasks(ActionEvent event){
+        popUp().show();
+        if(popUp().showAndWait().get()==ButtonType.OK){
+            //mark as complete and also register the finish time!
+        }
+    }
+
+    private Alert popUp() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+
+        alerta.setTitle("Confirmation");
+        alerta.setContentText("Do you wish to mark these tasks as complete?");
+
+        return alerta;
+    }
+
+    @FXML
     public void reload(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
         Parent root= fxmlLoader.load();
