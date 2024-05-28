@@ -25,7 +25,7 @@ public class RegisterTaskController {
     public RegisterTaskController() {
         org = Repositories.getInstance().getOrganizationRepository();
         greenMapper = new GreenSpaceMapper();
-        entryRepository = new EntryRepository();
+        entryRepository = Repositories.getInstance().getEntryRepository();
         session = ApplicationSession.getInstance();
         mapper = new EntryMapper();
     }
