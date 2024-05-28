@@ -106,7 +106,7 @@ public class ManageToDoListUI implements Initializable {
     }
 
     public void showMore(EntryDto task) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetails.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetailsTask.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageViewDetails=new Stage();
