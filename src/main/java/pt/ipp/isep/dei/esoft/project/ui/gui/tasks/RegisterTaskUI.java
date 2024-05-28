@@ -58,8 +58,7 @@ public class RegisterTaskUI implements Initializable {
         }else {
             try {
                 Tempo timeExpec = getTimeForEntry(timeExpected);
-                EntryDto entryDto = new EntryDto(new EntryState(),title,description,degreeOfUrgency,timeExpec,greenSpaceDto);
-                ctrl.registerTaskEntry(entryDto);
+                ctrl.registerTaskEntry(title,description,degreeOfUrgency,timeExpec,greenSpaceDto);
                 if(popUp().showAndWait().get()== ButtonType.OK){
                     stage.close();
                 }
