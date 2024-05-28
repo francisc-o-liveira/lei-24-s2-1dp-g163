@@ -9,7 +9,6 @@ public class DeiEmailService implements SendEmailExternalAPI {
 
     @Override
     public void sendEmail(String to, String subject, String body) {
-
         String fileName = "email.txt";
         File f = new File(fileName);
         if (f.exists()) {

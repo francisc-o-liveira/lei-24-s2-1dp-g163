@@ -26,6 +26,10 @@ public class ApplicationSession {
         Properties props = getProperties();
     }
 
+    public SendEmailExternalAPI getEmailServiceInstance(){
+        return sendEmailExternalAPI;
+    }
+
     public UserSession getCurrentSession() {
         pt.isep.lei.esoft.auth.UserSession userSession = this.authenticationRepository.getCurrentUserSession();
         return new UserSession(userSession);
@@ -34,18 +38,13 @@ public class ApplicationSession {
     private Properties getProperties() {
         Properties props = new Properties();
         Properties emailService = new Properties();
-
-        // Add default properties and values
-
-        // Read configured values
         try {
             InputStream in = new FileInputStream(CONFIGURATION_FILENAME);
             props.load(in);
             in.close();
             String companyDesignation = props.getProperty(COMPANY_DESIGNATION);
             String className = props.getProperty(EMAIL_DESIGNATION);
-            Class<?> oClass = Class.forName(className);
-            sendEmailExternalAPI = (SendEmailExternalAPI) oClass.newInstance();
+            sendEmailExternalAPI = getEmailService();
         } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             ex.printStackTrace();
         }

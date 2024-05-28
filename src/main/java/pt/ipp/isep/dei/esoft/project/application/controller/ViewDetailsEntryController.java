@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.domain.adapters.EmailService;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TeamDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
@@ -11,6 +12,7 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ViewDetailsEntryController {
@@ -27,6 +29,8 @@ public class ViewDetailsEntryController {
 
     private TeamRepository teamRepository;
 
+    private EmailService serv;
+
     public ViewDetailsEntryController(){
         this.entryRepository = Repositories.getInstance().getEntryRepository();
         this.vehicleRepository = Repositories.getInstance().getVehicleRepository();
@@ -34,6 +38,7 @@ public class ViewDetailsEntryController {
         this.vehicleMapper = new VehicleMapper();
         this.teamMapper = new TeamMapper();
         this.teamRepository = Repositories.getInstance().getTeamRepository();
+        this.serv = new EmailService();
     }
 
     public boolean cancelEntry(EntryDto entryDto){
@@ -60,9 +65,14 @@ public class ViewDetailsEntryController {
         return teamMapper.teamListToTeamDtoList(entryRepository.filterTeamNotActivateInTime(teamRepository.getTeams(),entryDto));
     }
 
-    public boolean assignTeamToEntry(TeamDto teamDto, EntryDto entryDto){
+    public boolean assignTeamToEntry(TeamDto teamDto, EntryDto entryDto) throws IOException {
         entryDto.assignTeam(teamMapper.teamDtoToTeam(teamDto));
-        return entryRepository.assignTeamOnEntry(entryDto).isPresent();
+        if( entryRepository.assignTeamOnEntry(entryDto).isPresent()){
+            serv.sendEmailToList(teamDto.getList(),entryDto);
+            return true;
+        }else {
+            return false;
+        }
     }
 
 

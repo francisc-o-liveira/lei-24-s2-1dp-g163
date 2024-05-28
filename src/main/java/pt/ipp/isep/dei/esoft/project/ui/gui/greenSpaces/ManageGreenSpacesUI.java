@@ -87,8 +87,7 @@ public class ManageGreenSpacesUI implements Initializable {
                 };
             }
         });
-
-        for(GreenSpaceDto greenSpace : ctrl.getGreenSpaces()){
+        for(GreenSpaceDto greenSpace : ctrl.getGreenSpacesByEmail()){
             greenSpaceObservableList.add(greenSpace);
         }
 

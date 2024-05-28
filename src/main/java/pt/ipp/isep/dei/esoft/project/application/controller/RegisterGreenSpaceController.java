@@ -31,9 +31,12 @@ public class RegisterGreenSpaceController {
         return org.registerGreenSpace(newGreenSpaceDto).isPresent();
     }
 
-
     public List<GreenSpaceDto> getGreenSpaces() {
         return mapper.greenSpaceListToGreenSpaceDto(org.getGreenSpaceList());
+    }
+
+    public List<GreenSpaceDto> getGreenSpacesByEmail() {
+        return mapper.greenSpaceListToGreenSpaceDto(org.getGreenSpaceListByManagerEmail(getManagerFromSession()));
     }
 
     private String getManagerFromSession(){
