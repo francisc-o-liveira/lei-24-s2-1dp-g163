@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;

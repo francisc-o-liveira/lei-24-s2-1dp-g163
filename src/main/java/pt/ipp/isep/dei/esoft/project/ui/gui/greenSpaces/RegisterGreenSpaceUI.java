@@ -25,6 +25,10 @@ public class RegisterGreenSpaceUI implements Initializable {
     @FXML
     private TextField addressGreenSpace;
     @FXML
+    private TextField addressCityGreenSpace;
+    @FXML
+    private TextField addressZipCodeGreenSpace;
+    @FXML
     private TextField areaGreenSpace;
     @FXML
     private ComboBox<GreenSpace.Type> greenSpaceType;
@@ -42,16 +46,18 @@ public class RegisterGreenSpaceUI implements Initializable {
 
     @FXML
     public void btnRegister(javafx.event.ActionEvent event){
-        String name=nameGreenSpace.getText();
-        String address=addressGreenSpace.getText();
-        String area=areaGreenSpace.getText();
-        GreenSpace.Type typeOfGreenSpace=greenSpaceType.getValue();
+        String name = nameGreenSpace.getText();
+        String address = addressGreenSpace.getText();
+        String area = areaGreenSpace.getText();
+        String addressCity = addressCityGreenSpace.getText();
+        String addressZipCode = addressZipCodeGreenSpace.getText();
+        GreenSpace.Type typeOfGreenSpace = greenSpaceType.getValue();
         if(name.isEmpty() || address.isEmpty() || area.isEmpty()){
             popUpOfVerifications(Alert.AlertType.ERROR, "The Green Space is empty").show();
         } else {
             try{
                 double areaRegistering=Double.parseDouble(area);
-                ctrl.registerGreenSpace(name,address,areaRegistering,typeOfGreenSpace);
+                ctrl.registerGreenSpace(name,address,addressCity,addressZipCode,areaRegistering,typeOfGreenSpace);
                 if(popUp().showAndWait().get()==ButtonType.OK){
                     stage.close();
                 }

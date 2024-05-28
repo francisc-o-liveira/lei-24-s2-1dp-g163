@@ -7,10 +7,6 @@ import java.util.Objects;
 public class GreenSpace {
 
 
-    public String createdBy() {
-        return email;
-    }
-
     public enum Type{MediumSize,LargeSize,Garden}
 
     private double areaInHectares;
@@ -27,13 +23,7 @@ public class GreenSpace {
         setAddress(addressStreet,addressCity,addressZipCode);
         setName(name);
         setType(type);
-        setEmailOfCreater(managerEmail);
-    }
-
-    private void setEmailOfCreater(String managerEmail) {
-        if (managerEmail != null) {
-            this.email = managerEmail;
-        }
+        setEmailOfCreator(managerEmail);
     }
 
     public GreenSpace(GreenSpaceDto greenSpaceDto) {
@@ -41,7 +31,7 @@ public class GreenSpace {
         setAddress(greenSpaceDto.getAddressStreet(), greenSpaceDto.getAddressCity(), greenSpaceDto.getAddressZipCode());
         setName(greenSpaceDto.getName());
         setType(greenSpaceDto.getType());
-        setEmailOfCreater(greenSpaceDto.createdBy());
+        setEmailOfCreator(greenSpaceDto.createdBy());
     }
 
     private void setType(Type type) {
@@ -113,6 +103,16 @@ public class GreenSpace {
                 Objects.equals(this.getAddressCity(), gs.getAddressCity()) &&
                 Objects.equals(this.getAddressZipCode(), gs.getAddressZipCode()) &&
                 Objects.equals(this.getType(), gs.getType());
+    }
+
+    public String createdBy() {
+        return email;
+    }
+
+    private void setEmailOfCreator(String managerEmail) {
+        if (managerEmail != null) {
+            this.email = managerEmail;
+        }
     }
 
 }

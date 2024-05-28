@@ -10,10 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 import java.io.IOException;

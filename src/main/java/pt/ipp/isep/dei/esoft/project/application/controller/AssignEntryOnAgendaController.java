@@ -25,4 +25,5 @@ public class AssignEntryOnAgendaController {
     public boolean assignEntryOnAgenda(EntryDto entryDto){
         return entryRepository.assignEntryOnAgenda(entryDto).isPresent();
     }
+
 }
