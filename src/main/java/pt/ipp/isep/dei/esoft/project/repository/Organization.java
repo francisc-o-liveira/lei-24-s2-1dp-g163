@@ -212,5 +212,14 @@ public class Organization{
         }
     }
 
+    public List<GreenSpace> getGreenSpaceListByManagerEmail(String email) {
+        List<GreenSpace> greenSpaceList = new ArrayList<>();
+        for (GreenSpace gs : greenSpaces) {
+            if (gs.createdBy().equals(email)){
+                greenSpaceList.add(gs);
+            }
+        }
+        return greenSpaceList;
+    }
     //Clone organization
 }
