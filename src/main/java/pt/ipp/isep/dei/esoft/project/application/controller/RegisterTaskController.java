@@ -3,12 +3,15 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.util.List;
 
@@ -38,7 +41,8 @@ public class RegisterTaskController {
         return EntryRepository.getDegreeOfUrgency();
     }
 
-    public boolean registerTaskEntry(EntryDto entryDto){
+    public boolean registerTaskEntry(Date startDate, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference){
+        EntryDto entryDto = new EntryDto(startDate,new EntryState(),title,description,degreeUrgency,expectedDuration,greenSpaceDto,reference);
         if (entryRepository.registerNewTask(entryDto).isPresent()){
            return true;
         }
