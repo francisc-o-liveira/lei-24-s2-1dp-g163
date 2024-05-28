@@ -54,7 +54,7 @@ public class ManageGreenSpacesUI implements Initializable {
 
     public void setTableGreenSpaces(){
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("addressStreet"));
         colArea.setCellValueFactory(new PropertyValueFactory<>("areaInHectares"));
         colDetails.setCellFactory(new Callback<
                 TableColumn<GreenSpaceDto, Void>, TableCell<GreenSpaceDto, Void>>() {
