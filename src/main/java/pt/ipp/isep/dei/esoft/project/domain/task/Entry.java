@@ -86,7 +86,6 @@ public class Entry extends Task {
     private void setStartDate(Date newStartDate) {
         this.startDate = newStartDate;
     }
-
     public Date getStartDate() {
         return this.startDate;
     }
@@ -96,37 +95,27 @@ public class Entry extends Task {
     public Team getTeamAssigned() {
         return this.teamAssigned;
     }
-
     public EntryState getStatus() {
         return this.status;
     }
-
     public static DegreeUrgency[] getDegreeOfUrgency(){
         return Task.getDegreeUrgencyValues();
     }
-
     public void setEntryAgenda(Date startDate, EntryState status) {
         this.startDate = startDate;
         this.status = status;
     }
-
     public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
     }
-
     public void setTeamAssigned(Team teamAssigned) {
         this.teamAssigned = teamAssigned;
     }
-
     public boolean isCanceled() {
         return this.status.isCanceled();
     }
-
     public boolean isPostpone() {
         return this.status.isPostpone();
     }
-
-    public TimePeriod getTimePeriod(){
-        return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());
-    }
+    public TimePeriod getTimePeriod(){return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());}
 }
