@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterTaskController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
@@ -26,8 +27,7 @@ import java.util.ResourceBundle;
 public class ManageTasksUI implements Initializable {
 
     public AuthenticationController ctrlAuth;
-    private DetailsEntryAgendaController ctrl;
-    private AssignEntryOnAgendaController ctrlForList;
+    private RegisterTaskController ctrl;
     public Stage stage = LoginUI.getMainStage();
     private ObservableList<EntryDto> taskObservableList= FXCollections.observableArrayList();
     private EntryDto selectedTask;
@@ -53,16 +53,15 @@ public class ManageTasksUI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ctrlAuth=new AuthenticationController();
-        ctrl=new DetailsEntryAgendaController();
-        ctrlForList=new AssignEntryOnAgendaController();
+        ctrl=new RegisterTaskController();
         setTableToDoList();
     }
 
     public void setTableToDoList(){
         degreeUrgencyCol.setCellValueFactory(new PropertyValueFactory<>("degreeUrgency"));
-        durationCol.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        durationCol.setCellValueFactory(new PropertyValueFactory<>("expectedDuration"));
         parkCol.setCellValueFactory(new PropertyValueFactory<>("park"));
-        taskCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        taskCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         detailsCol.setCellFactory(new Callback<
                 TableColumn<EntryDto, Void>, TableCell<EntryDto, Void>>() {
             @Override
@@ -95,7 +94,7 @@ public class ManageTasksUI implements Initializable {
             }
         });
 
-        for(EntryDto t : ctrlForList.getToDoList()){
+        for(EntryDto t : ctrl.getToDoList()){
             taskObservableList.add(t);
         }
 
