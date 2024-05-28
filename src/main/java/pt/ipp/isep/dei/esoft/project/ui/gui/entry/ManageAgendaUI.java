@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class ManageAgendaUI  implements Initializable{
         weeklyViewAnchorPane.getChildren().add(getViewWeekly());
         ctrlAuth = new AuthenticationController();
         ctrlEntry=new DetailsEntryAgendaController();
-        this.entries=ctrlEntry.getList();
+        //this.entries=ctrlEntry.getList();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);
         currentStartDate = LocalDate.now().with(DayOfWeek.MONDAY);
@@ -219,20 +220,20 @@ public class ManageAgendaUI  implements Initializable{
             entryLabel.setPrefHeight(50);
             entryLabel.getStyleClass().add("event-label");
 
-            switch (entry.getStatus()) {
-                case Postponed:
+            /*switch (entry.getStatus()) {
+                case EntryState.State.Postponed:
                     entryLabel.getStyleClass().add("status-postponed");
                     break;
-                case Planned:
+                case EntryState.State.Planned:
                     entryLabel.getStyleClass().add("status-planned");
                     break;
-                case Canceled:
+                case EntryState.State.Canceled:
                     entryLabel.getStyleClass().add("status-canceled");
                     break;
-                case Done:
+                case EntryState.State.Done:
                     entryLabel.getStyleClass().add("status-done");
                     break;
-            }
+            }*/
 
             entryLabel.setOnMouseClicked(event -> {
                 try {
