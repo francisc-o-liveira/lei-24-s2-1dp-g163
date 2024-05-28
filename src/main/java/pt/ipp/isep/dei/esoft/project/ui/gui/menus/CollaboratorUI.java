@@ -55,7 +55,7 @@ public class CollaboratorUI {
     @FXML
     public void btnCompleteTasks(ActionEvent event){
         popUp().show();
-        if(popUp().showAndWait().get()==ButtonType.OK){
+        if(popUp().showAndWait().get() == ButtonType.OK){
             //mark as complete and also register the finish time!
         }
     }
