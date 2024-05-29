@@ -11,31 +11,82 @@ participant ":ViewDetailsEntryUI" as UI2
 participant ":ViewDetailsEntryController" as CTRL2
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "entryRepository:\nEntryRepository" as EntryRepository
+participant "entryRepository:\nEntryRepository" as EntryRepo
+
+participant ":EntryMapper" as EntryMapper
+participant "objDto:EntryDto" as ObjDto
+participant "entryDto:EntryDto" as EntryDto
 participant "entry:Entry" as OBJ
 
 activate GSM
+activate UI2
+activate CTRL2
 
 ref over GSM : Get details and management options\n of a selected entry on the agenda
 
+note right of UI2
+    UI and Controller were activated simultaneously with GSM,
+    because this diagram continues from the previous one referenced
+    in this diagram at the beggining.
+end note
+
 GSM-> UI2: Postpones the Entry Starting Date   
-activate UI2
 
-UI2 -> CTRL2: postponeEntry(newStartDate, entry)
-activate CTRL2
+UI2 -> CTRL2: postponeEntry(objDto, entryDto)
 
-CTRL2 -> OBJ: postponeEntry(newStartDate)
+note right of UI2
+   Remember that in the previous diagram, 
+   ViewDetailsUI received entryDto from AgendaUI via 
+   receiveDto and will use it via this method: "assignTeamToEntry"
+end note
+note right of UI2
+    {newStartDate}, entry
+end note
+
+
+CTRL2 -> EntryRepo : postponeEntry(objDto, entryDto)
+note right of CTRL2
+    {newStartDate}, entry
+end note
+activate EntryRepo
+
+EntryRepo -> EntryMapper : toDomainAndpostponeEntry(objDto, entryDto)
+
+activate EntryMapper
+
+EntryMapper -> ObjDto : newStartDate = getstartDate()
+activate ObjDto
+deactivate ObjDto
+
+EntryMapper -> EntryDto : reference = getReference()
+activate EntryDto
+deactivate EntryDto
+
+EntryMapper -> EntryRepo : findEntryByReference(reference)
+activate EntryRepo
+
+EntryRepo -> EntryMapper : entry
+deactivate EntryRepo
+
+EntryMapper -> OBJ: postponeEntry(newStartDate)
 activate OBJ
 
 OBJ -> OBJ: status.postponeState()
 OBJ -> OBJ: setStartDate(newStartDate)
 
-OBJ -> CTRL2: true
-
+OBJ -> EntryMapper: true
 deactivate OBJ
+
+
+EntryMapper -> EntryRepo: true
+deactivate EntryMapper
+
+EntryRepo -> CTRL2: true
+deactivate EntryRepo
 
 CTRL2 -> UI2: true
 deactivate CTRL2
+
 
 UI2 -> GSM: Confirms the Change
 deactivate UI2

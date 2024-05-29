@@ -1,0 +1,159 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+participant "GreenSpaceManagementUI" as UI
+participant ":GreenSpaceController" as Controller
+
+
+participant "UserSession" as UserSession
+
+participant "Repositories" as Repos
+participant "repositories:Repositories" as reposRepos
+
+participant "authenticationRepository:AuthenticationRepository" as AuthRepo
+participant ":AuthFacade" as AuthFacade
+participant ":UserSession" as UserSession
+participant ":User" as User
+
+participant "managerRepository:ManagerRepository" as ManagerRepo
+participant "manager:Manager" as Manager
+participant "greenSpaces:GreenSpaces" as GreenSpaces
+participant ":Utils" as Utils
+participant "organization:Organization" as Organization
+participant ":GreenSpaceMapper" as Mapper
+participant "greenSpaceListSorted:List<GreenSpace>" as GreenSpaceList
+participant "greenSpaceListSortedDto:List<GreenSpaceDto>" as GreenSpaceDtoList
+participant "objDto:GreenSpaceDto" as GreenSpaceDto
+
+activate GSM
+
+GSM -> UI : Request to list managed green spaces
+activate UI
+
+
+UI -> Controller** : create
+
+
+UI -> Controller : getManagedGreenSpacesListDto()
+activate Controller
+
+Controller -> Repos : getInstance()
+activate Repos
+
+Repos --> Controller : repositories
+deactivate Repos
+
+
+Controller -> reposRepos : getAuthenticationRepository()
+activate reposRepos
+
+reposRepos --> Controller : authenticationRepository
+deactivate reposRepos
+
+/' Controller -> reposRepos : getGreenSpaceRepository()
+activate reposRepos
+
+reposRepos --> Controller : greenSpaceRepository
+deactivate reposRepos '/
+
+Controller -> reposRepos : getManagerRepository()
+activate reposRepos
+
+reposRepos --> Controller : managerRepository
+deactivate reposRepos
+
+
+Controller -> AuthRepo : getCurrentUserSession()
+activate AuthRepo
+
+AuthRepo -> AuthFacade : getCurrentUserSession()
+activate AuthFacade
+
+AuthFacade -> UserSession : getCurrentUserSession()
+activate UserSession
+
+UserSession --> AuthFacade : userSession
+deactivate UserSession
+
+AuthFacade --> AuthRepo : userSession
+deactivate AuthFacade
+
+AuthRepo --> Controller : userSession
+deactivate AuthRepo
+
+Controller -> UserSession : getUser()
+activate UserSession
+
+UserSession -> User : getEmail()
+activate User
+User --> UserSession : userEmail
+deactivate User
+
+UserSession --> Controller : userEmail
+deactivate UserSession
+
+
+
+
+Controller -> ManagerRepo : findByEmail(userEmail)
+activate ManagerRepo
+
+ManagerRepo --> Controller : manager
+deactivate ManagerRepo
+
+
+Controller -> Manager : getGreenSpaces()
+activate Manager
+
+Manager -> GreenSpaces : getSortedGreenSpaces()
+activate GreenSpaces
+
+GreenSpaces -> Utils : sortGreenSpaces()
+activate Utils
+
+Utils ->  GreenSpaces : greenSpaceListSorted
+deactivate Utils
+
+GreenSpaces ->  Manager : greenSpaceListSorted
+deactivate GreenSpaces
+
+Manager --> Controller : greenSpaceListSorted
+deactivate Manager
+
+
+Controller -> Mapper : toDTO(greenSpaceListSorted)
+activate Mapper
+
+Mapper -> GreenSpaceDtoList** : create()
+
+loop for each object in greenSpaceListSorted
+    Mapper -> GreenSpaceList : obj = get()
+    activate GreenSpaceList
+    deactivate GreenSpaceList
+    Mapper -> Mapper: objDto = toDto(obj)
+    activate Mapper
+
+    Mapper -> GreenSpaceDto** : create(obj.getName(), obj.getArea())
+    deactivate Mapper
+    Mapper -> GreenSpaceDtoList : add(objDto)
+    activate GreenSpaceDtoList
+    deactivate GreenSpaceDtoList
+end
+
+deactivate GreenSpaceList
+
+Mapper -> Controller : greenSpaceListSortedDto
+deactivate Mapper
+
+Controller --> UI : greenSpaceListSortedDto
+deactivate Controller
+
+UI --> GSM : Shows List of GreenSpaces
+deactivate UI
+
+@enduml

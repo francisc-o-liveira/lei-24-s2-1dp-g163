@@ -16,13 +16,13 @@ participant "skillRepository:SkillRepository" as SkillRepo
 participant ":CollaboratorMapper" as EmpMapper
 participant ":SkillMapper" as SkillMapper
 
-participant "listCollaborator:list<Collaborator>" as listEmp
-participant "listSkill:list<Skill>" as listSkill
+participant "collaboratorList:list<Collaborator>" as listEmp
+participant "availableSkillList:list<Skill>" as listSkill
 
-participant "CollaboratorNamesDto:list<String>" as CollaboratorNamesDto
+participant "collaboratorListDto:list<CollaboratorDto>" as CollaboratorListDto
 participant "objDto:CollaboratorDto" as CollaboratorDto
 
-participant "availableSkillsNamesDto:list<String>" as availableSkillsNamesDto
+participant "skillListDto:list<SkillDto>" as SkillListDto
 participant "objDto:SkillDto" as SkillDto
 
 
@@ -36,7 +36,7 @@ activate UI
 
 UI -> Controller** : create
 
-UI -> Controller : getCollaboratorNames()
+UI -> Controller : getCollaboratorListDto()
 activate Controller
 
 Controller -> Repos : getInstance()
@@ -66,7 +66,7 @@ deactivate EmpRepo
 Controller -> EmpMapper : toDTO(collaboratorList)
 activate EmpMapper
 
-EmpMapper -> CollaboratorNamesDto** : create()
+EmpMapper -> CollaboratorListDto** : create()
 
 loop for each object in collaboratorList
     EmpMapper -> listEmp : obj = get()
@@ -75,29 +75,45 @@ loop for each object in collaboratorList
     EmpMapper -> EmpMapper: objDto = toDto(obj)
     activate EmpMapper
 
-    EmpMapper -> CollaboratorDto** : create(...)
+    EmpMapper -> CollaboratorDto** : create(obj.getName())
     deactivate EmpMapper
-    EmpMapper -> CollaboratorNamesDto : add(objDto.getName())
-    activate CollaboratorNamesDto
-    deactivate CollaboratorNamesDto
+    EmpMapper -> CollaboratorListDto : add(objDto)
+    activate CollaboratorListDto
+    deactivate CollaboratorListDto
 end
 
 deactivate listEmp
 
-EmpMapper -> Controller : CollaboratorNamesDto
+EmpMapper -> Controller : CollaboratorListDto
 deactivate EmpMapper
 
-Controller --> UI : collaboratorNamesDto
+Controller --> UI : CollaboratorListDto
 deactivate Controller
 
-UI --> HRManager : Displays Collaborator list
+UI --> HRManager : Displays Collaborator Names list
 deactivate UI
 
 HRManager -> UI : Selects Collaborator
 activate UI
 
-UI -> Controller : getAvailableSkillsList(collaboratorName)
+UI -> Controller : getAvailableSkillListDto(objDto) /' collaboratorName '/ 
 activate Controller
+
+Controller -> EmpRepo : getName(objDto) /' collaboratorName '/ 
+activate EmpRepo
+
+EmpRepo -> EmpMapper : toModelAndGetName(objDto) /' collaboratorName '/ 
+activate EmpMapper
+
+EmpMapper -> CollaboratorDto : collaboratorName = getCollaboratorName()
+activate CollaboratorDto
+deactivate CollaboratorDto
+
+EmpMapper -> EmpRepo :  collaboratorName  
+deactivate EmpMapper
+
+EmpRepo -> Controller :  collaboratorName  
+deactivate EmpRepo
 
 Controller -> SkillRepo : getAllSkillNames()
 activate SkillRepo
@@ -105,50 +121,50 @@ activate SkillRepo
 SkillRepo -> Controller : allSkills
 deactivate SkillRepo
 
-Controller -> EmpRepo : getAvailableSkillsNames(collaboratorName, allSkills)
+Controller -> EmpRepo : getAvailableSkillList(collaboratorName, allSkills)
 activate EmpRepo
 
 EmpRepo -> EmpRepo : findCollaboratorByName(collaboratorName)
 activate EmpRepo
 deactivate EmpRepo
 
-EmpRepo -> Collaborator : getAssignedSkills(allSkills)
+EmpRepo -> Collaborator : getAssignedSkills()
 activate Collaborator
 
 Collaborator -> EmpRepo  : assignedSkills
 deactivate Collaborator
-EmpRepo --> EmpRepo : filterAssignedSkills(assignedSkills, allSkills)
+EmpRepo -> EmpRepo : filterAssignedSkills(assignedSkills, allSkills)
 
-EmpRepo --> Controller : availableSkills
+EmpRepo --> Controller : availableSkillList
 deactivate EmpRepo
 
 
 
-Controller -> SkillMapper : toDTO(availableSkills)
+Controller -> SkillMapper : toDTO(availableSkillList)
 activate SkillMapper
 
-SkillMapper -> availableSkillsNamesDto** : create()
+SkillMapper -> SkillListDto** : create()
 
-loop for each object in availableSKillsList
+loop for each object in availableSKillList
     SkillMapper -> listSkill : obj = get()
     activate listSkill
     deactivate listSkill
     SkillMapper -> SkillMapper: objDto = toDto(obj)
     activate SkillMapper
 
-    SkillMapper -> SkillDto** : create(...)
+    SkillMapper -> SkillDto** : create(obj.getName())
     deactivate SkillMapper
-    SkillMapper -> availableSkillsNamesDto : add(objDto.getName())
-    activate availableSkillsNamesDto
-    deactivate availableSkillsNamesDto
+    SkillMapper -> SkillListDto : add(objDto)
+    activate SkillListDto
+    deactivate SkillListDto
 end
 
 deactivate listEmp
 
-SkillMapper -> Controller : availableSkillsNamesDto
+SkillMapper -> Controller : skillListDto
 deactivate SkillMapper
 
-Controller --> UI : availableSkillsNamesDto
+Controller --> UI : availableSkillListDto
 deactivate Controller
 
 UI --> HRManager : Displays Available Skills to Assign
@@ -157,7 +173,7 @@ deactivate UI
 HRManager -> UI : Selects Skill and Submits
 activate UI
 
-UI -> Controller : assignSkills(objDto) /' collaboratorName, skillName '/
+UI -> Controller : assignSkill(objDto) /' collaboratorName, skillName '/
 activate Controller
 
 Controller -> EmpRepo : assignSkillToCollaborator(objDto)

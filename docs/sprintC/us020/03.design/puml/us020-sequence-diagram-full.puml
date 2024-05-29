@@ -6,82 +6,182 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "HRM" as HRM
+actor "GSM" as GSM
 participant ":RegisterGreenSpaceUI" as UI
 participant ":RegisterGreenSpaceController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "greenSpaceRepository:\nGreenSpaceRepository" as greenSpaceRepository
-participant ":GreenSpace" as classObj
+participant ":Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+participant "organizationRepository:Organization" as Organization
+participant ":GreenSpace" as GreenSpace
+participant "GreenSpace.Type" as Type
+participant ":OrganizationMapper" as OrganizationMapper
+
+participant ":GreenSpaceMapper" as GreenSpaceMapper
+participant "greenSpaceTypeListDto:list<GreenSpaceDTO>" as TypeListDto
+participant "objDto:GreenSpaceDTO" as GreenDto
+
+
+participant "listOrganization:list<Checkup>" as listOrganization
+participant "VehicleNamesDto:list<String>" as VehicleNamesDto
+participant "objDto:VehicleDto" as VehicleDto
+
+
 participant "greenSpace:GreenSpace" as obj
-participant ":greenSpaceDto" as dto
 
 
 
 
-activate HRM
 
-HRM -> UI : asks to register a new green space
+activate GSM
+
+GSM -> UI : Asks to Register a New Green Space
 
 activate UI
 
-'            UI --> HRM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-'create CTRL
-UI -> CTRL** : create
+UI -> CTRL** : create()
+
+
+
+UI -> CTRL: getGreenSpaceTypeListDto()
 activate CTRL
 
-ref over CTRL
-Get Green Space Type
+
+CTRL -> Repos: getInstance()
+activate Repos
+
+Repos --> CTRL: repositories
+deactivate Repos
+
+CTRL -> reposRepos: getOrganizarionRepository()
+activate reposRepos
+
+reposRepos --> CTRL: organizarionRepository
+deactivate reposRepos
+
+CTRL -> Organization: getEnumGreenSpaceTypes()
+activate Organization
+
+Organization -> GreenSpace : getEnumGreenSpaceTypes()
+activate GreenSpace
+
+GreenSpace -> Type  : values()
+activate Type
+
+
+Type -> GreenSpace  : enumGreenSpaceTypes
+deactivate Type
+
+GreenSpace -> Organization  : enumGreenSpaceTypes
+
+deactivate GreenSpace
+
+Organization -> CTRL  : enumGreenSpaceTypes
+deactivate Organization
+
+
+CTRL -> GreenSpaceMapper : toDTO(enumGreenSpaceTypes)
+activate GreenSpaceMapper
+
+GreenSpaceMapper -> TypeListDto** : create()
+
+loop for each type in enumGreenSpaceTypes
+    GreenSpaceMapper -> GreenSpaceMapper: objDto = toDto(type)
+    activate GreenSpaceMapper
+
+    GreenSpaceMapper -> GreenDto** : create(type.name())
+    deactivate GreenSpaceMapper
+    GreenSpaceMapper -> TypeListDto : add(objDto)
+    activate TypeListDto
+    deactivate TypeListDto
 end
 
-CTRL --> UI: greenSpaceTypes
+deactivate listEmp
 
-deactivate
+GreenSpaceMapper -> CTRL : greenSpaceTypeListDto
+deactivate GreenSpaceMapper
 
-UI -> HRM : requests data (greenSpaceType)
-deactivate UI
-
-HRM -> UI: selects data
-activate UI
-
-
-HRM <- UI: requests data (greenSpaceArea, greenSpaceAddress, greenSpaceName)
-deactivate UI
-HRM -> UI: types requested data
-activate UI
-
-UI -> CTRL: registerGreenSpace(greenSpaceDto)
-activate CTRL
-
-CTRL -> greenSpaceRepository : registerGreenSpace(greenSpaceDto)
-
-activate greenSpaceRepository
-
-greenSpaceRepository -> obj** : create(dto)
-
-activate obj
-
-obj -> dto : name= getGreenSpaceName
-activate dto
-obj -> dto : name= getGreenSpaceAddress
-
-obj -> dto : name= getGreenSpaceArea
-deactivate dto
-
-greenSpaceRepository-> greenSpaceRepository: verifyIfExists(greenSpace)
-
-greenSpaceRepository -> CTRL : GreenSpace
-deactivate greenSpaceRepository
-
-
-
-CTRL --> UI : greenSpace
+CTRL --> UI : greenSpaceTypeListDto
 deactivate CTRL
 
 
-UI --> HRM : displays operation success
+UI -> GSM : Displays all available green space types and requests\n the name, address, area, and type for the new green space
 deactivate UI
 
-deactivate HRM
+GSM -> UI: Provides the name, address, area, and selects a green space type
+activate UI
+
+UI -> CTRL: registerGreenSpace(objDto)
+activate CTRL
+
+note right of UI
+(newName, newAddress,
+ newArea, typeName)
+end note
+
+CTRL -> Organization : registerGreenSpace(objDto)
+activate Organization
+note right of CTRL
+(newName, newAddress, newArea, typeName)
+end note
+
+
+Organization -> GreenSpaceMapper : toModel(objDto)
+activate GreenSpaceMapper
+note right of Organization
+(newName, newAddress, newArea, typeName)
+end note
+
+
+GreenSpaceMapper -> GreenDto : newName = getName()
+activate GreenDto 
+deactivate GreenDto
+
+GreenSpaceMapper -> GreenDto : newAdress = getAdress()
+activate GreenDto 
+deactivate GreenDto
+
+GreenSpaceMapper -> GreenDto : newArea = getArea()
+activate GreenDto 
+deactivate GreenDto
+
+GreenSpaceMapper -> GreenDto : typeName = getTypeName()
+activate GreenDto 
+deactivate GreenDto
+
+GreenSpaceMapper -> GreenSpace : valueOf(typeName)
+activate GreenSpace 
+
+GreenSpace -> Type : valueOf(typeName)
+activate Type 
+
+Type -> GreenSpace : type
+deactivate Type
+
+
+GreenSpace -> GreenSpaceMapper : type
+deactivate GreenSpace
+
+GreenSpaceMapper -> obj** : create(newName, newAddress, newArea, type)
+
+activate obj
+
+obj -> GreenSpaceMapper : true
+deactivate obj
+
+GreenSpaceMapper-> Organization: verifyIfExists(greenSpace)
+deactivate GreenSpaceMapper
+
+Organization -> CTRL : true
+deactivate Organization
+
+
+CTRL --> UI : true
+deactivate CTRL
+
+
+UI --> GSM : displays operation success
+deactivate UI
+
+deactivate GSM
 
 @enduml

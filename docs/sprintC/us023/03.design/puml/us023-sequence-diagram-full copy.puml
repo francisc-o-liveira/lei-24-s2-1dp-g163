@@ -11,11 +11,16 @@ participant ":ViewDetailsEntryUI" as UI2
 participant ":ViewDetailsEntryController" as CTRL2
 
 
-
-participant "Repositories" as Repos
-participant "repositories\n:Repositories" as reposRepos
 participant "entryRepository:EntryRepository" as EntryRepo
+
+
+participant ":EntryMapper" as EntryMapper
+participant "entryDto:EntryDto" as EntryDto
+
 participant "TeamRepository:TeamRepository" as TeamRepo
+
+participant ":TeamMapper" as TeamMapper
+participant "objDto:TeamDto" as TeamDto
 
 
 
@@ -27,29 +32,84 @@ participant ":EmailService" as EmailService
 participant ":ApplicationSession" as ApplicationSession
 participant ":GmailService" as GmailService
 participant ":DeiEmailService" as DeiEmailService
+
 activate GSM
+activate UI2
+activate CTRL2
 
 ref over GSM : Get details and management options\n of a selected entry on the agenda
 
+note right of UI2
+    UI and Controller were activated simultaneously with GSM,
+    because this diagram continues from the previous one referenced
+    in this diagram at the beggining.
+end note
+
 GSM -> UI2 : Selects a Team and Assigns it to the Selected Entry
-activate UI2
 
-UI2 -> CTRL2 : assignTeamToEntry(teamName, agendaName)
-activate CTRL2
 
-CTRL2 -> EntryRepo : assignTeamToEntry(teamName, agendaName)
-activate EntryRepo
+UI2 -> CTRL2 : assignTeamToEntry(objDto, entryDto)
+note right of UI2
+   Remember that in the previous diagram, 
+   ViewDetailsUI received entryDto from AgendaUI via 
+   receiveDto and will use it via this method: "assignTeamToEntry"
+end note
+note right of UI2
+    {teamName}, entry
+end note
 
-EntryRepo -> TeamRepo : findTeamByName(teamName)
+
+CTRL2 -> TeamRepo : getTeamName(objDto)
+note right of CTRL2
+    teamName
+end note
 activate TeamRepo
 
-TeamRepo -> EntryRepo  : team
+TeamRepo -> TeamMapper : extractName(objDto)
+note right of TeamRepo
+    teamName
+end note
+activate TeamMapper
+
+TeamMapper -> TeamDto : teamName = getTeamName()
+activate TeamDto
+deactivate TeamDto
+
+TeamMapper -> TeamRepo : teamName
+deactivate TeamMapper
+
+TeamRepo -> CTRL2 : teamName
 deactivate TeamRepo
 
-EntryRepo -> EntryRepo : findEntryByName(entryName)
+
+CTRL2 -> TeamRepo : findTeamByName(teamName)
+activate TeamRepo
+
+TeamRepo -> CTRL2  : team
+deactivate TeamRepo
+
+
+CTRL2 -> EntryRepo : assignTeamToEntry(team, entryDto)
+
 activate EntryRepo
+
+EntryRepo -> EntryMapper : toDomainAndAssignTeam(team, entryDto)
+
+activate EntryMapper
+
+EntryMapper -> EntryDto : reference = getReference()
+activate EntryDto
+deactivate EntryDto
+
+EntryMapper -> EntryRepo : findEntryByReference(reference)
+activate EntryRepo
+
+EntryRepo -> EntryMapper : entry
+
 deactivate EntryRepo
-EntryRepo -> Entry : assignTeam(team)
+
+
+EntryMapper -> Entry : assignTeam(team)
 activate Entry
 
 loop for each collaborator in collaboratorsTeam
@@ -75,9 +135,11 @@ loop for each collaborator in collaboratorsTeam
 end
 deactivate EmailService
 
-
-Entry --> EntryRepo : true
+Entry --> EntryMapper : true
 deactivate Entry
+
+EntryMapper --> EntryRepo : true
+deactivate EntryMapper
 
 
 EntryRepo --> CTRL2 : true

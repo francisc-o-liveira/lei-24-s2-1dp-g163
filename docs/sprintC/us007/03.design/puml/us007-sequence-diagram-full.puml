@@ -21,10 +21,10 @@ participant "vehicleRepository:VehicleRepository" as VehicleRepo
 participant ":VehicleMapper" as VehicleMapper
 /' participant ":CheckupMapper" as CheckupMapper '/
 
-participant "listVehicle:list<Vehicle>" as listVehicle
+participant "vehicleList:list<Vehicle>" as listVehicle
 /' participant "listCheckup:list<Checkup>" as listCheckup
  '/
-participant "VehicleNamesDto:list<String>" as VehicleNamesDto
+participant "vehicleListDto:list<VehicleDto>" as VehicleNamesDto
 participant "objDto:VehicleDto" as VehicleDto
 
 /'participant "availableCheckupsNamesDto:list<String>" as availableCheckupsNamesDto
@@ -62,15 +62,7 @@ activate VehicleRepo
 VehicleRepo --> Controller : vehicleList
 deactivate VehicleRepo
 
-
-
-
-
-
-
-
-
-Controller -> VehicleMapper : toDTO(VehicleList)
+Controller -> VehicleMapper : toDTO(vehicleList)
 activate VehicleMapper
 
 VehicleMapper -> VehicleNamesDto** : create()
@@ -82,20 +74,19 @@ loop for each object in VehicleList
     VehicleMapper -> VehicleMapper: objDto = toDto(obj)
     activate VehicleMapper
 
-    VehicleMapper -> VehicleDto** : create(...)
+    VehicleMapper -> VehicleDto** : create(obj.getPlate())
     deactivate VehicleMapper
-    VehicleMapper -> VehicleNamesDto : add(objDto.getPlate())
+    VehicleMapper -> VehicleNamesDto : add(objDto)
     activate VehicleNamesDto
     deactivate VehicleNamesDto
 end
 
 deactivate listVehicle
 
-VehicleMapper -> Controller : VehiclesPlatesDto
+VehicleMapper -> Controller : vehicleListDto
 deactivate VehicleMapper
 
-
-Controller --> UI : vehiclePlatesDto
+Controller --> UI : vehicleListDto
 deactivate Controller
 
 UI --> FleetManager : Show Plates, Request Date of Check Up and Current Kilometers and Frequency Option
@@ -109,12 +100,28 @@ UI -> UI : validateCheckUpDate(date)
 
 UI -> UI : verifyKilometersFormat(currentKms)
 
-UI -> Controller : validateKilometers(currentKms, selectedPlate)
+UI -> Controller : validateKilometers(objDto) /' currentKms, selectedPlate '/ 
 activate Controller
 
 
-Controller -> VehicleRepo: getLastKmForVehicle(plate)
+note right of UI
+(currentKms, selectedPlate)
+end note
+
+Controller -> VehicleRepo: validateKilometers(objDto)
 activate VehicleRepo
+
+VehicleRepo -> VehicleMapper: toModelAndGetCurrentKms(objDto)
+activate VehicleMapper    
+
+VehicleMapper -> VehicleDto : providedKms = getcurrentKms()
+activate VehicleDto
+deactivate VehicleDto
+
+VehicleMapper -> VehicleDto : providedKms = getcurrentKms()
+activate VehicleDto
+deactivate VehicleDto
+
 
 VehicleRepo -> Controller: currentKm
 deactivate VehicleRepo
@@ -149,14 +156,14 @@ VehicleMapper -> VehicleDto : currentKms = getCurrentKms()
 activate VehicleDto
 deactivate VehicleDto
 
-VehicleMapper -> VehicleDto : maintenanceKm = getMaintenanceKms()
+VehicleMapper -> VehicleDto : newMaintenanceKms = getMaintenanceKms()
 activate VehicleDto
 deactivate VehicleDto
 
 
 
 
-VehicleMapper -> VehicleRepo : findVehicleByPlate(plate)
+VehicleMapper -> VehicleRepo : findVehicleByPlate(selectedPlate)
 activate VehicleRepo
 
 VehicleRepo -> VehicleMapper : vehicle
@@ -164,6 +171,8 @@ deactivate VehicleRepo
 
 VehicleMapper -> Vehicle : addCheckUp(currentKms, dateOfCheck, maintenanceKms)
 activate Vehicle
+
+Vehicle -> Vehicle : setMaintenanceKms(newMaintenanceKms)
 
 Vehicle -> Checkup** : create(currentKms, dateOfCheck)
 activate Checkup
