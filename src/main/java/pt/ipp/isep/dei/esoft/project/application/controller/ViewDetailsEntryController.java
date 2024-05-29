@@ -46,7 +46,7 @@ public class ViewDetailsEntryController {
         return entryRepository.cancelEntry(entryDto).isPresent();
     }
 
-    public boolean postponeEntry(EntryDto entryDto){
+    public boolean postponeEntry(EntryDto entryDto){ //dont you need the date to postpone?
         return entryRepository.postponeEntry(entryDto).isPresent();
     }
 
@@ -55,7 +55,7 @@ public class ViewDetailsEntryController {
     }
 
     public boolean assignVehicleToEntry(VehicleDto vehicleDto, EntryDto entryDto){
-        if (entryDto.assignVehicle(vehicleMapper.vehicleDtoToVehicle(vehicleDto))){
+        if (entryDto.assignVehicle(vehicleDto)){
             return entryRepository.assignVehicleOnEntry(entryDto).isPresent();
         }
         return false;
