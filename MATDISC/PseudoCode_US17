@@ -1,0 +1,63 @@
+// Function to find the index with the minimum cost
+function indexOfMin(costsOfVertices, verticesVisited, numVertices):
+    min = Infinity
+    indexOfMinimum = -1
+    for j from 0 to numVertices-1:
+        if verticesVisited[j] is False and costsOfVertices[j] < min:
+            min = costsOfVertices[j]
+            indexOfMinimum = j
+    return indexOfMinimum
+
+// Function to implement Dijkstra's Algorithm
+function dijkstraAlgorithm(edges, startingPoint):
+    resultPath = []
+
+    vertices = numberOfVertices(edges)
+    numVertices = length(vertices)
+
+    // Initialize the costs, used vertices, and path
+    costsOfVertices = [Infinity] * numVertices
+    verticesUsed = [False] * numVertices
+    pathVertices = [null] * numVertices
+
+    indexOfStartingPoint = indexOf(startingPoint in vertices)
+
+    costsOfVertices[indexOfStartingPoint] = 0
+
+    for i from 0 to numVertices-2:
+        // Find the vertex with the minimum cost among the unused vertices
+        indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices)
+
+        if indexOfMinimum == -1:
+            break
+
+        chosenVertex = vertices[indexOfMinimum]
+        verticesUsed[indexOfMinimum] = True
+
+        // Update the costs of the paths
+        for edge in edges:
+            if edge.p1 == chosenVertex:
+                indexOfNext = indexOf(edge.p2 in vertices)
+                if verticesUsed[indexOfNext] is False:
+                    cost = costsOfVertices[indexOfMinimum] + edge.price
+                    if cost < costsOfVertices[indexOfNext]:
+                        costsOfVertices[indexOfNext] = cost
+                        pathVertices[indexOfNext] = chosenVertex
+
+    for i from 0 to numVertices-1:
+        if pathVertices[i] is not null:
+            resultPath.append(new Edge(pathVertices[i], vertices[i], costsOfVertices[i]))
+
+    return resultPath
+
+// Function to get the list of vertices
+function numberOfVertices(edges):
+    vertices = []
+    for edgeX in edges:
+        x1 = edgeX.p1
+        x2 = edgeX.p2
+        if x1 not in vertices:
+            vertices.append(x1)
+        if x2 not in vertices:
+            vertices.append(x2)
+    return vertices

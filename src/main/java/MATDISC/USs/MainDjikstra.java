@@ -1,15 +1,10 @@
 package MATDISC.USs;
 
-import MATDISC.USs.Point;
-import MATDISC.USs.Edge;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.EmptyStackException;
 import java.util.Scanner;
 
 
@@ -25,6 +20,7 @@ public class MainDjikstra {
         int option = -1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
+        ArrayList<ArrayList<Edge>> result2;
         Point start;
         Point end;
         Scanner sc = new Scanner(System.in);
@@ -41,13 +37,27 @@ public class MainDjikstra {
                     }
                     break;
                 case 2:
-                    //needs to be changed to correspond with what the file will be giving
+                    //this part will have to be given by the csv
                     System.out.print("What is the starting point: ");
                     start = new Point(sc.next());
-                    System.out.print("What is the ending point: ");
-                    end = new Point(sc.next());
                     sc.close();
-                    result = djisktraAlgorithm(edges, start, end);
+                    result = dijkstraAlgorithmUS17(edges, start);
+                    try {
+                        createResultFile(result);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case 3:
+                    //this part will have to be given by the csv
+                    System.out.println("Enter the number of starting points:");
+                    int numStartingPoints = sc.nextInt();
+                    ArrayList<Point> startingPoints = new ArrayList<>();
+                    System.out.println("Enter the starting points:");
+                    for (int i = 0; i < numStartingPoints; i++) {
+                        startingPoints.add(new Point(sc.next()));
+                    }
+                    result = dijkstraAlgorithmUS18(edges, startingPoints);
                     try {
                         createResultFile(result);
                     } catch (IOException e) {
@@ -59,6 +69,32 @@ public class MainDjikstra {
             }
 
         }
+    }
+
+    //this method needs to be changed!
+    public static ArrayList<Edge> readFromFile(String fileName) throws IOException {
+        Scanner scanFile = new Scanner(new File(fileName));
+        String[] line;
+        ArrayList<Edge> edges = new ArrayList<>();
+        int sizeArray;
+        int i = 0;
+        if (scanFile.hasNextLine()) {
+            line = scanFile.nextLine().split(" ");
+            sizeArray = line.length;
+            do {
+                for (int j = i; j < sizeArray; j++) {
+                    if (Integer.parseInt(line[j]) != 0) {
+                        edges.add(new Edge(new Point(Integer.toString(i)), new Point(Integer.toString(j)), Integer.parseInt(line[j])));
+
+                    }
+                }
+                i++;
+            } while (i < sizeArray);
+        } else {
+            throw new IOException("The file is empty");
+        }
+
+        return edges;
     }
 
     //procura o índice com o menor custo
@@ -75,7 +111,7 @@ public class MainDjikstra {
     }
 
 
-    public static ArrayList<Edge> djisktraAlgorithm(ArrayList<Edge> edges, Point startingPoint, Point endPoint) {
+    public static ArrayList<Edge> dijkstraAlgorithmUS17(ArrayList<Edge> edges, Point startingPoint) {
         ArrayList<Edge> resultPath = new ArrayList<>();
 
         ArrayList<Point> vertices = numberOfVertices(edges);
@@ -89,7 +125,7 @@ public class MainDjikstra {
         ArrayList<Point> pathVertices = new ArrayList<>(Collections.nCopies(numVertices, null));
 
         int indexOfStartingPoint = vertices.indexOf(startingPoint);
-        int indexOfEndPoint = vertices.indexOf(endPoint);
+
 
         costsOfVertices.set(indexOfStartingPoint, 0);
 
@@ -97,7 +133,7 @@ public class MainDjikstra {
             // Index of the vertex with the minimum cost among the unused vertices
             int indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices);
             // The algorithm stops when the endPoint is the vertex with the minimum cost or all vertices have been used
-            if (indexOfMinimum == -1 || indexOfMinimum == indexOfEndPoint) {
+            if (indexOfMinimum == -1) {
                 break;
             }
             Point chosenVertex = vertices.get(indexOfMinimum);
@@ -116,26 +152,65 @@ public class MainDjikstra {
                 }
             }
         }
-        // Construct the resulting path in correct order
-        ArrayList<Edge> tempResultPath = new ArrayList<>();
-        Point currentPoint = endPoint;
-        while (currentPoint != null && !currentPoint.equals(startingPoint)) {
-            Point beforePoint = pathVertices.get(vertices.indexOf(currentPoint));
-            if (beforePoint == null) {
-                break;
+        for (int i = 0; i < numVertices; i++) {
+            if (pathVertices.get(i) != null) {
+                resultPath.add(new Edge(pathVertices.get(i), vertices.get(i), costsOfVertices.get(i)));
             }
-            int cost = costsOfVertices.get(vertices.indexOf(currentPoint)) - costsOfVertices.get(vertices.indexOf(beforePoint));
-            tempResultPath.add(new Edge(beforePoint, currentPoint, cost));
-            currentPoint = beforePoint;
-        }
-
-        // Reversing the path
-        for (int i = tempResultPath.size() - 1; i >= 0; i--) {
-            resultPath.add(tempResultPath.get(i));
         }
 
         return resultPath;
     }
+
+    public static ArrayList<Edge> dijkstraAlgorithmUS18(ArrayList<Edge> edges, ArrayList<Point> startingPoints) {
+        ArrayList<Edge> resultPath = new ArrayList<>();
+
+        ArrayList<Point> vertices = numberOfVertices(edges);
+        int numVertices = vertices.size();
+
+        ArrayList<Integer> costsOfVertices = new ArrayList<>(Collections.nCopies(numVertices, Integer.MAX_VALUE));
+        ArrayList<Boolean> verticesUsed = new ArrayList<>(Collections.nCopies(numVertices, false));
+        ArrayList<Point> pathVertices = new ArrayList<>(Collections.nCopies(numVertices, null));
+
+        // Initialize distances for starting points
+        for (Point startPoint : startingPoints) {
+            int indexOfStartingPoint = vertices.indexOf(startPoint);
+            costsOfVertices.set(indexOfStartingPoint, 0);
+        }
+
+        for (int i = 0; i < numVertices - 1; i++) {
+            int indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices);
+            if (indexOfMinimum == -1) {
+                break;
+            }
+            Point chosenVertex = vertices.get(indexOfMinimum);
+            verticesUsed.set(indexOfMinimum, true);
+
+            for (Edge edge : edges) {
+                if (edge.getP1().equals(chosenVertex)) {
+                    int indexOfNext = vertices.indexOf(edge.getP2());
+                    if (!verticesUsed.get(indexOfNext)) {
+                        int cost = costsOfVertices.get(indexOfMinimum) + edge.getPrice();
+                        if (cost < costsOfVertices.get(indexOfNext)) {
+                            costsOfVertices.set(indexOfNext, cost);
+                            pathVertices.set(indexOfNext, chosenVertex);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Construct the resulting paths
+        for (int i = 0; i < numVertices; i++) {
+            Point pathVertex = pathVertices.get(i);
+            if (pathVertex != null && !startingPoints.contains(vertices.get(i))) {
+                int indexOfPathVertex = vertices.indexOf(pathVertex);
+                resultPath.add(new Edge(pathVertex, vertices.get(i), costsOfVertices.get(i) - costsOfVertices.get(indexOfPathVertex)));
+            }
+        }
+
+        return resultPath;
+    }
+
 
     // VERTICES == POINTS
     public static ArrayList<Point> numberOfVertices(ArrayList<Edge> edges) {
@@ -185,14 +260,14 @@ public class MainDjikstra {
         System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
         System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
         if (edges == null) {
-            System.out.println("----Option 2 : Djikstra Algorithm (No Data Loaded)");
+            System.out.println("----Option 2 : Djikstra Algorithm US17 (No Data Loaded)");
         } else {
-            System.out.println("----Option 2 : Djikstra Algorithm (Data Loaded)");
+            System.out.println("----Option 2 : Djikstra Algorithm US17 (Data Loaded)");
         }
         if (edges == null) {
-            System.out.println("----Option 3 : Djikstra Algorithm to One (No Data Loaded)");
+            System.out.println("----Option 3 : Djikstra Algorithm US18 (No Data Loaded)");
         } else {
-            System.out.println("----Option 3 : Djikstra Algorithm to One (Data Loaded)");
+            System.out.println("----Option 3 : Djikstra Algorithm US18 (Data Loaded)");
         }
         while (option < 0 || option > 3) {
             if (option != -1) {
@@ -202,31 +277,6 @@ public class MainDjikstra {
             option = Integer.parseInt(scan.nextLine());
         }
         return option;
-    }
-
-    public static ArrayList<Edge> readFromFile(String fileName) throws IOException {
-        Scanner scanFile = new Scanner(new File(fileName));
-        String[] line;
-        ArrayList<Edge> edges = new ArrayList<>();
-        int sizeArray;
-        int i = 0;
-        if (scanFile.hasNextLine()) {
-            line = scanFile.nextLine().split(" ");
-            sizeArray = line.length;
-            do {
-                for (int j = i; j < sizeArray; j++) {
-                    if (Integer.parseInt(line[j]) != 0) {
-                        edges.add(new Edge(new Point(Integer.toString(i)), new Point(Integer.toString(j)), Integer.parseInt(line[j])));
-
-                    }
-                }
-                i++;
-            } while (i < sizeArray);
-        } else {
-            throw new IOException("The file is empty");
-        }
-
-        return edges;
     }
 
     public static void createResultFile(ArrayList<Edge> edges) throws IOException {
