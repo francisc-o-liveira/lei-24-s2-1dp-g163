@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain.dto;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
@@ -9,8 +11,6 @@ public class VehicleDto {
 
     /** The model of the vehicle. */
     private String model;
-
-
     private Vehicle.Type type;
 
     /** The license plate of the vehicle. */
@@ -22,6 +22,10 @@ public class VehicleDto {
     /** The date when the vehicle was acquired. */
     private Date acquisitionDate;
 
+    private final BooleanProperty selecting;
+
+    private boolean selectedForEntry;
+
     public VehicleDto(String brand, String model, Vehicle.Type type, String plate, double currentKm, Date acquisitionDate) {
         setBrand(brand);
         setModel(model);
@@ -29,6 +33,13 @@ public class VehicleDto {
         setPlate(plate);
         setCurrentKm(currentKm);
         setAcquisitionDate(acquisitionDate);
+        this.selecting = new SimpleBooleanProperty(false);
+
+        this.selecting.addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                selectedForEntry=true;
+            }
+        });
     }
 
     public void setType(Vehicle.Type type) {
@@ -54,6 +65,9 @@ public class VehicleDto {
     public void setBrand(String brand) {
         this.brand = brand;
     }
+    public void setSelecting(boolean value){
+        this.selecting.set(value);
+    }
     public String getBrand() {
         return brand;
     }
@@ -71,6 +85,9 @@ public class VehicleDto {
     }
     public Date getAcquisitionDate() {
         return acquisitionDate;
+    }
+    public BooleanProperty isSelectedForEntry(){
+        return selecting;
     }
 
 }

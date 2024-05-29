@@ -16,7 +16,7 @@ public class EntryDto extends TaskDto{
 
     private Date startDate;
     private EntryState status;
-    private List<Vehicle> vehicleList;
+    private List<VehicleDto> vehicleList;
     private Team teamAssigned;
     private String reference;
     private boolean selectedByCollab;
@@ -27,7 +27,7 @@ public class EntryDto extends TaskDto{
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
         setStatus(status);
-        this.vehicleList = new ArrayList<Vehicle>();
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.reference = reference;
         this.selectingCollab = new SimpleBooleanProperty(false);
@@ -40,7 +40,7 @@ public class EntryDto extends TaskDto{
     }
 
 
-    public EntryDto(Date startDate, EntryState status, List<Vehicle> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
+    public EntryDto(Date startDate, EntryState status, List<VehicleDto> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
         setStatus(status);
@@ -102,7 +102,7 @@ public class EntryDto extends TaskDto{
         this.startDate = newDate;
     }
 
-    public boolean assignVehicle(Vehicle vehicle) {
+    public boolean assignVehicle(VehicleDto vehicle) {
         if(vehicle != null){
             this.vehicleList.add(vehicle);
             return true;
@@ -111,7 +111,7 @@ public class EntryDto extends TaskDto{
         }
     }
 
-    public List<Vehicle> getVehicleList() {
+    public List<VehicleDto> getVehicleList() {
         return this.vehicleList;
     }
 
