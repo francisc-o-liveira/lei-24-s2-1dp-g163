@@ -25,6 +25,7 @@ public class MainDjikstra {
         int option = -1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
+        ArrayList<ArrayList<Edge>> result2;
         Point start;
         Point end;
         Scanner sc = new Scanner(System.in);
@@ -47,7 +48,7 @@ public class MainDjikstra {
                     System.out.print("What is the ending point: ");
                     end = new Point(sc.next());
                     sc.close();
-                    result = djisktraAlgorithm(edges, start, end);
+                    result = djisktraAlgorithm(edges, start);
                     try {
                         createResultFile(result);
                     } catch (IOException e) {
@@ -75,7 +76,8 @@ public class MainDjikstra {
     }
 
 
-    public static ArrayList<Edge> djisktraAlgorithm(ArrayList<Edge> edges, Point startingPoint, Point endPoint) {
+
+    public static ArrayList<Edge> djisktraAlgorithm(ArrayList<Edge> edges, Point startingPoint) {
         ArrayList<Edge> resultPath = new ArrayList<>();
 
         ArrayList<Point> vertices = numberOfVertices(edges);
@@ -89,7 +91,7 @@ public class MainDjikstra {
         ArrayList<Point> pathVertices = new ArrayList<>(Collections.nCopies(numVertices, null));
 
         int indexOfStartingPoint = vertices.indexOf(startingPoint);
-        int indexOfEndPoint = vertices.indexOf(endPoint);
+
 
         costsOfVertices.set(indexOfStartingPoint, 0);
 
@@ -97,7 +99,7 @@ public class MainDjikstra {
             // Index of the vertex with the minimum cost among the unused vertices
             int indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices);
             // The algorithm stops when the endPoint is the vertex with the minimum cost or all vertices have been used
-            if (indexOfMinimum == -1 || indexOfMinimum == indexOfEndPoint) {
+            if (indexOfMinimum == -1) {
                 break;
             }
             Point chosenVertex = vertices.get(indexOfMinimum);
@@ -116,22 +118,10 @@ public class MainDjikstra {
                 }
             }
         }
-        // Construct the resulting path in correct order
-        ArrayList<Edge> tempResultPath = new ArrayList<>();
-        Point currentPoint = endPoint;
-        while (currentPoint != null && !currentPoint.equals(startingPoint)) {
-            Point beforePoint = pathVertices.get(vertices.indexOf(currentPoint));
-            if (beforePoint == null) {
-                break;
+        for (int i = 0; i < numVertices; i++) {
+            if (pathVertices.get(i) != null) {
+                resultPath.add(new Edge(pathVertices.get(i), vertices.get(i), costsOfVertices.get(i)));
             }
-            int cost = costsOfVertices.get(vertices.indexOf(currentPoint)) - costsOfVertices.get(vertices.indexOf(beforePoint));
-            tempResultPath.add(new Edge(beforePoint, currentPoint, cost));
-            currentPoint = beforePoint;
-        }
-
-        // Reversing the path
-        for (int i = tempResultPath.size() - 1; i >= 0; i--) {
-            resultPath.add(tempResultPath.get(i));
         }
 
         return resultPath;
