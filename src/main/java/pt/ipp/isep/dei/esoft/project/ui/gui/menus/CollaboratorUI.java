@@ -52,14 +52,6 @@ public class CollaboratorUI {
         ui.setTableTasks(tasksInThoseDates);
     }
 
-    @FXML
-    public void btnCompleteTasks(ActionEvent event){
-        popUp().show();
-        if(popUp().showAndWait().get() == ButtonType.OK){
-            //mark as complete and also register the finish time!
-        }
-    }
-
     private Alert popUp() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
 
