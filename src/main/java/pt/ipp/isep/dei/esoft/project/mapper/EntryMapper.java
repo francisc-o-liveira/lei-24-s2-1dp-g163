@@ -69,9 +69,9 @@ public class EntryMapper {
             if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
                 entry.setTeamAssigned(entryDto.getTeamAssigned());
             }
-            if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
+            /*if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
                 entry.setVehicleList(entryDto.getVehicleList());
-            }
+            }*/
         }else {
             //modify task if it is possible
             throw new IllegalArgumentException();

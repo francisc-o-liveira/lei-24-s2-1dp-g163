@@ -10,10 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.ViewTaskListAssignedCollabController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ViewTaskListCollaboratorUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class CollaboratorUI {
     public Stage stage = LoginUI.getMainStage();
 
     public AuthenticationController ctrlAuth;
+    public ViewTaskListAssignedCollabController ctrl;
     private List<EntryDto> tasksInThoseDates;
 
     @FXML
@@ -36,7 +39,9 @@ public class CollaboratorUI {
     }
 
     public void getTasksForCollaborator(){
-        //tasksInThoseDates=ctrl.getTasks(firstDate.getValue(),secondDate.getValue());
+        Date first=new Date(firstDate.getValue().getYear(),firstDate.getValue().getMonthValue(),firstDate.getValue().getDayOfMonth());
+        Date second=new Date(secondDate.getValue().getYear(),secondDate.getValue().getMonthValue(),secondDate.getValue().getDayOfMonth());
+        tasksInThoseDates=ctrl.getEntrysAssignedToMe(/*first,second*/);
     }
 
 

@@ -11,22 +11,25 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.ViewTaskListAssignedCollabController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewTaskListCollaboratorUI {
 
     public Stage stage = LoginUI.getMainStage();
-
     public AuthenticationController ctrlAuth;
+    public ViewTaskListAssignedCollabController ctrl;
     private ObservableList<EntryDto> tasksOfCollab= FXCollections.observableArrayList();
     private List<EntryDto> entriesSelected;
     private List<EntryDto> tasksForCollab;
@@ -52,6 +55,7 @@ public class ViewTaskListCollaboratorUI {
         ctrlAuth=new AuthenticationController();
         entriesSelected =new ArrayList<>();
         tasksForCollab=new ArrayList<>();
+        ctrl=new ViewTaskListAssignedCollabController();
     }
 
     public void setTableTasks(List<EntryDto> tasksForCollaborator){
@@ -71,18 +75,17 @@ public class ViewTaskListCollaboratorUI {
     }
 
     @FXML
-    void btnComplete(ActionEvent event) {
-        getTasksDone();
-
-        for(EntryDto entry : entriesSelected){
+    private void btnComplete(ActionEvent event) {
             try{
-                //in a controller, it passes the collaborator that is completing a task and
-                // the list of tasks selected
+                getTasksDone();
+                ZonedDateTime timeAndDate = ZonedDateTime.now();
+                Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
+                Tempo completedTime=new Tempo(timeAndDate.getHour(),timeAndDate.getMinute());
+                ctrl.completeTasks(entriesSelected,completedDate,completedTime);
                 popUp().show();
             } catch (Exception e) {
-                popUpOfVerifications(Alert.AlertType.ERROR, "s").show();
+                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        }
     }
 
     private void getTasksDone(){
@@ -90,6 +93,9 @@ public class ViewTaskListCollaboratorUI {
             if (entry.selectedCollab().get()) {
                 entriesSelected.add(entry);
             }
+        }
+        if(entriesSelected==null){
+            throw new NullPointerException("No tasks were selected");
         }
     }
 
