@@ -10,8 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.DetailsEntryAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
@@ -29,12 +31,12 @@ public class ManageAgendaUI  implements Initializable{
     public Stage stageToViewDetails = new Stage();
 
     public AuthenticationController ctrlAuth;
-    public DetailsEntryAgendaController ctrlEntry;
+    public AssignEntryOnAgendaController ctrlEntry;
     private VBox view;
     private VBox viewWeek;
     private YearMonth currentYearMonth;
     private LocalDate currentStartDate;
-    private List<Entry> entries;
+    private List<EntryDto> entries;
     @FXML
     private AnchorPane calendarAnchorPane;
     @FXML
@@ -44,7 +46,7 @@ public class ManageAgendaUI  implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrlAuth = new AuthenticationController();
-        ctrlEntry=new DetailsEntryAgendaController();
+        ctrlEntry=new AssignEntryOnAgendaController();
         view = new VBox();
         viewWeek=new VBox();
         view.setAlignment(Pos.CENTER);
@@ -56,8 +58,7 @@ public class ManageAgendaUI  implements Initializable{
         calendarAnchorPane.getChildren().add(getView());
         weeklyViewAnchorPane.getChildren().add(getViewWeekly());
         ctrlAuth = new AuthenticationController();
-        ctrlEntry=new DetailsEntryAgendaController();
-        //this.entries=ctrlEntry.getList();
+        this.entries=ctrlEntry.getToDoList();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);
         currentStartDate = LocalDate.now().with(DayOfWeek.MONDAY);
@@ -115,7 +116,7 @@ public class ManageAgendaUI  implements Initializable{
             dayBox.setPrefHeight(70);
             dayBox.getChildren().add(new Label(String.valueOf(day)));
 
-            List<Entry> dayEntries = entries.stream()
+            List<EntryDto> dayEntries = entries.stream()
                     .filter(entry -> entry.getStartDate() != null && LocalDate.of(entry.getStartDate().getYear(), entry.getStartDate().getMonth(), entry.getStartDate().getDay()).equals(date))
                     .collect(Collectors.toList());
 
@@ -170,7 +171,7 @@ public class ManageAgendaUI  implements Initializable{
             dayBox.getChildren().add(new Label(String.valueOf(date.getDayOfMonth())));
 
             LocalDate finalDate = date;
-            List<Entry> dayEntries = entries.stream()
+            List<EntryDto> dayEntries = entries.stream()
                     .filter(entry -> entry.getStartDate() != null && LocalDate.of(entry.getStartDate().getYear(), entry.getStartDate().getMonth(), entry.getStartDate().getDay()).equals(finalDate))
                     .collect(Collectors.toList());
 
@@ -184,7 +185,7 @@ public class ManageAgendaUI  implements Initializable{
         viewWeek.getChildren().addAll(headerBox, calendarGrid);
     }
 
-    public void introduceDates(List<Entry> dayEntries, double rectangleHeight, double rectangleWidth, VBox dayBox) {
+    public void introduceDates(List<EntryDto> dayEntries, double rectangleHeight, double rectangleWidth, VBox dayBox) {
         VBox calendarActivityBox = new VBox();
         calendarActivityBox.setSpacing(5);
         for (int k = 0; k < dayEntries.size(); k++) {
@@ -195,7 +196,7 @@ public class ManageAgendaUI  implements Initializable{
                 ContextMenu contextMenu = new ContextMenu();
                 contextMenu.getStyleClass().add("context-menu");
                 for(int i=2; i< dayEntries.size(); i++){
-                    Entry entryDisplay=dayEntries.get(i);
+                    EntryDto entryDisplay=dayEntries.get(i);
                     MenuItem menuItem = new MenuItem(entryDisplay.getTitle());
                     menuItem.getStyleClass().add("menu-item");
                     menuItem.setOnAction(event -> {
@@ -213,7 +214,7 @@ public class ManageAgendaUI  implements Initializable{
                 });
                 break;
             }
-            Entry entry = dayEntries.get(k);
+            EntryDto entry = dayEntries.get(k);
             String eventBlock=String.format(entry.getStartDate() + "\n" + entry.getTitle());
             Label entryLabel = new Label(eventBlock);
             entryLabel.setPrefHeight(50);
@@ -248,18 +249,14 @@ public class ManageAgendaUI  implements Initializable{
         dayBox.getChildren().add(calendarActivityBox);
     }
 
-    private void showEntryDetails(Entry entry) throws IOException {
-        System.out.print("to be implemented");
-        /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsEntry.fxml"));
+    private void showEntryDetails(EntryDto entry) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsEntry.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
-        setLabels(entry); //should be done another ui for this*/
-    }
-
-    private void setLabels(Entry entry){
-        //TODO: to view details and also edit entries
+        ViewDetailsEntryAgendaUI ui=fxmlLoader.getController();
+        ui.setLabels(entry,stageToViewDetails);
     }
 
 
@@ -275,7 +272,7 @@ public class ManageAgendaUI  implements Initializable{
 
     @FXML
     private void btnAddEntry(ActionEvent event)throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_AddEntry.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_AddEntry.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);
@@ -284,7 +281,7 @@ public class ManageAgendaUI  implements Initializable{
 
     @FXML
     public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneMenu_GSM.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);

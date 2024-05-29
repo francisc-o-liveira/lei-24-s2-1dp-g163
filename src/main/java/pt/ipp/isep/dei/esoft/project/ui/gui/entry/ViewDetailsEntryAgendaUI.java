@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
@@ -18,6 +19,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class ViewDetailsEntryAgendaUI {
+    private ViewDetailsEntryController ctrl;
+    private EntryDto selectedEntry;
+    public Stage stage;
     @FXML
     private Label titleEntry;
     @FXML
@@ -33,7 +37,10 @@ public class ViewDetailsEntryAgendaUI {
 
     private ObservableList<VehicleDto> vehiclesList= FXCollections.observableArrayList();
 
-    public void setLabels(EntryDto entry){
+    public void setLabels(EntryDto entry, Stage stage){
+        ctrl=new ViewDetailsEntryController();
+        selectedEntry=entry;
+        this.stage=stage;
         titleEntry.setText(entry.getTitle());
         stateEntry.setText(String.valueOf(entry.getStatus()));
         //teamAssignedEntry.setText(String.valueOf(entry.getTeam()));
@@ -70,12 +77,26 @@ public class ViewDetailsEntryAgendaUI {
 
     @FXML
     public void btnCancel(ActionEvent event) throws IOException{
-        //go to controller and remove it
+        try{
+            Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
+
+            popUp.setHeaderText("Canceling Entry");
+            popUp.setContentText("Do you want to cancel this entry?");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+            ((Button) popUp.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+            if (popUp.showAndWait().get() == ButtonType.OK) {
+                ctrl.cancelEntry(selectedEntry);
+                stage.close();
+            }
+        } catch(Exception e){
+            popUpOfVerifications(Alert.AlertType.ERROR,e.getMessage()).show();
+        }
     }
 
     @FXML
     public void btnPostpone(ActionEvent event){
-        //go to controller and postpone the event
+
     }
 
     public static LocalDate convertToJavaLocalDate(Date date) {
@@ -85,6 +106,24 @@ public class ViewDetailsEntryAgendaUI {
         int day = date.getDay();
 
         return LocalDate.of(year, month, day);
+    }
+
+    private Alert popUp() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Information");
+        alert.setContentText("Entry removed!");
+
+        return alert;
+    }
+
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
+        Alert alerta = new Alert(alertType);
+
+        alerta.setTitle("ERROR");
+        alerta.setHeaderText("Invalid Data");
+        alerta.setContentText(messages);
+
+        return alerta;
     }
 
 }

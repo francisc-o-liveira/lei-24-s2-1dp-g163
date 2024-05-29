@@ -6,6 +6,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.tasks.ViewDetailsTaskUI">
    <children>
+      <Label layoutX="16.0" layoutY="14.0" text="Task" textFill="#046f4d">
+         <font>
+            <Font name="Tahoma Bold" size="16.0" />
+         </font>
+      </Label>
       <Label layoutX="126.0" layoutY="68.0" text="Title:">
          <font>
             <Font name="Tahoma" size="13.0" />

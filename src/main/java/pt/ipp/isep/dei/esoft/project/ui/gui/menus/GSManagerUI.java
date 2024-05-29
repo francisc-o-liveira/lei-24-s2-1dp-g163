@@ -160,6 +160,7 @@ public class GSManagerUI {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_Agenda.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
         //ManageAgendaUI ui=fxmlLoader.getController();
