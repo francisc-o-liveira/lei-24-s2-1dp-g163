@@ -1,23 +1,15 @@
-Carvalho;Camelia_e1;4
-Carvalho;Camelia_e2;6
-Carvalho;Tilia;9
-Camelia_e2;Camelia_e3;11
-Tilia;Camelia_e4;16
-Tilia;Castanheiro_India;18
-Camelia_e4;Camelia_e6;22
-Castanheiro_India;Camelia_e7;34
-Castanheiro_India;Olaia;28
-Olaia;Camelia_e8;36
-Olaia;Liquidanbar;35
-Liquidanbar;Camelia_e9;41
-Liquidanbar;Abrunheiro;40
-Camelia_e9;Camelia_d7;51
-Abrunheiro;Ginkgo;44
-Camelia_e8;Camelia_d6;46
-Camelia_e7;Camelia_d5;44
-Camelia_e4;Camelia_d4;26
-Camelia_e1;Camelia_d1;14
-Camelia_e2;Camelia_d2;16
-Camelia_e3;Camelia_d3;21
-Cost: 562
-Number of edges: 21
+9;10;15
+9;11;16
+8;17;13
+7;18;11
+18;19;2
+18;20;6
+18;21;8
+20;22;9
+20;23;9
+23;3;2
+4;7;22
+7;8;6
+7;9;9
+Cost: 128
+Number of edges: 13
