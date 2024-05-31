@@ -109,6 +109,7 @@ public class ManageTasksUI implements Initializable {
         Scene scene = new Scene(root);
         Stage stageViewDetails=new Stage();
         stageViewDetails.setScene(scene);
+        stageViewDetails.show();
         ViewDetailsTaskUI ui=fxmlLoader.getController();
         ui.setLabels(task);
     }

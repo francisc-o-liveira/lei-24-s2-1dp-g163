@@ -1,8 +1,7 @@
-    package pt.ipp.isep.dei.esoft.project.domain.task;
+package pt.ipp.isep.dei.esoft.project.domain.task;
 
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 
-public class  EntryState {
+public class EntryState {
 
 
     public enum State{Planned,Postponed,Assigned,Canceled,Done;}

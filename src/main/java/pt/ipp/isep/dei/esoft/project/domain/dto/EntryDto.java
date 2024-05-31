@@ -87,9 +87,9 @@ public class EntryDto extends TaskDto{
     }
 
     public void setStatus(EntryState newStatus) {
-        if(status == null){
+        /*if(status == null){
             throw new NullPointerException("Status cannot be null");
-        }
+        }*/
         this.status = newStatus;
     }
 
