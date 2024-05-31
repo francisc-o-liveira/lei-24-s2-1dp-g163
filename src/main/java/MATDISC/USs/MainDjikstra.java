@@ -1,6 +1,7 @@
 package MATDISC.USs;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,33 +15,37 @@ public class MainDjikstra {
     public static final String pathName = "src/main/java/MATDISC/USs/";
 
     public static final String FILENAME_PER_OMISSION = "..NONE..";
+    private static int counterForAPS=0;
 
     public static void main(String[] args) {
-        String filename = FILENAME_PER_OMISSION;
+        String filenameMatrix = FILENAME_PER_OMISSION;
+        String filenamePointsName = FILENAME_PER_OMISSION;
         int option = -1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
         ArrayList<ArrayList<Edge>> result2;
         Point start;
-        Point end;
         Scanner sc = new Scanner(System.in);
         while (option != 0) {
             option = askOptionShowOptions(edges);
             switch (option) {
                 case 1:
-                    filename = askFileName();
+                    filenameMatrix = askFileName();
+                    filenamePointsName= askFileName();
                     try {
-                        edges = readFromFile(filename);
+                        if(filenameMatrix.contains("17")){
+                            edges = readEdgesFromFileUS17(filenameMatrix,filenamePointsName);
+                        }
+                        if(filenameMatrix.contains("18")){
+                            edges = readEdgesFromFileUS18(filenameMatrix,filenamePointsName);
+                        }
                         createInputFile(edges);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
                 case 2:
-                    //this part will have to be given by the csv
-                    System.out.print("What is the starting point: ");
-                    start = new Point(sc.next());
-                    sc.close();
+                   start=new Point("AP");
                     result = dijkstraAlgorithmUS17(edges, start);
                     try {
                         createResultFile(result);
@@ -49,13 +54,10 @@ public class MainDjikstra {
                     }
                     break;
                 case 3:
-                    //this part will have to be given by the csv
-                    System.out.println("Enter the number of starting points:");
-                    int numStartingPoints = sc.nextInt();
                     ArrayList<Point> startingPoints = new ArrayList<>();
-                    System.out.println("Enter the starting points:");
-                    for (int i = 0; i < numStartingPoints; i++) {
-                        startingPoints.add(new Point(sc.next()));
+                    for (int i = 0; i < counterForAPS; i++) {
+                        int numberForAP=i+1;
+                        startingPoints.add(new Point("AP"+numberForAP));
                     }
                     result = dijkstraAlgorithmUS18(edges, startingPoints);
                     try {
@@ -71,28 +73,72 @@ public class MainDjikstra {
         }
     }
 
-    //this method needs to be changed!
-    public static ArrayList<Edge> readFromFile(String fileName) throws IOException {
-        Scanner scanFile = new Scanner(new File(fileName));
-        String[] line;
-        ArrayList<Edge> edges = new ArrayList<>();
-        int sizeArray;
-        int i = 0;
-        if (scanFile.hasNextLine()) {
-            line = scanFile.nextLine().split(" ");
-            sizeArray = line.length;
-            do {
-                for (int j = i; j < sizeArray; j++) {
-                    if (Integer.parseInt(line[j]) != 0) {
-                        edges.add(new Edge(new Point(Integer.toString(i)), new Point(Integer.toString(j)), Integer.parseInt(line[j])));
 
-                    }
-                }
-                i++;
-            } while (i < sizeArray);
-        } else {
-            throw new IOException("The file is empty");
+    private static ArrayList<Edge> readEdgesFromFileUS17(String matrixFilePath, String pointsFilePath) throws FileNotFoundException, FileNotFoundException {
+        ArrayList<Edge> edges = new ArrayList<>();
+        ArrayList<Point> points = new ArrayList<>();
+        Scanner scPoints = new Scanner(new File(pointsFilePath));
+        if (scPoints.hasNextLine()) {
+            String line = scPoints.nextLine();
+            String[] pointNames = line.split(";");
+            for (String pointName : pointNames) {
+                points.add(new Point(pointName));
+            }
         }
+        scPoints.close();
+        Scanner scMatrix = new Scanner(new File(matrixFilePath));
+        int row = 0;
+        while (scMatrix.hasNextLine()) {
+            String line=scMatrix.nextLine();
+            if (line.startsWith("\uFEFF")) {
+                line = line.substring(1);
+            }
+            String[] weights = line.split(";");
+            for (int col = 0; col < weights.length; col++){
+                int weight = Integer.parseInt(weights[col]);
+                if (weight > 0) {
+                    edges.add(new Edge(points.get(row), points.get(col), weight));
+                }
+            }
+            row++;
+        }
+        scMatrix.close();
+
+        return edges;
+    }
+
+    private static ArrayList<Edge> readEdgesFromFileUS18(String matrixFilePath, String pointsFilePath) throws FileNotFoundException, FileNotFoundException {
+        ArrayList<Edge> edges = new ArrayList<>();
+        ArrayList<Point> points = new ArrayList<>();
+        Scanner scPoints = new Scanner(new File(pointsFilePath));
+        if (scPoints.hasNextLine()) {
+            String line = scPoints.nextLine();
+            String[] pointNames = line.split(";");
+            for (String pointName : pointNames) {
+                points.add(new Point(pointName));
+                if(pointName.startsWith("AP")){
+                    counterForAPS++;
+                }
+            }
+        }
+        scPoints.close();
+        Scanner scMatrix = new Scanner(new File(matrixFilePath));
+        int row = 0;
+        while (scMatrix.hasNextLine()) {
+            String line=scMatrix.nextLine();
+            if (line.startsWith("\uFEFF")) {
+                line = line.substring(1);
+            }
+            String[] weights = line.split(";");
+            for (int col = 0; col < weights.length; col++){
+                int weight = Integer.parseInt(weights[col]);
+                if (weight > 0) {
+                    edges.add(new Edge(points.get(row), points.get(col), weight));
+                }
+            }
+            row++;
+        }
+        scMatrix.close();
 
         return edges;
     }
