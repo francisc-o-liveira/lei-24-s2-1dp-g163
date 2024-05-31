@@ -94,9 +94,6 @@ public class ViewTaskListCollaboratorUI {
                 entriesSelected.add(entry);
             }
         }
-        if(entriesSelected==null){
-            throw new NullPointerException("No tasks were selected");
-        }
     }
 
 

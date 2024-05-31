@@ -3,7 +3,6 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
@@ -38,7 +37,7 @@ public class ViewTaskListAssignedCollabController {
 
     /**Method to mark the entries as complete by the Collaborator
      * */
-    public void completeTasks(List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) {
-
+    public void completeTasks(List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) throws NullPointerException{
+        entryRepository.completeTasks(getCollaboratorByEmail(getCollaboratorFromSession()),entriesSelected,completedDate,completedTime);
     }
 }

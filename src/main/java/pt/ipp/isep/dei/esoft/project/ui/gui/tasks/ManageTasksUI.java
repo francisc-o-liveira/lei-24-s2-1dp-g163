@@ -61,7 +61,7 @@ public class ManageTasksUI implements Initializable {
     public void setTableToDoList(){
         degreeUrgencyCol.setCellValueFactory(new PropertyValueFactory<>("degreeUrgency"));
         durationCol.setCellValueFactory(new PropertyValueFactory<>("expectedDuration"));
-        parkCol.setCellValueFactory(new PropertyValueFactory<>("park"));
+        parkCol.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         taskCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         detailsCol.setCellFactory(new Callback<
                 TableColumn<EntryDto, Void>, TableCell<EntryDto, Void>>() {
@@ -104,7 +104,7 @@ public class ManageTasksUI implements Initializable {
     }
 
     public void showMore(EntryDto task) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetailsTask.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/tasks/Scene_ViewDetailsTask.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stageViewDetails=new Stage();

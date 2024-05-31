@@ -185,4 +185,8 @@ public class EntryRepository {
         }
         return agendaEntry;
     }
+
+    public void completeTasks(Collaborator collab, List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) throws NullPointerException{
+        mapper.entryDtoToCompleteTask(collab,entriesSelected,completedDate,completedTime);
+    }
 }

@@ -2,12 +2,15 @@ package pt.ipp.isep.dei.esoft.project.mapper;
 
 
 import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,5 +98,15 @@ public class EntryMapper {
 
     private Entry getEntryFromDtoToCompare(EntryDto entryDto) {
         return new Entry(entryDto.getTitle(), entryDto.getDescription(),entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()) ,entryDto.getDegreeUrgency(), entryDto.getStatus(),-1);
+    }
+
+    public void entryDtoToCompleteTask(Collaborator collab, List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime){
+        if(entriesSelected==null){
+            throw new NullPointerException("No tasks were selected");
+        }
+        for(EntryDto entryDto : entriesSelected){
+            Entry entryToComplete=entryDtoToEntryCreate(entryDto,Integer.parseInt(entryDto.getReference()));
+            entryToComplete.completeEntry(collab,completedDate,completedTime);
+        }
     }
 }

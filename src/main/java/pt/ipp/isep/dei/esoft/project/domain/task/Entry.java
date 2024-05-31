@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
@@ -23,6 +24,11 @@ public class Entry extends Task {
     private Team teamAssigned;
 
     private final String reference;
+
+    /**To complete the task*/
+    private Collaborator collaboratorThatCompleted;
+    private Date completedDate;
+    private Tempo completedTime;
 
 
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
@@ -118,4 +124,11 @@ public class Entry extends Task {
         return this.status.isPostpone();
     }
     public TimePeriod getTimePeriod(){return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());}
+
+    public void completeEntry(Collaborator collab, Date date, Tempo time){
+        this.collaboratorThatCompleted=collab;
+        this.completedDate=date;
+        this.completedTime=time;
+        this.status.doneEntry();
+    }
 }
