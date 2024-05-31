@@ -41,7 +41,7 @@ public class CollaboratorUI {
     public void getTasksForCollaborator(){
         Date first=new Date(firstDate.getValue().getYear(),firstDate.getValue().getMonthValue(),firstDate.getValue().getDayOfMonth());
         Date second=new Date(secondDate.getValue().getYear(),secondDate.getValue().getMonthValue(),secondDate.getValue().getDayOfMonth());
-        tasksInThoseDates=ctrl.getEntrysAssignedToMe(/*first,second*/);
+        tasksInThoseDates=ctrl.getEntrysAssignedToMe(first,second);
     }
 
 

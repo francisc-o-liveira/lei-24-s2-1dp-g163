@@ -25,8 +25,8 @@ public class ViewTaskListAssignedCollabController {
         mapper = new EntryMapper();
     }
 
-    public List<EntryDto> getEntrysAssignedToMe(/*Date firstDate, Date secondDate*/){ //it needs to take two dates
-        return mapper.entryListToEntryDtoList(entryRepository.getEntrysByCollaboratorInAgenda(getCollaboratorByEmail(getCollaboratorFromSession())));
+    public List<EntryDto> getEntrysAssignedToMe(Date firstDate, Date secondDate){
+        return mapper.entryListToEntryDtoList(entryRepository.getEntrysByCollaboratorInAgenda(getCollaboratorByEmail(getCollaboratorFromSession()),firstDate,secondDate));
     }
 
     private Collaborator getCollaboratorByEmail(String email){

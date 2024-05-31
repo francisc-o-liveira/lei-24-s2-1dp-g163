@@ -9,6 +9,7 @@ import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.IOException;
@@ -133,11 +134,13 @@ public class EntryRepository {
         return timeOfWorkByCollaborators;
     }
 
-    public List<Entry> getEntrysByCollaboratorInAgenda(Collaborator collaboratorByEmail) {
+    public List<Entry> getEntrysByCollaboratorInAgenda(Collaborator collaboratorByEmail, Date first, Date second) {
         List<Entry> entryCollaboratorList = new ArrayList<>();
         for (Entry entry: agenda){
             if (entry.getTeamAssigned()!=null && entryHaveCollaborator(entry,collaboratorByEmail)){
-                entryCollaboratorList.add(entry);
+                if(entry.getStartDate().equals(first) || entry.getStartDate().equals(second)){
+                    entryCollaboratorList.add(entry);
+                }
             }
         }
         return entryCollaboratorList;
