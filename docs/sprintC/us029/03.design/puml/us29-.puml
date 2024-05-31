@@ -12,10 +12,13 @@ participant ":CompleteTaskController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "TaskRepositories\n:TaskRepositories" as TaskRepositories
-/' participant ":TaskMapper" as MAPPER
+
+participant ":TaskMapper" as MAPPER
 participant "taskListDto : List<TaskDto>" as ListDTO
-participant "List : List<Task>" as List 
-participant ":TaskDto" as DTO'/
+participant "taskList : List<Task>" as List
+participant ":TaskDto" as DTO
+
+
 participant "task:Task" as OBJ
 
 
@@ -25,6 +28,8 @@ Collaborator -> UI: ask to show the list of tasks
 activate UI
 
 UI -> CTRL**: create()
+
+UI -> CTRL: getTaskListDto()
 activate CTRL
 
 CTRL -> RepositorySingleton: getInstance()
@@ -45,7 +50,34 @@ activate TaskRepositories
 TaskRepositories --> CTRL: taskList
 deactivate TaskRepositories
 
-CTRL --> UI: taskList
+
+
+CTRL -> MAPPER : toDTO(taskList)
+activate MAPPER
+
+MAPPER -> ListDTO** : create()
+
+loop for each object in TaskList
+    MAPPER -> List : obj = get()
+    activate List
+    deactivate List
+    MAPPER -> MAPPER: objDto = toDto(obj)
+    activate MAPPER
+
+    MAPPER -> DTO** : create(obj.getStartDate(), obj.getStatus(),\nobj.getVehicleList(), obj.getTeamAssigned(), obj.getReference())
+    deactivate MAPPER
+    MAPPER -> ListDTO : add(objDto)
+    activate ListDTO
+    deactivate ListDTO
+end
+
+deactivate List
+
+MAPPER -> CTRL : taskListDto
+deactivate MAPPER
+
+
+CTRL --> UI: taskListDto
 deactivate CTRL
 
 UI --> Collaborator: shows the list of tasks

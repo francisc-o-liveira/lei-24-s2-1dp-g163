@@ -1,0 +1,92 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+
+participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryController" as CTRL2
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository:\nEntryRepository" as EntryRepo
+
+participant ":EntryMapper" as EntryMapper
+participant "objDto:EntryDto" as ObjDto
+participant "entryDto:EntryDto" as EntryDto
+participant "entry:Entry" as OBJ
+
+activate GSM
+activate UI2
+activate CTRL2
+
+ref over GSM : Get details and management options\n of a selected entry on the agenda
+
+note right of UI2
+    UI and Controller were activated simultaneously with GSM,
+    because this diagram continues from the previous one referenced
+    in this diagram at the beggining.
+end note
+
+GSM-> UI2: Completes the Task and Provides Finish Time  
+
+UI2 -> CTRL2: completeEntry(objDto, entryDto)
+
+note right of UI2
+   Remember that in the previous diagram, 
+   ViewDetailsUI received entryDto from AgendaUI via 
+   receiveDto and will use it via this method: "assignTeamToEntry"
+end note
+note right of UI2
+     {finishTime}, entry
+end note
+
+
+CTRL2 -> EntryRepo : completeEntry(objDto, entryDto)
+note right of CTRL2
+    {finishTime}, entry
+end note
+activate EntryRepo
+
+EntryRepo -> EntryMapper : toDomainAndcompleteTask(objDto, entryDto)
+note right of EntryRepo
+    {finishTime}, entry
+end note
+activate EntryMapper
+
+EntryMapper -> EntryDto : reference = getReference()
+activate EntryDto
+deactivate EntryDto
+
+EntryMapper -> EntryRepo : findEntryByReference(reference)
+activate EntryRepo
+
+EntryRepo -> EntryMapper : entry
+deactivate EntryRepo
+
+EntryMapper -> OBJ: completeEntry()
+activate OBJ
+
+OBJ -> OBJ: status.postponeState()
+OBJ -> OBJ: setStartDate(newStartDate)
+
+OBJ -> EntryMapper: true
+deactivate OBJ
+
+
+EntryMapper -> EntryRepo: true
+deactivate EntryMapper
+
+EntryRepo -> CTRL2: true
+deactivate EntryRepo
+
+CTRL2 -> UI2: true
+deactivate CTRL2
+
+
+UI2 -> GSM: Confirms the Change
+deactivate UI2
+
+@enduml
