@@ -1,0 +1,53 @@
+FUNCTION indexOfMin(costsOfVertices, verticesVisited, numVertices)
+    min = INFINITY
+    indexOfMinimum = -1
+    FOR j FROM 0 TO numVertices - 1
+        IF NOT verticesVisited[j] AND costsOfVertices[j] < min THEN
+            min = costsOfVertices[j]
+            indexOfMinimum = j
+    RETURN indexOfMinimum
+END FUNCTION
+
+FUNCTION dijkstraAlgorithm(edges, startingPoint, endPoint)
+    resultPath = EMPTY LIST OF Edges
+
+    vertices = numberOfVertices(edges)
+    numVertices = SIZE OF vertices
+
+    costsOfVertices = LIST OF SIZE numVertices FILLED WITH INFINITY
+    verticesUsed = LIST OF SIZE numVertices FILLED WITH FALSE
+    pathVertices = LIST OF SIZE numVertices FILLED WITH NULL
+
+    indexOfStartingPoint = INDEX OF startingPoint IN vertices
+    indexOfEndPoint = INDEX OF endPoint IN vertices
+
+    costsOfVertices[indexOfStartingPoint] = 0
+
+    FOR i FROM 0 TO numVertices - 1
+        indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices)
+        IF indexOfMinimum == -1 OR indexOfMinimum == indexOfEndPoint THEN
+            BREAK
+
+        chosenVertex = vertices[indexOfMinimum]
+        verticesUsed[indexOfMinimum] = TRUE
+
+        FOR EACH edge IN edges
+            IF edge.p1 EQUALS chosenVertex THEN
+                indexOfNext = INDEX OF edge.p2 IN vertices
+                IF NOT verticesUsed[indexOfNext] THEN
+                    cost = costsOfVertices[indexOfMinimum] + edge.price
+                    IF cost < costsOfVertices[indexOfNext] THEN
+                        costsOfVertices[indexOfNext] = cost
+                        pathVertices[indexOfNext] = chosenVertex
+
+    currentPoint = endPoint
+    WHILE currentPoint IS NOT NULL AND currentPoint IS NOT startingPoint
+        beforePoint = pathVertices[INDEX OF currentPoint IN vertices]
+        IF beforePoint IS NULL THEN
+            BREAK
+        cost = costsOfVertices[INDEX OF currentPoint IN vertices] - costsOfVertices[INDEX OF beforePoint IN vertices]
+        ADD NEW Edge(beforePoint, currentPoint, cost) TO resultPath
+        currentPoint = beforePoint
+
+    RETURN resultPath
+END FUNCTION
