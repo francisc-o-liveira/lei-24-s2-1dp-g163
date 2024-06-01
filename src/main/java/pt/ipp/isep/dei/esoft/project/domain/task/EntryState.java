@@ -16,6 +16,10 @@ public class EntryState {
         return state;
     }
 
+    public State[] getStates(){
+        return State.values();
+    }
+
     public void setState(State state) {
         this.state = state;
     }
