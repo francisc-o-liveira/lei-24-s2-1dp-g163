@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.ViewDetailsEntryAgendaUI">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.ViewDetailsEntryAgendaUI">
    <children>
       <Label layoutX="115.0" layoutY="48.0" text="Select the vehicles to assign to the entry:">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TableView layoutX="55.0" layoutY="98.0" prefHeight="214.0" prefWidth="383.0">
+      <TableView fx:id="vehiclesToAssign" layoutX="55.0" layoutY="98.0" prefHeight="214.0" prefWidth="383.0">
         <columns>
-          <TableColumn prefWidth="317.0" text="Vehicles" />
-            <TableColumn prefWidth="65.0" text="select" />
+          <TableColumn fx:id="platesOfVehiclesToAssign" prefWidth="317.0" text="Vehicles" />
+            <TableColumn fx:id="selectingVehicles" prefWidth="65.0" text="select" />
         </columns>
       </TableView>
-      <Button layoutX="399.0" layoutY="346.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
+      <Button fx:id="assignVehicles" layoutX="399.0" layoutY="346.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
    </children>
 </AnchorPane>
