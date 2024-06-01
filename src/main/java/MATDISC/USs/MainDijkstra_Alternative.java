@@ -22,15 +22,14 @@ public class MainDijkstra_Alternative {
             int option = -1;
             ArrayList<Edge> edges = null;
             ArrayList<Edge> result;
-            ArrayList<ArrayList<Edge>> result2;
             Point start;
             Scanner sc = new Scanner(System.in);
             while (option != 0) {
                 option = askOptionShowOptions(edges);
                 switch (option) {
                     case 1:
-                        filenameMatrix = askFileName();
-                        filenamePointsName= askFileName();
+                        filenameMatrix = askFileNameMatrix();
+                        filenamePointsName= askFileNamePoints();
                         try {
                             if(filenameMatrix.contains("17")){
                                 edges = readEdgesFromFileUS17(filenameMatrix,filenamePointsName);
@@ -63,19 +62,19 @@ public class MainDijkstra_Alternative {
                         }
 
                         break;
-                    /*case 3:
+                    case 3:
                         ArrayList<Point> startingPoints = new ArrayList<>();
-                        for (int i = 0; i < counterForAPS; i++) {
-                            int numberForAP=i+1;
+                        for (int k = 0; k < counterForAPS; k++) {
+                            int numberForAP=k+1;
                             startingPoints.add(new Point("AP"+numberForAP));
                         }
                         result = dijkstraAlgorithmUS18(edges, startingPoints);
                         try {
-                            createResultFile(result);
+                            createResultFileUS18(result);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                        break;*/
+                        break;
                     case 0:
                         break;
                 }
@@ -84,7 +83,7 @@ public class MainDijkstra_Alternative {
         }
 
 
-        private static ArrayList<Edge> readEdgesFromFileUS17(String matrixFilePath, String pointsFilePath) throws FileNotFoundException, FileNotFoundException {
+        private static ArrayList<Edge> readEdgesFromFileUS17(String matrixFilePath, String pointsFilePath) throws FileNotFoundException {
             ArrayList<Edge> edges = new ArrayList<>();
             ArrayList<Point> points = new ArrayList<>();
             Scanner scPoints = new Scanner(new File(pointsFilePath));
@@ -117,7 +116,7 @@ public class MainDijkstra_Alternative {
             return edges;
         }
 
-        private static ArrayList<Edge> readEdgesFromFileUS18(String matrixFilePath, String pointsFilePath) throws FileNotFoundException, FileNotFoundException {
+        private static ArrayList<Edge> readEdgesFromFileUS18(String matrixFilePath, String pointsFilePath) throws FileNotFoundException {
             ArrayList<Edge> edges = new ArrayList<>();
             ArrayList<Point> points = new ArrayList<>();
             Scanner scPoints = new Scanner(new File(pointsFilePath));
@@ -277,7 +276,6 @@ public class MainDijkstra_Alternative {
             return resultPath;
         }
 
-
         // VERTICES == POINTS
         public static ArrayList<Point> numberOfVertices(ArrayList<Edge> edges) {
             ArrayList<Point> vertices = new ArrayList<>();
@@ -307,18 +305,31 @@ public class MainDijkstra_Alternative {
         }
 
 
-        public static String askFileName() {
+        public static String askFileNameMatrix() {
             String filename = pathName;
             Scanner readLineFile = new Scanner(System.in);
             File test;
             do {
-                System.out.println("Introduce the FileName to take data.(input: nameFile.csv)");
+                System.out.println("Introduce the matrix to take data.(input: nameFile.csv)");
                 filename += readLineFile.nextLine();
                 test = new File(filename);
 
             } while (!test.canExecute());
             return filename;
         }
+
+    public static String askFileNamePoints() {
+        String filename = pathName;
+        Scanner readLineFile = new Scanner(System.in);
+        File test;
+        do {
+            System.out.println("Introduce the points' names to take data.(input: nameFile.csv)");
+            filename += readLineFile.nextLine();
+            test = new File(filename);
+
+        } while (!test.canExecute());
+        return filename;
+    }
 
         public static int askOptionShowOptions(ArrayList<Edge> edges) {
             Scanner scan = new Scanner(System.in);
@@ -335,7 +346,7 @@ public class MainDijkstra_Alternative {
             } else {
                 System.out.println("----Option 3 : Djikstra Algorithm US18 (Data Loaded)");
             }
-            while (option < 0 || option > 3) {
+            while (option < 0 || option > 4) {
                 if (option != -1) {
                     System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
                 }
@@ -344,6 +355,35 @@ public class MainDijkstra_Alternative {
             }
             return option;
         }
+
+    public static void createResultFileUS18(ArrayList<Edge> edges) throws IOException {
+        FileWriter fileDot = new FileWriter("graph.dot");
+        FileWriter result = new FileWriter("result.csv");
+        int price = 0;
+        String line = "graph US13 {\n";
+        fileDot.write(line);
+        for (int i = 0; i < edges.size(); i++) {
+            String string = String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            fileDot.write(string);
+            String line1 = String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            price += edges.get(i).getPrice();
+            result.write(line1);
+        }
+        String line2 = "}";
+        fileDot.write(line2);
+        String line3 = String.format("Cost: %s%n", price);
+        String line4 = String.format("Number of edges: %d%n", edges.size());
+        result.write(line3);
+        result.write(line4);
+        fileDot.close();
+        result.close();
+        try {
+            String resultingFile = "result_graph.png";
+            createGraph("graph.dot", resultingFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
         public static void createResultFile(ArrayList<Edge> edges, String resultingFile) throws IOException {
             FileWriter fileDot = new FileWriter("graph.dot");

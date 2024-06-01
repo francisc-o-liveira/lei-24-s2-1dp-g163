@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class MainDjikstra {
     public static String fileName;
 
-    public static final String pathName = "src/main/java/MATDISC/USs/evaluationFolder/sprintC";
+    public static final String pathName = "src/main/java/MATDISC/USs/evaluationFolder/sprintC/";
 
     public static final String FILENAME_PER_OMISSION = "..NONE..";
     private static int counterForAPS=0;
