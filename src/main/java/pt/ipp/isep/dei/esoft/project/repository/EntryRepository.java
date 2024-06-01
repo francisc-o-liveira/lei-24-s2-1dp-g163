@@ -15,6 +15,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class EntryRepository {
@@ -78,7 +79,7 @@ public class EntryRepository {
 
     private Entry searchForEntryToDo(EntryDto entryDto) {
         for (Entry entry : toDo) {
-            if (entryDto.equals(entry)) {
+            if (Objects.equals(entry.getTitle(), entryDto.getTitle()) &&Objects.equals(entry.getDegreeUrgency(), entryDto.getDegreeUrgency()) && Objects.equals(entry.getDescription(), entryDto.getDescription()) && Objects.equals(entry.getExpectedDuration(),entryDto.getExpectedDuration())){
                 return entry;
             }
         }

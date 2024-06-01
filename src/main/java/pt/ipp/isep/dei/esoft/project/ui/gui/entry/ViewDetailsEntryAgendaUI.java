@@ -148,7 +148,7 @@ public class ViewDetailsEntryAgendaUI {
         assignTeam.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
-                selectedTeam= teamsToAssign.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                selectedTeam= teamsToAssign.getSelectionModel().getSelectedItem();
                 if(selectedTeam==null){
                     popUpOfVerifications(Alert.AlertType.ERROR, "Select a team").show();
                 }

@@ -46,7 +46,7 @@ public class RegisterEntryUI implements Initializable {
     @FXML
     public void btnRegister(ActionEvent event) {
         Date startDate=new Date(dateForEntry.getValue().getYear(),dateForEntry.getValue().getMonthValue(), dateForEntry.getValue().getDayOfMonth());
-        selectedTaskDto= tasksForEntry.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+        selectedTaskDto= tasksForEntry.getSelectionModel().getSelectedItem();
         EntryState.State state=statusOfEntry.getValue();
         String ref="reference"; //needs correction
         if(selectedTaskDto==null){
@@ -58,9 +58,6 @@ public class RegisterEntryUI implements Initializable {
                 EntryDto assigningEntry=new EntryDto(startDate,stateToRegister,selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace(),ref);
                 ctrl.assignEntryOnAgenda(assigningEntry);
                 popUp().show();
-                if(popUp().showAndWait().get()==ButtonType.OK){
-                    stage.close();
-                }
             } catch (Exception e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
