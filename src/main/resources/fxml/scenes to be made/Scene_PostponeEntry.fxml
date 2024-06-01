@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.ViewDetailsEntryAgendaUI">
+<AnchorPane prefHeight="250.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.ViewDetailsEntryAgendaUI">
    <children>
       <Label layoutX="63.0" layoutY="26.0" text="Introduce the new date of the entry:">
          <font>
@@ -15,7 +12,7 @@
          </font>
       </Label>
       <Label layoutX="63.0" layoutY="103.0" text="New date:" />
-      <DatePicker layoutX="128.0" layoutY="98.0" />
-      <Button layoutX="256.0" layoutY="201.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #C6E5B1;" text="Postpone" />
+      <DatePicker fx:id="postponedDate" layoutX="128.0" layoutY="98.0" />
+      <Button fx:id="postponingEntry" layoutX="256.0" layoutY="201.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #C6E5B1;" text="Postpone" />
    </children>
 </AnchorPane>

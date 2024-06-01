@@ -16,6 +16,7 @@ import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,14 +34,12 @@ public class RegisterEntryUI implements Initializable {
     @FXML
     private DatePicker dateForEntry;
     @FXML
-    private ComboBox<EntryState> statusOfEntry;
-
-    private ObservableList<EntryState> entryStates=FXCollections.observableArrayList();
+    private ComboBox<EntryState.State> statusOfEntry;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl = new AssignEntryOnAgendaController();
-        statusOfEntry.setItems(entryStates);
+        statusOfEntry.setItems(FXCollections.observableList(ctrl.getStates()));
         setTableTasks();
     }
 
@@ -48,13 +47,15 @@ public class RegisterEntryUI implements Initializable {
     public void btnRegister(ActionEvent event) {
         Date startDate=new Date(dateForEntry.getValue().getYear(),dateForEntry.getValue().getMonthValue(), dateForEntry.getValue().getDayOfMonth());
         selectedTaskDto= tasksForEntry.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
-        EntryState state=statusOfEntry.getValue();
+        EntryState.State state=statusOfEntry.getValue();
         String ref="reference"; //needs correction
         if(selectedTaskDto==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "A task needs to be selected").show();
         } else {
             try{
-                EntryDto assigningEntry=new EntryDto(startDate,state,selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace(),ref);
+                EntryState stateToRegister=new EntryState(); //possibly this is wrong and should not be accessed like this
+                stateToRegister.setState(state);
+                EntryDto assigningEntry=new EntryDto(startDate,stateToRegister,selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace(),ref);
                 ctrl.assignEntryOnAgenda(assigningEntry);
                 popUp().show();
                 if(popUp().showAndWait().get()==ButtonType.OK){

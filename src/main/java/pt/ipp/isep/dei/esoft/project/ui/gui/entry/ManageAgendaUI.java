@@ -272,11 +272,12 @@ public class ManageAgendaUI  implements Initializable{
 
     @FXML
     private void btnAddEntry(ActionEvent event)throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_AddEntry.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_RegisterEntry.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Stage stage1=new Stage();
+        stage1.setScene(scene);
+        stage1.show();
     }
 
     @FXML
