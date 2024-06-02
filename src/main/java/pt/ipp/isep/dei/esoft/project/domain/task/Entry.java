@@ -31,9 +31,6 @@ public class Entry extends Task {
     private Date finishDate;
 
 
-    public Collaborator getCollaboratorFinish() {
-        return collaboratorThatCompleted;
-    }
 
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
@@ -118,7 +115,9 @@ public class Entry extends Task {
         this.startDate = newStartDate;
     }
 
-
+    public Collaborator getCollaboratorFinish() {
+        return collaboratorThatCompleted;
+    }
     public Date getStartDate() {
         return this.startDate;
     }
@@ -134,10 +133,11 @@ public class Entry extends Task {
     public static DegreeUrgency[] getDegreeOfUrgency(){
         return Task.getDegreeUrgencyValues();
     }
+
+
     public void setEntryAgenda(Date startDate) {
         setStartDate(startDate);
-        status.assignState();
-    }
+        status.assignState();}
     public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
     }

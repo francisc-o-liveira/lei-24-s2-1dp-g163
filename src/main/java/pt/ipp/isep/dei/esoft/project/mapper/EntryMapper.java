@@ -38,7 +38,7 @@ public class EntryMapper {
         return entryDtoList;
     }
     public EntryDto entryToEntryDto(Entry entry){
-            return new EntryDto(entry.getStartDate(),entry.getStatus(),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
+            return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
     }
     public Entry entryDtoToEntryCreate(EntryDto entryDto, int reference){
         return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus(),reference);

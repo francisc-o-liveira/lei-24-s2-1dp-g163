@@ -4,12 +4,23 @@ package pt.ipp.isep.dei.esoft.project.domain.task;
 public class EntryState {
 
 
-    public enum State{Planned,Postponed,Assigned,Canceled,Done;}
+    public enum State{Planned,Postponed,Assigned,Canceled,Done}
 
     private State state;
 
     public EntryState() {
         this.state = State.Planned;
+    }
+    public EntryState(State state) {
+        if(verifyState(state)){
+            this.state = state;
+        }else {
+            throw new IllegalArgumentException("Illegal State in EntryMapper/EntryState");
+        }
+    }
+
+    private boolean verifyState(State state) {
+        return state!=null && ( state.equals(State.Planned) || state.equals(State.Postponed) || state.equals(State.Assigned)) || state.equals(State.Canceled) || state.equals(State.Done);
     }
 
     public State getState() {
