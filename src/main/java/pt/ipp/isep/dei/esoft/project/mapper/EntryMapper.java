@@ -83,10 +83,10 @@ public class EntryMapper {
 
 
        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
-            if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
+            if (entry.getTeamAssigned() == null && entryDto.getTeamAssigned() != null){
                 entry.setTeamAssigned(teamMapper.teamDtoToTeam(entryDto.getTeamAssigned()));
             }
-            if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
+            if (entry.getVehicleList() == null && entryDto.getVehicleList() != null){
                 entry.setVehicleList(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()));
             }
         }else {

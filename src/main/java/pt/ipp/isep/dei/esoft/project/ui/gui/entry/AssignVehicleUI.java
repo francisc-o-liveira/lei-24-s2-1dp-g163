@@ -52,6 +52,7 @@ public class AssignVehicleUI {
                 popUp("Vehicles assigned!").show();
             }
         } catch (Exception e){
+            e.printStackTrace();
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
