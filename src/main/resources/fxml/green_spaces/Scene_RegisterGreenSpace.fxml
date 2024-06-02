@@ -21,8 +21,6 @@
          </font></Label>
       <TextField fx:id="nameGreenSpace" layoutX="96.0" layoutY="61.0" prefHeight="26.0" prefWidth="186.0" />
       <Button layoutX="275.0" layoutY="306.0" mnemonicParsing="false" onAction="#btnRegister" text="Register" />
-      <TextField fx:id="maintenanceUp" layoutX="140.0" layoutY="150.0" prefHeight="26.0" prefWidth="175.0" visible="false" />
-      <Label fx:id="newMaintenanceCheck" layoutX="14.0" layoutY="155.0" text="New Maintenance Km: " visible="false" />
       <TextField fx:id="addressGreenSpace" layoutX="96.0" layoutY="107.0" prefHeight="26.0" prefWidth="186.0" />
       <Label layoutX="51.0" layoutY="222.0" text="Area:">
          <font>
