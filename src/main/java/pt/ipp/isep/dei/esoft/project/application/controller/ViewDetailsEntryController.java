@@ -66,7 +66,7 @@ public class ViewDetailsEntryController {
     }
 
     public boolean assignTeamToEntry(TeamDto teamDto, EntryDto entryDto) throws IOException {
-        entryDto.assignTeam(teamMapper.teamDtoToTeam(teamDto));
+        entryDto.assignTeam(teamDto);
         if( entryRepository.assignTeamOnEntry(entryDto).isPresent()){
             serv.sendEmailToList(teamDto.getTeamList(),entryDto);
             return true;
