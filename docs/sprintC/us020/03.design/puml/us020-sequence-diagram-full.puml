@@ -14,16 +14,13 @@ participant "repositories\n:Repositories" as reposRepos
 participant "organizationRepository:Organization" as Organization
 participant ":GreenSpace" as GreenSpace
 participant "GreenSpace.Type" as Type
-participant ":OrganizationMapper" as OrganizationMapper
+
 
 participant ":GreenSpaceMapper" as GreenSpaceMapper
 participant "greenSpaceTypeListDto:list<GreenSpaceDTO>" as TypeListDto
 participant "objDto:GreenSpaceDTO" as GreenDto
 
 
-participant "listOrganization:list<Checkup>" as listOrganization
-participant "VehicleNamesDto:list<String>" as VehicleNamesDto
-participant "objDto:VehicleDto" as VehicleDto
 
 
 participant "greenSpace:GreenSpace" as obj
@@ -95,7 +92,7 @@ loop for each type in enumGreenSpaceTypes
     deactivate TypeListDto
 end
 
-deactivate listEmp
+
 
 GreenSpaceMapper -> CTRL : greenSpaceTypeListDto
 deactivate GreenSpaceMapper
