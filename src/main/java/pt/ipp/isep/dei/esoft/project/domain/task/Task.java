@@ -13,10 +13,10 @@ public class Task {
     public enum DegreeUrgency {High,Medium,Low};
 
     public Task(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency) {
-        setGreenSpace(greenSpace);
         setTitle(title);
         setDescription(description);
         setExpectedDuration(expectedDuration);
+        setGreenSpace(greenSpace);
         setDegreeUrgency(degreeUrgency);
     }
 
