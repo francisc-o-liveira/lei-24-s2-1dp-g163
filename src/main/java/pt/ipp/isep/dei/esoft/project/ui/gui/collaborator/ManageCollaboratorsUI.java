@@ -47,6 +47,8 @@ public class ManageCollaboratorsUI {
     public TableColumn<Collaborator, JobCategory> columnJobCategory;
     @FXML
     public TableColumn<Collaborator, Void> columnButtonsDetails;
+    @FXML
+    public Label labelRole;
 
     ObservableList<Collaborator> collaboratorObservableList=FXCollections.observableArrayList();
     Collaborator selectedCollaboratorForEdit;
@@ -54,6 +56,22 @@ public class ManageCollaboratorsUI {
         ctrl = new RegisterCollaboratorController();
         ctrlAuth= new AuthenticationController();
     }
+
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        }
+    }
+
 
     public Stage getStageToViewDetails(){
         return stageToViewDetails;
@@ -118,6 +136,7 @@ public class ManageCollaboratorsUI {
 
 
     public void setTableCollaborators() {
+        setLabel();
 
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnIDNumber.setCellValueFactory(new PropertyValueFactory<>("docIDNumber"));

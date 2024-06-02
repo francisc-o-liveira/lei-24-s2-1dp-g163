@@ -30,6 +30,8 @@ public class ManageJobsUI {
 
     @FXML
     public TableColumn<JobCategory, String> colJobCategory;
+    @FXML
+    public Label labelRole;
 
     public RegisterJobCategoryController ctrl;
 
@@ -38,9 +40,26 @@ public class ManageJobsUI {
     public ManageJobsUI(){
         ctrl=new RegisterJobCategoryController();
         ctrlAuth=new AuthenticationController();
+
+    }
+
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        }
     }
 
     public void setJobCategoryTable(){
+        setLabel();
         colJobCategory.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getName());
         });

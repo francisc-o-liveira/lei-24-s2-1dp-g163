@@ -48,7 +48,10 @@ public class RegisterEntryUI implements Initializable {
             try{
                 EntryDto assigningEntry=new EntryDto(selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace());
                 ctrl.assignEntryOnAgenda(assigningEntry, startDate);
-                popUp().show();
+                if(popUp().showAndWait().get()==ButtonType.OK){
+                    Stage stage = (Stage) tasksForEntry.getScene().getWindow();
+                    stage.close();
+                }
             } catch (Exception e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }

@@ -41,7 +41,7 @@
                                         <Font name="Tahoma" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="29.0" layoutY="130.0" text="VehicleFleetManager" textFill="WHITE">
+                                <Label fx:id="labelRole" layoutX="29.0" layoutY="130.0" text="VehicleFleetManager" textFill="WHITE">
                                     <font>
                                         <Font name="Tahoma Bold" size="14.0" />
                                     </font>

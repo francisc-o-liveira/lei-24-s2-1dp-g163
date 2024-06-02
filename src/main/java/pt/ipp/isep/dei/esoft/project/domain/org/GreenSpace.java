@@ -88,8 +88,9 @@ public class GreenSpace {
     private void setName(String name) {
         if (verifyIsOnlyCharacter(name)){
             this.name = name;
+        } else {
+            throw new IllegalArgumentException("Name Cannot have have numbers");
         }
-  throw new IllegalArgumentException("Name Cannot have have numbers");
     }
 
     public double getArea() {

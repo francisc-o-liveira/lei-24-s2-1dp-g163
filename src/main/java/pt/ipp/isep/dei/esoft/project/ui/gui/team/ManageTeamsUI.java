@@ -32,12 +32,28 @@ public class ManageTeamsUI {
     public TableColumn<Team, String> colTeams;
     @FXML
     public TableColumn<Team, Void> colViewDetails;
-
+    @FXML
+    public Label labelRole;
     private Team selectedTeam;
 
     public ManageTeamsUI(){
         ctrl= new GenerateTeamController();
         ctrlAuth= new AuthenticationController();
+    }
+
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        }
     }
 
     @FXML
@@ -73,6 +89,7 @@ public class ManageTeamsUI {
     }
 
     public void setTableTeams(){
+        setLabel();
         colTeams.setCellValueFactory(new PropertyValueFactory<>("teamName"));
         colViewDetails.setCellFactory(new Callback<
                 TableColumn<Team, Void>, TableCell<Team, Void>>() {

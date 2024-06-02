@@ -30,6 +30,8 @@ public class ManageSkillsUI {
 
     @FXML
     public TableColumn<Skill, String> colSkills;
+    @FXML
+    public Label labelRole;
 
 
     public RegisterSkillController ctrl;
@@ -41,7 +43,23 @@ public class ManageSkillsUI {
         ctrlAuth=new AuthenticationController();
     }
 
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        }
+    }
+
     public void setSkillTable(){
+        setLabel();
         colSkills.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getSkillName());
         });

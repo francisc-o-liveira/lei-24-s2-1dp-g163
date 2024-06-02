@@ -49,7 +49,7 @@ public class Task {
     }
 
     public void setExpectedDuration(Tempo expectedDuration) {
-        if (expectedDuration!=null && getExpectedDuration().isMaior(0,0)){
+        if (expectedDuration!=null && expectedDuration.isMaior(0,0)){
             this.expectedDuration = expectedDuration;
         }else {
             throw new IllegalArgumentException("ExpectedDuration should be greater than or equal to 0");

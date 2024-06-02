@@ -47,6 +47,8 @@ public class ManageVehiclesUI {
     public TableColumn<Vehicle, Void> colButtonsDetails;
 
     @FXML public CheckBox vehiclesCheckUp;
+    @FXML
+    public Label labelRole;
 
     ObservableList<Vehicle> vehiclesObservableList= FXCollections.observableArrayList();
 
@@ -57,7 +59,23 @@ public class ManageVehiclesUI {
         ctrlAuth=new AuthenticationController();
     }
 
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_VFM)){
+            labelRole.setText("VehicleFleetManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        }
+    }
+
     public void setTableVehicles(){
+        setLabel();
         colBrand.setCellValueFactory(new PropertyValueFactory<>("Brand"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("Model"));
         colType.setCellValueFactory(new PropertyValueFactory<>("Type"));

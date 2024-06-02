@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
@@ -35,6 +36,19 @@ public class LoginUI {
 
     public static Stage getMainStage(){
         return mainStage;
+    }
+
+    public void initialize(){
+        emailLogin.setOnKeyPressed(event ->{
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                passwordLogin.requestFocus();
+            }
+        });
+        passwordLogin.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+               uiToShow(new ActionEvent());
+            }
+        });
     }
 
     @FXML
