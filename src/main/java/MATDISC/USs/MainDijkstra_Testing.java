@@ -4,11 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class MainDijkstra_Alternative {
+public class MainDijkstra_Testing {
         public static String fileName;
 
         public static final String pathName = "src/main/java/MATDISC/USs/evaluationFolder/sprintC/";
@@ -33,46 +34,44 @@ public class MainDijkstra_Alternative {
                         try {
                             if(filenameMatrix.contains("17")){
                                 edges = readEdgesFromFileUS17(filenameMatrix,filenamePointsName);
+                                start=new Point("AP");
+                                ArrayList<Point> vertices = numberOfVertices(edges);
+                                int i=1;
+                                for(Point p : vertices){
+                                    if(!start.equals(p)){
+                                        result = djisktraAlgorithm(edges, start,p);
+                                        try {
+                                            String file=new String("result_graph_"+i+".png");
+                                            createResultFile(result, file);
+                                            i++;
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    } else {
+                                        i++;
+                                    }
+                                }
                             }
                             if(filenameMatrix.contains("18")){
                                 edges = readEdgesFromFileUS18(filenameMatrix,filenamePointsName);
+                                ArrayList<Point> startingPoints = new ArrayList<>();
+                                for (int k = 0; k < counterForAPS; k++) {
+                                    int numberForAP=k+1;
+                                    startingPoints.add(new Point("AP"+numberForAP));
+                                }
+                                ArrayList<Point> vertices=numberOfVertices(edges);
+                                for(Point p : startingPoints){
+                                    result = dijkstraAlgorithmUS18(edges, p);
+                                    try {
+                                        createResultFileUS18(result);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
                             }
                             createInputFile(edges);
                         } catch (IOException e) {
                             e.printStackTrace();
-                        }
-                        break;
-                    case 2:
-                        start=new Point("AP");
-                        ArrayList<Point> vertices = numberOfVertices(edges);
-                        int i=1;
-                        for(Point p : vertices){
-                            if(!start.equals(p)){
-                                result = djisktraAlgorithm(edges, start,p);
-                                try {
-                                    String file=new String("result_graph_"+i+".png");
-                                    createResultFile(result, file);
-                                    i++;
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else {
-                                i++;
-                            }
-                        }
-
-                        break;
-                    case 3:
-                        ArrayList<Point> startingPoints = new ArrayList<>();
-                        for (int k = 0; k < counterForAPS; k++) {
-                            int numberForAP=k+1;
-                            startingPoints.add(new Point("AP"+numberForAP));
-                        }
-                        result = dijkstraAlgorithmUS18(edges, startingPoints);
-                        try {
-                            createResultFileUS18(result);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
                         }
                         break;
                     case 0:
@@ -226,30 +225,34 @@ public class MainDijkstra_Alternative {
         return resultPath;
     }
 
-        public static ArrayList<Edge> dijkstraAlgorithmUS18(ArrayList<Edge> edges, ArrayList<Point> startingPoints) {
+        public static ArrayList<Edge> dijkstraAlgorithmUS18(ArrayList<Edge> edges, Point startingPoint) {
             ArrayList<Edge> resultPath = new ArrayList<>();
 
             ArrayList<Point> vertices = numberOfVertices(edges);
             int numVertices = vertices.size();
 
+            // List of costs
             ArrayList<Integer> costsOfVertices = new ArrayList<>(Collections.nCopies(numVertices, Integer.MAX_VALUE));
+            // List to check if the vertex has been used
             ArrayList<Boolean> verticesUsed = new ArrayList<>(Collections.nCopies(numVertices, false));
+            // List of the path used
             ArrayList<Point> pathVertices = new ArrayList<>(Collections.nCopies(numVertices, null));
 
-            // Initialize distances for starting points
-            for (Point startPoint : startingPoints) {
-                int indexOfStartingPoint = vertices.indexOf(startPoint);
-                costsOfVertices.set(indexOfStartingPoint, 0);
-            }
+            int indexOfStartingPoint = vertices.indexOf(startingPoint);
+
+
+            costsOfVertices.set(indexOfStartingPoint, 0);
 
             for (int i = 0; i < numVertices - 1; i++) {
+                // Index of the vertex with the minimum cost among the unused vertices
                 int indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices);
+                // The algorithm stops when the endPoint is the vertex with the minimum cost or all vertices have been used
                 if (indexOfMinimum == -1) {
                     break;
                 }
                 Point chosenVertex = vertices.get(indexOfMinimum);
                 verticesUsed.set(indexOfMinimum, true);
-
+                // Update the costs of the paths (if they are smaller)
                 for (Edge edge : edges) {
                     if (edge.getP1().equals(chosenVertex)) {
                         int indexOfNext = vertices.indexOf(edge.getP2());
@@ -263,13 +266,9 @@ public class MainDijkstra_Alternative {
                     }
                 }
             }
-
-            // Construct the resulting paths
             for (int i = 0; i < numVertices; i++) {
-                Point pathVertex = pathVertices.get(i);
-                if (pathVertex != null && !startingPoints.contains(vertices.get(i))) {
-                    int indexOfPathVertex = vertices.indexOf(pathVertex);
-                    resultPath.add(new Edge(pathVertex, vertices.get(i), costsOfVertices.get(i) - costsOfVertices.get(indexOfPathVertex)));
+                if (pathVertices.get(i) != null) {
+                    resultPath.add(new Edge(pathVertices.get(i), vertices.get(i), costsOfVertices.get(i)));
                 }
             }
 
@@ -336,17 +335,7 @@ public class MainDijkstra_Alternative {
             int option = -1;
             System.out.println("-----------------MENU KRUSKAL ALGORITHM---------------");
             System.out.printf("----Option 1 : Introduce FileName      ACTUAL FILENAME:  %s%n", fileName);
-            if (edges == null) {
-                System.out.println("----Option 2 : Djikstra Algorithm US17 (No Data Loaded)");
-            } else {
-                System.out.println("----Option 2 : Djikstra Algorithm US17 (Data Loaded)");
-            }
-            if (edges == null) {
-                System.out.println("----Option 3 : Djikstra Algorithm US18 (No Data Loaded)");
-            } else {
-                System.out.println("----Option 3 : Djikstra Algorithm US18 (Data Loaded)");
-            }
-            while (option < 0 || option > 4) {
+            while (option < 0 || option > 1) {
                 if (option != -1) {
                     System.out.println("WARNING : INTRODUCE A CORRECT NUMBER TO SELECT A OPTION ON MENU");
                 }

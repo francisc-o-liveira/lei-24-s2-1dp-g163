@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -23,7 +24,6 @@ public class MainDjikstra {
         int option = -1;
         ArrayList<Edge> edges = null;
         ArrayList<Edge> result;
-        ArrayList<ArrayList<Edge>> result2;
         Point start;
         Scanner sc = new Scanner(System.in);
         while (option != 0) {
@@ -46,7 +46,9 @@ public class MainDjikstra {
                     break;
                 case 2:
                     start=new Point("AP");
-                    result = dijkstraAlgorithmUS17(edges, start);
+                    System.out.println("To which point do you wish to calculate the path?");
+                    Point end=new Point(sc.next());
+                    result = dijkstraAlgorithmUS17(edges, start, end);
                     try {
                         createResultFile(result);
                     } catch (IOException e) {
@@ -59,7 +61,11 @@ public class MainDjikstra {
                         int numberForAP=i+1;
                         startingPoints.add(new Point("AP"+numberForAP));
                     }
-                    result = dijkstraAlgorithmUS18(edges, startingPoints);
+                    ArrayList<Point> vertices=numberOfVertices(edges);
+                    System.out.print("What is the starting point: ");
+                    start = new Point(sc.next());
+                    sc.close();
+                    result = dijkstraAlgorithmUS18(edges, start, vertices);
                     try {
                         createResultFile(result);
                     } catch (IOException e) {
@@ -157,10 +163,69 @@ public class MainDjikstra {
     }
 
 
-    public static ArrayList<Edge> dijkstraAlgorithmUS17(ArrayList<Edge> edges, Point startingPoint) {
+    public static ArrayList<Edge> dijkstraAlgorithmUS17(ArrayList<Edge> edges, Point startingPoint, Point endPoint){
         ArrayList<Edge> resultPath = new ArrayList<>();
 
         ArrayList<Point> vertices = numberOfVertices(edges);
+        int numVertices = vertices.size();
+
+        //lista dos custos
+        ArrayList<Integer> costsOfVertices = new ArrayList<>(Collections.nCopies(numVertices, Integer.MAX_VALUE));
+        //lista para saber se o vértice já foi usado
+        ArrayList<Boolean> verticesUsed = new ArrayList<>(Collections.nCopies(numVertices, false));
+        //lista do caminho usado
+        ArrayList<Point> pathVertices = new ArrayList<>(Collections.nCopies(numVertices, null));
+
+        int indexOfStartingPoint = vertices.indexOf(startingPoint);
+        int indexOfEndPoint = vertices.indexOf(endPoint);
+
+        costsOfVertices.set(indexOfStartingPoint, 0);
+
+
+        for (int i = 0; i < numVertices - 1; i++) {
+            //dos vértices com os quais o vértice escolhido tem ligação, o index do que tem menor custo
+            int indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices);
+            //o algoritmo pára quando o de menor custo for o endPoint ou quando todos os vértices já foram usados
+            if (indexOfMinimum==-1 || indexOfMinimum == indexOfEndPoint) {
+                break;
+            }
+
+            Point chosenVertice = vertices.get(indexOfMinimum);
+            verticesUsed.set(indexOfMinimum, true);
+
+            //atualizar os custos dos caminhos (no caso de serem menores)
+            for (Edge edge : edges) {
+                if (edge.getP1().equals(chosenVertice)) {
+                    int indexOfNext = vertices.indexOf(edge.getP2());
+                    if (!verticesUsed.get(indexOfNext)){
+                        int cost=costsOfVertices.get(indexOfMinimum)+edge.getPrice();
+                        if (cost<costsOfVertices.get(indexOfNext)) {
+                            costsOfVertices.set(indexOfNext,cost);
+                            pathVertices.set(indexOfNext,chosenVertice);
+                        }
+                    }
+                }
+            }
+        }
+
+        // construir o caminho resultante
+        Point currentPoint=endPoint;
+        while (currentPoint != null && !currentPoint.equals(startingPoint)) {
+            Point beforePoint=pathVertices.get(vertices.indexOf(currentPoint));
+            if (beforePoint == null) {
+                break;
+            }
+            int cost = costsOfVertices.get(vertices.indexOf(currentPoint))-costsOfVertices.get(vertices.indexOf(beforePoint));
+            resultPath.add(new Edge(beforePoint, currentPoint, cost));
+            currentPoint=beforePoint;
+        }
+
+        return resultPath;
+    }
+
+    public static ArrayList<Edge> dijkstraAlgorithmUS18(ArrayList<Edge> edges, Point startingPoint, ArrayList<Point> vertices) {
+        ArrayList<Edge> resultPath = new ArrayList<>();
+
         int numVertices = vertices.size();
 
         // List of costs
@@ -207,55 +272,6 @@ public class MainDjikstra {
         return resultPath;
     }
 
-    public static ArrayList<Edge> dijkstraAlgorithmUS18(ArrayList<Edge> edges, ArrayList<Point> startingPoints) {
-        ArrayList<Edge> resultPath = new ArrayList<>();
-
-        ArrayList<Point> vertices = numberOfVertices(edges);
-        int numVertices = vertices.size();
-
-        ArrayList<Integer> costsOfVertices = new ArrayList<>(Collections.nCopies(numVertices, Integer.MAX_VALUE));
-        ArrayList<Boolean> verticesUsed = new ArrayList<>(Collections.nCopies(numVertices, false));
-        ArrayList<Point> pathVertices = new ArrayList<>(Collections.nCopies(numVertices, null));
-
-        // Initialize distances for starting points
-        for (Point startPoint : startingPoints) {
-            int indexOfStartingPoint = vertices.indexOf(startPoint);
-            costsOfVertices.set(indexOfStartingPoint, 0);
-        }
-
-        for (int i = 0; i < numVertices - 1; i++) {
-            int indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices);
-            if (indexOfMinimum == -1) {
-                break;
-            }
-            Point chosenVertex = vertices.get(indexOfMinimum);
-            verticesUsed.set(indexOfMinimum, true);
-
-            for (Edge edge : edges) {
-                if (edge.getP1().equals(chosenVertex)) {
-                    int indexOfNext = vertices.indexOf(edge.getP2());
-                    if (!verticesUsed.get(indexOfNext)) {
-                        int cost = costsOfVertices.get(indexOfMinimum) + edge.getPrice();
-                        if (cost < costsOfVertices.get(indexOfNext)) {
-                            costsOfVertices.set(indexOfNext, cost);
-                            pathVertices.set(indexOfNext, chosenVertex);
-                        }
-                    }
-                }
-            }
-        }
-
-        // Construct the resulting paths
-        for (int i = 0; i < numVertices; i++) {
-            Point pathVertex = pathVertices.get(i);
-            if (pathVertex != null && !startingPoints.contains(vertices.get(i))) {
-                int indexOfPathVertex = vertices.indexOf(pathVertex);
-                resultPath.add(new Edge(pathVertex, vertices.get(i), costsOfVertices.get(i) - costsOfVertices.get(indexOfPathVertex)));
-            }
-        }
-
-        return resultPath;
-    }
 
 
     // VERTICES == POINTS
