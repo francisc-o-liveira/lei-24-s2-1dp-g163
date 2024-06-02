@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -142,9 +143,9 @@ public class ManageGreenSpacesUI implements Initializable {
         FXMLLoader fxmlLoader ;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+            if (role.getDescription().equals(RegisterController.ROLE_HRM)){
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
-            } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
+            } else if (role.getDescription().equals(RegisterController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
