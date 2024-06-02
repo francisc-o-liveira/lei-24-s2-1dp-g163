@@ -110,8 +110,9 @@ public class ViewTaskListCollaboratorUI {
                 getTasksDone();
                 ZonedDateTime timeAndDate = ZonedDateTime.now();
                 Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
-                Tempo completedTime=new Tempo(timeAndDate.getHour(),timeAndDate.getMinute());
-                ctrl.completeTasks(entriesSelected,completedDate,completedTime);
+                for(EntryDto entry : entriesSelected){
+                    ctrl.assignEntryCompleted(entry,completedDate);
+                }
                 popUp().show();
             } catch (Exception e) {
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
