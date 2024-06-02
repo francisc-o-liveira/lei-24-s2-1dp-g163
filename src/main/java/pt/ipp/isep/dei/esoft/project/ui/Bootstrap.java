@@ -3,6 +3,9 @@ package pt.ipp.isep.dei.esoft.project.ui;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
@@ -75,4 +78,13 @@ public class Bootstrap implements Runnable {
         authenticationRepository.addUserWithRole("VFM","vfm@this.app","vfm", AuthenticationController.ROLE_VFM);
         //TODO: COMO ADICIONAR UTILIZADORES A APLICAÇAO
     }
+
+    /*private void addEntryForTesting(){
+        EntryRepository rep=Repositories.getInstance().getEntryRepository();
+        GreenSpaceDto greenSpaceDto=new GreenSpaceDto(40,"S", "s", "4565-969", "ss", GreenSpace.Type.Garden, "admin@this.app");
+        Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
+        organizationRepository.registerGreenSpace(greenSpaceDto);
+        EntryDto entryDto = new EntryDto("title", "description", Task.DegreeUrgency.Low, new Tempo(1,0), greenSpaceDto);
+        rep.registerNewTask(entryDto);
+    }*/
 }
