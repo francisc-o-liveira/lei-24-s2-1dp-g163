@@ -45,8 +45,10 @@ public class EntryMapper {
     }
     public void entryDtoToEntry(EntryDto entryDto, Entry entry) {
         // set entry on agenda
-        if (entry.getStartDate() == null && entryDto.getStartDate() != null) {
-            entry.setEntryAgenda(entryDto.getStartDate(), entryDto.getStatus());
+        if (entry.getStartDate() == null && entryDto.getStartDate() != null && entryDto.getStatus().getState().equals(EntryState.State.Assigned)) {
+            entry.setEntryAgenda(entryDto.getStartDate());
+
+
             // Postpone Don't know if are working
         } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && !entryDto.getStatus().equals(entry.getStatus())) {
                 boolean value=true;

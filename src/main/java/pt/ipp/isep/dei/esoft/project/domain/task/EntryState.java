@@ -57,11 +57,6 @@ public class EntryState {
             throw new RuntimeException("Access Impossible");
         }
     }
-    public void completeEntry(){
-        if (this.state == State.Postponed || this.state == State.Assigned){
-            this.state = State.Canceled;
-        }
-    }
     public boolean isCanceled() {
         return this.state == State.Canceled;
     }

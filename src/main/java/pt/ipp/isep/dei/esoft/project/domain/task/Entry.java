@@ -133,9 +133,9 @@ public class Entry extends Task {
     public static DegreeUrgency[] getDegreeOfUrgency(){
         return Task.getDegreeUrgencyValues();
     }
-    public void setEntryAgenda(Date startDate, EntryState status) {
-        this.startDate = startDate;
-        this.status = status;
+    public void setEntryAgenda(Date startDate) {
+        setStartDate(startDate);
+        status.assignState();
     }
     public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
