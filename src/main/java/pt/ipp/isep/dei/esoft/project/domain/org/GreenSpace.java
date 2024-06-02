@@ -39,21 +39,57 @@ public class GreenSpace {
     }
 
     private void setArea(double area) {
+        if(area <= 0){
+            throw new IllegalArgumentException("Area cannot be less or equal to 0");
+        }
         this.areaInHectares = area;
     }
 
     private void setAddress(String address, String addressCity, String addressZipCode) {
-        this.addressStreet = address;
-        this.addressCity = addressCity;
-        if ((addressZipCode.split("-").length==2) && addressStreet.split(" ").length<10 && addressCity.split(" ").length<6 && addressZipCode.split("").length==8) {
+        if (verifyStreet(address)) {
+            this.addressStreet = address;
+        }
+        if(verifyIsOnlyCharacter(addressCity)){
+            this.addressCity = addressCity;
+        }
+        if ((addressZipCode.split("-").length==2) && addressZipCode.split("").length==8) {
             this.addressZipCode = addressZipCode;
         }else {
             throw new IllegalArgumentException("Invalid address");
         }
     }
 
+    private boolean verifyStreet(String address) {
+        char[] chars = address.toCharArray();;
+        for(Character c : chars){
+            if (!Character.isLetter(c) && Character.isDigit(c)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** Method to verify if the name only contains characters
+     *
+     * @param name of Collaborator
+     * @return true if the name only contains characters
+     */
+    private boolean verifyIsOnlyCharacter(String name) {
+        char[] chars = name.replaceAll("\\s", "").toCharArray();
+        for (char c : chars){
+            if (!Character.isLetter(c)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
     private void setName(String name) {
-        this.name = name;
+        if (verifyIsOnlyCharacter(name)){
+            this.name = name;
+        }
+  throw new IllegalArgumentException("Name Cannot have have numbers");
     }
 
     public double getArea() {

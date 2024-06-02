@@ -126,6 +126,6 @@ public class ApplicationSession {
     }
 
     private static boolean verifyTime(String[] hoursMinutes) {
-        return (hoursMinutes.length == 2 && Integer.parseInt(hoursMinutes[0])>24 && Integer.parseInt(hoursMinutes[1])>-1 && Integer.parseInt(hoursMinutes[1])<61 && Integer.parseInt(hoursMinutes[0])>-1);
+        return (hoursMinutes.length == 2 && Integer.parseInt(hoursMinutes[0])<=24 && Integer.parseInt(hoursMinutes[1])>=0 && Integer.parseInt(hoursMinutes[1])<=60 && Integer.parseInt(hoursMinutes[0])>=0);
     }
 }

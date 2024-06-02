@@ -194,11 +194,9 @@ public class EntryRepository {
                                     teams.remove(team);
                                 }
                             }
-
                         }
                     }
                 }
-
             }
         }
         return teams;
