@@ -11,12 +11,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TableView fx:id="vehiclesToAssign" layoutX="55.0" layoutY="98.0" prefHeight="214.0" prefWidth="383.0">
+      <TableView fx:id="vehiclesToAssign" editable="true" layoutX="55.0" layoutY="98.0" prefHeight="214.0" prefWidth="383.0">
         <columns>
           <TableColumn fx:id="platesOfVehiclesToAssign" prefWidth="317.0" text="Vehicles" />
             <TableColumn fx:id="selectingVehicles" prefWidth="65.0" text="select" />
         </columns>
       </TableView>
-      <Button onAction="#assignVehicles" layoutX="399.0" layoutY="346.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
+      <Button layoutX="399.0" layoutY="346.0" mnemonicParsing="false" onAction="#assignVehicles" prefHeight="40.0" prefWidth="79.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
    </children>
 </AnchorPane>

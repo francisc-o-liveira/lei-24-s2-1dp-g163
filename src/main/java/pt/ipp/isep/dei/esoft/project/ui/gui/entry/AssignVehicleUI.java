@@ -19,8 +19,6 @@ public class AssignVehicleUI {
     private TableColumn<VehicleDto,String> platesOfVehiclesToAssign;
     @FXML
     private TableColumn<VehicleDto, Boolean> selectingVehicles;
-    @FXML
-    private Button assignVehicles;
     private ObservableList<VehicleDto> vehiclesToAssignList= FXCollections.observableArrayList();
     private ArrayList<VehicleDto> vehiclesSelected;
     private EntryDto selectedEntry;
@@ -30,14 +28,17 @@ public class AssignVehicleUI {
     public void setEntry(EntryDto entry){
         ctrl=new ViewDetailsEntryController();
         selectedEntry=entry;
+        vehiclesSelected=new ArrayList<>();
         initializeUI();
     }
 
     public void initializeUI(){
         platesOfVehiclesToAssign.setCellValueFactory(new PropertyValueFactory<>("plate"));
+        selectingVehicles.setCellValueFactory(cellData -> cellData.getValue().isSelectedForEntry());
         selectingVehicles.setCellFactory(CheckBoxTableCell.forTableColumn(selectingVehicles));
         for(VehicleDto t : ctrl.getVehicleListPossibleForEntry(selectedEntry)){
             vehiclesToAssignList.add(t);
+            t.setSelecting(false);
         }
         vehiclesToAssign.setItems(vehiclesToAssignList);
     }
