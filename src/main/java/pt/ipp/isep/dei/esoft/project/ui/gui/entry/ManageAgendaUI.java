@@ -4,11 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
@@ -16,6 +18,10 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
+
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Popup;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -76,6 +82,7 @@ public class ManageAgendaUI  implements Initializable{
         view.getChildren().clear();
         Label header = new Label(yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear());
         header.getStyleClass().add("header");
+        header.setOnMouseClicked(event -> showMiniCalendar(event, header));
 
         Button previousMonthButton = new Button("<");
         previousMonthButton.setOnAction(e -> changeMonth(-1));
@@ -129,9 +136,44 @@ public class ManageAgendaUI  implements Initializable{
                 row++;
             }
         }
+        Button addEntryButton = new Button("Add Entry");
+        addEntryButton.setOnAction(e -> {
+            try {
+                btnAddEntry(null);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
-        view.getChildren().addAll(headerBox, calendarGrid);
+        view.getChildren().addAll(headerBox, calendarGrid,addEntryButton);
     }
+
+    private void showMiniCalendar(MouseEvent event, Label header) {
+        Popup popup = new Popup();
+
+        GridPane miniCalendar = new GridPane();
+        miniCalendar.setStyle("-fx-background-color: white; -fx-border-color: black;");
+        miniCalendar.setHgap(10);
+        miniCalendar.setVgap(10);
+        miniCalendar.setPadding(new Insets(10, 10, 10, 10));
+
+        for (int month = 0; month < 12; month++) {
+            int row = month / 4;
+            int col = month % 4;
+            int selectedMonth = month; // effectively final variable
+            Button monthButton = new Button(YearMonth.of(currentYearMonth.getYear(), month + 1).getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
+            monthButton.setOnAction(e -> {
+                popup.hide();
+                currentYearMonth = YearMonth.of(currentYearMonth.getYear(), selectedMonth + 1);
+                drawCalendar(currentYearMonth);
+            });
+            miniCalendar.add(monthButton, col, row);
+        }
+
+        popup.getContent().add(miniCalendar);
+        popup.show(header, event.getScreenX(), event.getScreenY());
+    }
+
 
     private void drawWeeklyCalendar(LocalDate startDate) {
         viewWeek.getChildren().clear();
@@ -180,8 +222,16 @@ public class ManageAgendaUI  implements Initializable{
             calendarGrid.add(dayBox, col, 1);
             date = date.plusDays(1);
         }
+        Button addEntryButton = new Button("Add Entry");
+        addEntryButton.setOnAction(e -> {
+            try {
+                btnAddEntry(null);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
-        viewWeek.getChildren().addAll(headerBox, calendarGrid);
+        viewWeek.getChildren().addAll(headerBox, calendarGrid,addEntryButton);
     }
 
     public void introduceDates(List<EntryDto> dayEntries, VBox dayBox) {
