@@ -68,10 +68,11 @@ public class Entry extends Task {
         return finishDate;
     }
 
-    public void completeTask(Date finishDate){
+    public void completeTask(Date finishDate, Collaborator collaborator){
         if (finishDate.after(getTimePeriod().getStartDate())){
-            this.finishDate = finishDate;
-            status.isCompleted();
+            this.collaboratorThatCompleted=collaborator;
+            setFinishDate(finishDate);
+            this.status.doneEntry();
         }else {
             throw new IllegalArgumentException("This finish date is not right");
         }
@@ -151,11 +152,7 @@ public class Entry extends Task {
     }
     public TimePeriod getTimePeriod(){return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());}
 
-    public void completeEntry(Collaborator collab, Date date){
-        this.collaboratorThatCompleted=collab;
-        setFinishDate(date);
-        this.status.doneEntry();
-    }
+
 
     private void setFinishDate(Date date) {
         if (date == null && date.after(startDate)) {

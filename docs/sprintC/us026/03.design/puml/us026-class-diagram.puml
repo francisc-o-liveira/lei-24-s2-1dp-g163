@@ -17,6 +17,10 @@ class Entry {
     + removeVehicle()
 }
 
+class EntryState{
+    -Enum State
+}
+
 class Task{
 }
 class EntryRepository {
@@ -130,5 +134,7 @@ VehicleMapper "1" --> "*" VehicleDto
 Entry --> "*" CollaboratorUser : employs
 Task "1" -> "1" Entry : extends
 
+Entry "1" --> "1" EntryState : have
+EntryDto "1" --> "1" EntryState : have
 
 @enduml

@@ -74,8 +74,8 @@ public class EntryMapper {
 
             // DATAS IGUAIS E STATUS IGUAIS // TEAM E VEHICLES IGUAIS // ENTRY COMPLETE BY COLLABORATOR
         } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate()!=null && entryDto.getTeamAssigned().equals(entry.getTeamAssigned()) && entry.getVehicleList().equals(entryDto.getVehicleList()) ) {
-            if (entry.getFinishDate() == null && entryDto.getFinishDate() != null && entryDto.getCollaboratorFinish()!=null){
-                entry.completeTask(entryDto.getFinishDate());
+            if (entry.getFinishDate() == null && entryDto.getCollaboratorFinish()!=null){
+                entry.completeTask(entryDto.getFinishDate(),entryDto.getCollaboratorFinish());
             }else {
                 throw new IllegalArgumentException("This entry is already completed");
             }
