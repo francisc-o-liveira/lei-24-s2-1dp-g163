@@ -1,63 +1,62 @@
-// Function to find the index with the minimum cost
+// Function to find the index of the vertex with the minimum cost that has not been visited yet
 function indexOfMin(costsOfVertices, verticesVisited, numVertices):
-    min = Infinity
+    min = INFINITY
     indexOfMinimum = -1
-    for j from 0 to numVertices-1:
-        if verticesVisited[j] is False and costsOfVertices[j] < min:
+    for j = 0 to numVertices-1:
+        if not verticesVisited[j] and costsOfVertices[j] < min:
             min = costsOfVertices[j]
             indexOfMinimum = j
     return indexOfMinimum
 
-// Function to implement Dijkstra's Algorithm
-function dijkstraAlgorithm(edges, startingPoint):
-    resultPath = []
+// Dijkstra's Algorithm to find the shortest path
+function dijkstraAlgorithmUS17(edges, startingPoint, endPoint):
+    resultPath = empty list of Edge
 
     vertices = numberOfVertices(edges)
-    numVertices = length(vertices)
+    numVertices = size of vertices
 
-    // Initialize the costs, used vertices, and path
-    costsOfVertices = [Infinity] * numVertices
-    verticesUsed = [False] * numVertices
-    pathVertices = [null] * numVertices
+    // Initialize the cost list with INFINITY
+    costsOfVertices = list of size numVertices with all elements set to INFINITY
+    // Initialize the visited list with false
+    verticesUsed = list of size numVertices with all elements set to false
+    // Initialize the path list with null
+    pathVertices = list of size numVertices with all elements set to null
 
-    indexOfStartingPoint = indexOf(startingPoint in vertices)
+    indexOfStartingPoint = index of startingPoint in vertices
+    indexOfEndPoint = index of endPoint in vertices
 
+    // Set the cost of the starting point to 0
     costsOfVertices[indexOfStartingPoint] = 0
 
-    for i from 0 to numVertices-2:
-        // Find the vertex with the minimum cost among the unused vertices
+    // Loop to process each vertex
+    for i = 0 to numVertices-2:
+        // Find the index of the vertex with the minimum cost
         indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices)
-
-        if indexOfMinimum == -1:
+        // Stop if the minimum cost vertex is the endPoint or all vertices are visited
+        if indexOfMinimum == -1 or indexOfMinimum == indexOfEndPoint:
             break
 
-        chosenVertex = vertices[indexOfMinimum]
-        verticesUsed[indexOfMinimum] = True
+        chosenVertice = vertices[indexOfMinimum]
+        verticesUsed[indexOfMinimum] = true
 
-        // Update the costs of the paths
+        // Update the costs for adjacent vertices
         for edge in edges:
-            if edge.p1 == chosenVertex:
-                indexOfNext = indexOf(edge.p2 in vertices)
-                if verticesUsed[indexOfNext] is False:
+            if edge.p1 equals chosenVertice:
+                indexOfNext = index of edge.p2 in vertices
+                if not verticesUsed[indexOfNext]:
                     cost = costsOfVertices[indexOfMinimum] + edge.price
                     if cost < costsOfVertices[indexOfNext]:
                         costsOfVertices[indexOfNext] = cost
-                        pathVertices[indexOfNext] = chosenVertex
+                        pathVertices[indexOfNext] = chosenVertice
 
-    for i from 0 to numVertices-1:
-        if pathVertices[i] is not null:
-            resultPath.append(new Edge(pathVertices[i], vertices[i], costsOfVertices[i]))
+    // Build the result path
+    currentPoint = endPoint
+    while currentPoint is not null and currentPoint does not equal startingPoint:
+        beforePoint = pathVertices[indexOf(currentPoint in vertices)]
+        if beforePoint is null:
+            break
+        cost = costsOfVertices[indexOf(currentPoint in vertices)] - costsOfVertices[indexOf(beforePoint in vertices)]
+        resultPath.add(new Edge(beforePoint, currentPoint, cost))
+        currentPoint = beforePoint
 
     return resultPath
-
-// Function to get the list of vertices
-function numberOfVertices(edges):
-    vertices = []
-    for edgeX in edges:
-        x1 = edgeX.p1
-        x2 = edgeX.p2
-        if x1 not in vertices:
-            vertices.append(x1)
-        if x2 not in vertices:
-            vertices.append(x2)
-    return vertices

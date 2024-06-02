@@ -48,6 +48,7 @@ public class MainDjikstra {
                     start=new Point("AP");
                     System.out.println("To which point do you wish to calculate the path?");
                     Point end=new Point(sc.next());
+                    sc.close();
                     result = dijkstraAlgorithmUS17(edges, start, end);
                     try {
                         createResultFile(result);
@@ -319,20 +320,6 @@ public class MainDjikstra {
             }
         }
         return vertices;
-    }
-
-
-    public static String askFileName() {
-        String filename = pathName;
-        Scanner readLineFile = new Scanner(System.in);
-        File test;
-        do {
-            System.out.println("Introduce the FileName to take data.(input: nameFile.csv)");
-            filename += readLineFile.nextLine();
-            test = new File(filename);
-
-        } while (!test.canExecute());
-        return filename;
     }
 
     public static String askFileNameMatrix() {
