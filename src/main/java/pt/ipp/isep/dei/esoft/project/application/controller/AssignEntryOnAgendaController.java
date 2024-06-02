@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,8 @@ public class AssignEntryOnAgendaController {
         return mapper.entryListToEntryDtoList(entryRepository.getAgenda());
     }
 
-    public boolean assignEntryOnAgenda(EntryDto entryDto){
+    public boolean assignEntryOnAgenda(EntryDto entryDto, Date newDate){
+        entryDto.setEntryAgenda(newDate);
         return entryRepository.assignEntryOnAgenda(entryDto).isPresent();
     }
 
