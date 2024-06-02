@@ -12,9 +12,8 @@ import java.util.List;
  */
 public class AuthenticationController {
 
-    public static final String ROLE_GSM = "GSM";
-    public static final String ROLE_HRM = "HRM";
-    public static final String ROLE_VFM = "VFM";
+    public static final String ROLE_ADMIN = "ADMIN";
+
     //private final ApplicationSession applicationSession;
     private final AuthenticationRepository authenticationRepository;
 
@@ -53,13 +52,6 @@ public class AuthenticationController {
         return authenticationRepository.addUserWithRole(managerName, managerEmail, managerPassword, userRole);
     }
 
-    public List<String> getRolesToSelect(){
-        List<String> roles = new ArrayList<>();
-        roles.add(ROLE_GSM);
-        roles.add(ROLE_HRM);
-        roles.add(ROLE_VFM);
-        return roles;
-    }
 
     public void doLogout() {
         authenticationRepository.doLogout();

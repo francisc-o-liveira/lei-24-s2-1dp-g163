@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.system;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.OrganizationController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
 public class RegisterManageUI implements Runnable{
 
     private AuthenticationController ctrlUser;
+    private RegisterController ctrlRegis;
     private OrganizationController ctrlOrg;
     private String managerName;
     private String managerPassword;
@@ -20,6 +22,7 @@ public class RegisterManageUI implements Runnable{
     public RegisterManageUI() {
         ctrlUser = new AuthenticationController();
         ctrlOrg = new OrganizationController();
+        ctrlRegis = new RegisterController();
     }
     @Override
     public void run() {
@@ -116,7 +119,7 @@ public class RegisterManageUI implements Runnable{
     }
 
     private String selectUserRole(){
-        List<String>roles=ctrlUser.getRolesToSelect();
+        List<String>roles=ctrlRegis.getRolesToSelect();
         Scanner scan = new Scanner(System.in);
         int docIDNumber;
         System.out.print("Select one of the following Roles for the Manager on the System: \n");

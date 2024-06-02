@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console.authorization;
 
 import javafx.scene.control.PasswordField;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.AdminUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.HRManagerUI;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.MenuItem;
@@ -20,9 +21,11 @@ import java.util.Objects;
 
 public class AuthenticationUI implements Runnable {
     private final AuthenticationController ctrl;
+    private final RegisterController regis;
 
     public AuthenticationUI() {
         ctrl = new AuthenticationController();
+        regis = new RegisterController();
     }
 
     public void run() {
@@ -47,9 +50,9 @@ public class AuthenticationUI implements Runnable {
 
     private List<MenuItem> getMenuItemForRoles() {
         List<MenuItem> rolesUI = new ArrayList<>();
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_GSM, new AdminUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_HRM, new HRManagerUI()));
-        rolesUI.add(new MenuItem(AuthenticationController.ROLE_VFM, new VFManagerUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_ADMIN, new AdminUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_ADMIN, new HRManagerUI()));
+        rolesUI.add(new MenuItem(AuthenticationController.ROLE_ADMIN, new VFManagerUI()));
         //TODO: Complete with other user roles and related RoleUI
         return rolesUI;
     }
