@@ -83,4 +83,11 @@ public class EntryState {
     public boolean isCompleted(){
         return this.state == State.Canceled;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        EntryState other = (EntryState) obj;
+        return other.getState().equals(this.getState());
+    }
+
 }
