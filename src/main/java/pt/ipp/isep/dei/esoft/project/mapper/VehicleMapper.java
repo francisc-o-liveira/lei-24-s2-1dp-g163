@@ -29,4 +29,12 @@ public class VehicleMapper {
         }
         throw new RuntimeException("Vehicle not found in Repository - Fatal Error");
     }
+
+    public List<Vehicle> vehicleListDtoToVehicleList(List<VehicleDto> vehicleList) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        for (VehicleDto vehicleDto : vehicleList) {
+            vehicles.add(vehicleDtoToVehicle(vehicleDto));
+        }
+        return vehicles;
+    }
 }

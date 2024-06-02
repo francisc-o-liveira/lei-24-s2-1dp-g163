@@ -21,9 +21,13 @@ import java.util.List;
 public class EntryMapper {
 
     private GreenSpaceMapper mapperSpaces;
+    private VehicleMapper vehicleMapper;
+    private TeamMapper teamMapper;
 
     public EntryMapper(){
         mapperSpaces = new GreenSpaceMapper();
+        vehicleMapper = new VehicleMapper();
+        teamMapper = new TeamMapper();
     }
 
     public List<EntryDto> entryListToEntryDtoList(List<Entry> entryList) {
@@ -72,11 +76,11 @@ public class EntryMapper {
 
         } else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
             if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
-                entry.setTeamAssigned(entryDto.getTeamAssigned());
+                entry.setTeamAssigned(teamMapper.teamDtoToTeam(entryDto.getTeamAssigned()));
             }
-            /*if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
-                entry.setVehicleList(entryDto.getVehicleList());
-            }*/
+            if (!entry.getVehicleList().equals(entryDto.getVehicleList())){
+                entry.setVehicleList(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()));
+            }
         }else {
             //modify task if it is possible
             throw new IllegalArgumentException();
