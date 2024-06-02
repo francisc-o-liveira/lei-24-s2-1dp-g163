@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.gui.collaborator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.ViewTaskListAssigned
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
@@ -23,6 +25,8 @@ import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ViewTaskListCollaboratorUI {
@@ -31,6 +35,7 @@ public class ViewTaskListCollaboratorUI {
     public AuthenticationController ctrlAuth;
     public ViewTaskListAssignedCollabController ctrl;
     private ObservableList<EntryDto> tasksOfCollab= FXCollections.observableArrayList();
+    private FilteredList<EntryDto> filteredData;
     private List<EntryDto> entriesSelected;
     private List<EntryDto> tasksForCollab;
     @FXML
@@ -51,6 +56,21 @@ public class ViewTaskListCollaboratorUI {
     @FXML
     private TableColumn<EntryDto, EntryState> taskStatus;
 
+    @FXML
+    private CheckBox assignedCheck;
+
+    @FXML
+    private CheckBox canceledCheck;
+
+    @FXML
+    private CheckBox doneCheck;
+
+    @FXML
+    private CheckBox plannedCheck;
+
+    @FXML
+    private CheckBox postponedCheck;
+
     public ViewTaskListCollaboratorUI(){
         ctrlAuth=new AuthenticationController();
         entriesSelected =new ArrayList<>();
@@ -60,6 +80,14 @@ public class ViewTaskListCollaboratorUI {
 
     public void setTableTasks(List<EntryDto> tasksForCollaborator){
         tasksForCollab=tasksForCollaborator;
+        Comparator<EntryDto> sortingTasks=new Comparator<EntryDto>() {
+            @Override
+            public int compare(EntryDto o1, EntryDto o2) {
+                return o1.getStartDate().compareTo(o2.getStartDate());
+            }
+        };
+
+        Collections.sort(tasksForCollab,sortingTasks);
         taskDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         taskGreenSpace.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         taskName.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -72,6 +100,8 @@ public class ViewTaskListCollaboratorUI {
         }
 
         tableTasks.setItems(tasksOfCollab);
+        filteredData = new FilteredList<>(tasksOfCollab, p -> true);
+        tableTasks.setItems(filteredData);
     }
 
     @FXML
@@ -94,6 +124,29 @@ public class ViewTaskListCollaboratorUI {
                 entriesSelected.add(entry);
             }
         }
+    }
+
+    @FXML
+    public void filterTasks(ActionEvent event){
+        filteredData.setPredicate(task -> {
+            boolean showAssigned = assignedCheck.isSelected();
+            boolean showCanceled = canceledCheck.isSelected();
+            boolean showDone = doneCheck.isSelected();
+            boolean showPlanned = plannedCheck.isSelected();
+            boolean showPostponed = postponedCheck.isSelected();
+
+            if (!showAssigned && !showCanceled && !showDone && !showPlanned && !showPostponed) {
+                return true;
+            }
+
+            boolean matchesAssigned = showAssigned && task.getStatus().getState() == EntryState.State.Assigned;
+            boolean matchesCanceled = showCanceled && task.getStatus().getState() == EntryState.State.Canceled;
+            boolean matchesDone = showDone && task.getStatus().getState() == EntryState.State.Done;
+            boolean matchesPlanned = showPlanned && task.getStatus().getState() == EntryState.State.Planned;
+            boolean matchesPostponed = showPostponed && task.getStatus().getState() == EntryState.State.Postponed;
+
+            return matchesAssigned || matchesCanceled || matchesDone || matchesPlanned || matchesPostponed;
+        });
     }
 
 
