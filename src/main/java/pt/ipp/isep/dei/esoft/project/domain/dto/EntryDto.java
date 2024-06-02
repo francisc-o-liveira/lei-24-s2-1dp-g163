@@ -55,9 +55,9 @@ public class EntryDto extends TaskDto{
         });
     }
 
-    public EntryDto(EntryState entryState, String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
+    public EntryDto(String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
         super(title, description,degreeOfUrgency, timeExpec, greenSpaceDto);
-        this.status = entryState;
+        this.status = new EntryState();
         this.vehicleList = null;
         this.teamAssigned = null;
         this.reference = null;
@@ -86,7 +86,7 @@ public class EntryDto extends TaskDto{
     }
 
     public void setStatus(EntryState newStatus) {
-        if(status == null){
+        if(newStatus == null){
             throw new NullPointerException("Status cannot be null");
         }
         this.status = newStatus;
