@@ -27,7 +27,7 @@ public class MainApp extends Application {
             mainStage.setTitle("AquaCode - Green Space Management");
             mainStage.setScene(scene);
             mainStage.show();
-            Image image = new Image("/Icons/icon.png");
+            Image image = new Image(getClass().getResourceAsStream("/images/AQUACODE-2-2.png"));
             mainStage.getIcons().add(image);
             mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
