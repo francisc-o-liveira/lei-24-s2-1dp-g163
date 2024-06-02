@@ -221,7 +221,7 @@ public class ManageAgendaUI  implements Initializable{
             entryLabel.setPrefHeight(50);
             entryLabel.getStyleClass().add("event-label");
 
-            switch (entry.getStatusByState()) {
+            switch (entry.getStatus().getState()) {
                 case EntryState.State.Planned:
                     entryLabel.getStyleClass().add("status-planned");
                     break;
