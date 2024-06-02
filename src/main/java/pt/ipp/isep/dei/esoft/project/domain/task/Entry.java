@@ -153,7 +153,6 @@ public class Entry extends Task {
     public TimePeriod getTimePeriod(){return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());}
 
 
-
     private void setFinishDate(Date date) {
         if (date == null && date.after(startDate)) {
             throw new IllegalArgumentException("Date cannot be null.");

@@ -79,6 +79,7 @@ public class EntryState {
     public String toString(){
         return String.format("%s", state);
     }
+
     public boolean isCompleted(){
         return this.state == State.Canceled;
     }
