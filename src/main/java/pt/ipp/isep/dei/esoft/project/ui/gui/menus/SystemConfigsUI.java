@@ -9,12 +9,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.OrganizationController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 
 
 public class SystemConfigsUI {
 
-    AuthenticationController ctrl=new AuthenticationController();
+    RegisterController ctrl=new RegisterController();
     public Stage stage;
     @FXML
     private TextField emailTxt;

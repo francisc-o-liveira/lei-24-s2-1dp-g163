@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
@@ -155,9 +156,9 @@ public class ManageTeamsUI {
         FXMLLoader fxmlLoader ;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+            if (role.getDescription().equals(RegisterController.ROLE_HRM)){
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
-            } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
+            } else if (role.getDescription().equals(RegisterController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));

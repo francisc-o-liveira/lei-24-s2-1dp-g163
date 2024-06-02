@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
@@ -136,9 +137,9 @@ public class GenerateTeamsUI {
         FXMLLoader fxmlLoader ;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)){
+            if (role.getDescription().equals(RegisterController.ROLE_HRM)){
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
-            } else if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+            } else if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
