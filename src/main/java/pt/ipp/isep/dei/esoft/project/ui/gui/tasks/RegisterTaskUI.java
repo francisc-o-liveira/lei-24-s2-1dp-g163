@@ -88,7 +88,7 @@ public class RegisterTaskUI implements Initializable {
     private Alert popUp() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
-        alert.setContentText("Green Space added!");
+        alert.setContentText("Task added!");
 
         return alert;
     }

@@ -31,13 +31,10 @@ public class RegisterEntryUI implements Initializable {
     private TableColumn<EntryDto, String> titleTask;
     @FXML
     private DatePicker dateForEntry;
-    @FXML
-    private ComboBox<EntryState.State> statusOfEntry;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl = new AssignEntryOnAgendaController();
-        statusOfEntry.setItems(FXCollections.observableList(ctrl.getStates()));
         setTableTasks();
     }
 
@@ -45,8 +42,6 @@ public class RegisterEntryUI implements Initializable {
     public void btnRegister(ActionEvent event) {
         Date startDate=new Date(dateForEntry.getValue().getYear(),dateForEntry.getValue().getMonthValue(), dateForEntry.getValue().getDayOfMonth());
         selectedTaskDto= tasksForEntry.getSelectionModel().getSelectedItem();
-        EntryState.State state=statusOfEntry.getValue();
-        String ref="reference"; //needs correction
         if(selectedTaskDto==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "A task needs to be selected").show();
         } else {
