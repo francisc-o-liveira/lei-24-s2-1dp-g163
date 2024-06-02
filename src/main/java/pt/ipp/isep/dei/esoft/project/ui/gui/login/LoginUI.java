@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import javax.security.auth.login.LoginException;
@@ -46,14 +47,14 @@ public class LoginUI {
             authenticateCredentials();
             List<UserRoleDTO> roles = this.ctrl.getUserRoles();
             UserRoleDTO role = selectsRole(roles);
-            if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
+            if (role.getDescription().equals(RegisterController.ROLE_VFM)) {
                 showVFManagerUI();
-            }
-            if (role.getDescription().equals(AuthenticationController.ROLE_HRM)) {
+            }else if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
                 showHRManagerUI();
-            }
-            if (role.getDescription().equals(AuthenticationController.ROLE_GSM)) {
+            }else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
                 showGSManagerUI();
+            } else if (role.getDescription().equals(AuthenticationController.ROLE_ADMIN)) {
+                showAdminManagerUI();
             } else {
                 showCollaboratorUI();
             }
@@ -112,6 +113,14 @@ public class LoginUI {
 
     public void showVFManagerUI() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        mainStage.setScene(scene);
+        mainStage.show();
+    }
+
+    public void showAdminManagerUI() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
