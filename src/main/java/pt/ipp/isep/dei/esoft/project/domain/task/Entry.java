@@ -89,10 +89,6 @@ public class Entry extends Task {
         vehicleList.add(vehicle);
     }
 
-    public void assignTeam(Team teamToAssign){
-        this.teamAssigned = teamToAssign;
-    }
-
     public void cancelEntry(){
         status.cancelEntry();
         cancelData();

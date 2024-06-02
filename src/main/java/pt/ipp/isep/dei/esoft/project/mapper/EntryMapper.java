@@ -88,6 +88,18 @@ public class EntryMapper {
             }
             if (entry.getVehicleList() == null && entryDto.getVehicleList() != null){
                 entry.setVehicleList(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()));
+            } else if(entry.getVehicleList() != null && entryDto.getVehicleList()!=null){
+                for (Vehicle vehicle : vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList())) {
+                    boolean value=true;
+                    for (Vehicle vehicleInEntry : entry.getVehicleList()) {
+                        if (vehicle.equals(vehicleInEntry)){
+                            value=false;
+                        }
+                    }
+                    if(value){
+                        entry.assignVehicle(vehicle);
+                    }
+                }
             }
         }else {
             //modify task if it is possible
