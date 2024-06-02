@@ -44,68 +44,86 @@ public class EntryMapper {
         return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus(),reference);
     }
     public void entryDtoToEntry(EntryDto entryDto, Entry entry) {
-        // set entry on agenda
-        if (entry.getStartDate() == null && entryDto.getStartDate() != null && entryDto.getStatus().getState().equals(EntryState.State.Assigned)) {
+        if (shouldSetEntryAgenda(entry, entryDto)) {
             entry.setEntryAgenda(entryDto.getStartDate());
-
-
-            // Postpone Don't know if are working
-        } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && !entryDto.getStatus().equals(entry.getStatus())) {
-                boolean value=true;
-                ComparatorDates comparatorDates = new ComparatorDates();
-                Entry entryToCompare = getEntryFromDtoToCompare(entryDto);
-                for(Entry entryAgenda : Repositories.getInstance().getEntryRepository().getAgenda()){
-                    if(comparatorDates.compare(entryToCompare,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
-                        if(haveObjectsOf(entryToCompare,entryAgenda)){
-                            value = false;
-                        }
-                    }
-                }
-                if(value){
-                    entry.postponeEntry(entryDto.getStartDate());
-                }
-            // Cancel Entry // Dates equals, but status no
-        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate() == null) {
+        } else if (shouldPostponeEntry(entry, entryDto)) {
+            if (canPostpone(entryDto)) {
+                entry.postponeEntry(entryDto.getStartDate());
+            }
+        } else if (shouldCancelEntry(entry, entryDto)) {
             entry.cancelEntry();
+        } else if (shouldCompleteTask(entry, entryDto)) {
+            completeTask(entry, entryDto);
+        } else if (shouldUpdateTeamOrVehicles(entry, entryDto)) {
+            updateTeamAndVehicles(entry, entryDto);
+        } else {
+            throw new IllegalArgumentException("Cannot modify task");
+        }
+    }
 
-            // DATAS IGUAIS E STATUS IGUAIS // POSSIVEL MUDANÇA DE TEAM OU VEICULO
+    private boolean shouldSetEntryAgenda(Entry entry, EntryDto entryDto) {
+        return entry.getStartDate() == null && entryDto.getStartDate() != null
+                && entryDto.getStatus().getState().equals(EntryState.State.Assigned);
+    }
 
+    private boolean shouldPostponeEntry(Entry entry, EntryDto entryDto) {
+        return entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate())
+                && !entryDto.getStatus().equals(entry.getStatus());
+    }
 
-
-            // DATAS IGUAIS E STATUS IGUAIS // TEAM E VEHICLES IGUAIS // ENTRY COMPLETE BY COLLABORATOR
-        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate()!=null && entryDto.getTeamAssigned().equals(entry.getTeamAssigned()) && entry.getVehicleList().equals(entryDto.getVehicleList()) ) {
-            if (entry.getFinishDate() == null && entryDto.getCollaboratorFinish()!=null){
-                entry.completeTask(entryDto.getFinishDate(),entryDto.getCollaboratorFinish());
-            }else {
-                throw new IllegalArgumentException("This entry is already completed");
-            }
-
-
-
-       } else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
-            if (entry.getTeamAssigned() == null && entryDto.getTeamAssigned() != null){
-                entry.setTeamAssigned(teamMapper.teamDtoToTeam(entryDto.getTeamAssigned()));
-            }
-            if (entry.getVehicleList() == null && entryDto.getVehicleList() != null){
-                entry.setVehicleList(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()));
-            } else if(entry.getVehicleList() != null && entryDto.getVehicleList()!=null){
-                for (Vehicle vehicle : vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList())) {
-                    boolean value=true;
-                    for (Vehicle vehicleInEntry : entry.getVehicleList()) {
-                        if (vehicle.equals(vehicleInEntry)){
-                            value=false;
-                        }
-                    }
-                    if(value){
-                        entry.assignVehicle(vehicle);
-                    }
+    private boolean canPostpone(EntryDto entryDto) {
+        boolean value = true;
+        ComparatorDates comparatorDates = new ComparatorDates();
+        Entry entryToCompare = getEntryFromDtoToCompare(entryDto);
+        for (Entry entryAgenda : Repositories.getInstance().getEntryRepository().getAgenda()) {
+            if (comparatorDates.compare(entryToCompare, entryAgenda) == 0 && !entryAgenda.getStatus().isCanceled()) {
+                if (haveObjectsOf(entryToCompare, entryAgenda)) {
+                    value = false;
                 }
             }
-        }else {
-            //modify task if it is possible
-            throw new IllegalArgumentException();
         }
+        return value;
+    }
 
+    private boolean shouldCancelEntry(Entry entry, EntryDto entryDto) {
+        return entry.getStartDate().equals(entryDto.getStartDate())
+                && !entry.getStatus().equals(entryDto.getStatus())
+                && entryDto.getFinishDate() == null;
+    }
+
+    private boolean shouldCompleteTask(Entry entry, EntryDto entryDto) {
+        return entry.getStartDate().equals(entryDto.getStartDate())
+                && !entry.getStatus().equals(entryDto.getStatus())
+                && entryDto.getFinishDate() != null
+                && entryDto.getTeamAssigned().equals(entry.getTeamAssigned())
+                && entry.getVehicleList().equals(entryDto.getVehicleList());
+    }
+
+    private void completeTask(Entry entry, EntryDto entryDto) {
+        if (entry.getFinishDate() == null && entryDto.getCollaboratorFinish() != null) {
+            entry.completeTask(entryDto.getFinishDate(), entryDto.getCollaboratorFinish());
+        } else {
+            throw new IllegalArgumentException("This entry is already completed");
+        }
+    }
+
+    private boolean shouldUpdateTeamOrVehicles(Entry entry, EntryDto entryDto) {
+        return entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus());
+    }
+
+    private void updateTeamAndVehicles(Entry entry, EntryDto entryDto) {
+        if (entry.getTeamAssigned() == null && entryDto.getTeamAssigned() != null) {
+            entry.setTeamAssigned(teamMapper.teamDtoToTeam(entryDto.getTeamAssigned()));
+        }
+        if (entry.getVehicleList() == null && entryDto.getVehicleList() != null) {
+            entry.setVehicleList(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()));
+        } else if (entry.getVehicleList() != null && entryDto.getVehicleList() != null) {
+            for (Vehicle vehicle : vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList())) {
+                if (!entry.getVehicleList().contains(vehicle)) {
+                    entry.assignVehicle(vehicle);
+                }
+            }
+        }
     }
 
     private boolean haveObjectsOf(Entry entryToCompare, Entry entryAgenda) {
