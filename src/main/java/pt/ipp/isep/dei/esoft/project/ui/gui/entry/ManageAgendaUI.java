@@ -21,7 +21,6 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Popup;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -46,6 +45,7 @@ public class ManageAgendaUI  implements Initializable{
     private AnchorPane calendarAnchorPane;
     @FXML
     private AnchorPane weeklyViewAnchorPane;
+    private Popup miniCalendarPopup;
 
 
     @Override
@@ -149,7 +149,11 @@ public class ManageAgendaUI  implements Initializable{
     }
 
     private void showMiniCalendar(MouseEvent event, Label header) {
-        Popup popup = new Popup();
+
+        if (miniCalendarPopup != null && miniCalendarPopup.isShowing()) {
+            miniCalendarPopup.hide();
+        }
+        miniCalendarPopup = new Popup();
 
         GridPane miniCalendar = new GridPane();
         miniCalendar.setStyle("-fx-background-color: white; -fx-border-color: black;");
@@ -163,15 +167,16 @@ public class ManageAgendaUI  implements Initializable{
             int selectedMonth = month;
             Button monthButton = new Button(YearMonth.of(currentYearMonth.getYear(), month + 1).getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
             monthButton.setOnAction(e -> {
-                popup.hide();
+                miniCalendarPopup.hide();
                 currentYearMonth = YearMonth.of(currentYearMonth.getYear(), selectedMonth + 1);
                 drawCalendar(currentYearMonth);
             });
             miniCalendar.add(monthButton, col, row);
         }
 
-        popup.getContent().add(miniCalendar);
-        popup.show(header, event.getScreenX(), event.getScreenY());
+        miniCalendarPopup.getContent().add(miniCalendar);
+        miniCalendarPopup.setAutoHide(true);
+        miniCalendarPopup.show(header, event.getScreenX(), event.getScreenY());
     }
 
 
