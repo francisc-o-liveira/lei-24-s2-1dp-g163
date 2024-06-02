@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.ViewDetailsEntryAgendaUI">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.AssignTeamUI">
    <children>
       <Label layoutX="146.0" layoutY="31.0" text="Select a team to assign to this entry:">
          <font>
@@ -16,6 +16,6 @@
           <TableColumn fx:id="teamsName" prefWidth="381.0" text="Team" />
         </columns>
       </TableView>
-      <Button fx:id="assignTeam" layoutX="419.0" layoutY="344.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
+      <Button onAction="#assignTeam" layoutX="419.0" layoutY="344.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
    </children>
 </AnchorPane>

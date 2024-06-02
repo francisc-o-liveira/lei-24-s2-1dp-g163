@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.ViewDetailsEntryAgendaUI">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.AssignVehicleUI">
    <children>
       <Label layoutX="115.0" layoutY="48.0" text="Select the vehicles to assign to the entry:">
          <font>
@@ -17,6 +17,6 @@
             <TableColumn fx:id="selectingVehicles" prefWidth="65.0" text="select" />
         </columns>
       </TableView>
-      <Button fx:id="assignVehicles" layoutX="399.0" layoutY="346.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
+      <Button onAction="#assignVehicles" layoutX="399.0" layoutY="346.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="79.0" style="-fx-background-color: #C6E5B1;" text="Assign" />
    </children>
 </AnchorPane>

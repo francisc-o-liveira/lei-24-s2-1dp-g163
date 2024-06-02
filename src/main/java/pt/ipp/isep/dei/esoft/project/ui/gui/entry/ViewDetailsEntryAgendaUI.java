@@ -42,33 +42,7 @@ public class ViewDetailsEntryAgendaUI {
 
     private ObservableList<VehicleDto> vehiclesList= FXCollections.observableArrayList();
 
-    /** to postpone the entry*/
-    @FXML
-    private DatePicker postponedDate;
-    @FXML
-    private Button postponingEntry;
 
-    /**to assign a team*/
-    @FXML
-    private TableView<TeamDto> teamsToAssign;
-    @FXML
-    private TableColumn<TeamDto, String> teamsName;
-    @FXML
-    private Button assignTeam;
-    private ObservableList<TeamDto> teamsToAssignList=FXCollections.observableArrayList();
-    private TeamDto selectedTeam;
-
-    /**to assign the vehicles*/
-    @FXML
-    private TableView<VehicleDto> vehiclesToAssign;
-    @FXML
-    private TableColumn<VehicleDto,String> platesOfVehiclesToAssign;
-    @FXML
-    private TableColumn<VehicleDto, Boolean> selectingVehicles;
-    @FXML
-    private Button assignVehicles;
-    private ObservableList<VehicleDto> vehiclesToAssignList=FXCollections.observableArrayList();
-    private ArrayList<VehicleDto> vehiclesSelected;
     public void setLabels(EntryDto entry, Stage stage){
         ctrl=new ViewDetailsEntryController();
         selectedEntry=entry;
@@ -94,40 +68,8 @@ public class ViewDetailsEntryAgendaUI {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        platesOfVehiclesToAssign.setCellValueFactory(new PropertyValueFactory<>("plate"));
-        selectingVehicles.setCellFactory(CheckBoxTableCell.forTableColumn(selectingVehicles));
-        for(VehicleDto t : ctrl.getVehicleListPossibleForEntry(selectedEntry)){
-            vehiclesToAssignList.add(t);
-        }
-        vehiclesToAssign.setItems(vehiclesToAssignList);
-        assignVehicles.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                try{
-                    getVehiclesToAssign();
-                    for(VehicleDto vehicleDto : vehiclesSelected){
-                        ctrl.assignVehicleToEntry(vehicleDto,selectedEntry);
-                        popUp("Vehicles assigned!").show();
-                        if (popUp("Vehicles assigned").showAndWait().get() == ButtonType.OK) {
-                            stage.close();
-                        }
-                    }
-                } catch (Exception e){
-                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-                }
-            }
-        });
-    }
-
-    private void getVehiclesToAssign(){
-        for (VehicleDto vehicle : ctrl.getVehicleListPossibleForEntry(selectedEntry)) {
-            if (vehicle.isSelectedForEntry().get()) {
-                vehiclesSelected.add(vehicle);
-            }
-        }
-        if(vehiclesSelected==null){
-            throw new NullPointerException("No vehicles were chosen to assign");
-        }
+        AssignVehicleUI ui=fxmlLoader.getController();
+        ui.setEntry(selectedEntry);
     }
 
     @FXML
@@ -137,34 +79,10 @@ public class ViewDetailsEntryAgendaUI {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        assigningTeam();
+        AssignTeamUI ui=fxmlLoader.getController();
+        ui.setEntry(selectedEntry);
     }
 
-    private void assigningTeam(){
-        teamsName.setCellValueFactory(new PropertyValueFactory<>("teamName"));
-        for(TeamDto t : ctrl.getTeamListPossibleForEntry(selectedEntry)){
-            teamsToAssignList.add(t);
-        }
-        teamsToAssign.setItems(teamsToAssignList);
-        assignTeam.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                selectedTeam= teamsToAssign.getSelectionModel().getSelectedItem();
-                if(selectedTeam==null){
-                    popUpOfVerifications(Alert.AlertType.ERROR, "Select a team").show();
-                }
-                try{
-                    ctrl.assignTeamToEntry(selectedTeam,selectedEntry);
-                    popUp("Team assigned!").show();
-                    if (popUp("Team assigned").showAndWait().get() == ButtonType.OK) {
-                        stage.close();
-                    }
-                } catch (Exception e){
-                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-                }
-            }
-        });
-    }
 
     @FXML
     public void btnCancel(ActionEvent event) throws IOException{
@@ -192,21 +110,8 @@ public class ViewDetailsEntryAgendaUI {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        postponingEntry.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                try{
-                    Date postpone=new Date(postponedDate.getValue().getYear(), postponedDate.getValue().getMonthValue(), postponedDate.getValue().getDayOfMonth());
-                    ctrl.postponeEntry(selectedEntry/*postpone*/);
-                    popUp("Entry postponed").show();
-                    if (popUp("Entry postponed").showAndWait().get() == ButtonType.OK) {
-                        stage.close();
-                    }
-                } catch (Exception e){
-                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-                }
-            }
-        });
+        PostponeUI ui=fxmlLoader.getController();
+        ui.setEntry(selectedEntry);
     }
 
     public static LocalDate convertToJavaLocalDate(Date date) {
@@ -216,14 +121,6 @@ public class ViewDetailsEntryAgendaUI {
         int day = date.getDay();
 
         return LocalDate.of(year, month, day);
-    }
-
-    private Alert popUp(String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Information");
-        alert.setContentText(message);
-
-        return alert;
     }
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
