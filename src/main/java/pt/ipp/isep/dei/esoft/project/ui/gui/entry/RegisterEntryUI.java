@@ -51,10 +51,8 @@ public class RegisterEntryUI implements Initializable {
             popUpOfVerifications(Alert.AlertType.ERROR, "A task needs to be selected").show();
         } else {
             try{
-                EntryState stateToRegister=new EntryState(); //possibly this is wrong and should not be accessed like this
-                stateToRegister.setState(state);
-                EntryDto assigningEntry=new EntryDto(startDate,stateToRegister,selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace(),ref);
-                ctrl.assignEntryOnAgenda(assigningEntry);
+                EntryDto assigningEntry=new EntryDto(selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace());
+                ctrl.assignEntryOnAgenda(assigningEntry, startDate);
                 popUp().show();
             } catch (Exception e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
