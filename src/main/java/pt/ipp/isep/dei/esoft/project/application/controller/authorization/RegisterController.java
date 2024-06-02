@@ -39,6 +39,15 @@ public class RegisterController {
         return authenticationRepository.existUser(email);
     }
 
+    public List<String> getRolesToSelect(){
+        List<String> roles = new ArrayList<>();
+        roles.add(ROLE_GSM);
+        roles.add(ROLE_HRM);
+        roles.add(ROLE_VFM);
+        roles.add(ROLE_COLAB);
+        return roles;
+    }
+
     public boolean verifyPassword(String passwordLogin) {
         int countCapital=0;
         int countDigits=0;
