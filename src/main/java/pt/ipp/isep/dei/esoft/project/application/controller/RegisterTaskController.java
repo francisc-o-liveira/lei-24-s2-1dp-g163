@@ -42,7 +42,7 @@ public class RegisterTaskController {
     }
 
     public boolean registerTaskEntry( String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto){
-        EntryDto entryDto = new EntryDto(new EntryState(),title,description,degreeUrgency,expectedDuration,greenSpaceDto);
+        EntryDto entryDto = new EntryDto(title,description,degreeUrgency,expectedDuration,greenSpaceDto);
         if (entryRepository.registerNewTask(entryDto).isPresent()){
            return true;
         }
