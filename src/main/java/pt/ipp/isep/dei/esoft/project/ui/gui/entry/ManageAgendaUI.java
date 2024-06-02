@@ -160,7 +160,7 @@ public class ManageAgendaUI  implements Initializable{
         for (int month = 0; month < 12; month++) {
             int row = month / 4;
             int col = month % 4;
-            int selectedMonth = month; // effectively final variable
+            int selectedMonth = month;
             Button monthButton = new Button(YearMonth.of(currentYearMonth.getYear(), month + 1).getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
             monthButton.setOnAction(e -> {
                 popup.hide();
