@@ -31,6 +31,8 @@ public class Entry extends Task {
     private Date completedDate;
     private Tempo completedTime;
 
+    private Date finishDate;
+
 
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
@@ -40,6 +42,7 @@ public class Entry extends Task {
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
         this.teamAssigned = null;
+        this.finishDate = null;
     }
 
     // To Create one instance to compare for Postpone
@@ -51,6 +54,20 @@ public class Entry extends Task {
         this.startDate = null;
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
+        this.finishDate = null;
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void completeTask(Date finishDate){
+        if (finishDate.after(getTimePeriod().getStartDate())){
+            this.finishDate = finishDate;
+            status.isCompleted();
+        }else {
+            throw new IllegalArgumentException("This finish date is not right");
+        }
     }
 
     public String getReference(){
@@ -93,6 +110,8 @@ public class Entry extends Task {
     private void setStartDate(Date newStartDate) {
         this.startDate = newStartDate;
     }
+
+
     public Date getStartDate() {
         return this.startDate;
     }

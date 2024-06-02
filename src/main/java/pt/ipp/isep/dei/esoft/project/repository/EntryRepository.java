@@ -62,6 +62,13 @@ public class EntryRepository {
     }
 
     private boolean saveNewEntry(Entry entry) {
+        for (Entry entry1 : toDo){
+            if (entry.getReference() == entry1.getReference()){
+                return false;
+            }else {
+                return toDo.add(entry);
+            }
+        }
         return toDo.add(entry);
     }
 
@@ -178,7 +185,23 @@ public class EntryRepository {
         ComparatorDates comparatorDates = new ComparatorDates();
         for(Entry entryAgenda : agenda){
             if(comparatorDates.compare(entry,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
-                teams.remove(entryAgenda.getTeamAssigned());
+                if(teams.contains(entryAgenda.getTeamAssigned())){
+                    teams.remove(entryAgenda.getTeamAssigned());
+                }else {
+                    // If remove team from the Team List it is possible to have some problem with Collaborators there are in a new Team
+                    // For this we can check if any team have a Collaborator there are assigned in any task
+                    for (Team team : teams){
+                        for (Collaborator collaborator : team.getTeamList()){
+                            for (Collaborator collaboratorCompare : entry.getTeamAssigned().getTeamList()){
+                                if (collaborator.getEmail().equals(collaboratorCompare.getEmail())){
+                                    teams.remove(team);
+                                }
+                            }
+
+                        }
+                    }
+                }
+
             }
         }
         return teams;
@@ -196,5 +219,15 @@ public class EntryRepository {
 
     public void completeTasks(Collaborator collab, List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) throws NullPointerException{
         mapper.entryDtoToCompleteTask(collab,entriesSelected,completedDate,completedTime);
+    }
+
+    public Optional<Entry> completeTaskCollaborator(EntryDto entryDto) {
+        Optional<Entry> entryCompleted = Optional.empty();
+        Entry entry = searchForEntryAgenda(entryDto);
+        mapper.entryDtoToEntry(entryDto,entry);
+        if(entry.getStatus().isCompleted()){
+            entryCompleted = Optional.of(entry);
+        }
+        return entryCompleted;
     }
 }

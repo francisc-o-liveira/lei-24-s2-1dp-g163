@@ -56,75 +56,7 @@ public class Organization{
     public boolean employs(Manager manager) {
         return managers.contains(manager);
     }
-/*
-    /**
-     * This method creates a new task.
-     *
-     * @param reference            The reference of the task to be created.
-     * @param description          The description of the task to be created.
-     * @param informalDescription  The informal description of the task to be created.
-     * @param technicalDescription The technical description of the task to be created.
-     * @param duration             The duration of the task to be created.
-     * @param cost                 The cost of the task to be created.
-     * @param taskCategory         The task category of the task to be created.
-     * @return
 
-    public Optional<Task> createTask(String reference, String description, String informalDescription,
-                                     String technicalDescription, int duration, double cost,
-                                     TaskCategory taskCategory) {
-
-        //TODO: we could also check if the employee works for the organization before proceeding
-        //checkIfManagerWorksForOrganization(employee);
-
-        // When a Task is added, it should fail if the Task already exists in the list of Tasks.
-        // In order to not return null if the operation fails, we use the Optional class.
-        Optional<Task> optionalValue = Optional.empty();
-
-        Task task = new Task(reference, description, informalDescription, technicalDescription, duration, cost,
-                taskCategory);
-
-        if (addTask(task)) {
-            optionalValue = Optional.of(task);
-        }
-        return optionalValue;
-    }
-
-    /**
-     * This method adds a task to the list of tasks.
-     *
-     * @param task The task to be added.
-     * @return True if the task was added successfully.
-
-    private boolean addTask(Task task) {
-        boolean success = false;
-        if (validate(task)) {
-            // A clone of the task is added to the list of tasks, to avoid side effects and outside manipulation.
-            success = tasks.add(task.clone());
-        }
-        return success;
-
-    }
-
-    /**
-     * This method validates the task, checking for duplicates.
-     *
-     * @param task The task to be validated.
-     * @return True if the task is valid.
-
-    private boolean validate(Task task) {
-        return tasksDoNotContain(task);
-    }
-
-    /**
-     * This method checks if the task is already in the list of tasks.
-     *
-     * @param task The task to be checked.
-     * @return True if the task is not in the list of tasks.
-
-    private boolean tasksDoNotContain(Task task) {
-        return !tasks.contains(task);
-    }
- */
     /**
      * These methos check if the organization has an employee with the given email.
      *

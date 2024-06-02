@@ -17,8 +17,9 @@ public class EntryDto extends TaskDto{
     private Date startDate;
     private EntryState status;
     private List<VehicleDto> vehicleList;
-    private Team teamAssigned;
+    private TeamDto teamAssigned;
     private String reference;
+    private Date finishDate;
     private boolean selectedByCollab;
     private BooleanProperty selectingCollab;
 
@@ -27,11 +28,10 @@ public class EntryDto extends TaskDto{
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
         setStatus(status);
-        this.vehicleList = new ArrayList<>();
+        this.vehicleList = new ArrayList<VehicleDto>();
         this.teamAssigned = null;
         this.reference = reference;
         this.selectingCollab = new SimpleBooleanProperty(false);
-
         this.selectingCollab.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 selectedByCollab=true;
@@ -39,8 +39,7 @@ public class EntryDto extends TaskDto{
         });
     }
 
-
-    public EntryDto(Date startDate, EntryState status, List<VehicleDto> vehicleList, Team teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
+    public EntryDto(Date startDate, EntryState status, List<VehicleDto> vehicleList, TeamDto teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
         setStatus(status);
@@ -73,10 +72,6 @@ public class EntryDto extends TaskDto{
         return status;
     }
 
-    public EntryState.State getStatusByState() {
-        return status.getState();
-    }
-
     public String getReference() {
         return reference;
     }
@@ -91,9 +86,9 @@ public class EntryDto extends TaskDto{
     }
 
     public void setStatus(EntryState newStatus) {
-        /*if(status == null){
+        if(status == null){
             throw new NullPointerException("Status cannot be null");
-        }*/
+        }
         this.status = newStatus;
     }
 
@@ -119,11 +114,11 @@ public class EntryDto extends TaskDto{
         return this.vehicleList;
     }
 
-    public Team getTeamAssigned() {
+    public TeamDto getTeamAssigned() {
         return teamAssigned;
     }
 
-    public void assignTeam(Team team) {
+    public void assignTeam(TeamDto team) {
         if (team!=null){
             this.teamAssigned = team;
         }else{
@@ -137,5 +132,23 @@ public class EntryDto extends TaskDto{
 
     public void setSelectingCollab(boolean value){
         this.selectingCollab.set(value);
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void completeTask(Date finishDate){
+        if (!status.isCompleted() && !status.isCanceled()){
+            if (finishDate!=null){
+                this.finishDate = finishDate;
+                status.isCompleted();
+            }else {
+                throw new IllegalArgumentException("This finish date is not right");
+            }
+        }else {
+            throw new IllegalArgumentException("This Task is already completed");
+        }
+
     }
 }

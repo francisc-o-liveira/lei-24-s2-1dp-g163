@@ -41,4 +41,9 @@ public class ViewTaskListAssignedCollabController {
     public void completeTasks(List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) throws NullPointerException{
         entryRepository.completeTasks(getCollaboratorByEmail(getCollaboratorFromSession()),entriesSelected,completedDate,completedTime);
     }
+
+
+    public boolean assignEntryCompleted(EntryDto entryDto){
+        return entryRepository.completeTaskCollaborator(entryDto).isPresent();
+    }
 }

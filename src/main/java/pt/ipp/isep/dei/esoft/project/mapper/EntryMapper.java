@@ -39,13 +39,11 @@ public class EntryMapper {
     public Entry entryDtoToEntryCreate(EntryDto entryDto, int reference){
         return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus(),reference);
     }
-
     public void entryDtoToEntry(EntryDto entryDto, Entry entry) {
         // set entry on agenda
         if (entry.getStartDate() == null && entryDto.getStartDate() != null) {
             entry.setEntryAgenda(entryDto.getStartDate(), entryDto.getStatus());
-
-            // Postpone Dont now if are working
+            // Postpone Don't know if are working
         } else if (entry.getStartDate() != null && !entryDto.getStartDate().equals(entry.getStartDate()) && !entryDto.getStatus().equals(entry.getStatus())) {
                 boolean value=true;
                 ComparatorDates comparatorDates = new ComparatorDates();
@@ -60,15 +58,19 @@ public class EntryMapper {
                 if(value){
                     entry.postponeEntry(entryDto.getStartDate());
                 }
-
-
-
             // Cancel Entry // Dates equals, but status no
-        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus())) {
+        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate() == null) {
             entry.cancelEntry();
 
             // DATAS IGUAIS E STATUS IGUAIS // POSSIVEL MUDANÇA DE TEAM OU VEICULO
-        }else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
+        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate()!=null) {
+            if (entry.getFinishDate() == null){
+                entry.completeTask(entryDto.getFinishDate());
+            }else {
+                throw new IllegalArgumentException("This entry is already completed");
+            }
+
+        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
             if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
                 entry.setTeamAssigned(entryDto.getTeamAssigned());
             }
