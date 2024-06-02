@@ -26,7 +26,6 @@ public class EntryRepository {
     private static final int HOURS_WORK_PER_OMISSION=8;
     private static int REFERENCE_VALUE;
 
-
     public EntryRepository() {
         toDo = new ArrayList<Entry>();
         agenda = new ArrayList<Entry>();
@@ -63,8 +62,8 @@ public class EntryRepository {
 
     private boolean saveNewEntry(Entry entry) {
         for (Entry entry1 : toDo){
-            if (entry.getReference() == entry1.getReference()){
-                return false;
+            if (entry.getReference().equals(entry1.getReference())){
+                throw new RuntimeException("Duplicate entry reference");
             }else {
                 return toDo.add(entry);
             }
@@ -76,12 +75,10 @@ public class EntryRepository {
         Optional<Entry> agendaEntry = Optional.empty();
         Entry entry = searchForEntryToDo(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
-        //if (toDo.remove(entry)){
-            //if(agenda.add(entry)){
-                agendaEntry = Optional.of(entry);
-                agenda.add(entry);
-            //}
-        //}
+        if (toDo.remove(entry)){
+            agenda.add(entry);
+            agendaEntry = Optional.of(agenda.getLast());
+        }
         return agendaEntry;
     }
 
@@ -217,15 +214,12 @@ public class EntryRepository {
         return agendaEntry;
     }
 
-    public void completeTasks(Collaborator collab, List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) throws NullPointerException{
-        mapper.entryDtoToCompleteTask(collab,entriesSelected,completedDate,completedTime);
-    }
 
     public Optional<Entry> completeTaskCollaborator(EntryDto entryDto) {
         Optional<Entry> entryCompleted = Optional.empty();
         Entry entry = searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
-        if(entry.getStatus().isCompleted()){
+        if(entry.getStatus().isCompleted() && entry.getCollaboratorFinish().equals(entryDto.getCollaboratorFinish())){
             entryCompleted = Optional.of(entry);
         }
         return entryCompleted;

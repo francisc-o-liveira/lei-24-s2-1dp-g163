@@ -36,14 +36,11 @@ public class ViewTaskListAssignedCollabController {
         return session.getCurrentSession().getUserEmail();
     }
 
-    /**Method to mark the entries as complete by the Collaborator
-     * */
-    public void completeTasks(List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime) throws NullPointerException{
-        entryRepository.completeTasks(getCollaboratorByEmail(getCollaboratorFromSession()),entriesSelected,completedDate,completedTime);
-    }
 
 
-    public boolean assignEntryCompleted(EntryDto entryDto){
+
+    public boolean assignEntryCompleted(EntryDto entryDto, Date completedDate){
+        entryDto.completeTask(completedDate, getCollaboratorByEmail(getCollaboratorFromSession()));
         return entryRepository.completeTaskCollaborator(entryDto).isPresent();
     }
 }

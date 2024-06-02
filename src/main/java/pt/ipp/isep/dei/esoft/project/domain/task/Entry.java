@@ -28,11 +28,12 @@ public class Entry extends Task {
 
     /**To complete the task*/
     private Collaborator collaboratorThatCompleted;
-    private Date completedDate;
-    private Tempo completedTime;
-
     private Date finishDate;
 
+
+    public Collaborator getCollaboratorFinish() {
+        return collaboratorThatCompleted;
+    }
 
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
@@ -45,6 +46,7 @@ public class Entry extends Task {
         this.finishDate = null;
     }
 
+
     // To Create one instance to compare for Postpone
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference, List<Vehicle> vehicleList, Team teamAssigned) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
@@ -56,6 +58,11 @@ public class Entry extends Task {
         this.teamAssigned = teamAssigned;
         this.finishDate = null;
     }
+    // Compare constructor
+
+
+
+
 
     public Date getFinishDate() {
         return finishDate;
@@ -75,7 +82,6 @@ public class Entry extends Task {
     }
 
     private void validateReference(String reference) {
-        //TODO: missing from the diagrams
         if (reference == null || reference.isEmpty()) {
             throw new IllegalArgumentException("Reference cannot be null or empty.");
         }
@@ -145,10 +151,17 @@ public class Entry extends Task {
     }
     public TimePeriod getTimePeriod(){return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());}
 
-    public void completeEntry(Collaborator collab, Date date, Tempo time){
+    public void completeEntry(Collaborator collab, Date date){
         this.collaboratorThatCompleted=collab;
-        this.completedDate=date;
-        this.completedTime=time;
+        setFinishDate(date);
         this.status.doneEntry();
+    }
+
+    private void setFinishDate(Date date) {
+        if (date == null && date.after(startDate)) {
+            throw new IllegalArgumentException("Date cannot be null.");
+        }else {
+            this.finishDate = date;
+        }
     }
 }

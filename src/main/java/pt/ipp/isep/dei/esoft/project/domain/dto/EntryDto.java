@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.dto;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
@@ -24,6 +25,10 @@ public class EntryDto extends TaskDto{
     private BooleanProperty selectingCollab;
 
 
+    /**To complete the task*/
+    private Collaborator collaboratorThatCompleted;
+
+
     public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
@@ -31,6 +36,8 @@ public class EntryDto extends TaskDto{
         this.vehicleList = new ArrayList<VehicleDto>();
         this.teamAssigned = null;
         this.reference = reference;
+        this.finishDate = null;
+        this.collaboratorThatCompleted = null;
         this.selectingCollab = new SimpleBooleanProperty(false);
         this.selectingCollab.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
@@ -48,6 +55,9 @@ public class EntryDto extends TaskDto{
         this.reference = reference;
         this.selectingCollab = new SimpleBooleanProperty(false);
 
+        this.finishDate = null;
+        this.collaboratorThatCompleted = null;
+
         this.selectingCollab.addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 selectedByCollab=true;
@@ -61,8 +71,13 @@ public class EntryDto extends TaskDto{
         this.vehicleList = null;
         this.teamAssigned = null;
         this.reference = null;
+        this.startDate = null;
     }
 
+
+    public Collaborator getCollaboratorFinish() {
+        return collaboratorThatCompleted;
+    }
 
     public Date getStartDate() {
         return startDate;
@@ -138,10 +153,11 @@ public class EntryDto extends TaskDto{
         return finishDate;
     }
 
-    public void completeTask(Date finishDate){
+    public void completeTask(Date finishDate, Collaborator collaborator){
         if (!status.isCompleted() && !status.isCanceled()){
-            if (finishDate!=null){
+            if (finishDate!=null && collaborator!=null){
                 this.finishDate = finishDate;
+                this.collaboratorThatCompleted = collaborator;
                 status.isCompleted();
             }else {
                 throw new IllegalArgumentException("This finish date is not right");

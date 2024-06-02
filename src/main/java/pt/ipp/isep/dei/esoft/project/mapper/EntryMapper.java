@@ -67,14 +67,20 @@ public class EntryMapper {
             entry.cancelEntry();
 
             // DATAS IGUAIS E STATUS IGUAIS // POSSIVEL MUDANÇA DE TEAM OU VEICULO
-        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate()!=null) {
-            if (entry.getFinishDate() == null){
+
+
+
+            // DATAS IGUAIS E STATUS IGUAIS // TEAM E VEHICLES IGUAIS // ENTRY COMPLETE BY COLLABORATOR
+        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && !entry.getStatus().equals(entryDto.getStatus()) && entryDto.getFinishDate()!=null && entryDto.getTeamAssigned().equals(entry.getTeamAssigned()) && entry.getVehicleList().equals(entryDto.getVehicleList()) ) {
+            if (entry.getFinishDate() == null && entryDto.getFinishDate() != null && entryDto.getCollaboratorFinish()!=null){
                 entry.completeTask(entryDto.getFinishDate());
             }else {
                 throw new IllegalArgumentException("This entry is already completed");
             }
 
-        } else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
+
+
+       } else if (entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())){
             if (!entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
                 entry.setTeamAssigned(teamMapper.teamDtoToTeam(entryDto.getTeamAssigned()));
             }
@@ -106,13 +112,5 @@ public class EntryMapper {
         return new Entry(entryDto.getTitle(), entryDto.getDescription(),entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()) ,entryDto.getDegreeUrgency(), entryDto.getStatus(),-1);
     }
 
-    public void entryDtoToCompleteTask(Collaborator collab, List<EntryDto> entriesSelected, Date completedDate, Tempo completedTime){
-        if(entriesSelected==null){
-            throw new NullPointerException("No tasks were selected");
-        }
-        for(EntryDto entryDto : entriesSelected){
-            Entry entryToComplete=entryDtoToEntryCreate(entryDto,Integer.parseInt(entryDto.getReference()));
-            entryToComplete.completeEntry(collab,completedDate,completedTime);
-        }
-    }
+
 }
