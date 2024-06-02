@@ -30,8 +30,8 @@ public class MainDjikstra {
             option = askOptionShowOptions(edges);
             switch (option) {
                 case 1:
-                    filenameMatrix = askFileName();
-                    filenamePointsName= askFileName();
+                    filenameMatrix = askFileNameMatrix();
+                    filenamePointsName= askFileNamePoints();
                     try {
                         if(filenameMatrix.contains("17")){
                             edges = readEdgesFromFileUS17(filenameMatrix,filenamePointsName);
@@ -65,7 +65,9 @@ public class MainDjikstra {
                     System.out.print("What is the starting point: ");
                     start = new Point(sc.next());
                     sc.close();
-                    result = dijkstraAlgorithmUS18(edges, start, vertices);
+                    startingPoints.remove(start);
+                    ArrayList<Edge> edgesToUse=removingEdges(edges,startingPoints);
+                    result = dijkstraAlgorithmUS18(edgesToUse, start, vertices);
                     try {
                         createResultFile(result);
                     } catch (IOException e) {
@@ -77,6 +79,23 @@ public class MainDjikstra {
             }
 
         }
+    }
+
+    private static ArrayList<Edge> removingEdges(ArrayList<Edge> edges, ArrayList<Point> startingPoints) {
+        ArrayList<Edge> edgeList=new ArrayList<>();
+        for (Edge e : edges) {
+            boolean containsStartingPoint = false;
+            for (Point p : startingPoints) {
+                if (e.getP1().equals(p) || e.getP2().equals(p)) {
+                    containsStartingPoint = true;
+                    break;
+                }
+            }
+            if (!containsStartingPoint) {
+                edgeList.add(e);
+            }
+        }
+        return edgeList;
     }
 
 
@@ -315,6 +334,33 @@ public class MainDjikstra {
         } while (!test.canExecute());
         return filename;
     }
+
+    public static String askFileNameMatrix() {
+        String filename = pathName;
+        Scanner readLineFile = new Scanner(System.in);
+        File test;
+        do {
+            System.out.println("Introduce the matrix to take data.(input: nameFile.csv)");
+            filename += readLineFile.nextLine();
+            test = new File(filename);
+
+        } while (!test.canExecute());
+        return filename;
+    }
+
+    public static String askFileNamePoints() {
+        String filename = pathName;
+        Scanner readLineFile = new Scanner(System.in);
+        File test;
+        do {
+            System.out.println("Introduce the points' names to take data.(input: nameFile.csv)");
+            filename += readLineFile.nextLine();
+            test = new File(filename);
+
+        } while (!test.canExecute());
+        return filename;
+    }
+
 
     public static int askOptionShowOptions(ArrayList<Edge> edges) {
         Scanner scan = new Scanner(System.in);
