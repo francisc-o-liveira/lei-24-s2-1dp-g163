@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
@@ -26,6 +27,8 @@ public class MainApp extends Application {
             mainStage.setTitle("AquaCode - Green Space Management");
             mainStage.setScene(scene);
             mainStage.show();
+            Image image = new Image("/Icons/icon.png");
+            mainStage.getIcons().add(image);
             mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
