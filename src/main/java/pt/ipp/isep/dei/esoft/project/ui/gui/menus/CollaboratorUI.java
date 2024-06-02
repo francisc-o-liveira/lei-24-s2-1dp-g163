@@ -35,6 +35,7 @@ public class CollaboratorUI {
 
     public CollaboratorUI(){
         ctrlAuth=new AuthenticationController();
+        ctrl=new ViewTaskListAssignedCollabController();
         tasksInThoseDates=new ArrayList<>();
     }
 
@@ -55,24 +56,6 @@ public class CollaboratorUI {
         stage.show();
         ViewTaskListCollaboratorUI ui=fxmlLoader.getController();
         ui.setTableTasks(tasksInThoseDates);
-    }
-
-    private Alert popUp() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-
-        alerta.setTitle("Confirmation");
-        alerta.setContentText("Do you wish to mark these tasks as complete?");
-
-        return alerta;
-    }
-
-    @FXML
-    public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     @FXML

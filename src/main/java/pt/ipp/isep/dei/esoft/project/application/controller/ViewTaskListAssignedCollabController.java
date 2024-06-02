@@ -20,6 +20,7 @@ public class ViewTaskListAssignedCollabController {
 
     public ViewTaskListAssignedCollabController() {
         entryRepository = Repositories.getInstance().getEntryRepository();
+        collaboratorRepository= Repositories.getInstance().getCollaboratorRepository();
         session = ApplicationSession.getInstance();
         mapper = new EntryMapper();
     }
