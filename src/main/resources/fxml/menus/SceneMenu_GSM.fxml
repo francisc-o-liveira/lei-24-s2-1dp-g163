@@ -178,7 +178,7 @@
                                                             </fill>
                                                         </Circle>
                                                         <FontAwesomeIconView glyphName="USER" layoutX="120.0" layoutY="125.0" size="5em" />
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageToDoList" prefHeight="29.0" prefWidth="165.0" text="Manage Collaborators">
+                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageCollaborators" prefHeight="29.0" prefWidth="165.0" text="Manage Collaborators">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>

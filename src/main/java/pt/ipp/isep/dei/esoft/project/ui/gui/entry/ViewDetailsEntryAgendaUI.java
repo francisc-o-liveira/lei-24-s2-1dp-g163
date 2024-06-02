@@ -12,12 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TeamDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;
@@ -92,12 +89,12 @@ public class ViewDetailsEntryAgendaUI {
 
     @FXML
     public void btnAssignVehicles(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/scenes to be made/Scene_AssignVehicles.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_AssignVehicleEntry.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        platesOfVehiclesToAssign.setCellValueFactory(new PropertyValueFactory<>("teamName"));
+        platesOfVehiclesToAssign.setCellValueFactory(new PropertyValueFactory<>("plate"));
         selectingVehicles.setCellFactory(CheckBoxTableCell.forTableColumn(selectingVehicles));
         for(VehicleDto t : ctrl.getVehicleListPossibleForEntry(selectedEntry)){
             vehiclesToAssignList.add(t);
@@ -135,11 +132,15 @@ public class ViewDetailsEntryAgendaUI {
 
     @FXML
     public void btnAssignTeam(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/scenes to be made/Scene_AssignTeam.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_AssignTeamEntry.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        assigningTeam();
+    }
+
+    private void assigningTeam(){
         teamsName.setCellValueFactory(new PropertyValueFactory<>("teamName"));
         for(TeamDto t : ctrl.getTeamListPossibleForEntry(selectedEntry)){
             teamsToAssignList.add(t);
@@ -186,7 +187,7 @@ public class ViewDetailsEntryAgendaUI {
 
     @FXML
     public void btnPostpone(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/scenes to be made/Scene_PostponeEntry.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_PostponeEntry.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);

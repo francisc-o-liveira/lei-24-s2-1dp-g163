@@ -60,6 +60,10 @@
     -fx-background-color: #03a136;
 }
 
+.status-assigned {
+    -fx-background-color: #ab7c7c;
+}
+
 
 .prev-button{
     -fx-border:none;

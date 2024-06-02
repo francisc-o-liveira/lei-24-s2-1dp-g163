@@ -63,4 +63,9 @@ public class EntryState {
     public boolean isPostpone() {
         return this.state == State.Postponed;
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s", state);
+    }
 }

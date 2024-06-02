@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegisterEntryUI implements Initializable {
-
-    private Stage stage;
     private AssignEntryOnAgendaController ctrl;
     private EntryDto selectedTaskDto;
     private ObservableList<EntryDto> tasksForTable=FXCollections.observableArrayList();
@@ -72,10 +70,6 @@ public class RegisterEntryUI implements Initializable {
             }
         }
         tasksForEntry.setItems(tasksForTable);
-    }
-
-    public void setStage(Stage stage){
-        this.stage=stage;
     }
 
     private Alert popUp() {

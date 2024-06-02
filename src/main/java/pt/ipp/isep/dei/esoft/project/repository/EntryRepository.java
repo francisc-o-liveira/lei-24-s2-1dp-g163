@@ -69,11 +69,12 @@ public class EntryRepository {
         Optional<Entry> agendaEntry = Optional.empty();
         Entry entry = searchForEntryToDo(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
-        if (toDo.remove(entry)){
-            if(agenda.add(entry)){
+        //if (toDo.remove(entry)){
+            //if(agenda.add(entry)){
                 agendaEntry = Optional.of(entry);
-            }
-        }
+                agenda.add(entry);
+            //}
+        //}
         return agendaEntry;
     }
 
@@ -109,7 +110,13 @@ public class EntryRepository {
 
     private Entry searchForEntryAgenda(EntryDto entryDto) {
         for (Entry entry : agenda) {
-            if (entryDto.equals(entry)) {
+            if (Objects.equals(entry.getTitle(), entryDto.getTitle())
+                    &&Objects.equals(entry.getDegreeUrgency(), entryDto.getDegreeUrgency())
+                    && Objects.equals(entry.getDescription(), entryDto.getDescription())
+                    && Objects.equals(entry.getExpectedDuration(),entryDto.getExpectedDuration())
+                    && Objects.equals(entry.getStatus(),entryDto.getStatus())
+                    && Objects.equals(entry.getStartDate(),entryDto.getStartDate())
+            ){
                 return entry;
             }
         }

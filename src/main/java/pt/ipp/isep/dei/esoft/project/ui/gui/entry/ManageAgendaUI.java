@@ -59,7 +59,7 @@ public class ManageAgendaUI  implements Initializable{
         calendarAnchorPane.getChildren().add(getView());
         weeklyViewAnchorPane.getChildren().add(getViewWeekly());
         ctrlAuth = new AuthenticationController();
-        this.entries=ctrlEntry.getToDoList();
+        this.entries=ctrlEntry.getAgenda();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);
         currentStartDate = LocalDate.now().with(DayOfWeek.MONDAY);
@@ -122,7 +122,7 @@ public class ManageAgendaUI  implements Initializable{
                     .collect(Collectors.toList());
 
             if(dayEntries != null){
-                introduceDates(dayEntries,dayBox.getPrefHeight(), dayBox.getPrefWidth(), dayBox);
+                introduceDates(dayEntries, dayBox);
             }
             calendarGrid.add(dayBox, col, row);
             col++;
@@ -177,7 +177,7 @@ public class ManageAgendaUI  implements Initializable{
                     .collect(Collectors.toList());
 
             if (dayEntries != null) {
-                introduceDates(dayEntries, dayBox.getPrefHeight(), dayBox.getPrefWidth(), dayBox);
+                introduceDates(dayEntries, dayBox);
             }
             calendarGrid.add(dayBox, col, 1);
             date = date.plusDays(1);
@@ -186,7 +186,7 @@ public class ManageAgendaUI  implements Initializable{
         viewWeek.getChildren().addAll(headerBox, calendarGrid);
     }
 
-    public void introduceDates(List<EntryDto> dayEntries, double rectangleHeight, double rectangleWidth, VBox dayBox) {
+    public void introduceDates(List<EntryDto> dayEntries, VBox dayBox) {
         VBox calendarActivityBox = new VBox();
         calendarActivityBox.setSpacing(5);
         for (int k = 0; k < dayEntries.size(); k++) {
@@ -216,15 +216,12 @@ public class ManageAgendaUI  implements Initializable{
                 break;
             }
             EntryDto entry = dayEntries.get(k);
-            String eventBlock=String.format(entry.getStartDate() + "\n" + entry.getTitle());
+            String eventBlock=String.format(entry.getTitle());
             Label entryLabel = new Label(eventBlock);
             entryLabel.setPrefHeight(50);
             entryLabel.getStyleClass().add("event-label");
 
-            /*switch (entry.getStatus()) {
-                case EntryState.State.Postponed:
-                    entryLabel.getStyleClass().add("status-postponed");
-                    break;
+            switch (entry.getStatusByState()) {
                 case EntryState.State.Planned:
                     entryLabel.getStyleClass().add("status-planned");
                     break;
@@ -234,7 +231,13 @@ public class ManageAgendaUI  implements Initializable{
                 case EntryState.State.Done:
                     entryLabel.getStyleClass().add("status-done");
                     break;
-            }*/
+                case EntryState.State.Assigned:
+                    entryLabel.getStyleClass().add("status-assigned");
+                    break;
+                case EntryState.State.Postponed:
+                    entryLabel.getStyleClass().add("status-postponed");
+                    break;
+            }
 
             entryLabel.setOnMouseClicked(event -> {
                 try {
@@ -251,7 +254,7 @@ public class ManageAgendaUI  implements Initializable{
     }
 
     private void showEntryDetails(EntryDto entry) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Scene_ViewDetailsEntry.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_ViewDetailsEntry.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);

@@ -73,6 +73,10 @@ public class EntryDto extends TaskDto{
         return status;
     }
 
+    public EntryState.State getStatusByState() {
+        return status.getState();
+    }
+
     public String getReference() {
         return reference;
     }

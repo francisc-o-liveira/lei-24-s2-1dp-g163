@@ -77,18 +77,6 @@ public class GSManagerUI {
         return alerta;
     }
 
-    /*@FXML
-    public void manageEquipment(ActionEvent event) throws IOException {
-        /*FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneTableViewEquipment.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        ManageEquipment ctrlUI=fxmlLoader.getController();
-        ctrlUI.setTableEquipment();
-        popUpOfVerifications(Alert.AlertType.INFORMATION,"Implementing ...");
-    }*/
-
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewJobs.fxml"));
