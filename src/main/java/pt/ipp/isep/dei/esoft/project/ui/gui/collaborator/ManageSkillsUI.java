@@ -146,7 +146,7 @@ public class ManageSkillsUI {
             } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

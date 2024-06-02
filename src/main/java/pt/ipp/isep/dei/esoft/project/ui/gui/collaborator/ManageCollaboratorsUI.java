@@ -19,7 +19,6 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
-import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ViewDetailsCollaboratorUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 
@@ -203,7 +202,7 @@ public class ManageCollaboratorsUI {
             } else if (role.getDescription().equals(AuthenticationController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
             }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_GSM.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);

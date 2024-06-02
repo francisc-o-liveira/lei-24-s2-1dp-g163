@@ -10,17 +10,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageCollaboratorsUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageJobsUI;
+import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageSkillsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.team.ManageTeamsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.vehicles.ManageVehiclesUI;
 
 import java.io.IOException;
 
-public class GSManagerUI {
+public class AdminUI {
     public Stage stage = LoginUI.getMainStage();
     public AuthenticationController ctrlAuth;
 
-    public GSManagerUI(){
+    public AdminUI(){
         ctrlAuth = new AuthenticationController();
     }
 
@@ -71,6 +74,39 @@ public class GSManagerUI {
         alerta.setContentText(messages);
 
         return alerta;
+    }
+
+    @FXML
+    public void manageJobs(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewJobs.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ManageJobsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setJobCategoryTable();
+    }
+
+    @FXML
+    public void manageSkills(ActionEvent event)throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewSkill.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ManageSkillsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setSkillTable();
+    }
+
+    @FXML
+    public void manageCollaborators(ActionEvent event) throws IOException{
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewRegisterCollaborator.fxml"));
+        Parent root= fxmlLoader.load();
+        Scene scene= new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ManageCollaboratorsUI ctrlUI = fxmlLoader.getController();
+        ctrlUI.setTableCollaborators();
     }
 
     @FXML
