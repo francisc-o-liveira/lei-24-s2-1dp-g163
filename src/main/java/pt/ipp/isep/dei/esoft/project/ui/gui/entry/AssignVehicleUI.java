@@ -11,6 +11,7 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AssignVehicleUI {
     @FXML
@@ -20,7 +21,7 @@ public class AssignVehicleUI {
     @FXML
     private TableColumn<VehicleDto, Boolean> selectingVehicles;
     private ObservableList<VehicleDto> vehiclesToAssignList= FXCollections.observableArrayList();
-    private ArrayList<VehicleDto> vehiclesSelected;
+    private List<VehicleDto> vehiclesSelected=new ArrayList<>();
     private EntryDto selectedEntry;
 
     private ViewDetailsEntryController ctrl;
@@ -28,7 +29,6 @@ public class AssignVehicleUI {
     public void setEntry(EntryDto entry){
         ctrl=new ViewDetailsEntryController();
         selectedEntry=entry;
-        vehiclesSelected=new ArrayList<>();
         initializeUI();
     }
 
@@ -45,8 +45,8 @@ public class AssignVehicleUI {
 
     @FXML
     public void assignVehicles(){
+        getVehiclesToAssign();
         try{
-            getVehiclesToAssign();
             for(VehicleDto vehicleDto : vehiclesSelected){
                 ctrl.assignVehicleToEntry(vehicleDto,selectedEntry);
                 popUp("Vehicles assigned!").show();
@@ -57,7 +57,7 @@ public class AssignVehicleUI {
     }
 
     private void getVehiclesToAssign(){
-        for (VehicleDto vehicle : ctrl.getVehicleListPossibleForEntry(selectedEntry)) {
+        for (VehicleDto vehicle : vehiclesToAssignList) {
             if (vehicle.isSelectedForEntry().get()) {
                 vehiclesSelected.add(vehicle);
             }
