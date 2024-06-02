@@ -119,8 +119,6 @@ public class ApplicationSession {
                 throw new IOException("Invalid time format on config file");
             }
             tempo = new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }finally {
             input.close();
         }
