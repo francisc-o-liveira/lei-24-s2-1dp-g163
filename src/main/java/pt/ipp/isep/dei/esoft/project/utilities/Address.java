@@ -19,7 +19,7 @@ public class Address implements Serializable {
      * @param zipCode  Zip code of the object
      * @param street Street of the object
      */
-    public Address(String zipCode, String street,String city) throws IOException {
+    public Address(String zipCode, String street,String city)  {
         setStreet(street);
         setZipCode(zipCode);
         setCity(city);
@@ -52,7 +52,7 @@ public class Address implements Serializable {
      * <p>
      * @param zipCode The new zipCode
      */
-    public void setZipCode(String zipCode) throws IOException {
+    public void setZipCode(String zipCode) {
         if(zipCode.matches("\\d{5}") && zipCode.split("-").length == 2){
         this.zipCode = zipCode;
         }else{

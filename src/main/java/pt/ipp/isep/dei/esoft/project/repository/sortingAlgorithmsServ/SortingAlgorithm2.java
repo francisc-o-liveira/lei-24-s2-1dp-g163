@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsForUS27;
+package pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ;
 
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 

@@ -1,20 +1,19 @@
 package pt.ipp.isep.dei.esoft.project.domain.dto;
 
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
 public class GreenSpaceDto {
 
     private double areaInHectares;
-    private String addressStreet;
-    private String addressCity;
-    private String addressZipCode;
+    private Address address;
     private String name;
     private GreenSpace.Type type;
     private String emailOfCreator;
 
-    public GreenSpaceDto(double areaInHectares, String address,String addressCity,String addressZipCode, String name, GreenSpace.Type type, String emailOfCreator) {
+    public GreenSpaceDto(double areaInHectares, Address address, String name, GreenSpace.Type type, String emailOfCreator) {
         this.areaInHectares = areaInHectares;
-        setAddress(address,addressCity,addressZipCode);
+        setAddress(address);
         this.name = name;
         this.type = type;
         setEmailOfCreator(emailOfCreator);
@@ -32,15 +31,8 @@ public class GreenSpaceDto {
         return emailOfCreator;
     }
 
-    public String getAddressStreet() {
-        return addressStreet;
-    }
-
-    public String getAddressCity() {
-        return addressCity;
-    }
-    public String getAddressZipCode() {
-        return addressZipCode;
+    public Address getAddress() {
+        return address;
     }
 
     public double getAreaInHectares() {
@@ -64,10 +56,8 @@ public class GreenSpaceDto {
         this.name = name;
     }
 
-    public void setAddress(String addressStreet, String addressCity, String addressZipCode) {
-        this.addressStreet = addressStreet;
-        this.addressCity=addressCity;
-        this.addressZipCode=addressZipCode;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
 }

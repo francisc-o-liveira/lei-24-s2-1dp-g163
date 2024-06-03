@@ -11,7 +11,7 @@ import java.util.SequencedCollection;
 public class GreenSpaceMapper {
 
     public GreenSpaceDto greenSpaceToGreenSpaceDto(GreenSpace greenSpace){
-        return new GreenSpaceDto(greenSpace.getArea(), greenSpace.getAddressStreet(), greenSpace.getAddressCity(), greenSpace.getAddressZipCode(), greenSpace.getName(), greenSpace.getType(), greenSpace.createdBy());
+        return new GreenSpaceDto(greenSpace.getArea(), greenSpace.getAddress(), greenSpace.getName(), greenSpace.getType(), greenSpace.createdBy());
     }
 
     public List<GreenSpaceDto> greenSpaceListToGreenSpaceDto(List<GreenSpace> greenSpaceList){

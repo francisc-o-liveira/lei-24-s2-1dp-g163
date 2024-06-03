@@ -1,13 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.application.session;
 
-import pt.ipp.isep.dei.esoft.project.domain.adapters.EmailService;
 import pt.ipp.isep.dei.esoft.project.domain.adapters.SendEmailExternalAPI;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ.SortingList;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -17,8 +16,10 @@ public class ApplicationSession {
     private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
     private static final String COMPANY_DESIGNATION = "Company.Designation";
     private static final String EMAIL_DESIGNATION = "SendEmailExternalAPI.Class";
+    private static final String SORTING_ALGORITHM="SortingList.Class";
     private static final String TIME_WORK = "TimeWork";
     private static SendEmailExternalAPI sendEmailExternalAPI;
+    private static SortingList sortingList;
     private static Tempo timeOfWork;
 
     private ApplicationSession() {
@@ -64,7 +65,7 @@ public class ApplicationSession {
 
 
     private static String getEmail() throws IOException {
-        String fileName="src/main/resources/config.properties";
+        String fileName="configs/config.properties";
         InputStream input = new FileInputStream(fileName);
         String email = "";
         try {
@@ -86,15 +87,22 @@ public class ApplicationSession {
         return (SendEmailExternalAPI) className.newInstance();
     }
 
+    public static SortingList getAlgorithmService() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String email= "pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ.";
+        email += getAlgorithm();
+        Class<?> className = Class.forName(email);
+        return (SortingList) className.newInstance();
+    }
+
 
     private static String getAlgorithm() throws IOException {
-        String fileName="src/main/resources/config.properties";
+        String fileName="configs/config.properties";
         InputStream input = new FileInputStream(fileName);
         String algorithm = "";
         try {
             Properties prop = new Properties();
             prop.load(input);
-            algorithm= prop.getProperty("sortAlgorithm");
+            algorithm= prop.getProperty(SORTING_ALGORITHM);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }finally {
@@ -104,7 +112,7 @@ public class ApplicationSession {
     }
 
     public static Tempo getTimeOfWork() throws IOException {
-        String fileName="src/main/resources/config.properties";
+        String fileName="configs/config.properties";
         InputStream input = new FileInputStream(fileName);
         String time = "";
         Tempo tempo = null;

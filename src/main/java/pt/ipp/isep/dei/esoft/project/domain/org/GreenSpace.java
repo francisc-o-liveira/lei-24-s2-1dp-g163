@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain.org;
 
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
 import java.util.Objects;
 
@@ -10,17 +11,15 @@ public class GreenSpace {
     public enum Type{MediumSize,LargeSize,Garden}
 
     private double areaInHectares;
-    private String addressStreet;
-    private String addressCity;
-    private String addressZipCode;
+    private Address address;
     private String name;
     private Type type;
     private String email;
 
 
-    public GreenSpace(double area,String name,Type type, String managerEmail, String addressStreet, String addressCity, String addressZipCode, String email) {
+    public GreenSpace(double area,String name,Type type, String managerEmail, Address address, String email) {
         setArea(area);
-        setAddress(addressStreet,addressCity,addressZipCode);
+        setAddress(address);
         setName(name);
         setType(type);
         setEmailOfCreator(managerEmail);
@@ -28,7 +27,7 @@ public class GreenSpace {
 
     public GreenSpace(GreenSpaceDto greenSpaceDto) {
         setArea(greenSpaceDto.getAreaInHectares());
-        setAddress(greenSpaceDto.getAddressStreet(), greenSpaceDto.getAddressCity(), greenSpaceDto.getAddressZipCode());
+        setAddress(greenSpaceDto.getAddress());
         setName(greenSpaceDto.getName());
         setType(greenSpaceDto.getType());
         setEmailOfCreator(greenSpaceDto.createdBy());
@@ -45,17 +44,11 @@ public class GreenSpace {
         this.areaInHectares = area;
     }
 
-    private void setAddress(String address, String addressCity, String addressZipCode) {
-        if (verifyStreet(address)) {
-            this.addressStreet = address;
-        }
-        if(verifyIsOnlyCharacter(addressCity)){
-            this.addressCity = addressCity;
-        }
-        if ((addressZipCode.split("-").length==2) && addressZipCode.split("").length==8) {
-            this.addressZipCode = addressZipCode;
+    private void setAddress(Address address) {
+        if (address == null) {
+            throw new IllegalArgumentException("Address cannot be null");
         }else {
-            throw new IllegalArgumentException("Invalid address");
+            this.address = address;
         }
     }
 
@@ -96,15 +89,9 @@ public class GreenSpace {
     public double getArea() {
         return areaInHectares;
     }
-    public String getAddressStreet() {
-        return addressStreet;
-    }
 
-    public String getAddressCity() {
-        return addressCity;
-    }
-    public String getAddressZipCode() {
-        return addressZipCode;
+    public Address getAddress() {
+        return address;
     }
 
     public String getName() {
@@ -117,7 +104,7 @@ public class GreenSpace {
 
     @Override
     public String toString() {
-        return this.name + "----" + this.areaInHectares + "-----" + this.addressCity + "----" + this.addressZipCode + "----" + this.addressStreet;
+        return this.name + "----" + this.areaInHectares + "-----" + this.address;
     }
 
     public static final Type[] getEnumGreenSpaceTypes(){

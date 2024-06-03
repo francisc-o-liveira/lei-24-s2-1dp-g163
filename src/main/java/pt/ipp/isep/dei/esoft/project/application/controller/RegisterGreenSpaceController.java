@@ -6,11 +6,13 @@ import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsForUS27.SortingAlgorithm1;
-import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsForUS27.SortingAlgorithm2;
-import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsForUS27.SortingList;
+import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ.SortingAlgorithm1;
+import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ.SortingAlgorithm2;
+import pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ.SortingList;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
@@ -27,11 +29,11 @@ public class RegisterGreenSpaceController {
     private static final String SORTING_ALGORITHM="SortingList.Class";
     private static SortingList sort;
 
-    public RegisterGreenSpaceController() {
+    public RegisterGreenSpaceController() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         org = Repositories.getInstance().getOrganizationRepository();
         mapper = new GreenSpaceMapper();
         session = ApplicationSession.getInstance();
-        getProperties();
+        sort = getSortAlgorithm();
     }
 
     public GreenSpace.Type[] getEnumGreenSpaceType(){
@@ -39,7 +41,7 @@ public class RegisterGreenSpaceController {
     }
 
     public boolean registerGreenSpace(String name, String address,String addressCity, String addressZipCode, double areaInHectares, GreenSpace.Type type){
-        GreenSpaceDto newGreenSpaceDto = new GreenSpaceDto(areaInHectares,address,addressCity,addressZipCode,name,type,getManagerFromSession());
+        GreenSpaceDto newGreenSpaceDto = new GreenSpaceDto(areaInHectares,new Address(addressZipCode,address,addressCity),name,type,getManagerFromSession());
         return org.registerGreenSpace(newGreenSpaceDto).isPresent();
     }
 
@@ -55,23 +57,8 @@ public class RegisterGreenSpaceController {
         return session.getCurrentSession().getUserEmail();
     }
 
-    private void getProperties() {
-        Properties props = new Properties();
-        try {
-            InputStream in = new FileInputStream(CONFIGURATION_FILENAME);
-            props.load(in);
-            in.close();
-            String sortAlgorithm = props.getProperty(SORTING_ALGORITHM);
-            if ("SortingAlgorithm1".equals(sortAlgorithm)) {
-                sort = new SortingAlgorithm1();
-            } else if ("SortingAlgorithm2".equals(sortAlgorithm)) {
-                sort = new SortingAlgorithm2();
-            } else {
-                throw new IllegalArgumentException("Invalid sorting algorithm specified in the configuration file");
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    private SortingList getSortAlgorithm() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        return ApplicationSession.getAlgorithmService();
     }
-
 }
+
