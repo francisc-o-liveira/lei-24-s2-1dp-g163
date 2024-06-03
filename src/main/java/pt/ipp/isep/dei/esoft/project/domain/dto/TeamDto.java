@@ -23,4 +23,9 @@ public class TeamDto {
     public String getTeamName() {
         return teamName;
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s", teamName);
+    }
 }
