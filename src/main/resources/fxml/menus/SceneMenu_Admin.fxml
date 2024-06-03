@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.menus.AdminUI">
+<AnchorPane prefHeight="600.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.menus.AdminUI">
     <children>
         <AnchorPane layoutX="141.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" />
         <BorderPane layoutX="277.0" layoutY="58.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -83,9 +89,9 @@
                                                 <DropShadow />
                                             </effect>
                                             <children>
-                                                <AnchorPane layoutX="355.0" layoutY="17.0" prefHeight="227.0" prefWidth="266.0" style="-fx-background-color: #1C4741;">
+                                                <AnchorPane layoutX="355.0" layoutY="12.0" prefHeight="232.0" prefWidth="266.0" style="-fx-background-color: #1C4741;">
                                                     <children>
-                                                        <Circle layoutX="133.0" layoutY="106.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                                        <Circle layoutX="143.0" layoutY="99.0" radius="67.0" stroke="BLACK" strokeType="INSIDE">
                                                             <fill>
                                                                 <LinearGradient endX="1.0" endY="1.0">
                                                                     <stops>
@@ -103,26 +109,21 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <ImageView fitHeight="72.0" fitWidth="82.0" layoutX="96.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+                                                        <ImageView fitHeight="83.0" fitWidth="81.0" layoutX="104.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
                                                                 <Image url="@../../images/manage_jobs.png" />
                                                             </image>
                                                         </ImageView>
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="178.0" onAction="#manageJobs" prefHeight="29.0" prefWidth="109.0" text="Manage Jobs">
+                                                        <Button accessibleRole="BUTTON" layoutX="76.0" layoutY="180.0" onAction="#manageJobs" prefHeight="31.0" prefWidth="143.0" style="-fx-background-color: #FFFFFF00; -fx-border-color: #FFFFFF;" text="Manage Jobs" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Button>
-                                                        <ImageView fitHeight="78.0" fitWidth="87.0" layoutX="94.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@../../images/manage_jobs.png" />
-                                                            </image>
-                                                        </ImageView>
                                                     </children>
                                                 </AnchorPane>
                                                 <AnchorPane layoutX="28.0" layoutY="11.0" prefHeight="231.0" prefWidth="273.0" style="-fx-background-color: #1C4741;">
                                                     <children>
-                                                        <Circle layoutX="137.0" layoutY="109.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                                        <Circle layoutX="134.0" layoutY="104.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                                             <fill>
                                                                 <LinearGradient endX="1.0" endY="1.0">
                                                                     <stops>
@@ -140,26 +141,21 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="96.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+                                                        <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="93.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
                                                                 <Image url="@../../images/manage_skills.png" />
                                                             </image>
                                                         </ImageView>
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="79.0" layoutY="182.0" onAction="#manageSkills" prefHeight="29.0" prefWidth="114.0" text="Manage Skills">
+                                                        <Button accessibleRole="BUTTON" layoutX="59.0" layoutY="176.0" onAction="#manageSkills" prefHeight="36.0" prefWidth="150.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Skills" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Button>
-                                                        <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="93.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@../../images/manage_skills.png" />
-                                                            </image>
-                                                        </ImageView>
                                                     </children>
                                                 </AnchorPane>
-                                                <AnchorPane layoutX="667.0" layoutY="19.0" prefHeight="228.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
+                                                <AnchorPane layoutX="667.0" layoutY="12.0" prefHeight="235.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
                                                     <children>
-                                                        <Circle layoutX="144.0" layoutY="102.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                                        <Circle layoutX="141.0" layoutY="110.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                                             <fill>
                                                                 <LinearGradient endX="1.0" endY="1.0">
                                                                     <stops>
@@ -177,17 +173,17 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <FontAwesomeIconView glyphName="USER" layoutX="120.0" layoutY="125.0" size="5em" />
-                                                        <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageCollaborators" prefHeight="29.0" prefWidth="165.0" text="Manage Collaborators">
+                                                        <FontAwesomeIconView glyphName="USER" layoutX="117.0" layoutY="133.0" size="5em" text="" />
+                                                        <Button accessibleRole="BUTTON" layoutX="54.0" layoutY="180.0" onAction="#manageCollaborators" prefHeight="31.0" prefWidth="172.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Collaborators" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Button>
                                                     </children>
                                                 </AnchorPane>
-                                    <AnchorPane layoutX="969.0" layoutY="20.0" prefHeight="228.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
+                                    <AnchorPane layoutX="969.0" layoutY="13.0" prefHeight="235.0" prefWidth="264.0" style="-fx-background-color: #1C4741;">
                                        <children>
-                                          <Circle layoutX="144.0" layoutY="102.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
+                                          <Circle layoutX="134.0" layoutY="108.0" radius="66.0" stroke="BLACK" strokeType="INSIDE">
                                              <fill>
                                                 <LinearGradient endX="1.0" endY="1.0">
                                                    <stops>
@@ -205,12 +201,12 @@
                                                 </LinearGradient>
                                              </fill>
                                           </Circle>
-                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageToDoList" prefHeight="29.0" prefWidth="165.0" text="Manage Tasks">
+                                          <Button accessibleRole="BUTTON" layoutX="62.0" layoutY="175.0" onAction="#manageToDoList" prefHeight="29.0" prefWidth="165.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Tasks" textFill="#eeeeee">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Button>
-                                          <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="101.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="92.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../images/manage_skills.png" />
                                              </image>
@@ -244,7 +240,7 @@
                                                             </fill>
                                                         </Circle>
                                                         <FontAwesomeIconView glyphName="USERS" layoutX="102.0" layoutY="132.0" size="5em" />
-                                                        <Button blendMode="MULTIPLY" layoutX="73.0" layoutY="181.0" onAction="#manageTeams" prefHeight="29.0" prefWidth="127.0" text="Manage Teams">
+                                                        <Button layoutX="67.0" layoutY="178.0" onAction="#manageTeams" prefHeight="36.0" prefWidth="144.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Teams" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
@@ -276,7 +272,7 @@
                                                 <Image url="@../../images/manage_jobs.png" />
                                              </image>
                                           </ImageView>
-                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="55.0" layoutY="178.0" onAction="#manageGreenSpaces" prefHeight="31.0" prefWidth="154.0" text="Manage Green Spaces">
+                                          <Button accessibleRole="BUTTON" layoutX="46.0" layoutY="177.0" onAction="#manageGreenSpaces" prefHeight="31.0" prefWidth="173.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Green Spaces" textFill="WHITE">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
@@ -309,7 +305,7 @@
                                              </fill>
                                           </Circle>
                                           <FontAwesomeIconView glyphName="USER" layoutX="120.0" layoutY="125.0" size="5em" />
-                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageVehicles" prefHeight="29.0" prefWidth="165.0" text="Manage Vehicles">
+                                          <Button accessibleRole="BUTTON" layoutX="63.0" layoutY="176.0" onAction="#manageVehicles" prefHeight="29.0" prefWidth="165.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Vehicles" textFill="WHITE">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
@@ -337,7 +333,7 @@
                                              </fill>
                                           </Circle>
                                           <FontAwesomeIconView glyphName="USER" layoutX="120.0" layoutY="125.0" size="5em" />
-                                          <Button accessibleRole="BUTTON" blendMode="MULTIPLY" layoutX="62.0" layoutY="175.0" onAction="#manageAgenda" prefHeight="29.0" prefWidth="165.0" text="Manage Agenda">
+                                          <Button accessibleRole="BUTTON" layoutX="62.0" layoutY="175.0" onAction="#manageAgenda" prefHeight="29.0" prefWidth="165.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Agenda" textFill="WHITE">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
