@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,8 +24,8 @@ public class ViewDetailsGreenSpaceUI{
 
         public void setLabels(GreenSpaceDto greenSpace){
                 nameGreenSpace.setText(greenSpace.getName());
-                String address=greenSpace.getAddressStreet()+ ", " + greenSpace.getAddressCity() +"\n" + greenSpace.getAddressZipCode();
-                addressGreenSpace.setText(address);
+                Address address=greenSpace.getAddress();
+                addressGreenSpace.setText(address.getStreet() + "\n"+ address.getCity() + "\n"+ address.getZipCode());
                 GreenSpace.Type type = greenSpace.getType();
                 greenSpaceType.setText(type.name());
                 areaGreenSpace.setText(String.valueOf(greenSpace.getAreaInHectares()));
