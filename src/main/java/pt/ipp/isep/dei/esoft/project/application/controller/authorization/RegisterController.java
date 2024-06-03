@@ -44,7 +44,6 @@ public class RegisterController {
         roles.add(ROLE_GSM);
         roles.add(ROLE_HRM);
         roles.add(ROLE_VFM);
-        roles.add(ROLE_COLAB);
         return roles;
     }
 
