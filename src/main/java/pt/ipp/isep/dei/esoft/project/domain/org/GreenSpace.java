@@ -123,9 +123,7 @@ public class GreenSpace {
 
         return Objects.equals(this.getName(), gs.getName()) &&
                 Double.compare(this.getArea(), gs.getAreaInHectares()) == 0 &&
-                Objects.equals(this.getAddressStreet(), gs.getAddressStreet()) &&
-                Objects.equals(this.getAddressCity(), gs.getAddressCity()) &&
-                Objects.equals(this.getAddressZipCode(), gs.getAddressZipCode()) &&
+                Objects.equals(this.getAddress(), gs.getAddress()) &&
                 Objects.equals(this.getType(), gs.getType());
     }
 

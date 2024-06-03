@@ -11,6 +11,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceCo
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,8 +37,15 @@ public class RegisterGreenSpaceUI implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rbl){
-        ctrl=new RegisterGreenSpaceController();
-        greenSpaceType.setItems(FXCollections.observableArrayList(GreenSpace.getEnumGreenSpaceTypes()));
+        try {
+            ctrl=new RegisterGreenSpaceController();
+            greenSpaceType.setItems(FXCollections.observableArrayList(GreenSpace.getEnumGreenSpaceTypes()));
+        }catch (ClassNotFoundException | IOException | IllegalAccessException e){
+            popUpOfVerifications(Alert.AlertType.ERROR,"Error: Impossible to Access to Sort Algorithm" + e);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setStage(Stage stage){
