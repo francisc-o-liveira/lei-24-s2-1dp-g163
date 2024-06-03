@@ -25,8 +25,6 @@ public class RegisterGreenSpaceController {
 
     private ApplicationSession session;
 
-    private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
-    private static final String SORTING_ALGORITHM="SortingList.Class";
     private static SortingList sort;
 
     public RegisterGreenSpaceController() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
