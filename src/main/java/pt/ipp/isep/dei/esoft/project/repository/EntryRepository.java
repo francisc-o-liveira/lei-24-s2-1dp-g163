@@ -191,10 +191,10 @@ public class EntryRepository {
                     // If remove team from the Team List it is possible to have some problem with Collaborators there are in a new Team
                     // For this we can check if any team have a Collaborator there are assigned in any task
                     for (Team team : teams){
-                        if (team.getTeamList() != null){
-                            break;
-                        }
                         for (Collaborator collaborator : team.getTeamList()){
+                            if (entry.getTeamAssigned().getTeamList() != null){
+                                break;
+                            }
                             for (Collaborator collaboratorCompare : entry.getTeamAssigned().getTeamList()){
                                 if (collaborator.getEmail().equals(collaboratorCompare.getEmail())){
                                     teams.remove(team);
