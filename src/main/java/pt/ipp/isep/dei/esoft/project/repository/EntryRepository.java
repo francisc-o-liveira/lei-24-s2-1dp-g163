@@ -9,6 +9,7 @@ import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
+import pt.ipp.isep.dei.esoft.project.mapper.VehicleMapper;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
@@ -25,11 +26,13 @@ public class EntryRepository {
     private static EntryMapper mapper;
     private static final int HOURS_WORK_PER_OMISSION=8;
     private static int REFERENCE_VALUE;
+    private static VehicleMapper vehicleMapper;
 
     public EntryRepository() {
         toDo = new ArrayList<Entry>();
         agenda = new ArrayList<Entry>();
         mapper = new EntryMapper();
+        vehicleMapper = new VehicleMapper();
         REFERENCE_VALUE = 0;
         try {
             timeOfWorkByCollaborators = ApplicationSession.getTimeOfWork();
@@ -171,7 +174,7 @@ public class EntryRepository {
         Optional<Entry> agendaEntry = Optional.empty();
         Entry entry = searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
-        if (entry.getVehicleList().equals(entryDto.getVehicleList())){
+        if (entry.getVehicleList().equals(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()))){
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
