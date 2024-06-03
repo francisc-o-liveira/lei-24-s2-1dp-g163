@@ -48,9 +48,14 @@ public class ManageGreenSpacesUI implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ctrlAuth=new AuthenticationController();
-        ctrl=new RegisterGreenSpaceController();
-        setTableGreenSpaces();
+        try {
+            ctrlAuth=new AuthenticationController();
+            ctrl=new RegisterGreenSpaceController();
+            setTableGreenSpaces();
+        }catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e){
+            e.printStackTrace();
+        }
+
     }
 
     public void setTableGreenSpaces(){
