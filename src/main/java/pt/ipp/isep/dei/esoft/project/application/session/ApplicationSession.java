@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
-    private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
+    private static final String CONFIGURATION_FILENAME = "src/main/resources/configs/config.properties";
     private static final String COMPANY_DESIGNATION = "Company.Designation";
     private static final String EMAIL_DESIGNATION = "SendEmailExternalAPI.Class";
     private static final String SORTING_ALGORITHM="SortingList.Class";
@@ -65,7 +65,7 @@ public class ApplicationSession {
 
 
     private static String getEmail() throws IOException {
-        String fileName="configs/config.properties";
+        String fileName="src/main/resources/configs/config.properties";
         InputStream input = new FileInputStream(fileName);
         String email = "";
         try {
@@ -96,7 +96,7 @@ public class ApplicationSession {
 
 
     private static String getAlgorithm() throws IOException {
-        String fileName="configs/config.properties";
+        String fileName="src/main/resources/configs/config.properties";
         InputStream input = new FileInputStream(fileName);
         String algorithm = "";
         try {
@@ -112,7 +112,7 @@ public class ApplicationSession {
     }
 
     public static Tempo getTimeOfWork() throws IOException {
-        String fileName="configs/config.properties";
+        String fileName="src/main/resources/configs/config.properties";
         InputStream input = new FileInputStream(fileName);
         String time = "";
         Tempo tempo = null;
