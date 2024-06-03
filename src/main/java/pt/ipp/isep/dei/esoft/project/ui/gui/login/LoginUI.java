@@ -150,7 +150,7 @@ public class LoginUI {
     }
 
     public void showCollaboratorUI() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/scenes to be made/SceneMenu_Collaborator.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneMenu_Collaborator.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         mainStage.setScene(scene);
