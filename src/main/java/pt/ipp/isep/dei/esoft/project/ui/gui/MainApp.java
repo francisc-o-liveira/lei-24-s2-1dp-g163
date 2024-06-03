@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -71,5 +72,12 @@ public class MainApp extends Application {
         alerta.setContentText(ex.getMessage());
 
         return alerta;
+    }
+
+
+    private static File authDataBaseFile = new File("authDataBase.csv");
+
+    public static File getAuthDataBaseFile() {
+        return authDataBaseFile;
     }
 }
