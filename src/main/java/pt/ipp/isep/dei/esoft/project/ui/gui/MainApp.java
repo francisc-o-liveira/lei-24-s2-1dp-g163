@@ -75,7 +75,7 @@ public class MainApp extends Application {
     }
 
 
-    private static File authDataBaseFile = new File("authDataBase.csv");
+    private static File authDataBaseFile = new File("/DataBase/authDataBase.csv");
 
     public static File getAuthDataBaseFile() {
         return authDataBaseFile;
