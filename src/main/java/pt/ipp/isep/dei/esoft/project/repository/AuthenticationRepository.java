@@ -75,14 +75,11 @@ public class AuthenticationRepository {
     }
 
     public void loadFromAuthDataBase(){
-
         addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
         addUserRole(RegisterController.ROLE_HRM, RegisterController.ROLE_HRM);
         addUserRole(RegisterController.ROLE_GSM, RegisterController.ROLE_GSM);
         addUserRole(RegisterController.ROLE_VFM, RegisterController.ROLE_VFM);
         addUserRole(RegisterController.ROLE_COLAB, RegisterController.ROLE_COLAB);
-
-
         try {
             Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
             while (scanner.hasNextLine()){
