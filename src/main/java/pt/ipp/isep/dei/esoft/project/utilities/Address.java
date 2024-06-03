@@ -27,7 +27,11 @@ public class Address implements Serializable {
 
 
     public void setCity(String city) {
-        this.city = city;
+        if(verifyIsOnlyCharacter(city)){
+            this.city = city;
+        }else {
+            throw new IllegalArgumentException("INVALID CITY");
+        }
     }
 
     public String getCity() {
@@ -52,7 +56,7 @@ public class Address implements Serializable {
         if(zipCode.matches("\\d{5}") && zipCode.split("-").length == 2){
         this.zipCode = zipCode;
         }else{
-            throw new IllegalArgumentException("WRONG ZIPCODE");
+            throw new IllegalArgumentException("INVALID ZIPCODE");
         }
 
     }
@@ -73,7 +77,7 @@ public class Address implements Serializable {
         if (verifyIsOnlyCharacter(street)){
             this.street = street;
         }else {
-            throw new IllegalArgumentException("WRONG STREET");
+            throw new IllegalArgumentException("INVALID STREET");
         }
     }
 
