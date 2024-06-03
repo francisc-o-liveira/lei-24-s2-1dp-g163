@@ -32,8 +32,4 @@ public class OrganizationController {
         organization.removeManager(manager);
         authenticationRepository.removeUserCredentialsInDataBase(manager.getEmail());
     }
-
-    public String getRoles(){
-        return RegisterController.roles.removeLast();
-    }
 }
