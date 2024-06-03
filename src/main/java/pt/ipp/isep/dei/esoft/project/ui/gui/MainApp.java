@@ -74,8 +74,7 @@ public class MainApp extends Application {
         return alerta;
     }
 
-
-    private static File authDataBaseFile = new File("/DataBase/authDataBase.csv");
+    private static final File authDataBaseFile = new File("/DataBase/authDataBase.csv");
 
     public static File getAuthDataBaseFile() {
         return authDataBaseFile;
