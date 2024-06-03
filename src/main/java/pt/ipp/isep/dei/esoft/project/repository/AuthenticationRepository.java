@@ -122,8 +122,11 @@ public class AuthenticationRepository {
             while (scanner.hasNextLine()){
 
                 String currentLine = scanner.nextLine();
-                String[] curentLineSplited = currentLine.split(";");
-                addUserWithRole(curentLineSplited[0],curentLineSplited[1],curentLineSplited[2],curentLineSplited[3]);
+                String[] currentLineSplited = currentLine.split(";");
+                if (currentLineSplited.length != 4){
+                    break;
+                }
+                addUserWithRole(currentLineSplited[0],currentLineSplited[1],currentLineSplited[2],currentLineSplited[3]);
 
             }
             scanner.close();
