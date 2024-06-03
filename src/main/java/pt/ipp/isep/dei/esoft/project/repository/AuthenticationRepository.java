@@ -16,8 +16,6 @@ public class AuthenticationRepository {
 
     private final AuthFacade authenticationFacade;
 
-    private static SendEmailExternalAPI sendEmailExternalAPI;
-
     public AuthenticationRepository() {
         authenticationFacade = new AuthFacade();
     }
@@ -47,14 +45,7 @@ public class AuthenticationRepository {
         return authenticationFacade.existsUser(email);
     }
 
-    public static void setSendEmailExternalAPI(SendEmailExternalAPI sendEmailExternalAPI) {
-        AuthenticationRepository.sendEmailExternalAPI = sendEmailExternalAPI;
-    }
-
-
-
     public void storeUserCredentialInDataBase(String name, String email,String pwd,String roleId){
-
         Boolean emailAlreadyResgistered = false;
         try {
             Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
