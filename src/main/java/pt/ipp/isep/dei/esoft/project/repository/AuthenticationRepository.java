@@ -10,6 +10,9 @@ import pt.isep.lei.esoft.auth.UserSession;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 public class AuthenticationRepository {
@@ -43,6 +46,40 @@ public class AuthenticationRepository {
 
     public boolean existUser(String email) {
         return authenticationFacade.existsUser(email);
+    }
+
+    public void removeUserCredentialsInDataBase(String email) {
+        String line = "";
+        Boolean emailAlreadyResgistered = false;
+        try {
+            Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
+            while (scanner.hasNextLine()){
+                line = scanner.nextLine();
+                if (line.split(";")[1].equals(email)){
+                    emailAlreadyResgistered = true;
+                    break;
+                }
+
+            }
+        }catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        if (emailAlreadyResgistered){
+            try {
+                // Leia o conteúdo do ficheiro
+                String conteudo = new String(Files.readAllBytes(Paths.get(MainApp.getAuthDataBaseFile().toString())));
+
+                // Remova o texto desejado
+                String conteudoModificado = conteudo.replace(line, "");
+
+                // Escreva o conteúdo modificado de volta ao ficheiro
+                Files.write(Paths.get(MainApp.getAuthDataBaseFile().toString()), conteudoModificado.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+                System.out.println("Texto removido com sucesso!");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void storeUserCredentialInDataBase(String name, String email,String pwd,String roleId){

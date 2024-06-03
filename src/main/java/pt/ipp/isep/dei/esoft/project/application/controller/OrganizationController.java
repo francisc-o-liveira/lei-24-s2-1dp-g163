@@ -1,15 +1,18 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
+import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 
 import java.util.List;
 
 public class OrganizationController {
     private Organization organization;
+    private AuthenticationRepository authenticationRepository;
 
     public OrganizationController(){
         organization = new Organization();
+        authenticationRepository = new AuthenticationRepository();
     }
 
     private Organization getOrganization() {
@@ -26,5 +29,7 @@ public class OrganizationController {
 
     public void removeManager(Manager manager){
         organization.removeManager(manager);
+        authenticationRepository.removeUserCredentialsInDataBase(manager.getEmail());
+
     }
 }
