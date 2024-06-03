@@ -17,6 +17,7 @@ public class MainDjikstra {
 
     public static final String FILENAME_PER_OMISSION = "..NONE..";
     private static int counterForAPS=0;
+    public static ArrayList<ArrayList<Edge>> results=new ArrayList<>();
 
     public static void main(String[] args) {
         String filenameMatrix = FILENAME_PER_OMISSION;
@@ -48,7 +49,6 @@ public class MainDjikstra {
                     start=new Point("AP");
                     System.out.println("To which point do you wish to calculate the path?");
                     Point end=new Point(sc.next());
-                    sc.close();
                     result = dijkstraAlgorithmUS17(edges, start, end);
                     try {
                         createResultFile(result);
@@ -63,23 +63,52 @@ public class MainDjikstra {
                         startingPoints.add(new Point("AP"+numberForAP));
                     }
                     ArrayList<Point> vertices=numberOfVertices(edges);
-                    System.out.print("What is the starting point: ");
+                    System.out.print("What is the Assembly Point: ");
                     start = new Point(sc.next());
-                    sc.close();
                     startingPoints.remove(start);
                     ArrayList<Edge> edgesToUse=removingEdges(edges,startingPoints);
                     result = dijkstraAlgorithmUS18(edgesToUse, start, vertices);
+                    results.add(result);
+
+                    break;
+                case 0:
+                    ArrayList<Edge> pathWithLeastCost=new ArrayList<>();
+                    pathWithLeastCost=comparingResults(results);
                     try {
-                        createResultFile(result);
+                        createResultFile(pathWithLeastCost);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                     break;
-                case 0:
-                    break;
             }
 
         }
+    }
+
+    private static ArrayList<Edge> comparingResults(ArrayList<ArrayList<Edge>> results) {
+        ArrayList<Edge> path=new ArrayList<>();
+        int cost=0;
+        ArrayList<Integer> costs=new ArrayList<>();
+        for(ArrayList<Edge> array : results){
+            for(Edge e : array){
+                cost+=e.getPrice();
+            }
+            costs.add(cost);
+            cost=0;
+        }
+
+        int minCost=costs.get(0);
+        int posMinCost=0;
+        for(Integer i : costs){
+            if(i<minCost){
+                minCost=i;
+                posMinCost=costs.indexOf(i);
+            }
+        }
+
+        path=results.get(posMinCost);
+        return path;
+
     }
 
     private static ArrayList<Edge> removingEdges(ArrayList<Edge> edges, ArrayList<Point> startingPoints) {
