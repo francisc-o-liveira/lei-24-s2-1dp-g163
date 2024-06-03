@@ -25,7 +25,7 @@ public class ViewDetailsGreenSpaceUI{
         public void setLabels(GreenSpaceDto greenSpace){
                 nameGreenSpace.setText(greenSpace.getName());
                 Address address=greenSpace.getAddress();
-                addressGreenSpace.setText(address.getStreet() + ", "+ address.getCity() + "\n"+ address.getZipCode());
+                addressGreenSpace.setText(address.getStreet() + ","+ address.getCity() + "\n"+ address.getZipCode());
                 GreenSpace.Type type = greenSpace.getType();
                 greenSpaceType.setText(type.name());
                 areaGreenSpace.setText(String.valueOf(greenSpace.getAreaInHectares()));
