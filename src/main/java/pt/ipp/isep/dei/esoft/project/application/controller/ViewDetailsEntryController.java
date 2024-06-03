@@ -11,6 +11,7 @@ import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
+import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +47,8 @@ public class ViewDetailsEntryController {
         return entryRepository.cancelEntry(entryDto).isPresent();
     }
 
-    public boolean postponeEntry(EntryDto entryDto){ //dont you need the date to postpone?
+    public boolean postponeEntry(EntryDto entryDto, Date postpone){
+        entryDto.postpone(postpone);
         return entryRepository.postponeEntry(entryDto).isPresent();
     }
 

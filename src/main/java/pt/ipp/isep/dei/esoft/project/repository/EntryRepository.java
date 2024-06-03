@@ -121,8 +121,6 @@ public class EntryRepository {
                     &&Objects.equals(entry.getDegreeUrgency(), entryDto.getDegreeUrgency())
                     && Objects.equals(entry.getDescription(), entryDto.getDescription())
                     && Objects.equals(entry.getExpectedDuration(),entryDto.getExpectedDuration())
-                    && Objects.equals(entry.getStatus(),entryDto.getStatus())
-                    && Objects.equals(entry.getStartDate(),entryDto.getStartDate())
             ){
                 return entry;
             }

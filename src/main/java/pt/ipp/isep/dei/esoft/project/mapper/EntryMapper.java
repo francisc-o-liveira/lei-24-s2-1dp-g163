@@ -141,7 +141,7 @@ public class EntryMapper {
     }
 
     private Entry getEntryFromDtoToCompare(EntryDto entryDto) {
-        return new Entry(entryDto.getTitle(), entryDto.getDescription(),entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()) ,entryDto.getDegreeUrgency(), entryDto.getStatus(),-1);
+        return new Entry(entryDto.getStartDate(), entryDto.getTitle(), entryDto.getDescription(),entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()) ,entryDto.getDegreeUrgency(), entryDto.getStatus(),-1);
     }
 
 

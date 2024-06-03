@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TeamDto;
@@ -44,12 +45,12 @@ public class AssignTeamUI {
     @FXML
     public void assignTeam(ActionEvent event){
         selectedTeam= teamsToAssign.getSelectionModel().getSelectedItem();
-        if(selectedTeam==null){
-            popUpOfVerifications(Alert.AlertType.ERROR, "Select a team").show();
-        }
         try{
             ctrl.assignTeamToEntry(selectedTeam,selectedEntry);
-            popUp("Team assigned!").show();
+            if(popUp("Team assigned!").showAndWait().get()==ButtonType.OK){
+                Stage stage= (Stage) teamsToAssign.getScene().getWindow();
+                stage.close();
+            }
         } catch (Exception e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }

@@ -43,7 +43,6 @@ public class Entry extends Task {
         this.finishDate = null;
     }
 
-
     // To Create one instance to compare for Postpone
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference, List<Vehicle> vehicleList, Team teamAssigned) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
@@ -53,6 +52,18 @@ public class Entry extends Task {
         this.startDate = null;
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
+        this.finishDate = null;
+    }
+
+    //to do the postpone, you would need this constructor:
+    public Entry(Date startDate,String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
+        super(title, description, expectedDuration, greenSpace, degreeUrgency);
+        validateReference(Integer.toString(reference));
+        this.reference = Integer.toString(reference);
+        this.status = status;
+        this.startDate = startDate;
+        this.vehicleList = null;
+        this.teamAssigned = null;
         this.finishDate = null;
     }
     // Compare constructor
@@ -91,7 +102,7 @@ public class Entry extends Task {
 
     public void cancelEntry(){
         status.cancelEntry();
-        cancelData();
+        //cancelData();
     }
 
     private void cancelData() {

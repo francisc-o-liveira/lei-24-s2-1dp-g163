@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
@@ -49,7 +50,10 @@ public class AssignVehicleUI {
         try{
             for(VehicleDto vehicleDto : vehiclesSelected){
                 ctrl.assignVehicleToEntry(vehicleDto,selectedEntry);
-                popUp("Vehicles assigned!").show();
+            }
+            if(popUp("Vehicles assigned!").showAndWait().get()==ButtonType.OK){
+                Stage stage= (Stage) vehiclesToAssign.getScene().getWindow();
+                stage.close();
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -62,9 +66,6 @@ public class AssignVehicleUI {
             if (vehicle.isSelectedForEntry().get()) {
                 vehiclesSelected.add(vehicle);
             }
-        }
-        if(vehiclesSelected==null){
-            throw new NullPointerException("No vehicles were chosen to assign");
         }
     }
 
