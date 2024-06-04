@@ -417,36 +417,4 @@ public class Vehicle implements Serializable {
         this.type = type;
     }
 
-
-    /** Converts a date to LocalDate
-     *
-     * @param date to be converted
-     * @return date in the LocalDate format
-     */
-    public static LocalDate convertToJavaLocalDate(Date date) {
-
-        int year = date.getYear();
-        int month = date.getMonth();
-        int day = date.getDay();
-
-        return LocalDate.of(year, month, day);
-    }
-
-    /** Gets the registerDate in the LocalDate format
-     *
-     * @return registerDate in LocalDate format
-     */
-    public LocalDate getRegisterDateLocal(){
-        return convertToJavaLocalDate(registerDate);
-    }
-
-    /** Gets the acquisition date in the LocalDate format
-     *
-     * @return acquisition date in LocalDate format
-     */
-
-    public LocalDate getAcquisitionDateLocal(){
-        return convertToJavaLocalDate(acquisitionDate);
-    }
-
 }
