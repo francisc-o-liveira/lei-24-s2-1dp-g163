@@ -15,12 +15,12 @@
             <Font name="Tahoma Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="8.0" layoutY="64.0" text="Check Up Kilometers:" />
-      <Label layoutX="42.0" layoutY="98.0" text="Date Of Check:" />
-      <CheckBox fx:id="maintenanceCheckBox" onAction="#showMaintenance" layoutX="14.0" layoutY="126.0" mnemonicParsing="false" text="Edit Maintenance Km" />
-      <DatePicker fx:id="checkDate" layoutX="127.0" layoutY="94.0" />
-      <TextField fx:id="checkUpKMs" layoutX="127.0" layoutY="60.0" prefHeight="26.0" prefWidth="186.0" />
-      <Button layoutX="253.0" layoutY="203.0" mnemonicParsing="false" onAction="#btnRegisterCheck" text="Register" />
+      <Label layoutX="7.0" layoutY="73.0" text="Check Up Kilometers:" />
+      <Label layoutX="42.0" layoutY="133.0" text="Date Of Check:" />
+      <CheckBox fx:id="maintenanceCheckBox" layoutX="14.0" layoutY="208.0" mnemonicParsing="false" onAction="#showMaintenance" text="Edit Maintenance Km" />
+      <DatePicker fx:id="checkDate" layoutX="127.0" layoutY="129.0" />
+      <TextField fx:id="checkUpKMs" layoutX="127.0" layoutY="68.0" prefHeight="26.0" prefWidth="186.0" />
+      <Button layoutX="253.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnRegisterCheck" style="-fx-background-color: #93C777;" text="Register" />
       <TextField fx:id="maintenanceUp" layoutX="140.0" layoutY="150.0" prefHeight="26.0" prefWidth="175.0" visible="false" />
       <Label fx:id="newMaintenanceCheck" layoutX="14.0" layoutY="155.0" text="New Maintenance Km: " visible="false" />
    </children>
