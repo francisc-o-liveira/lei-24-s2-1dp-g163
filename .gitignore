@@ -3,9 +3,6 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-target/
-
-
 
 ### Eclipse ###
 .apt_generated
@@ -31,7 +28,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/target/**
-/target/classes/MATDISC/USs/Main$1.class
-/target/classes/fxml/SceneMenu_Collaborator.fxml
 misc.xml
+/target/
