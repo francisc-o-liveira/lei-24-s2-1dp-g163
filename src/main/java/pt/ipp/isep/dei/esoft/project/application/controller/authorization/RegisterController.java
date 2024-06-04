@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
@@ -25,7 +26,7 @@ public class RegisterController {
 
     private final Organization organization;
 
-    public RegisterController() {
+    private RegisterController() {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         this.collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         this.organization= Repositories.getInstance().getOrganizationRepository();
@@ -84,5 +85,15 @@ public class RegisterController {
 
     public List<String> getRoles(){
         return roles;
+    }
+
+    private static RegisterController instance;
+    public static RegisterController getInstance(){
+        if(instance == null){
+            synchronized (RegisterController.class) {
+                instance = new RegisterController();
+            }
+        }
+        return instance;
     }
 }

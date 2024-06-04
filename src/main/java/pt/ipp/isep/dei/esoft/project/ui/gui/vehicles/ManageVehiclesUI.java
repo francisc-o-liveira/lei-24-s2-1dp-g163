@@ -55,8 +55,8 @@ public class ManageVehiclesUI {
     Vehicle selectedVehicle;
 
     public ManageVehiclesUI(){
-        ctrl=new RegisterVehicleController();
-        ctrlAuth=new AuthenticationController();
+        ctrl= RegisterVehicleController.getInstance();
+        ctrlAuth=AuthenticationController.getInstance();
     }
 
     public void setLabel(){

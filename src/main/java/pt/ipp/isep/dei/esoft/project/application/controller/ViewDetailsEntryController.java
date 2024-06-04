@@ -32,7 +32,7 @@ public class ViewDetailsEntryController {
 
     private EmailService serv;
 
-    public ViewDetailsEntryController(){
+    private ViewDetailsEntryController(){
         this.entryRepository = Repositories.getInstance().getEntryRepository();
         this.vehicleRepository = Repositories.getInstance().getVehicleRepository();
         this.mapper = new EntryMapper();

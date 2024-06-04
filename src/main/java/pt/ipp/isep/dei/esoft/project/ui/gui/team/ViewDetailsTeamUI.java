@@ -28,7 +28,7 @@ public class ViewDetailsTeamUI {
     private TableView<Skill> tableSkills;
 
     public ViewDetailsTeamUI(){
-        ctrl=new GenerateTeamController();
+        ctrl= GenerateTeamController.getInstance();
     }
 
     public void setTableCollabs(){

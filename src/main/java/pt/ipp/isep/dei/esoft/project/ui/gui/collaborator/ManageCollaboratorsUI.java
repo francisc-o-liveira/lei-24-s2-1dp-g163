@@ -53,8 +53,8 @@ public class ManageCollaboratorsUI {
     ObservableList<Collaborator> collaboratorObservableList=FXCollections.observableArrayList();
     Collaborator selectedCollaboratorForEdit;
     public ManageCollaboratorsUI() {
-        ctrl = new RegisterCollaboratorController();
-        ctrlAuth= new AuthenticationController();
+        ctrl = RegisterCollaboratorController.getInstance();
+        ctrlAuth= AuthenticationController.getInstance();
     }
 
     public void setLabel(){

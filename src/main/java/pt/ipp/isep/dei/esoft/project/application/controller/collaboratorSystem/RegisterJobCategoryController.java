@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterJobCategoryController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -18,7 +19,7 @@ public class RegisterJobCategoryController {
     /**
      * When the controller is created, the jobCategory instance is taken from repositories
      */
-    public RegisterJobCategoryController(){
+    private RegisterJobCategoryController(){
         getJobCategoryRepository();
     }
 
@@ -63,6 +64,17 @@ public class RegisterJobCategoryController {
      */
     public void removeJobCategory(JobCategory jobCategory){
         jobCategoryRepository.removeJobCategory(jobCategory);
+    }
+
+
+    private static RegisterJobCategoryController instance;
+    public static RegisterJobCategoryController getInstance(){
+        if(instance == null){
+            synchronized (RegisterJobCategoryController.class) {
+                instance = new RegisterJobCategoryController();
+            }
+        }
+        return instance;
     }
 
 

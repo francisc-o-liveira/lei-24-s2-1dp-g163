@@ -25,7 +25,7 @@ public class HRManagerUI {
     public AuthenticationController ctrlAuth;
 
     public HRManagerUI(){
-        ctrlAuth = new AuthenticationController();
+        ctrlAuth = AuthenticationController.getInstance();
     }
 
     @FXML

@@ -24,7 +24,7 @@ public class AdminUI {
     public AuthenticationController ctrlAuth;
 
     public AdminUI(){
-        ctrlAuth = new AuthenticationController();
+        ctrlAuth = AuthenticationController.getInstance();
     }
 
     @FXML

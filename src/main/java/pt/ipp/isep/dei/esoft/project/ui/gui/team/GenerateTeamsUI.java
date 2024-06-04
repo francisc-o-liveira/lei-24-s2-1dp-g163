@@ -58,8 +58,8 @@ public class GenerateTeamsUI {
         stageClose=stage;
     }
     public GenerateTeamsUI(){
-        ctrlAuth = new AuthenticationController();
-        ctrl = new GenerateTeamController();
+        ctrlAuth = AuthenticationController.getInstance();
+        ctrl = GenerateTeamController.getInstance();
         skillsSelectedForTeam= new ArrayList<>();
         numberCollabsPerSkill= new ArrayList<>();
         skillsToChoose.addAll(ctrl.getSkillList());

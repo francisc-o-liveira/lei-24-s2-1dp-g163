@@ -38,8 +38,8 @@ public class ManageJobsUI {
     public AuthenticationController ctrlAuth;
 
     public ManageJobsUI(){
-        ctrl=new RegisterJobCategoryController();
-        ctrlAuth=new AuthenticationController();
+        ctrl= RegisterJobCategoryController.getInstance();
+        ctrlAuth=AuthenticationController.getInstance();
 
     }
 

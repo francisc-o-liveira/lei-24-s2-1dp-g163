@@ -33,8 +33,8 @@ public class RegisterUI {
 
     public static Stage mainStage;
 
-    private final RegisterController ctrl = new RegisterController();
-    private final AuthenticationController ctrlAuth=new AuthenticationController();
+    private final RegisterController ctrl =  RegisterController.getInstance();
+    private final AuthenticationController ctrlAuth= AuthenticationController.getInstance();
 
     public void setMainStageAndBox(Stage mainStage) {
         ObservableList<String> roles= FXCollections.observableArrayList(ctrl.getRoles());

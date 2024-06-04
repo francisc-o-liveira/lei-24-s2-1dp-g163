@@ -22,7 +22,7 @@ public class VFManagerUI {
     public AuthenticationController ctrlAuth;
 
     public VFManagerUI(){
-        ctrlAuth = new AuthenticationController();
+        ctrlAuth = AuthenticationController.getInstance();
     }
 
     @FXML

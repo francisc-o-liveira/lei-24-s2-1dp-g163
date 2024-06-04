@@ -50,8 +50,8 @@ public class ManageAgendaUI  implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ctrlAuth = new AuthenticationController();
-        ctrlEntry=new AssignEntryOnAgendaController();
+        ctrlAuth = AuthenticationController.getInstance();
+        ctrlEntry= AssignEntryOnAgendaController.getInstance();
         view = new VBox();
         viewWeek=new VBox();
         view.setAlignment(Pos.CENTER);
@@ -62,7 +62,6 @@ public class ManageAgendaUI  implements Initializable{
         viewWeek.getStyleClass().add("outline");
         calendarAnchorPane.getChildren().add(getView());
         weeklyViewAnchorPane.getChildren().add(getViewWeekly());
-        ctrlAuth = new AuthenticationController();
         this.entries=ctrlEntry.getAgenda();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);

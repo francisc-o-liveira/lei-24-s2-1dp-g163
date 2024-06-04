@@ -72,7 +72,7 @@ public class ViewTaskListCollaboratorUI {
     private CheckBox postponedCheck;
 
     public ViewTaskListCollaboratorUI(){
-        ctrlAuth=new AuthenticationController();
+        ctrlAuth= AuthenticationController.getInstance();
         entriesSelected =new ArrayList<>();
         tasksForCollab=new ArrayList<>();
         ctrl=new ViewTaskListAssignedCollabController();

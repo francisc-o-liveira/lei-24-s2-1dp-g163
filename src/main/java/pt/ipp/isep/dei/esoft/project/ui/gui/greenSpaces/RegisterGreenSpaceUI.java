@@ -38,7 +38,7 @@ public class RegisterGreenSpaceUI implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rbl){
         try {
-            ctrl=new RegisterGreenSpaceController();
+            ctrl= RegisterGreenSpaceController.getInstance();
             greenSpaceType.setItems(FXCollections.observableArrayList(GreenSpace.getEnumGreenSpaceTypes()));
         }catch (ClassNotFoundException | IOException | IllegalAccessException e){
             popUpOfVerifications(Alert.AlertType.ERROR,"Error: Impossible to Access to Sort Algorithm" + e);

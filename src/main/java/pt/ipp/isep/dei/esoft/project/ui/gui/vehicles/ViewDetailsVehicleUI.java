@@ -112,8 +112,8 @@ public class ViewDetailsVehicleUI {
 
 
     public ViewDetailsVehicleUI(){
-        ctrl = new RegisterVehicleController();
-        ctrlCheck= new RegisterCheckUpController();
+        ctrl =  RegisterVehicleController.getInstance();
+        ctrlCheck= RegisterCheckUpController.getInstance();
     }
 
     public void setComboBox(){

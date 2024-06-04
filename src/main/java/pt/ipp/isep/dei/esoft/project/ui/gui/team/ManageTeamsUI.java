@@ -37,8 +37,8 @@ public class ManageTeamsUI {
     private Team selectedTeam;
 
     public ManageTeamsUI(){
-        ctrl= new GenerateTeamController();
-        ctrlAuth= new AuthenticationController();
+        ctrl=  GenerateTeamController.getInstance();
+        ctrlAuth=  AuthenticationController.getInstance();
     }
 
     public void setLabel(){

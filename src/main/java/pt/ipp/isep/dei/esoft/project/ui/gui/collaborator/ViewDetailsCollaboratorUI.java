@@ -89,8 +89,8 @@ public class ViewDetailsCollaboratorUI {
     Collaborator editedCollaborator;
 
     public ViewDetailsCollaboratorUI(){
-        ctrl=new RegisterCollaboratorController();
-        ctrlSkills= new AssignSkillsController();
+        ctrl= RegisterCollaboratorController.getInstance();
+        ctrlSkills= AssignSkillsController.getInstance();
         manageTable= new ManageCollaboratorsUI();
         stage=manageTable.getStageToViewDetails();
     }

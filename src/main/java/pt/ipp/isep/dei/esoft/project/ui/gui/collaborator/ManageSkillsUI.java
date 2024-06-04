@@ -39,8 +39,8 @@ public class ManageSkillsUI {
     public AuthenticationController ctrlAuth;
 
     public ManageSkillsUI(){
-        ctrl=new RegisterSkillController();
-        ctrlAuth=new AuthenticationController();
+        ctrl= RegisterSkillController.getInstance();
+        ctrlAuth= AuthenticationController.getInstance();
     }
 
     public void setLabel(){

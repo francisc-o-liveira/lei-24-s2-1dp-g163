@@ -25,7 +25,7 @@ public class RegisterTaskController {
 
     private EntryRepository entryRepository;
 
-    public RegisterTaskController() {
+    private RegisterTaskController() {
         org = Repositories.getInstance().getOrganizationRepository();
         greenMapper = new GreenSpaceMapper();
         entryRepository = Repositories.getInstance().getEntryRepository();

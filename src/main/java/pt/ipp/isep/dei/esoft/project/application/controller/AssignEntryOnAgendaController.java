@@ -17,7 +17,7 @@ public class AssignEntryOnAgendaController {
 
     private EntryMapper mapper;
 
-    public AssignEntryOnAgendaController() {
+    private AssignEntryOnAgendaController() {
         entryRepository = Repositories.getInstance().getEntryRepository();
         mapper=new EntryMapper();
     }

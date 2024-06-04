@@ -28,7 +28,7 @@ participant "organization:Organization" as Organization
 participant ":GreenSpaceMapper" as Mapper
 participant "greenSpaceListSorted:List<GreenSpace>" as GreenSpaceList
 participant "greenSpaceListSortedDto:List<GreenSpaceDto>" as GreenSpaceDtoList
-participant "objDto:GreenSpaceDto" as GreenSpaceDto
+participant "greenSpaceDto:GreenSpaceDto" as GreenSpaceDto
 
 activate GSM
 
@@ -86,7 +86,7 @@ deactivate AuthFacade
 AuthRepo --> Controller : userSession
 deactivate AuthRepo
 
-Controller -> UserSession : getUser()
+Controller -> UserSession : getUserEmail()
 activate UserSession
 
 UserSession -> User : getEmail()

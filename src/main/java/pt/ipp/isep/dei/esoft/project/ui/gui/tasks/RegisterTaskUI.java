@@ -41,7 +41,7 @@ public class RegisterTaskUI implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ctrl = new RegisterTaskController();
+        ctrl =  RegisterTaskController.getInstance();
         greenSpace.setItems(FXCollections.observableArrayList(ctrl.getGreenSpaceList()));
         degreeOfUrgency.setItems(FXCollections.observableArrayList(ctrl.getDegreOfUrgency()));
     }

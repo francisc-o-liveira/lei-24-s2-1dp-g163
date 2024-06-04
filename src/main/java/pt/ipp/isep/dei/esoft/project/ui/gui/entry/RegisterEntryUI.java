@@ -34,7 +34,7 @@ public class RegisterEntryUI implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ctrl = new AssignEntryOnAgendaController();
+        ctrl =  AssignEntryOnAgendaController.getInstance();
         setTableTasks();
     }
 

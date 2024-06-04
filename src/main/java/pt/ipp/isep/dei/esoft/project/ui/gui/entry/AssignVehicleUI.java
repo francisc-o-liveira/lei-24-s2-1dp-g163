@@ -28,7 +28,7 @@ public class AssignVehicleUI {
     private ViewDetailsEntryController ctrl;
 
     public void setEntry(EntryDto entry){
-        ctrl=new ViewDetailsEntryController();
+        ctrl= ViewDetailsEntryController.getInstance();
         selectedEntry=entry;
         initializeUI();
     }

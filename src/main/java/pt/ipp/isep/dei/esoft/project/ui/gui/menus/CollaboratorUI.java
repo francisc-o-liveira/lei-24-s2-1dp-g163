@@ -34,7 +34,7 @@ public class CollaboratorUI {
     private DatePicker secondDate;
 
     public CollaboratorUI(){
-        ctrlAuth=new AuthenticationController();
+        ctrlAuth=AuthenticationController.getInstance();
         ctrl=new ViewTaskListAssignedCollabController();
         tasksInThoseDates=new ArrayList<>();
     }

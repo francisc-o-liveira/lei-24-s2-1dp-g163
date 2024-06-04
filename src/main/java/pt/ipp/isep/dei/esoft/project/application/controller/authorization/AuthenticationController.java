@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
@@ -17,7 +18,7 @@ public class AuthenticationController {
     //private final ApplicationSession applicationSession;
     private final AuthenticationRepository authenticationRepository;
 
-    public AuthenticationController() {
+   private AuthenticationController() {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
     }
 
@@ -55,5 +56,15 @@ public class AuthenticationController {
 
     public void doLogout() {
         authenticationRepository.doLogout();
+    }
+
+    private static AuthenticationController instance;
+    public static AuthenticationController getInstance(){
+        if(instance == null){
+            synchronized (AuthenticationController.class) {
+                instance = new AuthenticationController();
+            }
+        }
+        return instance;
     }
 }

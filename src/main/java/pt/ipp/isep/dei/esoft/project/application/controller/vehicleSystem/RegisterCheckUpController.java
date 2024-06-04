@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterCheckUpController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -17,7 +18,7 @@ public class RegisterCheckUpController {
     /**
      * This method is the method that get the vehicle repository from the Repositories Instance
      */
-    public RegisterCheckUpController() {
+    private RegisterCheckUpController() {
         this.vehicleRepository = Repositories.getInstance().getVehicleRepository();
     }
 
@@ -67,5 +68,16 @@ public class RegisterCheckUpController {
      */
     public void removeFromList(Vehicle vehicle,CheckUp checkUp){
         vehicleRepository.removeFromListCheckUp(vehicle,checkUp);
+    }
+
+
+    private static RegisterCheckUpController instance;
+    public static RegisterCheckUpController getInstance(){
+        if(instance == null){
+            synchronized (RegisterCheckUpController.class) {
+                instance = new RegisterCheckUpController();
+            }
+        }
+        return instance;
     }
 }

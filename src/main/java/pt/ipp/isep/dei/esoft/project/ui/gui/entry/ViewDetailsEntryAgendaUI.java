@@ -44,7 +44,7 @@ public class ViewDetailsEntryAgendaUI {
 
 
     public void setLabels(EntryDto entry, Stage stage){
-        ctrl=new ViewDetailsEntryController();
+        ctrl= ViewDetailsEntryController.getInstance();
         selectedEntry=entry;
         this.stage=stage;
         titleEntry.setText(entry.getTitle());

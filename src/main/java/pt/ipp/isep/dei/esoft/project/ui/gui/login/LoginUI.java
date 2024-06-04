@@ -28,7 +28,7 @@ public class LoginUI {
 
     public static Stage mainStage;
 
-    private final AuthenticationController ctrl = new AuthenticationController();
+    private final AuthenticationController ctrl = AuthenticationController.getInstance();
 
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;

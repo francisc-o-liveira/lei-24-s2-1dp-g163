@@ -15,7 +15,7 @@ import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 
 public class SystemConfigsUI {
 
-    RegisterController ctrl=new RegisterController();
+    RegisterController ctrl= RegisterController.getInstance();
     public Stage stage;
     @FXML
     private TextField emailTxt;

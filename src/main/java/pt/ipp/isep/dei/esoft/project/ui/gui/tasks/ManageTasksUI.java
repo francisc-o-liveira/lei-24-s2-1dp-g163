@@ -52,8 +52,8 @@ public class ManageTasksUI implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        ctrlAuth=new AuthenticationController();
-        ctrl=new RegisterTaskController();
+        ctrlAuth=AuthenticationController.getInstance();
+        ctrl= RegisterTaskController.getInstance();
         setTableToDoList();
     }
 

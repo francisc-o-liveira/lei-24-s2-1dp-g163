@@ -21,7 +21,7 @@ public class GSManagerUI {
     public AuthenticationController ctrlAuth;
 
     public GSManagerUI(){
-        ctrlAuth = new AuthenticationController();
+        ctrlAuth = AuthenticationController.getInstance();
     }
 
     @FXML
