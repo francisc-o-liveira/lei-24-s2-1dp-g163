@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.team;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
@@ -65,10 +67,33 @@ public class GenerateTeamsUI {
         skillsToChoose.addAll(ctrl.getSkillList());
     }
     public void setTableViewTeam(){
-
         colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
-        colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkillForTeam());
-        colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
+        colSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
+        colSelect.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Skill, Boolean> call(TableColumn<Skill, Boolean> param) {
+                return new TableCell<>() {
+                    private final CheckBox checkBox = new CheckBox();
+
+                    @Override
+                    protected void updateItem(Boolean item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                            setGraphic(null);
+                            return;
+                        }
+                        setGraphic(checkBox);
+                        checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                            Skill skill = (Skill) getTableRow().getItem();
+                            if (isNowSelected) {
+                                skillsSelectedForTeam.add(skill);
+                                numberCollabsPerSkill.add(skill.numberCollabsPerSkillProperty().get());
+                            }
+                        });
+                    }
+                };
+            }
+        });
 
         colNumberCollabs.setCellValueFactory(new PropertyValueFactory<>("numberCollabsPerSkill"));
         colNumberCollabs.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -83,27 +108,15 @@ public class GenerateTeamsUI {
         tableViewTeam.setItems(skillsToChoose);
     }
 
-    public void getSkillsAndCollabs() throws IOException{
-        skillsSelectedForTeam.clear();
-        for (Skill s : skillsToChoose) {
-            if(ctrl.isSkillSelected(s)){
-                if(s.numberCollabsPerSkillProperty() == null){
-                    throw new IOException("Please fill all the necessary fields");
-                }else if (s.numberCollabsPerSkillProperty().get() != 0) {
-                    skillsSelectedForTeam.add(s);
-                    numberCollabsPerSkill.add(s.numberCollabsPerSkillProperty().get());
-                }
-            }
-        }
-    }
-
     @FXML
     public void btnGenerateTeam(){
         int maxTeamSize=Integer.parseInt(maximumTeamSize.getText());
         int minTeamSize=Integer.parseInt(minimumTeamSize.getText());
         String teamName = nameForTeam.getText();
         try{
-            getSkillsAndCollabs();
+            minimumTeamSize.clear();
+            maximumTeamSize.clear();
+            nameForTeam.clear();
             try{
                 Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
                 if (teamCreated.isPresent()) {
@@ -127,7 +140,7 @@ public class GenerateTeamsUI {
             } catch (RuntimeException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-        } catch (IOException e){
+        } catch (Exception e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }

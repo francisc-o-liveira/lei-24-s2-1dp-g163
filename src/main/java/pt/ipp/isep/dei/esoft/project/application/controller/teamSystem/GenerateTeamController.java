@@ -129,9 +129,6 @@ public class GenerateTeamController{
         teamRepository.removeTeam(team);
     }
 
-    public boolean isSkillSelected(Skill s) {
-        return skillRepository.isSkillSelectedForTeam(s);
-    }
 
     /*private (...) getHRMFromSession()*/
 

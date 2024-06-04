@@ -1,4 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.collaborator;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
@@ -82,9 +84,18 @@ public class ViewDetailsCollaboratorUI {
     @FXML
     private Button btnAddCollaborator;
 
+    @FXML
+    private TableView<Skill> tableSkillsAssigned;
+    @FXML
+    private TableColumn<Skill, String> colSkillsAssigned;
+
+
+
+
     public List<Skill> skillsToAssign=new ArrayList<>();
 
     ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
+    ObservableList<Skill> assignedSkills= FXCollections.observableArrayList();
 
     Collaborator editedCollaborator;
 
@@ -144,7 +155,6 @@ public class ViewDetailsCollaboratorUI {
 
     @FXML
     public void btnAssign(ActionEvent event) {
-        getSkillsToAssign();
             Collaborator collaboratorAssigning=ctrl.getCollaboratorRepository().searchForCollaboratorByIDNumber(Integer.parseInt(docIDNumber.getText()));
             for(Skill skill : skillsToAssign){
                 try{
@@ -152,36 +162,61 @@ public class ViewDetailsCollaboratorUI {
                     popUpSkills().show();
                     tableAssignSkills.getItems().clear();
                     setTableAssignSkills();
+                    setTableSkillsAssigned();
                 } catch (CloneNotSupportedException e) {
                     popUpOfVerifications(Alert.AlertType.ERROR, "s").show();
                 }
             }
     }
 
-    public void getSkillsToAssign(){
-        for (Skill s : skillsToChoose) {
-            if (ctrlSkills.isSkillSelected(s)) {
-                skillsToAssign.add(s);
-            }
-        }
-    }
-
     public void setTableAssignSkills(){
         colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
-        colSelect.setCellValueFactory(cellData -> cellData.getValue().selectedSkill());
-        colSelect.setCellFactory(CheckBoxTableCell.forTableColumn(colSelect));
+        colSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
+        colSelect.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Skill, Boolean> call(TableColumn<Skill, Boolean> param) {
+                return new TableCell<>() {
+                    private final CheckBox checkBox = new CheckBox();
 
+                    @Override
+                    protected void updateItem(Boolean item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                            setGraphic(null);
+                            return;
+                        }
+                        setGraphic(checkBox);
+                        checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                            Skill skill = (Skill) getTableRow().getItem();
+                            if (isNowSelected) {
+                                skillsToAssign.add(skill);
+                            }
+                        });
+                    }
+                };
+            }
+        });
         for(Skill skill : ctrlSkills.getAllSkills()){
             if(editedCollaborator==null){
                skillsToChoose.add(skill);
             } else {
                 if(!editedCollaborator.verifyIfHaveSkill(skill)){
                     skillsToChoose.add(skill);
-                    skill.setSelecting(false);
                 }
             }
         }
         tableAssignSkills.setItems(skillsToChoose);
+    }
+
+    public void setTableSkillsAssigned(){
+        colSkillsAssigned.setCellValueFactory(new PropertyValueFactory<>("skillName"));
+        for(Skill skill : ctrlSkills.getAllSkills()){
+                if(editedCollaborator.verifyIfHaveSkill(skill)){
+                    assignedSkills.add(skill);
+                }
+        }
+
+        tableSkillsAssigned.setItems(assignedSkills);
     }
 
     @FXML
