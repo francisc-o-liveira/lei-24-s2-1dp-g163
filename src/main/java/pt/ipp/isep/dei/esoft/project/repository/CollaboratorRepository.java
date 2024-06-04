@@ -317,17 +317,19 @@ public class CollaboratorRepository {
         Collaborator collaboratorLoad;
         try {
             FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    collaboratorLoad = (Collaborator) in.readObject();
-                    loadInSystem(collaboratorLoad);
-                } catch (EOFException e) {
-                    break;
+            if (file.getChannel().size() > 0) {
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        collaboratorLoad = (Collaborator) in.readObject();
+                        loadInSystem(collaboratorLoad);
+                    } catch (EOFException e) {
+                        break;
+                    }
                 }
+                in.close();
+                file.close();
             }
-            in.close();
-            file.close();
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
