@@ -58,5 +58,17 @@ public class RegisterGreenSpaceController {
     private SortingList getSortAlgorithm() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         return ApplicationSession.getAlgorithmService();
     }
+
+
+    private static RegisterGreenSpaceController instance;
+
+    public static RegisterGreenSpaceController getInstance() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        if(instance == null){
+            synchronized (RegisterGreenSpaceController.class) {
+                instance = new RegisterGreenSpaceController();
+            }
+        }
+        return instance;
+    }
 }
 
