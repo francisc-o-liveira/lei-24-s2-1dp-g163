@@ -39,4 +39,13 @@ public class AssignEntryOnAgendaController {
         return Arrays.asList(EntryState.State.values());
     }
 
+    private static AssignEntryOnAgendaController instance;
+    public static AssignEntryOnAgendaController getInstance(){
+        if(instance == null){
+            synchronized (AssignEntryOnAgendaController.class) {
+                instance = new AssignEntryOnAgendaController();
+            }
+        }
+        return instance;
+    }
 }

@@ -56,4 +56,15 @@ public class RegisterTaskController {
     private String getManagerFromSession(){
         return session.getCurrentSession().getUserEmail();
     }
+
+    private static RegisterTaskController instance;
+
+    public static RegisterTaskController getInstance(){
+        if(instance == null){
+            synchronized (RegisterTaskController.class) {
+                instance = new RegisterTaskController();
+            }
+        }
+        return instance;
+    }
 }

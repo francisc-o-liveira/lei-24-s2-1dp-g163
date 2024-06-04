@@ -1,5 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.repository;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -69,4 +73,73 @@ public class JobCategoryRepository {
             throw new RuntimeException("This Job Category does not exist in the Repository");
         }
     }
+
+
+    public void removeFromJobCategoryDataBase(JobCategory jobCategory) {
+        List<JobCategory> jobCategoryList = new ArrayList<>();
+        JobCategory jobCategoryLoaded;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getJobCategoryDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    jobCategoryLoaded = (JobCategory) in.readObject();
+                    if (!jobCategoryLoaded.equals(jobCategory)) {
+                        jobCategoryList.add(jobCategoryLoaded);
+                    }
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            for (JobCategory jobCategorySave : jobCategoryList) {
+                out.writeObject(jobCategorySave);
+            }
+            out.close();
+            fileOut.close();
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFromJobCategoryInDataBase(JobCategory jobCategory){
+        try {
+            FileOutputStream file = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(jobCategory);
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadFromJobCategoryDataBase(){
+        JobCategory jobCategoryLoaded;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getJobCategoryDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    jobCategoryLoaded = (JobCategory) in.readObject();
+                    loadInSystem(jobCategoryLoaded);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+        } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(JobCategory jobCategory) throws CloneNotSupportedException {
+        verifyJobCategoryExistAndSave(jobCategory);
+    }
+
 }

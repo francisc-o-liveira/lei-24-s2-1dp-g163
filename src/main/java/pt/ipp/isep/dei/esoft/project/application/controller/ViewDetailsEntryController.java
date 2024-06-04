@@ -77,5 +77,15 @@ public class ViewDetailsEntryController {
         }
     }
 
+    private static ViewDetailsEntryController instance;
+    public static ViewDetailsEntryController getInstance(){
+        if(instance == null){
+            synchronized (ViewDetailsEntryController.class) {
+                instance = new ViewDetailsEntryController();
+            }
+        }
+        return instance;
+    }
+
 
 }

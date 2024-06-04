@@ -32,4 +32,14 @@ public class OrganizationController {
         organization.removeManager(manager);
         authenticationRepository.removeUserCredentialsInDataBase(manager.getEmail());
     }
+
+    private static OrganizationController instance;
+    public static OrganizationController getInstance(){
+        if(instance == null){
+            synchronized (OrganizationController.class) {
+                instance = new OrganizationController();
+            }
+        }
+        return instance;
+    }
 }

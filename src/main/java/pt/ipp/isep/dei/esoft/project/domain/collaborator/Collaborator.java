@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**  Domain Class for Collaborator Object */
-public class Collaborator{
+public class Collaborator implements Serializable {
 
     /** Parameters needed for Collaborator */
     private String name;
@@ -548,5 +549,8 @@ public class Collaborator{
         return convertToJavaLocalDate(this.admissionDate);
     }
 
-
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

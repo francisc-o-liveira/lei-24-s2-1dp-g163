@@ -43,4 +43,14 @@ public class ViewTaskListAssignedCollabController {
         entryDto.completeTask(completedDate, getCollaboratorByEmail(getCollaboratorFromSession()));
         return entryRepository.completeTaskCollaborator(entryDto).isPresent();
     }
+
+    private static ViewTaskListAssignedCollabController instance;
+    public static ViewTaskListAssignedCollabController getInstance(){
+        if(instance == null){
+            synchronized (ViewTaskListAssignedCollabController.class) {
+                instance = new ViewTaskListAssignedCollabController();
+            }
+        }
+        return instance;
+    }
 }
