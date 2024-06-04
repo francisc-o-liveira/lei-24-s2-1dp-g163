@@ -111,19 +111,14 @@
                                                                 </LinearGradient>
                                                             </fill>
                                                         </Circle>
-                                                        <ImageView fitHeight="82.0" fitWidth="90.0" layoutX="96.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                                <Image url="@../../images/manage_skills.png" />
-                                                            </image>
-                                                        </ImageView>
                                                         <Button accessibleRole="BUTTON" layoutX="71.0" layoutY="183.0" onAction="#manageVehicles" prefHeight="29.0" prefWidth="133.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #FFFFFF00;" text="Manage Vehicles" textFill="WHITE">
                                                             <font>
                                                                 <Font name="Tahoma" size="15.0" />
                                                             </font>
                                                         </Button>
-                                                        <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="93.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                                                        <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="95.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
-                                                                <Image url="@../../images/manage_skills.png" />
+                                                                <Image url="@../../images/carro.png" />
                                                             </image>
                                                         </ImageView>
                                                     </children>
