@@ -10,10 +10,15 @@ import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.mapper.VehicleMapper;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +30,6 @@ public class EntryRepository {
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
     private static final int HOURS_WORK_PER_OMISSION=8;
-    private static int REFERENCE_VALUE;
     private static VehicleMapper vehicleMapper;
 
     public EntryRepository() {
@@ -33,7 +37,6 @@ public class EntryRepository {
         agenda = new ArrayList<Entry>();
         mapper = new EntryMapper();
         vehicleMapper = new VehicleMapper();
-        REFERENCE_VALUE = 0;
         try {
             timeOfWorkByCollaborators = ApplicationSession.getTimeOfWork();
         }catch (IOException e){
@@ -41,6 +44,8 @@ public class EntryRepository {
             timeOfWorkByCollaborators = new Tempo(HOURS_WORK_PER_OMISSION);
         }
     }
+
+
 
     public List<Entry> getAgenda() {
         return agenda;
@@ -56,12 +61,14 @@ public class EntryRepository {
 
     public Optional<Entry> registerNewTask(EntryDto entryDto) {
         Optional<Entry> newEntry = Optional.empty();
-        Entry entry = mapper.entryDtoToEntryCreate(entryDto,REFERENCE_VALUE++);
+        Entry entry = mapper.entryDtoToEntryCreate(entryDto);
             if (saveNewEntry(entry)){
                 newEntry = Optional.of(entry);
             }
         return newEntry;
     }
+
+
 
     private boolean saveNewEntry(Entry entry) {
         for (Entry entry1 : toDo){

@@ -100,4 +100,15 @@ public class MainApp extends Application {
         return skillDataBaseFile;
     }
 
+    private static String entryDataBaseFile = new String("src/main/resources/DataBase/entryDataBase.csv");
+
+    private static String entryReferenceDataBaseFile = new String("src/main/resources/DataBase/entryReferenceDataBase.txt");
+
+    private static String getEntryReferenceDataBaseFile() {
+        return entryReferenceDataBaseFile;
+    }
+
+    private static String getEntryReferenceReferenceDataBaseFile() {
+        return entryReferenceDataBaseFile;
+    }
 }

@@ -10,11 +10,14 @@ import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 import pt.ipp.isep.dei.esoft.project.utilities.TimePeriod;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Entry extends Task {
+public class Entry extends Task implements Serializable {
+
+    private static int REFERENCE_VALUE;
 
     private Date startDate;
 
@@ -32,10 +35,10 @@ public class Entry extends Task {
 
 
 
-    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
+    public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
-        validateReference(Integer.toString(reference));
-        this.reference = Integer.toString(reference);
+        validateReference(Integer.toString(REFERENCE_VALUE++));
+        this.reference = Integer.toString(REFERENCE_VALUE);
         this.status = status;
         this.startDate = null;
         this.vehicleList = new ArrayList<Vehicle>();
