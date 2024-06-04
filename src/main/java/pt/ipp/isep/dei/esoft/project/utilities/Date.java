@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.utilities;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Calendar;
  *
  * @author ISEP-DEI-PPROG
  */
-public class Date implements Comparable<Date> {
+public class Date implements Comparable<Date>, Serializable {
 
     /**
      * O ano da data.
