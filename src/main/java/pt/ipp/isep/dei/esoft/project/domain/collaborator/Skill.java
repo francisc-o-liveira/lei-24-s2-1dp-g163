@@ -18,15 +18,15 @@ public class Skill implements Serializable{
     /** Name of the skill */
     private String skillName;
 
-    private final BooleanProperty selecting;
+    private final transient BooleanProperty selecting;
 
     private boolean selectedForTeam;
 
     private boolean selected;
 
-    private final BooleanProperty selectingForTeam;
+    private final transient BooleanProperty selectingForTeam;
 
-    private IntegerProperty numberCollabsPerSkill;
+    private transient IntegerProperty numberCollabsPerSkill;
     /**
      * Constructs a Skill object with the specified name.
      *
