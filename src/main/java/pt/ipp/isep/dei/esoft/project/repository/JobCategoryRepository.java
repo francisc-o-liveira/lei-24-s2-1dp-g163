@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -41,8 +42,10 @@ public class JobCategoryRepository {
        Optional<JobCategory> newJobCategory = Optional.empty();
        boolean operationSucess = false;
         if (!jobCategories.contains(jobCategory)){
+            saveFromJobCategoryInDataBase(jobCategory);
             operationSucess=jobCategories.add(jobCategory);
             newJobCategory=Optional.of(jobCategory);
+
         }
         if (!operationSucess){
             newJobCategory=Optional.empty();
@@ -69,6 +72,7 @@ public class JobCategoryRepository {
     public void removeJobCategory(JobCategory jobCategory) {
         if (jobCategories.contains(jobCategory)){
             jobCategories.remove(jobCategory);
+            removeFromJobCategoryDataBase(jobCategory);
         }else{
             throw new RuntimeException("This Job Category does not exist in the Repository");
         }
@@ -109,7 +113,13 @@ public class JobCategoryRepository {
     public void saveFromJobCategoryInDataBase(JobCategory jobCategory){
         try {
             FileOutputStream file = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
-            ObjectOutputStream out = new ObjectOutputStream(file);
+            ObjectOutputStream out;
+            // If the file already has content, we need to use the AppendableObjectOutputStream
+            if (file.getChannel().size() > 0) {
+                out = new AppendableObjectOutputStream(file);
+            } else {
+                out = new ObjectOutputStream(file);
+            }
             out.writeObject(jobCategory);
             out.close();
             file.close();

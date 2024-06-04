@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -122,7 +123,13 @@ public class SkillRepository {
     public void saveFromSkillInDataBase(Skill skill){
         try {
             FileOutputStream file = new FileOutputStream(MainApp.getSkillDataBaseFile());
-            ObjectOutputStream out = new ObjectOutputStream(file);
+            ObjectOutputStream out;
+            // If the file already has content, we need to use the AppendableObjectOutputStream
+            if (file.getChannel().size() > 0) {
+                out = new AppendableObjectOutputStream(file);
+            } else {
+                out = new ObjectOutputStream(file);
+            }
             out.writeObject(skill);
             out.close();
             file.close();

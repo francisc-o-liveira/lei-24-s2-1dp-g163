@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.*;
@@ -71,30 +72,14 @@ public class CollaboratorRepository {
 
     private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = Optional.empty();
-        boolean operationSucess = false;
         if (!collaboratorList.contains(collab)){
-            operationSucess=collaboratorList.add(collab);
+            collaboratorList.add(collab);
+            saveFromCollaboratorDataBase(collab);
             newCollab=Optional.of(collab);
-        }
-        if (!operationSucess){
+        }else{
             throw new CloneNotSupportedException();
         }
         return newCollab;
-    }
-
-    /**Adds the collaborator to the List of Collaborators
-     *
-     * @param collaborator to be added
-     * @return Optional of Collaborator if it has been added to the list
-     */
-    public Optional<Collaborator> addCollaborator(Collaborator collaborator){
-        Optional<Collaborator> newCollaborator = Optional.empty();
-        newCollaborator = Optional.of(collaborator);
-        if (isValidCollaborator(collaborator)){
-            collaboratorList.add(collaborator);
-            saveFromCollaboratorDataBase(collaborator);
-        }
-        return newCollaborator;
     }
 
 
@@ -292,6 +277,9 @@ public class CollaboratorRepository {
             in.close();
             file.close();
 
+
+
+
             FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             for (Collaborator collab : collaborators) {
@@ -299,16 +287,23 @@ public class CollaboratorRepository {
             }
             out.close();
             fileOut.close();
+
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void saveFromCollaboratorDataBase(Collaborator collaborator){
-        Collaborator collaboratorLoad;
         try {
-            FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
-            ObjectOutputStream out = new ObjectOutputStream(file);
+            FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile(), true);
+            ObjectOutputStream out;
+
+            // If the file already has content, we need to use the AppendableObjectOutputStream
+            if (file.getChannel().size() > 0) {
+                out = new AppendableObjectOutputStream(file);
+            } else {
+                out = new ObjectOutputStream(file);
+            }
             out.writeObject(collaborator);
             out.close();
             file.close();
@@ -317,21 +312,24 @@ public class CollaboratorRepository {
         }
     }
 
+
     public void loadFromCollaboratorDataBase(){
         Collaborator collaboratorLoad;
         try {
             FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    collaboratorLoad = (Collaborator) in.readObject();
-                    loadInSystem(collaboratorLoad);
-                } catch (EOFException e) {
-                    break;
+            if (file.getChannel().size() > 0) {
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        collaboratorLoad = (Collaborator) in.readObject();
+                        loadInSystem(collaboratorLoad);
+                    } catch (EOFException e) {
+                        break;
+                    }
                 }
+                in.close();
+                file.close();
             }
-            in.close();
-            file.close();
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -342,3 +340,5 @@ public class CollaboratorRepository {
     }
 
 }
+
+
