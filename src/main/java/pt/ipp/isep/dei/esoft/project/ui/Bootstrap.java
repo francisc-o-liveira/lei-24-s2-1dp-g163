@@ -31,11 +31,11 @@ public class Bootstrap implements Runnable {
 
     private void addJobCategories() throws CloneNotSupportedException {
         JobCategoryRepository jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
-        jobCategoryRepository.loadFromJobCategoryDataBase();}
+        }
 
     private void addCollaborators() throws CloneNotSupportedException {
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
-        collaboratorRepository.loadFromCollaboratorDataBase();}
+        }
 
     private void addVehicles() throws CloneNotSupportedException {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();

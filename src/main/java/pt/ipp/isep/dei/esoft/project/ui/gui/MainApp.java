@@ -18,6 +18,8 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 public class MainApp extends Application {
 
 
+
+
     @Override
     public void start(Stage stage) {
         try {
@@ -110,5 +112,12 @@ public class MainApp extends Application {
 
     private static String getEntryReferenceReferenceDataBaseFile() {
         return entryReferenceDataBaseFile;
+    }
+
+    private static String vehicleDataBaseFile = new String("src/main/resources/DataBase/vehicleDataBase.txt");
+
+
+    public static String getVehicleDataBaseFile() {
+        return vehicleDataBaseFile;
     }
 }

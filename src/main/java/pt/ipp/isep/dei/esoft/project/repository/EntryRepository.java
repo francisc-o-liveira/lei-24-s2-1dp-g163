@@ -233,4 +233,13 @@ public class EntryRepository {
         }
         return entryCompleted;
     }
+
+
+
+
+
+
+
+
+
 }

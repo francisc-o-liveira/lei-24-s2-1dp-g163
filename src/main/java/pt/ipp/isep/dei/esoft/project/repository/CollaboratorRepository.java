@@ -29,6 +29,7 @@ public class CollaboratorRepository {
     /** Initializes the list of Collaborators */
     public CollaboratorRepository(){
         collaboratorList=new ArrayList<>();
+        loadFromCollaboratorDataBase();
     }
 
     /** The method gets the List of Collaborators
@@ -312,7 +313,7 @@ public class CollaboratorRepository {
     }
 
 
-    public void loadFromCollaboratorDataBase(){
+    private void loadFromCollaboratorDataBase(){
         Collaborator collaboratorLoad;
         try {
             FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());

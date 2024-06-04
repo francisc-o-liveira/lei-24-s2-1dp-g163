@@ -1,10 +1,13 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,7 @@ public class VehicleRepository {
     /** Initializes the list of Vehicles*/
     public VehicleRepository(){
         vehicleList=new ArrayList<>();
+        loadVehicleDataBase();
     }
 
     /** Method to search for a Vehicle based on the plate
@@ -90,6 +94,7 @@ public class VehicleRepository {
         if (!operationSuccess) {
             throw new CloneNotSupportedException("Vehicle already exists in the system");
         }
+        saveFromVehicleDataBase(vehicle);
         return newVehicle;
     }
 
@@ -233,6 +238,7 @@ public class VehicleRepository {
      */
     public boolean removeVehicle(Vehicle selectedVehicle) {
         if (vehicleList.contains(selectedVehicle)) {
+            removeFromVehicleDataBase(selectedVehicle);
             return vehicleList.remove(selectedVehicle);
         } else {
             throw new RuntimeException("Vehicle not found");
@@ -271,6 +277,90 @@ public class VehicleRepository {
             return true;
         }else {
             return false;
+        }
+    }
+
+    public void removeFromVehicleDataBase(Vehicle vehicle) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        Vehicle vehicleLoad;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getVehicleDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    vehicleLoad = (Vehicle) in.readObject();
+                    if (!vehicleLoad.getPlate().equals(vehicle.getPlate())) {
+                        vehicles.add(vehicleLoad);
+                    }
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+
+
+
+
+            FileOutputStream fileOut = new FileOutputStream(MainApp.getVehicleDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            for (Vehicle vehicleOut : vehicles) {
+                out.writeObject(vehicleOut);
+            }
+            out.close();
+            fileOut.close();
+
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFromVehicleDataBase(Vehicle vehicle){
+        try {
+            FileOutputStream file = new FileOutputStream(MainApp.getVehicleDataBaseFile(), true);
+            ObjectOutputStream out;
+            // If the file already has content, we need to use the AppendableObjectOutputStream
+            if (file.getChannel().size() > 0) {
+                out = new AppendableObjectOutputStream(file);
+            } else {
+                out = new ObjectOutputStream(file);
+            }
+            out.writeObject(vehicle);
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void loadVehicleDataBase(){
+        Vehicle vehicle;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getVehicleDataBaseFile());
+            if (file.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        vehicle = (Vehicle) in.readObject();
+                        loadInSystem(vehicle);
+                    } catch (EOFException e) {
+                        break;
+                    }
+                }
+                in.close();
+                file.close();
+            }
+        }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(Vehicle vehicleLoad) throws CloneNotSupportedException {
+        if (!vehicleList.contains(vehicleLoad)){
+            vehicleList.add(vehicleLoad);
+        }else{
+            throw new CloneNotSupportedException();
         }
     }
 }

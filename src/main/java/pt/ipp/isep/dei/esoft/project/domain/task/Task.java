@@ -4,7 +4,9 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
     private String title;
     private String description;
     private Tempo expectedDuration;

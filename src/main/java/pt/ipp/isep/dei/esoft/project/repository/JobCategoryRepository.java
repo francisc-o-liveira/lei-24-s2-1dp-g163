@@ -17,6 +17,7 @@ public class JobCategoryRepository {
 
     public JobCategoryRepository() {
         jobCategories = new ArrayList<>();
+        loadFromJobCategoryDataBase();
     }
 
     /**
@@ -128,7 +129,7 @@ public class JobCategoryRepository {
         }
     }
 
-    public void loadFromJobCategoryDataBase(){
+    private void loadFromJobCategoryDataBase(){
         JobCategory jobCategoryLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getJobCategoryDataBaseFile());
