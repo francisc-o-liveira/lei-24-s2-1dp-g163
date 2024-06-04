@@ -4,12 +4,17 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.Active;
 import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.NotActive;
@@ -87,6 +92,7 @@ public class CollaboratorRepository {
         newCollaborator = Optional.of(collaborator);
         if (isValidCollaborator(collaborator)){
             collaboratorList.add(collaborator);
+            saveFromCollaboratorDataBase(collaborator);
         }
         return newCollaborator;
     }
@@ -243,6 +249,7 @@ public class CollaboratorRepository {
     public void removeFromList(Collaborator collaborator){
         if(collaboratorList.contains(collaborator)){
             collaboratorList.remove(collaborator);
+            removeFromCollaboratorDataBase(collaborator);
         } else {
             throw new RuntimeException("This Collaborator does not exist in the Repository");
         }
@@ -265,4 +272,73 @@ public class CollaboratorRepository {
         }
         throw new RuntimeException("You dont exist in the Repository! Please try again or contact your system administrator");
     }
+
+    public void removeFromCollaboratorDataBase(Collaborator collaborator) {
+        List<Collaborator> collaborators = new ArrayList<>();
+        Collaborator collaboratorLoad;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    collaboratorLoad = (Collaborator) in.readObject();
+                    if (!collaboratorLoad.getEmail().equals(collaborator.getEmail())) {
+                        collaborators.add(collaboratorLoad);
+                    }
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            for (Collaborator collab : collaborators) {
+                out.writeObject(collab);
+            }
+            out.close();
+            fileOut.close();
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFromCollaboratorDataBase(Collaborator collaborator){
+        Collaborator collaboratorLoad;
+        try {
+            FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(collaborator);
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadFromCollaboratorDataBase(){
+        Collaborator collaboratorLoad;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    collaboratorLoad = (Collaborator) in.readObject();
+                    loadInSystem(collaboratorLoad);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+        } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(Collaborator collaboratorLoad) throws CloneNotSupportedException {
+        verifyCollaboratorExistAndSave(collaboratorLoad);
+    }
+
 }

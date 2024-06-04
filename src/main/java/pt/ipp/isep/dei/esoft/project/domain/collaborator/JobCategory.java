@@ -1,10 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+import java.io.Serializable;
+
 /**
  * Represent the Domain Class of JobCategory Objects
  */
 //Verified By Francisco
-public class JobCategory {
+public class JobCategory implements Serializable {
     /**
      * This variable represent the name of the job
      */

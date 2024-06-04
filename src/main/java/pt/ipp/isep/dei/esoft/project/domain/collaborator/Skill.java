@@ -8,10 +8,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import java.io.Serializable;
+
 /**
  * Domain class representing a Skill object.
  */
-public class Skill {
+public class Skill implements Serializable {
 
     /** Name of the skill */
     private String skillName;
@@ -21,6 +23,7 @@ public class Skill {
     private boolean selectedForTeam;
 
     private boolean selected;
+
     private final BooleanProperty selectingForTeam;
 
     private IntegerProperty numberCollabsPerSkill;
@@ -172,5 +175,11 @@ public class Skill {
 
     public void setSelecting(boolean value){
         this.selecting.set(value);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

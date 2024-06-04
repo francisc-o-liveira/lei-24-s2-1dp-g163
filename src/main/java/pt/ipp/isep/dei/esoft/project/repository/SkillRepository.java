@@ -1,7 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +44,7 @@ public class SkillRepository {
         boolean operationSuccess = false;
         if (validateSkill(skill)) {
             operationSuccess = skillList.add(skill);
+                saveFromSkillInDataBase(skill);
         }else {
             throw new CloneNotSupportedException("This Skill already exists");
         }
@@ -73,6 +77,7 @@ public class SkillRepository {
     public void removeSkill(Skill skill){
         if(skillList.contains(skill)){
             skillList.remove(skill);
+            removeFromSkillDataBase(skill);
         }else{
             throw new RuntimeException("This Skill does not exist in the Repository");
         }
@@ -85,4 +90,76 @@ public class SkillRepository {
     public boolean isSkillSelectedForTeam(Skill s) {
         return s.selectedSkillForTeam().get();
     }
+
+
+
+
+
+    public void removeFromSkillDataBase(Skill skill) {
+        List<Skill> skillList = new ArrayList<>();
+        Skill skillLoaded;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getSkillDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    skillLoaded = (Skill) in.readObject();
+                    if (!skillLoaded.equals(skill)) {
+                        skillList.add(skillLoaded);
+                    }
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream(MainApp.getSkillDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            for (Skill skillSave : skillList) {
+                out.writeObject(skillSave);
+            }
+            out.close();
+            fileOut.close();
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFromSkillInDataBase(Skill skill){
+        try {
+            FileOutputStream file = new FileOutputStream(MainApp.getSkillDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(skill);
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadFromSkillDataBase(){
+        Skill skillLoaded;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getSkillDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    skillLoaded = (Skill) in.readObject();
+                    loadInSystem(skillLoaded);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+        } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(Skill skill) throws CloneNotSupportedException {
+        verifyIfExistAndSave(skill);
+    }
+
 }

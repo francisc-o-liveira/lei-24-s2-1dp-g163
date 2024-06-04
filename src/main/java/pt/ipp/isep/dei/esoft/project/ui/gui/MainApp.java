@@ -17,6 +17,7 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {
 
+
     @Override
     public void start(Stage stage) {
         try {
@@ -80,4 +81,23 @@ public class MainApp extends Application {
     public static File getAuthDataBaseFile() {
         return authDataBaseFile;
     }
+
+    private static String collaboratorDataBaseFile = new String("src/main/resources/DataBase/collaboratorDataBase.csv");
+
+    public static String getCollaboratorDataBaseFile() {
+        return collaboratorDataBaseFile;
+    }
+
+    private static String jobCategoryDataBaseFile = new String("src/main/resources/DataBase/jobCategoryDataBase.csv");
+
+    public static String getJobCategoryDataBaseFile() {
+        return jobCategoryDataBaseFile;
+    }
+
+    private static String skillDataBaseFile = new String("src/main/resources/DataBase/skillDataBase.csv");
+
+    public static String getSkillDataBaseFile() {
+        return skillDataBaseFile;
+    }
+
 }
