@@ -230,6 +230,7 @@ public class EntryRepository {
         mapper.entryDtoToEntry(entryDto,entry);
         if(entry.getStatus().isCompleted() && entry.getCollaboratorFinish().equals(entryDto.getCollaboratorFinish())){
             entryCompleted = Optional.of(entry);
+            agenda.remove(entry);
         }
         return entryCompleted;
     }
