@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.concurrent.RejectedExecutionException;
 /**
  * Represents a vehicle with various properties and functionalities.
  */
-public class Vehicle {
+public class Vehicle implements Serializable {
         /** The brand of the vehicle. */
         private String brand;
 
