@@ -24,7 +24,7 @@ public class AssignSkillsUI implements Runnable {
      *
      */
     public AssignSkillsUI(){
-        ctrl=new AssignSkillsController();
+        ctrl=AssignSkillsController.getInstance();
     }
 
     /** Gets the controller

@@ -11,7 +11,7 @@ public class RegisterJobCategoryUI implements Runnable {
     private RegisterJobCategoryController ctrl;
 
     public RegisterJobCategoryUI(){
-        ctrl = new RegisterJobCategoryController();
+        ctrl = RegisterJobCategoryController.getInstance();
     }
 
     private RegisterJobCategoryController getController(){

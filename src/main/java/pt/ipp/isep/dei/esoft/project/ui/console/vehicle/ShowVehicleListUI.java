@@ -9,7 +9,7 @@ public class ShowVehicleListUI implements Runnable{
     private RegisterVehicleController ctrl ;
 
     public ShowVehicleListUI(){
-        ctrl=new RegisterVehicleController();
+        ctrl=RegisterVehicleController.getInstance();
     }
     @Override
     public void run() {

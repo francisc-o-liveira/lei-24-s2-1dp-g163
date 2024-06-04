@@ -21,7 +21,7 @@ public class RegisterCheckUpUI implements Runnable {
     private double currentKm;
 
     public RegisterCheckUpUI() {
-        this.ctrl = new RegisterCheckUpController();
+        this.ctrl =RegisterCheckUpController.getInstance();
     }
 
     public RegisterCheckUpController getController(){

@@ -26,7 +26,7 @@ public class RegisterVehicleUI  implements Runnable{
     /**Controller*/
     public RegisterVehicleController ctrl;
     public RegisterVehicleUI() {
-        ctrl= new RegisterVehicleController();
+        ctrl=RegisterVehicleController.getInstance();
     }
 
     private RegisterVehicleController getController() {

@@ -19,7 +19,7 @@ public class RegisterSkillUI implements Runnable {
      * This method is the method constructor
      */
     public RegisterSkillUI(){
-        ctrl=new RegisterSkillController();
+        ctrl=RegisterSkillController.getInstance();
     }
 
     /**

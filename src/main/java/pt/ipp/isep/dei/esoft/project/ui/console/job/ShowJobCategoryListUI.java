@@ -10,7 +10,7 @@ public class ShowJobCategoryListUI implements Runnable{
     private RegisterJobCategoryController ctrl;
 
     public ShowJobCategoryListUI(){
-        ctrl = new RegisterJobCategoryController();
+        ctrl = RegisterJobCategoryController.getInstance();
     }
 
     private RegisterJobCategoryController getController(){

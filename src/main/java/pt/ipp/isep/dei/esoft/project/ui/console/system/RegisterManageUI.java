@@ -20,9 +20,9 @@ public class RegisterManageUI implements Runnable{
     private String managerPhone;
 
     public RegisterManageUI() {
-        ctrlUser = new AuthenticationController();
-        ctrlOrg = new OrganizationController();
-        ctrlRegis = new RegisterController();
+        ctrlUser = AuthenticationController.getInstance();
+        ctrlOrg = OrganizationController.getInstance();
+        ctrlRegis = RegisterController.getInstance();
     }
     @Override
     public void run() {
