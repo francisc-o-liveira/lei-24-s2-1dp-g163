@@ -122,7 +122,11 @@ public class Collaborator{
      */
 
     public void setAddress(String address) {
-        this.address = address;
+        if(verifyIsOnlyCharacter(address)){
+            this.address = address;
+        }else{
+            throw new IllegalArgumentException("Invalid address: " + address);
+        }
     }
 
     /** Gets the zip code of the address of Collaborator
@@ -139,7 +143,24 @@ public class Collaborator{
      */
 
     public void setAddressZipCode(String addressZipCode) {
-        this.addressZipCode = addressZipCode;
+        if(verifyZipCode(addressZipCode)){
+            this.addressZipCode = addressZipCode;
+        }else{
+            throw new IllegalArgumentException("Invalid address zip code: " + addressZipCode);
+        }
+    }
+
+    private boolean verifyZipCode(String addressZipCode) {
+        char[] chars = addressZipCode.replaceAll("-", "").toCharArray();
+        for (char c : chars){
+            if (Character.isDigit(c)){
+                return false;
+            }
+        }
+        if (chars.length==5){
+            return true;
+        }else{
+        return false;}
     }
 
     /** Gets the city of the address of Collaborator
@@ -155,7 +176,11 @@ public class Collaborator{
      * @param addressCity of Collaborator
      */
     public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
+        if (verifyIsOnlyCharacter(addressCity)){
+            this.addressCity = addressCity;
+        }else {
+            throw new IllegalArgumentException("Invalid address city: " + addressCity);
+        }
     }
 
     /** Gets the phone number of Collaborator

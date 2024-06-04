@@ -53,13 +53,28 @@ public class Address implements Serializable {
      * @param zipCode The new zipCode
      */
     public void setZipCode(String zipCode) {
-        if(zipCode.matches("\\d{5}") && zipCode.split("-").length == 2){
+        if(verifyZipCode(zipCode)){
         this.zipCode = zipCode;
         }else{
             throw new IllegalArgumentException("INVALID ZIPCODE");
         }
 
     }
+
+    private boolean verifyZipCode(String zipCode) {
+        char[] chars = zipCode.replaceAll("-", "").toCharArray();
+        for (char c : chars){
+            if (Character.isDigit(c)){
+                return false;
+            }
+        }
+        if (chars.length==5){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     /**
      * Resposible for get and return the street
      * <p>
