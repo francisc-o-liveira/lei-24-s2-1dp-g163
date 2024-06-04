@@ -280,10 +280,10 @@ public class ViewDetailsVehicleUI {
             checkupFrequency.setText(Double.toString(selectedVehicle.getFrequencyCheckKm()));
 
             selectedVehicle.setRegisterDate(new Date(registerDate.getValue().getYear(),registerDate.getValue().getMonthValue(),registerDate.getValue().getDayOfMonth()));
-            registerDate.setValue(selectedVehicle.getRegisterDateLocal());
+            registerDate.setValue(convertToJavaLocalDate(selectedVehicle.getRegisterDate()));
 
             selectedVehicle.setAcquisitionDate(new Date(acquisitionDate.getValue().getYear(), acquisitionDate.getValue().getMonthValue(), acquisitionDate.getValue().getDayOfMonth()));
-            acquisitionDate.setValue(selectedVehicle.getAcquisitionDateLocal());
+            acquisitionDate.setValue(convertToJavaLocalDate(selectedVehicle.getAcquisitionDate()));
         }
     }
 
