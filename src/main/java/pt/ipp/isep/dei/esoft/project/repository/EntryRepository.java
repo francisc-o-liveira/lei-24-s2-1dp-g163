@@ -190,7 +190,7 @@ public class EntryRepository {
                     // For this we can check if any team have a Collaborator there are assigned in any task
                     for (Team team : teams){
                         for (Collaborator collaborator : team.getTeamList()){
-                            if (entry.getTeamAssigned().getTeamList() != null){
+                            if (entry.getTeamAssigned() == null){
                                 break;
                             }
                             for (Collaborator collaboratorCompare : entry.getTeamAssigned().getTeamList()){
