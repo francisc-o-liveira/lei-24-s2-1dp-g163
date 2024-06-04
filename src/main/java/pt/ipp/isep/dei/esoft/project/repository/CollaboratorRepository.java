@@ -73,7 +73,7 @@ public class CollaboratorRepository {
 
     private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = Optional.empty();
-        if (!collaboratorList.contains(collab)){
+        if (isValidCollaborator(collab)){
             collaboratorList.add(collab);
             saveFromCollaboratorDataBase(collab);
             newCollab=Optional.of(collab);

@@ -18,16 +18,11 @@ class CollaboratorRepositoryTest {
 
     // Collaborator AC1
     @Test
-    void verifyIfCollaboratorExists() { // verify if exist and if not exist !
+    void verifyIfCollaboratorExists() throws CloneNotSupportedException { // verify if exist and if not exist !
         CollaboratorRepository repo = Repositories.getInstance().getCollaboratorRepository();
-        Collaborator cTest = new Collaborator("Joaquim",new Date(2002,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","jouim.cunha@gmail.com", DocType.Type.CitizenCard,863473624,new JobCategory("Gardener"));
-        Collaborator cTestEqual = new Collaborator("Joaquim",new Date(2002,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","jouim.cunha@gmail.com", DocType.Type.CitizenCard,863473624,new JobCategory("Gardener"));
-
-        Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,743626422,new JobCategory("Garder"));
-        Collaborator cTest3 = new Collaborator("Joaquim",new Date(2003,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351926835384","joaquim.cuha@gmail.com", DocType.Type.CitizenCard,376432422,new JobCategory("Gardener"));
-        repo.addCollaborator(cTest);
+        repo.createCollaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,743626422,new JobCategory("Garder"));
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            repo.addCollaborator(cTestEqual);
+            repo.createCollaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,743626422,new JobCategory("Garder"));
         });
     }
 

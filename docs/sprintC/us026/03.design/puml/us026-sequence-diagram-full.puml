@@ -159,14 +159,16 @@ activate GSM
             EntryRepository -> MAPPER : toModel(entryDto)
             activate MAPPER
 
+            MAPPER -> OBJ : setNewVehicle(vehicle)
+                        activate OBJ
+
+                        OBJ -> MAPPER : true/false
+                        deactivate OBJ
+
             MAPPER -> EntryRepository : entry
             deactivate MAPPER
 
-            EntryRepository -> OBJ : setNewVehicle(vehicle)
-            activate OBJ
 
-            OBJ -> EntryRepository : true/false
-            deactivate OBJ
 
             EntryRepository -> CTRL2 : true/false
 
