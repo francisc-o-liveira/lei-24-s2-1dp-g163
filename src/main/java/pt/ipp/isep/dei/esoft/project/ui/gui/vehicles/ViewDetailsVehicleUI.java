@@ -154,10 +154,10 @@ public class ViewDetailsVehicleUI {
         double editedFrequencyCheckKm= selectedVehicle.getFrequencyCheckKm();
         checkupFrequency.setText(String.valueOf(editedFrequencyCheckKm));
 
-        LocalDate editedDateRegister=selectedVehicle.getRegisterDateLocal();
+        LocalDate editedDateRegister=convertToJavaLocalDate(selectedVehicle.getRegisterDate());
         registerDate.setValue(editedDateRegister);
 
-        LocalDate editedDateAcquisition=selectedVehicle.getAcquisitionDateLocal();
+        LocalDate editedDateAcquisition=convertToJavaLocalDate(selectedVehicle.getAcquisitionDate());
         acquisitionDate.setValue(editedDateAcquisition);
 
         Vehicle.Type typeOfVehicle = selectedVehicle.getType();
@@ -343,6 +343,20 @@ public class ViewDetailsVehicleUI {
         alerta.setHeaderText("Correct Data");
         alerta.setContentText(messages);
         return alerta;
+    }
+
+    /** Converts a date to LocalDate
+     *
+     * @param date to be converted
+     * @return date in the LocalDate format
+     */
+    public static LocalDate convertToJavaLocalDate(Date date) {
+
+        int year = date.getYear();
+        int month = date.getMonth();
+        int day = date.getDay();
+
+        return LocalDate.of(year, month, day);
     }
 
 
