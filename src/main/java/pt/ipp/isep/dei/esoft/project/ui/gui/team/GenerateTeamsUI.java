@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
@@ -34,80 +35,49 @@ public class GenerateTeamsUI {
     public Stage stage= new Stage();
     public Stage stageClose;
     public GenerateTeamController ctrl;
-    ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
 
     public AuthenticationController ctrlAuth;
-
-    @FXML
-    public TableView<Skill> tableViewTeam;
-    @FXML
-    public TableColumn<Skill, Boolean> colSelect;
-    @FXML
-    public TableColumn<Skill, Skill> colSkills;
-    @FXML
-    public TableColumn<Skill, Integer> colNumberCollabs;
     @FXML
     public TextField maximumTeamSize;
     @FXML
     public TextField minimumTeamSize;
     @FXML
     public TextField nameForTeam;
+    @FXML
+    private VBox skillsContainer;
 
     private List<Skill> skillsSelectedForTeam;
     private List<Integer> numberCollabsPerSkill;
-    private boolean skillSelected;
+    private List<TextField> skillTextFields;
 
-    public void stageToCloseGenerate(Stage stage){
-        stageClose=stage;
+    public void setSkillsSelectedForTeam(List<Skill> skills){
+        skillsSelectedForTeam=skills;
+        createSkillInputFields();
     }
     public GenerateTeamsUI(){
         ctrlAuth = AuthenticationController.getInstance();
         ctrl = GenerateTeamController.getInstance();
         skillsSelectedForTeam= new ArrayList<>();
-        skillsToChoose.addAll(ctrl.getSkillList());
         numberCollabsPerSkill= new ArrayList<>();
+        skillTextFields=new ArrayList<>();
     }
-    public void setTableViewTeam(){
-        colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
-        colSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
-        colSelect.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Skill, Boolean> call(TableColumn<Skill, Boolean> param) {
-                return new TableCell<>() {
-                    private final CheckBox checkBox = new CheckBox();
-
-                    @Override
-                    protected void updateItem(Boolean item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                            setGraphic(null);
-                            return;
-                        }
-                        setGraphic(checkBox);
-                        checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                            Skill skill = (Skill) getTableRow().getItem();
-                            if (isNowSelected) {
-                                skillsSelectedForTeam.add(skill);
-                                skillSelected=true;
-                            }
-                        });
-                    }
-                };
-            }
-        });
-
-        colNumberCollabs.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        colNumberCollabs.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Skill, Integer>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<Skill, Integer> event) {
-                Skill skill = event.getRowValue();
-                numberCollabsPerSkill.add(event.getNewValue());
-
-            }
-        });
 
 
-        tableViewTeam.setItems(skillsToChoose);
+    // Other methods
+
+    private void createSkillInputFields() {
+        skillsContainer.getChildren().clear();
+
+        for (Skill skill : skillsSelectedForTeam) {
+            Label label = new Label(skill.getSkillName() + ":");
+            TextField textField = new TextField();
+            textField.setPromptText("Enter value for " + skill.getSkillName());
+
+            skillsContainer.getChildren().addAll(label, textField);
+            skillTextFields.add(textField);
+
+
+        }
     }
 
     @FXML
@@ -115,10 +85,17 @@ public class GenerateTeamsUI {
         int maxTeamSize=Integer.parseInt(maximumTeamSize.getText());
         int minTeamSize=Integer.parseInt(minimumTeamSize.getText());
         String teamName = nameForTeam.getText();
+        for (TextField textField : skillTextFields) {
+            numberCollabsPerSkill.add(Integer.parseInt(textField.getText()));
+        }
+
         try{
             minimumTeamSize.clear();
             maximumTeamSize.clear();
             nameForTeam.clear();
+            for (TextField textField : skillTextFields) {
+                textField.clear();
+            }
             try{
                 Optional<Team> teamCreated=ctrl.generateTeam(minTeamSize, maxTeamSize, skillsSelectedForTeam, numberCollabsPerSkill,teamName);
                 if (teamCreated.isPresent()) {

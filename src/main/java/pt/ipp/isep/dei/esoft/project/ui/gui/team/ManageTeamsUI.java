@@ -58,15 +58,14 @@ public class ManageTeamsUI {
 
     @FXML
     public void btnAdd() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/teams/Scene_GenerateTeams.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/teams/Scene_SelectSkills.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-        GenerateTeamsUI ctrlForGenerate= fxmlLoader.getController();
-        ctrlForGenerate.setTableViewTeam();
-        ctrlForGenerate.stageToCloseGenerate(stage);
+        SelectSkillForTeamUI ui=fxmlLoader.getController();
+        ui.setTableViewSkill();
     }
 
     @FXML

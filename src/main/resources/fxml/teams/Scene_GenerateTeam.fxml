@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.team.GenerateTeamsUI">
+    <children>
+        <Label layoutX="36.0" layoutY="69.0" text="Maximum Team Size:">
+            <font>
+                <Font name="Tahoma" size="13.0" />
+            </font>
+        </Label>
+        <Label layoutX="244.0" layoutY="69.0" text="Minimum Team Size:">
+            <font>
+                <Font name="Tahoma" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="maximumTeamSize" layoutX="168.0" layoutY="64.0" prefHeight="26.0" prefWidth="35.0" />
+        <TextField fx:id="minimumTeamSize" layoutX="372.0" layoutY="64.0" prefHeight="26.0" prefWidth="35.0" />
+        <Button layoutX="678.0" layoutY="436.0" mnemonicParsing="false" onAction="#btnGenerateTeam" prefHeight="38.0" prefWidth="78.0" style="-fx-background-color: #4DA768;" text="Generate">
+            <font>
+                <Font name="System Bold" size="13.0" />
+            </font>
+        </Button>
+        <Label layoutX="36.0" layoutY="29.0" text="Team Name: ">
+            <font>
+                <Font name="Tahoma" size="13.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nameForTeam" layoutX="117.0" layoutY="24.0" prefHeight="26.0" prefWidth="293.0" />
+      <VBox fx:id="skillsContainer" layoutX="36.0" layoutY="134.0" prefHeight="301.0" prefWidth="620.0" />
+      <Label layoutX="36.0" layoutY="107.0" text="Indicate the number of collaborators per skill:">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>
