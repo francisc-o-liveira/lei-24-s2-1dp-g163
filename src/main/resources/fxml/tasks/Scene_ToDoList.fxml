@@ -92,8 +92,14 @@
                                     <TableColumn fx:id="detailsCol" prefWidth="124.79996337890623" text="View Details" />
                                 </columns>
                               </TableView>
-                              <Button layoutX="756.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnRegister" prefHeight="45.0" prefWidth="91.0" style="-fx-background-color: #BDECB6;" text="Register " />
-                              <Button layoutX="649.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnUpdate" prefHeight="45.0" prefWidth="99.0" style="-fx-background-color: #b2dafa;" text="Update" />
+                              <Button layoutX="756.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnRegister" prefHeight="45.0" prefWidth="91.0" style="-fx-background-color: #BDECB6;" text="Register ">
+                                 <font>
+                                    <Font name="System Bold Italic" size="13.0" />
+                                 </font></Button>
+                              <Button layoutX="649.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnUpdate" prefHeight="45.0" prefWidth="99.0" style="-fx-background-color: #b2dafa;" text="Update">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font></Button>
                            </children>
                                 </AnchorPane>
                             </children>

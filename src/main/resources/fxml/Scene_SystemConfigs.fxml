@@ -28,13 +28,19 @@
             <Font name="Tahoma" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="602.0" layoutY="434.0" mnemonicParsing="false" onAction="#addManager" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add" />
+      <Button layoutX="602.0" layoutY="434.0" mnemonicParsing="false" onAction="#addManager" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: ADD8E6;" text="Add">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
       <Label layoutX="25.0" layoutY="20.0" text="System Configurations" textFill="#046f4d">
          <font>
             <Font name="Tahoma Bold" size="16.0" />
          </font></Label>
-      <ComboBox fx:id="roles" layoutX="115.0" layoutY="421.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button layoutX="514.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnRemove" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: FF9688;" text="Remove" />
+      <ComboBox fx:id="roles" layoutX="115.0" layoutY="421.0" prefHeight="26.0" prefWidth="160.0" />
+      <Button layoutX="514.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnRemove" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: FF9688;" text="Remove">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
       <TableView fx:id="tableSystemConfigs" layoutX="27.0" layoutY="64.0" prefHeight="200.0" prefWidth="645.0">
         <columns>
           <TableColumn fx:id="colManagers" prefWidth="239.20001792907715" text="Managers" />
@@ -48,6 +54,9 @@
          </font>
       </Label>
       <TextField fx:id="phoneTxt" layoutX="115.0" layoutY="309.0" />
-      <Button layoutX="435.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnReload" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: B7D5B2;" text="Reload" />
+      <Button layoutX="435.0" layoutY="434.0" mnemonicParsing="false" onAction="#btnReload" prefHeight="39.0" prefWidth="70.0" style="-fx-background-color: B7D5B2;" text="Reload">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
    </children>
 </AnchorPane>

@@ -97,7 +97,10 @@
                                  </font>
                               </Label>
                               <DatePicker fx:id="secondDate" layoutX="332.0" layoutY="269.0" prefHeight="26.0" prefWidth="218.0" />
-                              <Button onAction="#seeTasks" layoutX="683.0" layoutY="457.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="122.0" style="-fx-background-color: #B2DAFA;" text="View Tasks" />
+                              <Button layoutX="683.0" layoutY="457.0" mnemonicParsing="false" onAction="#seeTasks" prefHeight="53.0" prefWidth="122.0" style="-fx-background-color: #B2DAFA;" text="View Tasks">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font></Button>
                            </children>
                                 </AnchorPane>
                             </children>
