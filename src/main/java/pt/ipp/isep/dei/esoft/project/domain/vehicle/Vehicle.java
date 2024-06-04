@@ -19,7 +19,7 @@ public class Vehicle implements Serializable {
         private String model;
 
         /** The type of the vehicle. */
-        public enum Type {
+        public enum Type implements Serializable {
             LightPassenger, // Light Passenger
             LightCargo,       // Light Cargo
             Heavy,             // Heavy
