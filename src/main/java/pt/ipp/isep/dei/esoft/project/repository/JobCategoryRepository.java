@@ -132,16 +132,19 @@ public class JobCategoryRepository {
         JobCategory jobCategoryLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getJobCategoryDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    jobCategoryLoaded = (JobCategory) in.readObject();
-                    loadInSystem(jobCategoryLoaded);
-                } catch (EOFException e) {
-                    break;
+            if (file.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        jobCategoryLoaded = (JobCategory) in.readObject();
+                        loadInSystem(jobCategoryLoaded);
+                    } catch (EOFException e) {
+                        break;
+                    }
                 }
+                in.close();
+                file.close();
             }
-            in.close();
             file.close();
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);

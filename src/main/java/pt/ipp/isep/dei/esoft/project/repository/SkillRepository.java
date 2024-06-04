@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
@@ -142,16 +143,18 @@ public class SkillRepository {
         Skill skillLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getSkillDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    skillLoaded = (Skill) in.readObject();
-                    loadInSystem(skillLoaded);
-                } catch (EOFException e) {
-                    break;
+            if (file.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        skillLoaded = (Skill) in.readObject();
+                        loadInSystem(skillLoaded);
+                    } catch (EOFException e) {
+                        break;
+                    }
                 }
+                in.close();
             }
-            in.close();
             file.close();
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);

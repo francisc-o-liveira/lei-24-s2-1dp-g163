@@ -297,7 +297,6 @@ public class CollaboratorRepository {
         try {
             FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile(), true);
             ObjectOutputStream out;
-
             // If the file already has content, we need to use the AppendableObjectOutputStream
             if (file.getChannel().size() > 0) {
                 out = new AppendableObjectOutputStream(file);
