@@ -98,9 +98,6 @@ public class AssignSkillsController {
         return collaboratorRepository.assignSkill(collaborator,skillName);
     }
 
-    public boolean isSkillSelected(Skill skill) {
-        return skillRepository.isSkillSelected(skill);
-    }
 
 
     private static AssignSkillsController instance;
