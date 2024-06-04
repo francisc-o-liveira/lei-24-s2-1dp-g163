@@ -35,7 +35,7 @@ public class RegisterCollaboratorUI implements Runnable{
     public RegisterCollaboratorController ctrl;
 
     public RegisterCollaboratorUI() {
-        ctrl= new RegisterCollaboratorController();
+        ctrl= RegisterCollaboratorController.getInstance();
     }
 
     private RegisterCollaboratorController getController() {

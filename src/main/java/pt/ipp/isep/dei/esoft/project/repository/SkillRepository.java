@@ -134,7 +134,7 @@ public class SkillRepository {
             out.close();
             file.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 

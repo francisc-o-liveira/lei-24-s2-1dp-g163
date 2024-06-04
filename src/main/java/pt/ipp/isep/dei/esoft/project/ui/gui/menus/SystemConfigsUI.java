@@ -43,7 +43,7 @@ public class SystemConfigsUI {
     OrganizationController org;
 
     public SystemConfigsUI(){
-        org=new OrganizationController();
+        org= OrganizationController.getInstance();
     }
 
     public void setComboBoxAndStage(Stage stage){

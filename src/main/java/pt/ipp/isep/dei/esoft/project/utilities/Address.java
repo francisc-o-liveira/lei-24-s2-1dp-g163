@@ -62,18 +62,13 @@ public class Address implements Serializable {
     }
 
     private boolean verifyZipCode(String zipCode) {
-        char[] chars = zipCode.replaceAll("-", "").toCharArray();
-        for (char c : chars){
-            if (Character.isDigit(c)){
-                return false;
-            }
-        }
-        if (chars.length==5){
+        if (zipCode.matches("\\d{4}-\\d{3}")) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
 
     /**
      * Resposible for get and return the street

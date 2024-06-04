@@ -29,7 +29,7 @@ public class RegisterVehicleController {
     /**
      * Retrieves the vehicle repository instance.
      */
-    private void getVehicleRepository() {
+    public void getVehicleRepository() {
         if (vehicleRepository == null) {
             Repositories repositories = Repositories.getInstance();
             // Getting the Vehicle Repository

@@ -123,11 +123,21 @@ public class Collaborator implements Serializable {
      */
 
     public void setAddress(String address) {
-        if(verifyIsOnlyCharacter(address)){
+        if(verifyIsOnlyCharacterOrDigit(address)){
             this.address = address;
         }else{
             throw new IllegalArgumentException("Invalid address: " + address);
         }
+    }
+
+    private boolean verifyIsOnlyCharacterOrDigit(String address) {
+        char[] chars = name.replaceAll("\\s", "").toCharArray();
+        for (char c : chars){
+            if (!Character.isLetter(c) && !Character.isDigit(c)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /** Gets the zip code of the address of Collaborator
@@ -151,18 +161,14 @@ public class Collaborator implements Serializable {
         }
     }
 
-    private boolean verifyZipCode(String addressZipCode) {
-        char[] chars = addressZipCode.replaceAll("-", "").toCharArray();
-        for (char c : chars){
-            if (Character.isDigit(c)){
-                return false;
-            }
-        }
-        if (chars.length==5){
+    private boolean verifyZipCode(String zipCode) {
+        if (zipCode.matches("\\d{4}-\\d{3}")) {
             return true;
-        }else{
-        return false;}
+        } else {
+            return false;
+        }
     }
+
 
     /** Gets the city of the address of Collaborator
      *

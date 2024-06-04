@@ -11,12 +11,12 @@ public class OrganizationController {
     private Organization organization;
     private AuthenticationRepository authenticationRepository;
 
-    public OrganizationController(){
+    private OrganizationController(){
         organization = new Organization();
         authenticationRepository = new AuthenticationRepository();
     }
 
-    private Organization getOrganization() {
+    public Organization getOrganization() {
         return organization;
     }
 

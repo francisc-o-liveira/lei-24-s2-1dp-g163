@@ -45,8 +45,7 @@ public class Bootstrap implements Runnable {
     private void addCollaborators() throws CloneNotSupportedException {
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         collaboratorRepository.createCollaborator("Joaquim Mendes",new Date(1999,10,5),new Date(2024,5,2),"Rua das moinas","4630-132","Penafiel","joaquim@gmail.com","+351916834123", DocType.Type.CitizenCard,123456789,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
-        collaboratorRepository.createCollaborator("Maria Silva",new Date(1985,3,15),new Date(2024,1,10),"123 Main Street","12345","London","maria.silva@gmail.com","+441234567890", DocType.Type.Passport,987655,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
-
+        collaboratorRepository.createCollaborator("Maria Silva",new Date(1985,3,15),new Date(2024,1,10),"123 Main Street","1234-125","London","maria.silva@gmail.com","+441234567890", DocType.Type.Passport,987655,Repositories.getInstance().getJobCategoryRepository().getJobCategoryList().get(1));
     }
 
     private void addVehicles() throws CloneNotSupportedException {

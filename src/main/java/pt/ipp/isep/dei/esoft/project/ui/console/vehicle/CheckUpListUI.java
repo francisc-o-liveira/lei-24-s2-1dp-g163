@@ -9,7 +9,7 @@ public class CheckUpListUI implements Runnable {
     private CheckUpListController ctrl;
     private List<Vehicle> vehiclesNeedingCheckUp;
     public CheckUpListUI(){
-       ctrl = new CheckUpListController();
+       ctrl = CheckUpListController.getInstance();
     }
 
     private CheckUpListController getController(){

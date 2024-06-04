@@ -24,8 +24,8 @@ public class AuthenticationUI implements Runnable {
     private final RegisterController regis;
 
     public AuthenticationUI() {
-        ctrl = new AuthenticationController();
-        regis = new RegisterController();
+        ctrl = AuthenticationController.getInstance();
+        regis = RegisterController.getInstance();
     }
 
     public void run() {

@@ -30,7 +30,7 @@ public class GenerateTeamUI implements Runnable {
      * This method constructor, start the UI, creating a new GenerateTeamController.
      */
     public GenerateTeamUI(){
-        ctrl= new GenerateTeamController();
+        ctrl= GenerateTeamController.getInstance();
     }
 
     /**

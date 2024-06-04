@@ -13,7 +13,7 @@ import java.io.Serializable;
 /**
  * Domain class representing a Skill object.
  */
-public class Skill implements Serializable {
+public class Skill implements Serializable{
 
     /** Name of the skill */
     private String skillName;

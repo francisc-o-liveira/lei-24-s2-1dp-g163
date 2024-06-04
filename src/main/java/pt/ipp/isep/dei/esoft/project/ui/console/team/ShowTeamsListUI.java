@@ -12,7 +12,7 @@ public class ShowTeamsListUI implements Runnable{
 
     /** Initializes the controller */
     public ShowTeamsListUI(){
-        ctrl=new GenerateTeamController();
+        ctrl=GenerateTeamController.getInstance();
     }
 
     /** Gets the controller */
