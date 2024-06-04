@@ -18,14 +18,6 @@ public class Skill implements Serializable{
     /** Name of the skill */
     private String skillName;
 
-    private final transient BooleanProperty selecting;
-
-    private boolean selectedForTeam;
-
-    private boolean selected;
-
-    private final transient BooleanProperty selectingForTeam;
-
     private transient IntegerProperty numberCollabsPerSkill;
     /**
      * Constructs a Skill object with the specified name.
@@ -34,21 +26,6 @@ public class Skill implements Serializable{
      */
     public Skill(String skillName){
         setSkillName(skillName);
-        this.selecting = new SimpleBooleanProperty(false);
-
-        this.selecting.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selected=true;
-            }
-        });
-
-        this.selectingForTeam = new SimpleBooleanProperty(false);
-
-        this.selectingForTeam.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selectedForTeam=true;
-            }
-        });
     }
 
     /**
@@ -125,23 +102,7 @@ public class Skill implements Serializable{
     public String toString(){
         return String.format("Skill: %s\n ", skillName);
     }
-    /**
-     * Gets the BooleanProperty for assigning skills to collaborators.
-     *
-     * @return BooleanProperty representing whether a skill has been selected to assign
-     */
-    public BooleanProperty selectedSkill(){
-        return selecting;
-    }
 
-    /**
-     * Gets the BooleanProperty to select skills for a team.
-     *
-     * @return BooleanProperty representing whether a skill has been selected to generate a team
-     */
-    public BooleanProperty selectedSkillForTeam(){
-        return selectingForTeam;
-    }
 
     /**
      * Retrieves the IntegerProperty representing the number of collaborators per skill.
@@ -173,9 +134,6 @@ public class Skill implements Serializable{
         return numberCollabsPerSkill;
     }
 
-    public void setSelecting(boolean value){
-        this.selecting.set(value);
-    }
 
 
     @Override

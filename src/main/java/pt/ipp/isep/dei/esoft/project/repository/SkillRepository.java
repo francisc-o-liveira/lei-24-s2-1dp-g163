@@ -84,13 +84,6 @@ public class SkillRepository {
         }
     }
 
-    public boolean isSkillSelected(Skill skill) {
-        return skill.selectedSkill().get();
-    }
-
-    public boolean isSkillSelectedForTeam(Skill s) {
-        return s.selectedSkillForTeam().get();
-    }
 
 
 

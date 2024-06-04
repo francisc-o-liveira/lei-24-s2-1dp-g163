@@ -74,11 +74,19 @@ public class MainDijkstra_Evaluation {
                     ArrayList<Edge> pathWithLeastCost=comparingResults(results);
                     System.out.print("----- Path with least cost ------\n");
                     int costPath=0;
-                    for(Edge e : pathWithLeastCost){
-                        System.out.printf("%s;%s;", e.getP1(), e.getP2());
-                        costPath+=e.getPrice();
+                    StringBuilder path = new StringBuilder();
+                    for (int i = 0; i < pathWithLeastCost.size(); i++) {
+                        Edge e = pathWithLeastCost.get(i);
+                        if (i == 0) {
+                            path.append(e.getP1()).append(";");
+                        }
+                        path.append(e.getP2());
+                        if (i < pathWithLeastCost.size() - 1) {
+                            path.append(";");
+                        }
                     }
-                    System.out.printf("  %d%n", costPath);
+                    System.out.println(path.toString());
+
                     try {
                         createResultFile(pathWithLeastCost);
                     } catch (IOException e) {
@@ -255,6 +263,8 @@ public class MainDijkstra_Evaluation {
             resultPath.add(new Edge(beforePoint, currentPoint, cost));
             currentPoint=beforePoint;
         }
+
+        Collections.reverse(resultPath);
 
         return resultPath;
     }
