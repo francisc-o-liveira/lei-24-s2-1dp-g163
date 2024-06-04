@@ -114,7 +114,7 @@ public class MainApp extends Application {
         return entryReferenceDataBaseFile;
     }
 
-    private static String vehicleDataBaseFile = new String("src/main/resources/DataBase/vehicleDataBase.txt");
+    private static String vehicleDataBaseFile = new String("src/main/resources/DataBase/vehicleDataBase.csv");
 
 
     public static String getVehicleDataBaseFile() {
