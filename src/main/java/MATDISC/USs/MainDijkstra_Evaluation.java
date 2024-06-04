@@ -405,19 +405,28 @@ public class MainDijkstra_Evaluation {
         int price = 0;
         String line = "graph US13 {\n";
         fileDot.write(line);
-        for (int i = 0; i < edges.size(); i++) {
+        StringBuilder path = new StringBuilder();
+        for (int i = 0; i < edges.size() - 1; i++) { // Loop until the penultimate edge
             String string = String.format("%s -- %s [label=\"%d\"];\n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
             fileDot.write(string);
-            String line1 = String.format("%s;%s;%d%n", edges.get(i).getP1(), edges.get(i).getP2(), edges.get(i).getPrice());
+            Edge e = edges.get(i);
+            if (i == 0) {
+                path.append(e.getP1()).append(";");
+            }
+            path.append(e.getP2()).append(";"); // Append separator for all edges except the last one
             price += edges.get(i).getPrice();
-            result.write(line1);
         }
-        String line2 = "}";
+        // Write the last line after the loop
+        Edge lastEdge = edges.get(edges.size() - 1);
+        path.append(lastEdge.getP2()); // Append the last point of the path
+        String line1 = String.format("%s,%d\n", path.toString(), lastEdge.getPrice()); // Add comma and price at the end
+        result.write(line1);
+
+        String line2 = String.format("%s -- %s [label=\"%d\"];\n", lastEdge.getP1(), lastEdge.getP2(), lastEdge.getPrice()); // Write the last edge to the .dot file
         fileDot.write(line2);
-        String line3 = String.format("Cost: %s%n", price);
-        String line4 = String.format("Number of edges: %d%n", edges.size());
-        result.write(line3);
-        result.write(line4);
+
+        String line3 = "}";
+        fileDot.write(line3);
         fileDot.close();
         result.close();
         try {
@@ -427,6 +436,9 @@ public class MainDijkstra_Evaluation {
             e.printStackTrace();
         }
     }
+
+
+
 
     public static void createInputFile(ArrayList<Edge> edges) throws IOException {
         FileWriter fileDot = new FileWriter("graphinput.dot");
