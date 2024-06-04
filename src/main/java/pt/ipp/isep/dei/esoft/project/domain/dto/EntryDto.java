@@ -21,8 +21,6 @@ public class EntryDto extends TaskDto{
     private TeamDto teamAssigned;
     private String reference;
     private Date finishDate;
-    private boolean selectedByCollab;
-    private BooleanProperty selectingCollab;
 
 
     /**To complete the task*/
@@ -38,12 +36,6 @@ public class EntryDto extends TaskDto{
         this.reference = reference;
         this.finishDate = null;
         this.collaboratorThatCompleted = null;
-        this.selectingCollab = new SimpleBooleanProperty(false);
-        this.selectingCollab.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selectedByCollab=true;
-            }
-        });
     }
 
     public EntryDto(Date startDate, EntryState status, List<VehicleDto> vehicleList, TeamDto teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
@@ -53,16 +45,6 @@ public class EntryDto extends TaskDto{
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
         this.reference = reference;
-        this.selectingCollab = new SimpleBooleanProperty(false);
-
-        this.finishDate = null;
-        this.collaboratorThatCompleted = null;
-
-        this.selectingCollab.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selectedByCollab=true;
-            }
-        });
     }
 
     public EntryDto(String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
@@ -139,14 +121,6 @@ public class EntryDto extends TaskDto{
         }else{
             throw new NullPointerException("You must select a team to assign");
         }
-    }
-
-    public BooleanProperty selectedCollab(){
-        return selectingCollab;
-    }
-
-    public void setSelectingCollab(boolean value){
-        this.selectingCollab.set(value);
     }
 
     public Date getFinishDate() {

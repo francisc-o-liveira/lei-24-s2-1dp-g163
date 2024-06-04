@@ -18,7 +18,6 @@ public class Skill implements Serializable{
     /** Name of the skill */
     private String skillName;
 
-    private transient IntegerProperty numberCollabsPerSkill;
     /**
      * Constructs a Skill object with the specified name.
      *
@@ -103,36 +102,6 @@ public class Skill implements Serializable{
         return String.format("Skill: %s\n ", skillName);
     }
 
-
-    /**
-     * Retrieves the IntegerProperty representing the number of collaborators per skill.
-     *
-     * @return The IntegerProperty representing the number of collaborators per skill.
-     */
-    public IntegerProperty getNumberCollabsPerSkill() {
-        return numberCollabsPerSkill;
-    }
-
-    /**
-     * Sets the number of collaborators per skill.
-     *
-     * @param number The number of collaborators per skill to set.
-     */
-    public void setNumberCollabsPerSkill(Integer number) {
-        if (numberCollabsPerSkill == null) {
-            numberCollabsPerSkill = new SimpleIntegerProperty();
-        }
-        this.numberCollabsPerSkill.set(number);
-    }
-
-    /**
-     * Retrieves the IntegerProperty representing the number of collaborators per skill.
-     *
-     * @return The IntegerProperty representing the number of collaborators per skill.
-     */
-    public IntegerProperty numberCollabsPerSkillProperty() {
-        return numberCollabsPerSkill;
-    }
 
 
 

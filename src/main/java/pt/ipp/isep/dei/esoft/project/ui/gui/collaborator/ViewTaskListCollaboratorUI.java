@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.collaborator;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.ViewTaskListAssignedCollabController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
@@ -91,12 +93,36 @@ public class ViewTaskListCollaboratorUI {
         taskDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         taskGreenSpace.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         taskName.setCellValueFactory(new PropertyValueFactory<>("title"));
-        taskStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        taskSelect.setCellFactory(CheckBoxTableCell.forTableColumn(taskSelect));
+        taskSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
+        taskSelect.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<EntryDto, Boolean> call(TableColumn<EntryDto, Boolean> param) {
+                return new TableCell<>() {
+                    private final CheckBox checkBox = new CheckBox();
+
+                    @Override
+                    protected void updateItem(Boolean item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                            setGraphic(null);
+                            return;
+                        }
+                        setGraphic(checkBox);
+                        checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                            EntryDto entry = (EntryDto) getTableRow().getItem();
+                            if (isNowSelected) {
+                                entriesSelected.add(entry);
+                            }
+                        });
+                    }
+                };
+            }
+        });
+
+
 
         for(EntryDto entry : tasksForCollab){
             tasksOfCollab.add(entry);
-            entry.setSelectingCollab(false);
         }
 
         tableTasks.setItems(tasksOfCollab);
@@ -107,7 +133,6 @@ public class ViewTaskListCollaboratorUI {
     @FXML
     private void btnComplete(ActionEvent event) {
             try{
-                getTasksDone();
                 ZonedDateTime timeAndDate = ZonedDateTime.now();
                 Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
                 for(EntryDto entry : entriesSelected){
@@ -117,14 +142,6 @@ public class ViewTaskListCollaboratorUI {
             } catch (Exception e) {
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
-    }
-
-    private void getTasksDone(){
-        for (EntryDto entry : tasksForCollab) {
-            if (entry.selectedCollab().get()) {
-                entriesSelected.add(entry);
-            }
-        }
     }
 
     @FXML

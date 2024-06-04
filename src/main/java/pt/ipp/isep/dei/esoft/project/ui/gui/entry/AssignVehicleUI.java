@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.entry;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,7 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
 
@@ -35,18 +38,41 @@ public class AssignVehicleUI {
 
     public void initializeUI(){
         platesOfVehiclesToAssign.setCellValueFactory(new PropertyValueFactory<>("plate"));
-        selectingVehicles.setCellValueFactory(cellData -> cellData.getValue().isSelectedForEntry());
-        selectingVehicles.setCellFactory(CheckBoxTableCell.forTableColumn(selectingVehicles));
+        selectingVehicles.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
+        selectingVehicles.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<VehicleDto, Boolean> call(TableColumn<VehicleDto, Boolean> param) {
+                return new TableCell<>() {
+                    private final CheckBox checkBox = new CheckBox();
+
+                    @Override
+                    protected void updateItem(Boolean item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                            setGraphic(null);
+                            return;
+                        }
+                        setGraphic(checkBox);
+                        checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                            VehicleDto vehicle = (VehicleDto) getTableRow().getItem();
+                            if (isNowSelected) {
+                                vehiclesSelected.add(vehicle);
+                            }
+                        });
+                    }
+                };
+            }
+        });
+
         for(VehicleDto t : ctrl.getVehicleListPossibleForEntry(selectedEntry)){
             vehiclesToAssignList.add(t);
-            t.setSelecting(false);
         }
         vehiclesToAssign.setItems(vehiclesToAssignList);
     }
 
     @FXML
     public void assignVehicles(){
-        getVehiclesToAssign();
+        //getVehiclesToAssign();
         try{
             for(VehicleDto vehicleDto : vehiclesSelected){
                 ctrl.assignVehicleToEntry(vehicleDto,selectedEntry);
@@ -58,14 +84,6 @@ public class AssignVehicleUI {
         } catch (Exception e){
             e.printStackTrace();
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-    }
-
-    private void getVehiclesToAssign(){
-        for (VehicleDto vehicle : vehiclesToAssignList) {
-            if (vehicle.isSelectedForEntry().get()) {
-                vehiclesSelected.add(vehicle);
-            }
         }
     }
 

@@ -22,10 +22,6 @@ public class VehicleDto {
     /** The date when the vehicle was acquired. */
     private Date acquisitionDate;
 
-    private final BooleanProperty selecting;
-
-    private boolean selectedForEntry;
-
     public VehicleDto(String brand, String model, Vehicle.Type type, String plate, double currentKm, Date acquisitionDate) {
         setBrand(brand);
         setModel(model);
@@ -33,13 +29,6 @@ public class VehicleDto {
         setPlate(plate);
         setCurrentKm(currentKm);
         setAcquisitionDate(acquisitionDate);
-        this.selecting = new SimpleBooleanProperty(false);
-
-        this.selecting.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selectedForEntry=true;
-            }
-        });
     }
 
     public void setType(Vehicle.Type type) {
@@ -65,9 +54,6 @@ public class VehicleDto {
     public void setBrand(String brand) {
         this.brand = brand;
     }
-    public void setSelecting(boolean value){
-        this.selecting.set(value);
-    }
     public String getBrand() {
         return brand;
     }
@@ -85,9 +71,6 @@ public class VehicleDto {
     }
     public Date getAcquisitionDate() {
         return acquisitionDate;
-    }
-    public BooleanProperty isSelectedForEntry(){
-        return selecting;
     }
 
 }

@@ -55,6 +55,7 @@ public class GenerateTeamsUI {
 
     private List<Skill> skillsSelectedForTeam;
     private List<Integer> numberCollabsPerSkill;
+    private boolean skillSelected;
 
     public void stageToCloseGenerate(Stage stage){
         stageClose=stage;
@@ -63,8 +64,8 @@ public class GenerateTeamsUI {
         ctrlAuth = AuthenticationController.getInstance();
         ctrl = GenerateTeamController.getInstance();
         skillsSelectedForTeam= new ArrayList<>();
-        numberCollabsPerSkill= new ArrayList<>();
         skillsToChoose.addAll(ctrl.getSkillList());
+        numberCollabsPerSkill= new ArrayList<>();
     }
     public void setTableViewTeam(){
         colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
@@ -87,7 +88,7 @@ public class GenerateTeamsUI {
                             Skill skill = (Skill) getTableRow().getItem();
                             if (isNowSelected) {
                                 skillsSelectedForTeam.add(skill);
-                                numberCollabsPerSkill.add(skill.numberCollabsPerSkillProperty().get());
+                                skillSelected=true;
                             }
                         });
                     }
@@ -95,15 +96,16 @@ public class GenerateTeamsUI {
             }
         });
 
-        colNumberCollabs.setCellValueFactory(new PropertyValueFactory<>("numberCollabsPerSkill"));
         colNumberCollabs.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         colNumberCollabs.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Skill, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Skill, Integer> event) {
-                Skill skill=event.getRowValue();
-                skill.setNumberCollabsPerSkill(event.getNewValue());
+                Skill skill = event.getRowValue();
+                numberCollabsPerSkill.add(event.getNewValue());
+
             }
         });
+
 
         tableViewTeam.setItems(skillsToChoose);
     }
