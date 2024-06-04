@@ -20,8 +20,6 @@ public class AssignTeamUI {
     private TableView<TeamDto> teamsToAssign;
     @FXML
     private TableColumn<TeamDto, String> teamsName;
-    @FXML
-    private Button assignTeam;
     private ObservableList<TeamDto> teamsToAssignList= FXCollections.observableArrayList();
     private TeamDto selectedTeam;
     private EntryDto selectedEntry;
