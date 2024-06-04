@@ -317,7 +317,7 @@ public class CollaboratorRepository {
         Collaborator collaboratorLoad;
         try {
             FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
-            if (file.getChannel().size() > 0) {
+            if (file.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(file);
                 while (true) {
                     try {
@@ -330,13 +330,17 @@ public class CollaboratorRepository {
                 in.close();
                 file.close();
             }
-        } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+        }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void loadInSystem(Collaborator collaboratorLoad) throws CloneNotSupportedException {
-        verifyCollaboratorExistAndSave(collaboratorLoad);
+        if (!collaboratorList.contains(collaboratorLoad)){
+            collaboratorList.add(collaboratorLoad);
+        }else{
+            throw new CloneNotSupportedException();
+        }
     }
 
 }
