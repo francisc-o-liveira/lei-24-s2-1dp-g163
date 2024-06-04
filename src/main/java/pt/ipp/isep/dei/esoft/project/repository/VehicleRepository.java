@@ -335,25 +335,7 @@ public class VehicleRepository {
 
 
     private void loadVehicleDataBase(){
-        Vehicle vehicle;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getVehicleDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
-                while (true) {
-                    try {
-                        vehicle = (Vehicle) in.readObject();
-                        loadInSystem(vehicle);
-                    } catch (EOFException e) {
-                        break;
-                    }
-                }
-                in.close();
-                file.close();
-            }
-        }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+        Vehicle vehicle;try {FileInputStream file = new FileInputStream(MainApp.getVehicleDataBaseFile());if (file.getChannel().size() > 0){ObjectInputStream in = new ObjectInputStream(file);while (true) {try {vehicle = (Vehicle) in.readObject();loadInSystem(vehicle);} catch (EOFException e) {break;}}in.close();file.close();}}catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {throw new RuntimeException(e);}
     }
 
     private void loadInSystem(Vehicle vehicleLoad) throws CloneNotSupportedException {
