@@ -26,7 +26,6 @@ public class Bootstrap implements Runnable {
 
     private void addSkills() throws CloneNotSupportedException {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
-        skillRepository.loadFromSkillDataBase();
     }
 
     private void addJobCategories() throws CloneNotSupportedException {

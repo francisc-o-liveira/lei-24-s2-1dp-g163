@@ -18,6 +18,7 @@ public class SkillRepository {
     /** Initialize the list of Skills */
     public SkillRepository(){
         skillList = new ArrayList<>();
+        loadFromSkillDataBase();
     }
 
     /** Method to register a Skill
@@ -139,7 +140,7 @@ public class SkillRepository {
         }
     }
 
-    public void loadFromSkillDataBase(){
+    private void loadFromSkillDataBase(){
         Skill skillLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getSkillDataBaseFile());
