@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.database.ManagerBase;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
@@ -24,6 +25,9 @@ public class Organization{
     private String phone;
     private String emailPrefix;
 
+
+    private static ManagerBase databaseManager;
+
     /**
      * This method is the constructor of the organization.
      *
@@ -35,6 +39,7 @@ public class Organization{
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
+        databaseManager = ManagerBase.getInstance();
     }
 
     public Organization() {
@@ -44,6 +49,7 @@ public class Organization{
         vatNumber=VAT_NUMBER_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
+        databaseManager = ManagerBase.getInstance();
     }
 
     public static GreenSpace.Type[] getEnumGreenSpaceType(){
@@ -84,6 +90,7 @@ public class Organization{
         boolean success = false;
         if (validateManager(newManager)) {
             success = managers.add(newManager);
+            databaseManager.saveFromManagerInDataBase(newManager);
         }
         return success;
     }
@@ -142,6 +149,7 @@ public class Organization{
     public void removeManager(Manager manager) {
         if(managers.contains(manager)){
             managers.remove(manager);
+            databaseManager.removeFromManagerDataBase(manager);
         } else {
             throw new RuntimeException("This Collaborator does not exist in the Repository");
         }
@@ -231,5 +239,13 @@ public class Organization{
 
     private void loadInSystem(GreenSpace greenSpace) throws CloneNotSupportedException {
         saveGreenSpace(greenSpace);
+    }
+
+    public void loadManager(Manager manager) {
+        if (validateManager(manager)){
+            managers.add(manager);
+        }else{
+            throw new RuntimeException("This Already exists in the System");
+        }
     }
 }

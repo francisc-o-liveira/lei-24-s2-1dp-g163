@@ -130,5 +130,11 @@ public class MainApp extends Application {
     private static String greenSpaceDataBaseFile = new String("src/main/resources/DataBase/greenSpaceDataBase.csv");
 
     public static String getGreenSpaceDataBaseFile() {
+        return greenSpaceDataBaseFile;
+    }
+    private static String managerDataBaseFile = new String("src/main/resources/DataBase/managerDataBase.csv");
+
+    public static String getManagerDataBaseFile() {
+        return managerDataBaseFile;
     }
 }
