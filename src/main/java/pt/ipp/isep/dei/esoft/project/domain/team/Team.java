@@ -5,11 +5,12 @@ import javafx.collections.ObservableList;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /** Domain class for Team Object*/
-public class Team {
+public class Team implements Serializable {
 
     /** Parameters to generate a Team */
     private List<Collaborator> collaboratorsTeam;
