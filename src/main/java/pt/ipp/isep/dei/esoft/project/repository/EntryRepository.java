@@ -26,14 +26,14 @@ import java.util.Optional;
 
 public class EntryRepository {
     private AgendaList agenda;
-    private List<Entry> toDo;
+    private ToDoList toDo;
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
     private static final int HOURS_WORK_PER_OMISSION=8;
     private static VehicleMapper vehicleMapper;
 
     public EntryRepository() {
-        toDo = new ArrayList<Entry>();
+        toDo = new ToDoList();
         agenda = new AgendaList();
         mapper = new EntryMapper();
         vehicleMapper = new VehicleMapper();
@@ -51,7 +51,7 @@ public class EntryRepository {
         return agenda;
     }
 
-    public List<Entry> getToDo() {
+    public ToDoList getToDo() {
         return toDo;
     }
 
@@ -62,43 +62,21 @@ public class EntryRepository {
     public Optional<Entry> registerNewTask(EntryDto entryDto) {
         Optional<Entry> newEntry = Optional.empty();
         Entry entry = mapper.entryDtoToEntryCreate(entryDto);
-            if (saveNewEntry(entry)){
+            if (toDo.saveNewEntry(entry)){
                 newEntry = Optional.of(entry);
             }
         return newEntry;
     }
 
-
-
-    private boolean saveNewEntry(Entry entry) {
-        for (Entry entry1 : toDo){
-            if (entry.getReference().equals(entry1.getReference())){
-                throw new RuntimeException("Duplicate entry reference");
-            }else {
-                return toDo.add(entry);
-            }
-        }
-        return toDo.add(entry);
-    }
-
     public Optional<Entry> assignEntryOnAgenda(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
-        Entry entry = searchForEntryToDo(entryDto);
+        Entry entry = toDo.searchForEntryToDo(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
         if (toDo.remove(entry)){
             agenda.add(entry);
             agendaEntry = Optional.of(agenda.getLast());
         }
         return agendaEntry;
-    }
-
-    private Entry searchForEntryToDo(EntryDto entryDto) {
-        for (Entry entry : toDo) {
-            if (Objects.equals(entry.getTitle(), entryDto.getTitle()) &&Objects.equals(entry.getDegreeUrgency(), entryDto.getDegreeUrgency()) && Objects.equals(entry.getDescription(), entryDto.getDescription()) && Objects.equals(entry.getExpectedDuration(),entryDto.getExpectedDuration())){
-                return entry;
-            }
-        }
-        throw new RuntimeException("Entry not found");
     }
 
     public Optional<Entry> cancelEntry(EntryDto entryDto) {
@@ -110,7 +88,6 @@ public class EntryRepository {
         }
         return agendaEntry;
     }
-
     // Not Complete need to verify data of others entrys in same time of the postpone date
     public Optional<Entry> postponeEntry(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
@@ -121,8 +98,6 @@ public class EntryRepository {
         }
         return agendaEntry;
     }
-
-
 
     public Tempo getHoursOfWork() {
         return timeOfWorkByCollaborators;
