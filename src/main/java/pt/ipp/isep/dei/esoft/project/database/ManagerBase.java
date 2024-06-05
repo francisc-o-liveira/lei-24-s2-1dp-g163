@@ -13,21 +13,28 @@ import java.util.List;
 
 public class ManagerBase {
     private static ManagerBase instance;
-    private static Organization Rep;
+    private Organization Rep;
 
 
     public static ManagerBase getInstance() {
         if (instance == null) {
             synchronized (ManagerBase.class) {
-                instance = new ManagerBase(Repositories.getInstance().getOrganizationRepository());
+                instance = new ManagerBase();
             }
         }
         return instance;
     }
 
-    public ManagerBase(Organization rep){
-        loadFromManagerDataBase();
-        Rep = rep;
+    public ManagerBase(){
+    }
+
+    public Organization getRep() {
+        if (Rep == null) {
+            synchronized (Organization.class) {
+                Rep = Repositories.getInstance().getOrganizationRepository();
+            }
+        }
+        return Rep;
     }
 
     public void removeFromManagerDataBase(Manager manager) {
@@ -79,7 +86,7 @@ public class ManagerBase {
         }
     }
 
-    private void loadFromManagerDataBase(){
+    public void loadFromManagerDataBase(){
         Manager manager;
         try {
             FileInputStream file = new FileInputStream(MainApp.getManagerDataBaseFile());
@@ -102,6 +109,6 @@ public class ManagerBase {
     }
 
     private void loadInSystem(Manager manager) throws CloneNotSupportedException {
-        Rep.loadManager(manager);
+        getRep().loadManager(manager);
     }
 }

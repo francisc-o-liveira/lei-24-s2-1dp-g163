@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.repository;
+package pt.ipp.isep.dei.esoft.project.repository.lists;
 
 import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;

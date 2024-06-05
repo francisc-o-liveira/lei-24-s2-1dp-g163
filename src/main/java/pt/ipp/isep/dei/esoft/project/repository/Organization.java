@@ -26,7 +26,7 @@ public class Organization{
     private String emailPrefix;
 
 
-    private static ManagerBase databaseManager;
+    private static ManagerBase dataBaseManager;
 
     /**
      * This method is the constructor of the organization.
@@ -39,7 +39,8 @@ public class Organization{
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
-        databaseManager =new  ManagerBase(this);
+        dataBaseManager =new ManagerBase();
+
     }
 
     public Organization() {
@@ -49,7 +50,8 @@ public class Organization{
         vatNumber=VAT_NUMBER_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
-        databaseManager = new ManagerBase(this);
+        dataBaseManager = new ManagerBase();
+
     }
 
     public static GreenSpace.Type[] getEnumGreenSpaceType(){
@@ -90,7 +92,7 @@ public class Organization{
         boolean success = false;
         if (validateManager(newManager)) {
             success = managers.add(newManager);
-            databaseManager.saveFromManagerInDataBase(newManager);
+            dataBaseManager.saveFromManagerInDataBase(newManager);
         }
         return success;
     }
@@ -149,7 +151,7 @@ public class Organization{
     public void removeManager(Manager manager) {
         if(managers.contains(manager)){
             managers.remove(manager);
-            databaseManager.removeFromManagerDataBase(manager);
+            dataBaseManager.removeFromManagerDataBase(manager);
         } else {
             throw new RuntimeException("This Collaborator does not exist in the Repository");
         }
@@ -247,5 +249,10 @@ public class Organization{
         }else{
             throw new RuntimeException("This Already exists in the System");
         }
+    }
+
+    public void loadSystem() {
+        loadFromGreenSpaceDataBase();
+        dataBaseManager.loadFromManagerDataBase();
     }
 }

@@ -50,7 +50,7 @@ public class RegisterTaskController {
     }
 
     public List<EntryDto> getToDoList(){
-        return mapper.entryListToEntryDtoList(entryRepository.getToDo());
+        return mapper.entryListToEntryDtoList(entryRepository.getToDo().getToDo());
     }
 
     private String getManagerFromSession(){

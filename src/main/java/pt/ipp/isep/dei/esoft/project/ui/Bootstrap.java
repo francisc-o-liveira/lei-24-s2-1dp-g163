@@ -48,6 +48,7 @@ public class Bootstrap implements Runnable {
         //TODO: add organizations bootstrap here
         //get organization repository
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
+        organizationRepository.loadSystem();
         organizationRepository.addManager("ADMIN","GSM","910000000","admin@this.app");
     }
 

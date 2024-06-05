@@ -23,7 +23,7 @@ public class AssignEntryOnAgendaController {
     }
 
     public List<EntryDto> getToDoList(){
-        return mapper.entryListToEntryDtoList(entryRepository.getToDo());
+        return mapper.entryListToEntryDtoList(entryRepository.getToDo().getToDo());
     }
 
     public List<EntryDto> getAgenda(){
