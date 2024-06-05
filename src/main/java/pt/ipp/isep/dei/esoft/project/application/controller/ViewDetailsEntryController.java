@@ -53,7 +53,7 @@ public class ViewDetailsEntryController {
     }
 
     public List<VehicleDto> getVehicleListPossibleForEntry(EntryDto entryDto){
-        return vehicleMapper.vehicleListToVehicleDtoList(entryRepository.filterVehicleNotUseInTime(vehicleRepository.getVehicleList(),entryDto));
+        return vehicleMapper.vehicleListToVehicleDtoList(entryRepository.getAgenda().filterVehicleNotUseInTime(vehicleRepository.getVehicleList(),entryDto));
     }
 
     public boolean assignVehicleToEntry(VehicleDto vehicleDto, EntryDto entryDto){
@@ -64,7 +64,7 @@ public class ViewDetailsEntryController {
     }
 
     public List<TeamDto> getTeamListPossibleForEntry(EntryDto entryDto){
-        return teamMapper.teamListToTeamDtoList(entryRepository.filterTeamNotActivateInTime(teamRepository.getTeams(),entryDto));
+        return teamMapper.teamListToTeamDtoList(entryRepository.getAgenda().filterTeamNotActivateInTime(teamRepository.getTeams(),entryDto));
     }
 
     public boolean assignTeamToEntry(TeamDto teamDto, EntryDto entryDto) throws IOException {

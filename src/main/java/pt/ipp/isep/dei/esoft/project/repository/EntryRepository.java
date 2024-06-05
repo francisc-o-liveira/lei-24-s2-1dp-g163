@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class EntryRepository {
-    private List<Entry> agenda;
+    private AgendaList agenda;
     private List<Entry> toDo;
     private static Tempo timeOfWorkByCollaborators;
     private static EntryMapper mapper;
@@ -34,7 +34,7 @@ public class EntryRepository {
 
     public EntryRepository() {
         toDo = new ArrayList<Entry>();
-        agenda = new ArrayList<Entry>();
+        agenda = new AgendaList();
         mapper = new EntryMapper();
         vehicleMapper = new VehicleMapper();
         try {
@@ -47,7 +47,7 @@ public class EntryRepository {
 
 
 
-    public List<Entry> getAgenda() {
+    public AgendaList getAgenda() {
         return agenda;
     }
 
@@ -103,7 +103,7 @@ public class EntryRepository {
 
     public Optional<Entry> cancelEntry(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
-        Entry entry = searchForEntryAgenda(entryDto);
+        Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
         if (entry.isCanceled()){
             agendaEntry = Optional.of(entry);
@@ -114,7 +114,7 @@ public class EntryRepository {
     // Not Complete need to verify data of others entrys in same time of the postpone date
     public Optional<Entry> postponeEntry(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
-        Entry entry = searchForEntryAgenda(entryDto);
+        Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
         if (entry.isPostpone()){
             agendaEntry = Optional.of(entry);
@@ -122,62 +122,18 @@ public class EntryRepository {
         return agendaEntry;
     }
 
-    private Entry searchForEntryAgenda(EntryDto entryDto) {
-        for (Entry entry : agenda) {
-            if (Objects.equals(entry.getTitle(), entryDto.getTitle())
-                    &&Objects.equals(entry.getDegreeUrgency(), entryDto.getDegreeUrgency())
-                    && Objects.equals(entry.getDescription(), entryDto.getDescription())
-                    && Objects.equals(entry.getExpectedDuration(),entryDto.getExpectedDuration())
-            ){
-                return entry;
-            }
-        }
-        throw new RuntimeException("Entry not found");
-    }
 
-    public List<Vehicle> filterVehicleNotUseInTime(List<Vehicle> vehicleList,EntryDto entryDto) {
-        Entry entry = searchForEntryAgenda(entryDto);
-        ComparatorDates comparatorDates = new ComparatorDates();
-        for(Entry entryAgenda : agenda){
-            if(comparatorDates.compare(entry,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
-                for (Vehicle vehicle : entryAgenda.getVehicleList()){
-                    if (vehicleList.contains(vehicle)){
-                        vehicleList.remove(vehicle);
-                    }
-                }
-            }
-        }
-        return vehicleList;
-    }
 
     public Tempo getHoursOfWork() {
         return timeOfWorkByCollaborators;
     }
 
-    public List<Entry> getEntrysByCollaboratorInAgenda(Collaborator collaboratorByEmail, Date first, Date second) {
-        List<Entry> entryCollaboratorList = new ArrayList<>();
-        for (Entry entry: agenda){
-            if (entry.getTeamAssigned()!=null && entryHaveCollaborator(entry,collaboratorByEmail)){
-                if(entry.getStartDate().equals(first) || entry.getStartDate().equals(second)){
-                    entryCollaboratorList.add(entry);
-                }
-            }
-        }
-        return entryCollaboratorList;
-    }
 
-    private boolean entryHaveCollaborator(Entry entry, Collaborator collaboratorByEmail) {
-        for (Collaborator collaborator : entry.getTeamAssigned().getTeamList()){
-            if (collaborator.getEmail().equals(collaboratorByEmail.getEmail())){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     public Optional<Entry> assignVehicleOnEntry(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
-        Entry entry = searchForEntryAgenda(entryDto);
+        Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
         if (entry.getVehicleList().equals(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()))){
             agendaEntry = Optional.of(entry);
@@ -185,37 +141,10 @@ public class EntryRepository {
         return agendaEntry;
     }
 
-    public List<Team> filterTeamNotActivateInTime(List<Team> teams, EntryDto entryDto) {
-        Entry entry = searchForEntryAgenda(entryDto);
-        ComparatorDates comparatorDates = new ComparatorDates();
-        for(Entry entryAgenda : agenda){
-            if(comparatorDates.compare(entry,entryAgenda)==0 && !entryAgenda.getStatus().isCanceled()){ // == 0 significa que ha sobreposiçao das entrys nas datas
-                if(teams.contains(entryAgenda.getTeamAssigned())){
-                    teams.remove(entryAgenda.getTeamAssigned());
-                }else {
-                    // If remove team from the Team List it is possible to have some problem with Collaborators there are in a new Team
-                    // For this we can check if any team have a Collaborator there are assigned in any task
-                    for (Team team : teams){
-                        for (Collaborator collaborator : team.getTeamList()){
-                            if (entry.getTeamAssigned() == null){
-                                break;
-                            }
-                            for (Collaborator collaboratorCompare : entry.getTeamAssigned().getTeamList()){
-                                if (collaborator.getEmail().equals(collaboratorCompare.getEmail())){
-                                    teams.remove(team);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return teams;
-    }
 
     public Optional<Entry> assignTeamOnEntry(EntryDto entryDto) {
         Optional<Entry> agendaEntry = Optional.empty();
-        Entry entry = searchForEntryAgenda(entryDto);
+        Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
         if (entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
             agendaEntry = Optional.of(entry);
@@ -226,7 +155,7 @@ public class EntryRepository {
 
     public Optional<Entry> completeTaskCollaborator(EntryDto entryDto) {
         Optional<Entry> entryCompleted = Optional.empty();
-        Entry entry = searchForEntryAgenda(entryDto);
+        Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
         if(entry.getStatus().isCompleted() && entry.getCollaboratorFinish().equals(entryDto.getCollaboratorFinish())){
             entryCompleted = Optional.of(entry);

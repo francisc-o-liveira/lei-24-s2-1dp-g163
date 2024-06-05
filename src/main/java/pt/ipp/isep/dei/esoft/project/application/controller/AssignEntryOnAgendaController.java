@@ -27,7 +27,7 @@ public class AssignEntryOnAgendaController {
     }
 
     public List<EntryDto> getAgenda(){
-        return mapper.entryListToEntryDtoList(entryRepository.getAgenda());
+        return mapper.entryListToEntryDtoList(entryRepository.getAgenda().getList());
     }
 
     public boolean assignEntryOnAgenda(EntryDto entryDto, Date newDate){
