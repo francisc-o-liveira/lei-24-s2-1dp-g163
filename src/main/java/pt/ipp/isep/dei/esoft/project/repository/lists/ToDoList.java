@@ -3,11 +3,12 @@ package pt.ipp.isep.dei.esoft.project.repository.lists;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class ToDoList {
-    private List<Entry> toDo;
+    private static List<Entry> toDo = new ArrayList<>();
 
     public List<Entry> getToDo() {
         return toDo;
