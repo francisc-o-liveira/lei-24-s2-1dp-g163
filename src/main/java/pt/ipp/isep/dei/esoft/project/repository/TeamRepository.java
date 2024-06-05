@@ -106,29 +106,14 @@ public class TeamRepository {
         List<Team> teams = new ArrayList<>();
         Team teamLoaded;
         try {
-            FileInputStream file = new FileInputStream(MainApp.getTeamDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    teamLoaded = (Team) in.readObject();
-                    if (!teamLoaded.equals(team)) {
-                        teams.add(teamLoaded);
-                    }
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-            in.close();
-            file.close();
-
             FileOutputStream fileOut = new FileOutputStream(MainApp.getTeamDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for (Team teamSave : teams) {
-                out.writeObject(teamSave);
+            if (!teams.contains(team)){
+                out.writeObject(teams);
             }
             out.close();
             fileOut.close();
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -138,12 +123,10 @@ public class TeamRepository {
             FileOutputStream file = new FileOutputStream(MainApp.getTeamDataBaseFile());
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
-            if (file.getChannel().size() > 0) {
-                out = new AppendableObjectOutputStream(file);
-            } else {
-                out = new ObjectOutputStream(file);
+            out = new ObjectOutputStream(file);
+            if (teams.contains(team)){
+                out.writeObject(teams);
             }
-            out.writeObject(team);
             out.close();
             file.close();
         } catch (IOException e) {
@@ -152,14 +135,14 @@ public class TeamRepository {
     }
 
     private void loadFromTeamDataBase(){
-        Team teamLoaded;
+        List<Team> teamLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getTeamDataBaseFile());
             if (file.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(file);
                 while (true) {
                     try {
-                        teamLoaded = (Team) in.readObject();
+                        teamLoaded = (List<Team>) in.readObject();
                         loadInSystem(teamLoaded);
                     } catch (EOFException e) {
                         break;
@@ -173,7 +156,9 @@ public class TeamRepository {
         }
     }
 
-    private void loadInSystem(Team team) throws CloneNotSupportedException {
-        saveTeam(team);
+    private void loadInSystem(List<Team> team) throws CloneNotSupportedException {
+        for (Team teamLoaded : team) {
+            saveTeam(teamLoaded);
+        }
     }
 }
