@@ -25,7 +25,7 @@ public class ManagerBase {
         return instance;
     }
 
-    private ManagerBase(Organization rep){
+    public ManagerBase(Organization rep){
         loadFromManagerDataBase();
         Rep = rep;
     }

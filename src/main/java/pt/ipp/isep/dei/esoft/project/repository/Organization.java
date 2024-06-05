@@ -39,7 +39,7 @@ public class Organization{
         emailPrefix=EMAIL_PREFIX_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
-        databaseManager = ManagerBase.getInstance();
+        databaseManager =new  ManagerBase(this);
     }
 
     public Organization() {
@@ -49,7 +49,7 @@ public class Organization{
         vatNumber=VAT_NUMBER_PER_OMISSION;
         phone=PHONE_PER_OMISSION;
         greenSpaces = new ArrayList<>();
-        databaseManager = ManagerBase.getInstance();
+        databaseManager = new ManagerBase(this);
     }
 
     public static GreenSpace.Type[] getEnumGreenSpaceType(){
