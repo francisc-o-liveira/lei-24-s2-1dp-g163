@@ -1,7 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
@@ -92,32 +90,15 @@ public class SkillRepository {
 
 
     public void removeFromSkillDataBase(Skill skill) {
-        List<Skill> skillList = new ArrayList<>();
-        Skill skillLoaded;
         try {
-            FileInputStream file = new FileInputStream(MainApp.getSkillDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    skillLoaded = (Skill) in.readObject();
-                    if (!skillLoaded.equals(skill)) {
-                        skillList.add(skillLoaded);
-                    }
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-            in.close();
-            file.close();
-
             FileOutputStream fileOut = new FileOutputStream(MainApp.getSkillDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for (Skill skillSave : skillList) {
-                out.writeObject(skillSave);
-            }
+           if (!skillList.contains(skill)) {
+               out.writeObject(skillList);
+           }
             out.close();
             fileOut.close();
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -127,12 +108,10 @@ public class SkillRepository {
             FileOutputStream file = new FileOutputStream(MainApp.getSkillDataBaseFile());
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
-            if (file.getChannel().size() > 0) {
-                out = new AppendableObjectOutputStream(file);
-            } else {
-                out = new ObjectOutputStream(file);
+            out = new AppendableObjectOutputStream(file);
+            if (skillList.contains(skill)) {
+                out.writeObject(skillList);
             }
-            out.writeObject(skill);
             out.close();
             file.close();
         } catch (IOException e) {
@@ -141,15 +120,17 @@ public class SkillRepository {
     }
 
     private void loadFromSkillDataBase(){
-        Skill skillLoaded;
+        List<Skill> skillLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getSkillDataBaseFile());
             if (file.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(file);
                 while (true) {
                     try {
-                        skillLoaded = (Skill) in.readObject();
-                        loadInSystem(skillLoaded);
+                        skillLoaded = (List<Skill>) in.readObject();
+                        if (skillLoaded != null) {
+                            loadInSystem(skillLoaded);
+                        }
                     } catch (EOFException e) {
                         break;
                     }
@@ -162,8 +143,10 @@ public class SkillRepository {
         }
     }
 
-    private void loadInSystem(Skill skill) throws CloneNotSupportedException {
-        verifyIfExistAndSave(skill);
+    private void loadInSystem(List<Skill> skills) throws CloneNotSupportedException {
+        for (Skill skill1 : skills) {
+            verifyIfExistAndSave(skill1);
+        }
     }
 
 }
