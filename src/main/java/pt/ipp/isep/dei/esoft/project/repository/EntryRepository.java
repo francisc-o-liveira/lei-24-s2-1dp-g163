@@ -12,6 +12,7 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.Optional;
 
 public class EntryRepository {
@@ -112,10 +113,16 @@ public class EntryRepository {
         Optional<Entry> agendaEntry = Optional.empty();
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto,entry);
-        if (entry.getTeamAssigned().equals(entryDto.getTeamAssigned())){
+        if (haveSameTeam(entryDto,entry)){
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
+    }
+
+    public boolean haveSameTeam(EntryDto entryDto, Entry entry){
+        return Objects.equals(entryDto.getTeamAssigned().getSkillsSelected(), entry.getTeamAssigned().getSkills())
+                && Objects.equals(entryDto.getTeamAssigned().getTeamName(),entry.getTeamAssigned().getTeamName())
+                && Objects.equals(entryDto.getTeamAssigned().getTeamList(),entry.getTeamAssigned().getTeamList());
     }
 
 
