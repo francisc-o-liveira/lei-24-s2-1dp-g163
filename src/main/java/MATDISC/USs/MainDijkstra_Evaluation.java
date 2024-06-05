@@ -253,19 +253,31 @@ public class MainDijkstra_Evaluation {
         }
 
         // construir o caminho resultante
+        // construir o caminho resultante
         Point currentPoint=endPoint;
         while (currentPoint != null && !currentPoint.equals(startingPoint)) {
-            Point beforePoint=pathVertices.get(vertices.indexOf(currentPoint));
-            if (beforePoint == null) {
+            int currentIndex = vertices.indexOf(currentPoint);
+            if (currentIndex != -1) {
+                Point beforePoint = pathVertices.get(currentIndex);
+                if (beforePoint == null) {
+                    break;
+                }
+                int cost = costsOfVertices.get(currentIndex) - costsOfVertices.get(vertices.indexOf(beforePoint));
+                resultPath.add(new Edge(beforePoint, currentPoint, cost));
+                currentPoint = beforePoint;
+            } else {
+                int cIndex=0;
+                Point beforePoint = pathVertices.get(cIndex);
+                if (beforePoint == null) {
+                    break;
+                }
+                int cost = costsOfVertices.get(cIndex) - costsOfVertices.get(vertices.indexOf(beforePoint));
+                resultPath.add(new Edge(beforePoint, currentPoint, cost));
+                currentPoint = beforePoint;
                 break;
             }
-            int cost = costsOfVertices.get(vertices.indexOf(currentPoint))-costsOfVertices.get(vertices.indexOf(beforePoint));
-            resultPath.add(new Edge(beforePoint, currentPoint, cost));
-            currentPoint=beforePoint;
         }
-
         Collections.reverse(resultPath);
-
         return resultPath;
     }
 
