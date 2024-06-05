@@ -3,12 +3,13 @@ package pt.ipp.isep.dei.esoft.project.domain.org;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GreenSpace {
+public class GreenSpace implements Serializable {
 
 
-    public enum Type{MediumSize,LargeSize,Garden}
+    public enum Type implements Serializable{MediumSize,LargeSize,Garden}
 
     private double areaInHectares;
     private Address address;

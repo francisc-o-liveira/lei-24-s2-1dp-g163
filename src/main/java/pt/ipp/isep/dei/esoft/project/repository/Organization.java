@@ -4,7 +4,10 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -154,4 +157,79 @@ public class Organization{
         return greenSpaceList;
     }
     //Clone organization
+
+    public void removeFromGreenSpaceDataBase(GreenSpace greenSpace) {
+        List<GreenSpace> greenSpaces = new ArrayList<>();
+        GreenSpace greenSpaceLoaded;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getGreenSpaceDataBaseFile());
+            ObjectInputStream in = new ObjectInputStream(file);
+            while (true) {
+                try {
+                    greenSpaceLoaded = (GreenSpace) in.readObject();
+                    if (!greenSpaceLoaded.equals(greenSpace)) {
+                        greenSpaces.add(greenSpaceLoaded);
+                    }
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+            in.close();
+            file.close();
+
+            FileOutputStream fileOut = new FileOutputStream(MainApp.getGreenSpaceDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            for (GreenSpace greenSpaceSave : greenSpaces) {
+                out.writeObject(greenSpaceSave);
+            }
+            out.close();
+            fileOut.close();
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFromGreenSpaceInDataBase(GreenSpace greenSpace){
+        try {
+            FileOutputStream file = new FileOutputStream(MainApp.getGreenSpaceDataBaseFile());
+            ObjectOutputStream out;
+            // If the file already has content, we need to use the AppendableObjectOutputStream
+            if (file.getChannel().size() > 0) {
+                out = new AppendableObjectOutputStream(file);
+            } else {
+                out = new ObjectOutputStream(file);
+            }
+            out.writeObject(greenSpace);
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFromGreenSpaceDataBase(){
+        GreenSpace greenSpaceLoaded;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getGreenSpaceDataBaseFile());
+            if (file.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        greenSpaceLoaded = (GreenSpace) in.readObject();
+                        loadInSystem(greenSpaceLoaded);
+                    } catch (EOFException e) {
+                        break;
+                    }
+                }
+                in.close();
+            }
+            file.close();
+        } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(GreenSpace greenSpace) throws CloneNotSupportedException {
+        saveGreenSpace(greenSpace);
+    }
 }
