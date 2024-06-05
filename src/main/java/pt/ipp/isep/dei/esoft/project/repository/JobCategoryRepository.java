@@ -116,12 +116,10 @@ public class JobCategoryRepository {
             FileOutputStream file = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
-            if (file.getChannel().size() > 0) {
-                out = new AppendableObjectOutputStream(file);
-            } else {
-                out = new ObjectOutputStream(file);
+            out = new ObjectOutputStream(file);
+            if (jobCategories.contains(jobCategory)) {
+                out.writeObject(jobCategories);
             }
-            out.writeObject(jobCategory);
             out.close();
             file.close();
         } catch (IOException e) {
@@ -130,15 +128,17 @@ public class JobCategoryRepository {
     }
 
     private void loadFromJobCategoryDataBase(){
-        JobCategory jobCategoryLoaded;
+        List<JobCategory> jobCategoryLoaded;
         try {
             FileInputStream file = new FileInputStream(MainApp.getJobCategoryDataBaseFile());
             if (file.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(file);
                 while (true) {
                     try {
-                        jobCategoryLoaded = (JobCategory) in.readObject();
-                        loadInSystem(jobCategoryLoaded);
+                        jobCategoryLoaded = (List<JobCategory>) in.readObject();
+                        if (jobCategoryLoaded != null) {
+                            loadInSystem(jobCategoryLoaded);
+                        }
                     } catch (EOFException e) {
                         break;
                     }
@@ -152,8 +152,14 @@ public class JobCategoryRepository {
         }
     }
 
-    private void loadInSystem(JobCategory jobCategory) throws CloneNotSupportedException {
-        verifyJobCategoryExistAndSave(jobCategory);
+    private void loadInSystem(List<JobCategory> jobCategorys) throws CloneNotSupportedException {
+        if (jobCategorys==null) {
+            throw new RuntimeException("Nothing to load");
+        }
+        for (JobCategory jobCategoryLoaded : jobCategorys) {
+            verifyJobCategoryExistAndSave(jobCategoryLoaded);
+        }
+
     }
 
 }
