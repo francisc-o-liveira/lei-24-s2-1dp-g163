@@ -260,36 +260,15 @@ public class CollaboratorRepository {
     }
 
     public void removeFromCollaboratorDataBase(Collaborator collaborator) {
-        List<Collaborator> collaborators = new ArrayList<>();
-        Collaborator collaboratorLoad;
         try {
-            FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    collaboratorLoad = (Collaborator) in.readObject();
-                    if (!collaboratorLoad.getEmail().equals(collaborator.getEmail())) {
-                        collaborators.add(collaboratorLoad);
-                    }
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-            in.close();
-            file.close();
-
-
-
-
             FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for (Collaborator collab : collaborators) {
-                out.writeObject(collab);
-            }
-            out.close();
-            fileOut.close();
-
-        } catch (ClassNotFoundException | IOException e) {
+           if (!collaboratorList.contains(collaborator)) {
+               out.writeObject(collaborator);
+           }
+           out.close();
+           fileOut.close();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -299,12 +278,8 @@ public class CollaboratorRepository {
             FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile(), true);
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
-            if (file.getChannel().size() > 0) {
-                out = new AppendableObjectOutputStream(file);
-            } else {
-                out = new ObjectOutputStream(file);
-            }
-            out.writeObject(collaborator);
+            out = new ObjectOutputStream(file);
+            out.writeObject(collaboratorList);
             out.close();
             file.close();
         } catch (IOException e) {
@@ -314,15 +289,19 @@ public class CollaboratorRepository {
 
 
     private void loadFromCollaboratorDataBase(){
-        Collaborator collaboratorLoad;
+        List<Collaborator> collaboratorLoad;
         try {
             FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
             if (file.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(file);
                 while (true) {
                     try {
-                        collaboratorLoad = (Collaborator) in.readObject();
-                        loadInSystem(collaboratorLoad);
+                        collaboratorLoad = (List<Collaborator>) in.readObject();
+                        if (collaboratorLoad != null) {
+                            for (Collaborator collaborator : collaboratorLoad) {
+                                loadInSystem(collaborator);
+                            }
+                        }
                     } catch (EOFException e) {
                         break;
                     }
