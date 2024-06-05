@@ -19,7 +19,7 @@ participant ":VehicleMapper" as SelectedMAPPER
 participant ":Entry" as OBJ
 participant ":EntryDto" as DTO
 participant ":EntryMapper" as MAPPER
-participant "agenda : List<Entry>" as List
+participant "agenda : AgendaList" as List
 autonumber 3
 
  -> CTRL** : create()

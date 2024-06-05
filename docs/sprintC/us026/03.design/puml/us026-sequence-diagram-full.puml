@@ -94,8 +94,13 @@ activate GSM
                                                     VehicleRepository -> CTRL2 : vehicleList
                                                     deactivate VehicleRepository
 
-                                                    CTRL2 -> EntryRepository : filterVehiclesNotUseInTime(entryDto,vehicleList)
+                                                    CTRL2 -> EntryRepository : getAgendaList()
                                                     activate EntryRepository
+
+                                                    EntryRepository -> AgendaList : filterVehiclesNotUseInTime(entryDto,vehicleList)
+                                                    activate AgendaList
+                                                    ref over AgendaList : method omitted
+                                                    deactivate AgendaList
 
                                                     EntryRepository -> OBJ : getVehicleList()
                                                     activate OBJ
@@ -142,7 +147,7 @@ activate GSM
              GSM -> UI2 : select one vehicle and click on button to assign
              activate UI2
 
-            UI2 -> CTRL2 : assignVehicleToEntry(vehicleDto)
+            UI2 -> CTRL2 : assignVehicleToEntry(vehicleDto,entryDto)
             activate CTRL2
 
             CTRL2 -> SelectedMAPPER : toModel(vehicleDto)
@@ -171,10 +176,13 @@ activate GSM
 
 
             EntryRepository -> CTRL2 : true/false
+            deactivate EntryRepository
 
             CTRL2 -> UI2 : true/false
+            deactivate CTRL2
 
             UI2 -> GSM : show operation success
+            deactivate UI2
             end
 
 
