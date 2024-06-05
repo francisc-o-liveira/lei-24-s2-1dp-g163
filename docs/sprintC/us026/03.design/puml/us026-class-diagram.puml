@@ -125,7 +125,8 @@ AssignedVehicleToEntryController ..> EntryRepository : EntryRepository
 AssignedVehicleToEntryController ..> EntryMapper : EntryMapper
 AssignedVehicleToEntryController ..> VehicleMapper : VehicleMapper
 
-EntryMapper "1" --> "*" EntryDto
+EntryMapper "1" ..> "*" EntryDto
+EntryMapper "1" ..> "*" Entry
 
 VehicleRepository "1" --> "*" Vehicle : vehicles
 VehicleMapper "1" --> "*" Vehicle
