@@ -28,7 +28,7 @@ participant "organization:Organization" as Organization
 participant ":GreenSpaceMapper" as Mapper
 participant "greenSpaceListSorted:List<GreenSpace>" as GreenSpaceList
 participant "greenSpaceListSortedDto:List<GreenSpaceDto>" as GreenSpaceDtoList
-participant "greenSpaceDto:GreenSpaceDto" as GreenSpaceDto
+participant "objDto:GreenSpaceDto" as GreenSpaceDto
 
 activate GSM
 
@@ -86,7 +86,7 @@ deactivate AuthFacade
 AuthRepo --> Controller : userSession
 deactivate AuthRepo
 
-Controller -> UserSession : getUserEmail()
+Controller -> UserSession : getUser()
 activate UserSession
 
 UserSession -> User : getEmail()
@@ -153,7 +153,7 @@ deactivate Mapper
 Controller --> UI : greenSpaceListSortedDto
 deactivate Controller
 
-UI --> GSM : Shows List of GreenSpaces
+UI --> GSM : Shows Sorted List of Managed Green Spaces
 deactivate UI
 
 @enduml

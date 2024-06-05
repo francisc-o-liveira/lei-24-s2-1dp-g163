@@ -19,10 +19,10 @@ participant ":ViewDetailsEntryController" as CTRL2
 participant "Repositories" as Repos
 participant "repositories\n:Repositories" as reposRepos
 participant "entryRepository:EntryRepository" as EntryRepo
-participant "entry:Entry" as Entry
+/' participant "entry:Entry" as Entry'/
 participant ":EntryMapper" as EntryMapper
 participant "entryList:list<Entry>" as EntryList
-participant "entryListDto:list<EntryDto>" as EntryListDto
+participant "agendaEntryListDto:list<EntryDto>" as EntryListDto
 participant "objDto:EntryDto" as EntryDto
 
 participant "teamRepository:TeamRepository" as TeamRepo
@@ -42,9 +42,9 @@ participant "objDto:VehicleDto" as VehicleDto
 activate GSM
 
 
-group Get details and management options of a selected entry on the agenda
+group Get the details and management options of a selected entry on the agenda
 
-    GSM -> UI: Asks to assign a team to an entry in the Agenda
+    GSM -> UI: Asks to get the details and management\n options of a specific entry on the agenda
     activate UI
 
 
@@ -102,19 +102,17 @@ group Get details and management options of a selected entry on the agenda
     deactivate UI
 
 
-    GSM -> UI: Selects one Entry
+    GSM -> UI: Selects an Entry
     activate UI
 
-    UI -> UI2: receiveDto(entryDto)
+    UI -> UI2: showEntryDetails(entryDto)
+    deactivate UI
     activate UI2
+    
 
     note right of UI
         (DTO of the Selected Entry)
     end note
-
-
-    UI -> UI2: showEntryDetails()
-    deactivate UI
 
     UI2 -> CTRL2**: create()
 
@@ -167,7 +165,7 @@ group Get details and management options of a selected entry on the agenda
 
     deactivate TeamList
 
-    TeamMapper -> CTRL2 : TeamNameListDto
+    TeamMapper -> CTRL2 : teamListDto
     deactivate TeamMapper
 
 
@@ -207,10 +205,10 @@ group Get details and management options of a selected entry on the agenda
 
 
 
-    CTRL2 --> UI2: TeamNameListDto, vehicleListDto
+    CTRL2 --> UI2: teamListDto, vehicleListDto
     deactivate CTRL2
 
-    UI2 -> GSM: Shows Entry Details and Management Options
+    UI2 -> GSM: Displays Entry Details and Management Options
     deactivate UI2
 end
 

@@ -1,0 +1,154 @@
+@startuml
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+left to right direction
+
+package "UI" #f0f0f0{
+    class ViewDetailsEntryUI {
+    }
+
+}
+package "Core" #f0f0f0{
+
+    package "Controller" #dddddd{
+
+        class ViewDetailsEntryController {
+            +assignTeamToEntry(objDto: TeamDto, entryDto: EntryDto)
+        }
+
+        ViewDetailsEntryUI ..>  ViewDetailsEntryController
+
+
+    }
+
+    package "Domain" #dddddd{
+
+
+        package "Mapper" #dddddd{
+
+            class EntryMapper {
+                +toDomainAndAssignTeam(team: Team, entryDto: EntryDto): boolean
+            }
+
+
+            class TeamMapper {
+                +extractName(objDto: TeamDto): String
+            }
+
+
+        }
+
+        package "DTO" #dddddd{
+
+            class EntryDto {
+                +getReference(): String
+            }
+
+            EntryMapper ..> EntryDto
+
+            class TeamDto {
+                +teamName: String
+                +getTeamName() : String
+            }
+
+            TeamMapper ..> TeamDto
+
+
+        }
+
+        package "Repository" #bbbbbb{
+
+            class Repositories {
+                - static instance : Repositories
+                + getInstance() : Repositories
+                + getEntryRepository() : EntryRepository
+                + getTeamRepository() : TeamRepository
+                - Repositories()
+            }
+
+            ViewDetailsEntryController ..> Repositories : repositories
+
+            Repositories --> Repositories : instance
+
+            class EntryRepository {
+                +assignTeamToEntry(team: Team, entryDto: EntryDto) : boolean
+                +findEntryByReference(reference:String) : Entry
+            }
+            EntryRepository ..> EntryMapper   
+            Repositories "1" --> "1" EntryRepository : entryRepository
+
+            class TeamRepository {
+                +getTeamName(objDto: TeamDto): String
+                +findTeamByName(teamName: String): Team
+            }
+            TeamRepository ..> TeamMapper   
+            Repositories "1" --> "1" TeamRepository : teamRepository
+            ViewDetailsEntryController ..> TeamRepository: teamRepository
+
+        }
+
+        package "Model" #bbbbbb{
+
+            class Entry {
+                +assignTeam(team: Team): boolean
+                + setTeamAssigned(team: Team): boolean
+            }
+
+            EntryRepository "1" --> "*" Entry
+            EntryMapper  ..> Entry
+
+            class Team {
+                +sendToEmailFile(subject: String, message: String): boolean
+            }
+
+            TeamRepository "1" --> "*" Team
+            TeamMapper  ..> Team
+
+            class Collaborator {
+                +getEmail(): String
+            }
+
+            Team "*" --> "*" Collaborator
+
+        }
+
+        package "Adapters" #bbbbbb{
+
+            class EmailService {
+                +sendToEmailFile(email: String, subject: String, message: String): void
+            }
+
+            Team ..> EmailService
+
+            class ApplicationSession {
+                +getEmailService(): EmailService
+            }
+            EmailService "1" --> "1" ApplicationSession
+
+
+            class GmailService implements SendEmailExternalAPI {
+                +sendEmail(email: String, subject: String, message: String): void
+            }
+
+            EmailService "1" --> "1" GmailService
+
+            class DeiEmailService implements SendEmailExternalAPI {
+                +sendEmail(email: String, subject: String, message: String): void
+            }
+
+            EmailService "1" --> "1" DeiEmailService
+
+            interface SendEmailExternalAPI <<interface>> {
+                +sendEmail(email: String, subject: String, message: String): void
+            }
+
+            
+        }
+
+
+
+    }
+}
+
+@enduml

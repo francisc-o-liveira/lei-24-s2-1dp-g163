@@ -1,0 +1,69 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+
+participant "team:Team" as Team
+
+participant "collaborator:Collaborator" as Collaborator
+
+participant ":EmailService" as EmailService
+
+participant ":ApplicationSession" as ApplicationSession
+participant ":GmailService" as GmailService
+participant ":DeiEmailService" as DeiEmailService
+
+
+
+
+autonumber 4.1
+-> Team : sendToEmailFile(subject, message)
+activate Team
+group Send Email to All Team members
+
+
+
+    loop for each collaborator in collaboratorsTeam
+        Team -> Collaborator : getEmail()
+        activate Collaborator
+
+        Collaborator -> Team : email
+        deactivate Collaborator
+
+        Team -> EmailService: sendToEmailFile(email, subject, message)
+        activate EmailService
+        EmailService -> ApplicationSession : getEmailService()
+        activate ApplicationSession
+
+
+        ApplicationSession --> EmailService : emailService
+        deactivate ApplicationSession
+
+        alt emailService is GmailService
+            EmailService -> GmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
+            activate GmailService
+            deactivate GmailService
+        else emailService is DeiEmailService
+            EmailService -> DeiEmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
+            activate DeiEmailService
+            deactivate DeiEmailService
+
+        end
+        deactivate EmailService
+
+    end
+    
+
+
+end
+
+autonumber 5
+
+<- Team: true
+deactivate Team
+
+
+
+@enduml
