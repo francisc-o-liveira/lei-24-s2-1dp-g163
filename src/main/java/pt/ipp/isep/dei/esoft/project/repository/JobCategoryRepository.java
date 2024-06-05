@@ -81,32 +81,15 @@ public class JobCategoryRepository {
 
 
     public void removeFromJobCategoryDataBase(JobCategory jobCategory) {
-        List<JobCategory> jobCategoryList = new ArrayList<>();
-        JobCategory jobCategoryLoaded;
         try {
-            FileInputStream file = new FileInputStream(MainApp.getJobCategoryDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    jobCategoryLoaded = (JobCategory) in.readObject();
-                    if (!jobCategoryLoaded.equals(jobCategory)) {
-                        jobCategoryList.add(jobCategoryLoaded);
-                    }
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-            in.close();
-            file.close();
-
             FileOutputStream fileOut = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for (JobCategory jobCategorySave : jobCategoryList) {
-                out.writeObject(jobCategorySave);
+            if (!jobCategories.contains(jobCategory)){
+                out.writeObject(jobCategories);
             }
             out.close();
             fileOut.close();
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
