@@ -90,7 +90,7 @@ public class Organization{
         boolean success = false;
         if (validateManager(newManager)) {
             success = managers.add(newManager);
-            dataBaseManager.saveFromManagerInDataBase(newManager);
+            dataBaseManager.saveFromManagerInDataBase(managers);
         }
         return success;
     }
@@ -150,7 +150,7 @@ public class Organization{
     public void removeManager(Manager manager) {
         if(managers.contains(manager)){
             managers.remove(manager);
-            dataBaseManager.removeFromManagerDataBase(manager);
+            dataBaseManager.removeFromManagerDataBase(manager,managers);
         } else {
             throw new RuntimeException("This Collaborator does not exist in the Repository");
         }

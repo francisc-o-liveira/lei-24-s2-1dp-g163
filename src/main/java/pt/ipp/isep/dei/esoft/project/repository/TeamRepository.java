@@ -103,7 +103,6 @@ public class TeamRepository {
     }
 
     public void removeFromTeamDataBase(Team team) {
-        List<Team> teams = new ArrayList<>();
         Team teamLoaded;
         try {
             FileOutputStream fileOut = new FileOutputStream(MainApp.getTeamDataBaseFile());

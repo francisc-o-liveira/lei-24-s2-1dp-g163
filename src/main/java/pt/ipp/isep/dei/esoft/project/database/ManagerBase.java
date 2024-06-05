@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.database;
 
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
+import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
@@ -37,48 +38,28 @@ public class ManagerBase {
         return Rep;
     }
 
-    public void removeFromManagerDataBase(Manager manager) {
-        List<Manager> managers = new ArrayList<>();
-        Manager managerLoaded;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getManagerDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    managerLoaded = (Manager) in.readObject();
-                    if (!managerLoaded.equals(manager)) {
-                        managers.add(managerLoaded);
-                    }
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-            in.close();
-            file.close();
+    public void removeFromManagerDataBase(Manager manager,List<Manager> managers) {
 
+        try {
             FileOutputStream fileOut = new FileOutputStream(MainApp.getManagerDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for (Manager managerSave : managers) {
-                out.writeObject(managerSave);
-            }
+           if (!managers.contains(manager)){
+               out.writeObject(managers);
+           }
             out.close();
             fileOut.close();
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saveFromManagerInDataBase(Manager manager){
+    public void saveFromManagerInDataBase(List<Manager> managers){
         try {
             FileOutputStream file = new FileOutputStream(MainApp.getManagerDataBaseFile());
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
-            if (file.getChannel().size() > 0) {
-                out = new AppendableObjectOutputStream(file);
-            } else {
-                out = new ObjectOutputStream(file);
-            }
-            out.writeObject(manager);
+            out = new ObjectOutputStream(file);
+            out.writeObject(managers);
             out.close();
             file.close();
         } catch (IOException e) {
@@ -87,15 +68,19 @@ public class ManagerBase {
     }
 
     public void loadFromManagerDataBase(){
-        Manager manager;
+        List<Manager> managers;
         try {
             FileInputStream file = new FileInputStream(MainApp.getManagerDataBaseFile());
             if (file.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(file);
                 while (true) {
                     try {
-                        manager = (Manager) in.readObject();
-                        loadInSystem(manager);
+                        managers = (List<Manager>) in.readObject();
+                        if (managers != null){
+                            for (Manager manager : managers) {
+                                loadInSystem(manager);
+                            }
+                        }
                     } catch (EOFException e) {
                         break;
                     }

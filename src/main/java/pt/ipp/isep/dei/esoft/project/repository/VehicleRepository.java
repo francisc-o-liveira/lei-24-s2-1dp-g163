@@ -281,36 +281,18 @@ public class VehicleRepository {
     }
 
     public void removeFromVehicleDataBase(Vehicle vehicle) {
-        List<Vehicle> vehicles = new ArrayList<>();
-        Vehicle vehicleLoad;
+
         try {
-            FileInputStream file = new FileInputStream(MainApp.getVehicleDataBaseFile());
-            ObjectInputStream in = new ObjectInputStream(file);
-            while (true) {
-                try {
-                    vehicleLoad = (Vehicle) in.readObject();
-                    if (!vehicleLoad.getPlate().equals(vehicle.getPlate())) {
-                        vehicles.add(vehicleLoad);
-                    }
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-            in.close();
-            file.close();
-
-
-
 
             FileOutputStream fileOut = new FileOutputStream(MainApp.getVehicleDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            for (Vehicle vehicleOut : vehicles) {
-                out.writeObject(vehicleOut);
-            }
+           if (!vehicleList.contains(vehicle)) {
+               out.writeObject(vehicleList);
+           }
             out.close();
             fileOut.close();
 
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -320,12 +302,10 @@ public class VehicleRepository {
             FileOutputStream file = new FileOutputStream(MainApp.getVehicleDataBaseFile(), true);
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
-            if (file.getChannel().size() > 0) {
-                out = new AppendableObjectOutputStream(file);
-            } else {
-                out = new ObjectOutputStream(file);
+            out = new ObjectOutputStream(file);
+            if (vehicleList.contains(vehicle)) {
+                out.writeObject(vehicleList);
             }
-            out.writeObject(vehicle);
             out.close();
             file.close();
         } catch (IOException e) {
