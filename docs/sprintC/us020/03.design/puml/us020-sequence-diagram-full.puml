@@ -13,7 +13,7 @@ participant ":Repositories" as Repos
 participant "repositories\n:Repositories" as reposRepos
 participant "organizationRepository:Organization" as Organization
 participant ":GreenSpace" as GreenSpace
-participant "GreenSpace.Type" as Type
+participant "<<enum>>\nGreenSpace.Type" as Type
 
 
 participant ":GreenSpaceMapper" as GreenSpaceMapper
@@ -115,14 +115,14 @@ note right of UI
  newArea, typeName)
 end note
 
-CTRL -> Organization : registerGreenSpace(objDto)
+CTRL -> Organization : greenSpace = registerGreenSpace(objDto)
 activate Organization
 note right of CTRL
 (newName, newAddress, newArea, typeName)
 end note
 
 
-Organization -> GreenSpaceMapper : toModel(objDto)
+Organization -> GreenSpaceMapper : greenSpace = toModel(objDto)
 activate GreenSpaceMapper
 note right of Organization
 (newName, newAddress, newArea, typeName)

@@ -1,0 +1,135 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":ViewDetailsEntryController" as CTRL2
+
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+
+
+participant "teamRepository:TeamRepository" as TeamRepo
+
+participant ":TeamMapper" as TeamMapper
+/'
+participant "teamList:list<Team>" as TeamList
+participant "teamListDto:list<TeamDto>" as TeamListDto
+participant "objDto:TeamDto" as TeamDto
+'/
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+
+participant ":VehicleMapper" as VehicleMapper
+/'
+participant "vehicleList:list<Vehicle>" as VehicleList
+participant "vehicleListDto:list<VehicleDto>" as VehicleListDto
+participant "objDto:VehicleDto" as VehicleDto '/
+
+
+autonumber 8
+
+-> CTRL2 : getDataNeeded()
+autonumber 8.1
+activate CTRL2
+group Get Data Required to Display Selected Entry Management Options
+
+
+    CTRL2 -> Repos: getInstance()
+    activate Repos
+
+    Repos --> CTRL2: repositories
+    deactivate Repos
+
+    CTRL2 -> reposRepos: getTeamRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: teamRepository
+    deactivate reposRepos
+
+    CTRL2 -> reposRepos: getVehicleRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: vehicleRepository
+    deactivate reposRepos
+
+    CTRL2 -> TeamRepo: getTeamList()
+    activate TeamRepo
+
+    TeamRepo --> CTRL2: teamList
+    deactivate TeamRepo
+
+
+    CTRL2 -> TeamMapper : toDTO(teamList)
+    activate TeamMapper
+
+    ref over TeamMapper
+    Convert the Team List to DTO
+    end ref
+    /'
+    TeamMapper -> TeamListDto** : create()
+
+    loop for each object in TeamList
+        TeamMapper -> TeamList : obj = get()
+        activate TeamList
+        deactivate TeamList
+        TeamMapper -> TeamMapper: objDto = toDto(obj)
+        activate TeamMapper
+
+        TeamMapper -> TeamDto** : create(obj.getTeamName())
+        deactivate TeamMapper
+        TeamMapper -> TeamListDto : add(objDto)
+        activate TeamListDto
+        deactivate TeamListDto
+        end 
+
+        deactivate TeamList'/
+
+        TeamMapper -> CTRL2 : teamListDto
+        deactivate TeamMapper
+
+
+        CTRL2 -> VehicleRepo: getVehicleList()
+        activate VehicleRepo
+
+        VehicleRepo --> CTRL2: vehicleList
+        deactivate VehicleRepo
+
+
+
+
+        CTRL2 -> VehicleMapper : toDTO(vehicleList)
+        activate VehicleMapper
+        ref over VehicleMapper
+        Convert the Vehicle List to DTO
+        end ref
+        /'
+        VehicleMapper -> VehicleListDto** : create()
+
+        loop for each object in VehicleList
+            VehicleMapper -> VehicleList : obj = get()
+            activate VehicleList
+            deactivate VehicleList
+            VehicleMapper -> VehicleMapper: objDto = toDto(obj)
+            activate VehicleMapper
+
+            VehicleMapper -> VehicleDto** : create(obj.getBrand(), obj.getModel(), obj.getPlate())
+            deactivate VehicleMapper
+            VehicleMapper -> VehicleListDto : add(objDto)
+            activate VehicleListDto
+            deactivate VehicleListDto
+        end
+
+        deactivate VehicleList '/
+
+        VehicleMapper -> CTRL2 : vehicleListDto
+        deactivate VehicleMapper
+
+    end
+
+    autonumber 9
+    <-- CTRL2  : teamListDto, vehicleListDto
+    deactivate CTRL2
+
+    @enduml

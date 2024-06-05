@@ -77,7 +77,7 @@ function kruskalAlgorithm(edges):
     V = size(vertices)
     parent = new array of size V
     rank = new array of size V
-    for i from 0 to V-1:
+    for i from 0 to V:
         parent[i] = i
         rank[i] = 0
     for each edge in edges:

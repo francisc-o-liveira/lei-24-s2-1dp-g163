@@ -1,0 +1,78 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":AgendaController" as Controller
+
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+participant "entryRepository:EntryRepository" as EntryRepo
+
+participant ":EntryMapper" as EntryMapper
+participant "entryList:list<Entry>" as EntryList
+participant "agendaEntryListDto:list<EntryDto>" as EntryListDto
+participant "objDto:EntryDto" as EntryDto
+
+
+autonumber 2
+
+-> Controller: getAgendaEntryListDto()
+autonumber 2.1
+activate Controller
+group Get List of Agenda Entries
+
+    Controller -> Repos: getInstance()
+    activate Repos
+
+    Repos --> Controller: repositories
+    deactivate Repos
+
+    Controller -> reposRepos: getEntryRepository()
+    activate reposRepos
+
+    reposRepos --> Controller: entryRepository
+    deactivate reposRepos
+
+    Controller -> EntryRepo: getAgenda()
+    activate EntryRepo
+
+    EntryRepo -> Controller: agendaEntryList
+    deactivate EntryRepo
+
+
+    Controller -> EntryMapper : toDTO(agendaEntryList)
+    activate EntryMapper
+
+    EntryMapper -> EntryListDto** : create()
+
+    loop for each object in EntryList
+        EntryMapper -> EntryList : obj = get()
+        activate EntryList
+        deactivate EntryList
+        EntryMapper -> EntryMapper: objDto = toDto(obj)
+        activate EntryMapper
+
+        EntryMapper -> EntryDto** : create(obj.getStartDate(), obj.getStatus(),\nobj.getVehicleList(), obj.getTeamAssigned(), obj.getReference())
+        deactivate EntryMapper
+        EntryMapper -> EntryListDto : add(objDto)
+        activate EntryListDto
+        deactivate EntryListDto
+    end
+
+    deactivate EntryList
+
+    EntryMapper -> Controller : agendaEntryListDto
+    deactivate EntryMapper
+
+end
+
+autonumber 3
+<-- Controller  : agendaEntryListDto
+deactivate Controller
+
+@enduml

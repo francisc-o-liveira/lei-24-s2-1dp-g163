@@ -1,0 +1,23 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+class GSM {
+    email
+    password
+}
+
+class GreenSpace {
+    name
+    area
+    type
+    location
+}
+
+GSM "1..*" -- "*" GreenSpace : manages >
+
+@enduml
