@@ -65,7 +65,7 @@ activate GSM
             CTRL -> EntryRepository : assignEntryOnAgenda(entryDto)
             activate EntryRepository
 
-            ref over EntryRepository: Get Entry equal to DTO again with Task
+            ref over EntryRepository: Get Entry equal to DTO again with Task / To Model Mapper
 
 
 

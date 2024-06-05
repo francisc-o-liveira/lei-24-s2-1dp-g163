@@ -23,6 +23,9 @@ autonumber 3.1
 activate EntryRepository
     group To Model Mapper
 
+                    EntryRepository -> ToDoList : searchForEntryToDo(EntryDto entryDto)
+                    activate ToDoList
+                    deactivate ToDoList
 
                     EntryRepository -> MAPPER : toModel(entryDto, entry)
                        activate MAPPER

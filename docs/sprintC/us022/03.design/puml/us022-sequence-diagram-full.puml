@@ -110,7 +110,12 @@ activate GSM
             CTRL -> EntryRepository : assignEntryOnAgenda(entryDto)
             activate EntryRepository
 
+
+            EntryRepository -> ToDoList : searchForEntryToDo(EntryDto entryDto)
+            activate ToDoList
+            deactivate ToDoList
             ref over EntryRepository: Get Entry equal to DTO again with Task
+
 
             EntryRepository -> MAPPER : toModel(entryDto, entry)
             activate MAPPER
