@@ -17,6 +17,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Authen
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class ManageGreenSpacesUI implements Initializable {
     public Stage stage = LoginUI.getMainStage();
 
     @FXML
-    private TableColumn<GreenSpaceDto, String> colAddress;
+    private TableColumn<GreenSpaceDto, Address> colAddress;
 
     @FXML
     private TableColumn<GreenSpaceDto, Double> colArea;
@@ -60,7 +61,7 @@ public class ManageGreenSpacesUI implements Initializable {
 
     public void setTableGreenSpaces(){
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("addressStreet"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colArea.setCellValueFactory(new PropertyValueFactory<>("areaInHectares"));
         colDetails.setCellFactory(new Callback<
                 TableColumn<GreenSpaceDto, Void>, TableCell<GreenSpaceDto, Void>>() {

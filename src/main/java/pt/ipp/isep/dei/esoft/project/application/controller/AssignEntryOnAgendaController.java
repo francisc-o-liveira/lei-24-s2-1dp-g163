@@ -48,4 +48,8 @@ public class AssignEntryOnAgendaController {
         }
         return instance;
     }
+
+    public void saveToDB() {
+        entryRepository.saveToDB();
+    }
 }

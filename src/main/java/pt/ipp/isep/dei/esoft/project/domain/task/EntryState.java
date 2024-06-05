@@ -1,7 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain.task;
 
 
-public class EntryState {
+import java.io.Serializable;
+
+public class EntryState implements Serializable {
 
 
     public enum State{Planned,Postponed,Assigned,Canceled,Done}

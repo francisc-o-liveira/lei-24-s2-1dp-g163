@@ -13,6 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {
@@ -50,9 +51,20 @@ public class MainApp extends Application {
                     }
                 }
             });
+
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                saveData();
+            }));
+
         } catch (IOException ex) {
             criarAlertaErro(ex).show();
         }
+    }
+
+    public AssignEntryOnAgendaController ctrlEntry=AssignEntryOnAgendaController.getInstance();
+
+    public void saveData(){
+        ctrlEntry.saveToDB();
     }
 
     /**
@@ -106,8 +118,8 @@ public class MainApp extends Application {
 
     private static String entryReferenceDataBaseFile = new String("src/main/resources/DataBase/entryReferenceDataBase.txt");
 
-    private static String getEntryReferenceDataBaseFile() {
-        return entryReferenceDataBaseFile;
+    public static String getEntryDataBaseFile() {
+        return entryDataBaseFile;
     }
 
     private static String getEntryReferenceReferenceDataBaseFile() {

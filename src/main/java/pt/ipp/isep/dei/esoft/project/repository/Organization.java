@@ -129,6 +129,7 @@ public class Organization{
                 return false;
             }
         }
+        saveFromGreenSpaceInDataBase(greenSpace);
         return saveGreenSpace(greenSpace);
     }
 

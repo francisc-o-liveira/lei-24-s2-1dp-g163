@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.utilities;
 
-public class TimePeriod {
+import java.io.Serializable;
+
+public class TimePeriod implements Serializable {
     private Date startDate;
     private Date endDate;
     private Tempo timeOfWork;

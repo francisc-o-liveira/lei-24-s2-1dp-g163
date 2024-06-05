@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.utilities;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Calendar;
  *
  * @author ISEP-DEI-PPROG
  */
-public class Tempo implements Comparable<Tempo> {
+public class Tempo implements Comparable<Tempo>, Serializable {
 
     /**
      * As horas do tempo.

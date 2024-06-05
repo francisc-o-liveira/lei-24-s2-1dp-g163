@@ -130,7 +130,6 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return  "\n\t\t|->zipCode: " + zipCode +
-                "\n\t\t|->street: " + street;
+        return  String.format("%s, %s %s", street, city, zipCode);
     }
 }
