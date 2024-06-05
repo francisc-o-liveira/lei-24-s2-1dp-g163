@@ -75,7 +75,7 @@ public class EntryMapper {
         boolean value = true;
         ComparatorDates comparatorDates = new ComparatorDates();
         Entry entryToCompare = getEntryFromDtoToCompare(entryDto);
-        for (Entry entryAgenda : Repositories.getInstance().getEntryRepository().getAgenda()) {
+        for (Entry entryAgenda : Repositories.getInstance().getEntryRepository().getAgenda().getList()) {
             if (comparatorDates.compare(entryToCompare, entryAgenda) == 0 && !entryAgenda.getStatus().isCanceled()) {
                 if (haveObjectsOf(entryToCompare, entryAgenda)) {
                     value = false;
