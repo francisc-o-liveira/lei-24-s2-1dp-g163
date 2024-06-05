@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain.employee;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Manager {
+public class Manager implements Serializable {
 
     private String email;
     private String name;

@@ -120,4 +120,15 @@ public class MainApp extends Application {
     public static String getVehicleDataBaseFile() {
         return vehicleDataBaseFile;
     }
+    private static String teamDataBaseFile = new String("src/main/resources/DataBase/teamDataBase.csv");
+
+
+    public static String getTeamDataBaseFile() {
+        return teamDataBaseFile;
+    }
+
+    private static String greenSpaceDataBaseFile = new String("src/main/resources/DataBase/greenSpaceDataBase.csv");
+
+    public static String getGreenSpaceDataBaseFile() {
+    }
 }
