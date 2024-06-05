@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AgendaList implements Serializable {
-    private List<Entry> agenda;
+    private static List<Entry> agenda = new ArrayList<>();
 
     public List<Entry> getList() {
         return agenda;
