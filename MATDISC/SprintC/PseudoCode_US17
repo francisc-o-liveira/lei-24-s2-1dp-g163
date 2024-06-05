@@ -1,40 +1,41 @@
 // Function to find the index of the vertex with the minimum cost that has not been visited yet
+
+
+
 function indexOfMin(costsOfVertices, verticesVisited, numVertices):
     min = INFINITY
     indexOfMinimum = -1
     for j = 0 to numVertices-1:
-        if not verticesVisited[j] and costsOfVertices[j] < min:
-            min = costsOfVertices[j]
-            indexOfMinimum = j
+        if not verticesVisited[j] and costsOfVertices[j] < min then min = costsOfVertices[j] and indexOfMinimum = j
     return indexOfMinimum
 
+Atribuição
+
 // Dijkstra's Algorithm to find the shortest path
+
+
 function dijkstraAlgorithmUS17(edges, startingPoint, endPoint):
     resultPath = empty list of Edge
-
     vertices = numberOfVertices(edges)
     numVertices = size of vertices
-
     // Initialize the cost list with INFINITY
     costsOfVertices = list of size numVertices with all elements set to INFINITY
     // Initialize the visited list with false
     verticesUsed = list of size numVertices with all elements set to false
     // Initialize the path list with null
     pathVertices = list of size numVertices with all elements set to null
-
     indexOfStartingPoint = index of startingPoint in vertices
     indexOfEndPoint = index of endPoint in vertices
-
     // Set the cost of the starting point to 0
     costsOfVertices[indexOfStartingPoint] = 0
-
     // Loop to process each vertex
+
+
     for i = 0 to numVertices-2:
         // Find the index of the vertex with the minimum cost
         indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices)
         // Stop if the minimum cost vertex is the endPoint or all vertices are visited
-        if indexOfMinimum == -1 or indexOfMinimum == indexOfEndPoint:
-            break
+        if indexOfMinimum == -1 or indexOfMinimum == indexOfEndPoint then break
 
         chosenVertice = vertices[indexOfMinimum]
         verticesUsed[indexOfMinimum] = true
@@ -49,12 +50,17 @@ function dijkstraAlgorithmUS17(edges, startingPoint, endPoint):
                         costsOfVertices[indexOfNext] = cost
                         pathVertices[indexOfNext] = chosenVertice
 
+
+
+
     // Build the result path
+
+
+
     currentPoint = endPoint
     while currentPoint is not null and currentPoint does not equal startingPoint:
         beforePoint = pathVertices[indexOf(currentPoint in vertices)]
-        if beforePoint is null:
-            break
+        if beforePoint is null then break
         cost = costsOfVertices[indexOf(currentPoint in vertices)] - costsOfVertices[indexOf(beforePoint in vertices)]
         resultPath.add(new Edge(beforePoint, currentPoint, cost))
         currentPoint = beforePoint
