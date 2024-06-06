@@ -141,10 +141,12 @@ public class TeamRepository {
         if (!file.exists()) {
             throw new IOException("Team database file does not exist. Starting with an empty list.");
         }
-        try (FileInputStream fileIn = new FileInputStream(file);
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            List<Team> teamList = (List<Team>) in.readObject();
-            loadInSystem(teamList);
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                List<Team> teamList = (List<Team>) in.readObject();
+                loadInSystem(teamList);
+            }
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }

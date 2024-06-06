@@ -126,10 +126,13 @@ public class JobCategoryRepository {
         if(file.length()==0){
             jobCategorysList=new ArrayList<>();
         } else {
-        try (FileInputStream fileIn = new FileInputStream(file);
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            jobCategorysList = (List<JobCategory>) in.readObject();
-            loadInSystem(jobCategorysList);
+        try (FileInputStream fileIn = new FileInputStream(file)
+             ) {
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                jobCategorysList = (List<JobCategory>) in.readObject();
+                loadInSystem(jobCategorysList);
+            }
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }

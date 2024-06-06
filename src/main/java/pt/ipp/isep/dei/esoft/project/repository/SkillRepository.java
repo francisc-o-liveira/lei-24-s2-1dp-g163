@@ -138,10 +138,12 @@ public class SkillRepository {
         if (!file.exists()) {
             throw new IOException("Skill database file does not exist. Starting with an empty list.");
         }
-        try (FileInputStream fileIn = new FileInputStream(file);
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            List<Skill> skillList = (List<Skill>) in.readObject();
-            loadInSystem(skillList);
+        try (FileInputStream fileIn = new FileInputStream(file)){
+             if(fileIn.getChannel().size()>0){
+                 ObjectInputStream in = new ObjectInputStream(fileIn);
+                 List<Skill> skillList = (List<Skill>) in.readObject();
+                 loadInSystem(skillList);
+            }
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
