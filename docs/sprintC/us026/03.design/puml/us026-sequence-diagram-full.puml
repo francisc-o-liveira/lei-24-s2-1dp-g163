@@ -150,19 +150,21 @@ activate GSM
             UI2 -> CTRL2 : assignVehicleToEntry(vehicleDto,entryDto)
             activate CTRL2
 
-            CTRL2 -> SelectedMAPPER : vehicleDtoToVehicle(vehicleDto)
-            activate SelectedMAPPER
 
 
-            SelectedMAPPER -> CTRL2 : vehicle
-            deactivate SelectedMAPPER
-
-
-            CTRL2 -> EntryRepository :
+            CTRL2 -> EntryRepository : assignVehicleToEntry(vehicleDto,entryDto)
             activate EntryRepository
 
             EntryRepository -> MAPPER : entryDtoToEntry(entryDto)
             activate MAPPER
+
+             MAPPER -> SelectedMAPPER : vehicleDtoToVehicle(vehicleDto)
+                        activate SelectedMAPPER
+
+
+                        SelectedMAPPER -> MAPPER : vehicle
+                        deactivate SelectedMAPPER
+
 
             MAPPER -> OBJ : setNewVehicle(vehicle)
                         activate OBJ
