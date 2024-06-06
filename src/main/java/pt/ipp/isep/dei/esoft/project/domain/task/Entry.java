@@ -11,6 +11,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 import pt.ipp.isep.dei.esoft.project.utilities.TimePeriod;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,6 +21,8 @@ public class Entry extends Task implements Serializable {
     private static int REFERENCE_VALUE;
 
     private Date startDate;
+
+    private Tempo startHour;
 
     private EntryState status;
 
@@ -145,9 +148,25 @@ public class Entry extends Task implements Serializable {
     }
 
 
-    public void setEntryAgenda(Date startDate) {
+    public void setEntryAgenda(Date startDate, Tempo startHour) {
         setStartDate(startDate);
+        setStartHour(startHour);
         status.assignState();}
+
+    private void setStartHour(Tempo startHour) {
+        if (startHour == null) {
+            if (startHour.getHoras()>=8 && startHour.getHoras()<=20){
+                this.startHour = startHour;
+            }else {
+                throw new IllegalArgumentException("Start hour must be between 8 and 20 horas.");
+            }
+        }
+    }
+
+    public Tempo getStartHour() {
+        return startHour;
+    }
+
     public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
     }
@@ -160,7 +179,9 @@ public class Entry extends Task implements Serializable {
     public boolean isPostpone() {
         return this.status.isPostpone();
     }
-    public TimePeriod getTimePeriod(){return new TimePeriod(getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());}
+    public TimePeriod getTimePeriod(){
+        return new TimePeriod(getStartHour(),getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());
+    }
 
 
     private void setFinishDate(Date date) {

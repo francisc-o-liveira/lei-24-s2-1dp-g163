@@ -93,6 +93,12 @@ public class Date implements Comparable<Date>, Serializable {
         day = outraData.day;
     }
 
+    public Date(java.util.Date time) {
+        year = time.getYear();
+        month = time.getMonth();
+        day = time.getDate();
+    }
+
     /**
      * Devolve o ano da data.
      *

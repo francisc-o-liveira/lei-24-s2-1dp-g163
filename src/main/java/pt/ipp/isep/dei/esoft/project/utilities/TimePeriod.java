@@ -1,44 +1,57 @@
 package pt.ipp.isep.dei.esoft.project.utilities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 public class TimePeriod implements Serializable {
-    private Date startDate;
-    private Date endDate;
-    private Tempo timeOfWork;
 
-    public TimePeriod(Date date2, Tempo time2, Tempo timeOfWork) {
-        int minutes = time2.toMinutos();
-        int  minutesTotalByDay = timeOfWork.toMinutos();
-        int minutesByDay = timeOfWork.getMinutos();
-        int daysOfWork = minutes / minutesTotalByDay;
-        if(minutes % minutesTotalByDay < 0.5){
-            daysOfWork++;
-        }
-        startDate = date2;
-        // END DATE
-        int monthsForEnd = 0;
-        int yearsForEnd =  0;
-        int dayEnd = startDate.getDay()+daysOfWork;
-        while (dayEnd>30){
-            dayEnd -= 30;
-            monthsForEnd ++;
-        }
-        int monthEnd = startDate.getMonth()+monthsForEnd;
-        while (monthEnd > 12){
-            monthEnd -= 12;
-            yearsForEnd++;
-        }
-        int yearEnd = startDate.getYear()+yearsForEnd;
-        endDate = new Date(yearEnd, monthEnd, dayEnd);
-        this.timeOfWork = timeOfWork;
-    }
+        private Date startDate;
+        private Date endDate;
+        private Tempo timeOfWork;
+        private Tempo startHour;
+        private Tempo endHour;
 
-    public Date getEndDate() {
-        return endDate;
-    }
+        public TimePeriod(Tempo startHour, Date date2, Tempo expectedDuration, Tempo timeOfWork) {
+            this.startDate = date2;
+            this.timeOfWork = timeOfWork;
+            this.startHour = startHour;
 
-    public Date getStartDate() {
-        return startDate;
-    }
+            int totalMinutes = expectedDuration.toMinutos();
+            int minutesPerDay = timeOfWork.toMinutos();
+
+            // Calculate days required to complete the work
+            int daysOfWork = totalMinutes / minutesPerDay;
+            int remainingMinutes = totalMinutes % minutesPerDay;
+
+            if (remainingMinutes > 0) {
+                daysOfWork++;
+            }
+
+            // Calculate end date
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new java.util.Date(startDate.getYear(),startDate.getMonth(), startDate.getDay()));
+            calendar.add(Calendar.DAY_OF_YEAR, daysOfWork);
+
+            // Calculate end hour
+            int startHourMinutes = startHour.toMinutos();
+            int endHourMinutes = startHourMinutes + remainingMinutes;
+
+            int endHour = endHourMinutes / 60;
+            int endMinute = endHourMinutes % 60;
+
+            this.endHour = new Tempo(endHour, endMinute);
+
+            calendar.set(Calendar.HOUR_OF_DAY, endHour);
+            calendar.set(Calendar.MINUTE, endMinute);
+
+            this.endDate = new Date(calendar.getTime());
+        }
+
+        public Date getEndDate() {
+            return endDate;
+        }
+
+        public Date getStartDate() {
+            return startDate;
+        }
 }

@@ -21,6 +21,7 @@ public class EntryDto extends TaskDto{
     private TeamDto teamAssigned;
     private String reference;
     private Date finishDate;
+    private Tempo startHour;
 
 
     /**To complete the task*/
@@ -82,10 +83,11 @@ public class EntryDto extends TaskDto{
         return reference;
     }
 
-    public void setEntryAgenda(Date newDate){
+    public void setEntryAgenda(Date newDate, Tempo startHour){
         if(newDate != null){
             this.status.assignState();
             this.startDate = newDate;
+            this.startHour = startHour;
         }else {
             throw new NullPointerException("Start date cannot be null");
         }
@@ -149,5 +151,9 @@ public class EntryDto extends TaskDto{
             throw new IllegalArgumentException("This Task is already completed");
         }
 
+    }
+
+    public Tempo getStartHour() {
+        return startHour;
     }
 }

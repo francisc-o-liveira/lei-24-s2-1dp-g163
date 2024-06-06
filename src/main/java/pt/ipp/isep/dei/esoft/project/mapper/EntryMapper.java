@@ -48,7 +48,7 @@ public class EntryMapper {
     }
     public void entryDtoToEntry(EntryDto entryDto, Entry entry) {
         if (shouldSetEntryAgenda(entry, entryDto)) {
-            entry.setEntryAgenda(entryDto.getStartDate());
+            entry.setEntryAgenda(entryDto.getStartDate(),entryDto.getStartHour());
         } else if (shouldPostponeEntry(entry, entryDto)) {
             if (canPostpone(entryDto)) {
                 entry.postponeEntry(entryDto.getStartDate());
