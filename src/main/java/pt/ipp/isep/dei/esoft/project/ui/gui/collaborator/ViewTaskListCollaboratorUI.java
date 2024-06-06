@@ -93,6 +93,7 @@ public class ViewTaskListCollaboratorUI {
         taskDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         taskGreenSpace.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         taskName.setCellValueFactory(new PropertyValueFactory<>("title"));
+        taskStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         taskSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
         taskSelect.setCellFactory(new Callback<>() {
             @Override
