@@ -67,7 +67,7 @@ public class ManageCollaboratorsUI {
             labelRole.setLayoutY(130.0);
         } else {
             labelRole.setText("Admin");
-            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutX(69);
             labelRole.setLayoutY(130.0);
         }
     }
