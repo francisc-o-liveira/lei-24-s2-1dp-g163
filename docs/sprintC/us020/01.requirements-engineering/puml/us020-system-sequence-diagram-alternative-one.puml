@@ -12,25 +12,18 @@ participant ":System" as System
 
 activate Manager
 
-    Manager -> System : asks to register a green space
-    activate System
-
-        System --> Manager : requests data (greenSpaceType)
-    deactivate System
-
-   Manager  -> System : selects data
+    Manager -> System : asks to register a new green space
     activate System
 
 
-    System --> Manager  : requests data (greenSpaceArea, greenSpaceAddress, greenSpaceName)
+    System --> Manager  : Displays all available green space types and requests\n the name, address, area, and type for the new green space
         deactivate System
 
-        Manager  -> System : typed requested data
+        Manager  -> System :Provides the name, address, area, and selects a green space type
         activate System
 
-     System --> Manager : confirms data
 
-       Manager  -> System : displays operation success
+       System  --> Manager : displays operation success
 
 
 @enduml

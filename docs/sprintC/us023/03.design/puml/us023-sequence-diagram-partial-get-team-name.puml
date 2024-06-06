@@ -1,0 +1,51 @@
+
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant ":ViewDetailsEntryController" as CTRL2
+
+participant "TeamRepository:TeamRepository" as TeamRepo
+
+participant ":TeamMapper" as TeamMapper
+participant "objDto:TeamDto" as TeamDto
+
+
+
+
+-> CTRL2 : assignTeamToEntry(objDto, entryDto)
+autonumber 2.1
+activate CTRL2
+group Get Team Name
+
+
+
+    CTRL2 -> TeamRepo : getTeamName(objDto)
+    note right of CTRL2
+        stringTeamName
+    end note
+    activate TeamRepo
+
+    TeamRepo -> TeamMapper : extractName(objDto)
+    note right of TeamRepo
+        stringTeamName
+    end note
+    activate TeamMapper
+
+    TeamMapper -> TeamDto : teamName = getTeamName()
+    activate TeamDto
+    deactivate TeamDto
+
+    TeamMapper -> TeamRepo : teamName
+    deactivate TeamMapper
+
+    TeamRepo -> CTRL2 : teamName
+    deactivate TeamRepo
+
+end
+
+
+
+
+@enduml

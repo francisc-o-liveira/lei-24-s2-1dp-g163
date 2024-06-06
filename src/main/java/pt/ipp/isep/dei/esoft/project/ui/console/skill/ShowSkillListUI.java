@@ -10,7 +10,7 @@ public class ShowSkillListUI implements Runnable{
     private RegisterSkillController ctrl;
 
     public ShowSkillListUI(){
-        ctrl = new RegisterSkillController();
+        ctrl = RegisterSkillController.getInstance();
     }
 
     public RegisterSkillController getCtrl() {

@@ -1,0 +1,176 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+
+participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryController" as CTRL2
+
+/' 
+participant "TeamRepository:TeamRepository" as TeamRepo
+
+participant ":TeamMapper" as TeamMapper
+participant "objDto:TeamDto" as TeamDto
+
+
+participant "entryRepository:EntryRepository" as EntryRepo
+
+
+participant ":EntryMapper" as EntryMapper
+participant "entryDto:EntryDto" as EntryDto
+
+
+
+participant "entry:Entry" as Entry
+
+participant "team:Team" as Team
+
+participant "collaborator:Collaborator" as Collaborator
+
+participant ":EmailService" as EmailService
+
+participant ":ApplicationSession" as ApplicationSession
+participant ":GmailService" as GmailService
+participant ":DeiEmailService" as DeiEmailService '/
+
+activate GSM
+
+
+ref over GSM : Get details and management options\n of a selected entry on the agenda
+
+GSM -> UI2 : Selects a Team and Assigns it to the Selected Entry
+activate UI2
+
+
+UI2 -> CTRL2 : assignTeamToEntry(objDto, entryDto)
+activate CTRL2
+
+note right of UI2
+    Remember that in the previous referenced diagram,
+    ViewDetailsUI received entryDto from AgendaUI via
+    showEntryDetails and will continue to use it via this method: "assignTeamToEntry"
+end note
+note right of UI2
+    stringTeamName, objSelectedEntry
+end note
+
+
+ref over CTRL2
+Get Team Name
+end ref
+/' 
+CTRL2 -> TeamRepo : getTeamName(objDto)
+note right of CTRL2
+    stringTeamName
+end note
+activate TeamRepo
+
+TeamRepo -> TeamMapper : extractName(objDto)
+note right of TeamRepo
+    stringTeamName
+end note
+activate TeamMapper
+
+TeamMapper -> TeamDto : teamName = getTeamName()
+activate TeamDto
+deactivate TeamDto
+
+TeamMapper -> TeamRepo : teamName
+deactivate TeamMapper
+
+TeamRepo -> CTRL2 : teamName
+deactivate TeamRepo '/
+
+
+CTRL2 -> TeamRepo : findTeamByName(teamName)
+activate TeamRepo
+
+TeamRepo -> CTRL2  : team
+deactivate TeamRepo
+
+ref over CTRL2
+Assign Team to An Entry and Send Emails to Team Members
+end ref
+/' CTRL2 -> EntryRepo : assignTeamToEntry(team, entryDto)
+
+activate EntryRepo
+
+EntryRepo -> EntryMapper : toDomainAndAssignTeam(team, entryDto)
+
+activate EntryMapper
+
+EntryMapper -> EntryDto : reference = getReference()
+activate EntryDto
+deactivate EntryDto
+
+EntryMapper -> EntryRepo : findEntryByReference(reference)
+activate EntryRepo
+
+EntryRepo -> EntryMapper : entry
+
+deactivate EntryRepo
+
+
+EntryMapper -> Entry : assignTeam(team)
+activate Entry
+
+Entry -> Entry : setTeamAssigned(team)
+
+Entry -> Team : sendToEmailFile(subject, message)
+activate Team
+
+loop for each collaborator in collaboratorsTeam
+    Team -> Collaborator : getEmail()
+    activate Collaborator
+
+    Collaborator -> Team : email
+    deactivate Collaborator
+
+    Team -> EmailService: sendToEmailFile(email, subject, message)
+    activate EmailService
+    EmailService -> ApplicationSession : getEmailService()
+    activate ApplicationSession
+
+
+    ApplicationSession --> EmailService : emailService
+    deactivate ApplicationSession
+
+    alt emailService is GmailService
+        EmailService -> GmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
+        activate GmailService
+        deactivate GmailService
+    else emailService is DeiEmailService
+        EmailService -> DeiEmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
+        activate DeiEmailService
+        deactivate DeiEmailService
+
+    end
+    deactivate EmailService
+
+end
+Team -> Entry : true
+deactivate Team
+
+
+Entry --> EntryMapper : true
+deactivate Entry
+
+EntryMapper --> EntryRepo : true
+deactivate EntryMapper
+
+
+EntryRepo --> CTRL2 : true
+deactivate EntryRepo '/
+
+
+CTRL2 --> UI2 : true
+deactivate CTRL2
+
+UI2 --> GSM : Displays Operation Success Message
+deactivate UI2
+
+@enduml

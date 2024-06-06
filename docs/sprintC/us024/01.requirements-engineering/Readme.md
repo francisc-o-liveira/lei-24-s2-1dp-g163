@@ -16,9 +16,14 @@ The Agenda is made up of entries that relate to a task (which was previously in 
 
 **From the client clarifications:**
 
-> **Question:**
+> **Question:** What are the input to postpone an entry? From my perspective the Green Spaces Manager only needs to select the entry and introduce the new date.
 >
-> **Answer:**
+> **Answer:** Yes, you are correct!
+
+> **Question:** The selected task(s) will be postponed by one interval defined by the user or for the next day?
+> 
+> **Answer:** When postponing a task, the new predicated date for execution should be inserted.
+> 
 
 ### 1.3. Acceptance Criteria
 

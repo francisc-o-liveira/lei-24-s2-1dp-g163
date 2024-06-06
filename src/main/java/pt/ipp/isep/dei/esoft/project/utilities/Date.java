@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.utilities;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Calendar;
  *
  * @author ISEP-DEI-PPROG
  */
-public class Date implements Comparable<Date> {
+public class Date implements Comparable<Date>, Serializable {
 
     /**
      * O ano da data.
@@ -90,6 +91,12 @@ public class Date implements Comparable<Date> {
         year = outraData.year;
         month = outraData.month;
         day = outraData.day;
+    }
+
+    public Date(java.util.Date time) {
+        year = time.getYear();
+        month = time.getMonth();
+        day = time.getDate();
     }
 
     /**
@@ -294,4 +301,14 @@ public class Date implements Comparable<Date> {
 
         return totalDias;
     }
+
+
+        public boolean before(Date when) {
+            return this.compareTo(when) < 0;
+        }
+
+        public boolean after(Date when) {
+            return this.compareTo(when) > 0;
+        }
+
 }

@@ -1,5 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.repository;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,10 +13,14 @@ import java.util.Optional;
  * Represent the JobCategoryRepository
  */
 public class JobCategoryRepository {
-    private final List<JobCategory> jobCategories;
+    private List<JobCategory> jobCategories;
 
     public JobCategoryRepository() {
-        jobCategories = new ArrayList<>();
+        try {
+            loadFromJobCategoryDataBase();
+        } catch (IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -35,18 +44,12 @@ public class JobCategoryRepository {
 
     private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) throws CloneNotSupportedException {
        Optional<JobCategory> newJobCategory = Optional.empty();
-       boolean operationSucess = false;
         if (!jobCategories.contains(jobCategory)){
-            operationSucess=jobCategories.add(jobCategory);
+            saveFromJobCategoryInDataBase(jobCategory);
             newJobCategory=Optional.of(jobCategory);
-        }
-        if (!operationSucess){
-            newJobCategory=Optional.empty();
-            throw new CloneNotSupportedException("This Job Category already Exist");
         }
         return newJobCategory;
     }
-
     /**
      * This method returns a defensive (immutable) copy of the list of job categories.
      *
@@ -65,8 +68,69 @@ public class JobCategoryRepository {
     public void removeJobCategory(JobCategory jobCategory) {
         if (jobCategories.contains(jobCategory)){
             jobCategories.remove(jobCategory);
+            removeFromJobCategoryDataBase(jobCategory);
         }else{
             throw new RuntimeException("This Job Category does not exist in the Repository");
         }
     }
+
+
+    public void removeFromJobCategoryDataBase(JobCategory jobCategory) {
+        jobCategories.remove(jobCategory);
+        saveJobCategorys();
+    }
+
+    public void saveFromJobCategoryInDataBase(JobCategory jobCategory) {
+        if (!jobCategories.contains(jobCategory)) {
+            jobCategories.add(jobCategory);
+            saveJobCategorys();
+        }
+    }
+
+    private void saveJobCategorys() {
+        cleanFile(MainApp.getJobCategoryDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(jobCategories);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void cleanFile(String jobCategorysDataBaseFile) {
+        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void loadFromJobCategoryDataBase() throws CloneNotSupportedException, IOException {
+        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        if (!file.exists()) {
+            throw new IOException("JobCategory database file does not exist. Starting with an empty list.");
+        }
+        if(file.length()==0){
+            jobCategories=new ArrayList<>();
+        } else {
+        try (FileInputStream fileIn = new FileInputStream(file)){
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                jobCategories = (List<JobCategory>) in.readObject();
+                loadInSystem(jobCategories);
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        }
+    }
+
+    private void loadInSystem(List<JobCategory> jobCategoryss) throws CloneNotSupportedException {
+        for (JobCategory jobCategorys : jobCategoryss) {
+            verifyJobCategoryExistAndSave(jobCategorys);
+        }
+    }
+
 }

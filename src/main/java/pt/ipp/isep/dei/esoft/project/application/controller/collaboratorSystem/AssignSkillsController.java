@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.AssignSkillsController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
@@ -19,7 +20,7 @@ public class AssignSkillsController {
     private SkillRepository skillRepository;
 
     /** Initializes the controllers */
-    public AssignSkillsController(){
+    private AssignSkillsController(){
         getDataNeededToAssign();
     }
 
@@ -95,6 +96,18 @@ public class AssignSkillsController {
      */
     public Optional<Collaborator> assignSkills(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
         return collaboratorRepository.assignSkill(collaborator,skillName);
+    }
+
+
+
+    private static AssignSkillsController instance;
+    public static AssignSkillsController getInstance(){
+        if(instance == null){
+            synchronized (AssignSkillsController.class) {
+                instance = new AssignSkillsController();
+            }
+        }
+        return instance;
     }
 }
 

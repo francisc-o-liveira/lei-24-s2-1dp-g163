@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.entry.AssignTeamUI">
+   <children>
+      <Label layoutX="146.0" layoutY="31.0" text="Select a team to assign to this entry:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="teamsToAssign" layoutX="64.0" layoutY="68.0" prefHeight="246.0" prefWidth="382.0">
+        <columns>
+          <TableColumn fx:id="teamsName" prefWidth="381.0" text="Team" />
+        </columns>
+      </TableView>
+      <Button layoutX="419.0" layoutY="344.0" mnemonicParsing="false" onAction="#assignTeam" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: #C6E5B1;" text="Assign">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Button>
+   </children>
+</AnchorPane>

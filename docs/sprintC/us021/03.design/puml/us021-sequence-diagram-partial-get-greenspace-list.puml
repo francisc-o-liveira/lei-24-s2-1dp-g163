@@ -1,0 +1,76 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+participant ":RegisterTaskUI" as UI
+participant ":RegisterTaskController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "GreenSpaceRepositories\n:GreenSpaceRepositories" as GreenSpaceRepositories
+participant ":GreenSpaceDto" as DTO
+participant ":GreenSpaceMapper" as MAPPER
+participant "greenSpaceListDto : List<GreenSpaceDto>" as ListDTO
+participant "List : List<GreenSpace>" as List
+
+        -> UI : ask to add a new entry to the To-Do List
+        activate UI
+
+        UI -> CTRL** : create()
+        activate CTRL
+
+        CTRL -> RepositorySingleton : getInstance()
+        activate RepositorySingleton
+
+        RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT: getEntryRepository()
+        activate PLAT
+
+        PLAT --> CTRL: entryRepository
+        deactivate PLAT
+
+        CTRL -> PLAT: getGreenSpaceRepositories()
+        activate PLAT
+
+        PLAT --> CTRL: greenSpaceRepository
+        deactivate PLAT
+
+        CTRL -> GreenSpaceRepositories: getGreenSpaceList()
+        activate GreenSpaceRepositories
+
+        GreenSpaceRepositories -> List: create()
+        activate List
+        deactivate List
+
+        GreenSpaceRepositories --> CTRL: greenSpaceList
+        deactivate GreenSpaceRepositories
+
+        CTRL -> MAPPER: toDto(greenSpaceList)
+        activate MAPPER
+
+        MAPPER -> ListDTO** : create()
+
+        MAPPER -> List : greenSpace = get(i)
+        activate List
+        deactivate List
+
+        MAPPER -> MAPPER : greenSpaceDto = toDTO(greenSpace)
+        activate MAPPER
+
+        MAPPER -> DTO**  : create(...)
+        deactivate MAPPER
+
+        MAPPER -> ListDTO : add(greenSpaceDto)
+        activate ListDTO
+        deactivate ListDTO
+
+        MAPPER --> CTRL : greenSpaceListDto
+        deactivate MAPPER
+
+        CTRL --> UI: greenSpaceListDto
+
+@enduml

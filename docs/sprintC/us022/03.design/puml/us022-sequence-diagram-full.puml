@@ -58,7 +58,7 @@ activate GSM
                                         EntryRepository -> CTRL : toDoList
                                         deactivate EntryRepository
 
-                                        CTRL -> MAPPER : toDto(toDoList)
+                                        CTRL -> MAPPER : entryListToEntryDtoList(toDoList)
                                         activate MAPPER
 
                                         MAPPER -> ListDTO** : create()
@@ -92,12 +92,17 @@ activate GSM
             UI -> GSM : requests data
             deactivate UI
 
-            GSM --> UI : types requested data (Date startDate, Date endDate)
+            GSM --> UI : types requested data (Date startDate)
             activate UI
 
-            UI-> DTO : setTimePeriod(TimePeriod time)
+            UI -> DTO : setEntryAgenda(startDate)
+            activate DTO
+            DTO -> DTO : setStartDate(startDate)
             activate DTO
             deactivate DTO
+
+            deactivate DTO
+
 
             UI -> CTRL : assignEntryOnAgenda(entryDto)
             activate CTRL
@@ -105,18 +110,29 @@ activate GSM
             CTRL -> EntryRepository : assignEntryOnAgenda(entryDto)
             activate EntryRepository
 
+
+            EntryRepository -> ToDoList : searchForEntryToDo(EntryDto entryDto)
+            activate ToDoList
+            deactivate ToDoList
             ref over EntryRepository: Get Entry equal to DTO again with Task
+
 
             EntryRepository -> MAPPER : toModel(entryDto, entry)
             activate MAPPER
 
-            MAPPER -> DTO : time = getTimePeriod()
+            MAPPER -> DTO : startDate = getStartDate()
             activate DTO
             deactivate DTO
 
-            MAPPER -> OBJ : setTimePeriod(time)
+
+            MAPPER -> OBJ : setEntryAgenda(startDate)
+            activate OBJ
+            OBJ -> OBJ : setStartDate(startDate)
             activate OBJ
             deactivate OBJ
+
+            deactivate OBJ
+
 
             MAPPER -> EntryRepository : true / false
             deactivate MAPPER

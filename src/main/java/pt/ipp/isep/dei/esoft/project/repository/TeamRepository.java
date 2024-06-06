@@ -3,8 +3,11 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.serv.GenerateTeamServ;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +38,7 @@ public class TeamRepository {
         if(teamIsValid(team)){
             newTeam = Optional.of(team.clone());
             operationSucess = teams.add(newTeam.get());
+            saveFromTeamInDataBase(team);
         }
         if (!operationSucess){
             newTeam = Optional.empty();
@@ -56,6 +60,7 @@ public class TeamRepository {
     public List<Team> removeTeam(Team team){
         if (teams.contains(team)){
             teams.remove(team);
+            removeFromTeamDataBase(team);
         }
         return teams;
     }
@@ -95,5 +100,60 @@ public class TeamRepository {
      */
     public boolean saveTeam(Team teamCreated) {
         return teams.add(teamCreated);
+    }
+
+
+    public void removeFromTeamDataBase(Team team) {
+        teams.remove(team);
+        saveTeams();
+    }
+
+    public void saveFromTeamInDataBase(Team team) {
+        if (!teams.contains(team)) {
+            saveTeam(team);
+            saveTeams();
+        }
+    }
+
+    private void saveTeams() {
+        cleanFile(MainApp.getTeamDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getTeamDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(teams);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void cleanFile(String teamDataBaseFile) {
+        File file = new File(MainApp.getTeamDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void loadFromTeamDataBase() throws CloneNotSupportedException, IOException {
+        File file = new File(MainApp.getTeamDataBaseFile());
+        if (!file.exists()) {
+            throw new IOException("Team database file does not exist. Starting with an empty list.");
+        }
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                List<Team> teamList = (List<Team>) in.readObject();
+                loadInSystem(teamList);
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(List<Team> teams) throws CloneNotSupportedException {
+        for (Team team : teams) {
+            saveTeam(team);
+        }
     }
 }

@@ -1,0 +1,216 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+
+participant ":AgendaUI" as UI
+
+participant ":AgendaController" as Controller
+
+participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryController" as CTRL2
+
+
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+participant "entryRepository:EntryRepository" as EntryRepo
+/' participant "entry:Entry" as Entry'/
+participant ":EntryMapper" as EntryMapper
+participant "entryList:list<Entry>" as EntryList
+participant "agendaEntryListDto:list<EntryDto>" as EntryListDto
+participant "objDto:EntryDto" as EntryDto
+
+participant "teamRepository:TeamRepository" as TeamRepo
+
+participant ":TeamMapper" as TeamMapper
+participant "teamList:list<Team>" as TeamList
+participant "teamListDto:list<TeamDto>" as TeamListDto
+participant "objDto:TeamDto" as TeamDto
+
+participant "vehicleRepository:VehicleRepository" as VehicleRepo
+
+participant ":VehicleMapper" as VehicleMapper
+participant "vehicleList:list<Vehicle>" as VehicleList
+participant "vehicleListDto:list<VehicleDto>" as VehicleListDto
+participant "objDto:VehicleDto" as VehicleDto
+
+activate GSM
+
+
+group Get the details and management options of a selected entry on the agenda
+
+    GSM -> UI: Asks to get the details and management\n options of a specific entry on the agenda
+    activate UI
+
+
+    UI -> Controller: getAgendaEntryListDto()
+    activate Controller
+
+    Controller -> Repos: getInstance()
+    activate Repos
+
+    Repos --> Controller: repositories
+    deactivate Repos
+
+    Controller -> reposRepos: getEntryRepository()
+    activate reposRepos
+
+    reposRepos --> Controller: entryRepository
+    deactivate reposRepos
+
+    Controller -> EntryRepo: getAgenda()
+    activate EntryRepo
+
+    EntryRepo -> Controller: agendaEntryList
+    deactivate EntryRepo
+
+
+    Controller -> EntryMapper : toDTO(agendaEntryList)
+    activate EntryMapper
+
+    EntryMapper -> EntryListDto** : create()
+
+    loop for each object in EntryList
+        EntryMapper -> EntryList : obj = get()
+        activate EntryList
+        deactivate EntryList
+        EntryMapper -> EntryMapper: objDto = toDto(obj)
+        activate EntryMapper
+
+        EntryMapper -> EntryDto** : create(obj.getStartDate(), obj.getStatus(),\nobj.getVehicleList(), obj.getTeamAssigned(), obj.getReference())
+        deactivate EntryMapper
+        EntryMapper -> EntryListDto : add(objDto)
+        activate EntryListDto
+        deactivate EntryListDto
+    end
+
+    deactivate EntryList
+
+    EntryMapper -> Controller : agendaEntryListDto
+    deactivate EntryMapper
+
+    Controller --> UI : agendaEntryListDto
+    deactivate Controller
+
+
+    UI -> GSM: Shows Agenda and its Entries
+    deactivate UI
+
+
+    GSM -> UI: Selects an Entry
+    activate UI
+
+    UI -> UI2: showEntryDetails(entryDto)
+    deactivate UI
+    activate UI2
+    
+
+    note right of UI
+        (DTO of the Selected Entry)
+    end note
+
+    UI2 -> CTRL2**: create()
+
+    UI2 -> CTRL2: getDataNeeded()
+    activate CTRL2
+
+    CTRL2 -> Repos: getInstance()
+    activate Repos
+
+    Repos --> CTRL2: repositories
+    deactivate Repos
+
+    CTRL2 -> reposRepos: getTeamRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: teamRepository
+    deactivate reposRepos
+
+    CTRL2 -> reposRepos: getVehicleRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: vehicleRepository
+    deactivate reposRepos
+
+    CTRL2 -> TeamRepo: getTeamList()
+    activate TeamRepo
+
+    TeamRepo --> CTRL2: teamList
+    deactivate TeamRepo
+
+
+    CTRL2 -> TeamMapper : toDTO(teamList)
+    activate TeamMapper
+
+    TeamMapper -> TeamListDto** : create()
+
+    loop for each object in TeamList
+        TeamMapper -> TeamList : obj = get()
+        activate TeamList
+        deactivate TeamList
+        TeamMapper -> TeamMapper: objDto = toDto(obj)
+        activate TeamMapper
+
+        TeamMapper -> TeamDto** : create(obj.getTeamName())
+        deactivate TeamMapper
+        TeamMapper -> TeamListDto : add(objDto)
+        activate TeamListDto
+        deactivate TeamListDto
+    end
+
+    deactivate TeamList
+
+    TeamMapper -> CTRL2 : teamListDto
+    deactivate TeamMapper
+
+
+    CTRL2 -> VehicleRepo: getVehicleList()
+    activate VehicleRepo
+
+    VehicleRepo --> CTRL2: vehicleList
+    deactivate VehicleRepo
+
+
+
+
+    CTRL2 -> VehicleMapper : toDTO(vehicleList)
+    activate VehicleMapper
+
+    VehicleMapper -> VehicleListDto** : create()
+
+    loop for each object in VehicleList
+        VehicleMapper -> VehicleList : obj = get()
+        activate VehicleList
+        deactivate VehicleList
+        VehicleMapper -> VehicleMapper: objDto = toDto(obj)
+        activate VehicleMapper
+
+        VehicleMapper -> VehicleDto** : create(obj.getBrand(), obj.getModel(), obj.getPlate())
+        deactivate VehicleMapper
+        VehicleMapper -> VehicleListDto : add(objDto)
+        activate VehicleListDto
+        deactivate VehicleListDto
+    end
+
+    deactivate VehicleList
+
+    VehicleMapper -> CTRL2 : vehicleListDto
+    deactivate VehicleMapper
+
+
+
+
+    CTRL2 --> UI2: teamListDto, vehicleListDto
+    deactivate CTRL2
+
+    UI2 -> GSM: Displays Entry Details and Management Options
+    deactivate UI2
+end
+
+
+@enduml

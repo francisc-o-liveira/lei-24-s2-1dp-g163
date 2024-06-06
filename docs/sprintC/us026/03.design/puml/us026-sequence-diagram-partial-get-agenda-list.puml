@@ -1,0 +1,90 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+
+
+participant ":AgendaController" as CTRL
+participant ":ViewDetailsEntryController" as CTRL2
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+participant "agenda : List<Vehicle>" as ListSelected
+participant ":VehicleMapper" as SelectedMAPPER
+participant ":Entry" as OBJ
+participant ":EntryDto" as DTO
+participant ":EntryMapper" as MAPPER
+participant "agenda : AgendaList" as List
+autonumber 3
+
+ -> CTRL** : create()
+autonumber 3.1
+activate CTRL
+    group Get Agenda Entry's List
+
+
+             -> CTRL** : getAgendaList()
+
+                         CTRL -> RepositorySingleton : getInstance()
+                                                    activate RepositorySingleton
+
+                                                        RepositorySingleton --> CTRL: repositories
+                                                    deactivate RepositorySingleton
+
+
+                                                    CTRL -> PLAT : getEntryRepository()
+                                                    activate PLAT
+
+                                                    PLAT -> CTRL : entryRepository
+                                                    deactivate PLAT
+
+                                                    CTRL -> EntryRepository : getAgendaList()
+                                                    activate EntryRepository
+
+
+
+                                                    EntryRepository -> List** : create
+
+                                                    note over List : loop to populate is omitted
+
+
+
+                                                    EntryRepository -> CTRL : Agenda
+                                                    deactivate EntryRepository
+
+                                                    CTRL -> MAPPER : toDto(Agenda)
+                                                    activate MAPPER
+
+                                                    MAPPER -> ListDTO** : create()
+
+                                                    MAPPER -> List : entry = get(i)
+                                                    activate List
+                                                    deactivate List
+
+                                                    MAPPER -> MAPPER : entryDto = toDTO(entry)
+                                                    activate MAPPER
+
+                                                    MAPPER -> DTO**  : create(...)
+                                                    deactivate MAPPER
+
+                                                    MAPPER -> ListDTO : add(entryDto)
+                                                    activate ListDTO
+                                                    deactivate ListDTO
+
+                                                    MAPPER -> CTRL : agendaDto
+                                                    deactivate MAPPER
+
+
+
+    end
+    autonumber 4
+    <-- CTRL  :  agendaDto
+deactivate CTRL
+
+
+@enduml

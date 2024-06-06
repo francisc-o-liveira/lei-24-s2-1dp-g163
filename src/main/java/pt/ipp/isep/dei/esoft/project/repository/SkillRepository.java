@@ -1,21 +1,38 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/** Repository for Skills */
+/**
+ * Repository for Skills
+ */
 public class SkillRepository {
-    /** List of Skills */
+    /**
+     * List of Skills
+     */
     private List<Skill> skillList;
-    /** Initialize the list of Skills */
-    public SkillRepository(){
-        skillList = new ArrayList<>();
+
+    /**
+     * Initialize the list of Skills
+     */
+    public SkillRepository() {
+        try {
+            skillList = new ArrayList<>();
+            loadFromSkillDataBase();
+        }catch (CloneNotSupportedException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    /** Method to register a Skill
+    /**
+     * Method to register a Skill
      *
      * @param skillName - skill to be registered
      * @return Optional of Skill if Skill has been registered
@@ -31,7 +48,8 @@ public class SkillRepository {
 
     }
 
-    /** Verifies if Skill already exists and saves it
+    /**
+     * Verifies if Skill already exists and saves it
      *
      * @param skill to be verified
      * @return true if Skill did not exist
@@ -40,22 +58,25 @@ public class SkillRepository {
     private boolean verifyIfExistAndSave(Skill skill) throws CloneNotSupportedException {
         boolean operationSuccess = false;
         if (validateSkill(skill)) {
-            operationSuccess = skillList.add(skill);
-        }else {
+
+            saveFromSkillInDataBase(skill);
+        } else {
             throw new CloneNotSupportedException("This Skill already exists");
         }
         return operationSuccess;
     }
 
-    /** The method gets the List of Skills
+    /**
+     * The method gets the List of Skills
      *
      * @return List of Skills
      */
-    public List<Skill> getSkillList(){
+    public List<Skill> getSkillList() {
         return List.copyOf(skillList);
     }
 
-    /** Checks if Skill already exists in the list
+    /**
+     * Checks if Skill already exists in the list
      *
      * @param skill to be checked
      * @return true if Skill does not exist on the list
@@ -67,14 +88,71 @@ public class SkillRepository {
 
     /**
      * This method remove the skill selected by user
+     *
      * @param skill to be removed from the system
      */
 
-    public void removeSkill(Skill skill){
-        if(skillList.contains(skill)){
+    public void removeSkill(Skill skill) {
+        if (skillList.contains(skill)) {
             skillList.remove(skill);
-        }else{
+            removeFromSkillDataBase(skill);
+        } else {
             throw new RuntimeException("This Skill does not exist in the Repository");
         }
     }
+
+    public void removeFromSkillDataBase(Skill skill) {
+        skillList.remove(skill);
+        saveSkills();
+    }
+
+    public void saveFromSkillInDataBase(Skill skill) {
+        if (!skillList.contains(skill)) {
+            skillList.add(skill);
+            saveSkills();
+        }
+    }
+
+    private void saveSkills() {
+        cleanFile(MainApp.getSkillDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getSkillDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(skillList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void cleanFile(String skillDataBaseFile) {
+        File file = new File(MainApp.getSkillDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void loadFromSkillDataBase() throws CloneNotSupportedException, IOException {
+        File file = new File(MainApp.getSkillDataBaseFile());
+        if (!file.exists()) {
+            throw new IOException("Skill database file does not exist. Starting with an empty list.");
+        }
+        try (FileInputStream fileIn = new FileInputStream(file)){
+             if(fileIn.getChannel().size()>0){
+                 ObjectInputStream in = new ObjectInputStream(fileIn);
+                 List<Skill> skillList = (List<Skill>) in.readObject();
+                 loadInSystem(skillList);
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(List<Skill> skills) throws CloneNotSupportedException {
+        for (Skill skill : skills) {
+            verifyIfExistAndSave(skill);
+        }
+    }
+
 }

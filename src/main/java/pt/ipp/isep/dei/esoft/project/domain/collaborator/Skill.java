@@ -8,22 +8,16 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import java.io.Serializable;
+
 /**
  * Domain class representing a Skill object.
  */
-public class Skill {
+public class Skill implements Serializable{
 
     /** Name of the skill */
     private String skillName;
 
-    private final BooleanProperty selecting;
-
-    private boolean selectedForTeam;
-
-    private boolean selected;
-    private final BooleanProperty selectingForTeam;
-
-    private IntegerProperty numberCollabsPerSkill;
     /**
      * Constructs a Skill object with the specified name.
      *
@@ -31,21 +25,6 @@ public class Skill {
      */
     public Skill(String skillName){
         setSkillName(skillName);
-        this.selecting = new SimpleBooleanProperty(false);
-
-        this.selecting.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selected=true;
-            }
-        });
-
-        this.selectingForTeam = new SimpleBooleanProperty(false);
-
-        this.selectingForTeam.addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                selectedForTeam=true;
-            }
-        });
     }
 
     /**
@@ -122,55 +101,12 @@ public class Skill {
     public String toString(){
         return String.format("Skill: %s\n ", skillName);
     }
-    /**
-     * Gets the BooleanProperty for assigning skills to collaborators.
-     *
-     * @return BooleanProperty representing whether a skill has been selected to assign
-     */
-    public BooleanProperty selectedSkill(){
-        return selecting;
-    }
 
-    /**
-     * Gets the BooleanProperty to select skills for a team.
-     *
-     * @return BooleanProperty representing whether a skill has been selected to generate a team
-     */
-    public BooleanProperty selectedSkillForTeam(){
-        return selectingForTeam;
-    }
 
-    /**
-     * Retrieves the IntegerProperty representing the number of collaborators per skill.
-     *
-     * @return The IntegerProperty representing the number of collaborators per skill.
-     */
-    public IntegerProperty getNumberCollabsPerSkill() {
-        return numberCollabsPerSkill;
-    }
 
-    /**
-     * Sets the number of collaborators per skill.
-     *
-     * @param number The number of collaborators per skill to set.
-     */
-    public void setNumberCollabsPerSkill(Integer number) {
-        if (numberCollabsPerSkill == null) {
-            numberCollabsPerSkill = new SimpleIntegerProperty();
-        }
-        this.numberCollabsPerSkill.set(number);
-    }
 
-    /**
-     * Retrieves the IntegerProperty representing the number of collaborators per skill.
-     *
-     * @return The IntegerProperty representing the number of collaborators per skill.
-     */
-    public IntegerProperty numberCollabsPerSkillProperty() {
-        return numberCollabsPerSkill;
-    }
-
-    public void setSelecting(boolean value){
-        this.selecting.set(value);
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

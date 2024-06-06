@@ -1,0 +1,78 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class GSM {
+}
+
+class Entry {
+    - String stateOfEntry
+}
+
+class EntryDto {
+    - String stateOfEntry
+}
+
+class EntryMapper {
+    - String stateOfEntry
+}
+
+
+class EntryRepository{
+    + create()
+    + cancelEntry()
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : repositories
+    + getEntryRepository()
+
+}
+
+class ViewDetailsEntryController{
+    + cancelEntry(entryDto)
+}
+
+class ViewDetailsEntryUI {
+}
+
+Repositories -> Repositories : instance
+
+ApplicationSession -> ApplicationSession : instance
+ApplicationSession --> "1" UserSession : userSession
+
+ViewDetailsEntryUI .> ViewDetailsEntryController
+
+ViewDetailsEntryController .> Repositories : repositories
+
+Repositories -> "1" skillRepository
+
+
+
+ViewDetailsEntryController ..> Skill
+ViewDetailsEntryController ..> skillRepository : skillRepository
+ViewDetailsEntryController ..> ApplicationSession
+ViewDetailsEntryController ..> UserSession
+
+skillRepository "1" --> "*" Skill : Skills
+
+skillRepository --> "*" HRM : employs
+
+@enduml

@@ -1,7 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+import java.io.Serializable;
+
 /** Domain class for the type of identification document Object */
-public class DocType {
+public class DocType implements Serializable {
 
     /** Enumerate type for the type of identification document
      *

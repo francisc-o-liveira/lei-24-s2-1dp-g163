@@ -1,0 +1,141 @@
+// VERTICES == POINTS
+function numberOfVertices(edges):
+    vertices = empty list
+    for each edge in edges:
+        value1 = false
+        value2 = false
+        x1 = edge.getP1()
+        x2 = edge.getP2()
+        for each point in vertices:
+            if x1 == point:
+                value1 = true
+            if x2 == point:
+                value2 = true
+        if not value1:
+            append x1 to vertices
+        if not value2:
+            append x2 to vertices
+    return vertices
+
+
+
+// START US013
+function sortArrayListPrimitivePerPrice(edges):
+    for i from 0 to size(edges) - 1:
+        for j from i + 1 to size(edges):
+            if edges[j].getPrice() < edges[i].getPrice():
+                swap edges[i] and edges[j]
+
+
+
+Table
+
+
+
+
+
+function getVertices(edges):
+    vertices = empty list
+    for each edge in edges:
+        if edge.getP1() not in vertices:
+            append edge.getP1() to vertices
+        if edge.getP2() not in vertices:
+            append edge.getP2() to vertices
+    return vertices
+
+
+
+
+
+
+function find(parent, i):
+    if parent[i] != i:
+        parent[i] = find(parent, parent[i])
+    return parent[i]
+
+
+
+
+
+
+
+function union(parent, rank, x, y):
+    rootX = find(parent, x)
+    rootY = find(parent, y)
+    if rootX != rootY:
+        if rank[rootX] > rank[rootY]:
+            parent[rootY] = rootX
+        else if rank[rootX] < rank[rootY]:
+            parent[rootX] = rootY
+        else:
+            parent[rootY] = rootX
+            rank[rootX] += 1
+
+function kruskalAlgorithm(edges):
+    result = empty list
+    vertices = getVertices(edges)
+    V = size(vertices)
+    parent = new array of size V
+    rank = new array of size V
+    for i from 0 to V:
+        parent[i] = i
+        rank[i] = 0
+    for each edge in edges:
+        x = findVertexIndex(edge.getP1(), vertices)
+        y = findVertexIndex(edge.getP2(), vertices)
+        xRoot = find(parent, x)
+        yRoot = find(parent, y)
+        if xRoot != yRoot:
+            append edge to result
+            union(parent, rank, xRoot, yRoot)
+    return result
+
+function findVertexIndex(p, vertices):
+    for i from 0 to size(vertices):
+        if vertices[i] == p:
+            return i
+    return -1
+
+
+
+
+
+
+
+
+
+F1 = 5 +  nlog(n) + n^2 + n
+
+Pelo Teorema 3.3 da sebenta, da pagina 70
+
+
+
+
+
+
+Claro! Vamos analisar a complexidade temporal dos três algoritmos presentes no pseudocódigo:
+
+1. **Função `numberOfVertices(edges)`**:
+   - Essa função cria uma lista de vértices a partir de uma lista de arestas.
+   - O loop externo percorre todas as arestas (n elementos).
+   - O loop interno percorre todos os vértices (m elementos, onde m é o número de vértices já encontrados).
+   - Portanto, a complexidade temporal é \(O(n \cdot m)\).
+
+2. **Função `sortArrayListPrimitivePerPrice(edges)`**:
+   - Essa função parece ser uma implementação de ordenação (talvez Bubble Sort ou Selection Sort).
+   - O loop externo percorre todas as arestas (n elementos).
+   - O loop interno também percorre todas as arestas (n elementos).
+   - Dentro do loop interno, há uma comparação de preços.
+   - Portanto, a complexidade temporal é \(O(n^2)\).
+
+3. **Função `kruskalAlgorithm(edges)`**:
+   - Essa função implementa o algoritmo de Kruskal para encontrar a árvore geradora mínima de um grafo.
+   - A complexidade temporal do algoritmo de Kruskal é dominada pela ordenação das arestas.
+   - Portanto, a complexidade temporal é \(O(n \log n)\) (onde \(n\) é o número de arestas).
+
+Em resumo:
+- A complexidade da função `numberOfVertices` é \(O(n \cdot m)\).
+- A complexidade da função `sortArrayListPrimitivePerPrice` é \(O(n^2)\).
+- A complexidade da função `kruskalAlgorithm` é \(O(n \log n)\).
+
+Lembre-se de que essas análises consideram apenas o tempo de execução em termos de operações e não levam em conta fatores como hardware ou sistema operacional. Além disso, a complexidade espacial não foi discutida aqui, mas é importante considerá-la ao avaliar algoritmos em cenários reais.¹²³

@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.CheckUpListController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
@@ -15,7 +16,7 @@ public class CheckUpListController {
     /**
      * Constructs a CheckUpListController object and initializes the vehicle repository.
      */
-    public CheckUpListController(){
+    private CheckUpListController(){
         vehicleRepository= getVehicleRepository();
     }
 
@@ -35,5 +36,15 @@ public class CheckUpListController {
      */
     public List<Vehicle> getVehicleNeedingCheckUpList() {
         return vehicleRepository.getVehicleNeedingCheckUp();
+    }
+
+    private static CheckUpListController instance;
+    public static CheckUpListController getInstance(){
+        if(instance == null){
+            synchronized (CheckUpListController.class) {
+                instance = new CheckUpListController();
+            }
+        }
+        return instance;
     }
 }

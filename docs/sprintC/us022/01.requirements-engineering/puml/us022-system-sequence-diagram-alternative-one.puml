@@ -21,7 +21,7 @@ activate Manager
     Manager -> System : select a Entry
     activate System
 
-        System --> Manager : requests data (i.e. Date)
+        System --> Manager : requests data (i.e. startDate)
     deactivate System
 
    Manager  -> System : types requested data

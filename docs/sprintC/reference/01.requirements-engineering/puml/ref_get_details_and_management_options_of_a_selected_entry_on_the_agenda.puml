@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title Reference System Sequence Diagram
+autonumber
+
+actor "GSM" as GSM
+
+participant ":System" as UI
+
+activate GSM
+
+
+group Get the details and management options of a selected entry on the agenda
+
+    GSM -> UI: Asks to get the details and management options of a specific entry on the agenda
+    activate UI
+
+
+    UI -> GSM: Shows Agenda and its Entries
+    deactivate UI
+
+
+    GSM -> UI: Selects an Entry
+    activate UI
+
+    UI -> GSM: Displays entry details and management options  
+    deactivate UI
+end
+
+
+@enduml

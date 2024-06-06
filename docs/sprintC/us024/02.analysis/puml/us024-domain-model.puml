@@ -22,19 +22,22 @@ email
 password
 }
 
-class GreenSpace {
-EnumType{Garden
-Large-sized park
-Medium-sized park}
 
+class Entry{
+    status
 
-address
-areaInMeters
+}
+
+class Task{
+
 }
 
 
 
 'Platform "1" -- "*" Organization : has registered >
 'Platform "1" -- "*" Category : defines >
-GSM "1" -- "0..*" GreenSpace : Register >
+GSM "1" -- "0..*" Task : have >
+GSM "1" -- "0..*" Entry : Postpones >
+Entry "1" -- "1" Task : extends
+
 @enduml

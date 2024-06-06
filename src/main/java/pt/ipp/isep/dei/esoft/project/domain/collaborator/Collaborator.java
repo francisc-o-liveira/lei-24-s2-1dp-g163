@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**  Domain Class for Collaborator Object */
-public class Collaborator{
+public class Collaborator implements Serializable {
 
     /** Parameters needed for Collaborator */
     private String name;
@@ -122,7 +123,21 @@ public class Collaborator{
      */
 
     public void setAddress(String address) {
-        this.address = address;
+        if(verifyIsOnlyCharacterOrDigit(address)){
+            this.address = address;
+        }else{
+            throw new IllegalArgumentException("Invalid address: " + address);
+        }
+    }
+
+    private boolean verifyIsOnlyCharacterOrDigit(String address) {
+        char[] chars = name.replaceAll("\\s", "").toCharArray();
+        for (char c : chars){
+            if (!Character.isLetter(c) && !Character.isDigit(c)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /** Gets the zip code of the address of Collaborator
@@ -139,8 +154,21 @@ public class Collaborator{
      */
 
     public void setAddressZipCode(String addressZipCode) {
-        this.addressZipCode = addressZipCode;
+        if(verifyZipCode(addressZipCode)){
+            this.addressZipCode = addressZipCode;
+        }else{
+            throw new IllegalArgumentException("Invalid address zip code: " + addressZipCode);
+        }
     }
+
+    private boolean verifyZipCode(String zipCode) {
+        if (zipCode.matches("\\d{4}-\\d{3}")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     /** Gets the city of the address of Collaborator
      *
@@ -155,7 +183,11 @@ public class Collaborator{
      * @param addressCity of Collaborator
      */
     public void setAddressCity(String addressCity) {
-        this.addressCity = addressCity;
+        if (verifyIsOnlyCharacter(addressCity)){
+            this.addressCity = addressCity;
+        }else {
+            throw new IllegalArgumentException("Invalid address city: " + addressCity);
+        }
     }
 
     /** Gets the phone number of Collaborator
@@ -523,5 +555,8 @@ public class Collaborator{
         return convertToJavaLocalDate(this.admissionDate);
     }
 
-
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

@@ -1,66 +1,76 @@
-    @startuml
-    'skinparam monochrome true
-    skinparam packageStyle rectangle
-    skinparam shadowing false
-    skinparam linetype polyline
-    'skinparam linetype orto
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
 
-    skinparam classAttributeIconSize 0
+class SkillRepository {
+    - skillList : List<Skill>
+    + addSkill(skill : Skill) : void
+    + getAllSkillNames() : List<String>
+    + findSkillByName(name : String) : Skill
+}
 
-    'left to right direction
+class AssignSkillsUI {
+}
 
-    class SkillRepository {
-        - skillList : List<Skill>
-        + getAllSkills() : List<Skill> 
-    }
+class AssignSkillsController {
+    - repositories : Repositories
+    + AssignSkillsController()
+    + getDataNeededToAssignSkills() : List<String>
+    + getAvailableSkillsList(collaboratorName : String) : List<String>
+    + assignSkills(collaboratorName : String, skillName : String) : boolean
+    + getCollaboratorSkills(collaboratorName : String) : List<String>
+}
 
-    class AssignSkillsUI {
-    }
+class CollaboratorRepository {
+    - collaboratorList : List<Collaborator>
+    + addCollaborator(collaborator : Collaborator) : void
+    + getCollaboratorNames() : List<String>
+    + findCollaboratorByName(name : String) : Collaborator
+    + assignSkillToCollaborator(collaboratorName : String, skillName : String) : boolean
+    + getCollaboratorSkills(collaboratorName : String) : List<String>
+    + getAvailableSkillsList(collaboratorName : String, allSkills : List<String>) : List<String>
+}
 
-    class AssignSkillsController {
-        - collaboratorRepository : CollaboratorRepository
-        - skillRepository : SkillRepository
-        + AssignSkillsController()
-        + getDataNeededToAssignSkills() : void
-        + getCollaboratorList() : List<Collaborator>
-        + getCollaborator(index : int) : Collaborator
-        + getAvailableSkillsList(collaborator : Collaborator) : List<Skill> 
-        + filterAssignedSkills(assignedSkills : List<Skill>, allSkills : List<Skill>) : List<Skill> 
-        + assignSkills(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator>
-    }
+class Collaborator {
+    - skills : Skills
+    + getSkills() : List<String>
+    + assignSkill(skillName : String) : void
+    + filterAssignedSkills(allSkills : List<String>) : List<String>
+}
 
-    class CollaboratorRepository {
-        - collaboratorList : List<Collaborator>
-        + getCollaboratorList() : List<Collaborator>
-        + assignSkill(collaborator : Collaborator, skillName : Skill) : Optional<Collaborator> 
-        + getCollaboratorSkillsList(collaborator : Collaborator) : List<Skill> 
-    }
+class Skills {
+    - skillList : List<Skill>
+    + addSkill(skill : Skill) : void
+    + getSkills() : List<Skill>
+    + filterAssignedSkills(allSkills : List<Skill>) : List<String>
+    + getSkillNames() : List<String>
+}
 
-    class Collaborator {
-        - docIDNumber : int
-        - skills : List<Skill>
-        + assignSkill(skill : Skill) : boolean 
-    }
+class Skill {
+    - name : String
+    + getName() : String
+}
 
-    class Skill {
-        - name : String
-    }
+class Repositories {
+    - static instance : Repositories
+    - collaboratorRepository : CollaboratorRepository
+    - skillRepository : SkillRepository
+    + getInstance() : Repositories
+    + getCollaboratorRepository() : CollaboratorRepository
+    + getSkillRepository() : SkillRepository
+    - Repositories()
+}
 
-    class Repositories {
-        - static instance : Repositories
-        + getInstance() : Repositories
-        + getSkillRepository() : SkillRepository
-        + getCollaboratorRepository() : CollaboratorRepository
-        - Repositories()
-    }
+AssignSkillsUI ..> AssignSkillsController
+AssignSkillsController ..> Repositories : repositories
+AssignSkillsController ..> SkillRepository : skillRepository
+AssignSkillsController ..> CollaboratorRepository : collaboratorRepository
+SkillRepository "1" --> "*" Skill
+CollaboratorRepository "1" --> "*" Collaborator
+Repositories --> Repositories : instance
+Collaborator "1" --> "1" Skills : skills
+Skills "1" --> "*" Skill : skillList
 
-    AssignSkillsUI ..> AssignSkillsController
-    AssignSkillsController ..> Repositories : repositories
-    AssignSkillsController ..> SkillRepository : skillRepository
-    AssignSkillsController ..> CollaboratorRepository : collaboratorRepository
-    SkillRepository "1" --> "*" Skill 
-    CollaboratorRepository "1" --> "*" Collaborator 
-    Repositories --> Repositories : instance
-    Collaborator "*" --> "*" Skill
-
-    @enduml
+@enduml

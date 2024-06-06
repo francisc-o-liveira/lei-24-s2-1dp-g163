@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
@@ -21,7 +22,7 @@ public class RegisterVehicleController {
     /**
      * Constructs a RegisterVehicleController object.
      */
-    public RegisterVehicleController(){
+    private RegisterVehicleController(){
         getVehicleRepository();
     }
 
@@ -82,8 +83,8 @@ public class RegisterVehicleController {
      * @param selectedVehicle The vehicle to be removed.
      * @return true if the vehicle is successfully removed, otherwise false.
      */
-    public boolean removeVehicleFromList(Vehicle selectedVehicle) {
-        return vehicleRepository.removeVehicle(selectedVehicle);
+    public void removeVehicleFromList(Vehicle selectedVehicle) {
+         vehicleRepository.removeVehicle(selectedVehicle);
     }
 
     /**
@@ -101,5 +102,15 @@ public class RegisterVehicleController {
      */
     public List<Vehicle> getVehiclesNeedingCheckUp(){
         return vehicleRepository.getVehicleNeedingCheckUp();
+    }
+
+    private static RegisterVehicleController instance;
+    public static RegisterVehicleController getInstance(){
+        if(instance == null){
+            synchronized (RegisterVehicleController.class) {
+                instance = new RegisterVehicleController();
+            }
+        }
+        return instance;
     }
 }

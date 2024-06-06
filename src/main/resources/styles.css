@@ -1,0 +1,117 @@
+.outline{
+    -fx-padding: 10;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-border-radius: 0;
+    -fx-background-radius: 10;
+
+}
+
+.calendar{
+    -fx-border-color: rgba(0,0,0,0);
+    -fx-text-fill: rgba(68,68,68,0.4);
+}
+
+.header {
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-font-family: Tahoma;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-text-fill: rgba(68,68,68,0.9);
+}
+
+.day-names {
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-font-family: Tahoma;
+    -fx-text-fill: rgba(68,68,68,0.9);
+}
+
+.day-cell {
+    -fx-padding: 5;
+    -fx-alignment: top-left;
+    -fx-border-color: rgba(68,68,68,0.4);
+    -fx-border-style: solid none;
+    -fx-border-width: 1px;
+}
+
+.event-label {
+    -fx-padding: 2px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-wrap-text: true;
+}
+
+.status-postponed {
+    -fx-background-color: #e5870d;
+}
+
+.status-planned {
+    -fx-background-color: #5e6693;
+}
+
+.status-canceled {
+    -fx-background-color: #a42424;
+}
+
+.status-done {
+    -fx-background-color: #03a136;
+}
+
+.status-assigned {
+    -fx-background-color: #ab7c7c;
+}
+
+
+.prev-button{
+    -fx-border:none;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text:black;
+    -fx-font-family: Tahoma;
+    -fx-text-fill: rgba(68,68,68,0.7);
+}
+
+.next-button{
+    -fx-border:none;
+    -fx-font-size: 16pt;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-text:black;
+    -fx-font-family: Tahoma;
+    -fx-text-fill: rgba(68,68,68,0.7);
+}
+
+.show-more{
+    -fx-padding: 2px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-wrap-text: true;
+}
+
+.context-menu {
+    -fx-padding: 5px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-font-family: Tahoma;
+}
+
+.context-menu .menu-item {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-padding: 10px;
+    -fx-font-size: 12px;
+    -fx-font-family: Tahoma;
+    -fx-text-fill: #000000;
+}
+
+.context-menu .menu-item:hover {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-background-color: #e0e0e0;
+    -fx-text-fill: #000000;
+}

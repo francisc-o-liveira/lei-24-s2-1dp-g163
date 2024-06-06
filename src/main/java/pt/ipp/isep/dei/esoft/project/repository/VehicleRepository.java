@@ -1,16 +1,18 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.Use;
-import static pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle.StatusType.NotUse;
 
 /**
  * The VehicleRepository class manages vehicle data and operations.
@@ -23,7 +25,12 @@ public class VehicleRepository {
 
     /** Initializes the list of Vehicles*/
     public VehicleRepository(){
-        vehicleList=new ArrayList<>();
+        try {
+            vehicleList=new ArrayList<>();
+            loadFromVehicleDataBase();
+        } catch (IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /** Method to search for a Vehicle based on the plate
@@ -42,44 +49,6 @@ public class VehicleRepository {
     }
 
     /**
-     * Retrieves a list of vehicles that are not currently active.
-     *
-     * @return A list of inactive vehicles.
-     */
-
-    public List<Vehicle> getVehicleNotActive() {
-        List<Vehicle> vehicleNotActive = new ArrayList<>();
-        for (Vehicle c : vehicleList) {
-            if (c.getStatus() == NotUse) {
-                vehicleNotActive.add(c);
-            }
-        }
-        return vehicleNotActive;
-    }
-
-    /**
-     * Activates a specified vehicle.
-     *
-     * @param vehicle The vehicle to activate.
-     */
-    public void activateVehicle(Vehicle vehicle) {
-        if (vehicle.getStatus() == NotUse) {
-            vehicle.setStatusType(Use);
-        }
-    }
-
-    /**
-     * Deactivates a specified vehicle.
-     *
-     * @param vehicle The vehicle to deactivate.
-     */
-    public void deactivateVehicle(Vehicle vehicle) {
-        if (vehicle.getStatus() == Use) {
-            vehicle.setStatusType(NotUse);
-        }
-    }
-
-    /**
      * Retrieves a list of vehicles in need of check-up.
      *
      * @return A list of vehicles needing check-up.
@@ -94,21 +63,6 @@ public class VehicleRepository {
         return vehiclesNeedCheckUp;
     }
 
-    /**
-     * Retrieves a list of vehicles based on their status type.
-     *
-     * @param statusType The status type of the vehicles to retrieve.
-     * @return A list of vehicles with the specified status type.
-     */
-    public List<Vehicle> getVehicleListPerType(Vehicle.StatusType statusType) {
-        ArrayList<Vehicle> vehiclesPerType = new ArrayList<>();
-        for (Vehicle v : vehicleList) {
-            if (v.getStatus() == statusType) {
-                vehiclesPerType.add(v);
-            }
-        }
-        return vehiclesPerType;
-    }
 
     /**
      * Sorts the list of vehicles based on their proximity to the next check-up.
@@ -137,10 +91,11 @@ public class VehicleRepository {
      */
     public Optional<Vehicle> addVehicle(Vehicle vehicle) throws CloneNotSupportedException {
         Optional<Vehicle> newVehicle = Optional.empty();
-        newVehicle = Optional.of(vehicle);
         boolean operationSuccess = false;
         if (isValidVehicle(vehicle)) {
-            operationSuccess = saveVehicle(vehicle);
+            saveFromVehicleInDataBase(vehicle);
+            newVehicle = Optional.of(vehicle);
+            operationSuccess=true;
         }
         if (!operationSuccess) {
             throw new CloneNotSupportedException("Vehicle already exists in the system");
@@ -286,9 +241,9 @@ public class VehicleRepository {
      * @param selectedVehicle The vehicle to remove.
      * @return True if the vehicle is successfully removed, otherwise false.
      */
-    public boolean removeVehicle(Vehicle selectedVehicle) {
+    public void removeVehicle(Vehicle selectedVehicle) {
         if (vehicleList.contains(selectedVehicle)) {
-            return vehicleList.remove(selectedVehicle);
+            removeFromVehicleDataBase(selectedVehicle);
         } else {
             throw new RuntimeException("Vehicle not found");
         }
@@ -328,4 +283,64 @@ public class VehicleRepository {
             return false;
         }
     }
+
+
+    public void removeFromVehicleDataBase(Vehicle vehicle) {
+        vehicleList.remove(vehicle);
+        saveVehicles();
+    }
+
+    public void saveFromVehicleInDataBase(Vehicle vehicle) {
+        if (!vehicleList.contains(vehicle)) {
+            saveVehicle(vehicle);
+            saveVehicles();
+        }
+    }
+
+    private void saveVehicles() {
+        cleanFile(MainApp.getVehicleDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getVehicleDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(vehicleList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void cleanFile(String vehicleDataBaseFile) {
+        File file = new File(MainApp.getVehicleDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void loadFromVehicleDataBase() throws CloneNotSupportedException, IOException {
+        File file = new File(MainApp.getVehicleDataBaseFile());
+        if (!file.exists()) {
+            throw new IOException("Vehicle database file does not exist. Starting with an empty list.");
+        }
+        List<Vehicle> vehicleList;
+        if(file.length()==0){
+            vehicleList=new ArrayList<>();
+        } else {
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                vehicleList = (List<Vehicle>) in.readObject();
+                loadInSystem(vehicleList);
+            }
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }}
+    }
+
+    private void loadInSystem(List<Vehicle> vehicles) throws CloneNotSupportedException {
+        for (Vehicle vehicle : vehicles) {
+            saveVehicle(vehicle);
+        }
+    }
+
 }

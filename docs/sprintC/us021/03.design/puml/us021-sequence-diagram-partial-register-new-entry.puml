@@ -1,0 +1,94 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+participant ":RegisterTaskUI" as UI
+participant ":RegisterTaskController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "GreenSpaceRepositories\n:GreenSpaceRepositories" as GreenSpaceRepositories
+participant "entryRepository:\nEntryRepository" as EntryRepository
+participant "GreenSpace\n:GreenSpace" as GreenSpace
+participant "Task:\nTask" as Task
+participant ":Entry" as OBJ
+participant ":GreenSpaceDto" as DTO
+participant ":GreenSpaceMapper" as MAPPER
+participant "greenSpaceListDto : List<GreenSpaceDto>" as ListDTO
+participant "List : List<GreenSpace>" as List
+participant "entryDto: EntryDto" as EntryDto
+
+       -> UI: selects green space
+              activate UI
+
+              UI -> CTRL : getDegreeUrgency()
+              activate CTRL
+              activate EntryRepository
+
+              CTRL -> Task: getEnumDegreeUrgencyList()
+              activate Task
+
+
+              Task --> CTRL: enumDegreeUrgencyList
+              deactivate Task
+
+              CTRL --> UI: enumDegreeUrgencyList
+
+              <-- UI : show degree of urgency list and ask to select one
+
+              -> UI: selects the urgency degree
+
+              <-- UI  : requests data (expected duration)
+
+              -> UI: types data
+
+              <-- UI: show data and request confirmation
+
+              -> UI: confirms data
+
+              UI -> CTRL: registerNewTask(entryDto)
+
+              CTRL -> EntryRepository: registerNewTask(entryDto)
+
+              EntryRepository -> OBJ**: create(entryDto)
+              activate OBJ
+
+              OBJ -> EntryDto: stateOfEntry = getStateOfEntry()
+              activate EntryDto
+
+              EntryDto --> OBJ: stateOfEntry
+
+              OBJ -> EntryDto: greenSpace = getGreenSpace()
+
+              EntryDto --> OBJ: greenSpace
+
+              OBJ -> EntryDto: titleOfEntry = getTitleOfEntry()
+
+              EntryDto --> OBJ: titleOfEntry
+
+              OBJ -> EntryDto: descriptionOfEntry = getDescriptionOfEntry()
+
+              EntryDto --> OBJ: descriptionOfEntry
+
+              OBJ -> EntryDto: approximateExpectedDuration = getApproximateExpectedDuration()
+
+              EntryDto --> OBJ: approximateExpectedDuration
+
+              OBJ -> EntryDto: degreeOfUrgency = getDegreeUrgency()
+
+              EntryDto --> OBJ: degreeOfUrgency
+              deactivate EntryDto
+
+              OBJ --> EntryRepository: true/false
+
+              EntryRepository -> EntryRepository : verifyIfExist(entry)
+
+              EntryRepository --> CTRL: true/false
+
+              CTRL --> UI: true/false
+              deactivate UI
+
+      @enduml

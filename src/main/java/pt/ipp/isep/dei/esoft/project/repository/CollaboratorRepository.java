@@ -4,12 +4,16 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.Active;
 import static pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator.StatusType.NotActive;
@@ -23,6 +27,7 @@ public class CollaboratorRepository {
     /** Initializes the list of Collaborators */
     public CollaboratorRepository(){
         collaboratorList=new ArrayList<>();
+        loadFromCollaboratorDataBase();
     }
 
     /** The method gets the List of Collaborators
@@ -64,31 +69,16 @@ public class CollaboratorRepository {
      * @throws CloneNotSupportedException when Collaborator has already been created
      */
 
-    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
+    public Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = Optional.empty();
-        boolean operationSucess = false;
-        if (!collaboratorList.contains(collab)){
-            operationSucess=collaboratorList.add(collab);
+        if (isValidCollaborator(collab)){
+            collaboratorList.add(collab);
+            saveFromCollaboratorDataBase(collab);
             newCollab=Optional.of(collab);
-        }
-        if (!operationSucess){
+        }else{
             throw new CloneNotSupportedException();
         }
         return newCollab;
-    }
-
-    /**Adds the collaborator to the List of Collaborators
-     *
-     * @param collaborator to be added
-     * @return Optional of Collaborator if it has been added to the list
-     */
-    public Optional<Collaborator> addCollaborator(Collaborator collaborator){
-        Optional<Collaborator> newCollaborator = Optional.empty();
-        newCollaborator = Optional.of(collaborator);
-        if (isValidCollaborator(collaborator)){
-            collaboratorList.add(collaborator);
-        }
-        return newCollaborator;
     }
 
 
@@ -127,9 +117,11 @@ public class CollaboratorRepository {
         for(Collaborator c : team){
             if(c.getStatus()==NotActive){
                 c.setStatus(Active);
+            }else {
+                throw new IllegalArgumentException("Collaborator is active");
             }
         }
-        return false;
+        return true;
     }
 
 
@@ -241,9 +233,106 @@ public class CollaboratorRepository {
     public void removeFromList(Collaborator collaborator){
         if(collaboratorList.contains(collaborator)){
             collaboratorList.remove(collaborator);
+            removeFromCollaboratorDataBase(collaborator);
         } else {
             throw new RuntimeException("This Collaborator does not exist in the Repository");
         }
     }
 
+    public boolean haveCollaboratorWithEmail(String email) {
+        for (Collaborator c : collaboratorList) {
+            if (c.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Collaborator getCollaboratorByEmail(String email) {
+        for (Collaborator collaborator : collaboratorList) {
+            if (collaborator.getEmail().equals(email)) {
+                return collaborator;
+            }
+        }
+        throw new RuntimeException("You dont exist in the Repository! Please try again or contact your system administrator");
+    }
+
+    public void removeFromCollaboratorDataBase(Collaborator collaborator) {
+        cleanFile(MainApp.getCollaboratorDataBaseFile());
+        try {
+            FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           if (!collaboratorList.contains(collaborator)) {
+               cleanFile(MainApp.getCollaboratorDataBaseFile());
+               out.writeObject(collaboratorList);
+           }else{
+               throw new IOException("Collaborator are introduced in the system you cannot remove from Data Base file");
+           }
+           out.close();
+           fileOut.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void cleanFile(String collaboratorsDataBaseFile) {
+        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
+        }
+    }
+
+    public void saveFromCollaboratorDataBase(Collaborator collaborator){
+        cleanFile(MainApp.getCollaboratorDataBaseFile());
+        try {
+            FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile(), true);
+            ObjectOutputStream out;
+            // If the file already has content, we need to use the AppendableObjectOutputStream
+            out = new ObjectOutputStream(file);
+            out.writeObject(collaboratorList);
+            out.close();
+            file.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void loadFromCollaboratorDataBase(){
+        List<Collaborator> collaboratorLoad;
+        try {
+            FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
+            if (file.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(file);
+                while (true) {
+                    try {
+                        collaboratorLoad = (List<Collaborator>) in.readObject();
+                        if (collaboratorLoad != null) {
+                            for (Collaborator collaborator : collaboratorLoad) {
+                                loadInSystem(collaborator);
+                            }
+                        }
+                    } catch (EOFException e) {
+                        break;
+                    }
+                }
+                in.close();
+                file.close();
+            }
+        }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadInSystem(Collaborator collaboratorLoad) throws CloneNotSupportedException {
+        if (!collaboratorList.contains(collaboratorLoad)){
+            collaboratorList.add(collaboratorLoad);
+        }else{
+            throw new CloneNotSupportedException();
+        }
+    }
 }
+
+

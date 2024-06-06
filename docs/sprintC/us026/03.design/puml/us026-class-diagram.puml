@@ -1,0 +1,149 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+package "Domain" {
+class Entry {
+    - List<Vehicle>
+    + Entry()
+    + setNewVehicle()
+    + removeVehicle()
+}
+
+class EntryState{
+    -Enum State
+}
+
+class TaskDto{
+}
+class EntryRepository {
+    - List <Entry> : agenda
+
+    + getAgendaList()
+    + assignVehicleToEntry(vehicle,entry)
+    + filterVehiclesNotUseInTime(vehicleList,entryDto)
+}
+
+
+note bottom of EntryRepository
+    - used for displaying
+    the agenda list
+end note
+
+class VehicleRepository{
+    - List<Vehicle>
+
+    + getVehicleList()
+}
+
+class Vehicle {
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEntryRepository()
+    + getVehicleRepository()
+}
+
+class EntryMapper{
+    - List<EntryDto>
+    + entryDtoToEntry()
+    + entryToEntryDto()
+    + entryListToEntryDtoList()
+}
+
+class Task{
+}
+
+class EntryDto{
+}
+
+class VehicleMapper{
+    - List<VehicleDto>
+    + vehicleListToVehicleDtoList()
+    + vehicleToVehicleDto()
+    + vehicleDtoToVehicle()
+}
+
+class VehicleDto{
+}
+
+}
+
+
+
+class GSMUser {
+}
+
+
+package "Controller"{
+
+class AssignedVehicleToEntryController {
+    - EntryRepository entryRepository
+    - VehicleRepository vehicleRepository
+    + AssignedVehicleToEntryController()
+    + assignVehicleToEntry(vehicleDto)
+    + getEntrysInAgenda()
+    + getVehicleList()
+    - getCollaboratorFromSession()
+}
+
+note left of AssignedVehicleToEntryController
+    - entry is achieved with entry repository
+end note
+
+
+}
+
+
+
+package "UI"{
+
+class AssignedVehicleToEntryUI {
+    + assignVehicleListToEntry()
+}
+
+}
+Repositories -> Repositories : instance
+
+
+AssignedVehicleToEntryUI .> AssignedVehicleToEntryController
+
+AssignedVehicleToEntryController .> Repositories : repositories
+Repositories "1" --> "1" EntryRepository
+Repositories "1" --> "1" VehicleRepository
+
+AssignedVehicleToEntryController ..> EntryRepository : EntryRepository
+AssignedVehicleToEntryController ..> EntryMapper : EntryMapper
+AssignedVehicleToEntryController ..> VehicleMapper : VehicleMapper
+
+EntryMapper "1" ..> "*" EntryDto
+EntryMapper "1" ..> "*" Entry
+
+VehicleRepository "1" --> "*" Vehicle : vehicles
+VehicleMapper "1" --> "*" Vehicle
+EntryMapper "1" --> "1" VehicleMapper
+EntryRepository "1" --> "*" Entry : entry's
+EntryRepository --> "*" GSMUser : employs
+EntryRepository ..> EntryMapper
+VehicleRepository ..> VehicleMapper
+
+VehicleMapper "1" --> "*" VehicleDto
+
+Entry --> "*" GSMUser : employs
+Task "1" -> "1" Entry : extends
+
+Entry "1" --> "1" EntryState : have
+EntryDto "1" --> "1" EntryState : have
+EntryDto "1" --> "1" TaskDto
+
+@enduml

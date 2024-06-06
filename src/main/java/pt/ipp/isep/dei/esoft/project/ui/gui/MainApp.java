@@ -1,19 +1,25 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {
+
+
+
 
     @Override
     public void start(Stage stage) {
@@ -26,6 +32,8 @@ public class MainApp extends Application {
             mainStage.setTitle("AquaCode - Green Space Management");
             mainStage.setScene(scene);
             mainStage.show();
+            Image image = new Image(getClass().getResourceAsStream("/Icons/icon.png"));
+            mainStage.getIcons().add(image);
             mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent event) {
@@ -43,9 +51,20 @@ public class MainApp extends Application {
                     }
                 }
             });
+
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                saveData();
+            }));
+
         } catch (IOException ex) {
             criarAlertaErro(ex).show();
         }
+    }
+
+    public AssignEntryOnAgendaController ctrlEntry=AssignEntryOnAgendaController.getInstance();
+
+    public void saveData(){
+        ctrlEntry.saveToDB();
     }
 
     /**
@@ -68,5 +87,71 @@ public class MainApp extends Application {
         alerta.setContentText(ex.getMessage());
 
         return alerta;
+    }
+
+
+    private static File authDataBaseFile = new File("src/main/resources/DataBase/authDataBase.csv");
+
+    public static File getAuthDataBaseFile() {
+        return authDataBaseFile;
+    }
+
+    private static String collaboratorDataBaseFile = new String("src/main/resources/DataBase/collaboratorDataBase.csv");
+
+    public static String getCollaboratorDataBaseFile() {
+        return collaboratorDataBaseFile;
+    }
+
+    private static String jobCategoryDataBaseFile = new String("src/main/resources/DataBase/jobCategoryDataBase.csv");
+
+    public static String getJobCategoryDataBaseFile() {
+        return jobCategoryDataBaseFile;
+    }
+
+    private static String skillDataBaseFile = new String("src/main/resources/DataBase/skillDataBase.csv");
+
+    public static String getSkillDataBaseFile() {
+        return skillDataBaseFile;
+    }
+
+    private static String entryDataBaseFile = new String("src/main/resources/DataBase/entryDataBase.csv");
+
+    private static String entryReferenceDataBaseFile = new String("src/main/resources/DataBase/entryReferenceDataBase.csv");
+    private static String taskDataBaseFile=new String("src/main/resources/DataBase/taskDataBase.csv");
+
+    public static String getEntryDataBaseFile() {
+        return entryDataBaseFile;
+    }
+
+    private static String getEntryReferenceReferenceDataBaseFile() {
+        return entryReferenceDataBaseFile;
+    }
+
+    public static String getTaskDataBaseFile(){
+        return taskDataBaseFile;
+    }
+
+    private static String vehicleDataBaseFile = new String("src/main/resources/DataBase/vehicleDataBase.csv");
+
+
+    public static String getVehicleDataBaseFile() {
+        return vehicleDataBaseFile;
+    }
+    private static String teamDataBaseFile = new String("src/main/resources/DataBase/teamDataBase.csv");
+
+
+    public static String getTeamDataBaseFile() {
+        return teamDataBaseFile;
+    }
+
+    private static String greenSpaceDataBaseFile = new String("src/main/resources/DataBase/greenSpaceDataBase.csv");
+
+    public static String getGreenSpaceDataBaseFile() {
+        return greenSpaceDataBaseFile;
+    }
+    private static String managerDataBaseFile = new String("src/main/resources/DataBase/managerDataBase.csv");
+
+    public static String getManagerDataBaseFile() {
+        return managerDataBaseFile;
     }
 }

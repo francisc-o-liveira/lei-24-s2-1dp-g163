@@ -25,7 +25,7 @@ public class GenerateTeamController{
     private GenerateTeamServClass serv;
 
     /** Initializes the controller */
-    public GenerateTeamController() {
+    private GenerateTeamController() {
         getDataNeededToGenerate();
     }
 
@@ -129,6 +129,18 @@ public class GenerateTeamController{
         teamRepository.removeTeam(team);
     }
 
+
     /*private (...) getHRMFromSession()*/
+
+
+    private static GenerateTeamController instance;
+    public static GenerateTeamController getInstance(){
+        if(instance == null){
+            synchronized (GenerateTeamController.class) {
+                instance = new GenerateTeamController();
+            }
+        }
+        return instance;
+    }
 
 }

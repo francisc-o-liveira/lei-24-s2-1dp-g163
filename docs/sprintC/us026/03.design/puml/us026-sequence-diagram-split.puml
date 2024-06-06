@@ -1,0 +1,114 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "GSM" as GSM
+participant ":AgendaUI" as UI
+participant ":ViewDetailsEntryUI" as UI2
+participant ":AgendaController" as CTRL
+participant ":ViewDetailsEntryController" as CTRL2
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant "vehicleRepository\n:VehicleRepository" as VehicleRepository
+participant ":Vehicle" as OBJSelected
+participant ":Vehicle" as SelectedDTO
+participant "agendaDto : List<VehicleDto>" as ListSelectedDTO
+participant "agenda : List<Vehicle>" as ListSelected
+participant ":VehicleMapper" as SelectedMAPPER
+participant ":Entry" as OBJ
+participant ":EntryDto" as DTO
+participant ":EntryMapper" as MAPPER
+
+
+activate GSM
+
+        GSM -> UI : asks to assign a vehicle to an Entry in Agenda
+
+        activate UI
+
+'            UI --> GSM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            ref over UI
+                AgendaUI omitted (JavaFx) / View Entry's in Agenda
+            end
+
+            UI -> GSM : show Agenda and wait to select one Entry
+            deactivate UI
+
+
+
+            GSM --> UI : select one Entry
+            activate UI
+
+            UI --> UI2** : create
+            activate UI2
+            deactivate UI
+
+            UI2 --> CTRL2** : create(entryDto)
+
+            UI2 --> CTRL2 : getDataNeededToModify()
+            activate CTRL2
+
+
+
+
+                                                  ref over CTRL2
+                                                        Get Vehicles Dto List that can be assigned to Entry
+                                                  end
+
+
+                                                     note over CTRL2 : other data omitted
+
+                                                    CTRL2 -> UI2 : vehicleDtoList
+                                                    deactivate CTRL2
+
+             UI2 -> GSM : show entry data and wait for selection vehicle to assign
+             deactivate UI2
+             loop For Every vehicle that he want to add to the entry and are disposable to
+
+             GSM -> UI2 : select one vehicle and click on button to assign
+             activate UI2
+
+            UI2 -> CTRL2 : assignVehicleToEntry(vehicleDto)
+            activate CTRL2
+
+            CTRL2 -> SelectedMAPPER : toModel(vehicleDto)
+            activate SelectedMAPPER
+
+
+            SelectedMAPPER -> CTRL2 : vehicle
+            deactivate SelectedMAPPER
+
+
+            CTRL2 -> EntryRepository :
+            activate EntryRepository
+
+            EntryRepository -> MAPPER : toModel(entryDto)
+            activate MAPPER
+
+            MAPPER -> EntryRepository : entry
+            deactivate MAPPER
+
+            EntryRepository -> OBJ : setNewVehicle(vehicle)
+            activate OBJ
+
+            OBJ -> EntryRepository : true/false
+            deactivate OBJ
+
+            EntryRepository -> CTRL2 : true/false
+
+            CTRL2 -> UI2 : true/false
+
+            UI2 -> GSM : show operation success
+            end
+
+
+
+deactivate GSM
+
+@enduml

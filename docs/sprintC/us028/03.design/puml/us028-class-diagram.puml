@@ -1,0 +1,115 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+    + getUserEmail()
+}
+
+class CollaboratorUser {
+}
+
+
+class Entry {
+    - Team
+    + Entry()
+    + getTeam()
+}
+
+class Task{
+}
+
+
+class EntryRepository {
+    - List <Entry> : agenda
+
+    + getEntryByCollaboratorInAgenda()
+}
+
+class CollaboratorRepository{
+    - List<Collaborator>
+
+    + getCollaboratorRegisteredByEmail()
+}
+
+class Collaborator {
+    - String email
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEntryRepository()
+    + getCollaboratorRepository()
+}
+
+class ViewTaskListAssignedCollabController {
+    - EntryRepository entryRepository
+    + ViewTaskListAssignedCollabController()
+    + getEntrysAssignedToMe()
+    + getCollaboratorByEmail(email)
+    - getCollaboratorFromSession()
+}
+
+class EntryMapper{
+    - List<EntryDto>
+    + toModel()
+    + toDto()
+}
+
+class EntryDto{
+}
+
+
+note right of ViewTaskListAssignedCollabController
+    - entry is achieved with entry repository
+end note
+
+note bottom of EntryRepository
+    - used for displaying
+    the to do list
+end note
+
+class ViewTaskListAssignedCollabUI {
+}
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+ViewTaskListAssignedCollabUI .> ViewTaskListAssignedCollabController
+
+ViewTaskListAssignedCollabController .> Repositories : repositories
+Repositories "1" --> "1" EntryRepository
+Repositories "1" --> "1" CollaboratorRepository
+
+ViewTaskListAssignedCollabController ..> EntryRepository : EntryRepository
+ViewTaskListAssignedCollabController ..> EntryMapper : EntryMapper
+
+EntryMapper "1" --> "*" EntryDto
+
+CollaboratorRepository "1" --> "*" Collaborator : collaborators
+
+ApplicationSession --> "1" UserSession : userSession
+ViewTaskListAssignedCollabController ..> ApplicationSession
+ViewTaskListAssignedCollabController ..> UserSession
+EntryRepository "1" --> "*" Entry : entry's
+EntryRepository --> "*" CollaboratorUser : employs
+EntryRepository ..> EntryMapper
+Entry --> "*" CollaboratorUser : employs
+Task "1" -> "1" Entry : extends
+
+
+@enduml

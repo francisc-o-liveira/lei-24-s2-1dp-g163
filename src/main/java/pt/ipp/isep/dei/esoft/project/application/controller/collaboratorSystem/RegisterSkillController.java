@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterSkillController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -20,7 +21,7 @@ public class RegisterSkillController {
     /**
      * Constructs a RegisterSkillController object.
      */
-    public RegisterSkillController(){
+    private RegisterSkillController(){
         skillRepository=Repositories.getInstance().getSkillRepository();
     }
 
@@ -86,5 +87,16 @@ public class RegisterSkillController {
             }
         }
         return operations;
+    }
+
+    private static RegisterSkillController instance;
+
+    public static RegisterSkillController getInstance(){
+        if(instance == null){
+            synchronized (RegisterSkillController.class) {
+                instance = new RegisterSkillController();
+            }
+        }
+        return instance;
     }
 }

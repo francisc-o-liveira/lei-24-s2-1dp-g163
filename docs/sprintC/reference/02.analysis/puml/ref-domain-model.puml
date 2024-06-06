@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide circle
+hide methods
+
+class Entry{
+   reference
+    status
+    startDate
+    vehicleList
+    finishDate
+}
+
+class GSM{
+    email
+    password
+}
+
+class Agenda {
+
+}
+
+
+GSM "*" -- "1" Agenda : sees >
+GSM "1..*" -- "*" Entry : manages >
+
+Agenda "1" -- "*" Entry : contains >
+
+@enduml

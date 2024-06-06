@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US027
+
+autonumber
+
+actor "GSM" as GSM
+participant ":System" as UI2
+
+activate GSM
+
+GSM -> UI2 : Requests to List Managed Green Spaces
+
+activate UI2
+
+UI2 --> GSM : Shows Sorted List of Managed Green Spaces
+
+
+@enduml

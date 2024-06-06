@@ -22,25 +22,38 @@ As a GSM, I want to add a new entry in the Agenda.
 
 > **Question:** To add an entry in Agenda is needed to selected what data? Date?
 >
-> **Answer:** 
+> **Answer:** The start date only is enough because you have the time expected for the task
 
 > **Question:** It is possible to add an entry for more than one day? Like, if one task need more than one/two days is needed to add the entry for more than one day?
 >
-> **Answer:** 
+> **Answer:** Yes, with the time expected you can consider that one task can need more than one day to taken care.
 
 > **Question:** Can I add an entry that has a time period that already have an existing entry in the Agenda?
 >
-> **Answer:** 
+> **Answer:** Yes, because:
+a) there are many parks to manage
+b) different tasks can be executed at same time in the same park.
 
-> **Question:** 
+> **Question:** How many hours work a Team by day, to consider, how many days need to be taken care of to complete the task? And how much time needs to be taken into consideration for the transport distance to the location of the task?
 >
-> **Answer:**
+> **Answer:** This can be loaded by a configuration file don't need to think about that.
+
+> **Question:** When a new entry is added to the ToDo list, the default status of that task will be "pending" or no status at all is considered on ToDo list? Similarly, when a new entry is added to the Agenda, the status of that task will be, by default, set to "planned", right?
+>
+> **Answer:**  "Pending" as default for to-do list entries and "Planned" as default for Agenda entries, sounds good;
+
+> **Question:** What time unit should be used for the duration of the task?
+> 
+> **Answer:** Hour and/or days.
 
 
 ### 1.3. Acceptance Criteria
 
 * **AC1:** The new entry must be associated with a green space managed by the GSM.
 * **AC2:** The new entry must exist in the To-Do list.
+* **AC3:** The new entry must be associated with a Date for start the task (startDate)
+* **AC4:** The TimePeriod associated to the task are calculated with the expected duration of the task.
+* **AC5:** The time of work by day for a team need to be load by the configuration file
 
 ### 1.4. Found out Dependencies
 
@@ -52,7 +65,7 @@ As a GSM, I want to add a new entry in the Agenda.
 
 * Selected data:
   * Task
-  * Date (interactive UI)
+  * Start-Date 
 
 **Output Data:**
 

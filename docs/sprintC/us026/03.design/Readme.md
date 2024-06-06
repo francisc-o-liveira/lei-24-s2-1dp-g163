@@ -1,56 +1,60 @@
-# US003 - Register a Collaborator
+# US026 - Assign one or more Vehicles to an entry in the Agenda
 
-## 3. Design - User Story Realization 
+## 3. Design - User Story Realization
 
 ### 3.1. Rationale
 
-_**Note that SSD - Alternative Two is adopted.**_
+| Interaction ID | Question: Which class is responsible for...       | Answer                        | Justification (with patterns)                                                                                 |
+|:---------------|:--------------------------------------------------|:------------------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1         | 	... interacting with the actor?                  | AssignEntryOnAgendaUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+|                | 	... coordinating the US?                         | AssignEntryOnAgendaController | Controller                                                                                                    |
+|                | ... setting the Entry?                            | EntryRepository               | Creator (Rule 1): in the DM EntryRepository.                                                                  |
+| Step 2         | 	...saving the inputted data?                     | Entry                         | IE: object created in step 1 has its own data.                                                                |
+| Step 3         | 	...data transfer object?                         | EntryMapper and VehicleMapper | IE: Pattern (Data Transfer Object)                                                                            |
+| Step 4         | 	... validating vehicle (global validation)?      | EntryRepository               | IE:  the status have the verification and attribution method by omission.                                     |
+| Step 5         | 	... validating data (local validation)?          | Entry                         | IE: owns its data.                                                                                            | 
+|                | 	... validating all data (global validation)?     | EntryRepository               | IE: knows all Entry's.                                                                                        | 
+|                | 	... saving the set Vehicle?                      | Entry                         | IE: have vehicles.                                                                                            | 
+| Step 6         | 	... informing operation success?                 | AssignEntryOnAgendaUI         | IE: is responsible for user interactions.                                                                     | 
 
-| Interaction ID | Question: Which class is responsible for...          | Answer                         | Justification (with patterns)                                                                                 |
-|:---------------|:-----------------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?                     | RegisterCollaboratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                            | RegisterCollaboratorController | Controller                                                                                                    |
-| 			  		        | ... instantiating a new Collaborator?                | CollaboratorRepository         | Creator (Rule 1): in the DM CollaboratorRepository.                                                           |
-| 		             | 							                                              |                                |                                                                                                               |
-| Step 2  		     | 	...saving the inputted data?                        | Collaborator                   | IE: object created in step 1 has its own data.                                                                |
-| Step 3  		     | 	...knowing the Job categories to show?              | Repositories                   | IE: Job Categories are defined by the Administrators.                                                         |
-| Step 4  		     | 	... saving the selected category?                   | Collaborator                   | IE: object created in step 1 is classified in one jobCategory.                                                |
-| Step 5  		     | 	...knowing the DocType to show?                     | Enum DocType                   | IE: DocType are static and final.                                                                             |
-| Step 6  		     | 	... saving the selected docType?                    | Collaborator                   | IE: object created in step 1 is classified in one docType.                                                    |
-| Step 7  		     | 	... validating docIDNumber (local validation)? 				 | docType                        | IE:  the docType have the verification method by omission.                                                    |
-| Step 8  		     | 	... validating data (local validation)?             | Collaborator                   | IE: owns its data.                                                                                            | 
-|                | 	... validating all data (global validation)?        | CollaboratorRepository         | IE: knows all collaborators.                                                                                  | 
-| Step 9		       | 	... saving the registered Collaborator?             | CollaboratorRepository         | IE: owns all collaborators.                                                                                   | 
-| Step 10  		    | 	... informing operation success?                    | RegisterCollaboratorUI         | IE: is responsible for user interactions.                                                                     | 
+### Systematization
 
-### Systematization ##
+According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator):
 
-According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator): 
+* EntryRepository
+* Entry
+* Task
+* Vehicle
 
-* Collaborator Repository
-* Collaborator
-
-Other software classes (i.e Information Expert) identified:
+Other software classes (i.e. Information Expert) identified:
 
 * Repositories
-* DocTypeRepository
-* JobCategoryRepository
-* CollaboratorRepository
+* EntryRepository
+* VehicleRepository
 
-Other software classes (i.e. Pure Fabrication) identified: 
+Other software classes (i.e. Pure Fabrication) identified:
 
-* RegisterCollaboratorUI  
-* RegisterCollaboratorController
+* AssignEntryOnAgendaUI
+* AssignEntryOnAgendaController
+
+Other software classes (i.e. Use of Data Transfer Objects (DTO)) identified:
+
+* EntryDTO
+* TaskDTO
+* VehicleDTO
+* EntryMapper
+* VehicleMapper
+
 
 ## 3.2. Sequence Diagram (SD)
 
-_**Note that SSD - Alternative Two is adopted.**_
+_**Note that SSD - Alternative One is adopted.**_
 
 ### Full Diagram
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us026-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -58,16 +62,16 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us003-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us026-sequence-diagram-split.svg)
 
-**Get Job Category List Partial SD**
+**Get Agenda Entry's List Partial SD**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us003-sequence-diagram-partial-get-job-category-list.svg)
+![Sequence Diagram - Partial - Get Task Category List](svg/us026-sequence-diagram-partial-get-agenda-list.svg)
 
-**Register a Collaborator Partial SD**
+**Get Vehicle Dto List Partial SD**
 
-![Sequence Diagram - Partial - Create Task](svg/us003-sequence-diagram-partial-register-collaborator.svg)
+![Sequence Diagram - Partial - Create Task](svg/us026-sequence-diagram-partial-get-vehicles-dto.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us003-class-diagram.svg)
+![Class Diagram](svg/us026-class-diagram.svg)

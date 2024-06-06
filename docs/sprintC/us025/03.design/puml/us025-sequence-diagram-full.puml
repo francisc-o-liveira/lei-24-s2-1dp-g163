@@ -1,0 +1,85 @@
+ç@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "GSM" as GSM
+participant ":ViewDetailsEntryUI" as UI
+participant ":ViewDetailsEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository:\nEntryRepository" as EntryRepository
+participant ":EntryMapper" as MAPPER
+participant "cancelEntryListDto : List<EntryDto>" as ListDTO
+participant "List : List<EntryDto>" as EntryDtoList
+participant "cancelEntryList : List<Entry>" as List
+participant "entryList : List<Entry>" as EntryList
+participant ":EntryDto" as EntryDto
+participant ":Entry" as OBJ
+
+
+activate GSM
+
+        ref over GSM
+        Get Agenda Entry's List
+        end
+
+        GSM -> UI : ask and select an entry to cancel
+        activate UI
+
+        UI -> CTRL**: createViewDetailsEntryController()
+        activate CTRL
+
+        CTRL -> RepositorySingleton: getInstance()
+        activate RepositorySingleton
+
+        RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT: getEntryRepository()
+        activate PLAT
+
+        PLAT --> CTRL: entryRepository
+        deactivate PLAT
+
+        UI --> GSM: request confirmation to cancel the entry
+
+        GSM -> UI: confirms data
+
+        UI -> CTRL: cancelEntry(entryDto)
+
+        CTRL -> EntryRepository: cancelEntry(entryDto)
+        activate EntryRepository
+
+        EntryRepository -> EntryDto**: cancelEntry(entryDto)
+        deactivate EntryRepository
+        activate EntryDto
+
+
+        EntryDto -> OBJ: stateOfEntry = setStateOfEntry()
+        activate OBJ
+
+        OBJ --> EntryDto: stateOfEntry
+
+        EntryDto --> EntryRepository: true/false
+        deactivate OBJ
+        deactivate EntryDto
+        activate EntryRepository
+
+
+        EntryRepository --> CTRL: true/false
+        deactivate EntryRepository
+
+
+
+        CTRL --> UI: true/false
+
+        UI --> GSM : displays operation success
+        deactivate UI
+
+deactivate GSM
+
+@enduml

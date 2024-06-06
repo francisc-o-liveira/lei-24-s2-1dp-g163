@@ -1,0 +1,102 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class ApplicationSession{
+    + static getInstance()
+    + getCurrentSession()
+}
+
+class UserSession{
+}
+
+class Task{
+}
+
+class CollaboratorUser {
+}
+
+class Entry {
+    - Team
+    + Entry()
+    + getTeam()
+}
+
+
+class EntryRepository {
+    - List <Entry> : toDoList
+
+    + getToDoListsOfCollaborator()
+}
+
+class CollaboratorRepository{
+    - List<Collaborator>
+
+    + getCollaboratorRegisteredByEmail()
+}
+
+class Collaborator {
+    - String email
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getEntryRepository()
+    + getCollaboratorRepository()
+}
+
+class ViewTaskListAssignedCollabController {
+    - EntryRepository entryRepository
+    + ViewTaskListAssignedCollabController()
+    + getTaskAssignedToMe()
+    + getCollaboratorByEmail(email)
+    - getCollaboratorFromSession()
+}
+
+class ViewTaskListAssignedCollabUI {
+}
+
+note right of ViewTaskListAssignedCollabController
+    - entry is achieved with entry repository
+end note
+
+note bottom of EntryRepository
+    - used for displaying
+    the to do list
+end note
+
+Repositories -> Repositories : instance
+ApplicationSession -> ApplicationSession : instance
+
+ViewTaskListAssignedCollabUI .> ViewTaskListAssignedCollabController
+
+ViewTaskListAssignedCollabController .> Repositories : repositories
+Repositories "1" --> "1" EntryRepository
+Repositories "1" --> "1" CollaboratorRepository
+
+ViewTaskListAssignedCollabController ..> EntryRepository : EntryRepository
+
+
+CollaboratorRepository "1" --> "*" Collaborator : collaborators
+
+ApplicationSession --> "1" UserSession : userSession
+ViewTaskListAssignedCollabController ..> ApplicationSession
+ViewTaskListAssignedCollabController ..> UserSession
+EntryRepository --> "*" CollaboratorUser : employs
+EntryRepository "1" --> "*" Entry : entry's
+
+Entry --> "*" CollaboratorUser : employs
+Task "1" -> "1" Entry : extends
+
+
+
+@enduml

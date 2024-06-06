@@ -12,7 +12,7 @@ public class ShowCollaboratorListUI implements Runnable {
 
     /** Initializes the controller */
     public ShowCollaboratorListUI(){
-        ctrl= new RegisterCollaboratorController();
+        ctrl= RegisterCollaboratorController.getInstance();
     }
 
     /** Gets the controller */

@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 import pt.ipp.isep.dei.esoft.project.ui.console.vehicle.CheckUpListUI;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ManageVehiclesUI implements Runnable{
-    private AuthenticationController ctrl;
+    private RegisterController ctrl;
     public ManageVehiclesUI(){
     }
     @Override
@@ -36,9 +37,9 @@ public class ManageVehiclesUI implements Runnable{
         } while (option != -1);
     }
 
-    private Runnable getUserMainUI() {
-        ctrl = new AuthenticationController();
-        List<UserRoleDTO> roles = this.ctrl.getUserRoles();
+    /*private Runnable getUserMainUI() {
+        ctrl = new RegisterController();
+        List<String> roles = this.ctrl.getRolesToSelect();
         if ((roles == null) || (roles.isEmpty())) {
             System.out.println("No role assigned to user.");
         } else {
@@ -63,5 +64,5 @@ public class ManageVehiclesUI implements Runnable{
         } else {
             return (UserRoleDTO) Utils.showAndSelectOne(roles, "Select the role you want to adopt in this session:");
         }
-    }
+    }*/
 }

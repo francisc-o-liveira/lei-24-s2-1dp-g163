@@ -9,31 +9,23 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession{
-    + static getInstance()
-    + getCurrentSession()
-}
-
-class UserSession{
-}
-
-class GSM {
-}
-
+package "Domain" #DDDDDD{
 
 class Entry {
     - List<Vehicles>
     - Team
-    - TimePeriod
+    - StartDate
+    - StartHour
     - Status
     + Entry()
-    + setEntry(TimePeriod)
+    - setStartDate(startDate)
+    + setEntryAgenda(startDate)
 }
 
 class Task{
     - GreenSpace
+    - Integer timeExpected
 }
-
 
 class EntryRepository {
     - List <Entry> : toDoList
@@ -43,6 +35,10 @@ class EntryRepository {
     + getAgenda()
     + setEntryOnAgenda()
 }
+note bottom of EntryRepository
+    - used for displaying
+    the to do list
+end note
 
 
 class Repositories {
@@ -51,43 +47,82 @@ class Repositories {
     + getEntryRepository()
 }
 
+class EntryMapper{
+    - List<EntryDto>
+    + entryDtoToEntry(entryDto)
+    + entryToEntryDto(entry)
+    + entryListToEntryDtoList(entryList)
+}
+
+class EntryDto{
+    + timeExpected
+    - setStartDate(startDate)
+    + setEntryAgenda(startDate)
+}
+
+class TaskDto{
+
+    -GreenSpace
+    -Integer timeExpected
+}
+
+}
+
+
+
+package "Controller" #DDDDDD{
 class AssignEntryOnAgendaController {
-    - EntryRepository entryRepository
+    - EntryRepository repository
     + AssignEntryOnAgendaController()
     + getToDoList()
     + assignEntryOnAgenda()
-    - getHRMFromSession()
+    - getGSMFromSession()
 }
-
 note right of AssignEntryOnAgendaController
     - entry is achieved with entry repository
 end note
 
-note bottom of EntryRepository
-    - used for displaying
-    the to do list
-end note
-
-class AssignEntryOnAgendaUI {
 }
 
+class GSM {
+}
+
+
+
+package "UI" #DDDDDD{
+class AssignEntryOnAgendaUI {
+}
+}
+
+
+
+
+
+
 Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
 
 AssignEntryOnAgendaUI .> AssignEntryOnAgendaController
 
 AssignEntryOnAgendaController .> Repositories : repositories
 Repositories "1" --> "1" EntryRepository
 
-AssignEntryOnAgendaController ..> EntryRepository : EntryRepository
+EntryRepository  ..>  EntryMapper
 
-ApplicationSession --> "1" UserSession : userSession
-AssignEntryOnAgendaController ..> ApplicationSession
+EntryMapper --> EntryDto
+
+EntryDto -- TaskDto : extends
+
+
+AssignEntryOnAgendaController ..> EntryRepository : EntryRepository
+AssignEntryOnAgendaController ..> EntryMapper : EntryMapper
+
 AssignEntryOnAgendaController ..> UserSession
+UserSession "1" --> "1" GSM
 EntryRepository "1" --> "*" Entry : entry's
 EntryRepository --> "*" GSM : employs
 Entry --> "*" GSM : employs
-Task "1" -> "1" Entry : extends
+Task "1" <- "1" Entry : extends
+EntryMapper "1" ..> "1" Entry
 
 
 @enduml

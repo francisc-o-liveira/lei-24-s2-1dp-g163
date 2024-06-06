@@ -2,8 +2,10 @@ package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.Serializable;
+
 /** Domain class for Check-Up*/
-public class CheckUp {
+public class CheckUp implements Serializable {
 
     /** The kilometers when check-up was made */
     private double kmOfCheck;

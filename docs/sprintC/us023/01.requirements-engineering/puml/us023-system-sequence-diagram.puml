@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - US023
+
+autonumber
+
+actor "GSM" as GSM
+participant ":System" as UI2
+
+activate GSM
+
+ref over GSM : Get the details and management options\n of a selected entry on the agenda
+
+GSM -> UI2 : Selects a Team and Assigns it to the Selected Entry
+
+activate UI2
+
+UI2 --> GSM : Displays Operation Success Message
+
+
+@enduml

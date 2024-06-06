@@ -1,115 +1,225 @@
-    @startuml
-    skinparam monochrome true
-    skinparam packageStyle rectangle
-    skinparam shadowing false
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
 
-    autonumber
+autonumber
 
-    actor "HR Manager" as HRManager
-    participant "AssignSkillsUI" as UI
-    participant ":AssignSkillsController" as Controller
+actor "HR Manager" as HRManager
+participant "AssignSkillsUI" as UI
+participant ":AssignSkillsController" as Controller
 
-    participant "Repositories" as Repos
-    participant "repositories:Repositories" as reposRepos
-    participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
-    participant "skillRepository:SkillRepository" as SkillRepo
+participant "Repositories" as Repos
+participant "repositories:Repositories" as reposRepos
+participant "collaboratorRepository:CollaboratorRepository" as EmpRepo
+participant "skillRepository:SkillRepository" as SkillRepo
+participant ":CollaboratorMapper" as EmpMapper
+participant ":SkillMapper" as SkillMapper
 
-    participant "collaborator:Collaborator" as Collaborator
+participant "collaboratorList:list<Collaborator>" as listEmp
+participant "availableSkillList:list<Skill>" as listSkill
 
-    activate HRManager
+participant "collaboratorListDto:list<CollaboratorDto>" as CollaboratorListDto
+participant "objDto:CollaboratorDto" as CollaboratorDto
 
-    HRManager -> UI : Asks to assign skills to a specific collaborator
-    activate UI
-
-    UI -> Controller** : create
-
-    UI -> Controller : getDataNeededToAssignSkills()
-    activate Controller
-
-    Controller -> Repos : getInstance()
-    activate Repos
-
-    Repos --> Controller : repositories
-    deactivate Repos
-
-    Controller -> reposRepos : getSkillRepository()
-    activate reposRepos
-
-    reposRepos --> Controller : skillRepository
-    deactivate reposRepos
-
-    Controller -> reposRepos : getCollaboratorRepository()
-    activate reposRepos
-
-    reposRepos --> Controller : collaboratorRepository
-    deactivate reposRepos
-
-    Controller -> EmpRepo : getCollaboratorList()
-    activate EmpRepo
-
-    EmpRepo --> Controller : collaboratorList
-    deactivate EmpRepo
-
-    Controller --> UI : collaboratorList
-    deactivate Controller
+participant "skillListDto:list<SkillDto>" as SkillListDto
+participant "objDto:SkillDto" as SkillDto
 
 
-    UI --> HRManager : Displays Collaborator list
-    deactivate UI
+participant "collaborator:Collaborator" as Collaborator
+participant "skills:Skills" as Skills
 
-    HRManager -> UI : Selects Collaborator
-    activate UI
+activate HRManager
 
-    UI -> Controller : getAvailableSkillsList(collaborator)
-    activate Controller
+HRManager -> UI : Asks to assign skills to a specific collaborator
+activate UI
 
-    Controller -> EmpRepo : getCollaboratorSkillsList(collaborator)
-    activate EmpRepo
+UI -> Controller** : create
 
-    EmpRepo --> Controller : CollaboratorSkillsList
-    deactivate EmpRepo
+UI -> Controller : getCollaboratorListDto()
+activate Controller
 
-    Controller -> SkillRepo : getAllSkills()
-    activate SkillRepo
+Controller -> Repos : getInstance()
+activate Repos
 
-    SkillRepo --> Controller : allSkillsList
-    deactivate SkillRepo
+Repos --> Controller : repositories
+deactivate Repos
 
-    loop over each Skill not assigned to Collaborator
-        Controller -> Controller : filterAssignedSkills(CollaboratorSkillsList, allSkillsList)
-    end
+Controller -> reposRepos : getSkillRepository()
+activate reposRepos
 
-    Controller --> UI : availableSkillsList
-    deactivate Controller
+reposRepos --> Controller : skillRepository
+deactivate reposRepos
 
-    UI --> HRManager : Displays Available Skills to Assign
-    deactivate UI
+Controller -> reposRepos : getCollaboratorRepository()
+activate reposRepos
 
-    HRManager -> UI : Selects Skill and Submits
-    activate UI
+reposRepos --> Controller : collaboratorRepository
+deactivate reposRepos
 
-    UI -> Controller : assignSkills(collaborator, skillName)
-    activate Controller
+Controller -> EmpRepo : getCollaboratorList()
+activate EmpRepo
 
-    Controller -> EmpRepo : assignSkillToCollaborator(collaborator, skillName)
-    activate EmpRepo
+EmpRepo --> Controller : collaboratorList
+deactivate EmpRepo
+
+Controller -> EmpMapper : toDTO(collaboratorList)
+activate EmpMapper
+
+EmpMapper -> CollaboratorListDto** : create()
+
+loop for each object in collaboratorList
+    EmpMapper -> listEmp : obj = get()
+    activate listEmp
+    deactivate listEmp
+    EmpMapper -> EmpMapper: objDto = toDto(obj)
+    activate EmpMapper
+
+    EmpMapper -> CollaboratorDto** : create(obj.getName())
+    deactivate EmpMapper
+    EmpMapper -> CollaboratorListDto : add(objDto)
+    activate CollaboratorListDto
+    deactivate CollaboratorListDto
+end
+
+deactivate listEmp
+
+EmpMapper -> Controller : CollaboratorListDto
+deactivate EmpMapper
+
+Controller --> UI : CollaboratorListDto
+deactivate Controller
+
+UI --> HRManager : Displays Collaborator Names list
+deactivate UI
+
+HRManager -> UI : Selects Collaborator
+activate UI
+
+UI -> Controller : getAvailableSkillListDto(objDto) /' collaboratorName '/ 
+activate Controller
+
+Controller -> EmpRepo : getName(objDto) /' collaboratorName '/ 
+activate EmpRepo
+
+EmpRepo -> EmpMapper : toModelAndGetName(objDto) /' collaboratorName '/ 
+activate EmpMapper
+
+EmpMapper -> CollaboratorDto : collaboratorName = getCollaboratorName()
+activate CollaboratorDto
+deactivate CollaboratorDto
+
+EmpMapper -> EmpRepo :  collaboratorName  
+deactivate EmpMapper
+
+EmpRepo -> Controller :  collaboratorName  
+deactivate EmpRepo
+
+Controller -> SkillRepo : getAllSkillNames()
+activate SkillRepo
+
+SkillRepo -> Controller : allSkills
+deactivate SkillRepo
+
+Controller -> EmpRepo : getAvailableSkillList(collaboratorName, allSkills)
+activate EmpRepo
+
+EmpRepo -> EmpRepo : findCollaboratorByName(collaboratorName)
+activate EmpRepo
+deactivate EmpRepo
+
+EmpRepo -> Collaborator : getAssignedSkills()
+activate Collaborator
+
+Collaborator -> EmpRepo  : assignedSkills
+deactivate Collaborator
+EmpRepo -> EmpRepo : filterAssignedSkills(assignedSkills, allSkills)
+
+EmpRepo --> Controller : availableSkillList
+deactivate EmpRepo
 
 
-    EmpRepo -> Collaborator : assignSkill(skillName)
-    activate Collaborator
 
-    Collaborator --> EmpRepo : true
-    deactivate Collaborator
+Controller -> SkillMapper : toDTO(availableSkillList)
+activate SkillMapper
+
+SkillMapper -> SkillListDto** : create()
+
+loop for each object in availableSKillList
+    SkillMapper -> listSkill : obj = get()
+    activate listSkill
+    deactivate listSkill
+    SkillMapper -> SkillMapper: objDto = toDto(obj)
+    activate SkillMapper
+
+    SkillMapper -> SkillDto** : create(obj.getName())
+    deactivate SkillMapper
+    SkillMapper -> SkillListDto : add(objDto)
+    activate SkillListDto
+    deactivate SkillListDto
+end
+
+deactivate listEmp
+
+SkillMapper -> Controller : skillListDto
+deactivate SkillMapper
+
+Controller --> UI : availableSkillListDto
+deactivate Controller
+
+UI --> HRManager : Displays Available Skills to Assign
+deactivate UI
+
+HRManager -> UI : Selects Skill and Submits
+activate UI
+
+UI -> Controller : assignSkill(objDto) /' collaboratorName, skillName '/
+activate Controller
+
+Controller -> EmpRepo : assignSkillToCollaborator(objDto)
+activate EmpRepo
+
+EmpRepo -> EmpMapper : toModel(objDto)
+activate EmpMapper
+
+EmpMapper -> CollaboratorDto : collaboratorName = getCollaboratorName()
+activate CollaboratorDto
+deactivate CollaboratorDto
+
+EmpMapper -> SkillDto : skillName = getSkillName()
+activate SkillDto
+
+EmpMapper -> EmpRepo : findCollaboratorByName(collaboratorName)
+deactivate SkillDto
+activate EmpRepo
+
+EmpRepo -> EmpMapper  : collaborator
+deactivate EmpRepo
+
+EmpMapper -> SkillRepo : findSkillByName(skillName)
+
+activate SkillRepo
+
+SkillRepo -> EmpMapper  : skill
+deactivate SkillRepo
+
+EmpMapper -> Collaborator : assignSkill(skillName)
+activate Collaborator
 
 
-    EmpRepo --> Controller : true
-    deactivate EmpRepo
+Collaborator --> EmpMapper : true
+deactivate Collaborator
 
-    Controller --> UI : true
-    deactivate Controller
+EmpMapper --> EmpRepo : true
+deactivate EmpMapper
 
-    UI --> HRManager : Displays Operation Success Message
-    deactivate UI
+EmpRepo --> Controller : true
+deactivate EmpRepo
 
+Controller --> UI : true
+deactivate Controller
 
-    @enduml
+UI --> HRManager : Displays Operation Success Message
+deactivate UI
+
+@enduml

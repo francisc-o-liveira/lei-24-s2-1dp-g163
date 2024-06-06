@@ -45,7 +45,12 @@ As a GSM, I want to add a new entry to the To-Do List.
 **Input Data:**
 
 * Typed data:
-    * 
+    * state
+    * green space
+    * title
+    * description
+    * approximate expected duration
+    * degree of urgency
 
 * Selected data:
     * urgency degree

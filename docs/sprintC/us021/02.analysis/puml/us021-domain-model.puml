@@ -19,7 +19,12 @@ password
 }
 
 class Entry {
-
+stateOfEntry
+greenSpace
+titleOfEntry
+descriptionOfEntry
+approximateExpectedDuration
+degreeOfUrgency
 }
 
 

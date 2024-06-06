@@ -1,0 +1,155 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+
+participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryController" as CTRL2
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository:\nEntryRepository" as EntryRepository
+participant "entry:Entry" as OBJ
+participant "entryDto:EntryDto" as DTO
+
+activate GSM
+
+group Get details and management options of a selected entry on the agenda
+
+    GSM -> UI: Asks to assign a team to an entry in the Agenda
+    activate UI
+
+
+    UI -> Controller: getAgendaEntryList()
+    activate Controller
+
+    Controller -> Repos: getInstance()
+    activate Repos
+
+    Repos --> Controller: repositories
+    deactivate Repos
+
+    Controller -> reposRepos: getEntryRepository()
+    activate reposRepos
+
+    reposRepos --> Controller: entryRepository
+    deactivate reposRepos
+
+    Controller -> EntryRepo: getAgenda()
+    activate EntryRepo
+
+    EntryRepo -> Controller: entryList
+    deactivate EntryRepo
+
+    Controller -> UI: agendaEntryList
+    deactivate Controller
+
+    UI -> GSM: Shows Agenda and its Entries
+    deactivate UI
+
+
+    GSM -> UI: Selects one Entry
+    activate UI
+
+    UI -> UI2: showEntryDetails(entry)
+    deactivate UI
+    activate UI2
+
+
+    UI2 -> CTRL2**: create()
+
+    UI2 -> CTRL2: getDataNeededToEntry()
+    activate CTRL2
+
+
+    CTRL2 -> Repos: getInstance()
+    activate Repos
+
+    Repos --> CTRL2: repositories
+    deactivate Repos
+
+    CTRL2 -> reposRepos: getTeamRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: teamRepository
+    deactivate reposRepos
+
+    CTRL2 -> reposRepos: getVehicleRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: vehicleRepository
+    deactivate reposRepos
+
+    CTRL2 -> TeamRepo: getTeamList()
+    activate TeamRepo
+
+    TeamRepo --> CTRL2: teamList
+    deactivate TeamRepo
+
+
+    CTRL2 -> VehicleRepo: getVehicleList()
+    activate VehicleRepo
+
+    VehicleRepo --> CTRL2: vehicleList
+    deactivate VehicleRepo
+
+    CTRL2 --> UI2: vehicleList, teamList
+    deactivate CTRL2
+
+    UI2 -> GSM: Shows Entry Details and Management Options
+    deactivate UI2
+end
+
+
+
+
+
+
+
+ref over GSM : Get details and management options\n of a selected entry on the agenda
+
+GSM-> UI2: Postpones the Entry Starting Date
+activate UI2
+
+UI2 -> DTO : postpone(newStartDate)
+activate DTO
+
+deactivate DTO
+
+UI2 -> CTRL2: postponeEntry(entryDto)
+activate CTRL2
+
+CTRL2 -> EntryRepository : postponeEntry(entryDto)
+activate EntryRepository
+
+EntryRepository -> Mapper : entryDtoToEntry(entryDto,entry)
+activate Mapper
+
+Mapper -> OBJ: postponeEntry(newStartDate)
+activate OBJ
+
+OBJ -> OBJ: status.postponeState()
+OBJ -> OBJ: setStartDate(newStartDate)
+
+OBJ -> Mapper: true
+
+
+deactivate OBJ
+
+Mapper -> EntryRepository : true
+deactivate Mapper
+
+CTRL2 -> UI2: true
+deactivate CTRL2
+
+
+UI2 -> GSM: Confirms the Change
+deactivate UI2
+deactivate GSM
+
+@enduml
+
+

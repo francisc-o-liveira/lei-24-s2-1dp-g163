@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.concurrent.RejectedExecutionException;
 /**
  * Represents a vehicle with various properties and functionalities.
  */
-public class Vehicle {
+public class Vehicle implements Serializable {
         /** The brand of the vehicle. */
         private String brand;
 
@@ -18,7 +19,7 @@ public class Vehicle {
         private String model;
 
         /** The type of the vehicle. */
-        public enum Type {
+        public enum Type implements Serializable {
             LightPassenger, // Light Passenger
             LightCargo,       // Light Cargo
             Heavy,             // Heavy
@@ -55,13 +56,6 @@ public class Vehicle {
         /** The list of check-ups performed on the vehicle. */
         private List<CheckUp> checkUpList;
 
-        /** The status of the vehicle. */
-        public enum StatusType {
-            Use,    // In use
-            NotUse  // Not in use
-        }
-        private StatusType statusType;
-
         /** The tax rate for a close check. */
         private static final double TAX_FOR_CLOSE_CHECK = 0.05;
 
@@ -92,11 +86,9 @@ public class Vehicle {
             setRegisterDate(registerDate);
             setAcquisitionDate(acquisitionDate);
             setFrequencyCheckKm(frequencyCheckKm);
-            setStatusType(StatusType.NotUse);
             setPlate(plate);
             setLastCheckUp(date, lastKmCheck);
         }
-
 
 
     /**
@@ -137,14 +129,6 @@ public class Vehicle {
         }else {
             return plate.matches("^[A-Z]{2}-\\d{2}-[A-Z]{2}$");
         }
-    }
-
-    /**
-     * Retrieves the status of the vehicle.
-     * @return the status of the vehicle
-     */
-    public StatusType getStatus() {
-        return statusType;
     }
 
     /**
@@ -208,14 +192,6 @@ public class Vehicle {
      */
     public List<CheckUp> getCheckUpList() {
         return checkUpList;
-    }
-
-    /**
-     * Retrieves the status type of the vehicle.
-     * @return the status type of the vehicle
-     */
-    public StatusType getStatusType() {
-        return statusType;
     }
 
     /**
@@ -432,13 +408,6 @@ public class Vehicle {
         }
     }
 
-    /**
-     * Sets the status type of the vehicle.
-     * @param statusType the status type to set
-     */
-    public void setStatusType(StatusType statusType) {
-        this.statusType = statusType;
-    }
 
     /**
      * Sets the type of the vehicle.
@@ -446,38 +415,6 @@ public class Vehicle {
      */
     public void setType(Type type) {
         this.type = type;
-    }
-
-
-    /** Converts a date to LocalDate
-     *
-     * @param date to be converted
-     * @return date in the LocalDate format
-     */
-    public static LocalDate convertToJavaLocalDate(Date date) {
-
-        int year = date.getYear();
-        int month = date.getMonth();
-        int day = date.getDay();
-
-        return LocalDate.of(year, month, day);
-    }
-
-    /** Gets the registerDate in the LocalDate format
-     *
-     * @return registerDate in LocalDate format
-     */
-    public LocalDate getRegisterDateLocal(){
-        return convertToJavaLocalDate(registerDate);
-    }
-
-    /** Gets the acquisition date in the LocalDate format
-     *
-     * @return acquisition date in LocalDate format
-     */
-
-    public LocalDate getAcquisitionDateLocal(){
-        return convertToJavaLocalDate(acquisitionDate);
     }
 
 }

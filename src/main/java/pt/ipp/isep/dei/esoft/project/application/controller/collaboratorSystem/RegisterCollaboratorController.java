@@ -1,4 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem;
+import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
@@ -25,7 +26,7 @@ public class RegisterCollaboratorController {
     private JobCategoryRepository jobCategoryRepository;
 
 
-    public RegisterCollaboratorController() {
+    private RegisterCollaboratorController() {
         getDataNeededToRegister();
     }
 
@@ -110,4 +111,14 @@ public class RegisterCollaboratorController {
     /*private void getHRMFromSession(){
 
     }*/
+
+    private static RegisterCollaboratorController instance;
+    public static RegisterCollaboratorController getInstance(){
+        if(instance == null){
+            synchronized (RegisterCollaboratorController.class) {
+                instance = new RegisterCollaboratorController();
+            }
+        }
+        return instance;
+    }
 }
