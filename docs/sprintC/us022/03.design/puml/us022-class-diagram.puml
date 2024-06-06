@@ -122,6 +122,7 @@ EntryRepository "1" --> "*" Entry : entry's
 EntryRepository --> "*" GSM : employs
 Entry --> "*" GSM : employs
 Task "1" <- "1" Entry : extends
+EntryMapper "1" ..> "1" Entry
 
 
 @enduml
