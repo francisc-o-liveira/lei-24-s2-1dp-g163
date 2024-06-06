@@ -49,12 +49,15 @@ public class ManageTasksUI implements Initializable {
 
     @FXML
     private TableView<EntryDto> tableToDoList;
+    @FXML
+    public Label labelRole;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
         ctrlAuth=AuthenticationController.getInstance();
         ctrl= RegisterTaskController.getInstance();
         setTableToDoList();
+        setLabel();
     }
 
     public void setTableToDoList(){
@@ -153,6 +156,22 @@ public class ManageTasksUI implements Initializable {
             popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
         }
     }
+
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("Admin");
+            labelRole.setLayoutX(69);
+            labelRole.setLayoutY(130.0);
+        }
+    }
+
 
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
         Alert alerta = new Alert(alertType);

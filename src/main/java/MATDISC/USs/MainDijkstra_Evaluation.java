@@ -32,7 +32,6 @@ public class MainDijkstra_Evaluation {
                     filenameMatrix = askFileNameMatrix();
                     filenamePointsName= askFileNamePoints();
                     try {
-                         //to AP to another point
                         edges = readEdgesFromFileUS17(filenameMatrix,filenamePointsName);
                         createInputFile(edges);
                     } catch (IOException e) {
@@ -52,9 +51,6 @@ public class MainDijkstra_Evaluation {
                     filenameMatrix = askFileNameMatrix();
                     filenamePointsName= askFileNamePoints();
                     try {
-                         //one point is chosen, and know which AP is less cost
-                        /*para entrega: apenas o csv na US18
-                        * na us17: uma imagem por cada ponto */
                         edges = readEdgesFromFileUS18(filenameMatrix,filenamePointsName);
                         createInputFile(edges);
                     } catch (IOException e) {
