@@ -11,33 +11,37 @@ import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 import pt.ipp.isep.dei.esoft.project.utilities.TimePeriod;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents an entry in the task management system.
+ * Extends the Task class and implements Serializable for object serialization.
+ */
 public class Entry extends Task implements Serializable {
 
     private static int REFERENCE_VALUE;
 
     private Date startDate;
-
     private Tempo startHour;
-
     private EntryState status;
-
     private List<Vehicle> vehicleList;
-
     private Team teamAssigned;
-
     private final String reference;
-
-    /**To complete the task*/
     private Collaborator collaboratorThatCompleted;
     private Date finishDate;
 
-
-
+    /**
+     * Constructs an Entry instance with the specified details.
+     *
+     * @param title           the title of the entry
+     * @param description     the description of the entry
+     * @param expectedDuration the expected duration of the entry
+     * @param greenSpace      the green space associated with the entry
+     * @param degreeUrgency   the degree of urgency of the entry
+     * @param status          the initial status of the entry
+     */
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
         validateReference(Integer.toString(REFERENCE_VALUE++));
@@ -49,7 +53,19 @@ public class Entry extends Task implements Serializable {
         this.finishDate = null;
     }
 
-    // To Create one instance to compare for Postpone
+    /**
+     * Constructs an Entry instance with the specified details for comparison purposes.
+     *
+     * @param title           the title of the entry
+     * @param description     the description of the entry
+     * @param expectedDuration the expected duration of the entry
+     * @param greenSpace      the green space associated with the entry
+     * @param degreeUrgency   the degree of urgency of the entry
+     * @param status          the initial status of the entry
+     * @param reference       the reference number of the entry
+     * @param vehicleList     the list of vehicles assigned to the entry
+     * @param teamAssigned    the team assigned to the entry
+     */
     public Entry(String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference, List<Vehicle> vehicleList, Team teamAssigned) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
         validateReference(Integer.toString(reference));
@@ -61,8 +77,19 @@ public class Entry extends Task implements Serializable {
         this.finishDate = null;
     }
 
-    //to do the postpone, you would need this constructor:
-    public Entry(Date startDate,String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
+    /**
+     * Constructs an Entry instance for postponing purposes.
+     *
+     * @param startDate       the start date of the entry
+     * @param title           the title of the entry
+     * @param description     the description of the entry
+     * @param expectedDuration the expected duration of the entry
+     * @param greenSpace      the green space associated with the entry
+     * @param degreeUrgency   the degree of urgency of the entry
+     * @param status          the initial status of the entry
+     * @param reference       the reference number of the entry
+     */
+    public Entry(Date startDate, String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
         validateReference(Integer.toString(reference));
         this.reference = Integer.toString(reference);
@@ -72,120 +99,250 @@ public class Entry extends Task implements Serializable {
         this.teamAssigned = null;
         this.finishDate = null;
     }
-    // Compare constructor
 
-
-
-
-
+    /**
+     * Gets the finish date of the entry.
+     *
+     * @return the finish date
+     */
     public Date getFinishDate() {
         return finishDate;
     }
 
-    public void completeTask(Date finishDate, Collaborator collaborator){
-        if (finishDate.after(getTimePeriod().getStartDate())){
-            this.collaboratorThatCompleted=collaborator;
+    /**
+     * Completes the task with the specified finish date and collaborator.
+     *
+     * @param finishDate   the finish date
+     * @param collaborator the collaborator who completed the task
+     * @throws IllegalArgumentException if the finish date is before the start date
+     */
+    public void completeTask(Date finishDate, Collaborator collaborator) {
+        if (finishDate.after(getTimePeriod().getStartDate())) {
+            this.collaboratorThatCompleted = collaborator;
             setFinishDate(finishDate);
             this.status.doneEntry();
-        }else {
+        } else {
             throw new IllegalArgumentException("This finish date is not right");
         }
     }
 
-    public String getReference(){
+    /**
+     * Gets the reference of the entry.
+     *
+     * @return the reference
+     */
+    public String getReference() {
         return reference;
     }
 
+    /**
+     * Validates the reference string.
+     *
+     * @param reference the reference to validate
+     * @throws IllegalArgumentException if the reference is null or empty
+     */
     private void validateReference(String reference) {
         if (reference == null || reference.isEmpty()) {
             throw new IllegalArgumentException("Reference cannot be null or empty.");
         }
     }
 
+    /**
+     * Assigns a vehicle to the entry.
+     *
+     * @param vehicle the vehicle to assign
+     */
     public void assignVehicle(Vehicle vehicle) {
         vehicleList.add(vehicle);
     }
 
-    public void cancelEntry(){
+    /**
+     * Cancels the entry.
+     */
+    public void cancelEntry() {
         status.cancelEntry();
-        //cancelData();
     }
 
+    /**
+     * Cancels the data of the entry.
+     */
     private void cancelData() {
         this.startDate = null;
     }
 
+    /**
+     * Calculates the hash code for the entry based on its reference.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode() {
         return Objects.hash(reference);
     }
 
-    public void postponeEntry(Date newStartDate){
+    /**
+     * Postpones the entry to a new start date.
+     *
+     * @param newStartDate the new start date
+     */
+    public void postponeEntry(Date newStartDate) {
         status.postponeState();
         setStartDate(newStartDate);
     }
+
+    /**
+     * Sets the start date of the entry.
+     *
+     * @param newStartDate the new start date
+     */
     private void setStartDate(Date newStartDate) {
         this.startDate = newStartDate;
     }
 
+    /**
+     * Gets the collaborator who completed the entry.
+     *
+     * @return the collaborator
+     */
     public Collaborator getCollaboratorFinish() {
         return collaboratorThatCompleted;
     }
+
+    /**
+     * Gets the start date of the entry.
+     *
+     * @return the start date
+     */
     public Date getStartDate() {
         return this.startDate;
     }
+
+    /**
+     * Gets the list of vehicles assigned to the entry.
+     *
+     * @return the list of vehicles
+     */
     public List<Vehicle> getVehicleList() {
         return this.vehicleList;
     }
+
+    /**
+     * Gets the team assigned to the entry.
+     *
+     * @return the team
+     */
     public Team getTeamAssigned() {
         return this.teamAssigned;
     }
+
+    /**
+     * Gets the status of the entry.
+     *
+     * @return the status
+     */
     public EntryState getStatus() {
         return this.status;
     }
-    public static DegreeUrgency[] getDegreeOfUrgency(){
+
+    /**
+     * Gets all possible degrees of urgency.
+     *
+     * @return an array of DegreeUrgency enums
+     */
+    public static DegreeUrgency[] getDegreeOfUrgency() {
         return Task.getDegreeUrgencyValues();
     }
 
-
+    /**
+     * Sets the agenda for the entry with the specified start date and start hour.
+     *
+     * @param startDate the start date
+     * @param startHour the start hour
+     */
     public void setEntryAgenda(Date startDate, Tempo startHour) {
         setStartDate(startDate);
         setStartHour(startHour);
-        status.assignState();}
-
-    private void setStartHour(Tempo startHour) {
-            if (startHour.getHoras()>=8 && startHour.getHoras()<=20){
-                this.startHour = startHour;
-            }else {
-                throw new IllegalArgumentException("Start hour must be between 8 and 20 horas.");
-            }
+        status.assignState();
     }
 
+    /**
+     * Sets the start hour of the entry.
+     *
+     * @param startHour the start hour
+     * @throws IllegalArgumentException if the start hour is not between 8 and 20
+     */
+    private void setStartHour(Tempo startHour) {
+        if (startHour.getHoras() >= 8 && startHour.getHoras() <= 20) {
+            this.startHour = startHour;
+        } else {
+            throw new IllegalArgumentException("Start hour must be between 8 and 20 horas.");
+        }
+    }
+
+    /**
+     * Gets the start hour of the entry.
+     *
+     * @return the start hour
+     */
     public Tempo getStartHour() {
         return startHour;
     }
 
+    /**
+     * Sets the list of vehicles assigned to the entry.
+     *
+     * @param vehicleList the list of vehicles
+     */
     public void setVehicleList(List<Vehicle> vehicleList) {
         this.vehicleList = vehicleList;
     }
+
+    /**
+     * Sets the team assigned to the entry.
+     *
+     * @param teamAssigned the team to assign
+     */
     public void setTeamAssigned(Team teamAssigned) {
         this.teamAssigned = teamAssigned;
     }
+
+    /**
+     * Checks if the entry is canceled.
+     *
+     * @return true if the entry is canceled, false otherwise
+     */
     public boolean isCanceled() {
         return this.status.isCanceled();
     }
+
+    /**
+     * Checks if the entry is postponed.
+     *
+     * @return true if the entry is postponed, false otherwise
+     */
     public boolean isPostpone() {
         return this.status.isPostpone();
     }
-    public TimePeriod getTimePeriod(){
-        return new TimePeriod(getStartHour(),getStartDate(),getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());
+
+    /**
+     * Gets the time period of the entry.
+     *
+     * @return the time period
+     */
+    public TimePeriod getTimePeriod() {
+        return new TimePeriod(getStartHour(), getStartDate(), getExpectedDuration(), Repositories.getInstance().getEntryRepository().getHoursOfWork());
     }
 
-
+    /**
+     * Sets the finish date of the entry.
+     *
+     * @param date the finish date
+     * @throws IllegalArgumentException if the date is null or before the start date
+     */
     private void setFinishDate(Date date) {
-        if (date == null && date.after(startDate)) {
-            throw new IllegalArgumentException("Date cannot be null.");
-        }else {
+        if (date == null || date.after(startDate)) {
+            throw new IllegalArgumentException("Date cannot be null or before the start date.");
+        } else {
             this.finishDate = date;
         }
     }

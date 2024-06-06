@@ -6,34 +6,53 @@ import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SequencedCollection;
 
+/**
+ * The GreenSpaceMapper class is responsible for mapping between GreenSpace and GreenSpaceDto objects.
+ */
 public class GreenSpaceMapper {
 
-    public GreenSpaceDto greenSpaceToGreenSpaceDto(GreenSpace greenSpace){
+    /**
+     * Converts a GreenSpace object to a GreenSpaceDto object.
+     *
+     * @param greenSpace The GreenSpace object to be converted.
+     * @return The converted GreenSpaceDto object.
+     */
+    public GreenSpaceDto greenSpaceToGreenSpaceDto(GreenSpace greenSpace) {
         return new GreenSpaceDto(greenSpace.getArea(), greenSpace.getAddress(), greenSpace.getName(), greenSpace.getType(), greenSpace.createdBy());
     }
 
-    public List<GreenSpaceDto> greenSpaceListToGreenSpaceDto(List<GreenSpace> greenSpaceList){
-        List<GreenSpaceDto> greenSpaceDtoList = new ArrayList<GreenSpaceDto>();
-        for(GreenSpace greenSpace : greenSpaceList){
+    /**
+     * Converts a list of GreenSpace objects to a list of GreenSpaceDto objects.
+     *
+     * @param greenSpaceList The list of GreenSpace objects to be converted.
+     * @return The list of converted GreenSpaceDto objects.
+     */
+    public List<GreenSpaceDto> greenSpaceListToGreenSpaceDto(List<GreenSpace> greenSpaceList) {
+        List<GreenSpaceDto> greenSpaceDtoList = new ArrayList<>();
+        for (GreenSpace greenSpace : greenSpaceList) {
             greenSpaceDtoList.add(greenSpaceToGreenSpaceDto(greenSpace));
         }
         return greenSpaceDtoList;
     }
 
-    public GreenSpace greenSpaceDtoToGreenSpace(GreenSpaceDto greenSpaceDto){
-         List<GreenSpace> greenSpaces = Repositories.getInstance().getOrganizationRepository().getGreenSpaceList();
-        if (greenSpaces == null || greenSpaces.size() == 0){
-            throw new RuntimeException("Dont Find Your Green Space - Fatal Error");
+    /**
+     * Converts a GreenSpaceDto object to a GreenSpace object.
+     *
+     * @param greenSpaceDto The GreenSpaceDto object to be converted.
+     * @return The converted GreenSpace object.
+     * @throws RuntimeException if the corresponding GreenSpace object is not found.
+     */
+    public GreenSpace greenSpaceDtoToGreenSpace(GreenSpaceDto greenSpaceDto) {
+        List<GreenSpace> greenSpaces = Repositories.getInstance().getOrganizationRepository().getGreenSpaceList();
+        if (greenSpaces == null || greenSpaces.isEmpty()) {
+            throw new RuntimeException("Didn't find the GreenSpace - Fatal Error");
         }
-         for (GreenSpace greenSpace : greenSpaces) {
-             if(greenSpace.equals(greenSpaceDto)){
-                 return greenSpace;
-             }else {
-                 throw new RuntimeException("Dont Find Your Green Space - Fatal Error");
-             }
-         }
-        return null;
+        for (GreenSpace greenSpace : greenSpaces) {
+            if (greenSpace.equals(greenSpaceDto)) {
+                return greenSpace;
+            }
+        }
+        throw new RuntimeException("Didn't find the GreenSpace - Fatal Error");
     }
 }
