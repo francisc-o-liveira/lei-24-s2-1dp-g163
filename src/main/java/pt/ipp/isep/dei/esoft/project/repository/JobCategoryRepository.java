@@ -49,7 +49,6 @@ public class JobCategoryRepository {
         if (!jobCategories.contains(jobCategory)){
             saveFromJobCategoryInDataBase(jobCategory);
             newJobCategory=Optional.of(jobCategory);
-
         }
         return newJobCategory;
     }
