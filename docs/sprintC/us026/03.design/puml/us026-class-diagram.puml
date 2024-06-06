@@ -44,7 +44,6 @@ class VehicleRepository{
 }
 
 class Vehicle {
-    - String email
 }
 
 
@@ -57,8 +56,9 @@ class Repositories {
 
 class EntryMapper{
     - List<EntryDto>
-    + toModel()
-    + toDto()
+    + entryDtoToEntry()
+    + entryToEntryDto()
+    + entryListToEntryDtoList()
 }
 
 class Task{
@@ -131,7 +131,7 @@ EntryMapper "1" ..> "*" Entry
 
 VehicleRepository "1" --> "*" Vehicle : vehicles
 VehicleMapper "1" --> "*" Vehicle
-
+EntryMapper "1" --> "1" VehicleMapper
 EntryRepository "1" --> "*" Entry : entry's
 EntryRepository --> "*" GSMUser : employs
 EntryRepository ..> EntryMapper
