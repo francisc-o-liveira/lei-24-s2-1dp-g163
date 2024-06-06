@@ -69,7 +69,7 @@ public class AgendaList implements Serializable {
         List<Entry> entryCollaboratorList = new ArrayList<>();
         for (Entry entry: agenda){
             if (entry.getTeamAssigned()!=null && entryHaveCollaborator(entry,collaboratorByEmail)){
-                if(entry.getStartDate().equals(first) || entry.getStartDate().equals(second)){
+                if(entry.getStartDate().compareTo(first) > 0 && entry.getStartDate().compareTo(second) < 0){
                     entryCollaboratorList.add(entry);
                 }
             }
