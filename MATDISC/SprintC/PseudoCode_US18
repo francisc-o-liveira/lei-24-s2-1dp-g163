@@ -8,92 +8,48 @@ function indexOfMin(costsOfVertices, verticesVisited, numVertices):
             indexOfMinimum = j
     return indexOfMinimum
 
-// Dijkstra's Algorithm to find the shortest path
-
-
-function dijkstraAlgorithmUS17(edges, startingPoint, endPoint):
+// Dijkstra's Algorithm to find the shortest path from startingPoint to all vertices
+function dijkstraAlgorithmUS18(edges, startingPoint, vertices):
     resultPath = empty list of Edge
-    vertices = numberOfVertices(edges)
+
     numVertices = size of vertices
+
     // Initialize the cost list with INFINITY
     costsOfVertices = list of size numVertices with all elements set to INFINITY
     // Initialize the visited list with false
     verticesUsed = list of size numVertices with all elements set to false
     // Initialize the path list with null
     pathVertices = list of size numVertices with all elements set to null
+
     indexOfStartingPoint = index of startingPoint in vertices
-    indexOfEndPoint = index of endPoint in vertices
+
     // Set the cost of the starting point to 0
     costsOfVertices[indexOfStartingPoint] = 0
+
     // Loop to process each vertex
-
-
     for i = 0 to numVertices-2:
         // Find the index of the vertex with the minimum cost
         indexOfMinimum = indexOfMin(costsOfVertices, verticesUsed, numVertices)
-        // Stop if the minimum cost vertex is the endPoint or all vertices are visited
-        if indexOfMinimum == -1 or indexOfMinimum == indexOfEndPoint then break
+        // Stop if all vertices have been processed
+        if indexOfMinimum == -1:
+            break
 
-        chosenVertice = vertices[indexOfMinimum]
+        chosenVertex = vertices[indexOfMinimum]
         verticesUsed[indexOfMinimum] = true
 
         // Update the costs for adjacent vertices
         for edge in edges:
-            if edge.p1 equals chosenVertice:
+            if edge.p1 equals chosenVertex:
                 indexOfNext = index of edge.p2 in vertices
                 if not verticesUsed[indexOfNext]:
                     cost = costsOfVertices[indexOfMinimum] + edge.price
                     if cost < costsOfVertices[indexOfNext]:
                         costsOfVertices[indexOfNext] = cost
-                        pathVertices[indexOfNext] = chosenVertice
-
-
-
+                        pathVertices[indexOfNext] = chosenVertex
 
     // Build the result path
-
-
-
-    currentPoint = endPoint
-    while currentPoint is not null and currentPoint does not equal startingPoint:
-        beforePoint = searchForIndexPoint(vertices,currentPoint)
-        if beforePoint is null then break
-        cost = costsOfVertices[indexOf(currentPoint in vertices)] - costsOfVertices[indexOf(beforePoint in vertices)]
-        resultPath.add(new Edge(beforePoint, currentPoint, cost))
-        currentPoint = beforePoint
+    for i = 0 to numVertices-1:
+        if pathVertices[i] is not null:
+            resultPath.add(new Edge(pathVertices[i], vertices[i], costsOfVertices[i]))
 
     return resultPath
-
-//search for indesx in the vertices
-Function searchForIndexPoint(points, point):
-    For i from 0 to size of points - 1:
-        If points[i] equals point:
-            Return i
-    Return -1
-
-//function to compare the paths
-    Function comparingResults(results):
-        path = Empty ArrayList of Edges  //1A
-        cost = 0 //1A
-        costs = Empty ArrayList of Integers //1A
-
-        For each array in results: //n+1C
-            For each edge e in array: //(n+1)*(k+1)C
-                cost += e.getPrice() //n*kA
-            Add cost to costs //n*kA
-            cost = 0 //n*kA
-
-        minCost = costs[0] //1A
-        posMinCost = 0 //1A
-        For each integer i in costs: //(l+1)C
-            If i is less than minCost: //lC
-                minCost = i //lA
-                posMinCost = searchForIndexCost(costs, minCost) //lA
-
-        path = results[posMinCost] //1A
-        Return path //1A
-Function searchForIndexCost(costs, cost):
-    For i from 0 to size of costs - 1: //nC
-        If costs[i] equals cost: //n*(l-1)A
-            Return i //n*(l-1)A
-    Return -1 1A
