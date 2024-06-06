@@ -15,38 +15,87 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
+/**
+ * Repository class for authentication operations.
+ */
 public class AuthenticationRepository {
 
     private final AuthFacade authenticationFacade;
 
+    /**
+     * Constructs an AuthenticationRepository object.
+     */
     public AuthenticationRepository() {
         authenticationFacade = new AuthFacade();
     }
 
+    /**
+     * Attempts to log in a user.
+     *
+     * @param email the user's email
+     * @param pwd   the user's password
+     * @return true if the login attempt is successful, false otherwise
+     */
     public boolean doLogin(String email, String pwd) {
         return authenticationFacade.doLogin(email, pwd).isLoggedIn();
     }
 
+    /**
+     * Logs out the current user.
+     */
     public void doLogout() {
         authenticationFacade.doLogout();
     }
 
+    /**
+     * Retrieves the current user session.
+     *
+     * @return the current user session
+     */
     public UserSession getCurrentUserSession() {
         return authenticationFacade.getCurrentUserSession();
     }
 
+    /**
+     * Adds a new user role.
+     *
+     * @param id          the ID of the role
+     * @param description the description of the role
+     * @return true if the role is successfully added, false otherwise
+     */
     public boolean addUserRole(String id, String description) {
         return authenticationFacade.addUserRole(id, description);
     }
 
+    /**
+     * Adds a new user with a specified role.
+     *
+     * @param name   the name of the user
+     * @param email  the email of the user
+     * @param pwd    the password of the user
+     * @param roleId the ID of the role
+     * @return true if the user is successfully added, false otherwise
+     */
     public boolean addUserWithRole(String name, String email, String pwd, String roleId) {
         storeUserCredentialInDataBase(name, email, pwd, roleId);
         return authenticationFacade.addUserWithRole(name, email, pwd, roleId);
     }
 
+    /**
+     * Checks if a user with the given email exists.
+     *
+     * @param email the email of the user
+     * @return true if the user exists, false otherwise
+     */
     public boolean existUser(String email) {
         return authenticationFacade.existsUser(email);
     }
+
+    /**
+     * Removes user credentials from the database based on email.
+     *
+     * @param email the email of the user whose credentials should be removed
+     */
 
     public void removeUserCredentialsInDataBase(String email) {
         String line = "";
@@ -81,7 +130,14 @@ public class AuthenticationRepository {
             }
         }
     }
-
+    /**
+     * Stores user credentials in the database.
+     *
+     * @param name   the name of the user
+     * @param email  the email of the user
+     * @param pwd    the password of the user
+     * @param roleId the ID of the role
+     */
     public void storeUserCredentialInDataBase(String name, String email,String pwd,String roleId){
         Boolean emailAlreadyResgistered = false;
         try {
@@ -110,6 +166,10 @@ public class AuthenticationRepository {
         }
 
     }
+
+    /**
+     * Loads user data from the authentication database.
+     */
 
     public void loadFromAuthDataBase(){
         addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
