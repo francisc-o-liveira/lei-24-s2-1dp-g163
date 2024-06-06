@@ -38,7 +38,7 @@ public class ViewTaskListCollaboratorUI {
     public ViewTaskListAssignedCollabController ctrl;
     private ObservableList<EntryDto> tasksOfCollab= FXCollections.observableArrayList();
     private FilteredList<EntryDto> filteredData;
-    private List<EntryDto> entriesSelected;
+    private EntryDto entrySelected;
     private List<EntryDto> tasksForCollab;
     @FXML
     private TableView<EntryDto> tableTasks;
@@ -52,8 +52,8 @@ public class ViewTaskListCollaboratorUI {
     @FXML
     private TableColumn<EntryDto, String> taskName;
 
-    @FXML
-    private TableColumn<EntryDto, Boolean> taskSelect;
+    //@FXML
+    //private TableColumn<EntryDto, Boolean> taskSelect;
 
     @FXML
     private TableColumn<EntryDto, EntryState> taskStatus;
@@ -75,7 +75,6 @@ public class ViewTaskListCollaboratorUI {
 
     public ViewTaskListCollaboratorUI(){
         ctrlAuth= AuthenticationController.getInstance();
-        entriesSelected =new ArrayList<>();
         tasksForCollab=new ArrayList<>();
         ctrl=new ViewTaskListAssignedCollabController();
     }
@@ -94,33 +93,6 @@ public class ViewTaskListCollaboratorUI {
         taskGreenSpace.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
         taskName.setCellValueFactory(new PropertyValueFactory<>("title"));
         taskStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        taskSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
-        taskSelect.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<EntryDto, Boolean> call(TableColumn<EntryDto, Boolean> param) {
-                return new TableCell<>() {
-                    private final CheckBox checkBox = new CheckBox();
-
-                    @Override
-                    protected void updateItem(Boolean item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                            setGraphic(null);
-                            return;
-                        }
-                        setGraphic(checkBox);
-                        checkBox.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                            EntryDto entry = (EntryDto) getTableRow().getItem();
-                            if (isNowSelected) {
-                                entriesSelected.add(entry);
-                            }
-                        });
-                    }
-                };
-            }
-        });
-
-
 
         for(EntryDto entry : tasksForCollab){
             tasksOfCollab.add(entry);
@@ -133,12 +105,11 @@ public class ViewTaskListCollaboratorUI {
 
     @FXML
     private void btnComplete(ActionEvent event) {
+        entrySelected=tableTasks.getSelectionModel().getSelectedItem();
             try{
                 ZonedDateTime timeAndDate = ZonedDateTime.now();
                 Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
-                for(EntryDto entry : entriesSelected){
-                    ctrl.assignEntryCompleted(entry,completedDate);
-                }
+                ctrl.assignEntryCompleted(entrySelected,completedDate);
                 popUp().show();
             } catch (Exception e) {
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
@@ -171,7 +142,7 @@ public class ViewTaskListCollaboratorUI {
 
     @FXML
     public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Collaborator.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_TaskListCollaborator.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene= new Scene(root);
         stage.setScene(scene);

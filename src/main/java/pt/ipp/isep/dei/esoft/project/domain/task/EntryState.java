@@ -83,7 +83,7 @@ public class EntryState implements Serializable {
     }
 
     public boolean isCompleted(){
-        return this.state == State.Canceled;
+        return this.state == State.Done;
     }
 
     @Override
