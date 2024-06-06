@@ -260,11 +260,15 @@ public class CollaboratorRepository {
     }
 
     public void removeFromCollaboratorDataBase(Collaborator collaborator) {
+        cleanFile(MainApp.getCollaboratorDataBaseFile());
         try {
             FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
            if (!collaboratorList.contains(collaborator)) {
+               cleanFile(MainApp.getCollaboratorDataBaseFile());
                out.writeObject(collaboratorList);
+           }else{
+               throw new IOException("Collaborator are introduced in the system you cannot remove from Data Base file");
            }
            out.close();
            fileOut.close();
@@ -273,7 +277,17 @@ public class CollaboratorRepository {
         }
     }
 
+    private void cleanFile(String collaboratorsDataBaseFile) {
+        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
+        }
+    }
+
     public void saveFromCollaboratorDataBase(Collaborator collaborator){
+        cleanFile(MainApp.getCollaboratorDataBaseFile());
         try {
             FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile(), true);
             ObjectOutputStream out;
@@ -321,7 +335,6 @@ public class CollaboratorRepository {
             throw new CloneNotSupportedException();
         }
     }
-
 }
 
 
