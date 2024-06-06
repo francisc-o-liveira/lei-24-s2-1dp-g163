@@ -46,20 +46,12 @@ public class JobCategoryRepository {
 
     private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) throws CloneNotSupportedException {
        Optional<JobCategory> newJobCategory = Optional.empty();
-       boolean operationSucess = false;
         if (!jobCategories.contains(jobCategory)){
             saveFromJobCategoryInDataBase(jobCategory);
-            operationSucess=jobCategories.add(jobCategory);
             newJobCategory=Optional.of(jobCategory);
-
-        }
-        if (!operationSucess){
-            newJobCategory=Optional.empty();
-            throw new CloneNotSupportedException("This Job Category already Exist");
         }
         return newJobCategory;
     }
-
     /**
      * This method returns a defensive (immutable) copy of the list of job categories.
      *
