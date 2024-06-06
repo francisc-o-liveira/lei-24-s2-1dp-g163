@@ -83,8 +83,8 @@ public class RegisterVehicleController {
      * @param selectedVehicle The vehicle to be removed.
      * @return true if the vehicle is successfully removed, otherwise false.
      */
-    public boolean removeVehicleFromList(Vehicle selectedVehicle) {
-        return vehicleRepository.removeVehicle(selectedVehicle);
+    public void removeVehicleFromList(Vehicle selectedVehicle) {
+         vehicleRepository.removeVehicle(selectedVehicle);
     }
 
     /**

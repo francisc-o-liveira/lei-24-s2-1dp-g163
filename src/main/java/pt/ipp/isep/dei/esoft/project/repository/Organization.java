@@ -127,8 +127,8 @@ public class Organization{
                 return false;
             }
         }
-        saveFromGreenSpaceInDataBase(greenSpace);
-        return saveGreenSpace(greenSpace);
+        return saveFromGreenSpaceInDataBase(greenSpace);
+
     }
 
     private boolean saveGreenSpace(GreenSpace greenSpace) {
@@ -175,62 +175,54 @@ public class Organization{
         return greenSpaceList;
     }
     //Clone organization
-
     public void removeFromGreenSpaceDataBase(GreenSpace greenSpace) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(MainApp.getGreenSpaceDataBaseFile());
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            if (!greenSpaces.contains(greenSpace)) {
-                out.writeObject(greenSpaces);
-            }
+        greenSpaces.remove(greenSpace);
+        saveGreenSpaces();
+    }
+
+    public boolean saveFromGreenSpaceInDataBase(GreenSpace greenSpace){
+        if (!greenSpaces.contains(greenSpace)) {
+            greenSpaces.add(greenSpace);
+            return saveGreenSpaces();
+        }
+        return false;
+    }
+
+    private boolean saveGreenSpaces() {
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getGreenSpaceDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(greenSpaces);
             out.close();
             fileOut.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }finally {
+            return true;
         }
     }
 
-    public void saveFromGreenSpaceInDataBase(GreenSpace greenSpace){
-        try {
-            FileOutputStream file = new FileOutputStream(MainApp.getGreenSpaceDataBaseFile());
-            ObjectOutputStream out;
-            // If the file already has content, we need to use the AppendableObjectOutputStream
-                out = new ObjectOutputStream(file);
-            out.writeObject(greenSpaces);
-            out.close();
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    @SuppressWarnings("unchecked")
     private void loadFromGreenSpaceDataBase(){
-        List<GreenSpace> greenSpaceLoaded;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getGreenSpaceDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
-                while (true) {
-                    try {
-                        greenSpaceLoaded = (List<GreenSpace>) in.readObject();
-                        loadInSystem(greenSpaceLoaded);
-                    } catch (EOFException e) {
-                        break;
-                    }
-                }
-                in.close();
+        List<GreenSpace> greenSpaces;
+        try (FileInputStream file = new FileInputStream(MainApp.getGreenSpaceDataBaseFile());
+             ObjectInputStream in = new ObjectInputStream(file)) {
+            greenSpaces = (List<GreenSpace>) in.readObject();
+            if (greenSpaces.isEmpty()) {
+                throw new IOException("There are no green spaces in the dataBase file");
             }
-            file.close();
+            loadInSystem(greenSpaces);
+        } catch (EOFException e) {
+            // End of file reached, no action needed
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void loadInSystem(List<GreenSpace> greenSpace) throws CloneNotSupportedException {
-        if (greenSpace == null) {
-            throw new RuntimeException("List is null does not exist nothing");
+    private void loadInSystem(List<GreenSpace> greenSpaces) throws CloneNotSupportedException, IOException {
+        if (greenSpaces == null) {
+            throw new IOException("List is null, does not exist");
         }
-        for (GreenSpace gs : greenSpace) {
+        for (GreenSpace gs : greenSpaces) {
             saveGreenSpace(gs);
         }
     }
@@ -238,13 +230,12 @@ public class Organization{
     public void loadManager(Manager manager) {
         if (validateManager(manager)){
             managers.add(manager);
-        }else{
+        } else {
             throw new RuntimeException("This Already exists in the System");
         }
     }
 
-    public void loadSystem() {
-        loadFromGreenSpaceDataBase();
+    public void loadSystem(){
         dataBaseManager.loadFromManagerDataBase();
     }
 }
