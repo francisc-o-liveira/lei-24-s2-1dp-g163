@@ -19,14 +19,9 @@ public class AgendaList implements Serializable , List<Entry> {
     public static List<Entry> getList() {
         return agenda;
     }
-
     public static Task.DegreeUrgency[] getDegreeOfUrgency() {
         return Entry.getDegreeOfUrgency();
     }
-
-
-
-
     public Entry searchForEntryAgenda(EntryDto entryDto) {
         for (Entry entry : agenda) {
             if (Objects.equals(entry.getTitle(), entryDto.getTitle())
@@ -39,8 +34,6 @@ public class AgendaList implements Serializable , List<Entry> {
         }
         throw new RuntimeException("Entry not found");
     }
-
-
     public List<Vehicle> filterVehicleNotUseInTime(List<Vehicle> vehicleList, EntryDto entryDto) {
         Entry entry = searchForEntryAgenda(entryDto);
         ComparatorDates comparatorDates = new ComparatorDates();
@@ -55,9 +48,6 @@ public class AgendaList implements Serializable , List<Entry> {
         }
         return vehicleList;
     }
-
-
-
     public List<Entry> getEntrysByCollaboratorInAgenda(Collaborator collaboratorByEmail, Date first, Date second) {
         List<Entry> entryCollaboratorList = new ArrayList<>();
         for (Entry entry: agenda){
@@ -69,7 +59,6 @@ public class AgendaList implements Serializable , List<Entry> {
         }
         return entryCollaboratorList;
     }
-
     private boolean entryHaveCollaborator(Entry entry, Collaborator collaboratorByEmail) {
         for (Collaborator collaborator : entry.getTeamAssigned().getTeamList()){
             if (collaborator.getEmail().equals(collaboratorByEmail.getEmail())){
@@ -78,8 +67,6 @@ public class AgendaList implements Serializable , List<Entry> {
         }
         return false;
     }
-
-
     public List<Team> filterTeamNotActivateInTime(List<Team> teams, EntryDto entryDto) {
         Entry entry = searchForEntryAgenda(entryDto);
         ComparatorDates comparatorDates = new ComparatorDates();
@@ -107,8 +94,6 @@ public class AgendaList implements Serializable , List<Entry> {
         }
         return teams;
     }
-
-
     public void saveToDB(){
         try {
             File file1=new File(MainApp.getEntryDataBaseFile());
@@ -128,8 +113,6 @@ public class AgendaList implements Serializable , List<Entry> {
             e.printStackTrace();
         }
     }
-
-
     public static void loadFromDataBase(){
         Entry loadEntry;
         try {
