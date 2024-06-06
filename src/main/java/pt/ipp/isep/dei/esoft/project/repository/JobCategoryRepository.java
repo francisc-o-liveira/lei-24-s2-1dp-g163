@@ -52,7 +52,6 @@ public class JobCategoryRepository {
         }
         return newJobCategory;
     }
-
     /**
      * This method returns a defensive (immutable) copy of the list of job categories.
      *
