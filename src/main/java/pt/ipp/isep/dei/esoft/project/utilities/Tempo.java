@@ -39,8 +39,8 @@ public class Tempo implements Comparable<Tempo>, Serializable {
      * @param minutos os minutos do tempo.
      */
     public Tempo(int horas, int minutos) {
-        this.horas = horas;
-        this.minutos = minutos;
+        setHoras(horas);
+        setMinutos(minutos);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Tempo implements Comparable<Tempo>, Serializable {
      * @param horas as horas do tempo.
      */
     public Tempo(int horas) {
-        this.horas = horas;
+        setHoras(horas);
         minutos = MINUTOS_POR_OMISSAO;
     }
 
@@ -70,8 +70,8 @@ public class Tempo implements Comparable<Tempo>, Serializable {
      * @param outroTempo o tempo com as características a copiar.
      */
     public Tempo(Tempo outroTempo) {
-        horas = outroTempo.horas;
-        minutos = outroTempo.minutos;
+        setHoras(outroTempo.getHoras());
+        setMinutos(outroTempo.minutos);
     }
 
     /**
@@ -99,7 +99,11 @@ public class Tempo implements Comparable<Tempo>, Serializable {
      * @param horas as novas horas do tempo.
      */
     public void setHoras(int horas) {
-        this.horas = horas;
+        if (horas>=0 && horas<24) {
+            this.horas = horas;
+        }else{
+            throw new IllegalArgumentException("Invalid Time");
+        }
     }
 
     /**
@@ -108,7 +112,11 @@ public class Tempo implements Comparable<Tempo>, Serializable {
      * @param minutos os novos minutos do tempo.
      */
     public void setMinutos(int minutos) {
-        this.minutos = minutos;
+        if (minutos>=0 && minutos<60) {
+            this.minutos = minutos;
+        }else{
+            throw new IllegalArgumentException("Invalid Time");
+        }
     }
 
     /**
