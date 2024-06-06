@@ -50,7 +50,7 @@ public class ManageTeamsUI {
             labelRole.setLayoutX(28.0);
             labelRole.setLayoutY(130.0);
         } else {
-            labelRole.setText("GreenSpaceManager");
+            labelRole.setText("Admin");
             labelRole.setLayoutX(28.0);
             labelRole.setLayoutY(130.0);
         }
