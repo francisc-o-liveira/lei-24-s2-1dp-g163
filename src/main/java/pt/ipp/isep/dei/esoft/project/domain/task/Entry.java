@@ -154,13 +154,11 @@ public class Entry extends Task implements Serializable {
         status.assignState();}
 
     private void setStartHour(Tempo startHour) {
-        if (startHour == null) {
             if (startHour.getHoras()>=8 && startHour.getHoras()<=20){
                 this.startHour = startHour;
             }else {
                 throw new IllegalArgumentException("Start hour must be between 8 and 20 horas.");
             }
-        }
     }
 
     public Tempo getStartHour() {
