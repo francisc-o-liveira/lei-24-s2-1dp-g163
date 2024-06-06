@@ -18,7 +18,7 @@ public class TeamMapper {
         return teamDtoList;
     }
 
-    private TeamDto teamToTeamDto(Team team) {
+    public TeamDto teamToTeamDto(Team team) {
        return new TeamDto(team.getTeamList(),team.getSkills(),team.getTeamName());
     }
 

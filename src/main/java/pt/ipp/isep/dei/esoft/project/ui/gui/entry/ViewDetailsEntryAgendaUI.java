@@ -53,6 +53,7 @@ public class ViewDetailsEntryAgendaUI {
         LocalDate start=convertToJavaLocalDate(entry.getStartDate());
         startDateEntry.setValue(start);
         System.out.print(selectedEntry.getExpectedDuration());
+        System.out.print(selectedEntry.getTeamAssigned());
         vehiclesPlate.setCellValueFactory(new PropertyValueFactory<>("plate"));
         for(VehicleDto v : entry.getVehicleList()){
            vehiclesList.add(v);
