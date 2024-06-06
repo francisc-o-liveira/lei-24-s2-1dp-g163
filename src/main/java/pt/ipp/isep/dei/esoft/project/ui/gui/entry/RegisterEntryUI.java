@@ -14,6 +14,7 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -31,7 +32,8 @@ public class RegisterEntryUI implements Initializable {
     private TableColumn<EntryDto, String> titleTask;
     @FXML
     private DatePicker dateForEntry;
-
+    @FXML
+    private TextField hoursForEntry;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl =  AssignEntryOnAgendaController.getInstance();
@@ -41,13 +43,15 @@ public class RegisterEntryUI implements Initializable {
     @FXML
     public void btnRegister(ActionEvent event) {
         Date startDate=new Date(dateForEntry.getValue().getYear(),dateForEntry.getValue().getMonthValue(), dateForEntry.getValue().getDayOfMonth());
+        String startHour=hoursForEntry.getText();
         selectedTaskDto= tasksForEntry.getSelectionModel().getSelectedItem();
         if(selectedTaskDto==null){
             popUpOfVerifications(Alert.AlertType.ERROR, "A task needs to be selected").show();
         } else {
             try{
+                Tempo startTime=getTimeForEntry(startHour);
                 EntryDto assigningEntry=new EntryDto(selectedTaskDto.getTitle(), selectedTaskDto.getDescription(), selectedTaskDto.getDegreeUrgency(),selectedTaskDto.getExpectedDuration(), selectedTaskDto.getGreenSpace());
-                ctrl.assignEntryOnAgenda(assigningEntry, startDate);
+                ctrl.assignEntryOnAgenda(assigningEntry, startDate, startTime);
                 if(popUp().showAndWait().get()==ButtonType.OK){
                     Stage stage = (Stage) tasksForEntry.getScene().getWindow();
                     stage.close();
@@ -56,6 +60,17 @@ public class RegisterEntryUI implements Initializable {
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
+    }
+
+    private Tempo getTimeForEntry(String timeExpected) {
+        String[] times = timeExpected.split(":");
+        Tempo time;
+        if (times.length == 2) {
+            time = new Tempo(Integer.parseInt(times[0]),Integer.parseInt(times[1]));
+        }else {
+            throw new IllegalArgumentException("Invalid time format");
+        }
+        return time;
     }
 
     private void setTableTasks(){
