@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.serv.GenerateTeamServ;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
@@ -102,62 +103,56 @@ public class TeamRepository {
         return teams.add(teamCreated);
     }
 
+
     public void removeFromTeamDataBase(Team team) {
-        Team teamLoaded;
-        try {
-            FileOutputStream fileOut = new FileOutputStream(MainApp.getTeamDataBaseFile());
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            if (!teams.contains(team)){
-                out.writeObject(teams);
-            }
-            out.close();
-            fileOut.close();
+        teams.remove(team);
+        saveTeams();
+    }
+
+    public void saveFromTeamInDataBase(Team team) {
+        if (!teams.contains(team)) {
+            saveTeam(team);
+            saveTeams();
+        }
+    }
+
+    private void saveTeams() {
+        cleanFile(MainApp.getTeamDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getTeamDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(teams);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saveFromTeamInDataBase(Team team){
-        try {
-            FileOutputStream file = new FileOutputStream(MainApp.getTeamDataBaseFile());
-            ObjectOutputStream out;
-            // If the file already has content, we need to use the AppendableObjectOutputStream
-            out = new ObjectOutputStream(file);
-            if (teams.contains(team)){
-                out.writeObject(teams);
-            }
-            out.close();
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void cleanFile(String teamDataBaseFile) {
+        File file = new File(MainApp.getTeamDataBaseFile());
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print("");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File not found: " + file, e);
         }
     }
 
-    private void loadFromTeamDataBase(){
-        List<Team> teamLoaded;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getTeamDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
-                while (true) {
-                    try {
-                        teamLoaded = (List<Team>) in.readObject();
-                        loadInSystem(teamLoaded);
-                    } catch (EOFException e) {
-                        break;
-                    }
-                }
-                in.close();
-            }
-            file.close();
-        } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+    @SuppressWarnings("unchecked")
+    public void loadFromTeamDataBase() throws CloneNotSupportedException, IOException {
+        File file = new File(MainApp.getTeamDataBaseFile());
+        if (!file.exists()) {
+            throw new IOException("Team database file does not exist. Starting with an empty list.");
+        }
+        try (FileInputStream fileIn = new FileInputStream(file);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            List<Team> teamList = (List<Team>) in.readObject();
+            loadInSystem(teamList);
+        } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void loadInSystem(List<Team> team) throws CloneNotSupportedException {
-        for (Team teamLoaded : team) {
-            saveTeam(teamLoaded);
+    private void loadInSystem(List<Team> teams) throws CloneNotSupportedException {
+        for (Team team : teams) {
+            saveTeam(team);
         }
     }
 }

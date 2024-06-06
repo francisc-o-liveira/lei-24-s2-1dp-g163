@@ -264,7 +264,7 @@ public class CollaboratorRepository {
             FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
            if (!collaboratorList.contains(collaborator)) {
-               out.writeObject(collaborator);
+               out.writeObject(collaboratorList);
            }
            out.close();
            fileOut.close();
