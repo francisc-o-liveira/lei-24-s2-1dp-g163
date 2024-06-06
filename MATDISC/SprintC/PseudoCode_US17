@@ -59,10 +59,18 @@ function dijkstraAlgorithmUS17(edges, startingPoint, endPoint):
 
     currentPoint = endPoint
     while currentPoint is not null and currentPoint does not equal startingPoint:
-        beforePoint = pathVertices[indexOf(currentPoint in vertices)]
+        beforePoint = searchForIndexPoint(vertices,currentPoint)
         if beforePoint is null then break
         cost = costsOfVertices[indexOf(currentPoint in vertices)] - costsOfVertices[indexOf(beforePoint in vertices)]
         resultPath.add(new Edge(beforePoint, currentPoint, cost))
         currentPoint = beforePoint
 
     return resultPath
+
+
+
+Function searchForIndexPoint(points, point):
+    For i from 0 to size of points - 1:
+        If points[i] equals point:
+            Return i
+    Return -1
