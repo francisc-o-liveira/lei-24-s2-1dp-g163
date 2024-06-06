@@ -1,4 +1,4 @@
-# US001 - Register skills for collaborators
+# US025 - Add a new Entry to the To-Do List
 
 ## 3. Design - User Story Realization 
 
@@ -6,21 +6,20 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID                                               | Question: Which class is responsible for...                      | Answer                  | Justification (with patterns)                                                                                                                                                                 |
-|:-------------------------------------------------------------|:-----------------------------------------------------------------|:------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to add a new entry to the To-Do List  		        | 	... initiating the adding a new entry process?                  | RegisterTaskUI          | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                                                                 |
-| 			  		                                                      | 	... instantiating the class that handles the UI?                |                         |                                                                                  |
-| Step 2: show green space list and ask to select one	 			  		 | ... displaying the green space list and ask to select one?       | RegisterTaskUI          | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                                                                                                                                          |
-| Step 3: selects list	                                        | ... validating input data? ... temporarily keeping input data? 	 | RegisterSkillController | Controller                                                                                                                                                                                    |
-| Step 4: show degree of urgency list and ask to select one    | ... display request confirmation? 							                        | RegisterSkillUI         | Pure Fabrication: The UI class is responsible for displaying results to the user.                                                                                                             |
-| Step 5: selects the urgency degree	 		                       | ... validating the data locally (mandatory data)?							         | RegisterSkillController | Controller                                                                                                                                                                                    |
-| 	                                                            | 	...... creating the skill object?                               | RegisterSkillUI         | IE: is responsible for user interactions.                                                                                                                                                     |
-| Step 6: request data 		                                      | 	... informing operation success?	                               | RegisterSkillUI         | Pure Fabrication: The UI class is responsible for displaying results to the user.                                                                                                             |
-| Step 7: types data	                                          | 	... saving the created data (the list of skills)?	              | SkillRepository         | IE: knows all its skills.     | 
-| Step 8: show data and request confirmation                   |                                                                  |                         |                                    
-| Step 9: confirm data              |                                                                  |
-
-
+| SSD Interaction ID                    | Question: Which class is responsible for... | Answer                 | Justification (with patterns)                                                                                                                                                                                                  |
+|---------------------------------------|---------------------------------------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1: createRegisterTaskController()     | create the controller                       | RegisterTaskController | **Controller**: The `:RegisterTaskController` handles the request to add a new controller, coordinating the necessary operations between the UI and the data layer without performing business logic or data retrieval itself. |
+| 2: getInstance()                      | get the instance of repository              | Repositories           | **Information Expert**: The `Repositories` knows how to extract the information, as it holds the knowledge of data and structure.                                                                                              |
+| 3: getEntryRepository()               | get the entry repository                    | Repositories           | **Information Expert**: The `Repositories` knows how to extract the information, as it holds the knowledge of data and structure.                                                                                              |
+| 4: getGreenSpacesRepository()         | get the green space repository              | Repositories           | **Information Expert**: The `Repositories` knows how to extract the information, as it holds the knowledge of data and structure.                                                                                              |
+| 5: getGreenSpaceList()                | get green space list                        | GreenSpace             | **Information Expert**: The `GreenSpace` knows how to extract the the green space list, as it holds the knowledge of data and structure.                                                                                       |                                                                                                                                                                                                                                   |
+| 7: toDto(greenSpaceList)              | who creates the dto with the data           | GreenSpaceMapper       | **Creator**: The `GreenSpaceMapper` is responsible for create the dto with the data.                                                                                                                                           |
+| 9: greenSpace = getGreenSpace()       | providing the green space                   | GreenSpace             | **Information Expert**: The `GreenSpace` contains the information, making it the expert on providing this piece of information when needed.                                                                                    |
+| 10: greenSpaceDto = toDto(greenSpace) | create the green space dto                  | GreenSpaceMapper       | **Pure Fabrication**: The `GreenSpaceMapper` is a utility class created to handle data transformation tasks, such as create the green space DTO, without adding complexity to the business logic.                |
+| 11: add(GreenSpaceDto)                | add the green space Dto                     | GreenSpaceDto          | **Information Expert**: The `GreenSpaceDto` class knows how to assign a team to itself, as it holds the data and methods for managing its state.                                                                               |
+| 12: getDegreeUrgency()                | get the degree urgency                      | RegisterTaskController | **Controller**: The `RegisterTaskController` class knows about its collaborators and their contact details, making it the expert on sending notifications to its members.                                                      |
+| 13: getEnumDegreeUrgencyList()        | get the enum degree urgency list            | Task                   | **Information Expert**: The `Task` class knows its own email address, making it the expert on providing this piece of information.                                                                                             |
+| 15: create(entryDto)                  | create the entry                            | Entry                  | **Creator**: The `Entry` knows which email service is currently in use, making it the expert on providing this instance.                                                                                                       |
 
 ### Systematization ##
 
@@ -49,7 +48,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us021-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
