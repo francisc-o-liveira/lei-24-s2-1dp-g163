@@ -15,12 +15,14 @@ participant "GreenSpaceRepositories\n:GreenSpaceRepositories" as GreenSpaceRepos
 participant "entryRepository:\nEntryRepository" as EntryRepository
 participant "GreenSpace\n:GreenSpace" as GreenSpace
 participant "Task:\nTask" as Task
-participant ":Entry" as OBJ
 participant ":GreenSpaceDto" as DTO
 participant ":GreenSpaceMapper" as MAPPER
 participant "greenSpaceListDto : List<GreenSpaceDto>" as ListDTO
 participant "List : List<GreenSpace>" as List
 participant "entryDto: EntryDto" as EntryDto
+participant ":Entry" as OBJ
+
+
 
 
 activate GSM
@@ -28,7 +30,7 @@ activate GSM
         GSM -> UI : ask to add a new entry to the To-Do List
         activate UI
 
-        UI -> CTRL** : create()
+        UI -> CTRL** : createRegisterTaskController()
         activate CTRL
 
         CTRL -> RepositorySingleton : getInstance()
@@ -52,7 +54,7 @@ activate GSM
         CTRL -> GreenSpaceRepositories: getGreenSpaceList()
         activate GreenSpaceRepositories
 
-        GreenSpaceRepositories -> List: create()
+        GreenSpaceRepositories -> List: getGreenSpaceList()
         activate List
         deactivate List
 
@@ -64,7 +66,7 @@ activate GSM
 
         MAPPER -> ListDTO** : create()
 
-        MAPPER -> List : greenSpace = get(i)
+        MAPPER -> List : greenSpace = getGreenSpace()
         activate List
         deactivate List
 
@@ -90,7 +92,7 @@ activate GSM
         UI -> CTRL : getDegreeUrgency()
 
 
-        CTRL -> Task: getEnumDegreeUrgencyList()
+            CTRL -> Task: getEnumDegreeUrgencyList()
         activate Task
 
 
@@ -116,41 +118,43 @@ activate GSM
         CTRL -> EntryRepository: registerNewTask(entryDto)
         activate EntryRepository
 
-        EntryRepository -> OBJ**: create(entryDto)
+        EntryRepository -> EntryDto**: create(entryDto)
         deactivate EntryRepository
-        activate OBJ
-
-        OBJ -> EntryDto: stateOfEntry = getStateOfEntry()
         activate EntryDto
 
-        EntryDto --> OBJ: stateOfEntry
+        EntryDto -> OBJ: stateOfEntry = getStateOfEntry()
+        activate OBJ
 
-        OBJ -> EntryDto: greenSpace = getGreenSpace()
+        OBJ --> EntryDto: stateOfEntry
 
-        EntryDto --> OBJ: greenSpace
+        EntryDto -> OBJ: greenSpace = getGreenSpace()
 
-        OBJ -> EntryDto: titleOfEntry = getTitleOfEntry()
+        OBJ --> EntryDto: greenSpace
 
-        EntryDto --> OBJ: titleOfEntry
+        EntryDto -> OBJ: titleOfEntry = getTitleOfEntry()
 
-        OBJ -> EntryDto: descriptionOfEntry = getDescriptionOfEntry()
+        OBJ --> EntryDto: titleOfEntry
 
-        EntryDto --> OBJ: descriptionOfEntry
+        EntryDto -> OBJ: descriptionOfEntry = getDescriptionOfEntry()
 
-        OBJ -> EntryDto: approximateExpectedDuration = getApproximateExpectedDuration()
+        OBJ --> EntryDto: descriptionOfEntry
 
-        EntryDto --> OBJ: approximateExpectedDuration
+        EntryDto -> OBJ: approximateExpectedDuration = getApproximateExpectedDuration()
 
-        OBJ -> EntryDto: degreeOfUrgency = getDegreeUrgency()
+        OBJ --> EntryDto: approximateExpectedDuration
 
-        EntryDto --> OBJ: degreeOfUrgency
-        deactivate EntryDto
+        EntryDto -> OBJ: degreeOfUrgency = getDegreeUrgency()
 
-        OBJ --> EntryRepository: true/false
+        OBJ --> EntryDto: degreeOfUrgency
+        deactivate OBJ
+
+        EntryDto --> EntryRepository: true/false
+        activate EntryRepository
 
         EntryRepository -> EntryRepository : verifyIfExist(entry)
 
         EntryRepository --> CTRL: true/false
+        deactivate EntryRepository
 
         CTRL --> UI: true/false
 

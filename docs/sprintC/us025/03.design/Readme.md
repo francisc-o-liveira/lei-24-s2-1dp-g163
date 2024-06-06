@@ -1,4 +1,4 @@
-# US001 - Register skills for collaborators
+# US025 - Cancel an entry in the Agenda
 
 ## 3. Design - User Story Realization 
 
@@ -6,18 +6,12 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID                                                                  | Question: Which class is responsible for...                      | Answer                  | Justification (with patterns)                                                                                                                                                                 |
-|:--------------------------------------------------------------------------------|:-----------------------------------------------------------------|:------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to register a new skill  		                                        | 	... interacting with the actor?                                 | RegisterSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                                                                 |
-| 			  		                                                                         | 	... coordinating the US?                                        | RegisterSkillController | Controller                                                                                                                                                                                    |
-| 			  		                                                                         | 	... instantiating the class that handles the UI?                | RegisterSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                                                                 |
-| Step 2: requests data (skill name)	 			  		                                     | ... displaying the form for the actor to input data?             | Organization            | IE: cf. A&A component documentation.                                                                                                                                                          |
-| Step 3: types requested data	                                                   | ... validating input data? ... temporarily keeping input data? 	 | RegisterSkillController | Controller                                                                                                                                                                                    |
-| Step 4: requests confirmation                                                   | ... display request confirmation? 							                        | RegisterSkillUI         | Pure Fabrication: The UI class is responsible for displaying results to the user.                                                                                                             |
-| Step 5: confirms data	 		                                                       | ... validating the data locally (mandatory data)?							         | RegisterSkillController | Controller                                                                                                                                                                                    |
-| 	                                                                               | 	...... creating the skill object?                               | RegisterSkillUI         | IE: is responsible for user interactions.                                                                                                                                                     |
-| Step 6: displays operation success and the list of skills for collaborators. 		 | 	... informing operation success?	                               | RegisterSkillUI         | Pure Fabrication: The UI class is responsible for displaying results to the user.                                                                                                             |
-| 	                                                                               | 	... saving the created data (the list of skills)?	              | SkillRepository         | IE: knows all its skills.                                                                                                                                                                     | |                                                                                                               |              
+| SSD Interaction ID                    | Question: Which class is responsible for... | Answer                     | Justification (with patterns)                                                                                                                                                                                                      |
+|---------------------------------------|---------------------------------------------|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1: createViewDetailsEntryController() | creator the controller                      | ViewDetailsEntryController | **Controller**: The `:ViewDetailsEntryController` handles the request to add a new controller, coordinating the necessary operations between the UI and the data layer without performing business logic or data retrieval itself. |
+| 2: getInstance()                      | get the instance of repository              | Repositories               | **Information Expert**: The `Repositories` knows how to extract the information, as it holds the knowledge of data and structure.                                                                                                  |
+| 3: getEntryRepository()               | get the entry repository                    | Repositories               | **Information Expert**: The `Repositories` knows how to extract the information, as it holds the knowledge of data and structure.                                                                                                  |
+| 4: cancelEntry(entryDto)              | cancel the entry                            | EntryDto                   | **Information Expert**: The `EntryDto` is responsible for alter the state of the entry.                                                                                                                                            |
 
 ### Systematization ##
 
@@ -29,13 +23,13 @@ According to the taken rationale, the conceptual classes promoted to software cl
 Other software classes (i.e Information Expert) identified:
 
 * Repositories
-* DocTypeRepository
+* EntryRepository
 * SkillCategoryRepository
 
 Other software classes (i.e. Pure Fabrication) identified:
 
-* CreateSkillUI
-* CreateSkillController
+* ViewDetailsEntryUI
+* ViewDetailsEntryController
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -46,7 +40,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us025-sequence-diagram-full.svg)
 
 ### Split Diagrams
 

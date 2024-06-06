@@ -7,8 +7,6 @@ autonumber
 
 'hide footbox
 actor "GSM" as GSM
-participant ":AgendaUI" as AgendaUI
-participant ":AgendaController" as AgendaController
 participant ":ViewDetailsEntryUI" as UI
 participant ":ViewDetailsEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
@@ -19,61 +17,20 @@ participant "cancelEntryListDto : List<EntryDto>" as ListDTO
 participant "List : List<EntryDto>" as EntryDtoList
 participant "cancelEntryList : List<Entry>" as List
 participant "entryList : List<Entry>" as EntryList
-participant ":Entry" as OBJ
 participant ":EntryDto" as EntryDto
+participant ":Entry" as OBJ
 
 
 activate GSM
 
-        GSM -> AgendaUI: ask to show entrys
-        activate AgendaUI
-
-        AgendaUI -> AgendaController**: create(entryDto)
-        activate AgendaController
-
-
-        AgendaController -> EntryRepository: getEntryByStateList()
-        activate EntryRepository
-
-        EntryRepository -> EntryDtoList**: create()
-
-        EntryRepository --> AgendaController: entryByStateList
-        deactivate EntryRepository
-        deactivate AgendaController
-
-        AgendaController -> MAPPER: toDto(entryList)
-        activate MAPPER
-        activate AgendaController
-
-        MAPPER -> EntryList** : create()
-
-        MAPPER -> EntryList : entry = get(i)
-        activate EntryList
-        deactivate EntryList
-
-        MAPPER -> MAPPER : entryDto = toDTO(entry)
-        activate MAPPER
-
-        MAPPER -> EntryDto**  : create(...)
-        deactivate MAPPER
-
-        MAPPER -> ListDTO : add(entryDto)
-        activate ListDTO
-        deactivate ListDTO
-
-        MAPPER --> AgendaController : entryListDto
-        deactivate MAPPER
-
-        AgendaController --> AgendaUI: entryListDto
-        deactivate AgendaController
-
-        AgendaUI --> GSM: shows details and wait
-        deactivate AgendaUI
+        ref over GSM
+        Get Agenda Entry's List
+        end
 
         GSM -> UI : ask and select an entry to cancel
         activate UI
 
-        UI -> CTRL**: cancel()
+        UI -> CTRL**: createViewDetailsEntryController()
         activate CTRL
 
         CTRL -> RepositorySingleton: getInstance()
@@ -97,19 +54,19 @@ activate GSM
         CTRL -> EntryRepository: cancelEntry(entryDto)
         activate EntryRepository
 
-        EntryRepository -> OBJ**: cancelEntry(entryDto)
+        EntryRepository -> EntryDto**: cancelEntry(entryDto)
         deactivate EntryRepository
-        activate OBJ
-
-
-        OBJ -> EntryDto: stateOfEntry = setStateOfEntry()
         activate EntryDto
 
-        EntryDto --> OBJ: stateOfEntry
-        deactivate EntryDto
 
-        OBJ --> EntryRepository: true/false
+        EntryDto -> OBJ: stateOfEntry = setStateOfEntry()
+        activate OBJ
+
+        OBJ --> EntryDto: stateOfEntry
+
+        EntryDto --> EntryRepository: true/false
         deactivate OBJ
+        deactivate EntryDto
         activate EntryRepository
 
 
