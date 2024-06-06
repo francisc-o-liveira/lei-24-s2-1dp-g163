@@ -71,7 +71,7 @@ public class CollaboratorRepository {
      * @throws CloneNotSupportedException when Collaborator has already been created
      */
 
-    private Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
+    public Optional<Collaborator> verifyCollaboratorExistAndSave(Collaborator collab) throws CloneNotSupportedException {
         Optional<Collaborator> newCollab = Optional.empty();
         if (isValidCollaborator(collab)){
             collaboratorList.add(collab);
