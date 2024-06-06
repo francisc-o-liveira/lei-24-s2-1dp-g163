@@ -191,6 +191,7 @@ public class ManageCollaboratorsUI {
         ui.putInTextFields(collab);
         ui.showCollaboratorSelected(selectedCollaboratorForEdit);
         ui.setTableAssignSkills();
+        ui.setTableSkillsAssigned();
     }
 
     @FXML

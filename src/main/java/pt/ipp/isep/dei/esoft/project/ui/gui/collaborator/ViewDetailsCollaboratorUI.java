@@ -159,14 +159,15 @@ public class ViewDetailsCollaboratorUI {
             for(Skill skill : skillsToAssign){
                 try{
                     ctrlSkills.assignSkills(collaboratorAssigning, skill);
-                    popUpSkills().show();
-                    tableAssignSkills.getItems().clear();
-                    setTableAssignSkills();
-                    setTableSkillsAssigned();
                 } catch (CloneNotSupportedException e) {
-                    popUpOfVerifications(Alert.AlertType.ERROR, "s").show();
+                    popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
                 }
             }
+        popUpSkills().show();
+        tableAssignSkills.getItems().clear();
+        setTableAssignSkills();
+        tableSkillsAssigned.getItems().clear();
+        setTableSkillsAssigned();
     }
 
     public void setTableAssignSkills(){
