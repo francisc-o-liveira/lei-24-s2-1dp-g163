@@ -14,11 +14,11 @@ import java.util.Optional;
  * Represent the JobCategoryRepository
  */
 public class JobCategoryRepository {
-    private final List<JobCategory> jobCategories;
+    private List<JobCategory> jobCategories;
 
     public JobCategoryRepository() {
         try {
-            jobCategories = new ArrayList<>();
+            //jobCategories = new ArrayList<>();
             loadFromJobCategoryDataBase();
         } catch (IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
@@ -124,14 +124,14 @@ public class JobCategoryRepository {
         }
         List<JobCategory> jobCategorysList;
         if(file.length()==0){
-            jobCategorysList=new ArrayList<>();
+            jobCategories=new ArrayList<>();
         } else {
         try (FileInputStream fileIn = new FileInputStream(file)
              ) {
             if (fileIn.getChannel().size()>0){
                 ObjectInputStream in = new ObjectInputStream(fileIn);
-                jobCategorysList = (List<JobCategory>) in.readObject();
-                loadInSystem(jobCategorysList);
+                jobCategories = (List<JobCategory>) in.readObject();
+                loadInSystem(jobCategories);
             }
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
