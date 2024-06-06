@@ -56,6 +56,15 @@ public class EntryDto extends TaskDto{
         this.startDate = null;
     }
 
+    public EntryDto(Date startDate, EntryState status, TeamDto teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
+        super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
+        this.startDate = startDate;
+        setStatus(status);
+        this.vehicleList = new ArrayList<>();
+        this.teamAssigned = teamAssigned;
+        this.reference = reference;
+    }
+
 
     public Collaborator getCollaboratorFinish() {
         return collaboratorThatCompleted;

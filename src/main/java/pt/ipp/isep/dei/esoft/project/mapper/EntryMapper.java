@@ -38,7 +38,10 @@ public class EntryMapper {
         return entryDtoList;
     }
     public EntryDto entryToEntryDto(Entry entry){
+        if(entry.getTeamAssigned()==null){
             return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
+        }
+        return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()), teamMapper.teamToTeamDto(entry.getTeamAssigned()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
     }
     public Entry entryDtoToEntryCreate(EntryDto entryDto){
         return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus());
