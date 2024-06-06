@@ -122,12 +122,17 @@ public class JobCategoryRepository {
         if (!file.exists()) {
             throw new IOException("JobCategory database file does not exist. Starting with an empty list.");
         }
+        List<JobCategory> jobCategorysList;
+        if(file.length()==0){
+            jobCategorysList=new ArrayList<>();
+        } else {
         try (FileInputStream fileIn = new FileInputStream(file);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            List<JobCategory> jobCategorysList = (List<JobCategory>) in.readObject();
+            jobCategorysList = (List<JobCategory>) in.readObject();
             loadInSystem(jobCategorysList);
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
+        }
         }
     }
 

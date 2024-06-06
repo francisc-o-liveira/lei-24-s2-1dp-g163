@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
@@ -321,13 +322,17 @@ public class VehicleRepository {
         if (!file.exists()) {
             throw new IOException("Vehicle database file does not exist. Starting with an empty list.");
         }
+        List<Vehicle> vehicleList;
+        if(file.length()==0){
+            vehicleList=new ArrayList<>();
+        } else {
         try (FileInputStream fileIn = new FileInputStream(file);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            List<Vehicle> vehicleList = (List<Vehicle>) in.readObject();
+            vehicleList = (List<Vehicle>) in.readObject();
             loadInSystem(vehicleList);
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
-        }
+        }}
     }
 
     private void loadInSystem(List<Vehicle> vehicles) throws CloneNotSupportedException {
