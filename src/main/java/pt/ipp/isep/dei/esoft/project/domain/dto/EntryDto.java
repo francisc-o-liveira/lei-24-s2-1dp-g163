@@ -122,9 +122,10 @@ public class EntryDto extends TaskDto{
         this.status.cancelEntry();
     }
 
-    public void postpone(Date newDate) {
+    public void postpone(Date newDate, Tempo startTime) {
         this.status.postponeState();
         this.startDate = newDate;
+        this.startHour=startTime;
     }
 
     public boolean assignVehicle(VehicleDto vehicle) {
