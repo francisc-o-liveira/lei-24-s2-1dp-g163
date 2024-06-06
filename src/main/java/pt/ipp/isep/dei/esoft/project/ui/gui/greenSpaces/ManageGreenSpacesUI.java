@@ -43,6 +43,8 @@ public class ManageGreenSpacesUI implements Initializable {
 
     @FXML
     private TableView<GreenSpaceDto> tableGreenSpaces;
+    @FXML
+    private Label labelRole;
 
     private GreenSpaceDto selectedGreenSpace;
     private ObservableList<GreenSpaceDto> greenSpaceObservableList= FXCollections.observableArrayList();
@@ -53,10 +55,26 @@ public class ManageGreenSpacesUI implements Initializable {
             ctrlAuth= AuthenticationController.getInstance();
             ctrl=RegisterGreenSpaceController.getInstance();
             setTableGreenSpaces();
+            setLabel();
         }catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException e){
             e.printStackTrace();
         }
 
+    }
+
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("Admin");
+            labelRole.setLayoutX(69);
+            labelRole.setLayoutY(130.0);
+        }
     }
 
     public void setTableGreenSpaces(){

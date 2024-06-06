@@ -95,6 +95,7 @@ public class VehicleRepository {
         if (isValidVehicle(vehicle)) {
             saveFromVehicleInDataBase(vehicle);
             newVehicle = Optional.of(vehicle);
+            operationSuccess=true;
         }
         if (!operationSuccess) {
             throw new CloneNotSupportedException("Vehicle already exists in the system");
