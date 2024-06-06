@@ -14,6 +14,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
@@ -21,6 +22,8 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -45,6 +48,8 @@ public class ManageAgendaUI  implements Initializable{
     private AnchorPane calendarAnchorPane;
     @FXML
     private AnchorPane weeklyViewAnchorPane;
+    @FXML
+    public Label labelRole;
     private Popup miniCalendarPopup;
 
 
@@ -52,6 +57,7 @@ public class ManageAgendaUI  implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrlAuth = AuthenticationController.getInstance();
         ctrlEntry= AssignEntryOnAgendaController.getInstance();
+        setLabel();
         view = new VBox();
         viewWeek=new VBox();
         view.setAlignment(Pos.CENTER);
@@ -68,6 +74,22 @@ public class ManageAgendaUI  implements Initializable{
         currentStartDate = LocalDate.now().with(DayOfWeek.MONDAY);
         drawWeeklyCalendar(currentStartDate);
     }
+
+    public void setLabel(){
+        UserRoleDTO role = ctrlAuth.getAtualUserRole();
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            labelRole.setText("HumanResourcesManager");
+        } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
+            labelRole.setText("GreenSpaceManager");
+            labelRole.setLayoutX(28.0);
+            labelRole.setLayoutY(130.0);
+        } else {
+            labelRole.setText("Admin");
+            labelRole.setLayoutX(69);
+            labelRole.setLayoutY(130.0);
+        }
+    }
+
 
     public VBox getView() {
         return view;
