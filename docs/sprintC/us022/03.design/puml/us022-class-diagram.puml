@@ -15,6 +15,7 @@ class Entry {
     - List<Vehicles>
     - Team
     - StartDate
+    - StartHour
     - Status
     + Entry()
     - setStartDate(startDate)

@@ -73,30 +73,35 @@ autonumber 5
 
                                                              deactivate EntryRepository
 
-                                                             loop For every Vehicle
-                                                             CTRL2 -> SelectedMAPPER : toDTO(vehicleListFilter)
-                                                             activate SelectedMAPPER
 
+                                                             CTRL2 -> SelectedMAPPER : vehicleListToVehicleDtoList(vehicleListFilter)
+                                                             activate SelectedMAPPER
+loop For every Vehicle
                                                              SelectedMAPPER -> ListSelectedDTO** : create
 
-                                                             SelectedMAPPER -> ListSelected : vehicle = get(i)
-                                                             activate ListSelected
-                                                             deactivate ListSelected
 
-                                                             SelectedMAPPER -> SelectedMAPPER : vehicleDTO = toDTO(vehicle)
+
+                                                             SelectedMAPPER -> SelectedMAPPER : vehicleDTO = vehicleToVehicleDto(vehicle)
                                                              activate SelectedMAPPER
 
+                                                            SelectedMAPPER -> ListSelected : vehicle = get(i)
+                                                                                                                     activate ListSelected
+                                                                                                                     deactivate ListSelected
+
                                                              SelectedMAPPER -> SelectedDTO : create(...)
+                                                             activate SelectedDTO
+
+                                                             deactivate SelectedDTO
                                                              deactivate SelectedMAPPER
 
                                                              SelectedMAPPER -> ListSelectedDTO : add(vehicleDto)
                                                              activate ListSelectedDTO
                                                              deactivate ListSelectedDTO
-
+  end
                                                              SelectedMAPPER -> CTRL2 : vehicleDtoList
                                                              deactivate SelectedMAPPER
 
-                                                             end
+
 
 
 

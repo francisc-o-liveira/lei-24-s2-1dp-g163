@@ -35,7 +35,7 @@ activate GSM
 
 '            UI --> GSM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
-            UI -> CTRL** : create
+            UI -> CTRL** : create()
 
             UI -> CTRL : getAgendaList()
             activate CTRL
@@ -53,7 +53,7 @@ activate GSM
             GSM --> UI : select one Entry
             activate UI
 
-            UI --> UI2** : create
+            UI --> UI2** : create()
             activate UI2
             deactivate UI
 
@@ -85,7 +85,7 @@ activate GSM
                                                     CTRL2 -> VehicleRepository : getVehicleList()
                                                     activate VehicleRepository
 
-                                                    VehicleRepository -> ListSelected** : create
+                                                    VehicleRepository -> ListSelected** : create()
 
                                                     note over ListSelected : loop to populate is omitted
 
@@ -109,35 +109,35 @@ activate GSM
                                                     EntryRepository -> CTRL2 : vehicleList
                                                     deactivate EntryRepository
 
-                                                    loop For every Vehicle
+
                                                     CTRL2 -> SelectedMAPPER : toDTO(vehicleListFilter)
                                                     activate SelectedMAPPER
 
-                                                    SelectedMAPPER -> ListSelectedDTO** : create
-
-                                                    SelectedMAPPER -> ListSelected : vehicle = get(i)
-                                                    activate ListSelected
-                                                    deactivate ListSelected
-
-                                                    SelectedMAPPER -> SelectedMAPPER : vehicleDTO = toDTO(vehicle)
-                                                    activate SelectedMAPPER
-
-                                                    SelectedMAPPER -> SelectedDTO : create(...)
-                                                    deactivate SelectedMAPPER
-
-                                                    SelectedMAPPER -> ListSelectedDTO : add(vehicleDto)
-                                                    activate ListSelectedDTO
-                                                    deactivate ListSelectedDTO
-
-                                                    SelectedMAPPER -> CTRL2 : vehicleDtoList
-                                                    deactivate SelectedMAPPER
-
-                                                    end
+                                                                                                           SelectedMAPPER -> ListSelectedDTO** : create()
 
 
+                                                  loop For every Vehicle
+                                                                                                              SelectedMAPPER -> SelectedMAPPER : vehicleDTO = vehicleToVehicleDto(vehicle)
+                                                                                                              activate SelectedMAPPER
 
+                                                                                                             SelectedMAPPER -> ListSelected : vehicle = get(i)
+                                                                                                                                                                      activate ListSelected
+                                                                                                                                                                      deactivate ListSelected
 
-                                                    CTRL2 -> UI2 : vehicleDtoList
+                                                                                                              SelectedMAPPER -> SelectedDTO : create(...)
+                                                                                                              activate SelectedDTO
+
+                                                                                                              deactivate SelectedDTO
+                                                                                                              deactivate SelectedMAPPER
+
+                                                                                                              SelectedMAPPER -> ListSelectedDTO : add(vehicleDto)
+                                                                                                              activate ListSelectedDTO
+                                                                                                              deactivate ListSelectedDTO
+                                                   end
+                                                                                                              SelectedMAPPER -> CTRL2 : vehicleDtoList
+                                                                                                              deactivate SelectedMAPPER
+
+                                                     CTRL2 -> UI2 : vehicleDtoList
                                                     deactivate CTRL2
 
              UI2 -> GSM : show entry data and wait for selection vehicle to assign
@@ -150,19 +150,21 @@ activate GSM
             UI2 -> CTRL2 : assignVehicleToEntry(vehicleDto,entryDto)
             activate CTRL2
 
-            CTRL2 -> SelectedMAPPER : toModel(vehicleDto)
-            activate SelectedMAPPER
 
 
-            SelectedMAPPER -> CTRL2 : vehicle
-            deactivate SelectedMAPPER
-
-
-            CTRL2 -> EntryRepository :
+            CTRL2 -> EntryRepository : assignVehicleToEntry(vehicleDto,entryDto)
             activate EntryRepository
 
-            EntryRepository -> MAPPER : toModel(entryDto)
+            EntryRepository -> MAPPER : entryDtoToEntry(entryDto)
             activate MAPPER
+
+             MAPPER -> SelectedMAPPER : vehicleDtoToVehicle(vehicleDto)
+                        activate SelectedMAPPER
+
+
+                        SelectedMAPPER -> MAPPER : vehicle
+                        deactivate SelectedMAPPER
+
 
             MAPPER -> OBJ : setNewVehicle(vehicle)
                         activate OBJ
