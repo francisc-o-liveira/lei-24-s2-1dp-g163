@@ -5,7 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class GmailService implements SendEmailExternalAPI{
-
+    /**
+     * Sends an email with the specified recipient, subject, and body. The email content is written to a file named "email.txt".
+     * If the file already exists, the content is appended to it. Otherwise, a new file is created and the content is written to it.
+     *
+     * @param to      the recipient of the email
+     * @param subject the subject of the email
+     * @param body    the body of the email
+     */
     @Override
     public void sendEmail(String to, String subject, String body) {
 

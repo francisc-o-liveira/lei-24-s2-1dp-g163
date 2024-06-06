@@ -86,20 +86,6 @@ public class EntryDto extends TaskDto{
     }
 
 
-
-    // new
-    public EntryDto(String reference, String title, String description, Tempo expectedDuration, Task.DegreeUrgency degreeUrgency, GreenSpaceDto greenSpace) {
-        super(title, description,degreeUrgency, expectedDuration,greenSpace);
-        this.reference=reference;
-        this.vehicleList = null;
-        this.teamAssigned = null;
-        this.startDate = null;
-        this.startHour = null;
-        this.finishDate = null;
-        this.collaboratorThatCompleted = null;
-    }
-
-
     public Collaborator getCollaboratorFinish() {
         return collaboratorThatCompleted;
     }
