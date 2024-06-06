@@ -39,7 +39,31 @@ public class EntryDto extends TaskDto{
         this.collaboratorThatCompleted = null;
     }
 
-    public EntryDto(Date startDate, EntryState status, List<VehicleDto> vehicleList, TeamDto teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
+    public EntryDto(String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
+        super(title, description,degreeOfUrgency, timeExpec, greenSpaceDto);
+        this.status = new EntryState();
+        this.vehicleList = null;
+        this.teamAssigned = null;
+        this.reference = null;
+        this.startDate = null;
+        this.finishDate = null;
+        this.collaboratorThatCompleted = null;
+    }
+
+
+    public EntryDto(EntryState entryState, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
+        super(title, description,degreeUrgency, expectedDuration, greenSpaceDto);
+        setStatus(entryState);
+        this.vehicleList = null;
+        this.teamAssigned = null;
+        this.reference = reference;
+        this.startDate = null;
+        this.startHour = null;
+        this.finishDate = null;
+        this.collaboratorThatCompleted = null;
+    }
+
+    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference, TeamDto teamAssigned, List<VehicleDto> vehicleList) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
         setStatus(status);
@@ -48,21 +72,15 @@ public class EntryDto extends TaskDto{
         this.reference = reference;
     }
 
-    public EntryDto(String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
-        super(title, description,degreeOfUrgency, timeExpec, greenSpaceDto);
-        this.status = new EntryState();
-        this.vehicleList = null;
-        this.teamAssigned = null;
-        this.reference = null;
-        this.startDate = null;
-    }
-
-    public EntryDto(Date startDate, EntryState status, TeamDto teamAssigned,String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration,GreenSpaceDto greenSpaceDto, String reference) {
+    public EntryDto(Date startDate, Tempo startHour, Date finishDate, EntryState entryState, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference, TeamDto teamDto, List<VehicleDto> vehicleDtos, Collaborator collaboratorFinish) {
         super(title, description,degreeUrgency, expectedDuration,greenSpaceDto);
         this.startDate = startDate;
-        setStatus(status);
-        this.vehicleList = new ArrayList<>();
-        this.teamAssigned = teamAssigned;
+        this.startHour = startHour;
+        this.finishDate = finishDate;
+        this.collaboratorThatCompleted = collaboratorFinish;
+        setStatus(entryState);
+        this.vehicleList = vehicleDtos;
+        this.teamAssigned = teamDto;
         this.reference = reference;
     }
 

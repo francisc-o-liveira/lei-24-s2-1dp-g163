@@ -38,10 +38,20 @@ public class EntryMapper {
         return entryDtoList;
     }
     public EntryDto entryToEntryDto(Entry entry){
-        if(entry.getTeamAssigned()==null){
-            return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
+        if(entry.getTeamAssigned()==null && entry.getVehicleList()==null && entry.getStartDate() ==null){
+            return new EntryDto(new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
+        }else{
+            if (entry.getStartDate()!=null && entry.getTeamAssigned()==null && entry.getVehicleList()==null){
+                return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
+            }else if (entry.getStartDate()!=null && entry.getTeamAssigned()!=null || entry.getStartDate()!=null && entry.getVehicleList()==null){
+                return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference(), teamMapper.teamToTeamDto(entry.getTeamAssigned()),vehicleMapper.vehicleListToVehicleDtoList(entry.getVehicleList()));
+            }else if (entry.getStartDate()!=null && entry.getFinishDate()!=null){
+                return new EntryDto(entry.getStartDate(),entry.getStartHour(),entry.getFinishDate(),new EntryState(entry.getStatus().getState()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference(), teamMapper.teamToTeamDto(entry.getTeamAssigned()),vehicleMapper.vehicleListToVehicleDtoList(entry.getVehicleList()),entry.getCollaboratorFinish());
+            }else {
+                throw new IllegalArgumentException("Impossible Dto");
+            }
         }
-        return new EntryDto(entry.getStartDate(),new EntryState(entry.getStatus().getState()), teamMapper.teamToTeamDto(entry.getTeamAssigned()),entry.getTitle(),entry.getDescription(),entry.getDegreeUrgency(),entry.getExpectedDuration(),mapperSpaces.greenSpaceToGreenSpaceDto(entry.getGreenSpace()),entry.getReference());
+
     }
     public Entry entryDtoToEntryCreate(EntryDto entryDto){
         return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus());
