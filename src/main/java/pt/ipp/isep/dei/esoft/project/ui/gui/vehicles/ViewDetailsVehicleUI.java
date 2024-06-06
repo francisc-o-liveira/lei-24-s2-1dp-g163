@@ -203,12 +203,16 @@ public class ViewDetailsVehicleUI {
                         if (result.isPresent() && result.get() == ButtonType.OK) {
                             lastCheckUp.setVisible(true);
                             lastDateCheckUp.setVisible(true);
-                            }
+                        }
                     }else{
                         try{
                             vlastDateCheck=new Date(lastDateCheckUp.getValue().getYear(),lastDateCheckUp.getValue().getMonthValue(),lastDateCheckUp.getValue().getDayOfMonth());
                             vlastCheckKm=Double.parseDouble(lastCheckUp.getText());
                             ctrl.registerVehicle(vBrand,vModel,vAcquisition,vRegister,vCurrentKm,vFrequencyCheck,vGrossWeight,vTare,vPlate,vType,vlastDateCheck,vlastCheckKm);
+                            if(popUpOfConfirmation(Alert.AlertType.CONFIRMATION, "Vehicle registered!").showAndWait().get()==ButtonType.OK){
+                                Stage stage=(Stage) brand.getScene().getWindow();
+                                stage.close();
+                            }
                         } catch (CloneNotSupportedException e){
                             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
                         }
