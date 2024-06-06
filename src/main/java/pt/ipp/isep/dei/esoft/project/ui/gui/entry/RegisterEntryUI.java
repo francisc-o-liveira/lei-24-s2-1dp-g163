@@ -36,7 +36,7 @@ public class RegisterEntryUI implements Initializable {
     private TextField hoursForEntry;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ctrl =  AssignEntryOnAgendaController.getInstance();
+        ctrl =AssignEntryOnAgendaController.getInstance();
         setTableTasks();
     }
 
