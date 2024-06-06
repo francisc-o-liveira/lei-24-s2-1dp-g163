@@ -54,4 +54,11 @@ public class TimePeriod implements Serializable {
         public Date getStartDate() {
             return startDate;
         }
+
+    public Tempo getStartHour() {
+            return startHour;
+    }
+    public Tempo getEndHour() {
+            return endHour;
+    }
 }
