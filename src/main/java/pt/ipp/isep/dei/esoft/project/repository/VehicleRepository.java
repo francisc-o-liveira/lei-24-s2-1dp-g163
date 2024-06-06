@@ -326,10 +326,12 @@ public class VehicleRepository {
         if(file.length()==0){
             vehicleList=new ArrayList<>();
         } else {
-        try (FileInputStream fileIn = new FileInputStream(file);
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
-            vehicleList = (List<Vehicle>) in.readObject();
-            loadInSystem(vehicleList);
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                vehicleList = (List<Vehicle>) in.readObject();
+                loadInSystem(vehicleList);
+            }
         } catch (ClassNotFoundException | IOException e) {
             throw new RuntimeException(e);
         }}

@@ -135,6 +135,8 @@ public class EntryRepository {
         }
         return entryCompleted;
     }
+
+
     public void saveToDB(){
         try {
             File file1=new File(MainApp.getEntryDataBaseFile());
