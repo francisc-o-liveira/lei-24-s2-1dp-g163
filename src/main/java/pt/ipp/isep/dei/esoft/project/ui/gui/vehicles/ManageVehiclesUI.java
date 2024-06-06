@@ -158,11 +158,11 @@ public class ManageVehiclesUI {
         if(selectedVehicle != null){
             tableViewVehicles.getItems().remove(selectedVehicle);
             try{
-                operationSuccess=ctrl.removeVehicleFromList(selectedVehicle);
+                ctrl.removeVehicleFromList(selectedVehicle);
             }catch (RuntimeException e){
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage());
             }
-            if (operationSuccess){
+            finally {
                 popUpOfVerifications(Alert.AlertType.CONFIRMATION,"Vehicle Removed Successfully");
             }
         }
