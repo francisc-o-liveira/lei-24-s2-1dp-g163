@@ -3,7 +3,6 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
-import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ public class JobCategoryRepository {
 
     public JobCategoryRepository() {
         try {
-            //jobCategories = new ArrayList<>();
             loadFromJobCategoryDataBase();
         } catch (IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
@@ -114,7 +112,6 @@ public class JobCategoryRepository {
         if (!file.exists()) {
             throw new IOException("JobCategory database file does not exist. Starting with an empty list.");
         }
-        List<JobCategory> jobCategorysList;
         if(file.length()==0){
             jobCategories=new ArrayList<>();
         } else {
