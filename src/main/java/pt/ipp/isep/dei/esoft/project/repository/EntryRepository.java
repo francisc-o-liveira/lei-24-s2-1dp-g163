@@ -34,7 +34,12 @@ public class EntryRepository {
             System.out.println("Error in File Config Please Verify : Getting Time Of Work By Collaborators");
             timeOfWorkByCollaborators = new Tempo(HOURS_WORK_PER_OMISSION);
         }
-        agenda.loadFromDataBase();
+        try{
+            agenda.loadFromDataBase();
+            toDo.loadFromDataBase();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 

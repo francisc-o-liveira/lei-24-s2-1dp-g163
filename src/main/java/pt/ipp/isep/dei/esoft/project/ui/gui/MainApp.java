@@ -117,6 +117,7 @@ public class MainApp extends Application {
     private static String entryDataBaseFile = new String("src/main/resources/DataBase/entryDataBase.csv");
 
     private static String entryReferenceDataBaseFile = new String("src/main/resources/DataBase/entryReferenceDataBase.txt");
+    private static String taskDataBaseFile=new String("src/main/resources/DataBase/taskDataBase.csv");
 
     public static String getEntryDataBaseFile() {
         return entryDataBaseFile;
@@ -124,6 +125,10 @@ public class MainApp extends Application {
 
     private static String getEntryReferenceReferenceDataBaseFile() {
         return entryReferenceDataBaseFile;
+    }
+
+    public static String getTaskDataBaseFile(){
+        return taskDataBaseFile;
     }
 
     private static String vehicleDataBaseFile = new String("src/main/resources/DataBase/vehicleDataBase.csv");

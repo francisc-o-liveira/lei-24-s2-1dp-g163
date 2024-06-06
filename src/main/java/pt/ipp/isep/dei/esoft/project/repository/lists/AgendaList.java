@@ -2,12 +2,14 @@ package pt.ipp.isep.dei.esoft.project.repository.lists;
 
 import pt.ipp.isep.dei.esoft.project.domain.ComparatorDates;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.ui.gui.entry.ManageAgendaUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.*;
@@ -104,68 +106,41 @@ public class AgendaList implements Serializable , List<Entry> {
             FileOutputStream file = new FileOutputStream(file1, true);
             ObjectOutputStream out;
             out=new ObjectOutputStream(file);
-            for(Entry entry : getList()){
-                out.writeObject(entry);
-            }
+            out.writeObject(agenda);
+
             out.close();
             file.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void loadFromDataBase(){
-        Entry loadEntry;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getEntryDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
-                while (true) {
-                    try {
-                        loadEntry = (Entry) in.readObject();
-                        loadInSystem(loadEntry);
-                    } catch (EOFException e) {
-                        break;
-                    }
+    @SuppressWarnings("unchecked")
+    public void loadFromDataBase() throws IOException {
+        List<Entry> loadEntry;
+        File file= new File(MainApp.getEntryDataBaseFile());
+        if (!file.exists()) {
+            throw new IOException("Entry database file does not exist. Starting with an empty list.");
+        }
+        if(file.length()==0){
+            loadEntry=new ArrayList<>();
+        } else {
+            try (FileInputStream fileIn = new FileInputStream(file)){
+                if (fileIn.getChannel().size()>0){
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    loadEntry = (List<Entry>) in.readObject();
+                    loadInSystem(loadEntry);
                 }
-                in.close();
-                file.close();
+            } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+                throw new RuntimeException(e);
             }
-        }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    private static void loadInSystem(Entry entry) throws CloneNotSupportedException {
-        if (!getList().contains(entry)){
+    private void loadInSystem(List<Entry> entries) throws CloneNotSupportedException {
+        for (Entry entry : entries) {
             agenda.add(entry);
-        }else{
-            throw new CloneNotSupportedException();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Override
     public int size() {

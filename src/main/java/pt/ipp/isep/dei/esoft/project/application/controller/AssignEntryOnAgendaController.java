@@ -52,5 +52,6 @@ public class AssignEntryOnAgendaController {
 
     public void saveToDB() {
         entryRepository.getAgenda().saveToDB();
+        entryRepository.getToDo().saveToDB();
     }
 }
