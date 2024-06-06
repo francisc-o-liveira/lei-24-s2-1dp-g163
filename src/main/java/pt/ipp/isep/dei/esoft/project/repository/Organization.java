@@ -237,5 +237,6 @@ public class Organization{
 
     public void loadSystem(){
         dataBaseManager.loadFromManagerDataBase();
+        loadFromGreenSpaceDataBase();
     }
 }
