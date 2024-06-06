@@ -33,7 +33,6 @@ import java.util.Optional;
 public class GenerateTeamsUI {
 
     public Stage stage= new Stage();
-    public Stage stageClose;
     public GenerateTeamController ctrl;
 
     public AuthenticationController ctrlAuth;
@@ -113,7 +112,6 @@ public class GenerateTeamsUI {
                     if (result.isPresent() && result.get() == ButtonType.OK) {
                         ctrl.saveTeam(teamCreated.get());
                         stage.close();
-                        stageClose.close();
                     }
                 }
             } catch (RuntimeException e){
