@@ -6,7 +6,6 @@ import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
-import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 
 import java.io.*;
 import java.util.ArrayList;

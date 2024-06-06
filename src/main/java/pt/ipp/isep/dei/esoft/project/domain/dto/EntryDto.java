@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain.dto;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
@@ -82,6 +83,20 @@ public class EntryDto extends TaskDto{
         this.vehicleList = vehicleDtos;
         this.teamAssigned = teamDto;
         this.reference = reference;
+    }
+
+
+
+    // new
+    public EntryDto(String reference, String title, String description, Tempo expectedDuration, Task.DegreeUrgency degreeUrgency, GreenSpaceDto greenSpace) {
+        super(title, description,degreeUrgency, expectedDuration,greenSpace);
+        this.reference=reference;
+        this.vehicleList = null;
+        this.teamAssigned = null;
+        this.startDate = null;
+        this.startHour = null;
+        this.finishDate = null;
+        this.collaboratorThatCompleted = null;
     }
 
 

@@ -115,8 +115,7 @@ public class JobCategoryRepository {
         if(file.length()==0){
             jobCategories=new ArrayList<>();
         } else {
-        try (FileInputStream fileIn = new FileInputStream(file)
-             ) {
+        try (FileInputStream fileIn = new FileInputStream(file)){
             if (fileIn.getChannel().size()>0){
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 jobCategories = (List<JobCategory>) in.readObject();

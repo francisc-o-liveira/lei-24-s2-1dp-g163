@@ -6,7 +6,6 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
-import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.*;

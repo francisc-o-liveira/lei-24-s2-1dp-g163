@@ -5,9 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
-import pt.ipp.isep.dei.esoft.project.utilities.AppendableObjectOutputStream;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;

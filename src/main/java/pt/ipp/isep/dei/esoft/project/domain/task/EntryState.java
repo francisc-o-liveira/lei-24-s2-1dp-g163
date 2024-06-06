@@ -6,6 +6,10 @@ import java.io.Serializable;
 public class EntryState implements Serializable {
 
 
+    public boolean isPlanned() {
+        return this.state.equals(State.Planned);
+    }
+
     public enum State{Planned,Postponed,Assigned,Canceled,Done}
 
     private State state;

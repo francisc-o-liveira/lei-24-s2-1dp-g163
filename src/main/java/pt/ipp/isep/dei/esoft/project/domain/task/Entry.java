@@ -44,7 +44,7 @@ public class Entry extends Task implements Serializable {
         this.reference = Integer.toString(REFERENCE_VALUE);
         this.status = status;
         this.startDate = null;
-        this.vehicleList = new ArrayList<Vehicle>();
+        this.vehicleList = null;
         this.teamAssigned = null;
         this.finishDate = null;
     }
