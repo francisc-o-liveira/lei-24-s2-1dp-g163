@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="340.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.register.RegisterGreenSpaceUI">
+<AnchorPane prefHeight="340.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.register.RegisterGreenSpaceUI">
    <children>
       <Button layoutX="270.0" layoutY="300.0" mnemonicParsing="false" onAction="#btnRegister" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: ADD8E6;" text="Add">
          <font>
