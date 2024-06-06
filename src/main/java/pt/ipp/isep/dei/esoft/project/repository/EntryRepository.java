@@ -34,7 +34,7 @@ public class EntryRepository {
             System.out.println("Error in File Config Please Verify : Getting Time Of Work By Collaborators");
             timeOfWorkByCollaborators = new Tempo(HOURS_WORK_PER_OMISSION);
         }
-        loadFromDataBase();
+        agenda.loadFromDataBase();
     }
 
 
@@ -134,57 +134,5 @@ public class EntryRepository {
             entryCompleted = Optional.of(entry);
         }
         return entryCompleted;
-    }
-
-
-    public void saveToDB(){
-        try {
-            File file1=new File(MainApp.getEntryDataBaseFile());
-            PrintWriter writer = new PrintWriter(new FileWriter(file1));
-            writer.print("");
-            writer.close();
-
-            FileOutputStream file = new FileOutputStream(file1, true);
-            ObjectOutputStream out;
-            out=new ObjectOutputStream(file);
-            for(Entry entry : agenda.getList()){
-                out.writeObject(entry);
-            }
-            out.close();
-            file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void loadFromDataBase(){
-        Entry loadEntry;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getEntryDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
-                while (true) {
-                    try {
-                        loadEntry = (Entry) in.readObject();
-                        loadInSystem(loadEntry);
-                    } catch (EOFException e) {
-                        break;
-                    }
-                }
-                in.close();
-                file.close();
-            }
-        }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void loadInSystem(Entry entry) throws CloneNotSupportedException {
-        if (!agenda.getList().contains(entry)){
-            agenda.add(entry);
-        }else{
-            throw new CloneNotSupportedException();
-        }
     }
 }

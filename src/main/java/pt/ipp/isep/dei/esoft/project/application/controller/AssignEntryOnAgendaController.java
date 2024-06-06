@@ -50,6 +50,6 @@ public class AssignEntryOnAgendaController {
     }
 
     public void saveToDB() {
-        entryRepository.saveToDB();
+        entryRepository.getAgenda().saveToDB();
     }
 }
