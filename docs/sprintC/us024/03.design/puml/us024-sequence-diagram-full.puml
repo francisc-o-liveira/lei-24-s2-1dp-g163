@@ -19,7 +19,7 @@ activate GSM
 
 group Get details and management options of a selected entry on the agenda
 
-    GSM -> UI: Asks to assign a team to an entry in the Agenda
+    GSM -> UI: Asks to postpone an entry in the Agenda
     activate UI
 
 

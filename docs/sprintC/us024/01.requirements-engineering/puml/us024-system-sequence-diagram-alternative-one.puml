@@ -15,7 +15,7 @@ activate Manager
     Manager -> System : asks to postpone an entry in the Agenda
     activate System
 
-        System --> Manager : show Agenda entries
+        System --> Manager : Shows Agenda and its Entries
     deactivate System
 
    Manager  -> System : selects an Agenda entry
