@@ -42,8 +42,6 @@ private GreenSpace.Type type;
          area = 20.0;
          type = GreenSpace.Type.Garden;
          email = "gsm@this.app";
-
-
     }
 
     @Test
