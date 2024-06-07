@@ -1,8 +1,13 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.repository.*;
+
 import java.io.*;
 
-public class Repositories implements Serializable{
+/**
+ * The Repositories class manages repositories for various entities in the system.
+ */
+public class Repositories implements Serializable {
 
     private static Repositories instance;
     private Organization organizationRepository;
@@ -25,6 +30,11 @@ public class Repositories implements Serializable{
         entryRepository = new EntryRepository();
     }
 
+    /**
+     * Retrieves the singleton instance of Repositories.
+     *
+     * @return The singleton instance of Repositories.
+     */
     public static Repositories getInstance() {
         if (instance == null) {
             synchronized (Repositories.class) {
@@ -62,17 +72,22 @@ public class Repositories implements Serializable{
         return jobCategoryRepository;
     }
 
-    public VehicleRepository getVehicleRepository() {return vehicleRepository;}
+    public VehicleRepository getVehicleRepository() {
+        return vehicleRepository;
+    }
 
-
-
-    public void loadSystemStateFromBinary(File file){
+    /**
+     * Loads the system state from a binary file.
+     *
+     * @param file The binary file to load the system state from.
+     * @throws RuntimeException if an error occurs while loading the system state.
+     */
+    public void loadSystemStateFromBinary(File file) {
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(file);
             ObjectInputStream in = new ObjectInputStream(fileInputStream);
             Repositories repObject = (Repositories) in.readObject();
-
 
             organizationRepository = repObject.getOrganizationRepository();
             entryRepository = repObject.getEntryRepository();
@@ -83,7 +98,6 @@ public class Repositories implements Serializable{
             collaboratorRepository = repObject.getCollaboratorRepository();
             teamRepository = repObject.getTeamRepository();
 
-
             in.close();
             fileInputStream.close();
         } catch (ClassNotFoundException | IOException e) {
@@ -91,7 +105,13 @@ public class Repositories implements Serializable{
         }
     }
 
-    public void saveSystemStateToBinary(File file){
+    /**
+     * Saves the system state to a binary file.
+     *
+     * @param file The binary file to save the system state to.
+     * @throws RuntimeException if an error occurs while saving the system state.
+     */
+    public void saveSystemStateToBinary(File file) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(instance);

@@ -76,7 +76,7 @@ public class ViewTaskListCollaboratorUI {
     public ViewTaskListCollaboratorUI(){
         ctrlAuth= AuthenticationController.getInstance();
         tasksForCollab=new ArrayList<>();
-        ctrl=new ViewTaskListAssignedCollabController();
+        ctrl= new ViewTaskListAssignedCollabController();
     }
 
     public void setTableTasks(List<EntryDto> tasksForCollaborator){

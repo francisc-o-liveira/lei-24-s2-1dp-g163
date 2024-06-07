@@ -8,7 +8,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class GenerateTeamServClass implements GenerateTeamServ{
-
+    /**
+     * Generates a team based on the provided criteria.
+     *
+     * @param minSizeTeam           The minimum size of the team.
+     * @param maxSizeTeam           The maximum size of the team.
+     * @param skillsSelected        The list of skills selected for the team.
+     * @param numberCollabForSkill The number of collaborators required for each skill.
+     * @param collaboratorsForTeam  The list of collaborators available for forming the team.
+     * @param teamName              The name of the team.
+     * @return An Optional containing the generated team if successful, empty otherwise.
+     * @throws RuntimeException if there are no collaborators to generate a team with the provided skills.
+     * @throws RuntimeException if it's impossible to create a team with the given size.
+     * @throws RuntimeException if it's impossible to create a team with the given data.
+     */
     public Optional<Team> generateTeam(int minSizeTeam, int maxSizeTeam, List<Skill> skillsSelected, List<Integer> numberCollabForSkill, List<Collaborator> collaboratorsForTeam, String teamName) {
         if(collaboratorsForTeam==null || collaboratorsForTeam.isEmpty()){
             throw new RuntimeException("Dont exist collaborators to generate any Team with this Skills.");
@@ -41,7 +54,13 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         return teamGenerated;
     }
 
-
+    /**
+     * Creates a matrix indicating whether each collaborator has the required skills for the team.
+     *
+     * @param skillsSelected       The list of skills selected for the team.
+     * @param collaboratorsForTeam The list of collaborators available for forming the team.
+     * @return A boolean matrix indicating whether each collaborator has the required skills.
+     */
     public boolean[][] getCollabOrderWithMoreSkill(List<Skill> skillsSelected, List<Collaborator> collaboratorsForTeam) {
         boolean[][] yesOrNoSkill = new boolean[collaboratorsForTeam.size()][skillsSelected.size()];
         int column;
@@ -59,7 +78,12 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         sortCollabsWithMoreSkill(yesOrNoSkill,collaboratorsForTeam);
         return yesOrNoSkill;
     }
-
+    /**
+     * Sorts the list of collaborators based on the number of skills they possess.
+     *
+     * @param yesOrNoSkill          The boolean matrix indicating whether each collaborator has the required skills.
+     * @param collaboratorsForTeam  The list of collaborators available for forming the team.
+     */
     public void sortCollabsWithMoreSkill(boolean[][] yesOrNoSkill, List<Collaborator> collaboratorsForTeam) {
         Collaborator save;
         for (int i = 0; i < collaboratorsForTeam.size(); i++){
@@ -74,7 +98,13 @@ public class GenerateTeamServClass implements GenerateTeamServ{
             }
         }
     }
-
+    /**
+     * Calculates the number of skills a collaborator possesses.
+     *
+     * @param yesOrNoSkill The boolean array indicating whether each collaborator has the required skills.
+     * @param i            The index of the collaborator in the array.
+     * @return The number of skills the collaborator possesses.
+     */
     public int numberSkillCollab(boolean[][] yesOrNoSkill, int i) {
         int count=0;
         for (int j = 0 ; j < yesOrNoSkill[0].length; j++){
@@ -84,7 +114,13 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         }
         return count;
     }
-
+    /**
+     * Checks if a collaborator can upgrade the team.
+     *
+     * @param yesOrNoSkill The boolean array indicating whether each collaborator has the required skills.
+     * @param generatedTrue An array indicating the number of collaborators needed for each skill.
+     * @return True if the collaborator can upgrade the team, false otherwise.
+     */
     public boolean collabororatorUpgradeTeam(boolean[] yesOrNoSkill, int[] generatedTrue) {
         if (generatedTrue.length==0){
             return true;
@@ -96,11 +132,20 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         }
         return false;
     }
-
+    /**
+     * Checks if a team is completed.
+     *
+     * @return True if the team is completed, false otherwise.
+     */
     public boolean teamIsPossible(Team create) {
         return create.isPossible();
     }
-
+    /**
+     * Checks if a team is completed.
+     *
+     * @param generatedTrue An array indicating the number of collaborators needed for each skill.
+     * @return True if the team is completed, false otherwise.
+     */
     public boolean teamIsCompleted(int[] generatedTrue) {
         for (int i = 0; i < generatedTrue.length; i++) {
             if(generatedTrue[i]>0){
@@ -109,7 +154,12 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         }
         return true;
     }
-
+    /**
+     * Retrieves the number of collaborators needed for each skill.
+     *
+     * @param numberCollabForSkill The list of numbers of collaborators for each skill.
+     * @return An array containing the number of collaborators needed for each skill.
+     */
     public int[] getNumberSkill(List<Integer> numberCollabForSkill) {
         int[] numb = new int[0];
         if (numberCollabForSkill!=null){
@@ -120,7 +170,12 @@ public class GenerateTeamServClass implements GenerateTeamServ{
         }
         return numb;
     }
-
+    /**
+     * Orders the skills and their corresponding number of collaborators by descending order of the number of collaborators.
+     *
+     * @param skillsSelected        The list of skills selected for the team.
+     * @param numberCollabForSkill The list of numbers of collaborators for each skill.
+     */
     public void getSkillByOrder(List<Skill> skillsSelected, List<Integer> numberCollabForSkill) {
         int save;
         Skill saveSkill;

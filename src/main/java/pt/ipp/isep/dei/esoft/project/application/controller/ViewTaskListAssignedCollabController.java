@@ -25,7 +25,7 @@ public class ViewTaskListAssignedCollabController {
     /**
      * Initializes a new instance of the ViewTaskListAssignedCollabController class.
      */
-    private ViewTaskListAssignedCollabController() {
+    public ViewTaskListAssignedCollabController() {
         entryRepository = Repositories.getInstance().getEntryRepository();
         collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         session = ApplicationSession.getInstance();
