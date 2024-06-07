@@ -37,9 +37,9 @@ class CollaboratorRepositoryTest {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         String name="";
 
-        Collaborator cTest = new Collaborator("Joaquim",new Date(2002,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","351916835384","jouim.cunha@gmail.com", DocType.Type.CitizenCard,1231312312,new JobCategory("Gardener"));
-        Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,838742392,new JobCategory("Garder"));
-        Collaborator cTest3 = new Collaborator("Joaquim",new Date(2003,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","351926835384","joaquim.cuha@gmail.com", DocType.Type.CitizenCard,873247823,new JobCategory("Gardener"));
+        Collaborator cTest = new Collaborator("Joaquim",new Date(2002,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835383","jouim.cunha@gmail.com", DocType.Type.CitizenCard,123131231,new JobCategory("Gardener"));
+        Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,838742392,new JobCategory("Garder"));
+        Collaborator cTest3 = new Collaborator("Joaquim",new Date(2003,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351926835382","joaquim.cuha@gmail.com", DocType.Type.CitizenCard,873247823,new JobCategory("Gardener"));
         List<Collaborator> expectedResult = new ArrayList<>();
         List<Skill> skillSet = new ArrayList<>();
         Team team = new Team(4,1,skillSet,name);
@@ -52,19 +52,22 @@ class CollaboratorRepositoryTest {
         expectedResult.add(cTest2);
 
         rep.activateCollaborators(expectedResult);
+
         assertEquals(cTest.getStatus(), Collaborator.StatusType.Active);
         assertEquals(cTest2.getStatus(), Collaborator.StatusType.Active);
-        assertEquals(cTest3.getStatus(), Collaborator.StatusType.Active);
+        assertEquals(cTest3.getStatus(), Collaborator.StatusType.NotActive);
     }
 
     @Test
     void getCollaboratorsNotActiveBySkills() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
-        int docIDNumber = 1972321313;
+        int docIDNumber = 197232131;
         Skill newSkill = new Skill("podar");
         Skill newSkill2 = new Skill("carta de ligeiros");
         Collaborator cTest = new Collaborator("Joaquim",new Date(2002,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","jouim.cunha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Gardener"));
+        docIDNumber = 197321131;
         Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Garder"));
+        docIDNumber = 197131324;
         Collaborator cTest3 = new Collaborator("Joaquim",new Date(2003,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351926835384","joaquim.cuha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Gardener"));
         List<Skill> skillSet = new ArrayList<>();
 
@@ -82,6 +85,10 @@ class CollaboratorRepositoryTest {
         expectedResult.add(cTest);
         expectedResult.add(cTest2);
 
+
+        rep.getCollaboratorList().add(cTest);
+        rep.getCollaboratorList().add(cTest2);
+        rep.getCollaboratorList().add(cTest3);
         List<Collaborator> result = rep.getCollaboratorsNotActiveBySkills(skillSet);
 
         assertEquals(result,expectedResult);
@@ -90,12 +97,15 @@ class CollaboratorRepositoryTest {
     @Test
     void sortCollaboratorsByNumberOfSkills() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
-        int docIDNumber = 1972321313;
+        int docIDNumber = 197232133;
         Skill newSkill = new Skill("podar");
         Skill newSkill2 = new Skill("carta de ligeiros");
         Collaborator cTest = new Collaborator("Joaquim",new Date(2002,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","jouim.cunha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Gardener"));
+        docIDNumber = 197432131;
         Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Garder"));
+        docIDNumber = 197233131;
         Collaborator cTest3 = new Collaborator("Joaquim",new Date(2003,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351926835384","joaquim.cuha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Gardener"));
+        docIDNumber = 197232132;
 
         cTest.setAddSkill(newSkill);
         cTest.setAddSkill(newSkill2);
@@ -115,17 +125,17 @@ class CollaboratorRepositoryTest {
     @Test
     void searchForCollaboratorByIDNumber() {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
-        int docIDNumber = 1972321313;
+        int docIDNumber = 197232131;
         Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Gardener"));
         rep.getCollaboratorList().add(cTest);
+
         assertEquals(cTest,rep.searchForCollaboratorByIDNumber(docIDNumber));
     }
 
     @Test
-    void searchForCollaborator() {
+    void searchForCollaborator() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
-        Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
-        rep.getCollaboratorsNotActive().add(cTest);
+        Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
         assertEquals(cTest, rep.searchForCollaborator(0));
     }
 
@@ -133,7 +143,7 @@ class CollaboratorRepositoryTest {
     void getCollaboratorSkillsList() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         List<Skill> expectedSkills = new ArrayList<Skill>();
-        Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+        Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
         Skill skillToAdd = new Skill("carta de ligeiros");
         expectedSkills.add(skillToAdd);
         rep.assignSkill(cTest,skillToAdd);
@@ -149,7 +159,7 @@ class CollaboratorRepositoryTest {
     @Test
     void assignSkill() throws CloneNotSupportedException {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
-        Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
+        Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
         Skill skillToAdd = new Skill("carta de ligeiros");
         rep.assignSkill(cTest,skillToAdd);
         List<Skill> collabSkills = cTest.getSkills();
