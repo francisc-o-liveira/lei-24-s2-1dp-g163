@@ -4,9 +4,12 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Authen
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
 
+import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.*;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import java.util.List;
 
 public class Bootstrap implements Runnable {
 
@@ -21,6 +24,7 @@ public class Bootstrap implements Runnable {
             addEntries();
             addOrganization();
             addUsers();
+            addGreenSpaces();
         } catch (CloneNotSupportedException e) {
             System.out.println("erro inicializando");
         }
@@ -49,5 +53,10 @@ public class Bootstrap implements Runnable {
     }
     private void addEntries(){
         EntryRepository entryRepository=Repositories.getInstance().getEntryRepository();
+    }
+    private void addGreenSpaces(){
+        List<GreenSpace> gsRepository = new Organization().getGreenSpaceList();
+        gsRepository.add(new GreenSpace(20,"isep", GreenSpace.Type.Garden,"gsm@this.app",new Address("4400-123","rua sao tome", "porto"),null));
+
     }
 }

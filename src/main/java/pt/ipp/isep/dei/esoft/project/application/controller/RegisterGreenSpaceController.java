@@ -27,7 +27,7 @@ public class RegisterGreenSpaceController {
 
     private static SortingList sort;
 
-    private RegisterGreenSpaceController() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public RegisterGreenSpaceController() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         org = Repositories.getInstance().getOrganizationRepository();
         mapper = new GreenSpaceMapper();
         session = ApplicationSession.getInstance();

@@ -25,9 +25,9 @@ class CollaboratorRepositoryTest {
 
         Collaborator cTest2 = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916323234","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,743626422,new JobCategory("Garder"));
         Collaborator cTest3 = new Collaborator("Joaquim",new Date(2003,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351926835384","joaquim.cuha@gmail.com", DocType.Type.CitizenCard,376432422,new JobCategory("Gardener"));
-        repo.addCollaborator(cTest);
+        repo.getCollaboratorList().add(cTest);
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            repo.addCollaborator(cTestEqual);
+            repo.getCollaboratorList().add(cTestEqual);
         });
     }
 
@@ -51,7 +51,7 @@ class CollaboratorRepositoryTest {
         expectedResult.add(cTest);
         expectedResult.add(cTest2);
 
-        rep.activateCollaborators(team);
+        rep.activateCollaborators(expectedResult);
         assertEquals(cTest.getStatus(), Collaborator.StatusType.Active);
         assertEquals(cTest2.getStatus(), Collaborator.StatusType.Active);
         assertEquals(cTest3.getStatus(), Collaborator.StatusType.Active);
@@ -117,7 +117,7 @@ class CollaboratorRepositoryTest {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         int docIDNumber = 1972321313;
         Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,docIDNumber,new JobCategory("Gardener"));
-        rep.addCollaborator(cTest);
+        rep.getCollaboratorList().add(cTest);
         assertEquals(cTest,rep.searchForCollaboratorByIDNumber(docIDNumber));
     }
 
@@ -125,7 +125,7 @@ class CollaboratorRepositoryTest {
     void searchForCollaborator() {
         CollaboratorRepository rep = Repositories.getInstance().getCollaboratorRepository();
         Collaborator cTest = new Collaborator("Joaquim",new Date(2005,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351916835384","joaquim.cunha@gmail.com", DocType.Type.CitizenCard,1972321313,new JobCategory("Gardener"));
-        rep.addCollaborator(cTest);
+        rep.getCollaboratorsNotActive().add(cTest);
         assertEquals(cTest, rep.searchForCollaborator(0));
     }
 

@@ -22,6 +22,10 @@ public class GreenSpaceMapper {
         return new GreenSpaceDto(greenSpace.getArea(), greenSpace.getAddress(), greenSpace.getName(), greenSpace.getType(), greenSpace.createdBy());
     }
 
+    public GreenSpace toDomain(GreenSpaceDto greenSpaceDto){
+        return new GreenSpace(greenSpaceDto.getAreaInHectares(),greenSpaceDto.getName(),greenSpaceDto.getType(),greenSpaceDto.createdBy(),greenSpaceDto.getAddress(),null);
+    }
+
     /**
      * Converts a list of GreenSpace objects to a list of GreenSpaceDto objects.
      *
@@ -55,4 +59,8 @@ public class GreenSpaceMapper {
         }
         throw new RuntimeException("Didn't find the GreenSpace - Fatal Error");
     }
+
+    //No Mapper, nao se usa as classes de repositorios, 
+    //só pegas no objeto de dominio e transformas em DTO, ou o inverso.
+
 }

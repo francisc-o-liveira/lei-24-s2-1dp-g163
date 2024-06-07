@@ -76,6 +76,10 @@ public class EntryMapper {
         return new Entry(entryDto.getTitle(), entryDto.getDescription(), entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()), entryDto.getDegreeUrgency(), entryDto.getStatus());
     }
 
+    public Entry toDomain(EntryDto entryDto){
+        return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.toDomain(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus());
+    }
+
     /**
      * Updates an existing Entry object with data from an EntryDto object.
      *

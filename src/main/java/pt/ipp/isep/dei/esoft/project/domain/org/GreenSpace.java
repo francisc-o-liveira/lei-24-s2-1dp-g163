@@ -172,6 +172,10 @@ public class GreenSpace implements Serializable {
         return type;
     }
 
+
+    public String getEmail(){
+        return email;
+    }
     /**
      * Returns a string representation of the green space.
      *
