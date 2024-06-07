@@ -161,9 +161,9 @@ public class Vehicle implements Serializable {
         if (maintenanceKm == 0) {
             operationSuccess = true;
         } else {
-            this.frequencyCheckKm = maintenanceKm;
+            setFrequencyCheckKm(maintenanceKm);
         }
-        if (currentKmOfCheck >= currentKm && currentKmOfCheck > getLastCheckUpKm() && dateOfCheck.diference(Date.atualDate()) < 30) {
+        if (currentKmOfCheck >= currentKm && currentKmOfCheck > getLastCheckUpKm() && dateOfCheck.diference(Date.atualDate()) < 300) {
             CheckUp regist = new CheckUp(currentKmOfCheck, dateOfCheck);
             newCheck = Optional.of(regist);
             operationSuccess = this.checkUpList.add(regist);
@@ -173,6 +173,8 @@ public class Vehicle implements Serializable {
         }
         return newCheck;
     }
+
+
 
     /**
      * Retrieves the kilometres travelled at the time of the last check-up.
@@ -359,7 +361,7 @@ public class Vehicle implements Serializable {
      * @throws IllegalArgumentException if the frequency of checks is invalid
      */
     public void setFrequencyCheckKm(double frequencyCheckKm) {
-        if (frequencyCheckKm >= 1000) {
+        if (frequencyCheckKm >= 1000 && frequencyCheckKm<1000000) {
             this.frequencyCheckKm = frequencyCheckKm;
         } else {
             throw new IllegalArgumentException("Frequency Check Km should be greater than 1000");
