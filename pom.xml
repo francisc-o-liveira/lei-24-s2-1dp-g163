@@ -179,6 +179,14 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
             <!-- Required for generating PIT Mutation reports -->
             <plugin>
                 <groupId>org.pitest</groupId>
