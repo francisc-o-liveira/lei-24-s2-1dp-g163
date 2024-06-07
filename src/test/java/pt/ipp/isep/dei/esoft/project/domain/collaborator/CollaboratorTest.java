@@ -1,11 +1,46 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CollaboratorTest {
+
+    private EntryRepository entryRepository;
+    private EntryDto entryDto;
+
+    private Date startDate;
+    private Date endDate;
+
+
+
+    @BeforeEach
+    void setUp() {
+        entryRepository = Repositories.getInstance().getEntryRepository();
+
+        entryDto = new EntryDto(
+                new Date(2023, 6, 1),
+                new EntryState(),
+                "Test Task",
+                "Description of Test Task",
+                Task.DegreeUrgency.Medium,
+                new Tempo(2),
+                null,
+                "REF123"
+        );
+        startDate = new Date(2020,7,30);
+        endDate = new Date(2030,7,30);
+    }
 
     @Test
     void setStatus() {
@@ -124,6 +159,15 @@ class CollaboratorTest {
     void verifyCreateCollaboratorMinimumCriteria(){
        Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
         assertNotNull(c);
+    }
+    
+    @Test
+    void tasksAssignedTasksTest(){
+        Bootstrap boot = new Bootstrap();
+        boot.run();
+        Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
+        List<Entry> entries = entryRepository.getAgenda().getEntrysByCollaboratorInAgenda(c,startDate,endDate);
+        assertNotNull(entries);
     }
 
 }

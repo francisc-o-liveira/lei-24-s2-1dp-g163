@@ -315,6 +315,8 @@ public class Entry extends Task implements Serializable {
         return this.status.isCanceled();
     }
 
+    public boolean isCompleted(){return this.status.isCompleted();}
+
     /**
      * Checks if the entry is postponed.
      *
