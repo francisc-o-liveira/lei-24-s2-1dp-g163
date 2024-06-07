@@ -61,7 +61,7 @@ activate reposRepos
 
 reposRepos --> CTRL: entryRepository
 deactivate reposRepos
-
+/' 
 CTRL -> CTRL : getCollaboratorFromSession()
 activate CTRL
 
@@ -76,7 +76,11 @@ activate UserSession
 
 UserSession -> CTRL : userEmail
 deactivate UserSession
-deactivate CTRL
+deactivate CTRL '/
+
+ref over CTRL
+Get Email of User That is Currently Logged in
+end ref
 
 CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
 activate CollabRepo
@@ -130,7 +134,7 @@ activate UI
 UI -> CTRL: assignEntryCompleted(entryDto, completedDate)
 activate CTRL
 
-
+/'
 CTRL -> CTRL : getCollaboratorFromSession()
 activate CTRL
 
@@ -146,6 +150,11 @@ activate UserSession
 UserSession -> CTRL : userEmail
 deactivate UserSession
 deactivate CTRL
+'/
+
+ref over CTRL
+Get Email of User That is Currently Logged in
+end ref
 
 CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
 activate CollabRepo

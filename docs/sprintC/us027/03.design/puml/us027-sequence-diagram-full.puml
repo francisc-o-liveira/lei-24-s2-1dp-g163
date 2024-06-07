@@ -5,155 +5,127 @@ skinparam shadowing false
 
 autonumber
 
-actor "GSM" as GSM
-participant "GreenSpaceManagementUI" as UI
-participant ":GreenSpaceController" as Controller
+actor "GSM" as GreenSpaceManager
 
+participant ":ManageGreenSpacesUI" as UI
+participant ":RegisterGreenSpaceController" as Controller
+participant ":ApplicationSession" as Session
+participant ":UserSession" as UserSession
 
-participant "UserSession" as UserSession
 
 participant "Repositories" as Repos
 participant "repositories:Repositories" as reposRepos
 
-participant "authenticationRepository:AuthenticationRepository" as AuthRepo
-participant ":AuthFacade" as AuthFacade
-participant ":UserSession" as UserSession
-participant ":User" as User
-
-participant "managerRepository:ManagerRepository" as ManagerRepo
-participant "manager:Manager" as Manager
-participant "greenSpaces:GreenSpaces" as GreenSpaces
-participant ":Utils" as Utils
-participant "organization:Organization" as Organization
+participant "organization:Organization" as Org
+participant "greenSpaceList:List<GreenSpace>" as GreenSpaceList
+participant "greenSpace:GreenSpace" as GreenSpace
 participant ":GreenSpaceMapper" as Mapper
-participant "greenSpaceListSorted:List<GreenSpace>" as GreenSpaceList
-participant "greenSpaceListSortedDto:List<GreenSpaceDto>" as GreenSpaceDtoList
-participant "objDto:GreenSpaceDto" as GreenSpaceDto
+participant "greenSpaceListDto:List<GreenSpaceDto>" as GreenSpaceListDto
+participant "greenSpaceDto:GreenSpaceDto" as GreenSpaceDto
+participant "sortAlgorithm:SortingList" as SortAlgorithm
 
-activate GSM
+activate GreenSpaceManager
 
-GSM -> UI : Request to list managed green spaces
+GreenSpaceManager -> UI : Request to list all green spaces managed by the GSM
 activate UI
-
 
 UI -> Controller** : create
 
 
-UI -> Controller : getManagedGreenSpacesListDto()
+UI -> Controller: getGreenSpacesByEmail()
 activate Controller
 
-Controller -> Repos : getInstance()
+Controller -> Repos: getInstance()
 activate Repos
 
-Repos --> Controller : repositories
+Repos --> Controller: repositories
 deactivate Repos
 
-
-Controller -> reposRepos : getAuthenticationRepository()
+Controller -> reposRepos: getOrganization()
 activate reposRepos
 
-reposRepos --> Controller : authenticationRepository
+reposRepos --> Controller: organization
 deactivate reposRepos
 
-/' Controller -> reposRepos : getGreenSpaceRepository()
-activate reposRepos
+Controller -> Controller : getCollaboratorFromSession()
+activate Controller
 
-reposRepos --> Controller : greenSpaceRepository
-deactivate reposRepos '/
+Controller -> Session: getCurrentSession()
+activate Session
 
-Controller -> reposRepos : getManagerRepository()
-activate reposRepos
+Session -> Controller: userSession
+deactivate Session
 
-reposRepos --> Controller : managerRepository
-deactivate reposRepos
-
-
-Controller -> AuthRepo : getCurrentUserSession()
-activate AuthRepo
-
-AuthRepo -> AuthFacade : getCurrentUserSession()
-activate AuthFacade
-
-AuthFacade -> UserSession : getCurrentUserSession()
+Controller -> UserSession: getUserEmail()
 activate UserSession
 
-UserSession --> AuthFacade : userSession
+UserSession -> Controller : userEmail
 deactivate UserSession
-
-AuthFacade --> AuthRepo : userSession
-deactivate AuthFacade
-
-AuthRepo --> Controller : userSession
-deactivate AuthRepo
-
-Controller -> UserSession : getUser()
-activate UserSession
-
-UserSession -> User : getEmail()
-activate User
-User --> UserSession : userEmail
-deactivate User
-
-UserSession --> Controller : userEmail
-deactivate UserSession
-
-
-
-
-Controller -> ManagerRepo : findByEmail(userEmail)
-activate ManagerRepo
-
-ManagerRepo --> Controller : manager
-deactivate ManagerRepo
-
-
-Controller -> Manager : getGreenSpaces()
-activate Manager
-
-Manager -> GreenSpaces : getSortedGreenSpaces()
-activate GreenSpaces
-
-GreenSpaces -> Utils : sortGreenSpaces()
-activate Utils
-
-Utils ->  GreenSpaces : greenSpaceListSorted
-deactivate Utils
-
-GreenSpaces ->  Manager : greenSpaceListSorted
-deactivate GreenSpaces
-
-Manager --> Controller : greenSpaceListSorted
-deactivate Manager
-
-
-Controller -> Mapper : toDTO(greenSpaceListSorted)
-activate Mapper
-
-Mapper -> GreenSpaceDtoList** : create()
-
-loop for each object in greenSpaceListSorted
-    Mapper -> GreenSpaceList : obj = get()
-    activate GreenSpaceList
-    deactivate GreenSpaceList
-    Mapper -> Mapper: objDto = toDto(obj)
-    activate Mapper
-
-    Mapper -> GreenSpaceDto** : create(obj.getName(), obj.getArea())
-    deactivate Mapper
-    Mapper -> GreenSpaceDtoList : add(objDto)
-    activate GreenSpaceDtoList
-    deactivate GreenSpaceDtoList
-end
-
-deactivate GreenSpaceList
-
-Mapper -> Controller : greenSpaceListSortedDto
-deactivate Mapper
-
-Controller --> UI : greenSpaceListSortedDto
 deactivate Controller
 
-UI --> GSM : Shows Sorted List of Managed Green Spaces
+Controller -> Org: getGreenSpaceListByManagerEmail(UserEmail)
+activate Org
+
+Org -> GreenSpaceList** : create()
+
+loop for each greenSpace in greenSpaces
+    Org -> GreenSpace : GSMEmail = createdBy()
+    activate GreenSpace
+    deactivate GreenSpace    
+    alt greenSpace was created by the GSM who is currently logged in\n, i.e, whose email is stored in email attribute
+        Org -> GreenSpaceList : add(greenSpace)
+        activate GreenSpaceList
+        deactivate GreenSpaceList
+    end
+end
+
+Org -> Controller: GreenSpaceList
+deactivate Org
+
+Controller -> Mapper: greenSpaceListToGreenSpaceDto(GreenSpaceList)
+activate Mapper
+
+Mapper -> GreenSpaceListDto** : create()
+
+loop for each greenSpace in GreenSpaceList
+    Mapper -> GreenSpaceList : greenSpace = get()
+    activate GreenSpaceList
+    deactivate GreenSpaceList
+    Mapper -> Mapper: greenSpaceDto = toDto(greenSpace)
+    activate Mapper
+
+    Mapper -> GreenSpaceDto** : create(greenSpace.getArea(), greenSpace.getAddress(),\ngreenSpace.getName(), greenSpace.getType(),\ngreenSpace.createdBy())
+    deactivate Mapper
+    Mapper -> GreenSpaceListDto : add(greenSpaceDto)
+    activate GreenSpaceListDto
+    deactivate GreenSpaceListDto
+end
+
+Mapper -> Controller: greenSpaceListDto
+deactivate Mapper
+
+
+Controller -> Controller : getSortAlgorithm()
+activate Controller
+
+Controller -> Session : getAlgorithmService()
+activate Session
+Session -> Controller : sortAlgorithm
+
+deactivate Session
+deactivate Controller
+
+
+Controller -> SortAlgorithm: sortingList(greenSpaceListDto)
+activate SortAlgorithm
+
+SortAlgorithm -> Controller: sortedList
+deactivate SortAlgorithm
+
+Controller -> UI: sortedList
+deactivate Controller
+
+UI -> GreenSpaceManager: Display list of green spaces
 deactivate UI
 
 @enduml

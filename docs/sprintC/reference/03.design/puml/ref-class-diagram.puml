@@ -5,31 +5,30 @@ skinparam classAttributeIconSize 0
 left to right direction
 
 package "UI" #f0f0f0{
+    class ManageAgendaUI {
+    }
+
     class ViewDetailsEntryUI {
-        +showEntryDetails(entryDto: EntryDto): void
+        +setLabels(entryDto: EntryDto): void
     }
 
-    class AgendaUI {
-    }
-
-    AgendaUI ..> ViewDetailsEntryUI
+    ManageAgendaUI ..> ViewDetailsEntryUI
 }
 package "Core" #f0f0f0{
 
     package "Controller" #dddddd{
 
         class ViewDetailsEntryController {
-            +getDataNeeded()
         }
 
         ViewDetailsEntryUI ..>  ViewDetailsEntryController
 
 
-        class AgendaController {
-            +getAgendaEntryListDto(): List<EntryDto>
+        class AssignEntryOnAgendaController {
+            +getAgenda(): List<EntryDto>
         }
 
-        AgendaUI ..> AgendaController
+        ManageAgendaUI ..> AssignEntryOnAgendaController
     }
 
     package "Domain" #dddddd{
@@ -38,20 +37,10 @@ package "Core" #f0f0f0{
         package "Mapper" #dddddd{
 
             class EntryMapper {
-                +toDTO(entryList: List<Entry>): List<EntryDto>
+                +entryListToEntryDtoList(entryList: List<Entry>): List<EntryDto>
             }
 
-            AgendaController ..> EntryMapper
-
-            class TeamMapper {
-                +toDTO(teamList: List<Team>): List<TeamDto>
-            }
-            ViewDetailsEntryController ..> TeamMapper
-
-            class VehicleMapper {
-                +toDTO(vehicleList: List<Vehicle>): List<VehicleDto>
-            }
-            ViewDetailsEntryController ..> VehicleMapper
+            AssignEntryOnAgendaController ..> EntryMapper
 
         }
 
@@ -63,22 +52,9 @@ package "Core" #f0f0f0{
                 +teamAssigned: TeamDto
                 +reference: String
             }
-            
+
             EntryMapper ..> EntryDto
 
-            class TeamDto {
-                +teamName: String
-            }
-            
-            TeamMapper ..> TeamDto
-
-            class VehicleDto {
-                brand: String
-                model: String
-                plate: String
-            }
-
-            VehicleMapper ..> VehicleDto
 
 
         }
@@ -89,39 +65,27 @@ package "Core" #f0f0f0{
                 - static instance : Repositories
                 + getInstance() : Repositories
                 + getEntryRepository() : EntryRepository
-                + getTeamRepository() : TeamRepository
-                +getVehicleRepository(): VehicleRepository
                 - Repositories()
             }
 
             ViewDetailsEntryController ..> Repositories : repositories
-            AgendaController ..> Repositories : repositories
+            AssignEntryOnAgendaController ..> Repositories : repositories
 
             Repositories --> Repositories : instance
 
             class EntryRepository {
-                +assignTeamToEntry(team: Team, entryDto: EntryDto): boolean
-                +findEntryByReference(reference: String): Entry
                 +getAgenda(): List<Entry>
             }
 
             Repositories "1" --> "1" EntryRepository : entryRepository
-            AgendaController ..> EntryRepository : entryRepository
+            AssignEntryOnAgendaController ..> EntryRepository : entryRepository
 
-            class TeamRepository {
-                +getTeamList(): List<Team>
+
+            package "Lists" #999{
+                class AgendaList {
+                    +getList(): List<Entry>
+                }
             }
-
-            Repositories "1" --> "1" TeamRepository : teamRepository
-            ViewDetailsEntryController ..> TeamRepository: teamRepository
-
-            class VehicleRepository {
-                +getVehicleList(): List<Vehicle>
-            }
-
-            Repositories "1" --> "1" VehicleRepository : VehicleRepository
-            ViewDetailsEntryController ..> VehicleRepository: VehicleRepository
-
         }
 
         package "Model" #bbbbbb{
@@ -137,23 +101,6 @@ package "Core" #f0f0f0{
             EntryRepository "1" --> "*" Entry
             EntryMapper  ..> Entry
 
-            class Team {
-                +name: String
-                +maxSize: int
-                +minSize: int
-            }
-
-            TeamRepository "1" --> "*" Team
-            TeamMapper  ..> Team
-
-            class Vehicle {
-                brand: String
-                model: String
-                plate: String
-            }
-
-            VehicleRepository "1" --> "*" Vehicle
-            VehicleMapper  ..> Vehicle
         }
 
 
