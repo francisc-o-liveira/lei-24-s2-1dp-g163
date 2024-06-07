@@ -47,6 +47,8 @@ public class JobCategoryRepository {
         if (!jobCategories.contains(jobCategory)){
             saveFromJobCategoryInDataBase(jobCategory);
             newJobCategory=Optional.of(jobCategory);
+        }else{
+            throw new CloneNotSupportedException("Job Category already exist");
         }
         return newJobCategory;
     }
