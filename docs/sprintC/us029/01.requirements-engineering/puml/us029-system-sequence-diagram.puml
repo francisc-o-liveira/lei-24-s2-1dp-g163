@@ -1,0 +1,26 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+autonumber
+
+actor "Collaborator" as Collaborator
+participant ":System" as System
+
+activate Collaborator
+
+    Collaborator -> System : Selects Start Date and End Date
+    activate System
+
+    System --> Collaborator : Shows Entries in Those Dates
+    deactivate System
+
+    Collaborator -> System : Selects an Entry and Completes it
+    activate System
+
+    System --> Collaborator : Displays Operation Success
+    deactivate System
+@enduml

@@ -3,8 +3,6 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-'left to right direction
-
 skinparam classAttributeIconSize 0
 
 hide circle
@@ -18,13 +16,22 @@ class Collaborator {
     password
 }
 
-class Task{
+class Task {
     greenSpaceAssigned
     degreeUrgency
     timeExpected
 }
 
+class Entry {
+    startDate
+    finishDate
+    status
+    description
+    reference
+}
 
-Collaborator "1" -- "0..*" Task : have >
+Collaborator "1" -- "0..*" Task : has >
+Collaborator "1" -- "0..*" Entry : completes >
+Task "1" -- "1" Entry : relates to >
 
 @enduml
