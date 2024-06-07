@@ -11,12 +11,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Manages the application's session, providing access to the current user session, email services, and sorting algorithms.
+ */
 public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
     private static final String CONFIGURATION_FILENAME = "src/main/resources/configs/config.properties";
     private static final String COMPANY_DESIGNATION = "Company.Designation";
     private static final String EMAIL_DESIGNATION = "SendEmailExternalAPI.Class";
-    private static final String SORTING_ALGORITHM="SortingList.Class";
+    private static final String SORTING_ALGORITHM = "SortingList.Class";
     private static final String TIME_WORK = "TimeWork";
     private static SendEmailExternalAPI sendEmailExternalAPI;
     private static SortingList sortingList;
@@ -27,23 +30,36 @@ public class ApplicationSession {
         Properties props = getProperties();
     }
 
-    public SendEmailExternalAPI getEmailServiceInstance(){
+    /**
+     * Gets an instance of the email service.
+     *
+     * @return the email service instance
+     */
+    public SendEmailExternalAPI getEmailServiceInstance() {
         return sendEmailExternalAPI;
     }
 
+    /**
+     * Gets the current user session.
+     *
+     * @return the current user session
+     */
     public UserSession getCurrentSession() {
         pt.isep.lei.esoft.auth.UserSession userSession = this.authenticationRepository.getCurrentUserSession();
         return new UserSession(userSession);
     }
 
+    /**
+     * Loads properties from the configuration file.
+     *
+     * @return the loaded properties
+     */
     private Properties getProperties() {
         Properties props = new Properties();
-        Properties emailService = new Properties();
         try {
             InputStream in = new FileInputStream(CONFIGURATION_FILENAME);
             props.load(in);
             in.close();
-            String companyDesignation = props.getProperty(COMPANY_DESIGNATION);
             String className = props.getProperty(EMAIL_DESIGNATION);
             sendEmailExternalAPI = getEmailService();
         } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
@@ -54,86 +70,114 @@ public class ApplicationSession {
 
     private static ApplicationSession singleton = null;
 
+    /**
+     * Gets the singleton instance of ApplicationSession.
+     *
+     * @return the singleton instance
+     */
     public static ApplicationSession getInstance() {
         if (singleton == null) {
             synchronized (ApplicationSession.class) {
-                singleton = new ApplicationSession();
+                if (singleton == null) {
+                    singleton = new ApplicationSession();
+                }
             }
         }
         return singleton;
     }
 
-
+    /**
+     * Reads the email configuration from the properties file.
+     *
+     * @return the email class name
+     * @throws IOException if an I/O error occurs
+     */
     private static String getEmail() throws IOException {
-        String fileName="src/main/resources/configs/config.properties";
-        InputStream input = new FileInputStream(fileName);
-        String email = "";
-        try {
+        String fileName = "src/main/resources/configs/config.properties";
+        try (InputStream input = new FileInputStream(fileName)) {
             Properties prop = new Properties();
             prop.load(input);
-            email= prop.getProperty(EMAIL_DESIGNATION);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }finally {
-            input.close();
+            return prop.getProperty(EMAIL_DESIGNATION);
         }
-        return email;
     }
 
+    /**
+     * Gets the email service instance based on the configuration.
+     *
+     * @return the email service instance
+     * @throws IOException            if an I/O error occurs
+     * @throws ClassNotFoundException if the class cannot be found
+     * @throws InstantiationException if the class cannot be instantiated
+     * @throws IllegalAccessException if the class or its nullary constructor is not accessible
+     */
     public static SendEmailExternalAPI getEmailService() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String email= "pt.ipp.isep.dei.esoft.project.domain.adapters.";
-        email += getEmail();
-        Class<?> className = Class.forName(email);
+        String emailClass = "pt.ipp.isep.dei.esoft.project.domain.adapters." + getEmail();
+        Class<?> className = Class.forName(emailClass);
         return (SendEmailExternalAPI) className.newInstance();
     }
 
+    /**
+     * Gets the sorting algorithm service instance based on the configuration.
+     *
+     * @return the sorting algorithm service instance
+     * @throws IOException            if an I/O error occurs
+     * @throws ClassNotFoundException if the class cannot be found
+     * @throws InstantiationException if the class cannot be instantiated
+     * @throws IllegalAccessException if the class or its nullary constructor is not accessible
+     */
     public static SortingList getAlgorithmService() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String email= "pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ.";
-        email += getAlgorithm();
-        Class<?> className = Class.forName(email);
+        String algorithmClass = "pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ." + getAlgorithm();
+        Class<?> className = Class.forName(algorithmClass);
         return (SortingList) className.newInstance();
     }
 
-
+    /**
+     * Reads the sorting algorithm configuration from the properties file.
+     *
+     * @return the sorting algorithm class name
+     * @throws IOException if an I/O error occurs
+     */
     private static String getAlgorithm() throws IOException {
-        String fileName="src/main/resources/configs/config.properties";
-        InputStream input = new FileInputStream(fileName);
-        String algorithm = "";
-        try {
+        String fileName = "src/main/resources/configs/config.properties";
+        try (InputStream input = new FileInputStream(fileName)) {
             Properties prop = new Properties();
             prop.load(input);
-            algorithm= prop.getProperty(SORTING_ALGORITHM);
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }finally {
-            input.close();
+            return prop.getProperty(SORTING_ALGORITHM);
         }
-        return algorithm;
     }
 
+    /**
+     * Reads the work time configuration from the properties file.
+     *
+     * @return the work time as a Tempo object
+     * @throws IOException if an I/O error occurs
+     */
     public static Tempo getTimeOfWork() throws IOException {
-        String fileName="src/main/resources/configs/config.properties";
-        InputStream input = new FileInputStream(fileName);
-        String time = "";
-        Tempo tempo = null;
-        try {
+        String fileName = "src/main/resources/configs/config.properties";
+        try (InputStream input = new FileInputStream(fileName)) {
             Properties prop = new Properties();
             prop.load(input);
-            time= prop.getProperty(TIME_WORK);
+            String time = prop.getProperty(TIME_WORK);
             String[] hoursMinutes = time.split(":");
             if (verifyTime(hoursMinutes)) {
-                tempo = new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
-            }else {
-                throw new IOException("Invalid time format on config file");
+                return new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
+            } else {
+                throw new IOException("Invalid time format in the config file");
             }
-            tempo = new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
-        }finally {
-            input.close();
         }
-        return tempo;
     }
 
+    /**
+     * Verifies the time format from the configuration file.
+     *
+     * @param hoursMinutes the time in hours and minutes
+     * @return true if the format is valid, false otherwise
+     */
     private static boolean verifyTime(String[] hoursMinutes) {
-        return (hoursMinutes.length == 2 && Integer.parseInt(hoursMinutes[0])<=24 && Integer.parseInt(hoursMinutes[1])>=0 && Integer.parseInt(hoursMinutes[1])<=60 && Integer.parseInt(hoursMinutes[0])>=0);
+        return hoursMinutes.length == 2 &&
+                Integer.parseInt(hoursMinutes[0]) <= 24 &&
+                Integer.parseInt(hoursMinutes[1]) >= 0 &&
+                Integer.parseInt(hoursMinutes[1]) <= 60 &&
+                Integer.parseInt(hoursMinutes[0]) >= 0;
     }
 }

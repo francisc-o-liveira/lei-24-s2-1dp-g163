@@ -1,97 +1,123 @@
 package pt.ipp.isep.dei.esoft.project.database;
 
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Singleton class that manages the persistence and retrieval of Manager objects in the database.
+ */
 public class ManagerBase {
+
     private static ManagerBase instance;
-    private Organization Rep;
+    private Organization rep;
 
-
+    /**
+     * Gets the singleton instance of ManagerBase.
+     *
+     * @return the singleton instance of ManagerBase
+     */
     public static ManagerBase getInstance() {
         if (instance == null) {
             synchronized (ManagerBase.class) {
-                instance = new ManagerBase();
+                if (instance == null) {
+                    instance = new ManagerBase();
+                }
             }
         }
         return instance;
     }
 
-    public ManagerBase(){
+    /**
+     * Private constructor to prevent direct instantiation.
+     */
+    private ManagerBase() {
     }
 
+    /**
+     * Gets the organization repository.
+     *
+     * @return the organization repository
+     */
     public Organization getRep() {
-        if (Rep == null) {
+        if (rep == null) {
             synchronized (Organization.class) {
-                Rep = Repositories.getInstance().getOrganizationRepository();
+                if (rep == null) {
+                    rep = Repositories.getInstance().getOrganizationRepository();
+                }
             }
         }
-        return Rep;
+        return rep;
     }
 
-    public void removeFromManagerDataBase(Manager manager,List<Manager> managers) {
-
-        try {
-            FileOutputStream fileOut = new FileOutputStream(MainApp.getManagerDataBaseFile());
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-           if (!managers.contains(manager)){
-               out.writeObject(managers);
-           }
-            out.close();
-            fileOut.close();
+    /**
+     * Removes a manager from the database.
+     *
+     * @param manager the manager to be removed
+     * @param managers the list of managers
+     */
+    public void removeFromManagerDataBase(Manager manager, List<Manager> managers) {
+        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getManagerDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            if (!managers.contains(manager)) {
+                out.writeObject(managers);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saveFromManagerInDataBase(List<Manager> managers){
-        try {
-            FileOutputStream file = new FileOutputStream(MainApp.getManagerDataBaseFile());
-            ObjectOutputStream out;
-            // If the file already has content, we need to use the AppendableObjectOutputStream
-            out = new ObjectOutputStream(file);
+    /**
+     * Saves a list of managers to the database.
+     *
+     * @param managers the list of managers to be saved
+     */
+    public void saveFromManagerInDataBase(List<Manager> managers) {
+        try (FileOutputStream file = new FileOutputStream(MainApp.getManagerDataBaseFile());
+             ObjectOutputStream out = new ObjectOutputStream(file)) {
             out.writeObject(managers);
-            out.close();
-            file.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadFromManagerDataBase(){
-        List<Manager> managers;
-        try {
-            FileInputStream file = new FileInputStream(MainApp.getManagerDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
-                while (true) {
-                    try {
-                        managers = (List<Manager>) in.readObject();
-                        if (managers != null){
-                            for (Manager manager : managers) {
-                                loadInSystem(manager);
+    /**
+     * Loads managers from the database.
+     */
+    public void loadFromManagerDataBase() {
+        try (FileInputStream file = new FileInputStream(MainApp.getManagerDataBaseFile())) {
+            if (file.getChannel().size() > 0) {
+                try (ObjectInputStream in = new ObjectInputStream(file)) {
+                    List<Manager> managers;
+                    while (true) {
+                        try {
+                            managers = (List<Manager>) in.readObject();
+                            if (managers != null) {
+                                for (Manager manager : managers) {
+                                    loadInSystem(manager);
+                                }
                             }
+                        } catch (EOFException e) {
+                            break;
                         }
-                    } catch (EOFException e) {
-                        break;
                     }
                 }
-                in.close();
             }
-            file.close();
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Loads a manager into the system.
+     *
+     * @param manager the manager to be loaded
+     * @throws CloneNotSupportedException if cloning is not supported
+     */
     private void loadInSystem(Manager manager) throws CloneNotSupportedException {
         getRep().loadManager(manager);
     }

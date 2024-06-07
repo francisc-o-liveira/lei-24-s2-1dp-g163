@@ -8,49 +8,87 @@ import pt.ipp.isep.dei.esoft.project.repository.CollaboratorRepository;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.util.List;
 
+/**
+ * Controller for viewing task lists assigned to a collaborator.
+ */
 public class ViewTaskListAssignedCollabController {
-    private EntryRepository entryRepository;
-    private ApplicationSession session;
-    private CollaboratorRepository collaboratorRepository;
-    private EntryMapper mapper;
+    private final EntryRepository entryRepository;
+    private final ApplicationSession session;
+    private final CollaboratorRepository collaboratorRepository;
+    private final EntryMapper mapper;
 
-    public ViewTaskListAssignedCollabController() {
+    private static ViewTaskListAssignedCollabController instance;
+
+    /**
+     * Initializes a new instance of the ViewTaskListAssignedCollabController class.
+     */
+    private ViewTaskListAssignedCollabController() {
         entryRepository = Repositories.getInstance().getEntryRepository();
-        collaboratorRepository= Repositories.getInstance().getCollaboratorRepository();
+        collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
         session = ApplicationSession.getInstance();
         mapper = new EntryMapper();
     }
 
-    public List<EntryDto> getEntrysAssignedToMe(Date firstDate, Date secondDate){
-        return mapper.entryListToEntryDtoList(entryRepository.getAgenda().getEntrysByCollaboratorInAgenda(getCollaboratorByEmail(getCollaboratorFromSession()),firstDate,secondDate));
-    }
-
-    private Collaborator getCollaboratorByEmail(String email){
-        return collaboratorRepository.getCollaboratorByEmail(email);
-    }
-    private String getCollaboratorFromSession(){
-        return session.getCurrentSession().getUserEmail();
-    }
-
-
-
-
-    public boolean assignEntryCompleted(EntryDto entryDto, Date completedDate){
-        entryDto.completeTask(completedDate, getCollaboratorByEmail(getCollaboratorFromSession()));
-        return entryRepository.completeTaskCollaborator(entryDto).isPresent();
-    }
-
-    private static ViewTaskListAssignedCollabController instance;
-    public static ViewTaskListAssignedCollabController getInstance(){
-        if(instance == null){
+    /**
+     * Gets the singleton instance of the controller.
+     *
+     * @return the singleton instance
+     */
+    public static ViewTaskListAssignedCollabController getInstance() {
+        if (instance == null) {
             synchronized (ViewTaskListAssignedCollabController.class) {
-                instance = new ViewTaskListAssignedCollabController();
+                if (instance == null) {
+                    instance = new ViewTaskListAssignedCollabController();
+                }
             }
         }
         return instance;
+    }
+
+    /**
+     * Gets the entries assigned to the current user within the specified date range.
+     *
+     * @param firstDate  the start date of the range
+     * @param secondDate the end date of the range
+     * @return a list of EntryDto objects representing the entries
+     */
+    public List<EntryDto> getEntrysAssignedToMe(Date firstDate, Date secondDate) {
+        Collaborator collaborator = getCollaboratorByEmail(getCollaboratorFromSession());
+        return mapper.entryListToEntryDtoList(entryRepository.getAgenda().getEntrysByCollaboratorInAgenda(collaborator, firstDate, secondDate));
+    }
+
+    /**
+     * Marks an entry as completed by the current user on the specified date.
+     *
+     * @param entryDto      the entry to be marked as completed
+     * @param completedDate the date the entry was completed
+     * @return true if the entry was successfully marked as completed, false otherwise
+     */
+    public boolean assignEntryCompleted(EntryDto entryDto, Date completedDate) {
+        Collaborator collaborator = getCollaboratorByEmail(getCollaboratorFromSession());
+        entryDto.completeTask(completedDate, collaborator);
+        return entryRepository.completeTaskCollaborator(entryDto).isPresent();
+    }
+
+    /**
+     * Gets the email address of the current collaborator from the session.
+     *
+     * @return the email address of the current collaborator
+     */
+    private String getCollaboratorFromSession() {
+        return session.getCurrentSession().getUserEmail();
+    }
+
+    /**
+     * Retrieves a collaborator by their email address.
+     *
+     * @param email the email address of the collaborator
+     * @return the Collaborator object
+     */
+    private Collaborator getCollaboratorByEmail(String email) {
+        return collaboratorRepository.getCollaboratorByEmail(email);
     }
 }
