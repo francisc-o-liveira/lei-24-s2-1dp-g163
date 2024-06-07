@@ -28,7 +28,7 @@ public class EntryRepositoryTest {
         controller = AssignEntryOnAgendaController.getInstance();
 
         entryDto = new EntryDto(
-                new Date(2023, 6, 1),
+                new Date(2023, 6, 1),new Tempo(8),
                 new EntryState(),
                 "Test Task",
                 "Description of Test Task",

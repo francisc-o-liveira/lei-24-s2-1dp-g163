@@ -52,7 +52,7 @@ public class PostponeEntryTest {
         GreenSpaceDto gs=new GreenSpaceDto(area, new Address(zipCode,address,city),name,type,email);
         greenSpaceRepository.registerGreenSpace(gs);
         entryDto = new EntryDto(
-                new Date(2023, 6, 1),
+                new Date(2023, 6, 1),new Tempo(8),
                 new EntryState(EntryState.State.Assigned),
                 "Test Task",
                 "Description of Test Task",

@@ -30,7 +30,7 @@ public class AssignVehicleTest {
         entryRepository = Repositories.getInstance().getEntryRepository();
         vehicleMapper = new VehicleMapper();
         entryDto = new EntryDto(
-                new Date(2023, 6, 1),
+                new Date(2023, 6, 1),new Tempo(8),
                 new EntryState(),
                 "Test Task",
                 "Description of Test Task",
