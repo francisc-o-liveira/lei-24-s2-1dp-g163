@@ -26,7 +26,6 @@ public class Bootstrap implements Runnable {
             addEntries();
             addOrganization();
             addUsers();
-            addGreenSpaces();
         } catch (CloneNotSupportedException e) {
             System.out.println("erro inicializando");
         }
@@ -39,8 +38,6 @@ public class Bootstrap implements Runnable {
     }
     private void addCollaborators() throws CloneNotSupportedException {
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
-        Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
-        collaboratorRepository.getCollaboratorList().add(c);
     }
 
     private void addVehicles() throws CloneNotSupportedException {
@@ -57,10 +54,5 @@ public class Bootstrap implements Runnable {
     }
     private void addEntries(){
         EntryRepository entryRepository=Repositories.getInstance().getEntryRepository();
-    }
-    private void addGreenSpaces(){
-        List<GreenSpace> gsRepository = new Organization().getGreenSpaceList();
-        gsRepository.add(new GreenSpace(20,"isep", GreenSpace.Type.Garden,"gsm@this.app",new Address("4400-123","rua sao tome", "porto"),null));
-
     }
 }
