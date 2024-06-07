@@ -32,29 +32,6 @@ public class EntryDto extends TaskDto {
     private Collaborator collaboratorThatCompleted;
 
     /**
-     * Constructor with required parameters for initializing an EntryDto.
-     *
-     * @param startDate        the start date of the entry
-     * @param status           the status of the entry
-     * @param title            the title of the task
-     * @param description      the description of the task
-     * @param degreeUrgency    the urgency degree of the task
-     * @param expectedDuration the expected duration of the task
-     * @param greenSpaceDto    the green space associated with the task
-     * @param reference        the reference identifier for the entry
-     */
-    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
-        super(title, description, degreeUrgency, expectedDuration, greenSpaceDto);
-        this.startDate = startDate;
-        setStatus(status);
-        this.vehicleList = new ArrayList<VehicleDto>();
-        this.teamAssigned = null;
-        this.reference = reference;
-        this.finishDate = null;
-        this.collaboratorThatCompleted = null;
-    }
-
-    /**
      * Constructor with required parameters for initializing an EntryDto without a start date or reference.
      *
      * @param title           the title of the task
@@ -111,13 +88,14 @@ public class EntryDto extends TaskDto {
      * @param teamAssigned     the team assigned to the task
      * @param vehicleList      the list of vehicles assigned to the task
      */
-    public EntryDto(Date startDate, EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference, TeamDto teamAssigned, List<VehicleDto> vehicleList) {
+    public EntryDto(Date startDate, Tempo startHour,  EntryState status, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference, TeamDto teamAssigned, List<VehicleDto> vehicleList) {
         super(title, description, degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
         setStatus(status);
         this.vehicleList = vehicleList;
         this.teamAssigned = teamAssigned;
         this.reference = reference;
+        this.startHour = startHour;
     }
 
     /**
@@ -146,6 +124,18 @@ public class EntryDto extends TaskDto {
         setStatus(entryState);
         this.vehicleList = vehicleDtos;
         this.teamAssigned = teamDto;
+        this.reference = reference;
+    }
+
+    public EntryDto(Date startDate, Tempo startHour, EntryState entryState, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
+        super(title, description, degreeUrgency, expectedDuration, greenSpaceDto);
+        this.startDate = startDate;
+        this.startHour = startHour;
+        this.finishDate = finishDate;
+        this.collaboratorThatCompleted = null;
+        setStatus(entryState);
+        this.vehicleList = null;
+        this.teamAssigned = null;
         this.reference = reference;
     }
 
