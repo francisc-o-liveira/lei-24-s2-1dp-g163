@@ -33,6 +33,4 @@ class OrganizationTest {
         Organization organization = new Organization("123456789");
         assertEquals(organization.hashCode(), organization.hashCode());
     }
-
-
 }
