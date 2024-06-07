@@ -9,7 +9,7 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-package "Domain" {
+package "Domain" #DDDDDD{
 class Entry {
     - List<Vehicle>
     + Entry()
@@ -85,7 +85,7 @@ class GSMUser {
 }
 
 
-package "Controller"{
+package "Controller" #DDDDDD{
 
 class AssignedVehicleToEntryController {
     - EntryRepository entryRepository
@@ -106,7 +106,7 @@ end note
 
 
 
-package "UI"{
+package "UI" #DDDDDD{
 
 class AssignedVehicleToEntryUI {
     + assignVehicleListToEntry()
