@@ -42,6 +42,7 @@ public class ToDoList {
             if (entry.getReference().equals(entry1.getReference())) {
                 throw new RuntimeException("Duplicate entry reference");
             } else {
+                saveToDB();
                 return toDo.add(entry);
             }
         }
@@ -117,7 +118,7 @@ public class ToDoList {
                     loadEntry = (List<Entry>) in.readObject();
                     loadInSystem(loadEntry);
                 }
-            } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            } catch (ClassNotFoundException | CloneNotSupportedException e) {
                 throw new RuntimeException(e);
             }
         }

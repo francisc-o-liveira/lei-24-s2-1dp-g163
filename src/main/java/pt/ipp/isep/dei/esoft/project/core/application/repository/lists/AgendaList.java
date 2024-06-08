@@ -190,7 +190,7 @@ public class AgendaList implements Serializable, List<Entry> {
                     loadEntry = (List<Entry>) in.readObject();
                     loadInSystem(loadEntry);
                 }
-            } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
+            } catch (ClassNotFoundException | CloneNotSupportedException e) {
                 throw new RuntimeException(e);
             }
         }

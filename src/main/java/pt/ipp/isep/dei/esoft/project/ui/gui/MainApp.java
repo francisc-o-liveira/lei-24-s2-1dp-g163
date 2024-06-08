@@ -91,17 +91,8 @@ public class MainApp extends Application {
                 }
             }
         });
-
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            saveData();
-        }));
     }
 
-    public AssignEntryOnAgendaController ctrlEntry=AssignEntryOnAgendaController.getInstance();
-
-    public void saveData(){
-        ctrlEntry.saveToDB();
-    }
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.

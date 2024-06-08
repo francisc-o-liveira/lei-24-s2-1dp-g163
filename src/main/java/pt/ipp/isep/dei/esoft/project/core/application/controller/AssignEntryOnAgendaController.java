@@ -75,12 +75,4 @@ public class AssignEntryOnAgendaController {
         }
         return instance;
     }
-
-    /**
-     * Saves the agenda and to-do list to the database.
-     */
-    public void saveToDB() {
-        entryRepository.getAgenda().saveToDB();
-        entryRepository.getToDo().saveToDB();
-    }
 }

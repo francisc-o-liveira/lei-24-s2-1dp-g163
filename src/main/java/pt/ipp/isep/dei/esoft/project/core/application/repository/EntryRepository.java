@@ -101,6 +101,7 @@ public class EntryRepository {
         mapper.entryDtoToEntry(entryDto, entry);
         if (toDo.remove(entry)) {
             agenda.add(entry);
+            agenda.saveToDB();
             agendaEntry = Optional.of(agenda.getLast());
         }
         return agendaEntry;
