@@ -1,0 +1,132 @@
+@startuml
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+left to right direction
+
+package "UI" #f0f0f0{
+    class ViewDetailsEntryAgendaUI {
+    }
+
+    class PostponeUI {
+        +setEntry(entryDto: EntryDto): void
+    }
+}
+
+package "Core" #f0f0f0{
+
+
+
+
+package "Session" #ddd {
+    class ApplicationSession {
+        - instance: ApplicationSession
+        + getInstance(): ApplicationSession
+        + getEmailServiceInstance(): EmailService
+    }
+}
+
+    package "Controller" #dddddd{
+
+        class ViewDetailsEntryController {
+            +postponeEntry(entryDto)
+
+        }
+
+    }
+
+    package "Mapper" #dddddd{
+
+
+
+            class EntryMapper {
+                +entryDtoToEntry(entryDto: EntryDto, entry: Entry): Entry
+
+            }
+        }
+
+        package "DTO" #dddddd{
+
+            class EntryDto {
+                +startDate: Date
+                +status: String
+                +teamAssigned: TeamDto
+                +reference: String
+                +finishDate: Date
+                + assignTeam(teamDto: TeamDto)
+            }
+
+
+        }
+
+    package "Domain" #dddddd{
+
+    
+        package "Repository" #bbbbbb{
+
+            class Repositories {
+                - entryRepository: EntryRepository
+                - static instance: Repositories
+                + getInstance(): Repositories
+                + getEntryRepository(): EntryRepository
+                - Repositories()
+            }
+
+            class EntryRepository {
+                - agenda: AgendaList
+                + getAgenda(): AgendaList
+                + postponeEntry(entryDto)
+                + searchForEntryAgenda(entryDto: EntryDto): Entry
+            }
+
+            class TeamRepository {
+                + getTeams(): List<Team>
+            }
+
+            package "Lists" #999{
+                class AgendaList {
+                    + filterTeamNotActivateInTime(teamList: List<Team>, entryDto: EntryDto): List<Team>
+                }
+            }
+        }
+
+        package "Model" #bbbbbb{
+
+            class Entry {
+                +reference: String
+                +status: String
+                +startDate: Date
+                +teamAssigned: Team
+                +finishDate: Date
+                +description: String
+                +title: String
+                +getTeamAssigned(): TeamDto
+            }
+
+
+        }
+    }
+}
+
+
+ViewDetailsEntryAgendaUI ..> PostponeUI
+PostponeUI ..> ViewDetailsEntryController
+ViewDetailsEntryController ..> Repositories : repositories
+ViewDetailsEntryController ..> EntryRepository : entryRepository
+ViewDetailsEntryController ..> TeamRepository : teamRepository
+ViewDetailsEntryController ..> AgendaList : agendaList
+
+ViewDetailsEntryController ..> EntryDto 
+EntryRepository ..> EntryMapper
+
+
+
+
+EntryRepository "1" --> "*" Entry
+Repositories "1" --> "1" TeamRepository
+Repositories "1" --> "1" EntryRepository
+AgendaList "1" --> "*" Entry
+EntryMapper ..> EntryDto
+
+
+@enduml

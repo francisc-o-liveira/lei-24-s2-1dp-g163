@@ -1,0 +1,125 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+participant ":ManageAgendaUI" as UI
+participant ":ViewDetailsEntryAgendaUI" as UI2
+participant ":AssignEntryOnAgendaController" as CTRL2
+participant ":ViewDetailsEntryController" as CTRL
+
+
+
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+participant "entryRepository:EntryRepository" as EntryRepo
+participant ":AgendaList" as AgendaList
+/' participant "entry:Entry" as Entry'/
+participant ":EntryMapper" as EntryMapper
+
+
+participant "entryListDto:List<EntryDto>" as EntryListDto
+participant "entryList:List<Entry>" as EntryList
+participant "objDto:EntryDto" as EntryDto
+
+
+participant "agendaEntryListDto:List<EntryDto>" as EntryListDto
+participant "objDto:EntryDto" as EntryDto
+
+
+activate GSM
+
+
+group Get the details and management options of a selected entry on the agenda
+
+
+    GSM -> UI: Asks to get the details and management\n options of a specific entry on the agenda
+    activate UI
+
+    UI -> CTRL2**: create()
+
+    UI -> CTRL2: getAgenda()
+    activate CTRL2
+
+    
+    CTRL2 -> Repos: getInstance()
+    activate Repos
+
+    Repos --> CTRL2: repositories
+    deactivate Repos
+
+    CTRL2 -> reposRepos: getEntryRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: entryRepository
+    deactivate reposRepos
+
+    CTRL2 -> EntryRepo: getAgenda()
+    activate EntryRepo
+
+    EntryRepo -> AgendaList: getList()
+    activate AgendaList
+
+    AgendaList -> EntryRepo: entryList
+    deactivate AgendaList
+
+    EntryRepo -> CTRL2: entryList
+    deactivate EntryRepo
+
+
+    CTRL2 -> EntryMapper: entryListToEntryDtoList(entryList)
+    activate EntryMapper
+
+
+    EntryMapper -> EntryListDto** : create()
+
+    loop for each entry in EntryList
+        EntryMapper -> EntryList : entry = get()
+        activate EntryList
+        deactivate EntryList
+        EntryMapper -> EntryMapper: entryDto = toDto(entry)
+        activate EntryMapper
+
+        EntryMapper -> EntryDto** : create(entry All Getters)
+        deactivate EntryMapper
+        EntryMapper -> EntryListDto : add(entryDto)
+        activate EntryListDto
+        deactivate EntryListDto
+    end
+
+    EntryMapper -> CTRL2: entryListDto
+    deactivate EntryMapper
+
+    CTRL2 -> UI: entryListDto
+    deactivate CTRL2
+
+    UI -> GSM: Shows Agenda Entries
+    deactivate UI
+
+
+    GSM -> UI: Selects an Entry
+    activate UI
+
+    UI -> UI2: setLabels(entryDto)
+    deactivate UI
+    activate UI2
+
+
+    note right of UI
+        (DTO of the Selected Entry)
+    end note
+
+    UI2 -> CTRL** : create()
+    
+    UI2 -> GSM: Displays entry details and management options  
+
+    deactivate UI2
+
+end
+
+
+@enduml
