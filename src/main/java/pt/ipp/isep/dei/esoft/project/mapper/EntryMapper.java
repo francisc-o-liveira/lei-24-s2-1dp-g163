@@ -5,9 +5,11 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +79,7 @@ public class EntryMapper {
     }
 
     public Entry toDomain(EntryDto entryDto){
-        return new Entry(entryDto.getTitle(),entryDto.getDescription(),entryDto.getExpectedDuration(),mapperSpaces.toDomain(entryDto.getGreenSpace()),entryDto.getDegreeUrgency(),entryDto.getStatus());
+        return new Entry(entryDto.getStartDate(), entryDto.getTitle(), entryDto.getDescription(), entryDto.getExpectedDuration(), mapperSpaces.toDomain(entryDto.getGreenSpace()), entryDto.getDegreeUrgency(), entryDto.getStatus(), Integer.parseInt(entryDto.getReference()));
     }
 
     /**

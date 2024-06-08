@@ -10,6 +10,7 @@ import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -26,6 +27,10 @@ public class PostponeEntryTest {
     private EntryRepository entryRepository;
     private EntryDto entryDto;
 
+    private EntryMapper entryMapper;
+
+    private Entry entry;
+
     private Date postDate;
 
     private Tempo startTime;
@@ -40,6 +45,7 @@ public class PostponeEntryTest {
 
     @BeforeEach
     void setUp() {
+        entryMapper = new EntryMapper();
         entryRepository = Repositories.getInstance().getEntryRepository();
         Organization greenSpaceRepository = Repositories.getInstance().getOrganizationRepository();
         name = "isep";
@@ -53,7 +59,7 @@ public class PostponeEntryTest {
         greenSpaceRepository.registerGreenSpace(gs);
         entryDto = new EntryDto(
                 new Date(2023, 6, 1),new Tempo(8),
-                new EntryState(EntryState.State.Assigned),
+                new EntryState(EntryState.State.Planned),
                 "Test Task",
                 "Description of Test Task",
                 Task.DegreeUrgency.Medium,
@@ -63,17 +69,17 @@ public class PostponeEntryTest {
         );
         postDate = new Date(2024,7,30);
         startTime =new Tempo(14,0);
-        entryRepository.registerNewTask(entryDto);
-        entryRepository.assignEntryOnAgenda(entryDto);
+        entry = entryMapper.toDomain(entryDto);
+        entryRepository.getAgenda().add(entry);
     }
 
     @Test
     void postponeTest(){
-        entryDto.postpone(postDate,startTime);
-        Optional<Entry> entry = entryRepository.postponeEntry(entryDto);
-        assertNotNull(entry.get());
-        assertTrue(entry.get().isPostpone());
-        assertEquals(entry.get().getStartDate(),postDate);
-        assertEquals(entry.get().getStartHour(),startTime);
+        entry.postponeEntry(postDate);
+        entry.setStartHour(startTime);
+        assertTrue(entry.isPostpone());
+        assertEquals(entry.getStartDate(),postDate);
+        assertEquals(entry.getStartHour(),startTime);
+        assertTrue(entryRepository.getAgenda().contains(entry));
     }
 }

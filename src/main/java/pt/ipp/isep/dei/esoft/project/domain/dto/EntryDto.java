@@ -210,6 +210,8 @@ public class EntryDto extends TaskDto {
         this.status.cancelEntry();
     }
 
+    public void setCollaboratorThatCompleted(Collaborator collaboratorThatCompleted){this.collaboratorThatCompleted = collaboratorThatCompleted;}
+
     /**
      * Postpones the entry to a new date and start time.
      *

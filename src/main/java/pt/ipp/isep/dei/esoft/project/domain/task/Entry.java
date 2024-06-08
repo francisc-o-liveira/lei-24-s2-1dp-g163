@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.esoft.project.domain.task;
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -195,9 +197,11 @@ public class Entry extends Task implements Serializable {
      *
      * @param newStartDate the new start date
      */
-    private void setStartDate(Date newStartDate) {
+    public void setStartDate(Date newStartDate) {
         this.startDate = newStartDate;
     }
+
+    public void setCollaboratorThatCompleted(Collaborator c){this.collaboratorThatCompleted=c;}
 
     /**
      * Gets the collaborator who completed the entry.
@@ -271,7 +275,7 @@ public class Entry extends Task implements Serializable {
      * @param startHour the start hour
      * @throws IllegalArgumentException if the start hour is not between 8 and 20
      */
-    private void setStartHour(Tempo startHour) {
+    public void setStartHour(Tempo startHour) {
         if (startHour.getHoras() >= 8 && startHour.getHoras() <= 20) {
             this.startHour = startHour;
         } else {
