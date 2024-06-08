@@ -89,7 +89,7 @@ public class MainApp extends Application {
         return alerta;
     }
 
-    private static String getFilePath() {
+    private static String getFilePath(String fileName) {
         // Get the current working directory
         String currentDir = System.getProperty("user.dir");
 
@@ -98,34 +98,34 @@ public class MainApp extends Application {
         currentDir.replace("\"","\\");
 
         // Combine the current directory with the relative path
-        String fullPath = currentDir + File.separator + relativePath;
+        String fullPath = currentDir + relativePath + fileName;
 
         return fullPath;
     }
 
 
-    private static File authDataBaseFile = new File("authDataBase.csv");
+    private static String authDataBaseFile = new String("authDataBase.csv");
 
     public static File getAuthDataBaseFile() {
-        return authDataBaseFile;
+        return new File(getFilePath(authDataBaseFile));
     }
 
     private static String collaboratorDataBaseFile = new String("collaboratorDataBase.csv");
 
     public static String getCollaboratorDataBaseFile() {
-        return collaboratorDataBaseFile;
+        return getFilePath(collaboratorDataBaseFile);
     }
 
     private static String jobCategoryDataBaseFile = new String("jobCategoryDataBase.csv");
 
     public static String getJobCategoryDataBaseFile() {
-        return jobCategoryDataBaseFile;
+        return getFilePath(jobCategoryDataBaseFile);
     }
 
     private static String skillDataBaseFile = new String("skillDataBase.csv");
 
     public static String getSkillDataBaseFile() {
-        return skillDataBaseFile;
+        return getFilePath(skillDataBaseFile);
     }
 
     private static String entryDataBaseFile = new String("entryDataBase.csv");
@@ -134,38 +134,38 @@ public class MainApp extends Application {
     private static String taskDataBaseFile=new String("taskDataBase.csv");
 
     public static String getEntryDataBaseFile() {
-        return entryDataBaseFile;
+        return getFilePath(entryDataBaseFile);
     }
 
     private static String getEntryReferenceReferenceDataBaseFile() {
-        return entryReferenceDataBaseFile;
+        return getFilePath(entryReferenceDataBaseFile);
     }
 
     public static String getTaskDataBaseFile(){
-        return taskDataBaseFile;
+        return getFilePath(taskDataBaseFile);
     }
 
     private static String vehicleDataBaseFile = new String("vehicleDataBase.csv");
 
 
     public static String getVehicleDataBaseFile() {
-        return vehicleDataBaseFile;
+        return getFilePath(vehicleDataBaseFile);
     }
     private static String teamDataBaseFile = new String("teamDataBase.csv");
 
 
     public static String getTeamDataBaseFile() {
-        return teamDataBaseFile;
+        return getFilePath(teamDataBaseFile);
     }
 
     private static String greenSpaceDataBaseFile = new String("greenSpaceDataBase.csv");
 
     public static String getGreenSpaceDataBaseFile() {
-        return greenSpaceDataBaseFile;
+        return getFilePath(greenSpaceDataBaseFile);
     }
     private static String managerDataBaseFile = new String("managerDataBase.csv");
 
     public static String getManagerDataBaseFile() {
-        return managerDataBaseFile;
+        return getFilePath(managerDataBaseFile);
     }
 }
