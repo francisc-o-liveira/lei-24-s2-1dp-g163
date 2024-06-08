@@ -20,24 +20,34 @@ import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {
+
+    private static File saveDirectory = null;
     @Override
     public void start(Stage stage) {
         try {
+            // PRIMEIRA TENTATIVA DE LOAD DATA
             loadDatabases();
             initializeApp();
         } catch (Exception ex) {
             //criarAlertaErro(ex).show();
             if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
+                /// ISTO PODE TAR NUM METODO 777777
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 directoryChooser.setTitle("Select Directory");
                 File selectedDirectory = directoryChooser.showDialog(null);
+
+                ///
                 if (selectedDirectory != null) {
                     try{
+                        // SEGUNDA TENTATIVA LOAD DATA VAI TER UM SAVEDIRECTORY AQUI SALVADO LOGO O METODO GETFILEPATH VAI REAGIR DIFERENTE
+                        saveDirectory = selectedDirectory;
                         loadDatabases();
                         initializeApp();
                     }catch (IOException io){
                         criarAlertaErro(io).show();
                     } catch (Exception e) {
+                        // NAO SEI SE ISTO FAZ O WHILE QUE NOS QUEREMOS PODES TESTAR!
+                        // PODES VOLTAR A CHAMAR AQUI O METODO 77777777 que referi em cima
                         start(stage);
                     }
                 } else {
@@ -82,7 +92,7 @@ public class MainApp extends Application {
                 }
             }
         });
-
+        // NAO FUNCIONA SE A LUZ FOR A BAIXO CARALHO FDS QUE MERDA É ESTA
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             saveData();
         }));
@@ -118,25 +128,24 @@ public class MainApp extends Application {
 
     private Alert popUpBootStrap(){
         Alert alerta = new Alert(Alert.AlertType.ERROR);
-
         alerta.setContentText("The application did not detect a database. Select one?");
-
         return alerta;
     }
 
     private static String getFilePath(String fileName) {
-        // Get the current working directory
-        String currentDir = System.getProperty("user.dir");
-
-        // Construct the path to the team database file
-        String relativePath = "\\target\\classes\\DataBase\\";
-
-        // Combine the current directory with the relative path
-        String fullPath = currentDir + relativePath + fileName;
-
-        return fullPath;
+        if (saveDirectory == null) {
+            // Get the current working directory
+            String currentDir = System.getProperty("user.dir");
+            // Construct the path to the team database file
+            String relativePath = "\\target\\classes\\DataBase\\";
+            // Combine the current directory with the relative path
+            String fullPath = currentDir + relativePath + fileName;
+            return fullPath;
+        }else {
+            String fullPath = saveDirectory.getAbsolutePath() + File.separator + fileName;
+            return fullPath;
+        }
     }
-
 
     private static String authDataBaseFile = new String("authDataBase.csv");
 
