@@ -95,7 +95,7 @@ public class MainApp extends Application {
 
         // Construct the path to the team database file
         String relativePath = "\\target\\classes\\DataBase\\";
-        currentDir.replace("\"","\\");
+        relativePath.replace("/", File.separator).replace("\\", File.separator);
 
         // Combine the current directory with the relative path
         String fullPath = currentDir + relativePath + fileName;
@@ -113,7 +113,7 @@ public class MainApp extends Application {
     private static String collaboratorDataBaseFile = new String("collaboratorDataBase.csv");
 
     public static String getCollaboratorDataBaseFile() {
-        return getFilePath(collaboratorDataBaseFile);
+        return "C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase" + collaboratorDataBaseFile;
     }
 
     private static String jobCategoryDataBaseFile = new String("jobCategoryDataBase.csv");
@@ -125,7 +125,7 @@ public class MainApp extends Application {
     private static String skillDataBaseFile = new String("skillDataBase.csv");
 
     public static String getSkillDataBaseFile() {
-        return getFilePath(skillDataBaseFile);
+        return "C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase" + skillDataBaseFile;
     }
 
     private static String entryDataBaseFile = new String("entryDataBase.csv");
