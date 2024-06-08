@@ -103,34 +103,34 @@ public class MainApp extends Application {
     }
 
 
-    private static File authDataBaseFile = new File("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\authDataBase.csv");
+    private static File authDataBaseFile = new File("authDataBase.csv");
 
     public static File getAuthDataBaseFile() {
         return authDataBaseFile;
     }
 
-    private static String collaboratorDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\collaboratorDataBase.csv");
+    private static String collaboratorDataBaseFile = new String("collaboratorDataBase.csv");
 
     public static String getCollaboratorDataBaseFile() {
         return collaboratorDataBaseFile;
     }
 
-    private static String jobCategoryDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\jobCategoryDataBase.csv");
+    private static String jobCategoryDataBaseFile = new String("jobCategoryDataBase.csv");
 
     public static String getJobCategoryDataBaseFile() {
         return jobCategoryDataBaseFile;
     }
 
-    private static String skillDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\skillDataBase.csv");
+    private static String skillDataBaseFile = new String("skillDataBase.csv");
 
     public static String getSkillDataBaseFile() {
         return skillDataBaseFile;
     }
 
-    private static String entryDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\entryDataBase.csv");
+    private static String entryDataBaseFile = new String("entryDataBase.csv");
 
-    private static String entryReferenceDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\entryReferenceDataBase.csv");
-    private static String taskDataBaseFile=new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\taskDataBase.csv");
+    private static String entryReferenceDataBaseFile = new String("entryReferenceDataBase.csv");
+    private static String taskDataBaseFile=new String("taskDataBase.csv");
 
     public static String getEntryDataBaseFile() {
         return entryDataBaseFile;
@@ -144,25 +144,25 @@ public class MainApp extends Application {
         return taskDataBaseFile;
     }
 
-    private static String vehicleDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\vehicleDataBase.csv");
+    private static String vehicleDataBaseFile = new String("vehicleDataBase.csv");
 
 
     public static String getVehicleDataBaseFile() {
         return vehicleDataBaseFile;
     }
-    private static String teamDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\teamDataBase.csv");
+    private static String teamDataBaseFile = new String("teamDataBase.csv");
 
 
     public static String getTeamDataBaseFile() {
         return teamDataBaseFile;
     }
 
-    private static String greenSpaceDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\greenSpaceDataBase.csv");
+    private static String greenSpaceDataBaseFile = new String("greenSpaceDataBase.csv");
 
     public static String getGreenSpaceDataBaseFile() {
         return greenSpaceDataBaseFile;
     }
-    private static String managerDataBaseFile = new String("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\managerDataBase.csv");
+    private static String managerDataBaseFile = new String("managerDataBase.csv");
 
     public static String getManagerDataBaseFile() {
         return managerDataBaseFile;
