@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pt.ipp.isep.dei.esoft.project.core.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {

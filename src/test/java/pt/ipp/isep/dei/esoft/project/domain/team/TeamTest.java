@@ -8,13 +8,21 @@ import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.DocTyp
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.TeamDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.VehicleDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.core.application.mapper.EntryMapper;
+import pt.ipp.isep.dei.esoft.project.core.application.mapper.TeamMapper;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.EntryRepository;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.TeamRepository;
+import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
