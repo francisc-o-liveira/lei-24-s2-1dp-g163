@@ -19,14 +19,34 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.vehicles.ManageVehiclesUI;
 
 import java.io.IOException;
 
+/**
+ * This class represents the UI for administrators, allowing them to manage various aspects of the application,
+ * such as vehicles, jobs, skills, collaborators, teams, and system configurations.
+ */
 public class AdminUI {
+    /**
+     * The main stage of the application.
+     */
     public Stage stage = LoginUI.getMainStage();
+
+    /**
+     * The authentication controller instance.
+     */
     public AuthenticationController ctrlAuth;
 
+    /**
+     * Constructor for the AdminUI class. Initializes the authentication controller.
+     */
     public AdminUI(){
         ctrlAuth = AuthenticationController.getInstance();
     }
 
+    /**
+     * Reloads the admin menu scene.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void reload(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
@@ -36,6 +56,13 @@ public class AdminUI {
         stage.show();
     }
 
+    /**
+     * Handles the action of logging out. Displays a confirmation dialog and, if confirmed,
+     * logs out the user and loads the login scene.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void doLogout(ActionEvent event) throws IOException{
         Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
@@ -55,6 +82,12 @@ public class AdminUI {
         }
     }
 
+    /**
+     * Loads the scene for managing vehicles.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageVehicles(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/vehicles/SceneTableViewRegisterVehicle.fxml"));
@@ -66,6 +99,14 @@ public class AdminUI {
         ctrlUI.setTableVehicles();
         popUpOfVerifications(Alert.AlertType.INFORMATION,"Implementing ...");
     }
+
+    /**
+     * Displays a pop-up alert with the specified message.
+     *
+     * @param alertType the type of alert
+     * @param messages the message to display
+     * @return the created alert
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 
@@ -76,6 +117,12 @@ public class AdminUI {
         return alerta;
     }
 
+    /**
+     * Loads the scene for managing jobs.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewJobs.fxml"));
@@ -87,6 +134,12 @@ public class AdminUI {
         ctrlUI.setJobCategoryTable();
     }
 
+    /**
+     * Loads the scene for managing skills.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageSkills(ActionEvent event)throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewSkill.fxml"));
@@ -98,6 +151,12 @@ public class AdminUI {
         ctrlUI.setSkillTable();
     }
 
+    /**
+     * Loads the scene for managing collaborators.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageCollaborators(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewRegisterCollaborator.fxml"));
@@ -109,6 +168,12 @@ public class AdminUI {
         ctrlUI.setTableCollaborators();
     }
 
+    /**
+     * Loads the scene for managing teams.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageTeams(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/teams/SceneTableViewManageTeams.fxml"));
@@ -120,6 +185,12 @@ public class AdminUI {
         ctrlUI.setTableTeams();
     }
 
+    /**
+     * Loads the scene for system configurations.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     private void btnSystemConfigs(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/Scene_SystemConfigs.fxml"));
@@ -133,6 +204,12 @@ public class AdminUI {
         ui.setTableSystemConfigs();
     }
 
+    /**
+     * Loads the scene for managing the to-do list.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageToDoList(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/tasks/Scene_ToDoList.fxml"));
@@ -142,6 +219,12 @@ public class AdminUI {
         stage.show();
     }
 
+    /**
+     * Loads the scene for managing the agenda.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageAgenda(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_Agenda.fxml"));
@@ -152,6 +235,12 @@ public class AdminUI {
         stage.show();
     }
 
+    /**
+     * Loads the scene for managing green spaces.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageGreenSpaces(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/green_spaces/Scene_ListGreenSpaces.fxml"));
