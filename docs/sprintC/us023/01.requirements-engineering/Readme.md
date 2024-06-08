@@ -56,5 +56,3 @@ To avoid redundancy and ensure consistency across multiple user stories that sha
 The reference diagram that illustrates the process of pre-selecting an agenda entry to obtain its details and management options is presented below.
 
 ![System Sequence Diagram - Success Scenario](../../reference/01.requirements-engineering/svg/ref_get_details_and_management_options_of_a_selected_entry_on_the_agenda.svg)
-
-**IMPORTANT NOTE:** In the last step of the **Reference System Sequence Diagram**, the system displays the management options of an entry, so it displays all the available teams, because viewing all the available teams and assigning one to an entry is one of the management options of an entry.

@@ -6,30 +6,49 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
-class Entry{
-   reference
+class Entry {
+    reference String
     status
     startDate
-    vehicleList
     finishDate
 }
 
-class GSM{
+class GSM {
     email
     password
 }
 
 class Team {
-    name 
-    collaborators
-    maxSize 
+    name
+    maxSize
     minSize
     skillsSelected
 }
 
+class Collaborator {
+    name
+    email
+    birthdate
+    salary
+}
+
+class EmailService {
+    +sendEmail(to: String, subject: String, body: String): void
+    +notifyTeamAssignment(entry: Entry, team: Team): void
+}
+
+class Agenda {
+}
 
 GSM "1..*" -- "*" Entry : manages >
 
 Entry "*" -- "0..1" Team : has assigned >
+
+Team "1" -- "*" Collaborator : includes >
+
+Agenda "1" -- "*" Entry: contains >
+
+EmailService "1" -- "*" Entry : receives assignment >
+EmailService "*" -- "*" Team : notifies >
 
 @enduml

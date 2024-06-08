@@ -12,11 +12,11 @@ participant ":System" as UI2
 
 activate GSM
 
-GSM -> UI2 : Requests to List Managed Green Spaces
+GSM -> UI2 : Requests to list all green spaces managed by the GSM
 
 activate UI2
 
-UI2 --> GSM : Shows Sorted List of Managed Green Spaces
+UI2 --> GSM : Shows Sorted List of the Managed Green Spaces
 
 
 @enduml

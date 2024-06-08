@@ -94,7 +94,7 @@ loop for each greenSpace in GreenSpaceList
     Mapper -> Mapper: greenSpaceDto = toDto(greenSpace)
     activate Mapper
 
-    Mapper -> GreenSpaceDto** : create(greenSpace.getArea(), greenSpace.getAddress(),\ngreenSpace.getName(), greenSpace.getType(),\ngreenSpace.createdBy())
+    Mapper -> GreenSpaceDto** : create(greenSpace All Getters)
     deactivate Mapper
     Mapper -> GreenSpaceListDto : add(greenSpaceDto)
     activate GreenSpaceListDto
@@ -125,7 +125,7 @@ deactivate SortAlgorithm
 Controller -> UI: sortedList
 deactivate Controller
 
-UI -> GreenSpaceManager: Display list of green spaces
+UI -> GreenSpaceManager: Shows Sorted List of the Managed Green Spaces
 deactivate UI
 
 @enduml

@@ -5,99 +5,93 @@ skinparam classAttributeIconSize 0
 left to right direction
 
 package "UI" #f0f0f0 {
-    class GreenSpaceManagementUI {
-        +requestToListManagedGreenSpaces(): void
+    class ManageGreenSpacesUI {
     }
 }
 
 package "Core" #f0f0f0 {
-
+    
     package "Controller" #dddddd {
-        class GreenSpaceController {
-            +getManagedGreenSpacesListDto(): List<GreenSpaceDto>
+        class RegisterGreenSpaceController {
+            +getGreenSpacesByEmail(): List<GreenSpaceDto>
+            +getCollaboratorFromSession(): String
+            +getSortAlgorithm(): SortingList
+        }
+    }
+
+    package "Session" #dddddd {
+        class ApplicationSession {
+            -instance: ApplicationSession
+            +getInstance(): ApplicationSession
+            +getCurrentSession(): UserSession
+            +getAlgorithmService(): SortingList
         }
 
-        GreenSpaceManagementUI ..> GreenSpaceController
+        class UserSession {
+            +getUserEmail(): String
+        }
     }
 
     package "Domain" #dddddd {
-
-        package "Mapper" #bbbbbb {
+        
+        package "Mapper" #dddddd {
             class GreenSpaceMapper {
-                +toDTO(greenSpaceList: List<GreenSpace>): List<GreenSpaceDto>
-                +toDto(obj: GreenSpace): GreenSpaceDto
+                +greenSpaceListToGreenSpaceDtoList(greenSpaceList: List<GreenSpace>): List<GreenSpaceDto>
+                +toDto(greenSpace: GreenSpace): GreenSpaceDto
             }
         }
 
-        package "DTO" #bbbbbb {
+        package "DTO" #dddddd {
             class GreenSpaceDto {
                 +name: String
-                +area: Float
-                +GreenSpaceDto(name: String, area: Float)
+                +location: String
+                +size: float
+                +createdBy: String
             }
-
-            GreenSpaceMapper ..> GreenSpaceDto
         }
 
         package "Repository" #bbbbbb {
             class Repositories {
-                - static instance: Repositories
-                + getInstance(): Repositories
-                + getAuthenticationRepository(): AuthenticationRepository
-                + getManagerRepository(): ManagerRepository
+                -organization: Organization
+                -static instance: Repositories
+                +getInstance(): Repositories
+                +getOrganization(): Organization
             }
 
-            class AuthenticationRepository {
-                +getCurrentUserSession(): UserSession
+            class Organization {
+                +getGreenSpaceListByManagerEmail(email: String): List<GreenSpace>
             }
-
-            class ManagerRepository {
-                +findByEmail(email: String): Manager
-            }
-
-            Repositories "1" --> "1" AuthenticationRepository
-            Repositories "1" --> "1" ManagerRepository
-            GreenSpaceController ..> Repositories : repositories
         }
 
         package "Model" #bbbbbb {
-            class UserSession {
-                +getUser(): User
-            }
-
-            class User {
-                +getEmail(): String
-            }
-
-            class Manager {
-                +getGreenSpaces(): GreenSpaces
-            }
-
-            class GreenSpaces {
-                +getSortedGreenSpaces(): List<GreenSpace>
-            }
-
             class GreenSpace {
-                +getName(): String
-                +getArea(): Float
+                +name: String
+                +location: String
+                +size: float
+                +createdBy: String
             }
-
-            class Utils {
-                +sortGreenSpaces(greenSpaces: List<GreenSpace>): List<GreenSpace>
-            }
-
-            GreenSpaces ..> Utils
-            Manager "1" --> "*" GreenSpaces
-            GreenSpaces "1" --> "*" GreenSpace
         }
 
-        package "Adapters" #bbbbbb {
-            class AuthFacade {
-                +getCurrentUserSession(): UserSession
+        package "Service" #bbbbbb {
+            class SortingList {
+                +sortingList(greenSpaceList: List<GreenSpaceDto>): List<GreenSpaceDto>
             }
-
-            AuthenticationRepository "1" --> "1" AuthFacade
         }
     }
 }
+
+ManageGreenSpacesUI ..> RegisterGreenSpaceController
+RegisterGreenSpaceController ..> Repositories : repositories
+RegisterGreenSpaceController ..> Organization : organization
+RegisterGreenSpaceController ..> GreenSpaceMapper
+RegisterGreenSpaceController ..> SortingList : sortAlgorithm
+RegisterGreenSpaceController ..> UserSession
+RegisterGreenSpaceController ..> ApplicationSession
+RegisterGreenSpaceController ..> GreenSpaceDto
+ApplicationSession ..> UserSession
+ApplicationSession ..> SortingList
+GreenSpaceMapper ..> GreenSpaceDto
+GreenSpaceMapper ..> GreenSpace
+Organization "1" --> "*" GreenSpace
+Repositories "1" --> "1" Organization
 @enduml
