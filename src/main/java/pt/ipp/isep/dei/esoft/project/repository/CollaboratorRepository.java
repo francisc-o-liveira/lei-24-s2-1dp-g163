@@ -26,8 +26,12 @@ public class CollaboratorRepository {
 
     /** Initializes the list of Collaborators */
     public CollaboratorRepository(){
-        collaboratorList=new ArrayList<>();
-        loadFromCollaboratorDataBase();
+        try {
+            collaboratorList=new ArrayList<>();
+            loadFromCollaboratorDataBase();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /** The method gets the List of Collaborators
@@ -300,12 +304,25 @@ public class CollaboratorRepository {
     }
 
 
-    private void loadFromCollaboratorDataBase(){
+    private void loadFromCollaboratorDataBase() throws IOException {
         List<Collaborator> collaboratorLoad;
+        File file = new File(MainApp.getCollaboratorDataBaseFile());
+        if (!file.exists()) {
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("Collaborator database file did not exist and has been created. Starting with an empty list.");
+                } else {
+                    throw new IOException("Collaborator database file does not exist and could not be created.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IOException("An error occurred while trying to create the Collaborator database file.", e);
+            }
+        }
         try {
-            FileInputStream file = new FileInputStream(MainApp.getCollaboratorDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
+            FileInputStream fileIn = new FileInputStream(file);
+            if (fileIn.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
                 while (true) {
                     try {
                         collaboratorLoad = (List<Collaborator>) in.readObject();
@@ -319,7 +336,7 @@ public class CollaboratorRepository {
                     }
                 }
                 in.close();
-                file.close();
+                fileIn.close();
             }
         }catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);

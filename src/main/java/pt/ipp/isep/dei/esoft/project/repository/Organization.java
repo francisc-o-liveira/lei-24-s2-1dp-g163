@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.database.ManagerBase;
 import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
@@ -202,17 +203,27 @@ public class Organization{
     }
 
     @SuppressWarnings("unchecked")
-    private void loadFromGreenSpaceDataBase(){
+    private void loadFromGreenSpaceDataBase() throws IOException {
         List<GreenSpace> greenSpaces;
-        try (FileInputStream file = new FileInputStream(MainApp.getGreenSpaceDataBaseFile());
-             ObjectInputStream in = new ObjectInputStream(file)) {
-            greenSpaces = (List<GreenSpace>) in.readObject();
-            if (greenSpaces.isEmpty()) {
-                throw new IOException("There are no green spaces in the dataBase file");
+        File file = new File(MainApp.getGreenSpaceDataBaseFile());
+        if (!file.exists()) {
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("Organization database file did not exist and has been created. Starting with an empty list.");
+                } else {
+                    throw new IOException("Organization database file does not exist and could not be created.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IOException("An error occurred while trying to create the Organization database file.", e);
             }
-            loadInSystem(greenSpaces);
-        } catch (EOFException e) {
-            // End of file reached, no action needed
+        }
+        try (FileInputStream fileIn = new FileInputStream(file)) {
+            if (fileIn.getChannel().size()>0){
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                greenSpaces = (List<GreenSpace>) in.readObject();
+                loadInSystem(greenSpaces);
+            }
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
@@ -236,7 +247,11 @@ public class Organization{
     }
 
     public void loadSystem(){
-        dataBaseManager.loadFromManagerDataBase();
-        loadFromGreenSpaceDataBase();
+        try {
+            dataBaseManager.loadFromManagerDataBase();
+            loadFromGreenSpaceDataBase();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

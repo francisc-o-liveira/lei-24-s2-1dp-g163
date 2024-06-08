@@ -7,6 +7,7 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.isep.lei.esoft.auth.AuthFacade;
 import pt.isep.lei.esoft.auth.UserSession;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -178,7 +179,21 @@ public class AuthenticationRepository {
         addUserRole(RegisterController.ROLE_VFM, RegisterController.ROLE_VFM);
         addUserRole(RegisterController.ROLE_COLAB, RegisterController.ROLE_COLAB);
         try {
+            File file = MainApp.getAuthDataBaseFile();
+            if (!file.exists()) {
+                try {
+                    if (file.createNewFile()) {
+                        System.out.println("Organization database file did not exist and has been created. Starting with an empty list.");
+                    } else {
+                        throw new IOException("Organization database file does not exist and could not be created.");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new IOException("An error occurred while trying to create the Organization database file.", e);
+                }
+            }
             Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
+
             while (scanner.hasNextLine()){
 
                 String currentLine = scanner.nextLine();
@@ -190,7 +205,7 @@ public class AuthenticationRepository {
 
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

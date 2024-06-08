@@ -320,7 +320,16 @@ public class VehicleRepository {
     public void loadFromVehicleDataBase() throws CloneNotSupportedException, IOException {
         File file = new File(MainApp.getVehicleDataBaseFile());
         if (!file.exists()) {
-            throw new IOException("Vehicle database file does not exist. Starting with an empty list.");
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("Skill database file did not exist and has been created. Starting with an empty list.");
+                } else {
+                    throw new IOException("Skill database file does not exist and could not be created.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IOException("An error occurred while trying to create the skill database file.", e);
+            }
         }
         List<Vehicle> vehicleList;
         if(file.length()==0){
