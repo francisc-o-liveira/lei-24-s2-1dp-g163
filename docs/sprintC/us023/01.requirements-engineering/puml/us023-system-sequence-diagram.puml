@@ -14,11 +14,23 @@ activate GSM
 
 ref over GSM : Get the details and management options\n of a selected entry on the agenda
 
-GSM -> UI2 : Selects a Team and Assigns it to the Selected Entry
+GSM -> UI2 : Asks to Assign a Team to the selected entry
 
 activate UI2
 
+UI2 --> GSM : Shows Possible Teams for Entry Assignment List
+
+deactivate UI2
+
+GSM -> UI2 : Selects a team and Assigns it to the selected entry
+
+activate UI2
+
+UI2 -> UI2 : Notifies all team members via email
+
 UI2 --> GSM : Displays Operation Success Message
+
+deactivate UI2
 
 
 @enduml

@@ -12,35 +12,15 @@ package "UI" #f0f0f0{
         +setLabels(entryDto: EntryDto): void
     }
 
-    ManageAgendaUI ..> ViewDetailsEntryUI
+
 }
 package "Core" #f0f0f0{
 
-    package "Controller" #dddddd{
-
-        class ViewDetailsEntryController {
-        }
-
-        ViewDetailsEntryUI ..>  ViewDetailsEntryController
-
-
-        class AssignEntryOnAgendaController {
-            +getAgenda(): List<EntryDto>
-        }
-
-        ManageAgendaUI ..> AssignEntryOnAgendaController
-    }
-
-    package "Domain" #dddddd{
-
-
-        package "Mapper" #dddddd{
+    package "Mapper" #dddddd{
 
             class EntryMapper {
                 +entryListToEntryDtoList(entryList: List<Entry>): List<EntryDto>
             }
-
-            AssignEntryOnAgendaController ..> EntryMapper
 
         }
 
@@ -53,39 +33,58 @@ package "Core" #f0f0f0{
                 +reference: String
             }
 
-            EntryMapper ..> EntryDto
+            
 
 
 
         }
 
+    package "Controller" #dddddd{
+
+        class ViewDetailsEntryController {
+        }
+
+
+
+
+        class AssignEntryOnAgendaController {
+            +getAgenda(): List<EntryDto>
+        }
+
+
+    }
+
+    package "Domain" #dddddd{
+
+
         package "Repository" #bbbbbb{
 
             class Repositories {
+                - entryRepository: EntryRepository
                 - static instance : Repositories
                 + getInstance() : Repositories
                 + getEntryRepository() : EntryRepository
                 - Repositories()
             }
 
-            ViewDetailsEntryController ..> Repositories : repositories
-            AssignEntryOnAgendaController ..> Repositories : repositories
 
-            Repositories --> Repositories : instance
 
             class EntryRepository {
-                +getAgenda(): List<Entry>
+                -agenda: AgendaList;
+                +getAgenda(): AgendaList
             }
 
-            Repositories "1" --> "1" EntryRepository : entryRepository
-            AssignEntryOnAgendaController ..> EntryRepository : entryRepository
+
 
 
             package "Lists" #999{
                 class AgendaList {
+                    - agenda: List<Entry>
                     +getList(): List<Entry>
                 }
             }
+
+
         }
 
         package "Model" #bbbbbb{
@@ -98,8 +97,7 @@ package "Core" #f0f0f0{
                 +finishDate: Date
             }
 
-            EntryRepository "1" --> "*" Entry
-            EntryMapper  ..> Entry
+
 
         }
 
@@ -107,5 +105,21 @@ package "Core" #f0f0f0{
 
     }
 }
+
+ManageAgendaUI ..> AssignEntryOnAgendaController
+AssignEntryOnAgendaController ..> Repositories : repositories
+AssignEntryOnAgendaController ..> EntryRepository : entryRepository
+EntryRepository "1" --> "1" AgendaList
+AssignEntryOnAgendaController ..> EntryMapper
+EntryMapper ..> EntryDto
+ManageAgendaUI ..> ViewDetailsEntryUI
+ViewDetailsEntryUI ..>  ViewDetailsEntryController
+AgendaList "1" --> "*" Entry
+EntryMapper  ..> Entry
+
+
+Repositories --> Repositories : instance
+Repositories  "1" --> "1" EntryRepository
+
 
 @enduml

@@ -11,9 +11,6 @@ participant ":ViewDetailsEntryUI" as UI
 participant ":ViewDetailsEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "entryRepository:\nEntryRepository" as EntryRepository
-participant ":EntryDto" as EntryDto
-participant ":Entry" as OBJ
 
 
 activate GSM
@@ -40,35 +37,9 @@ activate GSM
         PLAT --> CTRL: entryRepository
         deactivate PLAT
 
-        UI --> GSM: request confirmation to cancel the entry
-
-        GSM -> UI: confirms data
-
-        UI -> CTRL: cancelEntry(entryDto)
-
-        CTRL -> EntryRepository: cancelEntry(entryDto)
-        activate EntryRepository
-
-        EntryRepository -> EntryDto**: cancelEntry(entryDto)
-        deactivate EntryRepository
-        activate EntryDto
-
-
-        EntryDto -> OBJ: status = setSatus()
-        activate OBJ
-
-        OBJ --> EntryDto: status
-
-        EntryDto --> EntryRepository: true/false
-        deactivate OBJ
-        deactivate EntryDto
-        activate EntryRepository
-
-
-        EntryRepository --> CTRL: true/false
-        deactivate EntryRepository
-
-
+        ref over CTRL
+        Cancel Entry
+        end
 
         CTRL --> UI: true/false
 

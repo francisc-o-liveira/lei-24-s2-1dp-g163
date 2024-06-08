@@ -24,9 +24,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * UI Controller class for managing green spaces.
+ */
 public class ManageGreenSpacesUI implements Initializable {
+    /**Controller for authentication */
     public AuthenticationController ctrlAuth;
+    /** Controller */
     public RegisterGreenSpaceController ctrl;
+    /** Stage */
     public Stage stage = LoginUI.getMainStage();
 
     @FXML
@@ -43,12 +49,21 @@ public class ManageGreenSpacesUI implements Initializable {
 
     @FXML
     private TableView<GreenSpaceDto> tableGreenSpaces;
+
     @FXML
     private Label labelRole;
 
+    /** Varibale for the selected green space */
     private GreenSpaceDto selectedGreenSpace;
+    /** Observable list for the TableView */
     private ObservableList<GreenSpaceDto> greenSpaceObservableList= FXCollections.observableArrayList();
 
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -62,6 +77,9 @@ public class ManageGreenSpacesUI implements Initializable {
 
     }
 
+    /**
+     * Sets the label based on the current user's role.
+     */
     public void setLabel(){
         UserRoleDTO role = ctrlAuth.getAtualUserRole();
         if (role.getDescription().equals(RegisterController.ROLE_HRM)){
@@ -77,6 +95,9 @@ public class ManageGreenSpacesUI implements Initializable {
         }
     }
 
+    /**
+     * Sets up the table for displaying green spaces.
+     */
     public void setTableGreenSpaces(){
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -89,7 +110,6 @@ public class ManageGreenSpacesUI implements Initializable {
                     private final javafx.scene.control.Button btn = new Button("View Details");
 
                     {
-
                         btn.setOnAction((ActionEvent event) -> {
                             selectedGreenSpace = tableGreenSpaces.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
                             try {
@@ -120,6 +140,12 @@ public class ManageGreenSpacesUI implements Initializable {
 
     }
 
+    /**
+     * Shows more details about a selected green space.
+     *
+     * @param gs The selected green space.
+     * @throws IOException If an I/O error occurs.
+     */
     public void showMore(GreenSpaceDto gs) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/green_spaces/Scene_ViewDetailsGreenSpace.fxml"));
         Parent root = fxmlLoader.load();
@@ -131,6 +157,12 @@ public class ManageGreenSpacesUI implements Initializable {
         ui.setLabels(gs);
     }
 
+    /**
+     * Handles the action when the register button is clicked.
+     *
+     * @param event The action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     void btnRegister(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/green_spaces/Scene_RegisterGreenSpace.fxml"));
@@ -143,6 +175,12 @@ public class ManageGreenSpacesUI implements Initializable {
         ui.setStage(stageRegister);
     }
 
+    /**
+     * Handles the action when the logout button is clicked.
+     *
+     * @param event The action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
         Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
@@ -162,6 +200,12 @@ public class ManageGreenSpacesUI implements Initializable {
         }
     }
 
+    /**
+     * Handles the action when the go back button is clicked.
+     *
+     * @param event The action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void goBack(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader ;
@@ -183,6 +227,13 @@ public class ManageGreenSpacesUI implements Initializable {
         }
     }
 
+    /**
+     * Creates and returns a pop-up alert for displaying error messages.
+     *
+     * @param alertType The type of the alert.
+     * @param message   The message to be displayed.
+     * @return The pop-up alert.
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
         Alert alerta = new Alert(alertType);
 
@@ -193,6 +244,11 @@ public class ManageGreenSpacesUI implements Initializable {
         return alerta;
     }
 
+    /**
+     * Updates the table of green spaces with the latest data.
+     *
+     * @param event The action event.
+     */
     @FXML
     public void update(ActionEvent event){
         tableGreenSpaces.getItems().clear();

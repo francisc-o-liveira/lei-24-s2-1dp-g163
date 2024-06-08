@@ -15,21 +15,14 @@ _**Note that SSD - Alternative One is adopted.**_
 
 ### Systematization ##
 
-According to the taken rationale, the conceptual classes promoted to software classes are: 
-
-* Organization
-* Skill
-
 Other software classes (i.e Information Expert) identified:
 
 * Repositories
-* EntryRepository
-* SkillCategoryRepository
+* EntryDto
 
 Other software classes (i.e. Pure Fabrication) identified:
 
 * ViewDetailsEntryUI
-* ViewDetailsEntryController
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -48,13 +41,20 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us001-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us025-sequence-diagram-split.svg)
 
 **Get Task Category List Partial SD**
 
-![Sequence Diagram - Partial](svg/us001-sequence-diagram-partial-get-skill.svg)
+![Sequence Diagram - Partial](svg/us025-sequence-diagram-partial-cancel-entry.svg)
 
+**Get Task Category List Partial SD**
+
+![Sequence Diagram - Partial](svg/us025-sequence-diagram-partial-get-entry-list.svg)
+
+**Reference Get Agenda Entry's List SD**
+
+![Sequence Diagram - Partial](svg/ref-sequence-diagram-partial-get-list-of-agenda-entries.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us001-class-diagram.svg)
+![Class Diagram](svg/us025-class-diagram.svg)

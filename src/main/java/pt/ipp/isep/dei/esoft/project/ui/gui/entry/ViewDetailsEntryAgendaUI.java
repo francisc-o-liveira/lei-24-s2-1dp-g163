@@ -1,32 +1,35 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.entry;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.TeamDto;
 import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
+/**
+ * UI Controller class for viewing details of an entry in the agenda.
+ */
 public class ViewDetailsEntryAgendaUI {
+    /** Controller */
     private ViewDetailsEntryController ctrl;
+    /** Variable for the selected entry to view the details*/
     private EntryDto selectedEntry;
+    /** The stage */
     public Stage stage;
 
-    /** to view the details */
+    /** Labels for displaying entry details */
     @FXML
     private Label titleEntry;
     @FXML
@@ -40,9 +43,15 @@ public class ViewDetailsEntryAgendaUI {
     @FXML
     private TableColumn<VehicleDto, String> vehiclesPlate;
 
+    /** Observable List for the TableView showing the vehicles assigned to the entry*/
     private ObservableList<VehicleDto> vehiclesList= FXCollections.observableArrayList();
 
-
+    /**
+     * Sets the labels with details of the selected entry.
+     *
+     * @param entry The selected entry.
+     * @param stage The stage for displaying UI.
+     */
     public void setLabels(EntryDto entry, Stage stage){
         ctrl= ViewDetailsEntryController.getInstance();
         selectedEntry=entry;
@@ -52,16 +61,20 @@ public class ViewDetailsEntryAgendaUI {
         teamAssignedEntry.setText(String.valueOf(entry.getTeamAssigned()));
         LocalDate start=convertToJavaLocalDate(entry.getStartDate());
         startDateEntry.setValue(start);
-        System.out.print(selectedEntry.getExpectedDuration());
-        System.out.print(selectedEntry.getTeamAssigned());
         vehiclesPlate.setCellValueFactory(new PropertyValueFactory<>("plate"));
         for(VehicleDto v : entry.getVehicleList()){
-           vehiclesList.add(v);
+            vehiclesList.add(v);
         }
 
         vehiclesAssigned.setItems(vehiclesList);
     }
 
+    /**
+     * Handles the action of assigning vehicles to the entry.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException If an error occurs while loading the FXML file.
+     */
     @FXML
     public void btnAssignVehicles(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_AssignVehicleEntry.fxml"));
@@ -73,6 +86,12 @@ public class ViewDetailsEntryAgendaUI {
         ui.setEntry(selectedEntry);
     }
 
+    /**
+     * Handles the action of assigning a team to the entry.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException If an error occurs while loading the FXML file.
+     */
     @FXML
     public void btnAssignTeam(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_AssignTeamEntry.fxml"));
@@ -85,6 +104,12 @@ public class ViewDetailsEntryAgendaUI {
     }
 
 
+    /**
+     * Handles the action of canceling the entry.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException If an error occurs while handling the cancellation.
+     */
     @FXML
     public void btnCancel(ActionEvent event) throws IOException{
         try{
@@ -104,6 +129,12 @@ public class ViewDetailsEntryAgendaUI {
         }
     }
 
+    /**
+     * Handles the action of postponing the entry.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException If an error occurs while postponing the entry.
+     */
     @FXML
     public void btnPostpone(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_PostponeEntry.fxml"));
@@ -115,6 +146,12 @@ public class ViewDetailsEntryAgendaUI {
         ui.setEntry(selectedEntry);
     }
 
+    /**
+     * Converts a custom Date object to Java LocalDate object.
+     *
+     * @param date The custom Date object.
+     * @return The converted LocalDate object.
+     */
     public static LocalDate convertToJavaLocalDate(Date date) {
 
         int year = date.getYear();
@@ -124,6 +161,13 @@ public class ViewDetailsEntryAgendaUI {
         return LocalDate.of(year, month, day);
     }
 
+    /**
+     * Creates a popup alert for displaying verification messages.
+     *
+     * @param alertType The type of alert.
+     * @param messages The message to display in the popup.
+     * @return The created Alert object.
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 
@@ -133,5 +177,4 @@ public class ViewDetailsEntryAgendaUI {
 
         return alerta;
     }
-
 }

@@ -18,12 +18,8 @@ import pt.ipp.isep.dei.esoft.project.application.controller.authorization.Regist
 import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
-
-
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -33,33 +29,92 @@ import java.time.format.TextStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ManageAgendaUI  implements Initializable{
+/**
+ * Controller class for managing the agenda UI.
+ * It handles the display and interaction with the calendar and weekly view.
+ */
+public class ManageAgendaUI implements Initializable {
+    /**
+     * Main stage for the application.
+     */
     public Stage stage = LoginUI.getMainStage();
+
+    /**
+     * Stage for viewing details of an entry.
+     */
     public Stage stageToViewDetails = new Stage();
 
+    /**
+     * Controller for authentication-related operations.
+     */
     public AuthenticationController ctrlAuth;
+
+    /**
+     * Controller for assigning entries on the agenda.
+     */
     public AssignEntryOnAgendaController ctrlEntry;
+
+    /**
+     * VBox container for the calendar view.
+     */
     private VBox view;
+
+    /**
+     * VBox container for the weekly view.
+     */
     private VBox viewWeek;
+
+    /**
+     * Current year and month being displayed in the calendar.
+     */
     private YearMonth currentYearMonth;
+
+    /**
+     * Current start date for the weekly view.
+     */
     private LocalDate currentStartDate;
+
+    /**
+     * List of entries to be displayed in the calendar and weekly view.
+     */
     private List<EntryDto> entries;
+
+    /**
+     * AnchorPane container for the calendar.
+     */
     @FXML
     private AnchorPane calendarAnchorPane;
+
+    /**
+     * AnchorPane container for the weekly view.
+     */
     @FXML
     private AnchorPane weeklyViewAnchorPane;
+
+    /**
+     * Label to display the role of the currently authenticated user.
+     */
     @FXML
     public Label labelRole;
+
+    /**
+     * Popup for displaying a mini calendar.
+     */
     private Popup miniCalendarPopup;
 
-
+    /**
+     * Initializes the UI and sets up the calendar and weekly view.
+     *
+     * @param url URL location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle ResourceBundle that can be used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrlAuth = AuthenticationController.getInstance();
-        ctrlEntry= AssignEntryOnAgendaController.getInstance();
+        ctrlEntry = AssignEntryOnAgendaController.getInstance();
         setLabel();
         view = new VBox();
-        viewWeek=new VBox();
+        viewWeek = new VBox();
         view.setAlignment(Pos.CENTER);
         view.setSpacing(20);
         view.getStyleClass().add("outline");
@@ -68,16 +123,19 @@ public class ManageAgendaUI  implements Initializable{
         viewWeek.getStyleClass().add("outline");
         calendarAnchorPane.getChildren().add(getView());
         weeklyViewAnchorPane.getChildren().add(getViewWeekly());
-        this.entries=ctrlEntry.getAgenda();
+        this.entries = ctrlEntry.getAgenda();
         currentYearMonth = YearMonth.now();
         drawCalendar(currentYearMonth);
         currentStartDate = LocalDate.now().with(DayOfWeek.MONDAY);
         drawWeeklyCalendar(currentStartDate);
     }
 
-    public void setLabel(){
+    /**
+     * Sets the role label based on the current user's role.
+     */
+    public void setLabel() {
         UserRoleDTO role = ctrlAuth.getAtualUserRole();
-        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
             labelRole.setText("HumanResourcesManager");
         } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
             labelRole.setText("GreenSpaceManager");
@@ -90,15 +148,29 @@ public class ManageAgendaUI  implements Initializable{
         }
     }
 
-
+    /**
+     * Returns the VBox container for the calendar view.
+     *
+     * @return VBox container for the calendar view.
+     */
     public VBox getView() {
         return view;
     }
 
-    public VBox getViewWeekly(){
+    /**
+     * Returns the VBox container for the weekly view.
+     *
+     * @return VBox container for the weekly view.
+     */
+    public VBox getViewWeekly() {
         return viewWeek;
     }
 
+    /**
+     * Draws the calendar for the specified year and month.
+     *
+     * @param yearMonth The year and month to display in the calendar.
+     */
     private void drawCalendar(YearMonth yearMonth) {
         view.getChildren().clear();
         Label header = new Label(yearMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH) + " " + yearMonth.getYear());
@@ -147,7 +219,7 @@ public class ManageAgendaUI  implements Initializable{
                     .filter(entry -> entry.getStartDate() != null && LocalDate.of(entry.getStartDate().getYear(), entry.getStartDate().getMonth(), entry.getStartDate().getDay()).equals(date))
                     .collect(Collectors.toList());
 
-            if(dayEntries != null){
+            if (dayEntries != null) {
                 introduceDates(dayEntries, dayBox);
             }
             calendarGrid.add(dayBox, col, row);
@@ -166,11 +238,16 @@ public class ManageAgendaUI  implements Initializable{
             }
         });
 
-        view.getChildren().addAll(headerBox, calendarGrid,addEntryButton);
+        view.getChildren().addAll(headerBox, calendarGrid, addEntryButton);
     }
 
+    /**
+     * Shows a mini calendar popup when the header is clicked.
+     *
+     * @param event MouseEvent triggered by clicking the header.
+     * @param header The header label clicked.
+     */
     private void showMiniCalendar(MouseEvent event, Label header) {
-
         if (miniCalendarPopup != null && miniCalendarPopup.isShowing()) {
             miniCalendarPopup.hide();
         }
@@ -200,7 +277,11 @@ public class ManageAgendaUI  implements Initializable{
         miniCalendarPopup.show(header, event.getScreenX(), event.getScreenY());
     }
 
-
+    /**
+     * Draws the weekly calendar starting from the specified date.
+     *
+     * @param startDate The start date for the weekly view.
+     */
     private void drawWeeklyCalendar(LocalDate startDate) {
         viewWeek.getChildren().clear();
         Label header = new Label("Week of " + startDate);
@@ -257,9 +338,15 @@ public class ManageAgendaUI  implements Initializable{
             }
         });
 
-        viewWeek.getChildren().addAll(headerBox, calendarGrid,addEntryButton);
+        viewWeek.getChildren().addAll(headerBox, calendarGrid, addEntryButton);
     }
 
+    /**
+     * Introduces entries into the specified day box.
+     *
+     * @param dayEntries The list of entries for the day.
+     * @param dayBox The VBox representing the day in the calendar.
+     */
     public void introduceDates(List<EntryDto> dayEntries, VBox dayBox) {
         VBox calendarActivityBox = new VBox();
         calendarActivityBox.setSpacing(5);
@@ -270,8 +357,8 @@ public class ManageAgendaUI  implements Initializable{
 
                 ContextMenu contextMenu = new ContextMenu();
                 contextMenu.getStyleClass().add("context-menu");
-                for(int i=2; i< dayEntries.size(); i++){
-                    EntryDto entryDisplay=dayEntries.get(i);
+                for (int i = 2; i < dayEntries.size(); i++) {
+                    EntryDto entryDisplay = dayEntries.get(i);
                     MenuItem menuItem = new MenuItem(entryDisplay.getTitle());
                     menuItem.getStyleClass().add("menu-item");
                     menuItem.setOnAction(event -> {
@@ -290,7 +377,7 @@ public class ManageAgendaUI  implements Initializable{
                 break;
             }
             EntryDto entry = dayEntries.get(k);
-            String eventBlock=String.format(entry.getTitle());
+            String eventBlock = String.format(entry.getTitle());
             Label entryLabel = new Label(eventBlock);
             entryLabel.setPrefHeight(50);
             entryLabel.getStyleClass().add("event-label");
@@ -327,49 +414,82 @@ public class ManageAgendaUI  implements Initializable{
         dayBox.getChildren().add(calendarActivityBox);
     }
 
+    /**
+     * Shows the details of the specified entry.
+     *
+     * @param entry The entry whose details are to be displayed.
+     * @throws IOException if an I/O error occurs.
+     */
     private void showEntryDetails(EntryDto entry) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_ViewDetailsEntry.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
-        ViewDetailsEntryAgendaUI ui=fxmlLoader.getController();
-        ui.setLabels(entry,stageToViewDetails);
+        ViewDetailsEntryAgendaUI ui = fxmlLoader.getController();
+        ui.setLabels(entry, stageToViewDetails);
     }
 
-
+    /**
+     * Changes the calendar month by the specified number of months.
+     *
+     * @param months The number of months to change.
+     */
     private void changeMonth(int months) {
         currentYearMonth = currentYearMonth.plusMonths(months);
         drawCalendar(currentYearMonth);
     }
 
+    /**
+     * Changes the week in the weekly view by the specified number of weeks.
+     *
+     * @param weeks The number of weeks to change.
+     */
     private void changeWeek(int weeks) {
         currentStartDate = currentStartDate.plusWeeks(weeks);
         drawWeeklyCalendar(currentStartDate);
     }
 
+    /**
+     * Handles the action of adding an entry.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
-    private void btnAddEntry(ActionEvent event)throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/entry/Scene_RegisterEntry.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
-        Stage stage1=new Stage();
+    private void btnAddEntry(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/entry/Scene_RegisterEntry.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        Stage stage1 = new Stage();
         stage1.setScene(scene);
         stage1.show();
     }
 
+    /**
+     * Reloads the admin menu scene.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
     public void reload(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
-        Parent root= fxmlLoader.load();
-        Scene scene= new Scene(root);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
+    /**
+     * Handles the logout action.
+     *
+     * @param event The ActionEvent triggered by the button click.
+     * @throws IOException if an I/O error occurs.
+     */
     @FXML
-    public void doLogout(ActionEvent event) throws IOException{
-        Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
+    public void doLogout(ActionEvent event) throws IOException {
+        Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
 
         popUp.setHeaderText("Logging Out");
         popUp.setContentText("Do you wish to log out?");
@@ -378,9 +498,9 @@ public class ManageAgendaUI  implements Initializable{
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
             ctrlAuth.doLogout();
-            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
-            Parent root= fxmlLoader.load();
-            Scene scene= new Scene(root);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }

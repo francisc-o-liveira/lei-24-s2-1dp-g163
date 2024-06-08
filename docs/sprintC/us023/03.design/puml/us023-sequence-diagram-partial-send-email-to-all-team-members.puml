@@ -1,69 +1,83 @@
-
 @startuml
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
+autonumber
 
-participant "team:Team" as Team
 
-participant "collaborator:Collaborator" as Collaborator
 
+participant ":ViewDetailsEntryController" as CTRL2
+
+participant "objDto:TeamDto" as TeamDto 
 participant ":EmailService" as EmailService
+participant "entry:Entry" as Entry
+participant "collaborator:Collaborator" as Collaborator
+participant "someEmailService: SomeEmailService\nimplements <<SendEmailExternalAPI>>" as SomeEmailService
 
-participant ":ApplicationSession" as ApplicationSession
-participant ":GmailService" as GmailService
-participant ":DeiEmailService" as DeiEmailService
-
-
-
-
-autonumber 4.1
--> Team : sendToEmailFile(subject, message)
-activate Team
-group Send Email to All Team members
+participant "ApplicationSession" as Session
+participant "applicationSession:ApplicationSession" as ApplicationSession
 
 
 
-    loop for each collaborator in collaboratorsTeam
-        Team -> Collaborator : getEmail()
+-> CTRL2: Optional<Entry>
+
+autonumber 16.1
+activate CTRL2
+
+group Send Email To All Team Members
+    CTRL2 -> TeamDto : getTeamList()
+    activate TeamDto
+    TeamDto -> CTRL2 : collaboratorsList
+    deactivate TeamDto
+
+    CTRL2 -> EmailService : sendEmailToList(collaboratorsList, entryDto)
+    activate EmailService
+    loop for each collaborator in collaboratorsList
+        EmailService -> Collaborator : to = getEmail()
         activate Collaborator
-
-        Collaborator -> Team : email
         deactivate Collaborator
 
-        Team -> EmailService: sendToEmailFile(email, subject, message)
-        activate EmailService
-        EmailService -> ApplicationSession : getEmailService()
+        EmailService -> Entry : subject = getTitle()
+        activate Entry
+        deactivate Entry
+
+        EmailService -> Entry : description = getDescription()
+        activate Entry
+        deactivate Entry
+
+        EmailService -> Entry : teamAssigned = getTeamAssigned()
+        activate Entry
+        deactivate Entry
+
+        EmailService -> EmailService : body = description + teamAssigned
+
+        EmailService -> EmailService : sendToEmailFile(to, subject, body)
+
+
+        EmailService -> Session : getInstance()
+        activate Session
+
+        Session --> EmailService : applicationSession
+        deactivate Session
+
+        EmailService --> ApplicationSession : getEmailServiceInstance()
         activate ApplicationSession
 
-
-        ApplicationSession --> EmailService : emailService
+        ApplicationSession --> EmailService : someEmailService
         deactivate ApplicationSession
 
-        alt emailService is GmailService
-            EmailService -> GmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
-            activate GmailService
-            deactivate GmailService
-        else emailService is DeiEmailService
-            EmailService -> DeiEmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
-            activate DeiEmailService
-            deactivate DeiEmailService
-
-        end
+        EmailService -->  SomeEmailService : sendEmail(to, subject, body)
+        activate SomeEmailService
+        deactivate SomeEmailService
         deactivate EmailService
 
     end
-    
-
-
 end
 
-autonumber 5
+autonumber 17
 
-<- Team: true
-deactivate Team
-
-
+<-- CTRL2  : true
+deactivate CTRL2
 
 @enduml

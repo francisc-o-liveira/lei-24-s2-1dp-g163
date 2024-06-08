@@ -1,176 +1,234 @@
 @startuml
+!pragma teoz true
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
 autonumber
 
-actor "GSM" as GSM
+actor "GSM" as Actor
 
-participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryAgendaUI" as UI
+participant "AssignTeamUI" as UI2
+
+
+
 participant ":ViewDetailsEntryController" as CTRL2
+/' 
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos '/
+participant "entryRepository:EntryRepository" as EntryRepo
+/' 
+participant "teamRepository:TeamRepository" as TeamRepo
+participant "agendaList:AgendaList" as AgendaList
+participant ":TeamMapper" as TeamMapper '/
+participant ":EntryMapper" as EntryMapper
 
 /' 
-participant "TeamRepository:TeamRepository" as TeamRepo
-
-participant ":TeamMapper" as TeamMapper
-participant "objDto:TeamDto" as TeamDto
-
-
-participant "entryRepository:EntryRepository" as EntryRepo
-
-
-participant ":EntryMapper" as EntryMapper
+participant "teamListFiltered:list<Team>" as TeamList
+participant "teamListDto:List<TeamDto>" as TeamListDto
+participant "objDto:TeamDto" as TeamDto '/
 participant "entryDto:EntryDto" as EntryDto
-
-
-
-participant "entry:Entry" as Entry
-
-participant "team:Team" as Team
-
-participant "collaborator:Collaborator" as Collaborator
-
+/' 
 participant ":EmailService" as EmailService
+participant "entry:Entry" as Entry
+participant "collaborator:Collaborator" as Collaborator
+participant "someEmailService: SomeEmailService\nimplements <<SendEmailExternalAPI>>" as SomeEmailService
 
-participant ":ApplicationSession" as ApplicationSession
-participant ":GmailService" as GmailService
-participant ":DeiEmailService" as DeiEmailService '/
+participant "ApplicationSession" as Session
+participant "applicationSession:ApplicationSession" as ApplicationSession
+ '/
+activate Actor
 
-activate GSM
+ref over Actor : Get details and management options\n of a selected entry on the agenda
 
 
-ref over GSM : Get details and management options\n of a selected entry on the agenda
+Actor -> UI : Asks to Assign a Team to the Selected Entry
+activate UI
 
-GSM -> UI2 : Selects a Team and Assigns it to the Selected Entry
+UI -> UI2 :setEntry(entryDto)
 activate UI2
+deactivate UI
 
-
-UI2 -> CTRL2 : assignTeamToEntry(objDto, entryDto)
+UI2 -> CTRL2 :getTeamListPossibleForEntry(entryDto)
 activate CTRL2
 
-note right of UI2
-    Remember that in the previous referenced diagram,
-    ViewDetailsUI received entryDto from AgendaUI via
-    showEntryDetails and will continue to use it via this method: "assignTeamToEntry"
-end note
-note right of UI2
-    stringTeamName, objSelectedEntry
-end note
+    ref over CTRL2
+        Get Team List Possible For Entry Assignment
+    end ref
+    /' 
+    CTRL2 -> Repos: getInstance()
+    activate Repos
 
+    Repos --> CTRL2: repositories
+    deactivate Repos
 
-ref over CTRL2
-Get Team Name
-end ref
-/' 
-CTRL2 -> TeamRepo : getTeamName(objDto)
-note right of CTRL2
-    stringTeamName
-end note
-activate TeamRepo
+    CTRL2 -> reposRepos: getEntryRepository()
+    activate reposRepos
 
-TeamRepo -> TeamMapper : extractName(objDto)
-note right of TeamRepo
-    stringTeamName
-end note
-activate TeamMapper
+    reposRepos --> CTRL2: entryRepository
+    deactivate reposRepos
 
-TeamMapper -> TeamDto : teamName = getTeamName()
-activate TeamDto
-deactivate TeamDto
+    CTRL2 -> reposRepos: getTeamRepository()
+    activate reposRepos
 
-TeamMapper -> TeamRepo : teamName
-deactivate TeamMapper
+    reposRepos --> CTRL2: teamRepository
+    deactivate reposRepos
 
-TeamRepo -> CTRL2 : teamName
-deactivate TeamRepo '/
-
-
-CTRL2 -> TeamRepo : findTeamByName(teamName)
-activate TeamRepo
-
-TeamRepo -> CTRL2  : team
-deactivate TeamRepo
-
-ref over CTRL2
-Assign Team to An Entry and Send Emails to Team Members
-end ref
-/' CTRL2 -> EntryRepo : assignTeamToEntry(team, entryDto)
-
+CTRL2 -> EntryRepo: getAgenda()
 activate EntryRepo
 
-EntryRepo -> EntryMapper : toDomainAndAssignTeam(team, entryDto)
-
-activate EntryMapper
-
-EntryMapper -> EntryDto : reference = getReference()
-activate EntryDto
-deactivate EntryDto
-
-EntryMapper -> EntryRepo : findEntryByReference(reference)
-activate EntryRepo
-
-EntryRepo -> EntryMapper : entry
-
+EntryRepo -> CTRL2: agendaList
 deactivate EntryRepo
 
-
-EntryMapper -> Entry : assignTeam(team)
-activate Entry
-
-Entry -> Entry : setTeamAssigned(team)
-
-Entry -> Team : sendToEmailFile(subject, message)
-activate Team
-
-loop for each collaborator in collaboratorsTeam
-    Team -> Collaborator : getEmail()
-    activate Collaborator
-
-    Collaborator -> Team : email
-    deactivate Collaborator
-
-    Team -> EmailService: sendToEmailFile(email, subject, message)
-    activate EmailService
-    EmailService -> ApplicationSession : getEmailService()
-    activate ApplicationSession
+CTRL2 -> TeamRepo: teamList = getTeams()
+activate TeamRepo
+deactivate TeamRepo
 
 
-    ApplicationSession --> EmailService : emailService
-    deactivate ApplicationSession
+CTRL2 -> AgendaList: filterTeamNotActivateInTime(teamList,entryDto)
+activate AgendaList
 
-    alt emailService is GmailService
-        EmailService -> GmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
-        activate GmailService
-        deactivate GmailService
-    else emailService is DeiEmailService
-        EmailService -> DeiEmailService : sendEmail(email, "Assignment Notification", "You have been assigned to an entry in the agenda.")
-        activate DeiEmailService
-        deactivate DeiEmailService
+AgendaList -> CTRL2 :  teamListFiltered
+deactivate AgendaList
 
-    end
-    deactivate EmailService
+CTRL2 -> TeamMapper: teamListToTeamDtoList(teamListFiltered)
+activate TeamMapper
 
+
+TeamMapper -> TeamListDto** : create()
+
+loop for each object in TeamListFiltered
+    TeamMapper -> TeamList : obj = get()
+    activate TeamList
+    deactivate TeamList
+    TeamMapper -> TeamMapper: objDto = toDto(obj)
+    activate TeamMapper
+
+    TeamMapper -> TeamDto** : create(objAllAtributes)
+    deactivate TeamMapper
+    TeamMapper -> TeamListDto : add(objDto)
+    activate TeamListDto
+    deactivate TeamListDto
 end
-Team -> Entry : true
-deactivate Team
 
+TeamMapper -> CTRL2 : teamListDto
+deactivate TeamMapper '/
 
-Entry --> EntryMapper : true
-deactivate Entry
-
-EntryMapper --> EntryRepo : true
-deactivate EntryMapper
-
-
-EntryRepo --> CTRL2 : true
-deactivate EntryRepo '/
-
-
-CTRL2 --> UI2 : true
+CTRL2 -> UI2  : teamListDtoPossible
 deactivate CTRL2
 
-UI2 --> GSM : Displays Operation Success Message
+
+
+UI2 -> Actor : Shows possible Teams for Entry Assignment List
 deactivate UI2
 
+Actor -> UI2 : Selects a team and Assigns it to the selected entry
+activate UI2
+
+UI2 -> CTRL2 : assignTeamToEntry(teamDto, entryDto)
+activate CTRL2
+
+CTRL2 -> EntryDto : assignTeam(teamDto)
+activate EntryDto
+EntryDto -> EntryDto : teamAssigned = teamDto
+||0||
+deactivate EntryDto
+
+
+CTRL2 -> EntryRepo : assignTeamOnEntry(entryDto)
+
+
+activate EntryRepo
+
+EntryRepo -> EntryRepo : entry = searchForEntryAgenda(entryDto)
+EntryRepo -> EntryMapper : entryDtoToEntry(entryDto, entry)
+activate EntryMapper
+EntryMapper -> EntryMapper: shouldUpdateTeamOrVehicles\n = shouldUpdateTeamOrVehicles(entry, entryDto)
+note right of EntryMapper
+     "shouldUpdateTeamOrVehicles" verifies if the team or vehicles in the entry need to be
+     updated based on the changes in entryDto.
+end note
+alt shouldUpdateTeamOrVehicles is true
+    EntryMapper -> EntryMapper : updateTeamAndVehicles(entry, entryDto)
+    activate EntryMapper
+
+    alt teamAssigned in entryDto is not null
+        EntryMapper -> Entry : teamAssigned = getTeamAssigned()
+        activate Entry
+        deactivate Entry
+        deactivate EntryMapper
+    end
+
+    deactivate EntryMapper
+end
+
+
+
+EntryRepo -> CTRL2 : Optional<Entry>
+deactivate EntryRepo
+
+alt Optional<Entry> is present, i.e\n Entry was successfully assigned
+   ref over CTRL2
+        Send Email to All Team Members
+    end ref
+   /'  CTRL2 -> TeamDto : getTeamList()
+    activate TeamDto
+    TeamDto -> CTRL2 : collaboratorsList
+    deactivate TeamDto
+    
+    CTRL2 -> EmailService : sendEmailToList(collaboratorsList, entryDto)
+    activate EmailService
+    loop for each collaborator in collaboratorsList
+        EmailService -> Collaborator : to = getEmail() 
+        activate Collaborator
+        deactivate Collaborator
+
+        EmailService -> Entry : subject = getTitle() 
+        activate Entry
+        deactivate Entry
+
+        EmailService -> Entry : description = getDescription() 
+        activate Entry
+        deactivate Entry
+
+        EmailService -> Entry : teamAssigned = getTeamAssigned() 
+        activate Entry
+        deactivate Entry
+
+        EmailService -> EmailService : body = description + teamAssigned 
+
+        EmailService -> EmailService : sendToEmailFile(to, subject, body)
+
+
+        EmailService -> Session : getInstance()
+        activate Session
+
+        Session --> EmailService : applicationSession
+        deactivate Session
+
+        EmailService --> ApplicationSession : getEmailServiceInstance()
+        activate ApplicationSession
+
+        ApplicationSession --> EmailService : someEmailService
+        deactivate ApplicationSession
+
+        EmailService -->  SomeEmailService : sendEmail(to, subject, body)
+        activate SomeEmailService
+        deactivate SomeEmailService
+        deactivate EmailService
+
+
+    end '/
+    
+    CTRL2 -> UI2 : true
+else
+    CTRL2 -> UI2 : false
+    deactivate CTRL2
+end
+
+
+
+UI2 --> Actor : Displays Operation Success Message
+deactivate UI2
 @enduml

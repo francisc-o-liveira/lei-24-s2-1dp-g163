@@ -31,15 +31,47 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * UI controller class for managing the task list of a collaborator.
+ * It handles the display and interaction with the tasks assigned to the collaborator.
+ */
 public class ViewTaskListCollaboratorUI {
 
+    /**
+     * Stage for displaying the main window.
+     */
     public Stage stage = LoginUI.getMainStage();
+
+    /**
+     * Controller for handling authentication.
+     */
     public AuthenticationController ctrlAuth;
+
+    /**
+     * Controller for handling the viewing of tasks assigned to a collaborator.
+     */
     public ViewTaskListAssignedCollabController ctrl;
+
+    /**
+     * Observable list of tasks assigned to the collaborator.
+     */
     private ObservableList<EntryDto> tasksOfCollab= FXCollections.observableArrayList();
+
+    /**
+     * Filtered list of tasks for applying filters.
+     */
     private FilteredList<EntryDto> filteredData;
+
+    /**
+     * Selected entry from the table.
+     */
     private EntryDto entrySelected;
+
+    /**
+     * List of tasks assigned to the collaborator.
+     */
     private List<EntryDto> tasksForCollab;
+
     @FXML
     private TableView<EntryDto> tableTasks;
 
@@ -51,9 +83,6 @@ public class ViewTaskListCollaboratorUI {
 
     @FXML
     private TableColumn<EntryDto, String> taskName;
-
-    //@FXML
-    //private TableColumn<EntryDto, Boolean> taskSelect;
 
     @FXML
     private TableColumn<EntryDto, EntryState> taskStatus;
@@ -73,12 +102,20 @@ public class ViewTaskListCollaboratorUI {
     @FXML
     private CheckBox postponedCheck;
 
+    /**
+     * Constructor for initializing controllers and task list.
+     */
     public ViewTaskListCollaboratorUI(){
         ctrlAuth= AuthenticationController.getInstance();
         tasksForCollab=new ArrayList<>();
         ctrl= new ViewTaskListAssignedCollabController();
     }
 
+    /**
+     * Sets the tasks in the table view for the collaborator.
+     *
+     * @param tasksForCollaborator List of tasks assigned to the collaborator.
+     */
     public void setTableTasks(List<EntryDto> tasksForCollaborator){
         tasksForCollab=tasksForCollaborator;
         Comparator<EntryDto> sortingTasks=new Comparator<EntryDto>() {
@@ -103,19 +140,29 @@ public class ViewTaskListCollaboratorUI {
         tableTasks.setItems(filteredData);
     }
 
+    /**
+     * Handles the action of marking a task as complete.
+     *
+     * @param event The action event triggered by the button click.
+     */
     @FXML
     private void btnComplete(ActionEvent event) {
         entrySelected=tableTasks.getSelectionModel().getSelectedItem();
-            try{
-                ZonedDateTime timeAndDate = ZonedDateTime.now();
-                Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
-                ctrl.assignEntryCompleted(entrySelected,completedDate);
-                popUp().show();
-            } catch (Exception e) {
-                popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
-            }
+        try{
+            ZonedDateTime timeAndDate = ZonedDateTime.now();
+            Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
+            ctrl.assignEntryCompleted(entrySelected,completedDate);
+            popUp().show();
+        } catch (Exception e) {
+            popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
+    /**
+     * Filters the tasks based on the selected checkboxes.
+     *
+     * @param event The action event triggered by the checkbox change.
+     */
     @FXML
     public void filterTasks(ActionEvent event){
         filteredData.setPredicate(task -> {
@@ -139,7 +186,12 @@ public class ViewTaskListCollaboratorUI {
         });
     }
 
-
+    /**
+     * Reloads the task list UI.
+     *
+     * @param event The action event triggered by the button click.
+     * @throws IOException If the FXML file cannot be loaded.
+     */
     @FXML
     public void reload(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_TaskListCollaborator.fxml"));
@@ -149,6 +201,12 @@ public class ViewTaskListCollaboratorUI {
         stage.show();
     }
 
+    /**
+     * Handles the logout action.
+     *
+     * @param event The action event triggered by the button click.
+     * @throws IOException If the FXML file cannot be loaded.
+     */
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
         Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
@@ -168,6 +226,13 @@ public class ViewTaskListCollaboratorUI {
         }
     }
 
+    /**
+     * Creates a pop-up alert for verification errors.
+     *
+     * @param alertType The type of alert.
+     * @param messages  The error message.
+     * @return The alert.
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 
@@ -178,6 +243,11 @@ public class ViewTaskListCollaboratorUI {
         return alerta;
     }
 
+    /**
+     * Creates a pop-up alert for successful task completion.
+     *
+     * @return The alert.
+     */
     private Alert popUp(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");

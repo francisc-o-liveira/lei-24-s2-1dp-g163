@@ -19,9 +19,15 @@ import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 
-
+/**
+ * UI class responsible for managing skills.
+ */
 public class ManageSkillsUI {
+    /**
+     * Main stage of the application.
+     */
     public Stage stage = LoginUI.getMainStage();
+
     @FXML
     public TextField introducingSkill;
 
@@ -33,19 +39,30 @@ public class ManageSkillsUI {
     @FXML
     public Label labelRole;
 
-
+    /**
+     * Controller for registering skills.
+     */
     public RegisterSkillController ctrl;
 
+    /**
+     * Controller for user authentication.
+     */
     public AuthenticationController ctrlAuth;
 
-    public ManageSkillsUI(){
-        ctrl= RegisterSkillController.getInstance();
-        ctrlAuth= AuthenticationController.getInstance();
+    /**
+     * Constructor for ManageSkillsUI.
+     */
+    public ManageSkillsUI() {
+        ctrl = RegisterSkillController.getInstance();
+        ctrlAuth = AuthenticationController.getInstance();
     }
 
-    public void setLabel(){
+    /**
+     * Set the label for the user role.
+     */
+    public void setLabel() {
         UserRoleDTO role = ctrlAuth.getAtualUserRole();
-        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
             labelRole.setText("HumanResourcesManager");
         } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
             labelRole.setText("GreenSpaceManager");
@@ -58,43 +75,52 @@ public class ManageSkillsUI {
         }
     }
 
-    public void setSkillTable(){
+    /**
+     * Set up the skill table.
+     */
+    public void setSkillTable() {
         setLabel();
         colSkills.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(cellData.getValue().getSkillName());
         });
         tableSkills.getItems().clear();
-        for(Skill s : ctrl.getSkillList()){
+        for (Skill s : ctrl.getSkillList()) {
             tableSkills.getItems().add(s);
         }
         tableSkills.setOnMouseClicked(mouseEvent -> putInTextField());
     }
 
+    /**
+     * Handle the action event for adding a skill.
+     */
     @FXML
-    public void btnAdd(){
+    public void btnAdd() {
         String skillName = introducingSkill.getText();
-        if (skillName.isEmpty()){
+        if (skillName.isEmpty()) {
             popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is Empty").show();
             return;
         } else {
-            try{
+            try {
                 ctrl.RegisterSkill(skillName);
-            } catch (NullPointerException | CloneNotSupportedException e){
+            } catch (NullPointerException | CloneNotSupportedException e) {
                 popUpOfVerifications(Alert.AlertType.ERROR, "The Skill Name is invalid").show();
-            } catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
             }
         }
         introducingSkill.clear();
-        ObservableList<Skill> listForTable= FXCollections.observableArrayList(ctrl.getSkillList());
+        ObservableList<Skill> listForTable = FXCollections.observableArrayList(ctrl.getSkillList());
         tableSkills.getItems().clear();
         tableSkills.setItems(listForTable);
     }
 
+    /**
+     * Handle the action event for removing a skill.
+     */
     @FXML
-    public void btnRemove(){
+    public void btnRemove() {
         Skill selectedSkill = tableSkills.getSelectionModel().getSelectedItem();
-        if(selectedSkill != null){
+        if (selectedSkill != null) {
             Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
             popUp.setHeaderText("Removing Skill");
             popUp.setContentText("Do you want to remove the skill?");
@@ -108,8 +134,11 @@ public class ManageSkillsUI {
         }
     }
 
+    /**
+     * Handle the action event for editing a skill.
+     */
     @FXML
-    public void btnEdit(){
+    public void btnEdit() {
         Skill editedSkill = tableSkills.getSelectionModel().getSelectedItem();
         if (editedSkill != null) {
             String newSkillName = introducingSkill.getText();
@@ -119,13 +148,22 @@ public class ManageSkillsUI {
         }
     }
 
-    private void putInTextField(){
-        Skill selectedSkill=tableSkills.getSelectionModel().getSelectedItem();
-        String editSkill= selectedSkill.getSkillName();
+    /**
+     * Put the selected skill in the text field.
+     */
+    private void putInTextField() {
+        Skill selectedSkill = tableSkills.getSelectionModel().getSelectedItem();
+        String editSkill = selectedSkill.getSkillName();
         introducingSkill.setText(editSkill);
     }
 
-
+    /**
+     * Create a pop-up alert for verifications.
+     *
+     * @param alertType Type of alert.
+     * @param message   Message to display.
+     * @return Alert object.
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
         Alert alerta = new Alert(alertType);
 
@@ -136,9 +174,15 @@ public class ManageSkillsUI {
         return alerta;
     }
 
+    /**
+     * Handle the action event for logging out.
+     *
+     * @param event Action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
-        Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
+        Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
 
         popUp.setHeaderText("Logging Out");
         popUp.setContentText("Do you wish to log out?");
@@ -147,25 +191,31 @@ public class ManageSkillsUI {
 
         if (popUp.showAndWait().get() == ButtonType.OK) {
             ctrlAuth.doLogout();
-            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
-            Parent root= fxmlLoader.load();
-            Scene scene= new Scene(root);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }
     }
 
+    /**
+     * Handle the action event for going back.
+     *
+     * @param event Action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
-    public void goBack(ActionEvent event) throws IOException{
-        FXMLLoader fxmlLoader ;
+    public void goBack(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
             } else if (role.getDescription().equals(RegisterController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
-            }else {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
+            } else {
+                fxmlLoader= new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
