@@ -2,30 +2,25 @@ package pt.ipp.isep.dei.esoft.project.domain.ToDoEntry;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.TeamDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
-import pt.ipp.isep.dei.esoft.project.domain.task.Task;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
-import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
-import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
-import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Organization;
+
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.TeamDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.VehicleDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.core.application.mapper.EntryMapper;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

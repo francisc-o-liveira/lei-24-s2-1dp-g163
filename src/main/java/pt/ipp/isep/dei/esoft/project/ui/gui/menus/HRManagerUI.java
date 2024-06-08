@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageCollaboratorsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageJobsUI;

@@ -1,8 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain.greenSpace;
 
 import org.junit.jupiter.api.BeforeEach;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.repository.Organization;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Organization;
 import org.junit.jupiter.api.Test;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 

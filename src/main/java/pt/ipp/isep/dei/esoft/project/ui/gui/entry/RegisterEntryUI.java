@@ -8,8 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 

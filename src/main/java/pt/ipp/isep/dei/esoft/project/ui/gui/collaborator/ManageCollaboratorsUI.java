@@ -11,12 +11,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterCollaboratorController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.collaboratorSystem.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 

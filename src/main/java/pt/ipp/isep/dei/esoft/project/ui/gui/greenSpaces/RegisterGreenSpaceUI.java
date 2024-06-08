@@ -7,8 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.RegisterGreenSpaceController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
 import javafx.stage.Stage;
 
 import java.io.IOException;

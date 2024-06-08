@@ -1,17 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
-
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
-import pt.ipp.isep.dei.esoft.project.repository.*;
-import pt.ipp.isep.dei.esoft.project.utilities.Address;
-import pt.ipp.isep.dei.esoft.project.utilities.Date;
-import java.util.List;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
 
 public class Bootstrap implements Runnable {
 

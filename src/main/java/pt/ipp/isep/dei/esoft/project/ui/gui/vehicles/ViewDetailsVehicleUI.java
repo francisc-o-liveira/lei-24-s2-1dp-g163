@@ -11,10 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterCheckUpController;
-import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterVehicleController;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.vehicleSystem.RegisterCheckUpController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.vehicleSystem.RegisterVehicleController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.CheckUp;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;

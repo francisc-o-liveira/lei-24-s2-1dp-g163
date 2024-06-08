@@ -12,10 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.teamSystem.GenerateTeamController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;

@@ -5,13 +5,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.VehicleDto;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.ViewDetailsEntryController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.VehicleDto;
 
 import java.util.ArrayList;
 import java.util.List;

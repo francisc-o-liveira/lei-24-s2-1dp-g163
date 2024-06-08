@@ -10,8 +10,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import javax.security.auth.login.LoginException;

@@ -13,7 +13,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {

@@ -6,8 +6,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.ViewDetailsEntryController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.ViewDetailsEntryController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 

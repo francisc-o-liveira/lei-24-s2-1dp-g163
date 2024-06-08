@@ -1,11 +1,13 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.CollaboratorRepository;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.ArrayList;

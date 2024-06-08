@@ -23,14 +23,14 @@
 
 ## 5. Construction (Implementation)
 
-### Class RegisterJobCategoryController 
+### Class RegisterJobCategoryController
 
 ```java
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.repository.JobCategoryRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.JobCategoryRepository;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +46,7 @@ public class RegisterJobCategoryController {
     /**
      * When the controller is created, the jobCategory instance is taken from repositories
      */
-    public RegisterJobCategoryController(){
+    public RegisterJobCategoryController() {
         getJobCategoryRepository();
     }
 
@@ -54,8 +54,8 @@ public class RegisterJobCategoryController {
      *
      * @return repository of Job Categories
      */
-    public JobCategoryRepository getJobCategoryRepository(){
-        if (jobCategoryRepository == null){
+    public JobCategoryRepository getJobCategoryRepository() {
+        if (jobCategoryRepository == null) {
             Repositories repositories = Repositories.getInstance();
             jobCategoryRepository = repositories.getJobCategoryRepository();
         }
@@ -69,10 +69,10 @@ public class RegisterJobCategoryController {
      * @return true if jobCategory is created
      */
     public boolean registerJobCategory(String jobName) throws CloneNotSupportedException {
-        Optional<JobCategory> jobCategory= jobCategoryRepository.registerJobCategory(jobName);
-        if(jobCategory.isPresent()){
+        Optional<JobCategory> jobCategory = jobCategoryRepository.registerJobCategory(jobName);
+        if (jobCategory.isPresent()) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -81,7 +81,7 @@ public class RegisterJobCategoryController {
      * Get from Job Category Repository all the Job Categories in a List
      * @return a List of JobCategories
      */
-    public List<JobCategory> getJobCategoriesList(){
+    public List<JobCategory> getJobCategoriesList() {
         return jobCategoryRepository.getJobCategoryList();
     }
 
@@ -89,7 +89,7 @@ public class RegisterJobCategoryController {
      *
      * @param jobCategory to be removed
      */
-    public void removeJobCategory(JobCategory jobCategory){
+    public void removeJobCategory(JobCategory jobCategory) {
         getJobCategoriesList().remove(jobCategory);
     }
 }

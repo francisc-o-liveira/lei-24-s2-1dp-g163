@@ -2,8 +2,8 @@ package pt.ipp.isep.dei.esoft.project.ui.gui.tasks;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
 
 /**
  * UI Controller class for viewing details of a task.

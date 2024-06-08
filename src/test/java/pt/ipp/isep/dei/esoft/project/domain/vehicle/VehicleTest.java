@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain.vehicle;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.CheckUp;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.util.Optional;

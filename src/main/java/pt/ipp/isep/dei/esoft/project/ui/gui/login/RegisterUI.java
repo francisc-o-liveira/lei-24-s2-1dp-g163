@@ -9,12 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
 
 import java.io.IOException;
 
-import static pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController.ROLE_COLAB;
+import static pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController.ROLE_COLAB;
 
 /**
  * UI Controller class for the register.
