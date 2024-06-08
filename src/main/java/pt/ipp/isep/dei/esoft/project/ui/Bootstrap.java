@@ -22,29 +22,29 @@ public class Bootstrap {
             throw new Exception();
         }
     }
-    private void addSkills() throws CloneNotSupportedException {
+    private void addSkills() throws Exception {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
     }
-    private void addJobCategories() throws CloneNotSupportedException {
+    private void addJobCategories() throws Exception {
         JobCategoryRepository jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
     }
-    private void addCollaborators() throws CloneNotSupportedException {
+    private void addCollaborators() throws Exception {
         CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
     }
 
-    private void addVehicles() throws CloneNotSupportedException {
+    private void addVehicles() throws Exception {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
     }
-    private void addOrganization(){
+    private void addOrganization() throws Exception {
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
         organizationRepository.loadSystem();
         organizationRepository.addManager("ADMIN","GSM","+351910000000","admin@this.app");
     }
-    private void addUsers() {
+    private void addUsers() throws Exception {
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.loadFromAuthDataBase();
     }
-    private void addEntries(){
+    private void addEntries() throws Exception {
         EntryRepository entryRepository=Repositories.getInstance().getEntryRepository();
     }
 }
