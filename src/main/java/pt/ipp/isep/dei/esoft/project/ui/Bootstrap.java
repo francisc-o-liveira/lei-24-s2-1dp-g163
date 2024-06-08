@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Bootstrap {
 
     //Add some task categories to the repository as bootstrap
-    public void run() {
+    public void run() throws Exception{
         try {
             addSkills();
             addJobCategories();

@@ -23,12 +23,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            Bootstrap bootstrap = new Bootstrap();
-            bootstrap.run();
+            loadDatabases();
             initializeApp();
-        } catch (IOException ex) {
-            criarAlertaErro(ex).show();
-        } catch (Exception e){
+        } catch (Exception ex) {
+            //criarAlertaErro(ex).show();
             if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 directoryChooser.setTitle("Select Directory");
@@ -46,6 +44,12 @@ public class MainApp extends Application {
                 }
             }
         }
+
+    }
+
+    private void loadDatabases() throws Exception{
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.run();
     }
 
     private void initializeApp() throws IOException {
