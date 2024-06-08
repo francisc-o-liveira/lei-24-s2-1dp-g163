@@ -296,19 +296,19 @@ public class ManageAgendaUI  implements Initializable{
             entryLabel.getStyleClass().add("event-label");
 
             switch (entry.getStatus().getState()) {
-                case EntryState.State.Planned:
+                case Planned:
                     entryLabel.getStyleClass().add("status-planned");
                     break;
-                case EntryState.State.Canceled:
+                case Canceled:
                     entryLabel.getStyleClass().add("status-canceled");
                     break;
-                case EntryState.State.Done:
+                case Done:
                     entryLabel.getStyleClass().add("status-done");
                     break;
-                case EntryState.State.Assigned:
+                case Assigned:
                     entryLabel.getStyleClass().add("status-assigned");
                     break;
-                case EntryState.State.Postponed:
+                case Postponed:
                     entryLabel.getStyleClass().add("status-postponed");
                     break;
             }
