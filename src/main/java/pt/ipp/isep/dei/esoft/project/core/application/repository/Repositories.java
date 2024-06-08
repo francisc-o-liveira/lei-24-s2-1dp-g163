@@ -19,7 +19,7 @@ public class Repositories implements Serializable {
     private SkillRepository skillRepository;
     private VehicleRepository vehicleRepository;
 
-    private Repositories() {
+    private Repositories() throws Exception {
         organizationRepository = new Organization();
         authenticationRepository = new AuthenticationRepository();
         skillRepository = new SkillRepository();
@@ -35,7 +35,7 @@ public class Repositories implements Serializable {
      *
      * @return The singleton instance of Repositories.
      */
-    public static Repositories getInstance() {
+    public static Repositories getInstance() throws Exception {
         if (instance == null) {
             synchronized (Repositories.class) {
                 instance = new Repositories();

@@ -15,12 +15,10 @@ import java.util.Optional;
 public class JobCategoryRepository {
     private List<JobCategory> jobCategories;
 
-    public JobCategoryRepository() {
-        try {
+    public JobCategoryRepository() throws IOException, CloneNotSupportedException {
+
             loadFromJobCategoryDataBase();
-        } catch (IOException | CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     /**
