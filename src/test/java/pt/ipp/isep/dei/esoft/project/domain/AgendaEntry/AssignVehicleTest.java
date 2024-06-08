@@ -76,7 +76,7 @@ public class AssignVehicleTest {
                 gs,
                 "123"
         );
-        v1 = new Vehicle("VW", "Golf", Vehicle.Type.LightCargo, 1200, 1500, 150000, new Date(2005, 10, 1), new Date(2010, 12, 3), 10000, "15-RD-15", new Date(2010, 10, 1), 140000);
+        v1 = new Vehicle("VW1", "Golf1", Vehicle.Type.LightCargo, 1300, 1600, 160000, new Date(2005, 10, 1), new Date(2010, 12, 3), 11000, "30-AB-90", new Date(2010, 10, 1), 150000);
         vehiclesAssigning=new ArrayList<>();
         vehiclesAssigning.add(v1);
         vehicleRepository.addVehicle(v1);
