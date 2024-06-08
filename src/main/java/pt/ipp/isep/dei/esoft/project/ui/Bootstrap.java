@@ -19,6 +19,7 @@ public class Bootstrap {
             addUsers();
         } catch (Exception e) {
             System.out.println("erro inicializando");
+            throw new Exception();
         }
     }
     private void addSkills() throws CloneNotSupportedException {
