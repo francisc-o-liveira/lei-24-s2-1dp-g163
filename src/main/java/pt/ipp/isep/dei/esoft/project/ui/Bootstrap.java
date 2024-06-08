@@ -3,11 +3,10 @@ package pt.ipp.isep.dei.esoft.project.ui;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
 
-public class Bootstrap implements Runnable {
+public class Bootstrap {
 
     //Add some task categories to the repository as bootstrap
-    public void run(){
-
+    public void run() throws Exception {
         try {
             addSkills();
             addJobCategories();
