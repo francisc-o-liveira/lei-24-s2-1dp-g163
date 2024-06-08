@@ -201,6 +201,10 @@ public class AgendaList implements Serializable, List<Entry> {
         }
     }
 
+    public Entry getLast(){
+        return agenda.get(agenda.size());
+    }
+
     @Override
     public int size() {
         return agenda.size();
