@@ -11,7 +11,7 @@
 
     <properties>
         <!-- Java Version Configuration -->
-        <java.version>22</java.version>
+        <java.version>11</java.version>
 
         <!-- Maven Version Configuration -->
         <maven-compiler-plugin>3.10.1</maven-compiler-plugin>
@@ -87,12 +87,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>17.0.2</version>
+            <version>11.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>17.0.2</version>
+            <version>11.0.2</version>
         </dependency>
 
         <dependency>
