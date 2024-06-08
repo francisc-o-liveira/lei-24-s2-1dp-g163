@@ -26,11 +26,11 @@ public class Bootstrap {
     }
 
     public Bootstrap() {
-        saveDirectory = null;
     }
 
     //Add some task categories to the repository as bootstrap
     public void run() throws Exception{
+        try {
             addSkills();
             addJobCategories();
             addCollaborators();
@@ -38,6 +38,10 @@ public class Bootstrap {
             addEntries();
             addOrganization();
             addUsers();
+        } catch (Exception e) {
+            System.out.println("erro inicializando");
+            throw new Exception();
+        }
     }
     private void addSkills() throws Exception {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
@@ -78,6 +82,17 @@ public class Bootstrap {
             return fullPath;
         }else {
             String fullPath = saveDirectory.getAbsolutePath() + File.separator + fileName;
+            File testFile = new File(fullPath);
+            if (testFile.exists()){
+                return fullPath;
+            }else {
+                try {
+                    testFile.createNewFile();
+                } catch (IOException e) {
+                    System.out.println("Error creating file on directory");
+                }
+
+            }
             return fullPath;
         }
     }
