@@ -1,46 +1,43 @@
-# US003 - Register a Collaborator
+# US020 - Register a Green Space
 
 ## 3. Design - User Story Realization 
 
 ### 3.1. Rationale
 
-_**Note that SSD - Alternative Two is adopted.**_
+_**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...          | Answer                         | Justification (with patterns)                                                                                 |
-|:---------------|:-----------------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?                     | RegisterCollaboratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                            | RegisterCollaboratorController | Controller                                                                                                    |
-| 			  		        | ... instantiating a new Collaborator?                | CollaboratorRepository         | Creator (Rule 1): in the DM CollaboratorRepository.                                                           |
-| 		             | 							                                              |                                |                                                                                                               |
-| Step 2  		     | 	...saving the inputted data?                        | Collaborator                   | IE: object created in step 1 has its own data.                                                                |
-| Step 3  		     | 	...knowing the Job categories to show?              | Repositories                   | IE: Job Categories are defined by the Administrators.                                                         |
-| Step 4  		     | 	... saving the selected category?                   | Collaborator                   | IE: object created in step 1 is classified in one jobCategory.                                                |
-| Step 5  		     | 	...knowing the DocType to show?                     | Enum DocType                   | IE: DocType are static and final.                                                                             |
-| Step 6  		     | 	... saving the selected docType?                    | Collaborator                   | IE: object created in step 1 is classified in one docType.                                                    |
-| Step 7  		     | 	... validating docIDNumber (local validation)? 				 | docType                        | IE:  the docType have the verification method by omission.                                                    |
-| Step 8  		     | 	... validating data (local validation)?             | Collaborator                   | IE: owns its data.                                                                                            | 
-|                | 	... validating all data (global validation)?        | CollaboratorRepository         | IE: knows all collaborators.                                                                                  | 
-| Step 9		       | 	... saving the registered Collaborator?             | CollaboratorRepository         | IE: owns all collaborators.                                                                                   | 
-| Step 10  		    | 	... informing operation success?                    | RegisterCollaboratorUI         | IE: is responsible for user interactions.                                                                     | 
-
+| Interaction ID                                                                                                            | Question: Which class is responsible for...                          | Answer                       | Justification (with patterns)                                                                                                             |
+|:--------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------|:-----------------------------|:------------------------------------------------------------------------------------------------------------------------------------------|
+| Step 1: asks to register a new green space 		                                                                             | 	... interacting with the actor?                                     | RegisterGreenSpaceUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                             |
+| 			  		                                                                                                                   | 	... coordinating the US?                                            | RegisterGreenSpaceController | Controller                                                                                                                                |
+| 			  		                                                                                                                   | ... saving green space tyes?                                         | Organization                 | Creator (Rule 1): in the DM Organization                                                                                                  |
+| 		                                                                                                                        | 						                                                               |                              |                                                                                                                                           |
+| Step 2: Displays all available green space types and requests the name, address, area, and type for the new green space 		 | 	...returning green space type list?	                                | GreenSpaceController         | Controller                                                                                                                                |
+| 	                                                                                                                         | 	...displaying all available green space types?                      | GreenSpaceUI                 |                                                                                                                                           |
+| 	                                                                                                                         | 	... saving green space types?                                       | Organization                 |                                                                                                                                           |
+| Step 3:Provides the name, address, area, and selects a green space type		                                                 | 	...providing the name, area, address and select a green space type? | GSM                          | GSM                                                                                                                                       |
+|                                                                                                                           | 	... saving the name, area and address                               | Organization                 |                                                                            |
+| 		                                                                                                                        | 	... verifying if the green space exits and save the data?			        | Organization                 |                                                                              |
+| 		                                                                                                                        | 	...                                                                 |                | IE: owns its data.                                                                                                                        | 
+|                                                                                                                           | 	                        |       |                                                                                                              | 
+| Step 4: displays operation success		                                                                                                                | ... informing operation success?                                     | RegisterGreenSpaceUI         | Pure Fabrication: The RegisterGreenSpaceUI presents feedback to the user, maintaining separation of concerns between UI and business logic| 
+ 		                                                                                                          
 ### Systematization ##
 
-According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator): 
+Software classes (i.e. **Pure Fabrication**) identified
 
-* Collaborator Repository
-* Collaborator
+* RegisterGreenSpaceUI
 
-Other software classes (i.e Information Expert) identified:
 
-* Repositories
-* DocTypeRepository
-* JobCategoryRepository
-* CollaboratorRepository
+Other software classes (i.e. **Controller**) identified
 
-Other software classes (i.e. Pure Fabrication) identified: 
+* RegisterGreenSpaceController
 
-* RegisterCollaboratorUI  
-* RegisterCollaboratorController
+Other software classes (i.e. **Information Expert**) identified
+
+* Organization
+* GreensSpace
+
 
 ## 3.2. Sequence Diagram (SD)
 
