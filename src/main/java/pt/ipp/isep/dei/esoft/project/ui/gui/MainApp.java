@@ -64,6 +64,7 @@ public class MainApp extends Application {
         bootstrap.run();
     }
 
+    // VERIFICA BEM ESTE METODO NAO SEI QUE MERDA E AQUELA QUE FIZESTE
     private void initializeApp() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/SceneLogin.fxml"));
         Scene scene=new Scene(fxmlLoader.load());
