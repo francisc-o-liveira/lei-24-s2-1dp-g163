@@ -24,9 +24,13 @@ public class VehicleRepository {
     private List<Vehicle> vehicleList;
 
     /** Initializes the list of Vehicles*/
-    public VehicleRepository() throws IOException, CloneNotSupportedException {
+    public VehicleRepository(){
+        try {
             vehicleList=new ArrayList<>();
             loadFromVehicleDataBase();
+        } catch (IOException | CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /** Method to search for a Vehicle based on the plate

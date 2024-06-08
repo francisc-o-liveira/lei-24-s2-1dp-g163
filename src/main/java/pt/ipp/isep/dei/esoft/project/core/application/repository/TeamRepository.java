@@ -20,9 +20,8 @@ public class TeamRepository {
     /**
      * Constructs a new TeamRepository.
      */
-    public TeamRepository() throws IOException, CloneNotSupportedException {
+    public TeamRepository(){
         teams = new ArrayList<>();
-        loadFromTeamDataBase();
     }
 
     /**

@@ -22,9 +22,13 @@ public class SkillRepository {
     /**
      * Initialize the list of Skills
      */
-    public SkillRepository() throws Exception {
+    public SkillRepository() {
+        try {
             skillList = new ArrayList<>();
             loadFromSkillDataBase();
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
