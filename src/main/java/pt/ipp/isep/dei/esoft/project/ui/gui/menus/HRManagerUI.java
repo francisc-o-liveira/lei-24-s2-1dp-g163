@@ -14,20 +14,37 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageJobsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.collaborator.ManageSkillsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.team.ManageTeamsUI;
 
-
 import java.io.IOException;
 
-
+/**
+ * This class represents the UI for HR managers, allowing them to manage various aspects of the application,
+ * such as jobs, skills, collaborators, and teams.
+ */
 public class HRManagerUI {
 
+    /**
+     * The main stage of the application.
+     */
     public Stage stage = LoginUI.getMainStage();
 
+    /**
+     * The authentication controller instance.
+     */
     public AuthenticationController ctrlAuth;
 
+    /**
+     * Constructor for the HRManagerUI class. Initializes the authentication controller.
+     */
     public HRManagerUI(){
         ctrlAuth = AuthenticationController.getInstance();
     }
 
+    /**
+     * Reloads the HR manager menu scene.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void reloadPage(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
@@ -37,6 +54,13 @@ public class HRManagerUI {
         stage.show();
     }
 
+    /**
+     * Handles the action of logging out. Displays a confirmation dialog and, if confirmed,
+     * logs out the user and loads the login scene.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
         Alert popUp= new Alert(Alert.AlertType.CONFIRMATION);
@@ -56,6 +80,12 @@ public class HRManagerUI {
         }
     }
 
+    /**
+     * Loads the scene for managing jobs.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageJobs(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewJobs.fxml"));
@@ -67,6 +97,12 @@ public class HRManagerUI {
         ctrlUI.setJobCategoryTable();
     }
 
+    /**
+     * Loads the scene for managing skills.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageSkills(ActionEvent event)throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewSkill.fxml"));
@@ -78,6 +114,12 @@ public class HRManagerUI {
         ctrlUI.setSkillTable();
     }
 
+    /**
+     * Loads the scene for managing collaborators.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageCollaborators(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/collaborator/SceneTableViewRegisterCollaborator.fxml"));
@@ -89,6 +131,12 @@ public class HRManagerUI {
         ctrlUI.setTableCollaborators();
     }
 
+    /**
+     * Loads the scene for managing teams.
+     *
+     * @param event the action event
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML
     public void manageTeams(ActionEvent event) throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/teams/SceneTableViewManageTeams.fxml"));
