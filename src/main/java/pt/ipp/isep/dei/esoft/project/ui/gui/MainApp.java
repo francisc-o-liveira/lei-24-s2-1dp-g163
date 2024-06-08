@@ -94,7 +94,7 @@ public class MainApp extends Application {
         String currentDir = System.getProperty("user.dir");
 
         // Construct the path to the team database file
-        String relativePath = '\target\classes\DataBase\teamDataBase.csv';
+        String relativePath = "\\target\\classes\\DataBase";
 
         // Combine the current directory with the relative path
         String fullPath = currentDir + File.separator + relativePath;
