@@ -21,7 +21,7 @@ public class ListGreenSpacesTest {
     }
 
     @Test
-    void listSpacesTest(){
+    void listSpacesTest() throws Exception {
         Bootstrap boot= new Bootstrap();
         boot.run();
         List<GreenSpace> list = org.getGreenSpaceListByManagerEmail(email);

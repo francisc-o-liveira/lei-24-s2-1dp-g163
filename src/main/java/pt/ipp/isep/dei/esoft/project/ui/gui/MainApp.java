@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pt.ipp.isep.dei.esoft.project.core.application.controller.AssignEntryOnAgendaController;
@@ -22,32 +21,28 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 public class MainApp extends Application {
 
     private static File saveDirectory = null;
+
+
     Bootstrap bootstrap=new Bootstrap();
+
+
     @Override
     public void start(Stage stage) {
         try {
-            // PRIMEIRA TENTATIVA DE LOAD DATA
             bootstrap.run();
             initializeApp();
         } catch (IOException ex) {
             if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
-                /// ISTO PODE TAR NUM METODO 777777
-                DirectoryChooser directoryChooser = new DirectoryChooser();
-                directoryChooser.setTitle("Select Directory");
-                File selectedDirectory = directoryChooser.showDialog(null);
-
-                ///
+                File selectedDirectory = pickingDirectory();
                 if (selectedDirectory != null) {
                     try{
-                        // SEGUNDA TENTATIVA LOAD DATA VAI TER UM SAVEDIRECTORY AQUI SALVADO LOGO O METODO GETFILEPATH VAI REAGIR DIFERENTE
-                        saveDirectory = selectedDirectory;
+                        bootstrap.setSaveDirectory(selectedDirectory);
                         bootstrap.run();
                         initializeApp();
                     }catch (IOException io){
                         criarAlertaErro(io).show();
                     } catch (Exception e) {
-                        // NAO SEI SE ISTO FAZ O WHILE QUE NOS QUEREMOS PODES TESTAR!
-                        // PODES VOLTAR A CHAMAR AQUI O METODO 77777777 que referi em cima
+                        bootstrap.setSaveDirectory(pickingDirectory());
                         start(stage);
                     }
                 } else {
@@ -60,6 +55,11 @@ public class MainApp extends Application {
         }
     }
 
+    private File pickingDirectory() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Directory");
+        return directoryChooser.showDialog(null);
+    }
 
 
     // VERIFICA BEM ESTE METODO NAO SEI QUE MERDA E AQUELA QUE FIZESTE
@@ -131,77 +131,4 @@ public class MainApp extends Application {
         return alerta;
     }
 
-    private static String getFilePath(String fileName) {
-        if (saveDirectory == null) {
-            // Get the current working directory
-            String currentDir = System.getProperty("user.dir");
-            // Construct the path to the team database file
-            String relativePath = "\\target\\classes\\DataBase\\";
-            // Combine the current directory with the relative path
-            String fullPath = currentDir + relativePath + fileName;
-            return fullPath;
-        }else {
-            String fullPath = saveDirectory.getAbsolutePath() + File.separator + fileName;
-            return fullPath;
-        }
-    }
-
-    private static String authDataBaseFile = new String("authDataBase.csv");
-
-    public static File getAuthDataBaseFile() {
-        return new File(getFilePath(authDataBaseFile));
-    }
-
-    private static String collaboratorDataBaseFile = new String("collaboratorDataBase.csv");
-
-    public static String getCollaboratorDataBaseFile() {
-        return getFilePath(collaboratorDataBaseFile);
-    }
-
-    private static String jobCategoryDataBaseFile = new String("jobCategoryDataBase.csv");
-
-    public static String getJobCategoryDataBaseFile() {
-        return getFilePath(jobCategoryDataBaseFile);
-    }
-
-    private static String skillDataBaseFile = new String("skillDataBase.csv");
-
-    public static String getSkillDataBaseFile() {
-        return getFilePath(skillDataBaseFile);
-    }
-
-    private static String entryDataBaseFile = new String("entryDataBase.csv");
-    private static String taskDataBaseFile=new String("taskDataBase.csv");
-
-    public static String getEntryDataBaseFile() {
-        return getFilePath(entryDataBaseFile);
-    }
-
-    public static String getTaskDataBaseFile(){
-        return getFilePath(taskDataBaseFile);
-    }
-
-    private static String vehicleDataBaseFile = new String("vehicleDataBase.csv");
-
-
-    public static String getVehicleDataBaseFile() {
-        return getFilePath(vehicleDataBaseFile);
-    }
-    private static String teamDataBaseFile = new String("teamDataBase.csv");
-
-
-    public static String getTeamDataBaseFile() {
-        return getFilePath(teamDataBaseFile);
-    }
-
-    private static String greenSpaceDataBaseFile = new String("greenSpaceDataBase.csv");
-
-    public static String getGreenSpaceDataBaseFile() {
-        return getFilePath(greenSpaceDataBaseFile);
-    }
-    private static String managerDataBaseFile = new String("managerDataBase.csv");
-
-    public static String getManagerDataBaseFile() {
-        return getFilePath(managerDataBaseFile);
-    }
 }

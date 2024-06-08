@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.core.application.repository;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
@@ -114,8 +115,8 @@ public class TeamRepository {
     }
 
     private void saveTeams() {
-        cleanFile(MainApp.getTeamDataBaseFile());
-        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getTeamDataBaseFile());
+        cleanFile(Bootstrap.getInstance().getTeamDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getInstance().getTeamDataBaseFile());
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(teams);
         } catch (IOException e) {
@@ -124,7 +125,7 @@ public class TeamRepository {
     }
 
     private void cleanFile(String teamDataBaseFile) {
-        File file = new File(MainApp.getTeamDataBaseFile());
+        File file = new File(teamDataBaseFile);
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print("");
         } catch (FileNotFoundException e) {
@@ -134,7 +135,7 @@ public class TeamRepository {
 
     @SuppressWarnings("unchecked")
     public void loadFromTeamDataBase() throws CloneNotSupportedException, IOException {
-        File file = new File(MainApp.getTeamDataBaseFile());
+        File file = new File(Bootstrap.getInstance().getVehicleDataBaseFile());
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {

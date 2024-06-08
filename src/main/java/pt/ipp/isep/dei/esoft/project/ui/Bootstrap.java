@@ -1,65 +1,143 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
-import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
-import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Bootstrap {
-    CollaboratorRepository collaboratorRepository;
-    SkillRepository skillRepository;
-    JobCategoryRepository jobCategoryRepository;
-    VehicleRepository vehicleRepository;
+
+    private static Bootstrap instance;
+
+    private static File saveDirectory;
+
+    public static void setSaveDirectory(File saveDirectory) {
+        Bootstrap.saveDirectory = saveDirectory;
+    }
+
+    public static Bootstrap getInstance() {
+        if (instance == null) {
+            synchronized (Bootstrap.class) {
+                instance = new Bootstrap();
+            }
+        }
+        return instance;
+    }
+
+    public Bootstrap() {
+        saveDirectory = null;
+    }
 
     //Add some task categories to the repository as bootstrap
-    public void run() throws IOException{
-        jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
-        skillRepository = Repositories.getInstance().getSkillRepository();
-        collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
-        vehicleRepository = Repositories.getInstance().getVehicleRepository();
-
-        addSkills();
-        addJobCategories();
-        addCollaborators();
-        addOrganization();
-        addVehicles();
-        try {
+    public void run() throws Exception{
+            addSkills();
+            addJobCategories();
+            addCollaborators();
+            addVehicles();
             addEntries();
+            addOrganization();
             addUsers();
-        } catch (CloneNotSupportedException e) {
-            System.out.println("erro inicializando");
-        }
     }
-    private void addSkills() throws IOException {
+    private void addSkills() throws Exception {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
         skillRepository.loadFromSkillDataBase();
     }
-    private void addJobCategories() throws IOException {
+    private void addJobCategories() throws Exception {
+        JobCategoryRepository jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
+    }
+    private void addCollaborators() throws Exception {
+        CollaboratorRepository collaboratorRepository = Repositories.getInstance().getCollaboratorRepository();
+    }
 
-        jobCategoryRepository.loadFromJobCategoryDataBase();
+    private void addVehicles() throws Exception {
+        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
     }
-    private void addCollaborators() throws IOException {
-        collaboratorRepository.loadFromCollaboratorDataBase();
-    }
-
-    private void addVehicles() throws IOException {
-        vehicleRepository.loadFromVehicleDataBase();
-    }
-    private void addOrganization() throws IOException {
+    private void addOrganization() throws Exception {
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
         organizationRepository.loadSystem();
         organizationRepository.addManager("ADMIN","GSM","+351910000000","admin@this.app");
     }
-    private void addUsers() throws CloneNotSupportedException {
+    private void addUsers() throws Exception {
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.loadFromAuthDataBase();
     }
-    private void addEntries() throws CloneNotSupportedException {
+    private void addEntries() throws Exception {
         EntryRepository entryRepository=Repositories.getInstance().getEntryRepository();
-        //entryRepository.loadFromDataBase();
     }
 
+
+    private static String getFilePath(String fileName) {
+        if (saveDirectory == null) {
+            // Get the current working directory
+            String currentDir = System.getProperty("user.dir");
+            // Construct the path to the team database file
+            String relativePath = "\\target\\classes\\DataBase\\";
+            // Combine the current directory with the relative path
+            String fullPath = currentDir + relativePath + fileName;
+            return fullPath;
+        }else {
+            String fullPath = saveDirectory.getAbsolutePath() + File.separator + fileName;
+            return fullPath;
+        }
+    }
+
+    private static String authDataBaseFile = new String("authDataBase.csv");
+
+    public static File getAuthDataBaseFile() {
+        return new File(getFilePath(authDataBaseFile));
+    }
+
+    private static String collaboratorDataBaseFile = new String("collaboratorDataBase.csv");
+
+    public static String getCollaboratorDataBaseFile() {
+        return getFilePath(collaboratorDataBaseFile);
+    }
+
+    private static String jobCategoryDataBaseFile = new String("jobCategoryDataBase.csv");
+
+    public static String getJobCategoryDataBaseFile() {
+        return getFilePath(jobCategoryDataBaseFile);
+    }
+
+    private static String skillDataBaseFile = new String("skillDataBase.csv");
+
+    public static String getSkillDataBaseFile() {
+        return getFilePath(skillDataBaseFile);
+    }
+
+    private static String entryDataBaseFile = new String("entryDataBase.csv");
+    private static String taskDataBaseFile=new String("taskDataBase.csv");
+
+    public static String getEntryDataBaseFile() {
+        return getFilePath(entryDataBaseFile);
+    }
+
+    public static String getTaskDataBaseFile(){
+        return getFilePath(taskDataBaseFile);
+    }
+
+    private static String vehicleDataBaseFile = new String("vehicleDataBase.csv");
+
+
+    public static String getVehicleDataBaseFile() {
+        return getFilePath(vehicleDataBaseFile);
+    }
+    private static String teamDataBaseFile = new String("teamDataBase.csv");
+
+
+    public static String getTeamDataBaseFile() {
+        return getFilePath(teamDataBaseFile);
+    }
+
+    private static String greenSpaceDataBaseFile = new String("greenSpaceDataBase.csv");
+
+    public static String getGreenSpaceDataBaseFile() {
+        return getFilePath(greenSpaceDataBaseFile);
+    }
+    private static String managerDataBaseFile = new String("managerDataBase.csv");
+
+    public static String getManagerDataBaseFile() {
+        return getFilePath(managerDataBaseFile);
+    }
 }

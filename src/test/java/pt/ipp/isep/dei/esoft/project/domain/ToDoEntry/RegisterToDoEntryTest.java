@@ -69,7 +69,7 @@ public class RegisterToDoEntryTest {
     }
 
     @Test
-    void testEntryRegistry(){
+    void testEntryRegistry() throws Exception {
         Bootstrap boot = new Bootstrap();
         boot.run();
         EntryDto entryDto = new EntryDto("x","banana", Task.DegreeUrgency.High,new Tempo(0,15),new GreenSpaceDto(area,new Address(zipCode,address,city),name,type,email));

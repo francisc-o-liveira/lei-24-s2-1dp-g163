@@ -76,6 +76,8 @@ public class Repositories implements Serializable {
         return vehicleRepository;
     }
 
+
+
     /**
      * Loads the system state from a binary file.
      *

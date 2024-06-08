@@ -166,7 +166,7 @@ class CollaboratorTest {
     }
     
     @Test
-    void tasksAssignedTasksTest(){
+    void tasksAssignedTasksTest() throws Exception {
         Bootstrap boot = new Bootstrap();
         boot.run();
         Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));

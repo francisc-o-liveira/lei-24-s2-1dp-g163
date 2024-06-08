@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCat
 import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.CheckUp;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
@@ -298,8 +299,8 @@ public class VehicleRepository {
     }
 
     private void saveVehicles() {
-        cleanFile(MainApp.getVehicleDataBaseFile());
-        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getVehicleDataBaseFile());
+        cleanFile(Bootstrap.getInstance().getVehicleDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getInstance().getVehicleDataBaseFile());
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(vehicleList);
         } catch (IOException e) {
@@ -308,7 +309,7 @@ public class VehicleRepository {
     }
 
     private void cleanFile(String vehicleDataBaseFile) {
-        File file = new File(MainApp.getVehicleDataBaseFile());
+        File file = new File(vehicleDataBaseFile);
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print("");
         } catch (FileNotFoundException e) {
@@ -318,7 +319,7 @@ public class VehicleRepository {
 
     @SuppressWarnings("unchecked")
     public void loadFromVehicleDataBase() throws CloneNotSupportedException, IOException {
-        File file = new File(MainApp.getVehicleDataBaseFile());
+        File file = new File(Bootstrap.getInstance().getVehicleDataBaseFile());
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {
