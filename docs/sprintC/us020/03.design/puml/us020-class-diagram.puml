@@ -1,70 +1,25 @@
 @startuml
-'skinparam monochrome true
-skinparam packageStyle rectangle
 skinparam shadowing false
-skinparam linetype polyline
-'skinparam linetype orto
-
 skinparam classAttributeIconSize 0
 
-'left to right direction
+left to right direction
 
-class GreenSpace {
-    -Enum Type
-}
-
-
-
-class greenSpaceRepository {
-
-           + registerGreenSpace()
-           + verifyIfExists()
+package "UI" #f0f0f0{
+    class RegisterGreenSpaceUI {
+    }
 
 }
+package "Core" #f0f0f0{
 
-class GreenSpaceMapper{
+    package "Controller" #dddddd{
 
-}
+        class RegisterGreenSpaceController {
+            +getGreenSpaceTypeListDto(objDto: TeamDto, entryDto: EntryDto)
+        }
 
-class GreenSpaceDTO{
-
-}
-
-
-class Repositories {
-        - Repositories()
-        + getInstance() : Repositories
-        + getGreenSpaceRepository() : GreenSpaceRepository
-}
-
-class RegisterGreenSpaceController{
-    - GreenSpaceRepository greenSpaceRepository
-        + getGreenSpaceType()
-        + registerGreenSpace()
-
-}
-GreenSpaceMapper "1" - "*" GreenSpaceDTO
-GreenSpaceMapper "1" -- "*" GreenSpace
-
-RegisterGreenSpaceController "1" -> "1" GreenSpaceMapper
-greenSpaceRepository "1" --> "1" GreenSpaceMapper
-RegisterGreenSpaceUI"1" --> "1" RegisterGreenSpaceController
-
-
-RegisterGreenSpaceController .> Repositories : repositories
-
-
-RegisterGreenSpaceController ..> GreenSpace
-RegisterGreenSpaceController ..> greenSpaceRepository : greenSpaceRepository
-
-
-
-Repositories -> Repositories : instance
-Repositories -> "1" greenSpaceRepository
-
-greenSpaceRepository "1" --> "*" GreenSpace : GreenSpaces
-
+        RegisterGreenSpaceUI ..>  RegisterGreenSpaceController
 
 
 
 @enduml
+

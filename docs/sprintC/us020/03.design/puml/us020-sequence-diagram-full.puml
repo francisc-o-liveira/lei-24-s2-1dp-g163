@@ -15,8 +15,6 @@ participant "organizationRepository:Organization" as Organization
 participant ":GreenSpace" as GreenSpace
 participant "<<enum>>\nGreenSpace.Type" as Type
 
-
-participant ":GreenSpaceMapper" as GreenSpaceMapper
 participant "greenSpaceTypeListDto:list<GreenSpaceDTO>" as TypeListDto
 participant "objDto:GreenSpaceDTO" as GreenDto
 
@@ -76,26 +74,10 @@ Organization -> CTRL  : enumGreenSpaceTypes
 deactivate Organization
 
 
-CTRL -> GreenSpaceMapper : toDTO(enumGreenSpaceTypes)
-activate GreenSpaceMapper
-
-GreenSpaceMapper -> TypeListDto** : create()
-
-loop for each type in enumGreenSpaceTypes
-    GreenSpaceMapper -> GreenSpaceMapper: objDto = toDto(type)
-    activate GreenSpaceMapper
-
-    GreenSpaceMapper -> GreenDto** : create(type.name())
-    deactivate GreenSpaceMapper
-    GreenSpaceMapper -> TypeListDto : add(objDto)
-    activate TypeListDto
-    deactivate TypeListDto
-end
 
 
 
-GreenSpaceMapper -> CTRL : greenSpaceTypeListDto
-deactivate GreenSpaceMapper
+
 
 CTRL --> UI : greenSpaceTypeListDto
 deactivate CTRL
@@ -107,7 +89,7 @@ deactivate UI
 GSM -> UI: Provides the name, address, area, and selects a green space type
 activate UI
 
-UI -> CTRL: registerGreenSpace(objDto)
+UI -> CTRL: registerGreenSpace(greenSpaceDto)
 activate CTRL
 
 note right of UI
@@ -115,57 +97,50 @@ note right of UI
  newArea, typeName)
 end note
 
-CTRL -> Organization : greenSpace = registerGreenSpace(objDto)
+CTRL -> Organization : greenSpace = registerGreenSpace(greenSpaceDto)
 activate Organization
 note right of CTRL
 (newName, newAddress, newArea, typeName)
 end note
 
 
-Organization -> GreenSpaceMapper : greenSpace = toModel(objDto)
-activate GreenSpaceMapper
+Organization -> GreenDto : greenSpace = toModel(greenSpaceDto)
+activate GreenDto
+
 note right of Organization
 (newName, newAddress, newArea, typeName)
 end note
+deactivate GreenDto
 
 
-GreenSpaceMapper -> GreenDto : newName = getName()
+
+
+Organization-> GreenDto : newName = getNameGreenSpace()
 activate GreenDto 
 deactivate GreenDto
 
-GreenSpaceMapper -> GreenDto : newAdress = getAdress()
+Organization-> GreenDto : newAdress = getAdress()
 activate GreenDto 
 deactivate GreenDto
 
-GreenSpaceMapper -> GreenDto : newArea = getArea()
+Organization-> GreenDto : newArea = getAreaInHectares()
 activate GreenDto 
 deactivate GreenDto
 
-GreenSpaceMapper -> GreenDto : typeName = getTypeName()
+Organization -> GreenDto : newType = getType()
 activate GreenDto 
 deactivate GreenDto
 
-GreenSpaceMapper -> GreenSpace : valueOf(typeName)
-activate GreenSpace 
-
-GreenSpace -> Type : valueOf(typeName)
-activate Type 
-
-Type -> GreenSpace : type
-deactivate Type
 
 
-GreenSpace -> GreenSpaceMapper : type
-deactivate GreenSpace
-
-GreenSpaceMapper -> obj** : create(newName, newAddress, newArea, type)
+Organization -> obj** : create(newName, newAddress, newArea, type)
 
 activate obj
 
-obj -> GreenSpaceMapper : true
+obj -> Organization : true
 deactivate obj
 
-GreenSpaceMapper-> Organization: verifyIfExists(greenSpace)
+Organization-> Organization: verifyIfExistAndSave(greenSpace)
 deactivate GreenSpaceMapper
 
 Organization -> CTRL : true
