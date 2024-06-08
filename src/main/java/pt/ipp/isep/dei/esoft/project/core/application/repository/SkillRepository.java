@@ -18,6 +18,7 @@ public class SkillRepository {
      * List of Skills
      */
     private List<Skill> skillList;
+    private File fileToSerialize;
 
     /**
      * Initialize the list of Skills
@@ -25,7 +26,6 @@ public class SkillRepository {
     public SkillRepository() {
         try {
             skillList = new ArrayList<>();
-            loadFromSkillDataBase();
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -133,10 +133,10 @@ public class SkillRepository {
     }
 
     @SuppressWarnings("unchecked")
-    public void loadFromSkillDataBase() throws Exception {
+    public void loadFromSkillDataBase() throws IOException {
         File file = new File(MainApp.getSkillDataBaseFile());
         if (!file.exists()) {
-            throw new Exception("The files do not exist.");
+            throw new IOException("The files do not exist.");
         }
         try (FileInputStream fileIn = new FileInputStream(file)){
              if(fileIn.getChannel().size()>0){
@@ -144,7 +144,7 @@ public class SkillRepository {
                  List<Skill> skillList = (List<Skill>) in.readObject();
                  loadInSystem(skillList);
             }
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (CloneNotSupportedException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

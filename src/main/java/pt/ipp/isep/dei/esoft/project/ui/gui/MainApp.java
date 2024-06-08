@@ -22,14 +22,14 @@ import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 public class MainApp extends Application {
 
     private static File saveDirectory = null;
+    Bootstrap bootstrap=new Bootstrap();
     @Override
     public void start(Stage stage) {
         try {
             // PRIMEIRA TENTATIVA DE LOAD DATA
-            loadDatabases();
+            bootstrap.run();
             initializeApp();
-        } catch (Exception ex) {
-            //criarAlertaErro(ex).show();
+        } catch (IOException ex) {
             if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
                 /// ISTO PODE TAR NUM METODO 777777
                 DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -41,7 +41,7 @@ public class MainApp extends Application {
                     try{
                         // SEGUNDA TENTATIVA LOAD DATA VAI TER UM SAVEDIRECTORY AQUI SALVADO LOGO O METODO GETFILEPATH VAI REAGIR DIFERENTE
                         saveDirectory = selectedDirectory;
-                        loadDatabases();
+                        bootstrap.run();
                         initializeApp();
                     }catch (IOException io){
                         criarAlertaErro(io).show();
@@ -55,14 +55,12 @@ public class MainApp extends Application {
                     alert.setContentText("Please select a directory");
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
     }
 
-    private void loadDatabases() throws Exception{
-        Bootstrap bootstrap = new Bootstrap();
-        bootstrap.run();
-    }
+
 
     // VERIFICA BEM ESTE METODO NAO SEI QUE MERDA E AQUELA QUE FIZESTE
     private void initializeApp() throws IOException {
@@ -93,7 +91,7 @@ public class MainApp extends Application {
                 }
             }
         });
-        // NAO FUNCIONA SE A LUZ FOR A BAIXO CARALHO FDS QUE MERDA É ESTA
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             saveData();
         }));
