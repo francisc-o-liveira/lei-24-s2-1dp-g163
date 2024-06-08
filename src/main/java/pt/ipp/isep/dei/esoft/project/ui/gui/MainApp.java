@@ -89,6 +89,19 @@ public class MainApp extends Application {
         return alerta;
     }
 
+    private static String getFilePath() {
+        // Get the current working directory
+        String currentDir = System.getProperty("user.dir");
+
+        // Construct the path to the team database file
+        String relativePath = '\target\classes\DataBase\teamDataBase.csv';
+
+        // Combine the current directory with the relative path
+        String fullPath = currentDir + File.separator + relativePath;
+
+        return fullPath;
+    }
+
 
     private static File authDataBaseFile = new File("C:\\Users\\Francisco\\Desktop\\lei-24-s2-1dp-g163-github\\target\\classes\\DataBase\\authDataBase.csv");
 
