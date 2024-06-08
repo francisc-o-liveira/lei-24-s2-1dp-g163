@@ -7,6 +7,7 @@ package pt.ipp.isep.dei.esoft.project.core.application.repository.lists;
 
 import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
@@ -78,7 +79,7 @@ public class ToDoList {
      */
     public void saveToDB() {
         try {
-            File file1 = new File(MainApp.getTaskDataBaseFile());
+            File file1 = new File(Bootstrap.getTaskDataBaseFile());
             PrintWriter writer = new PrintWriter(new FileWriter(file1));
             writer.print("");
             writer.close();
@@ -103,7 +104,7 @@ public class ToDoList {
     @SuppressWarnings("unchecked")
     public void loadFromDataBase() throws IOException {
         List<Entry> loadEntry;
-        File file = new File(MainApp.getTaskDataBaseFile());
+        File file = new File(Bootstrap.getTaskDataBaseFile());
         if (!file.exists()) {
             throw new IOException("Task database file does not exist. Starting with an empty list.");
         }

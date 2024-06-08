@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.core.application.repository;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
@@ -90,8 +91,8 @@ public class JobCategoryRepository {
     }
 
     private void saveJobCategorys() {
-        cleanFile(MainApp.getJobCategoryDataBaseFile());
-        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getJobCategoryDataBaseFile());
+        cleanFile(Bootstrap.getJobCategoryDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getJobCategoryDataBaseFile());
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(jobCategories);
         } catch (IOException e) {
@@ -100,7 +101,7 @@ public class JobCategoryRepository {
     }
 
     private void cleanFile(String jobCategorysDataBaseFile) {
-        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        File file = new File(Bootstrap.getJobCategoryDataBaseFile());
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print("");
         } catch (FileNotFoundException e) {
@@ -110,7 +111,7 @@ public class JobCategoryRepository {
 
     @SuppressWarnings("unchecked")
     public void loadFromJobCategoryDataBase() throws CloneNotSupportedException, IOException {
-        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        File file = new File(Bootstrap.getJobCategoryDataBaseFile());
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {

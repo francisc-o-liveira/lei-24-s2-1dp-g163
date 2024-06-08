@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collab
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.DocType;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import java.io.*;
@@ -262,12 +263,12 @@ public class CollaboratorRepository {
     }
 
     public void removeFromCollaboratorDataBase(Collaborator collaborator) {
-        cleanFile(MainApp.getCollaboratorDataBaseFile());
+        cleanFile(Bootstrap.getCollaboratorDataBaseFile());
         try {
-            FileOutputStream fileOut = new FileOutputStream(MainApp.getCollaboratorDataBaseFile());
+            FileOutputStream fileOut = new FileOutputStream(Bootstrap.getCollaboratorDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
            if (!collaboratorList.contains(collaborator)) {
-               cleanFile(MainApp.getCollaboratorDataBaseFile());
+               cleanFile(Bootstrap.getCollaboratorDataBaseFile());
                out.writeObject(collaboratorList);
            }else{
                throw new IOException("Collaborator are introduced in the system you cannot remove from Data Base file");
@@ -280,7 +281,7 @@ public class CollaboratorRepository {
     }
 
     private void cleanFile(String collaboratorsDataBaseFile) {
-        File file = new File(MainApp.getJobCategoryDataBaseFile());
+        File file = new File(Bootstrap.getJobCategoryDataBaseFile());
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print("");
         } catch (FileNotFoundException e) {
@@ -289,9 +290,9 @@ public class CollaboratorRepository {
     }
 
     public void saveFromCollaboratorDataBase(Collaborator collaborator){
-        cleanFile(MainApp.getCollaboratorDataBaseFile());
+        cleanFile(Bootstrap.getCollaboratorDataBaseFile());
         try {
-            FileOutputStream file = new FileOutputStream(MainApp.getCollaboratorDataBaseFile(), true);
+            FileOutputStream file = new FileOutputStream(Bootstrap.getCollaboratorDataBaseFile(), true);
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
             out = new ObjectOutputStream(file);
@@ -306,7 +307,7 @@ public class CollaboratorRepository {
 
     private void loadFromCollaboratorDataBase() throws IOException {
         List<Collaborator> collaboratorLoad;
-        File file = new File(MainApp.getCollaboratorDataBaseFile());
+        File file = new File(Bootstrap.getCollaboratorDataBaseFile());
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {

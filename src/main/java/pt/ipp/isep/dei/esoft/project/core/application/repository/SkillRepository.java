@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.core.application.repository;
 
 import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 
@@ -114,8 +115,8 @@ public class SkillRepository {
     }
 
     private void saveSkills() {
-        cleanFile(MainApp.getSkillDataBaseFile());
-        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getSkillDataBaseFile());
+        cleanFile(Bootstrap.getSkillDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getSkillDataBaseFile());
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(skillList);
         } catch (IOException e) {
@@ -124,7 +125,7 @@ public class SkillRepository {
     }
 
     private void cleanFile(String skillDataBaseFile) {
-        File file = new File(MainApp.getSkillDataBaseFile());
+        File file = new File(Bootstrap.getSkillDataBaseFile());
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print("");
         } catch (FileNotFoundException e) {
@@ -134,7 +135,7 @@ public class SkillRepository {
 
     @SuppressWarnings("unchecked")
     public void loadFromSkillDataBase() throws IOException {
-        File file = new File(MainApp.getSkillDataBaseFile());
+        File file = new File(Bootstrap.getSkillDataBaseFile());
         if (!file.exists()) {
             throw new IOException("The files do not exist.");
         }

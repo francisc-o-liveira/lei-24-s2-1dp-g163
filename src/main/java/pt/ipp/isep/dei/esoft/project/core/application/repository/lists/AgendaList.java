@@ -8,6 +8,7 @@ import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 import pt.ipp.isep.dei.esoft.project.ui.gui.entry.ManageAgendaUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
@@ -150,7 +151,7 @@ public class AgendaList implements Serializable, List<Entry> {
      */
     public void saveToDB() {
         try {
-            File file1 = new File(MainApp.getEntryDataBaseFile());
+            File file1 = new File(Bootstrap.getEntryDataBaseFile());
             PrintWriter writer = new PrintWriter(new FileWriter(file1));
             writer.print("");
             writer.close();
@@ -175,7 +176,7 @@ public class AgendaList implements Serializable, List<Entry> {
     @SuppressWarnings("unchecked")
     public void loadFromDataBase() throws IOException {
         List<Entry> loadEntry;
-        File file = new File(MainApp.getEntryDataBaseFile());
+        File file = new File(Bootstrap.getEntryDataBaseFile());
         if (!file.exists()) {
             throw new IOException("Entry database file does not exist. Starting with an empty list.");
         }

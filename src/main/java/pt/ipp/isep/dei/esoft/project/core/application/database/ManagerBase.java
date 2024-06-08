@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.core.application.database;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
@@ -37,7 +38,7 @@ public class ManagerBase {
     public void removeFromManagerDataBase(Manager manager,List<Manager> managers) {
 
         try {
-            FileOutputStream fileOut = new FileOutputStream(MainApp.getManagerDataBaseFile());
+            FileOutputStream fileOut = new FileOutputStream(Bootstrap.getManagerDataBaseFile());
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
            if (!managers.contains(manager)){
                out.writeObject(managers);
@@ -51,7 +52,7 @@ public class ManagerBase {
 
     public void saveFromManagerInDataBase(List<Manager> managers){
         try {
-            FileOutputStream file = new FileOutputStream(MainApp.getManagerDataBaseFile());
+            FileOutputStream file = new FileOutputStream(Bootstrap.getManagerDataBaseFile());
             ObjectOutputStream out;
             // If the file already has content, we need to use the AppendableObjectOutputStream
             out = new ObjectOutputStream(file);
@@ -65,7 +66,7 @@ public class ManagerBase {
 
     public void loadFromManagerDataBase() throws IOException {
         List<Manager> managers;
-        File file = new File(MainApp.getManagerDataBaseFile());
+        File file = new File(Bootstrap.getManagerDataBaseFile());
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {
@@ -79,7 +80,7 @@ public class ManagerBase {
             }
         }
         try {
-            FileInputStream fileIS = new FileInputStream(MainApp.getManagerDataBaseFile());
+            FileInputStream fileIS = new FileInputStream(Bootstrap.getManagerDataBaseFile());
             if (fileIS.getChannel().size() > 0){
                 ObjectInputStream in = new ObjectInputStream(fileIS);
                 while (true) {

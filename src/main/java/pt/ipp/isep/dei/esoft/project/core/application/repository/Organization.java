@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.core.application.database.ManagerBase;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.employee.Manager;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
@@ -189,7 +190,7 @@ public class Organization{
     }
 
     private boolean saveGreenSpaces() {
-        try (FileOutputStream fileOut = new FileOutputStream(MainApp.getGreenSpaceDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getGreenSpaceDataBaseFile());
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(greenSpaces);
             out.close();
@@ -204,7 +205,7 @@ public class Organization{
     @SuppressWarnings("unchecked")
     private void loadFromGreenSpaceDataBase() throws IOException {
         List<GreenSpace> greenSpaces;
-        File file = new File(MainApp.getGreenSpaceDataBaseFile());
+        File file = new File(Bootstrap.getGreenSpaceDataBaseFile());
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {

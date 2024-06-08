@@ -2,7 +2,7 @@ package pt.ipp.isep.dei.esoft.project.core.application.repository;
 
 import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.isep.lei.esoft.auth.AuthFacade;
 import pt.isep.lei.esoft.auth.UserSession;
 
@@ -101,7 +101,7 @@ public class AuthenticationRepository {
         String line = "";
         Boolean emailAlreadyResgistered = false;
         try {
-            Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
+            Scanner scanner = new Scanner(Bootstrap.getAuthDataBaseFile());
             while (scanner.hasNextLine()){
                 line = scanner.nextLine();
                 if (line.split(";")[1].equals(email)){
@@ -116,13 +116,13 @@ public class AuthenticationRepository {
         if (emailAlreadyResgistered){
             try {
                 // Leia o conteúdo do ficheiro
-                String conteudo = new String(Files.readAllBytes(Paths.get(MainApp.getAuthDataBaseFile().toString())));
+                String conteudo = new String(Files.readAllBytes(Paths.get(Bootstrap.getAuthDataBaseFile().toString())));
 
                 // Remova o texto desejado
                 String conteudoModificado = conteudo.replace(line, "");
 
                 // Escreva o conteúdo modificado de volta ao ficheiro
-                Files.write(Paths.get(MainApp.getAuthDataBaseFile().toString()), conteudoModificado.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+                Files.write(Paths.get(Bootstrap.getAuthDataBaseFile().toString()), conteudoModificado.getBytes(), StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println("Texto removido com sucesso!");
 
             } catch (IOException e) {
@@ -141,7 +141,7 @@ public class AuthenticationRepository {
     public void storeUserCredentialInDataBase(String name, String email,String pwd,String roleId){
         Boolean emailAlreadyResgistered = false;
         try {
-            Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
+            Scanner scanner = new Scanner(Bootstrap.getAuthDataBaseFile());
             while (scanner.hasNextLine()){
 
                 if (scanner.nextLine().split(";")[1].equals(email)){
@@ -155,7 +155,7 @@ public class AuthenticationRepository {
         }
         if (!emailAlreadyResgistered){
             try {
-                FileWriter send = new FileWriter(MainApp.getAuthDataBaseFile(), true);
+                FileWriter send = new FileWriter(Bootstrap.getAuthDataBaseFile(), true);
                 send.write(name+";"+email+";"+pwd+";"+roleId);
                 send.write(System.lineSeparator());
                 send.flush();
@@ -178,7 +178,7 @@ public class AuthenticationRepository {
         addUserRole(RegisterController.ROLE_VFM, RegisterController.ROLE_VFM);
         addUserRole(RegisterController.ROLE_COLAB, RegisterController.ROLE_COLAB);
         try {
-            File file = MainApp.getAuthDataBaseFile();
+            File file = Bootstrap.getAuthDataBaseFile();
             if (!file.exists()) {
                 try {
                     if (file.createNewFile()) {
@@ -191,7 +191,7 @@ public class AuthenticationRepository {
                     throw new IOException("An error occurred while trying to create the Organization database file.", e);
                 }
             }
-            Scanner scanner = new Scanner(MainApp.getAuthDataBaseFile());
+            Scanner scanner = new Scanner(Bootstrap.getAuthDataBaseFile());
 
             while (scanner.hasNextLine()){
 
