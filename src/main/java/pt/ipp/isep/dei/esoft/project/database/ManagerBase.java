@@ -1,14 +1,11 @@
 package pt.ipp.isep.dei.esoft.project.database;
 
 import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
-import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 import pt.ipp.isep.dei.esoft.project.ui.gui.MainApp;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerBase {
@@ -66,12 +63,25 @@ public class ManagerBase {
         }
     }
 
-    public void loadFromManagerDataBase(){
+    public void loadFromManagerDataBase() throws IOException {
         List<Manager> managers;
+        File file = new File(MainApp.getManagerDataBaseFile());
+        if (!file.exists()) {
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("Collaborator database file did not exist and has been created. Starting with an empty list.");
+                } else {
+                    throw new IOException("Collaborator database file does not exist and could not be created.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new IOException("An error occurred while trying to create the Collaborator database file.", e);
+            }
+        }
         try {
-            FileInputStream file = new FileInputStream(MainApp.getManagerDataBaseFile());
-            if (file.getChannel().size() > 0){
-                ObjectInputStream in = new ObjectInputStream(file);
+            FileInputStream fileIS = new FileInputStream(MainApp.getManagerDataBaseFile());
+            if (fileIS.getChannel().size() > 0){
+                ObjectInputStream in = new ObjectInputStream(fileIS);
                 while (true) {
                     try {
                         managers = (List<Manager>) in.readObject();
@@ -86,7 +96,7 @@ public class ManagerBase {
                 }
                 in.close();
             }
-            file.close();
+            fileIS.close();
         } catch (ClassNotFoundException | IOException | CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }

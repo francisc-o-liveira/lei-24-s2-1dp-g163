@@ -11,54 +11,75 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
 public class MainApp extends Application {
-
-
-
-
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/SceneLogin.fxml"));
-            Scene scene=new Scene(fxmlLoader.load());
-            Stage mainStage=new Stage();
-            LoginUI controller=fxmlLoader.getController();
-            controller.setMainStage(mainStage);
-            mainStage.setTitle("AquaCode - Green Space Management");
-            mainStage.setScene(scene);
-            mainStage.show();
-            Image image = new Image(getClass().getResourceAsStream("/Icons/icon.png"));
-            mainStage.getIcons().add(image);
-            mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-
-                    alerta.setTitle("Confirmation");
-                    alerta.setHeaderText("Closing Application");
-                    alerta.setContentText("Do you wish to close the app?");
-
-                    ((Button) alerta.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
-                    ((Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
-
-                    if (alerta.showAndWait().get() == ButtonType.CANCEL) {
-                        event.consume();
-                    }
-                }
-            });
-
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                saveData();
-            }));
-
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.run();
+            initializeApp();
         } catch (IOException ex) {
             criarAlertaErro(ex).show();
+        } catch (Exception e){
+            if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
+                DirectoryChooser directoryChooser = new DirectoryChooser();
+                directoryChooser.setTitle("Select Directory");
+                File selectedDirectory = directoryChooser.showDialog(null);
+
+                if (selectedDirectory != null) {
+                    try{
+                        initializeApp();
+                    }catch (IOException io){
+                        criarAlertaErro(io).show();
+                    }
+                } else {
+                    Alert alert=new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Please select a directory");
+                }
+            }
         }
+    }
+
+    private void initializeApp() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/SceneLogin.fxml"));
+        Scene scene=new Scene(fxmlLoader.load());
+        Stage mainStage=new Stage();
+        LoginUI controller=fxmlLoader.getController();
+        controller.setMainStage(mainStage);
+        mainStage.setTitle("AquaCode - Green Space Management");
+        mainStage.setScene(scene);
+        mainStage.show();
+        Image image = new Image(getClass().getResourceAsStream("/Icons/icon.png"));
+        mainStage.getIcons().add(image);
+        mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+
+                alerta.setTitle("Confirmation");
+                alerta.setHeaderText("Closing Application");
+                alerta.setContentText("Do you wish to close the app?");
+
+                ((Button) alerta.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");
+                ((Button) alerta.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("No");
+
+                if (alerta.showAndWait().get() == ButtonType.CANCEL) {
+                    event.consume();
+                }
+            }
+        });
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            saveData();
+        }));
     }
 
     public AssignEntryOnAgendaController ctrlEntry=AssignEntryOnAgendaController.getInstance();
@@ -85,6 +106,14 @@ public class MainApp extends Application {
         alerta.setTitle("Aplicação");
         alerta.setHeaderText("Problemas no arranque da aplicação");
         alerta.setContentText(ex.getMessage());
+
+        return alerta;
+    }
+
+    private Alert popUpBootStrap(){
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+
+        alerta.setContentText("The application did not detect a database. Select one?");
 
         return alerta;
     }
@@ -128,16 +157,10 @@ public class MainApp extends Application {
     }
 
     private static String entryDataBaseFile = new String("entryDataBase.csv");
-
-    private static String entryReferenceDataBaseFile = new String("entryReferenceDataBase.csv");
     private static String taskDataBaseFile=new String("taskDataBase.csv");
 
     public static String getEntryDataBaseFile() {
         return getFilePath(entryDataBaseFile);
-    }
-
-    private static String getEntryReferenceReferenceDataBaseFile() {
-        return getFilePath(entryReferenceDataBaseFile);
     }
 
     public static String getTaskDataBaseFile(){

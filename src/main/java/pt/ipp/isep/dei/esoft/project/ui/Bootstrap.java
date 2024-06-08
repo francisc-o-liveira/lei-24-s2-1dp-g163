@@ -11,13 +11,14 @@ import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
+
+import java.io.IOException;
 import java.util.List;
 
-public class Bootstrap implements Runnable {
+public class Bootstrap {
 
     //Add some task categories to the repository as bootstrap
-    public void run(){
-
+    public void run() throws Exception {
         try {
             addSkills();
             addJobCategories();
