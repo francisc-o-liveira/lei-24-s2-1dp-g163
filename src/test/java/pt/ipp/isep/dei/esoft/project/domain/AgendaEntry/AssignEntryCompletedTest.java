@@ -11,6 +11,7 @@ import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
 import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
@@ -26,7 +27,8 @@ public class AssignEntryCompletedTest {
 
     private EntryRepository entryRepository;
     private EntryDto entryDto;
-
+    private EntryMapper entryMapper;
+    private Entry entry;
     private Date completionDate;
     private String name;
     private String address;
@@ -39,6 +41,7 @@ public class AssignEntryCompletedTest {
 
     @BeforeEach
     void setUp() {
+        entryMapper =new EntryMapper();
         entryRepository = Repositories.getInstance().getEntryRepository();
         Organization greenSpaceRepository = Repositories.getInstance().getOrganizationRepository();
         name = "isep";
@@ -48,10 +51,10 @@ public class AssignEntryCompletedTest {
         area = 20.0;
         type = GreenSpace.Type.Garden;
         email = "gsm@this.app";
-        GreenSpaceDto gs=new GreenSpaceDto(area, new Address(zipCode,address,city),name,type,email);
+        GreenSpaceDto gs =new GreenSpaceDto(area, new Address(zipCode,address,city),name,type,email);
         greenSpaceRepository.registerGreenSpace(gs);
         entryDto = new EntryDto(
-                new Date(2024, 6, 1),new Tempo(8),
+                new Date(2023, 6, 1),new Tempo(8),
                 new EntryState(EntryState.State.Assigned),
                 "Test Task",
                 "Description of Test Task",
@@ -61,16 +64,18 @@ public class AssignEntryCompletedTest {
                 "123"
         );
         completionDate=new Date(2024,6,7);
-        entryRepository.registerNewTask(entryDto);
-        entryRepository.assignEntryOnAgenda(entryDto);
+        Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,4,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
+        entryDto.setCollaboratorThatCompleted(c);
+        entry = entryMapper.toDomain(entryDto);
+        entry.setCollaboratorThatCompleted(c);
+        entry.getStatus().setState(EntryState.State.Done);
+        entryRepository.getAgenda().add(entry);
     }
 
     @Test
     void completeTaskTest(){
-        Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,4,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));
-        entryDto.completeTask(completionDate,c);
         Optional<Entry> entry = entryRepository.completeTaskCollaborator(entryDto);
-        assertNotNull(entry.isPresent());
+        assertNotNull(entry.get());
         assertTrue(entry.get().isCompleted());
         assertEquals(entry.get().getStatus().getState(),EntryState.State.Done);
 

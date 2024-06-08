@@ -36,6 +36,10 @@ public class TeamMapper {
         return new TeamDto(team.getTeamList(), team.getSkills(), team.getTeamName());
     }
 
+    public Team toDomain(TeamDto teamDto){
+        return new Team(teamDto.getTeamList(),teamDto.getSkillsSelected(),100,0,teamDto.getTeamName());
+    }
+
     /**
      * Converts a TeamDto object to a Team object.
      *

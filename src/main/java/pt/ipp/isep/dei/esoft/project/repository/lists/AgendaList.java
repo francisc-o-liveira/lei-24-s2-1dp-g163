@@ -52,9 +52,9 @@ public class AgendaList implements Serializable, List<Entry> {
                     && Objects.equals(entry.getDegreeUrgency(), entryDto.getDegreeUrgency())
                     && Objects.equals(entry.getDescription(), entryDto.getDescription())
                     && Objects.equals(entry.getExpectedDuration(), entryDto.getExpectedDuration())
-            ) {
+            )
                 return entry;
-            }
+
         }
         throw new RuntimeException("Entry not found");
     }
@@ -202,7 +202,7 @@ public class AgendaList implements Serializable, List<Entry> {
     }
 
     public Entry getLast(){
-        return agenda.get(agenda.size());
+        return agenda.get(agenda.size()-1);
     }
 
     @Override
