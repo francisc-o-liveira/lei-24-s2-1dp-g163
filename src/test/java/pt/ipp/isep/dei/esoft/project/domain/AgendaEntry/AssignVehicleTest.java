@@ -74,9 +74,11 @@ public class AssignVehicleTest {
                 Task.DegreeUrgency.Medium,
                 new Tempo(2),
                 gs,
-                "123"
+                "123",
+                null,
+                new ArrayList<>()
         );
-        v1 = new Vehicle("VW1", "Golf1", Vehicle.Type.LightCargo, 1300, 1600, 160000, new Date(2005, 10, 1), new Date(2010, 12, 3), 11000, "30-AB-90", new Date(2010, 10, 1), 150000);
+        v1 = new Vehicle("VW3", "Golf13", Vehicle.Type.LightCargo, 1300, 1600, 160000, new Date(2005, 10, 1), new Date(2010, 12, 3), 11000, "32-AB-90", new Date(2010, 10, 1), 150000);
         vehiclesAssigning=new ArrayList<>();
         vehiclesAssigning.add(v1);
         vehicleRepository.addVehicle(v1);
