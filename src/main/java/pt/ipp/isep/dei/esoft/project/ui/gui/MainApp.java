@@ -31,12 +31,14 @@ public class MainApp extends Application {
                 DirectoryChooser directoryChooser = new DirectoryChooser();
                 directoryChooser.setTitle("Select Directory");
                 File selectedDirectory = directoryChooser.showDialog(null);
-
                 if (selectedDirectory != null) {
                     try{
+                        loadDatabases();
                         initializeApp();
                     }catch (IOException io){
                         criarAlertaErro(io).show();
+                    } catch (Exception e) {
+                        start(stage);
                     }
                 } else {
                     Alert alert=new Alert(Alert.AlertType.ERROR);
