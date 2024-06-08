@@ -113,16 +113,7 @@ public class JobCategoryRepository {
     public void loadFromJobCategoryDataBase() throws CloneNotSupportedException, IOException {
         File file = new File(Bootstrap.getJobCategoryDataBaseFile());
         if (!file.exists()) {
-            try {
-                if (file.createNewFile()) {
-                    System.out.println("Team database file did not exist and has been created. Starting with an empty list.");
-                } else {
-                    throw new IOException("Team database file does not exist and could not be created.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new IOException("An error occurred while trying to create the Team database file.", e);
-            }
+            throw new IOException("The files do not exist.");
         }
         if(file.length()==0){
             jobCategories=new ArrayList<>();

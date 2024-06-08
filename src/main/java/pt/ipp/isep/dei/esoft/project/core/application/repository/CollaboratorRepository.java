@@ -309,16 +309,7 @@ public class CollaboratorRepository {
         List<Collaborator> collaboratorLoad;
         File file = new File(Bootstrap.getCollaboratorDataBaseFile());
         if (!file.exists()) {
-            try {
-                if (file.createNewFile()) {
-                    System.out.println("Collaborator database file did not exist and has been created. Starting with an empty list.");
-                } else {
-                    throw new IOException("Collaborator database file does not exist and could not be created.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new IOException("An error occurred while trying to create the Collaborator database file.", e);
-            }
+            throw new IOException("The files do not exist.");
         }
         try {
             FileInputStream fileIn = new FileInputStream(file);
