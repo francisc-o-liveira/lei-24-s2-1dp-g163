@@ -8,10 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import javafx.util.Callback;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
 import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterCollaboratorController;
@@ -22,21 +20,38 @@ import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
-
 import java.io.IOException;
 
-
+/**
+ * UI class responsible for managing collaborators.
+ */
 public class ManageCollaboratorsUI {
 
+    /**
+     * Main stage of the application.
+     */
     public Stage stage = LoginUI.getMainStage();
+
+    /**
+     * Stage for viewing collaborator details.
+     */
     public Stage stageToViewDetails = new Stage();
+
+    /**
+     * Controller for registering collaborators.
+     */
     public RegisterCollaboratorController ctrl;
-    public ViewDetailsCollaboratorUI viewDetailsCollaboratorUI;
+
+    /**
+     * Controller for user authentication.
+     */
     public AuthenticationController ctrlAuth;
 
+    /**
+     * FXML elements for the scene
+     */
     @FXML
     public TableView<Collaborator> tableCollaborators;
-
     @FXML
     public TableColumn<Collaborator, Integer> columnIDNumber;
     @FXML
@@ -50,16 +65,30 @@ public class ManageCollaboratorsUI {
     @FXML
     public Label labelRole;
 
-    ObservableList<Collaborator> collaboratorObservableList=FXCollections.observableArrayList();
-    Collaborator selectedCollaboratorForEdit;
+    /**
+     * Observable list of collaborators.
+     */
+    private ObservableList<Collaborator> collaboratorObservableList = FXCollections.observableArrayList();
+
+    /**
+     * Selected collaborator for editing.
+     */
+    public Collaborator selectedCollaboratorForEdit;
+
+    /**
+     * Constructor for ManageCollaboratorsUI.
+     */
     public ManageCollaboratorsUI() {
         ctrl = RegisterCollaboratorController.getInstance();
-        ctrlAuth= AuthenticationController.getInstance();
+        ctrlAuth = AuthenticationController.getInstance();
     }
 
-    public void setLabel(){
+    /**
+     * Set the label for the user role.
+     */
+    public void setLabel() {
         UserRoleDTO role = ctrlAuth.getAtualUserRole();
-        if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+        if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
             labelRole.setText("HumanResourcesManager");
         } else if (role.getDescription().equals(RegisterController.ROLE_GSM)) {
             labelRole.setText("GreenSpaceManager");
@@ -72,11 +101,21 @@ public class ManageCollaboratorsUI {
         }
     }
 
-
-    public Stage getStageToViewDetails(){
+    /**
+     * Get the stage for viewing collaborator details.
+     *
+     * @return Stage for viewing collaborator details.
+     */
+    public Stage getStageToViewDetails() {
         return stageToViewDetails;
     }
 
+    /**
+     * Handle the action event for adding a collaborator.
+     *
+     * @param event Action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void btnAddCollaborator(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetails.fxml"));
@@ -85,13 +124,16 @@ public class ManageCollaboratorsUI {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-        ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        ViewDetailsCollaboratorUI uiToAdd = fxmlLoader.getController();
         uiToAdd.setStageToAdd(stage);
         uiToAdd.setTableAssignSkills();
         uiToAdd.setComboBoxes();
         uiToAdd.setBtnEditCollaboratorValue(false);
     }
 
+    /**
+     * Handle the action event for removing a collaborator.
+     */
     @FXML
     public void btnRemoveCollaborator() {
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
@@ -112,6 +154,11 @@ public class ManageCollaboratorsUI {
         }
     }
 
+    /**
+     * Handle the action event for editing a collaborator.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void btnEditCollaborator() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetails.fxml"));
@@ -119,22 +166,23 @@ public class ManageCollaboratorsUI {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
-        ViewDetailsCollaboratorUI uiToAdd=fxmlLoader.getController();
+        ViewDetailsCollaboratorUI uiToAdd = fxmlLoader.getController();
         Collaborator selectedCollaborator = tableCollaborators.getSelectionModel().getSelectedItem();
-        try{
+        try {
             stage.show();
             uiToAdd.setTableAssignSkills();
             uiToAdd.setComboBoxes();
             uiToAdd.putInTextFields(selectedCollaborator);
             uiToAdd.showCollaboratorSelected(selectedCollaboratorForEdit);
             uiToAdd.setBtnAddCollaboratorValue(false);
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             popUpOfVerifications(Alert.AlertType.ERROR, "Select a Collaborator to edit.").show();
         }
     }
 
-
-
+    /**
+     * Set up the table of collaborators.
+     */
     public void setTableCollaborators() {
         setLabel();
 
@@ -151,9 +199,8 @@ public class ManageCollaboratorsUI {
                     private final javafx.scene.control.Button btn = new Button("View Details");
 
                     {
-
                         btn.setOnAction((ActionEvent event) -> {
-                            selectedCollaboratorForEdit = tableCollaborators.getItems().get(((TableCell) ((Button)event.getSource()).getParent()).getIndex());
+                            selectedCollaboratorForEdit = tableCollaborators.getItems().get(((TableCell) ((Button) event.getSource()).getParent()).getIndex());
                             try {
                                 showMore(selectedCollaboratorForEdit);
                             } catch (IOException e) {
@@ -174,19 +221,25 @@ public class ManageCollaboratorsUI {
                 };
             }
         });
-        for(Collaborator c : ctrl.getCollaboratorList()){
+        for (Collaborator c : ctrl.getCollaboratorList()) {
             collaboratorObservableList.add(c);
         }
         tableCollaborators.setItems(collaboratorObservableList);
     }
 
+    /**
+     * Shows the details of a collaborator.
+     *
+     * @param collab Collaborator to show details for.
+     * @throws IOException If an I/O error occurs.
+     */
     public void showMore(Collaborator collab) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/collaborator/Scene_ViewDetails.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         stageToViewDetails.setScene(scene);
         stageToViewDetails.show();
-        ViewDetailsCollaboratorUI ui=fxmlLoader.getController();
+        ViewDetailsCollaboratorUI ui = fxmlLoader.getController();
         ui.setComboBoxes();
         ui.putInTextFields(collab);
         ui.showCollaboratorSelected(selectedCollaboratorForEdit);
@@ -194,6 +247,12 @@ public class ManageCollaboratorsUI {
         ui.setTableSkillsAssigned();
     }
 
+    /**
+     * Handle the action event for logging out.
+     *
+     * @param event Action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void doLogout(ActionEvent event) throws IOException {
         Alert popUp = new Alert(Alert.AlertType.CONFIRMATION);
@@ -213,27 +272,40 @@ public class ManageCollaboratorsUI {
         }
     }
 
+    /**
+     * Handle the action event for going back.
+     *
+     * @param event Action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader ;
+        FXMLLoader fxmlLoader;
         try {
             UserRoleDTO role = ctrlAuth.getAtualUserRole();
-            if (role.getDescription().equals(RegisterController.ROLE_HRM)){
+            if (role.getDescription().equals(RegisterController.ROLE_HRM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_HRM.fxml"));
             } else if (role.getDescription().equals(RegisterController.ROLE_VFM)) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_VFM.fxml"));
-            }else {
+            } else {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/menus/SceneMenu_Admin.fxml"));
             }
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-        }catch (ArrayIndexOutOfBoundsException e){
-            popUpOfVerifications(Alert.AlertType.WARNING,"PLEASE RESTART THIS APPLICATION").show();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            popUpOfVerifications(Alert.AlertType.WARNING, "PLEASE RESTART THIS APPLICATION").show();
         }
     }
 
+    /**
+     * Create a pop-up alert for verifications.
+     *
+     * @param alertType Type of alert.
+     * @param message   Message to display.
+     * @return Alert object.
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
         Alert alerta = new Alert(alertType);
 
@@ -244,8 +316,13 @@ public class ManageCollaboratorsUI {
         return alerta;
     }
 
+    /**
+     * Handle the action event for updating the table of collaborators.
+     *
+     * @param event Action event.
+     */
     @FXML
-    public void btnUpdate(ActionEvent event){
+    public void btnUpdate(ActionEvent event) {
         tableCollaborators.getItems().clear();
         setTableCollaborators();
     }

@@ -11,20 +11,32 @@ import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
+/**
+ * UI Controller class for postponing an entry.
+ */
 public class PostponeUI {
     @FXML
     private DatePicker postponedDate;
     @FXML
     private TextField postponeTime;
+    /** Vriable of the selected entry to postpone */
     private EntryDto selectedEntry;
-
+    /** Controller */
     private ViewDetailsEntryController ctrl;
 
+    /**
+     * Sets the entry to be postponed.
+     *
+     * @param entry The entry to be postponed.
+     */
     public void setEntry(EntryDto entry){
         ctrl= ViewDetailsEntryController.getInstance();
         selectedEntry=entry;
     }
 
+    /**
+     * Handles the action of postponing the entry.
+     */
     @FXML
     public void postponingEntry(){
         String timeToPostpone=postponeTime.getText();
@@ -41,6 +53,12 @@ public class PostponeUI {
         }
     }
 
+    /**
+     * Parses the time string into Tempo object.
+     *
+     * @param timeExpected The time string to parse.
+     * @return The parsed Tempo object.
+     */
     private Tempo getTimeForEntry(String timeExpected) {
         String[] times = timeExpected.split(":");
         Tempo time;
@@ -52,6 +70,12 @@ public class PostponeUI {
         return time;
     }
 
+    /**
+     * Creates a popup alert with the given message.
+     *
+     * @param message The message to display in the popup.
+     * @return The created Alert object.
+     */
     private Alert popUp(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
@@ -60,6 +84,13 @@ public class PostponeUI {
         return alert;
     }
 
+    /**
+     * Creates a popup alert with the given alert type and message.
+     *
+     * @param alertType The type of alert.
+     * @param messages The message to display in the popup.
+     * @return The created Alert object.
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 

@@ -16,37 +16,63 @@ import java.io.IOException;
 
 import static pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController.ROLE_COLAB;
 
+/**
+ * UI Controller class for the register.
+ */
 public class RegisterUI {
 
+    /** Text field for entering the user's email. */
     @FXML
     private TextField emailLogin;
 
+    /** Password field for entering the user's password. */
     @FXML
     private PasswordField passwordLogin;
 
-
+    /** Password field for repeating the user's password. */
     @FXML
     private PasswordField repeatPasswordLogin;
 
+    /** Combo box for selecting the user's role. */
     @FXML
     private ComboBox<String> roleComboBox;
 
+    /** The main stage of the application. */
     public static Stage mainStage;
 
+    /** Instance of the RegisterController for handling registration. */
     private final RegisterController ctrl =  RegisterController.getInstance();
+
+    /** Instance of the AuthenticationController for authentication-related operations. */
     private final AuthenticationController ctrlAuth= AuthenticationController.getInstance();
 
+    /**
+     * Sets the main stage of the application and populates the role combo box.
+     *
+     * @param mainStage The main stage of the application.
+     */
     public void setMainStageAndBox(Stage mainStage) {
         ObservableList<String> roles= FXCollections.observableArrayList(ctrl.getRoles());
         roleComboBox.setItems(roles);
         this.mainStage = mainStage;
     }
 
+    /**
+     * Handles the action when the login button is clicked.
+     *
+     * @param event The action event.
+     * @throws IOException If an I/O error occurs.
+     */
     @FXML
     public void btnLogin(ActionEvent event) throws IOException {
         returnToLogin();
     }
 
+    /**
+     * Handles the action when the register button is clicked.
+     *
+     * @param event The action event.
+     */
     @FXML
     public void btnRegister(ActionEvent event) {
         try{
@@ -71,6 +97,9 @@ public class RegisterUI {
         }
     }
 
+    /**
+     * Registers a new user account.
+     */
     private void regAccount() {
         if (emailLogin.getText().isEmpty() || passwordLogin.getText().isEmpty() || repeatPasswordLogin.getText().isEmpty()) {
             throw new IllegalArgumentException("Email or password are required");
@@ -89,6 +118,11 @@ public class RegisterUI {
         }
     }
 
+    /**
+     * Creates and returns a pop-up alert.
+     *
+     * @return The pop-up alert.
+     */
     private Alert popUp(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
@@ -97,6 +131,12 @@ public class RegisterUI {
         return alert;
     }
 
+    /**
+     * Creates and returns a pop-up alert for exceptions.
+     *
+     * @param message The message to display in the alert.
+     * @return The pop-up alert.
+     */
     private Alert popUpExceptions(String message){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
@@ -105,6 +145,11 @@ public class RegisterUI {
         return alert;
     }
 
+    /**
+     * Returns to the login screen.
+     *
+     * @throws IOException If an I/O error occurs.
+     */
     private void returnToLogin()throws IOException{
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/SceneLogin.fxml"));
         Parent root= fxmlLoader.load();
