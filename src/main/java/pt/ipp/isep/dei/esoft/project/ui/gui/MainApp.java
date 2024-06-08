@@ -97,7 +97,6 @@ public class MainApp extends Application {
         String relativePath = "\\\\target\\\\classes\\\\DataBase\\\\";
         currentDir = currentDir.replace("\\", "\\\\");
 
-
         // Combine the current directory with the relative path
         String fullPath = currentDir + relativePath + fileName;
 
