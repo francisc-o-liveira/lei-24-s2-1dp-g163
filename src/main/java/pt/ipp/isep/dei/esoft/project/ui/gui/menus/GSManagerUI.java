@@ -9,7 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.team.ManageTeamsUI;
 import pt.ipp.isep.dei.esoft.project.ui.gui.vehicles.ManageVehiclesUI;

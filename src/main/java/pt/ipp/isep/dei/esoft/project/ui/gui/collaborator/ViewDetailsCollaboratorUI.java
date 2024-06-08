@@ -6,18 +6,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.AssignSkillsController;
-import pt.ipp.isep.dei.esoft.project.application.controller.collaboratorSystem.RegisterCollaboratorController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.DocType;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.JobCategory;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.collaboratorSystem.AssignSkillsController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.collaboratorSystem.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.time.LocalDate;

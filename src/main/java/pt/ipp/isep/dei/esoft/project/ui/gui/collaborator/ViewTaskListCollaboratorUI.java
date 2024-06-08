@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.collaborator;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -10,19 +9,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.ViewTaskListAssignedCollabController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
-import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.ViewTaskListAssignedCollabController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.EntryState;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
-import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;

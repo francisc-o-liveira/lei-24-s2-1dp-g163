@@ -1,7 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 
 import java.util.ArrayList;
 import java.util.List;

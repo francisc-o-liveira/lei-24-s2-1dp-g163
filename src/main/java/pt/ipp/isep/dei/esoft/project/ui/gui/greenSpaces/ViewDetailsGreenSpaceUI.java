@@ -3,8 +3,8 @@ package pt.ipp.isep.dei.esoft.project.ui.gui.greenSpaces;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
 import java.net.URL;

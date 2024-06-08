@@ -7,9 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.OrganizationController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.domain.employee.Manager;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.OrganizationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.employee.Manager;
 
 /**
  * This class represents the UI for system configurations, allowing the management of managers

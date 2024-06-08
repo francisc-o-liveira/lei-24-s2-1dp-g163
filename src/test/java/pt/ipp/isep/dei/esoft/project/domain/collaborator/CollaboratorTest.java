@@ -2,12 +2,16 @@ package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.task.Entry;
-import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
-import pt.ipp.isep.dei.esoft.project.domain.task.Task;
-import pt.ipp.isep.dei.esoft.project.repository.EntryRepository;
-import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.DocType;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Entry;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.EntryState;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.EntryRepository;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
@@ -162,7 +166,7 @@ class CollaboratorTest {
     }
     
     @Test
-    void tasksAssignedTasksTest(){
+    void tasksAssignedTasksTest() throws Exception {
         Bootstrap boot = new Bootstrap();
         boot.run();
         Collaborator c = new Collaborator("Joaquim Mendes Manuel Silva Oliveira",new Date(2001,10,29), new Date(2024,04,29),"Rua Das Rosas","4630-131","Marco de Canaveses","+351 916835384","joaquim@gmail.com", DocType.Type.CitizenCard,197232131,new JobCategory("Gardener"));

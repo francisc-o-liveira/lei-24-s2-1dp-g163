@@ -2,19 +2,15 @@ package pt.ipp.isep.dei.esoft.project.domain.greenSpace;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
-import pt.ipp.isep.dei.esoft.project.domain.org.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.mapper.GreenSpaceMapper;
-import pt.ipp.isep.dei.esoft.project.repository.Organization;
-import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
+
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.org.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.core.application.mapper.GreenSpaceMapper;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Organization;
 import pt.ipp.isep.dei.esoft.project.utilities.Address;
 
-import java.io.IOException;
 import java.util.Optional;
 
 class RegisterGreenSpaceTest{

@@ -1,14 +1,13 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.team;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.teamSystem.GenerateTeamController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.team.Team;
 
 /**
  * UI Controller for viewing details of a team.
