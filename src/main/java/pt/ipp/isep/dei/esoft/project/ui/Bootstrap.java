@@ -26,6 +26,7 @@ public class Bootstrap {
     }
 
     public Bootstrap() {
+        saveDirectory = null;
     }
 
     //Add some task categories to the repository as bootstrap
