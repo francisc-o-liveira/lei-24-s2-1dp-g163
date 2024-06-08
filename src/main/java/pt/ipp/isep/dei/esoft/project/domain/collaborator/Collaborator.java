@@ -26,7 +26,7 @@ public class Collaborator implements Serializable {
     private String email;
     private JobCategory jobCategory;
     private List<Skill> skills;
-    public enum StatusType {Active,NotActive}
+    public enum StatusType implements Serializable {Active,NotActive}
     private StatusType statusType;
 
     /** When created, the Collaborator does not own any skills */
