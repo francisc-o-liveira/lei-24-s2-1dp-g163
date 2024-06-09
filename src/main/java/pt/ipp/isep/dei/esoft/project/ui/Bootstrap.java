@@ -1,7 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
-import pt.ipp.isep.dei.esoft.project.core.application.repository.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +40,7 @@ public class Bootstrap {
     }
     private void addSkills() throws Exception {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
-       // skillRepository.loadFromSkillDataBase();
+        skillRepository.loadFromSkillDataBase();
     }
     private void addJobCategories() throws Exception {
         JobCategoryRepository jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
@@ -55,7 +54,7 @@ public class Bootstrap {
     }
     private void addOrganization() throws Exception {
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
-       // organizationRepository.loadSystem();
+        organizationRepository.loadSystem();
         organizationRepository.addManager("ADMIN","GSM","+351910000000","admin@this.app");
     }
     private void addUsers() throws Exception {

@@ -40,14 +40,12 @@ public class EntryRepository {
             timeOfWorkByCollaborators = new Tempo(HOURS_WORK_PER_OMISSION);
         }
 
-        /* try {
+        try {
             agenda.loadFromDataBase();
             toDo.loadFromDataBase();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-         */
     }
 
     /**
@@ -104,7 +102,7 @@ public class EntryRepository {
         mapper.entryDtoToEntry(entryDto, entry);
         if (toDo.remove(entry)) {
             agenda.add(entry);
-          //  agenda.saveToDB();
+            agenda.saveToDB();
             agendaEntry = Optional.of(agenda.getLast());
         }
         return agendaEntry;
@@ -121,7 +119,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.isCanceled()) {
-            // agenda.saveToDB();
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -138,7 +136,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.isPostpone()) {
-            // agenda.saveToDB();
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -164,7 +162,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.getVehicleList().equals(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()))) {
-            // agenda.saveToDB();
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -181,7 +179,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (haveSameTeam(entryDto, entry)) {
-           // agenda.saveToDB();
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -211,7 +209,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.getStatus().isCompleted() && entry.getCollaboratorFinish().equals(entryDto.getCollaboratorFinish())) {
-          //  agenda.saveToDB();
+            agenda.saveToDB();
             entryCompleted = Optional.of(entry);
         }
         return entryCompleted;
