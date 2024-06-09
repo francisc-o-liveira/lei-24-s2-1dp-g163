@@ -61,7 +61,7 @@ Later, that To-do List entry will originate an Entry in the Agenda with a starti
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us028-system-sequence-diagram-alternative-one.svg)
 
 
 ### 1.7 Other Relevant Remarks

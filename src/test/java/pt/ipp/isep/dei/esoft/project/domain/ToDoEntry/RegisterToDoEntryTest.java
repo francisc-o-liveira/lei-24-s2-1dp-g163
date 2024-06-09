@@ -21,6 +21,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class RegisterToDoEntryTest {
 
 
     @BeforeEach
-    void setupAll() {
+    void setupAll() throws IOException {
         repo = new EntryRepository();
         mapper = new EntryMapper();
         startDate = new Date();
