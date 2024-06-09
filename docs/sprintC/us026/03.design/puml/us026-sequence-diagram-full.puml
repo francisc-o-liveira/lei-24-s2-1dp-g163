@@ -8,7 +8,7 @@ autonumber
 'hide footbox
 actor "GSM" as GSM
 participant ":AgendaUI" as UI
-participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryAgendaUI" as UI2
 participant ":AgendaController" as CTRL
 participant ":ViewDetailsEntryController" as CTRL2
 participant ":Repositories" as RepositorySingleton
@@ -142,11 +142,11 @@ activate GSM
 
              UI2 -> GSM : show entry data and wait for selection vehicle to assign
              deactivate UI2
-             loop For Every vehicle that he want to add to the entry and are disposable to
+
 
              GSM -> UI2 : select one vehicle and click on button to assign
              activate UI2
-
+ loop For Every vehicle that he want to add to the entry and are disposable to
             UI2 -> CTRL2 : assignVehicleToEntry(vehicleDto,entryDto)
             activate CTRL2
 
@@ -182,10 +182,10 @@ activate GSM
 
             CTRL2 -> UI2 : true/false
             deactivate CTRL2
-
+end
             UI2 -> GSM : show operation success
             deactivate UI2
-            end
+
 
 
 

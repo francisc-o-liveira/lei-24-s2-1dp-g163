@@ -17,6 +17,7 @@ public class JobCategoryRepository {
     private List<JobCategory> jobCategories;
 
     public JobCategoryRepository() {
+        jobCategories=new ArrayList<>();
        // try {
         //    loadFromJobCategoryDataBase();
        // } catch (IOException | CloneNotSupportedException e) {

@@ -8,7 +8,7 @@ skinparam linetype polyline
 skinparam classAttributeIconSize 0
 
 'left to right direction
-
+package "Core" #DDDDDD{
 package "Domain" {
 class Entry {
     - List<Vehicle>
@@ -24,11 +24,13 @@ class EntryState{
 class TaskDto{
 }
 class EntryRepository {
-    - List <Entry> : agenda
 
     + getAgendaList()
     + assignVehicleToEntry(vehicle,entry)
     + filterVehiclesNotUseInTime(vehicleList,entryDto)
+}
+
+class AgendaList{
 }
 
 
@@ -81,11 +83,12 @@ class VehicleDto{
 
 
 
-class GSMUser {
-}
 
 
 package "Controller"{
+
+class ViewDetailsEntryOnAgendaController{
+}
 
 class AssignedVehicleToEntryController {
     - EntryRepository entryRepository
@@ -96,6 +99,7 @@ class AssignedVehicleToEntryController {
     + getVehicleList()
     - getCollaboratorFromSession()
 }
+}
 
 note left of AssignedVehicleToEntryController
     - entry is achieved with entry repository
@@ -104,19 +108,25 @@ end note
 
 }
 
-
+class GSMUser {
+}
 
 package "UI"{
-
-class AssignedVehicleToEntryUI {
+class ViewDetailsEntryOnAgendaUI {
     + assignVehicleListToEntry()
 }
 
+class AssignVehicleToEntryUI{
+}
 }
 Repositories -> Repositories : instance
 
+AssignVehicleToEntryUI <. ViewDetailsEntryOnAgendaUI
 
-AssignedVehicleToEntryUI .> AssignedVehicleToEntryController
+ViewDetailsEntryOnAgendaUI .> ViewDetailsEntryOnAgendaController
+
+
+AssignVehicleToEntryUI .> AssignedVehicleToEntryController
 
 AssignedVehicleToEntryController .> Repositories : repositories
 Repositories "1" --> "1" EntryRepository
@@ -132,7 +142,8 @@ EntryMapper "1" ..> "*" Entry
 VehicleRepository "1" --> "*" Vehicle : vehicles
 VehicleMapper "1" --> "*" Vehicle
 EntryMapper "1" --> "1" VehicleMapper
-EntryRepository "1" --> "*" Entry : entry's
+EntryRepository "1" --> "1" AgendaList : agenda
+AgendaList "1" --> "*" Entry : entry's
 EntryRepository --> "*" GSMUser : employs
 EntryRepository ..> EntryMapper
 VehicleRepository ..> VehicleMapper
