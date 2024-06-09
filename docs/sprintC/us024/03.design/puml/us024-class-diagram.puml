@@ -18,13 +18,7 @@ package "Core" #f0f0f0{
 
 
 
-package "Session" #ddd {
-    class ApplicationSession {
-        - instance: ApplicationSession
-        + getInstance(): ApplicationSession
-        + getEmailServiceInstance(): EmailService
-    }
-}
+
 
     package "Controller" #dddddd{
 
@@ -48,12 +42,7 @@ package "Session" #ddd {
         package "DTO" #dddddd{
 
             class EntryDto {
-                +startDate: Date
-                +status: String
-                +teamAssigned: TeamDto
-                +reference: String
-                +finishDate: Date
-                + assignTeam(teamDto: TeamDto)
+                +postpone(newStartDate, newStartTime)
             }
 
 
@@ -79,28 +68,18 @@ package "Session" #ddd {
                 + searchForEntryAgenda(entryDto: EntryDto): Entry
             }
 
-            class TeamRepository {
-                + getTeams(): List<Team>
-            }
 
-            package "Lists" #999{
-                class AgendaList {
-                    + filterTeamNotActivateInTime(teamList: List<Team>, entryDto: EntryDto): List<Team>
-                }
-            }
+
+
         }
 
         package "Model" #bbbbbb{
 
             class Entry {
-                +reference: String
+
                 +status: String
                 +startDate: Date
-                +teamAssigned: Team
-                +finishDate: Date
-                +description: String
-                +title: String
-                +getTeamAssigned(): TeamDto
+                +postponeEntry(entryDto)
             }
 
 
@@ -113,8 +92,8 @@ ViewDetailsEntryAgendaUI ..> PostponeUI
 PostponeUI ..> ViewDetailsEntryController
 ViewDetailsEntryController ..> Repositories : repositories
 ViewDetailsEntryController ..> EntryRepository : entryRepository
-ViewDetailsEntryController ..> TeamRepository : teamRepository
-ViewDetailsEntryController ..> AgendaList : agendaList
+
+
 
 ViewDetailsEntryController ..> EntryDto 
 EntryRepository ..> EntryMapper
@@ -123,9 +102,9 @@ EntryRepository ..> EntryMapper
 
 
 EntryRepository "1" --> "*" Entry
-Repositories "1" --> "1" TeamRepository
+
 Repositories "1" --> "1" EntryRepository
-AgendaList "1" --> "*" Entry
+
 EntryMapper ..> EntryDto
 
 

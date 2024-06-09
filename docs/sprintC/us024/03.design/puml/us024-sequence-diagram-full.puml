@@ -61,7 +61,7 @@ deactivate EntryDto
 
 
 
-EntryDto ->
+
 
 
 
@@ -102,4 +102,3 @@ deactivate Actor
 
 
 
-@enduml
