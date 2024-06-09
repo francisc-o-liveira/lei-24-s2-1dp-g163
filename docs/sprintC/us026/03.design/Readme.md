@@ -4,18 +4,21 @@
 
 ### 3.1. Rationale
 
-| Interaction ID | Question: Which class is responsible for...       | Answer                        | Justification (with patterns)                                                                                 |
-|:---------------|:--------------------------------------------------|:------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1         | 	... interacting with the actor?                  | AssignEntryOnAgendaUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-|                | 	... coordinating the US?                         | AssignEntryOnAgendaController | Controller                                                                                                    |
-|                | ... setting the Entry?                            | EntryRepository               | Creator (Rule 1): in the DM EntryRepository.                                                                  |
-| Step 2         | 	...saving the inputted data?                     | Entry                         | IE: object created in step 1 has its own data.                                                                |
-| Step 3         | 	...data transfer object?                         | EntryMapper and VehicleMapper | IE: Pattern (Data Transfer Object)                                                                            |
-| Step 4         | 	... validating vehicle (global validation)?      | EntryRepository               | IE:  the status have the verification and attribution method by omission.                                     |
-| Step 5         | 	... validating data (local validation)?          | Entry                         | IE: owns its data.                                                                                            | 
-|                | 	... validating all data (global validation)?     | EntryRepository               | IE: knows all Entry's.                                                                                        | 
-|                | 	... saving the set Vehicle?                      | Entry                         | IE: have vehicles.                                                                                            | 
-| Step 6         | 	... informing operation success?                 | AssignEntryOnAgendaUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...       | Answer                      | Justification (with patterns)                                                                                                                                                  |
+|:---------------|:--------------------------------------------------|:----------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1: Asks to Assign a Team to the Selected Entry | handling the user's request to assign a team to a selected entry? | ViewDetailsEntryAgendaUI    | **Pure Fabrication**: The `ViewDetailsEntryAgendaUI` manages user interaction to keep the UI logic separate from the business logic, ensuring high cohesion and low coupling.  |
+| 1 | delegating the request to get possible teams for the entry? | ViewDetailsEntryController  | **Controller**: The `ViewDetailsEntryController` coordinates the process, delegating the request to appropriate handlers, ensuring separation of concerns and central control. |
+| 1 | fetching the agenda list from the entry repository? | EntryRepository             | **Information Expert**: The `EntryRepository` holds the agenda data and is responsible for providing it.                                                                       |
+| 1 | fetching the list of teams from the team repository? | VehicleRepository           | **Information Expert**: The `VehicleRepository` holds the vehicle data and is responsible for providing it.                                                                    |
+| 1 | filtering the team list based on the entry time? | AgendaList                  | **Information Expert**: The `AgendaList` knows the details and logic for filtering teams based on their activation times.                                                      |
+| 1 | converting the filtered team list to a list of DTOs? | VehicleMapper               | **Pure Fabrication**: The `VehicleMapper` converts vehicles entities to DTOs, separating transformation logic from business logic.                                             |
+| 2: Shows possible Teams for Entry Assignment List | displaying the possible teams for entry assignment to the user? | AssignVehicleOnEntryUI      | **Pure Fabrication**: The `AssignVehicleOnEntryUI` presents the list of possible teams to the user, maintaining separation of concerns.                                        |
+| 3: Selects a Team and Assigns it | handling the user's selection of a team and assignment to an entry? | AssignVehicleOnEntryUI      | **Pure Fabrication**: The `AssignVehicleOnEntryUI` manages user interaction for team selection and assignment, ensuring UI responsibilities are distinct from business logic.  |
+| 3 | delegating the request to assign the selected team to the entry? | ViewDetailsEntryController  | **Controller**: The `AssignVehicleOnEntryController` manages the assignment process, ensuring central control and coordination.                                                |
+| 3 | delegating the task to update the entry in the repository? | EntryRepository             | **Information Expert**: The `EntryRepository` manages data persistence and is responsible for updating the entry with the assigned team.                                       |
+| 3 | converting the entry DTO to an entry entity? | EntryMapper                 | **Pure Fabrication**: The `EntryMapper` handles the transformation of entry DTOs to domain entities, ensuring separation of concerns.                                          |
+| 3 | updating the team and vehicles in the entry? | EntryMapper                 | **Pure Fabrication**: The `EntryMapper` updates the entry based on the provided DTO, applying domain logic appropriately.                                                      |
+| 4: Displays Operation Success Message | displaying the operation success message to the user? | AssignTeamUI                | **Pure Fabrication**: The `AssignVehicleOnEntryUI` presents feedback to the user, maintaining separation of concerns between UI and business logic.                            |
 
 ### Systematization
 
@@ -36,6 +39,8 @@ Other software classes (i.e. Pure Fabrication) identified:
 
 * AssignEntryOnAgendaUI
 * AssignEntryOnAgendaController
+* EntryMapper
+* VehicleMapper
 
 Other software classes (i.e. Use of Data Transfer Objects (DTO)) identified:
 

@@ -8,7 +8,7 @@ autonumber
 'hide footbox
 actor "GSM" as GSM
 participant ":AgendaUI" as UI
-participant ":ViewDetailsEntryUI" as UI2
+participant ":ViewDetailsEntryAgendaUI" as UI2
 participant ":AgendaController" as CTRL
 participant ":ViewDetailsEntryController" as CTRL2
 participant ":Repositories" as RepositorySingleton
