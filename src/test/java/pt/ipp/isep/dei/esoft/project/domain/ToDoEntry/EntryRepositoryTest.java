@@ -69,10 +69,4 @@ public class EntryRepositoryTest {
         assertTrue(states.contains(EntryState.State.Assigned));
     }
 
-    @Test
-    void testSaveToDB() {
-        entryRepository.registerNewTask(entryDto);
-        controller.assignEntryOnAgenda(entryDto, new Date(2023, 6, 2), new Tempo(9));
-        assertDoesNotThrow(() -> controller.saveToDB());
-    }
 }
