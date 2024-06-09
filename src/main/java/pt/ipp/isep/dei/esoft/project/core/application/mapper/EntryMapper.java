@@ -199,7 +199,7 @@ public class EntryMapper {
      * @return true if the team or vehicles should be updated, false otherwise
      */
     private boolean shouldUpdateTeamOrVehicles(Entry entry, EntryDto entryDto) {
-        return entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())&& (entry.getTeamAssigned() == null || entry.getVehicleList() == null);
+        return entry.getStartDate().equals(entryDto.getStartDate()) && entry.getStatus().equals(entryDto.getStatus())&& ((entry.getTeamAssigned() == null || entryDto.getTeamAssigned() != null) || (entry.getVehicleList().size()==0 && entryDto.getVehicleList().size()>0));
     }
 
     /**
