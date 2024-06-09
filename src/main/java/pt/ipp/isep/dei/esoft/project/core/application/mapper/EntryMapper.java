@@ -91,7 +91,7 @@ public class EntryMapper {
             entry.setEntryAgenda(entryDto.getStartDate(), entryDto.getStartHour());
         } else if (shouldPostponeEntry(entry, entryDto)) {
             if (canPostpone(entryDto)) {
-                entry.postponeEntry(entryDto.getStartDate());
+                entry.postponeEntry(entryDto.getStartDate(),entryDto.getStartHour());
             }
         } else if (shouldCancelEntry(entry, entryDto)) {
             entry.cancelEntry();

@@ -187,9 +187,10 @@ public class Entry extends Task implements Serializable {
      *
      * @param newStartDate the new start date
      */
-    public void postponeEntry(Date newStartDate) {
-        status.postponeState();
+    public void postponeEntry(Date newStartDate,  Tempo startTime) {
         setStartDate(newStartDate);
+        setStartHour(startTime);
+        status.postponeState();
     }
 
     /**
@@ -197,8 +198,12 @@ public class Entry extends Task implements Serializable {
      *
      * @param newStartDate the new start date
      */
-    public void setStartDate(Date newStartDate) {
-        this.startDate = newStartDate;
+    public void setStartDate(Date newStartDate){
+        if(newStartDate.compareTo(Date.atualDate())<=0){
+            this.startDate = newStartDate;
+        }else {
+            throw new IllegalArgumentException("The start date cannot be greater than or equal to the current date");
+        }
     }
 
     public void setCollaboratorThatCompleted(Collaborator c){this.collaboratorThatCompleted=c;}
