@@ -118,6 +118,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.isCanceled()) {
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -134,6 +135,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.isPostpone()) {
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -159,6 +161,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.getVehicleList().equals(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()))) {
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -175,6 +178,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (haveSameTeam(entryDto, entry)) {
+            agenda.saveToDB();
             agendaEntry = Optional.of(entry);
         }
         return agendaEntry;
@@ -204,6 +208,7 @@ public class EntryRepository {
         Entry entry = agenda.searchForEntryAgenda(entryDto);
         mapper.entryDtoToEntry(entryDto, entry);
         if (entry.getStatus().isCompleted() && entry.getCollaboratorFinish().equals(entryDto.getCollaboratorFinish())) {
+            agenda.saveToDB();
             entryCompleted = Optional.of(entry);
         }
         return entryCompleted;
