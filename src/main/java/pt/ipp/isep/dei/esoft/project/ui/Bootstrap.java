@@ -46,7 +46,7 @@ public class Bootstrap {
     }
     private void addSkills() throws Exception {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();
-        skillRepository.loadFromSkillDataBase();
+       // skillRepository.loadFromSkillDataBase();
     }
     private void addJobCategories() throws Exception {
         JobCategoryRepository jobCategoryRepository = Repositories.getInstance().getJobCategoryRepository();
@@ -60,7 +60,7 @@ public class Bootstrap {
     }
     private void addOrganization() throws Exception {
         Organization organizationRepository = Repositories.getInstance().getOrganizationRepository();
-        organizationRepository.loadSystem();
+       // organizationRepository.loadSystem();
         organizationRepository.addManager("ADMIN","GSM","+351910000000","admin@this.app");
     }
     private void addUsers() throws Exception {
@@ -82,7 +82,13 @@ public class Bootstrap {
             String fullPath = currentDir + relativePath + fileName;
             return fullPath;
         }else {
-            String fullPath = saveDirectory.getAbsolutePath() + File.separator + fileName;
+            String fullPath;
+
+            if (saveDirectory.getAbsolutePath().charAt(saveDirectory.getAbsolutePath().length() - 1) == File.separatorChar) {
+                fullPath = saveDirectory.getAbsolutePath()  + fileName;
+            }else{
+                fullPath = saveDirectory.getAbsolutePath() + File.separator + fileName;
+            }
             File testFile = new File(fullPath);
             if (testFile.exists()){
                 return fullPath;

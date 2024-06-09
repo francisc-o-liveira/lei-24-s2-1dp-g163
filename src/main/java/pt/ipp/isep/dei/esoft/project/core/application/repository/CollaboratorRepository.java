@@ -27,12 +27,12 @@ public class CollaboratorRepository {
 
     /** Initializes the list of Collaborators */
     public CollaboratorRepository(){
-        try {
+       // try {
             collaboratorList=new ArrayList<>();
-            loadFromCollaboratorDataBase();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //    loadFromCollaboratorDataBase();
+       // } catch (IOException e) {
+         //   throw new RuntimeException(e);
+        //}
     }
 
     /** The method gets the List of Collaborators
@@ -78,7 +78,7 @@ public class CollaboratorRepository {
         Optional<Collaborator> newCollab = Optional.empty();
         if (isValidCollaborator(collab)){
             collaboratorList.add(collab);
-            saveFromCollaboratorDataBase(collab);
+          //  saveFromCollaboratorDataBase(collab);
             newCollab=Optional.of(collab);
         }else{
             throw new CloneNotSupportedException();
@@ -238,7 +238,7 @@ public class CollaboratorRepository {
     public void removeFromList(Collaborator collaborator){
         if(collaboratorList.contains(collaborator)){
             collaboratorList.remove(collaborator);
-            removeFromCollaboratorDataBase(collaborator);
+        //    removeFromCollaboratorDataBase(collaborator);
         } else {
             throw new RuntimeException("This Collaborator does not exist in the Repository");
         }
