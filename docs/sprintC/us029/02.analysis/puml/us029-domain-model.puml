@@ -2,36 +2,23 @@
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
-
 skinparam classAttributeIconSize 0
-
 hide circle
 hide methods
 
-'title Domain Model
+class Entry {
+    reference String
+    status
+    startDate
+    finishDate
+}
 
 class Collaborator {
     name
     email
-    password
 }
 
-class Task {
-    greenSpaceAssigned
-    degreeUrgency
-    timeExpected
-}
 
-class Entry {
-    startDate
-    finishDate
-    status
-    description
-    reference
-}
-
-Collaborator "1" -- "0..*" Task : has >
-Collaborator "1" -- "0..*" Entry : completes >
-Task "1" -- "1" Entry : relates to >
+Collaborator "1" -- "*" Entry : completes >
 
 @enduml

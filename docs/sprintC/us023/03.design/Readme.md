@@ -25,7 +25,7 @@ Please first read the **Design - User Story Realization of the Reference System 
 | 3 | converting the entry DTO to an entry entity? | EntryMapper | **Pure Fabrication**: The `EntryMapper` handles the transformation of entry DTOs to domain entities, ensuring separation of concerns. |
 | 3 | updating the team and vehicles in the entry? | EntryMapper | **Pure Fabrication**: The `EntryMapper` updates the entry based on the provided DTO, applying domain logic appropriately. |
 | 3 | preparing the email content for sending? | EmailService | **Pure Fabrication**: The `EmailService` prepares and sends the email content, managing the email-sending logic. |
-| 3 | sending the email using an external service? | SomeEmailService | **Information Expert**: The `SomeEmailService` implements the external email sending functionality, handling the necessary details for email transmission. |
+| 3 | sending the email using an external service? | SomeEmailService | **Polymorphism**: The `SomeEmailService` implements the external email sending functionality, handling the necessary details for email transmission. |
 | 4: Displays Operation Success Message | displaying the operation success message to the user? | AssignTeamUI | **Pure Fabrication**: The `AssignTeamUI` presents feedback to the user, maintaining separation of concerns between UI and business logic. |
 
 ### Systematization
@@ -47,6 +47,8 @@ Other software classes (i.e. **Information Expert**) identified
 * EntryRepository
 * TeamRepository
 * AgendaList
+
+Other software classes (i.e. **Polymorphism**) identified
 * SomeEmailService¹
 
 ## 3.2. Sequence Diagram (SD)

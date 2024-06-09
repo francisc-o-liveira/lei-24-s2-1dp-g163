@@ -10,7 +10,7 @@ package "UI" #f0f0f0 {
 }
 
 package "Core" #f0f0f0 {
-    
+
     package "Controller" #dddddd {
         class RegisterGreenSpaceController {
             +getGreenSpacesByEmail(): List<GreenSpaceDto>
@@ -22,7 +22,6 @@ package "Core" #f0f0f0 {
     package "Session" #dddddd {
         class ApplicationSession {
             -instance: ApplicationSession
-            +getInstance(): ApplicationSession
             +getCurrentSession(): UserSession
             +getAlgorithmService(): SortingList
         }
@@ -32,30 +31,47 @@ package "Core" #f0f0f0 {
         }
     }
 
-    package "Domain" #dddddd {
-        
-        package "Mapper" #dddddd {
-            class GreenSpaceMapper {
-                +greenSpaceListToGreenSpaceDtoList(greenSpaceList: List<GreenSpace>): List<GreenSpaceDto>
-                +toDto(greenSpace: GreenSpace): GreenSpaceDto
-            }
+    package "SortingAlgorithmsServ" #dddddd {
+        interface SortingList {
+            + sortingList(list: List<GreenSpaceDto>): List<GreenSpaceDto>
         }
 
-        package "DTO" #dddddd {
-            class GreenSpaceDto {
-                +name: String
-                +location: String
-                +size: float
-                +createdBy: String
-            }
+        class SortingAlgorithm1 implements SortingList {
+            + sortingList(list: List<GreenSpaceDto>): List<GreenSpaceDto>
+
         }
+
+        class SortingAlgorithm2 implements SortingList {
+            + sortingList(list: List<GreenSpaceDto>): List<GreenSpaceDto>
+        }
+
+
+    }
+
+    package "Mapper" #dddddd {
+        class GreenSpaceMapper {
+            +greenSpaceListToGreenSpaceDtoList(greenSpaceList: List<GreenSpace>): List<GreenSpaceDto>
+            +toDto(greenSpace: GreenSpace): GreenSpaceDto
+        }
+    }
+
+    package "DTO" #dddddd {
+        class GreenSpaceDto {
+            +name: String
+            +location: String
+            +size: float
+            +createdBy: String
+        }
+    }
+    package "Domain" #dddddd {
 
         package "Repository" #bbbbbb {
             class Repositories {
-                -organization: Organization
-                -static instance: Repositories
-                +getInstance(): Repositories
-                +getOrganization(): Organization
+                - organizationRepository: Organization
+                - static instance : Repositories
+                + getInstance() : Repositories
+                + getOrganizationRepository() : Organization
+                - Repositories()
             }
 
             class Organization {
@@ -72,11 +88,6 @@ package "Core" #f0f0f0 {
             }
         }
 
-        package "Service" #bbbbbb {
-            class SortingList {
-                +sortingList(greenSpaceList: List<GreenSpaceDto>): List<GreenSpaceDto>
-            }
-        }
     }
 }
 
@@ -88,10 +99,17 @@ RegisterGreenSpaceController ..> SortingList : sortAlgorithm
 RegisterGreenSpaceController ..> UserSession
 RegisterGreenSpaceController ..> ApplicationSession
 RegisterGreenSpaceController ..> GreenSpaceDto
+RegisterGreenSpaceController ..> SortingAlgorithm1
+RegisterGreenSpaceController ..> SortingAlgorithm2
+SortingAlgorithm1 ..> GreenSpaceDto
+SortingAlgorithm2 ..> GreenSpaceDto
+SortingList ..> GreenSpaceDto
 ApplicationSession ..> UserSession
 ApplicationSession ..> SortingList
 GreenSpaceMapper ..> GreenSpaceDto
 GreenSpaceMapper ..> GreenSpace
 Organization "1" --> "*" GreenSpace
 Repositories "1" --> "1" Organization
+Repositories --> Repositories : instance
+
 @enduml
