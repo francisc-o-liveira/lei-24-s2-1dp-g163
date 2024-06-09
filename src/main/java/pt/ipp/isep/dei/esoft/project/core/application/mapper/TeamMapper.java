@@ -33,6 +33,9 @@ public class TeamMapper {
      * @return The converted TeamDto object.
      */
     public TeamDto teamToTeamDto(Team team) {
+        if (team == null) {
+            return null;
+        }
         return new TeamDto(team.getTeamList(), team.getSkills(), team.getTeamName());
     }
 
