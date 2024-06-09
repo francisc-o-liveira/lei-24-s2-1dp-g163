@@ -46,7 +46,7 @@ public class EntryDto extends TaskDto {
     public EntryDto(String title, String description, Task.DegreeUrgency degreeOfUrgency, Tempo timeExpec, GreenSpaceDto greenSpaceDto) {
         super(title, description, degreeOfUrgency, timeExpec, greenSpaceDto);
         this.status = new EntryState();
-        this.vehicleList = null;
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.reference = null;
         this.startDate = null;
@@ -68,7 +68,7 @@ public class EntryDto extends TaskDto {
     public EntryDto(EntryState entryState, String title, String description, Task.DegreeUrgency degreeUrgency, Tempo expectedDuration, GreenSpaceDto greenSpaceDto, String reference) {
         super(title, description, degreeUrgency, expectedDuration, greenSpaceDto);
         setStatus(entryState);
-        this.vehicleList = null;
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.reference = reference;
         this.startDate = null;
@@ -134,10 +134,10 @@ public class EntryDto extends TaskDto {
         super(title, description, degreeUrgency, expectedDuration, greenSpaceDto);
         this.startDate = startDate;
         this.startHour = startHour;
-        this.finishDate = finishDate;
+        this.finishDate = null;
         this.collaboratorThatCompleted = null;
         setStatus(entryState);
-        this.vehicleList = null;
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.reference = reference;
     }

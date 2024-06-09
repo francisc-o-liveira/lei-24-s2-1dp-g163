@@ -13,6 +13,7 @@ import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 import pt.ipp.isep.dei.esoft.project.utilities.TimePeriod;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class Entry extends Task implements Serializable {
         this.reference = Integer.toString(REFERENCE_VALUE);
         this.status = status;
         this.startDate = null;
-        this.vehicleList = null;
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.finishDate = null;
     }
@@ -96,7 +97,7 @@ public class Entry extends Task implements Serializable {
         this.reference = Integer.toString(reference);
         this.status = status;
         this.startDate = startDate;
-        this.vehicleList = null;
+        this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.finishDate = null;
     }
