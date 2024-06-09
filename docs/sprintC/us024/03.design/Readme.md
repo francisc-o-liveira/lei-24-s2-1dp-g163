@@ -1,4 +1,4 @@
-# US001 - Register skills for collaborators
+# US024 - Register skills for collaborators
 
 ## 3. Design - User Story Realization 
 
@@ -6,36 +6,37 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID                                                                  | Question: Which class is responsible for...                      | Answer                  | Justification (with patterns)                                                                                                                                                                 |
-|:--------------------------------------------------------------------------------|:-----------------------------------------------------------------|:------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Step 1: asks to register a new skill  		                                        | 	... interacting with the actor?                                 | RegisterSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                                                                 |
-| 			  		                                                                         | 	... coordinating the US?                                        | RegisterSkillController | Controller                                                                                                                                                                                    |
-| 			  		                                                                         | 	... instantiating the class that handles the UI?                | RegisterSkillUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                                                                 |
-| Step 2: requests data (skill name)	 			  		                                     | ... displaying the form for the actor to input data?             | Organization            | IE: cf. A&A component documentation.                                                                                                                                                          |
-| Step 3: types requested data	                                                   | ... validating input data? ... temporarily keeping input data? 	 | RegisterSkillController | Controller                                                                                                                                                                                    |
-| Step 4: requests confirmation                                                   | ... display request confirmation? 							                        | RegisterSkillUI         | Pure Fabrication: The UI class is responsible for displaying results to the user.                                                                                                             |
-| Step 5: confirms data	 		                                                       | ... validating the data locally (mandatory data)?							         | RegisterSkillController | Controller                                                                                                                                                                                    |
-| 	                                                                               | 	...... creating the skill object?                               | RegisterSkillUI         | IE: is responsible for user interactions.                                                                                                                                                     |
-| Step 6: displays operation success and the list of skills for collaborators. 		 | 	... informing operation success?	                               | RegisterSkillUI         | Pure Fabrication: The UI class is responsible for displaying results to the user.                                                                                                             |
-| 	                                                                               | 	... saving the created data (the list of skills)?	              | SkillRepository         | IE: knows all its skills.                                                                                                                                                                     | |                                                                                                               |              
+ | SD Interaction ID                                   | Question: Which class is responsible for...                | Answer                     | Justification (with patterns)                                                                                                                                                  |
+|-----------------------------------------------------|------------------------------------------------------------|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1: Asks to Postpone an Entry                        | handling the user's request to postpone an entry?          | ViewDetailsEntryAgendaUI   | **Pure Fabrication**: The `ViewDetailsEntryAgendaUI` manages user interaction to keep the UI logic separate from the business logic, ensuring high cohesion and low coupling.  |
+|                                                     | delegating the request to get possible postpone an entry?  | ViewDetailsEntryController | **Controller**: The `ViewDetailsEntryController` coordinates the process, delegating the request to appropriate handlers, ensuring separation of concerns and central control. |
+|                                                     | fetching the agenda list from the entry repository?        | EntryRepository            | **Information Expert**: The `EntryRepository` holds the agenda data and is responsible for providing it.                                                                       |
+| 2: Ask to introduce a new date and a new start hour | asking a new date and a new start hour?                    | PostponeUI                 | **Pure Fabrication**: The `PostponeUI` asks for introduce data, maintaining separation of concerns.                                                                            |
+| 3: introduces requested data                        | delegating the request to postpone the entry?              | ViewDetailsEntryController               | **Controller**: The `ViewDetailsEntryController` manages the postpone process, ensuring central control and coordination.                                                      |
+| 3                                                   | delegating the task to update the entry in the repository? | EntryRepository            | **Information Expert**: The `EntryRepository` manages data persistence and is responsible for updating the entry with the assigned team.                                       |
+| 3                                                   | converting the entry DTO to an entry entity?               | EntryMapper                | **Pure Fabrication**: The `EntryMapper` handles the transformation of entry DTOs to domain entities, ensuring separation of concerns.                                          |
+| 3                                                   | updating the entry with the new start date?                | Entry              |                                                                                                                                                                                |
+| 4: Confirms the Change                              | confirms the change                                        | PostponeUI                 | **Pure Fabrication**: The `PostponeUI` presents feedback to the user, maintaining separation of concerns between UI and business logic.                                        |
+                                                                                                                                                                                                                                                                                 
 
 ### Systematization ##
 
-According to the taken rationale, the conceptual classes promoted to software classes are: 
+Software classes (i.e. **Pure Fabrication**) identified
 
-* Organization
-* Skill
+* ViewDetailsEntryAgendaUI
+* PostponeUI
+* EntryMapper
 
-Other software classes (i.e Information Expert) identified:
 
-* Repositories
-* DocTypeRepository
-* SkillCategoryRepository
+Other software classes (i.e. **Controller**) identified
 
-Other software classes (i.e. Pure Fabrication) identified:
+* ViewDetailsEntryController
 
-* CreateSkillUI
-* CreateSkillController
+Other software classes (i.e. **Information Expert**) identified
+
+* EntryRepository
+
+
 
 
 ## 3.2. Sequence Diagram (SD)
@@ -46,21 +47,13 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us001-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us024-sequence-diagram-full.svg)
 
-### Split Diagrams
+### Split Diagram
+**Get details and management options of a selected entry on the agenda**
 
-The following diagram shows the same sequence of interactions between the classes involved in the realization of this user story, but it is split in partial diagrams to better illustrate the interactions between the classes.
-
-It uses Interaction Occurrence (a.k.a. Interaction Use).
-
-![Sequence Diagram - split](svg/us001-sequence-diagram-split.svg)
-
-**Get Task Category List Partial SD**
-
-![Sequence Diagram - Partial](svg/us001-sequence-diagram-partial-get-skill.svg)
-
+![Reference Domain Model](../../reference/03.design/svg/ref_get_details_and_management_options_of_a_selected_entry_on_the_agenda.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us001-class-diagram.svg)
+![Class Diagram](svg/us024-class-diagram.svg)
