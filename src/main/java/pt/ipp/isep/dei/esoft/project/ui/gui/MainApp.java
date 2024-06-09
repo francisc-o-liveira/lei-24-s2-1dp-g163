@@ -31,7 +31,7 @@ public class MainApp extends Application {
         try {
             bootstrap.run();
             initializeApp();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
                 File selectedDirectory = pickingDirectory();
                 if (selectedDirectory != null) {
@@ -50,8 +50,6 @@ public class MainApp extends Application {
                     alert.setContentText("Please select a directory");
                 }
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 

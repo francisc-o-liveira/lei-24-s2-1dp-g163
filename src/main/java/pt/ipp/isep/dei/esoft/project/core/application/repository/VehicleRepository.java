@@ -26,12 +26,12 @@ public class VehicleRepository {
 
     /** Initializes the list of Vehicles*/
     public VehicleRepository(){
-        try {
+       // try {
             vehicleList=new ArrayList<>();
-            loadFromVehicleDataBase();
-        } catch (IOException | CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+        //    loadFromVehicleDataBase();
+       // } catch (IOException | CloneNotSupportedException e) {
+        //    throw new RuntimeException(e);
+        // }
     }
 
     /** Method to search for a Vehicle based on the plate
@@ -288,13 +288,13 @@ public class VehicleRepository {
 
     public void removeFromVehicleDataBase(Vehicle vehicle) {
         vehicleList.remove(vehicle);
-        saveVehicles();
+       // saveVehicles();
     }
 
     public void saveFromVehicleInDataBase(Vehicle vehicle) {
         if (!vehicleList.contains(vehicle)) {
             saveVehicle(vehicle);
-            saveVehicles();
+          //  saveVehicles();
         }
     }
 

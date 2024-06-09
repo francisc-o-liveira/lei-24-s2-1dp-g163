@@ -91,7 +91,7 @@ public class Organization{
         boolean success = false;
         if (validateManager(newManager)) {
             success = managers.add(newManager);
-            dataBaseManager.saveFromManagerInDataBase(managers);
+           // dataBaseManager.saveFromManagerInDataBase(managers);
         }
         return success;
     }

@@ -104,13 +104,13 @@ public class SkillRepository {
 
     public void removeFromSkillDataBase(Skill skill) {
         skillList.remove(skill);
-        saveSkills();
+       // saveSkills();
     }
 
     public void saveFromSkillInDataBase(Skill skill) {
         if (!skillList.contains(skill)) {
             skillList.add(skill);
-            saveSkills();
+          //  saveSkills();
         }
     }
 

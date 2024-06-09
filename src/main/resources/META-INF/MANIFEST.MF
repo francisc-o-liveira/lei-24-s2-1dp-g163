@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: pt.ipp.isep.dei.esoft.project.ui.Main
+Class-Path: resources/configs/* resources/DataBase/*
 

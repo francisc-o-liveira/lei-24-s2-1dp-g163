@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
-    private static final String CONFIGURATION_FILENAME = "classes\\configs\\config.properties";
+    private static final String CONFIGURATION_FILENAME = "\\target\\classes\\configs\\config.properties";
     private static final String COMPANY_DESIGNATION = "Company.Designation";
     private static final String EMAIL_DESIGNATION = "SendEmailExternalAPI.Class";
     private static final String SORTING_ALGORITHM = "SortingList.Class";

@@ -17,11 +17,11 @@ public class JobCategoryRepository {
     private List<JobCategory> jobCategories;
 
     public JobCategoryRepository() {
-        try {
-            loadFromJobCategoryDataBase();
-        } catch (IOException | CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
+       // try {
+        //    loadFromJobCategoryDataBase();
+       // } catch (IOException | CloneNotSupportedException e) {
+        //    throw new RuntimeException(e);
+       // }
     }
 
     /**
@@ -46,7 +46,7 @@ public class JobCategoryRepository {
     private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) throws CloneNotSupportedException {
        Optional<JobCategory> newJobCategory = Optional.empty();
         if (!jobCategories.contains(jobCategory)){
-            saveFromJobCategoryInDataBase(jobCategory);
+           saveFromJobCategoryInDataBase(jobCategory);
             newJobCategory=Optional.of(jobCategory);
         }else{
             throw new CloneNotSupportedException("Job Category already exist");
@@ -70,7 +70,6 @@ public class JobCategoryRepository {
      */
     public void removeJobCategory(JobCategory jobCategory) {
         if (jobCategories.contains(jobCategory)){
-            jobCategories.remove(jobCategory);
             removeFromJobCategoryDataBase(jobCategory);
         }else{
             throw new RuntimeException("This Job Category does not exist in the Repository");
@@ -80,13 +79,13 @@ public class JobCategoryRepository {
 
     public void removeFromJobCategoryDataBase(JobCategory jobCategory) {
         jobCategories.remove(jobCategory);
-        saveJobCategorys();
+       // saveJobCategorys();
     }
 
     public void saveFromJobCategoryInDataBase(JobCategory jobCategory) {
         if (!jobCategories.contains(jobCategory)) {
             jobCategories.add(jobCategory);
-            saveJobCategorys();
+            // saveJobCategorys();
         }
     }
 
