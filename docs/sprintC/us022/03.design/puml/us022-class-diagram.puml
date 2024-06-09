@@ -8,7 +8,7 @@ skinparam linetype polyline
 skinparam classAttributeIconSize 0
 
 'left to right direction
-
+package "Core" #EEEEEE{
 package "Domain" #DDDDDD{
 
 class Entry {
@@ -28,13 +28,19 @@ class Task{
 }
 
 class EntryRepository {
-    - List <Entry> : toDoList
-    - List <Entry> : agenda
 
     + getToDoList()
     + getAgenda()
     + setEntryOnAgenda()
 }
+
+class AgendaList{
+}
+
+class ToDoList{
+}
+
+
 note bottom of EntryRepository
     - used for displaying
     the to do list
@@ -78,6 +84,7 @@ class AssignEntryOnAgendaController {
     + assignEntryOnAgenda()
     - getGSMFromSession()
 }
+}
 note right of AssignEntryOnAgendaController
     - entry is achieved with entry repository
 end note
@@ -93,6 +100,7 @@ package "UI" #DDDDDD{
 class AssignEntryOnAgendaUI {
 }
 }
+
 
 
 
@@ -118,7 +126,10 @@ AssignEntryOnAgendaController ..> EntryMapper : EntryMapper
 
 AssignEntryOnAgendaController ..> UserSession
 UserSession "1" --> "1" GSM
-EntryRepository "1" --> "*" Entry : entry's
+EntryRepository "1" --> "1" AgendaList : agenda
+EntryRepository "1" --> "1" ToDoList : toDo
+AgendaList "1" --> "*" Entry : entry's
+ToDoList "1" --> "*" Entry : entry's
 EntryRepository --> "*" GSM : employs
 Entry --> "*" GSM : employs
 Task "1" <- "1" Entry : extends

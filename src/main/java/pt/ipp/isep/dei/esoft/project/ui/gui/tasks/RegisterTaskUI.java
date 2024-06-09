@@ -7,23 +7,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
 import javafx.scene.control.TextField;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterTaskController;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.GreenSpaceDto;
-import pt.ipp.isep.dei.esoft.project.domain.task.EntryState;
-import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import javafx.stage.Stage;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.RegisterTaskController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.GreenSpaceDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * UI Controller class for registering tasks.
+ */
 public class RegisterTaskUI implements Initializable {
 
+    /**
+     * The stage for this UI.
+     */
     private Stage stage;
 
+    /**
+     * The register task controller instance.
+     */
     private RegisterTaskController ctrl;
+
     @FXML
     private TextField title;
 
@@ -39,6 +47,9 @@ public class RegisterTaskUI implements Initializable {
     @FXML
     private TextField timeExpected;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ctrl =  RegisterTaskController.getInstance();
@@ -46,6 +57,11 @@ public class RegisterTaskUI implements Initializable {
         degreeOfUrgency.setItems(FXCollections.observableArrayList(ctrl.getDegreOfUrgency()));
     }
 
+    /**
+     * Handles the register button action.
+     *
+     * @param event the action event
+     */
     @FXML
     public void btnRegister(ActionEvent event) {
         String title = this.title.getText();
@@ -68,6 +84,12 @@ public class RegisterTaskUI implements Initializable {
         }
     }
 
+    /**
+     * Parses the time string and returns a Tempo object.
+     *
+     * @param timeExpected the time string
+     * @return the Tempo object representing the time
+     */
     private Tempo getTimeForEntry(String timeExpected) {
         String[] times = timeExpected.split(":");
         Tempo time;
@@ -79,12 +101,20 @@ public class RegisterTaskUI implements Initializable {
         return time;
     }
 
+    /**
+     * Sets the stage for this UI.
+     *
+     * @param stage the stage
+     */
     public void setStage(Stage stage){
         this.stage=stage;
     }
 
-
-
+    /**
+     * Creates and returns an alert for successful task registration.
+     *
+     * @return the alert
+     */
     private Alert popUp() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Information");
@@ -93,6 +123,13 @@ public class RegisterTaskUI implements Initializable {
         return alert;
     }
 
+    /**
+     * Creates and returns an alert with a specified message.
+     *
+     * @param alertType the type of the alert
+     * @param messages  the message to be displayed in the alert
+     * @return the alert
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 
@@ -102,6 +139,5 @@ public class RegisterTaskUI implements Initializable {
 
         return alerta;
     }
-
 
 }

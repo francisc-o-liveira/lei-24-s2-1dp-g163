@@ -12,32 +12,22 @@ participant ":System" as System
 
 activate Manager
 
-    Manager -> System : asks to postpone an entry in the Agenda
+
+ref over Manager : Get the details and management options\n of a selected entry on the agenda
+
+Manager -> System : Asks to postpone an Entry
+
     activate System
 
-        System --> Manager : show Agenda entries
+        System --> Manager : Ask to introduce a new date and a new start hour
     deactivate System
 
-   Manager  -> System : selects an Agenda entry
+   Manager  -> System : introduces requested data
     activate System
 
-    System --> Manager : requests data (future date)
+    System --> Manager : Confirms the change
     deactivate System
 
-    Manager  -> System : types requested data
-        activate System
 
-    alt System Verification
-    System --> System  : verify data
-    end
-
-        System --> Manager  : requests confirmation
-    deactivate System
-
-    Manager  -> System : confirms data
-    activate System
-
-        System --> Manager : displays operation success
-    deactivate System
 
 @enduml

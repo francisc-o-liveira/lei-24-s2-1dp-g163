@@ -1,28 +1,19 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui.team;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import javafx.util.converter.IntegerStringConverter;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Collaborator;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
-import pt.ipp.isep.dei.esoft.project.domain.team.Team;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.teamSystem.GenerateTeamController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Collaborator;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.team.Team;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
@@ -30,12 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * UI Controller class for generating teams.
+ */
 public class GenerateTeamsUI {
 
     public Stage stage= new Stage();
     public GenerateTeamController ctrl;
 
     public AuthenticationController ctrlAuth;
+
     @FXML
     public TextField maximumTeamSize;
     @FXML
@@ -49,10 +44,9 @@ public class GenerateTeamsUI {
     private List<Integer> numberCollabsPerSkill;
     private List<TextField> skillTextFields;
 
-    public void setSkillsSelectedForTeam(List<Skill> skills){
-        skillsSelectedForTeam=skills;
-        createSkillInputFields();
-    }
+    /**
+     * Constructs a new GenerateTeamsUI instance.
+     */
     public GenerateTeamsUI(){
         ctrlAuth = AuthenticationController.getInstance();
         ctrl = GenerateTeamController.getInstance();
@@ -61,6 +55,15 @@ public class GenerateTeamsUI {
         skillTextFields=new ArrayList<>();
     }
 
+    /**
+     * Sets the skills selected for the team.
+     *
+     * @param skills the list of skills selected for the team
+     */
+    public void setSkillsSelectedForTeam(List<Skill> skills){
+        skillsSelectedForTeam=skills;
+        createSkillInputFields();
+    }
 
     // Other methods
 
@@ -74,11 +77,12 @@ public class GenerateTeamsUI {
 
             skillsContainer.getChildren().addAll(label, textField);
             skillTextFields.add(textField);
-
-
         }
     }
 
+    /**
+     * Handles the action event of generating a team.
+     */
     @FXML
     public void btnGenerateTeam(){
         int maxTeamSize=Integer.parseInt(maximumTeamSize.getText());
@@ -122,6 +126,12 @@ public class GenerateTeamsUI {
         }
     }
 
+    /**
+     * Handles the action event of going back to the previous menu.
+     *
+     * @param event the ActionEvent triggering the method
+     * @throws IOException if an I/O exception occurs
+     */
     @FXML
     public void goBack(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader ;
@@ -143,14 +153,18 @@ public class GenerateTeamsUI {
         }
     }
 
-
+    /**
+     * Generates a pop-up alert for displaying verification messages.
+     *
+     * @param alertType the type of the alert
+     * @param messages the messages to be displayed in the alert
+     * @return the pop-up alert
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
-
         alerta.setTitle("ERROR");
         alerta.setHeaderText("Invalid Data");
         alerta.setContentText(messages);
-
         return alerta;
     }
 }

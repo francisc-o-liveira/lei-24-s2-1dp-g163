@@ -1,0 +1,145 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "CollaboratorUser" as CollaboratorUser
+participant ":AssignEntryOnAgendaUI" as UI
+participant ":AssignEntryOnAgendaController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "entryRepository\n:EntryRepository" as EntryRepository
+participant ":Entry" as OBJ
+participant ":EntryDto" as DTO
+participant ":EntryMapper" as MAPPER
+participant "toDoListDto : List<EntryDto>" as ListDTO
+participant "toDoList : List<Entry>" as List
+participant "CollaboratorRepository" as CollabRepository
+
+
+activate CollaboratorUser
+
+        CollaboratorUser -> UI : asks to view tasks assigned to me
+
+        activate UI
+
+'            UI --> CollaboratorUser : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+            activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+                                                    activate RepositorySingleton
+
+                                                        RepositorySingleton --> CTRL: repositories
+                                                    deactivate RepositorySingleton
+
+                                                    CTRL -> PLAT : getEntryRepository()
+                                                    activate PLAT
+
+                                                    PLAT -> CTRL : entryRepository
+                                                    deactivate PLAT
+
+                                                     CTRL -> PLAT : getCollaboratorRepository()
+                                                              activate PLAT
+
+                                                    PLAT -> CTRL : collaboratorRepository
+                                                                deactivate PLAT
+
+                                                                CTRL -> ApplicationSession : getInstance()
+                                                                                                                              activate ApplicationSession
+
+                                                                                                                    ApplicationSession -> CTRL : applicationSession
+                                                                                                                                deactivate ApplicationSession
+
+
+
+
+            CTRL -> CTRL : getCollaboratorFromSession()
+            activate CTRL
+
+            CTRL -> ApplicationSession : getCurrentSession()
+            activate ApplicationSession
+
+            ApplicationSession -> User : getUserEmail()
+            activate User
+
+            User-> ApplicationSession : email
+            deactivate User
+
+            ApplicationSession -> CTRL : email
+            deactivate ApplicationSession
+            deactivate CTRL
+
+            CTRL -> CollabRepository : getCollaboratorByEmail()
+            activate CollabRepository
+
+            CollabRepository -> CTRL : collaborator
+            deactivate CollabRepository
+
+            CTRL -> EntryRepository : getEntrysByCollaboratorInAgenda(collaborator)
+            activate EntryRepository
+
+            EntryRepository -> EntryRepository : getAgenda();
+            activate EntryRepository
+
+            loop All Entrys are compared
+            EntryRepository -> EntryRepository : entryHaveCollaborator(collaborator)
+            deactivate EntryRepository
+            end
+
+            EntryRepository -> CTRL : entryList
+            deactivate EntryRepository
+
+            CTRL -> MAPPER : entryListToEntryDtoList(entryList)
+            activate MAPPER
+
+
+            MAPPER -> ListDTO** : create()
+
+                                                    MAPPER -> List : entry = get(i)
+                                                    activate List
+                                                    deactivate List
+
+                                                    MAPPER -> MAPPER : entryDto = toDTO(entry)
+                                                    activate MAPPER
+
+                                                    MAPPER -> DTO**  : create(...)
+                                                    deactivate MAPPER
+
+                                                    MAPPER -> ListDTO : add(entryDto)
+                                                    activate ListDTO
+                                                    deactivate ListDTO
+
+                                                    MAPPER -> CTRL : entryListDto
+                                                    deactivate MAPPER
+
+
+                                                    CTRL -> UI : entryAssignedToCollaborator
+                                                    deactivate CTRL
+
+                                                    UI -> CollaboratorUser : show entry's assigned
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deactivate CollaboratorUser
+
+@enduml

@@ -15,8 +15,7 @@ participant "organizationRepository:Organization" as Organization
 participant ":GreenSpace" as GreenSpace
 participant "<<enum>>\nGreenSpace.Type" as Type
 
-participant "greenSpaceTypeListDto:list<GreenSpaceDTO>" as TypeListDto
-participant "objDto:GreenSpaceDTO" as GreenDto
+participant "objDto:GreenSpaceDto" as GreenDto
 
 
 
@@ -104,31 +103,25 @@ note right of CTRL
 end note
 
 
-Organization -> GreenDto : greenSpace = toModel(greenSpaceDto)
-activate GreenDto
 
-note right of Organization
-(newName, newAddress, newArea, typeName)
-end note
-deactivate GreenDto
 
 
 
 
 Organization-> GreenDto : newName = getNameGreenSpace()
-activate GreenDto 
+activate GreenDto
 deactivate GreenDto
 
 Organization-> GreenDto : newAdress = getAdress()
-activate GreenDto 
+activate GreenDto
 deactivate GreenDto
 
 Organization-> GreenDto : newArea = getAreaInHectares()
-activate GreenDto 
+activate GreenDto
 deactivate GreenDto
 
 Organization -> GreenDto : newType = getType()
-activate GreenDto 
+activate GreenDto
 deactivate GreenDto
 
 
@@ -141,7 +134,7 @@ obj -> Organization : true
 deactivate obj
 
 Organization-> Organization: verifyIfExistAndSave(greenSpace)
-deactivate GreenSpaceMapper
+
 
 Organization -> CTRL : true
 deactivate Organization

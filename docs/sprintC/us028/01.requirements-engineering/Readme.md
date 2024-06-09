@@ -24,17 +24,19 @@ Teams are temporary associations of employees who will carry out a determined se
 
 **From the client clarifications:**
 
-> **Question:** What type of Status can the Collaborator see assigned to him?
+> **Question:** While consulting tasks, how specific should be data presented to collaborator? Should it be all entries from the agenda with collaborator's team assigned or generic tasks that these entries refer to? As there is agenda entry, to-do list entry and task.
 >
-> **Answer:** 
+> **Answer:** A "generic task" is something like "task type" or "template task", for instance "Prunning Trees".
+When a GSM decides to insert a entry in the To-Do list, he selects a generic task, selects a park, defines the expected duration and the urgency.
+Later, that To-do List entry will originate an Entry in the Agenda with a starting date/time. That Entry can be managed due to actions/events that happens, hence the Entry can be Canceled, Postponed or Completed.
 
-> **Question:**  
+> **Question:**  For a new entry in the agenda, if we assign it to a team, is this assigned to all members of the group? This could be contradictory because maybe one of the collaborators of the team doesn't have the skill to perform this task.
 >
-> **Answer:** 
+> **Answer:** It depends on the granularity of the task. If the task is Prunning Trees, besides the ones who will prune the tree, the team will need need someone who transports persons and machinery; someone who operates some kind of machinery; maybe a coordinator.
 
-> **Question:** 
+> **Question:** When a collaborator is registered, they are given an account with the registered email and a password? This allows them to log in and view their tasks later on. What should be the password for this collaborator's account?
 >
-> **Answer:**
+> **Answer:** Yes, it makes sense. About the password, not important in this stage of the project
 
 
 
@@ -42,30 +44,16 @@ Teams are temporary associations of employees who will carry out a determined se
 
 * **AC1:** The list of green spaces must be sorted by date, starting with the first to be performed.
 * **AC2:** The Collaborator should be able to filter the results by the status of the task.
-* **AC3:** 
 
 ### 1.4. Found out Dependencies
+* There is a dependency on **US22 - As a GSM, I want to add a new entry in the Agenda**. A task must exist in the Agenda before it can see the tasks assigned a collaborator.
+* There is a dependency on **US23 - As a GSM, I want to assign a Team to an entry in the Agenda**. A task must be assigned to a team before it can see the tasks assigned.
 
-* 
 
 ### 1.5 Input and Output Data
-
-**Input Data:**
-
-* Sorted Options:
-  * By Green Space
-  * By Date (Month/Week/Year)
-  * By Status of Entry
-
-
 **Output Data:**
 
-* **TableView/Calendar with the Entry's assigned to Collaborator**
-  - Sort options by date, green space, status of entry's
-* **Warnings or Errors (if applicable):**
-  - Error messages for any issues encountered during the process of getting the entry's, such non-existent data or duplications ,etc...
-* **Operational Feedback:**
-  - Overall status of the operation (success or failure), with immediate feedback to the Collaborator.
+* Shows entry assigned 
 
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -74,11 +62,8 @@ Teams are temporary associations of employees who will carry out a determined se
 
 #### Alternative One
 
-![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us028-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
 
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us003-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 

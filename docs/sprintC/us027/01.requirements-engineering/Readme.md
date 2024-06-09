@@ -32,8 +32,6 @@ As a GSM, I need to list all green spaces managed by me.
 
 ### 1.5. Input and Output Data
 
-* **Selected Data:**
-  - **GSM:** The GSM retrieves a list of green spaces they manage. This assumes that green spaces have been registered as described in <u>US20</u>.
 
 **Output Data:**
 

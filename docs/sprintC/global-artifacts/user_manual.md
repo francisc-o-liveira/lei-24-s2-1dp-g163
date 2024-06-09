@@ -64,62 +64,16 @@ managers of the company, or the ones who want to purchase a property.
 This user manual has been provided to the user with the purpose of demonstrating
 how to use the application designed for the Green Space Company.
 
-This user manual is appointed to:
-
-1. Unsigned Green Space User (UGSU)
-
-In the Green Space Portal the GSU can:
-* Register/Login himself on the application
-* See all published Evaluations of the Green Spaces made by other users.
-
-2. Signed Green Space User (GSU)
-
-In the Green Space Portal the GSU can:
-* Make an Evaluation of the Green Spaces with comments.
-* Make report faults of malfunctions in some green space
-
-3. Green Space Manager (GRM)
-
-In the Green Space Portal the GRM can:
-* Manage the Report Faults
-
-In the Software Management System the HRM can:
-* Manage the Tasks
-* Attribute Teams, Vehicles and Equipment for the Tasks
-* Manage Agenda of Tasks in the Green Space
-* Access to Manage Vehicles, Collaborators, Jobs, Skills and Equipment. (HRM, VFM)
-
-4. Human Resources Manager (HRM)
-
-In the Software Management System the HRM can:
-* Register a Collaborator
-* Register a Job Category
-* Register a Skill to be appointed to a Collaborator
-* Appoint Skills to Collaborators
-* Generate a Team of Collaborators
-* Create a Team of Collaborators
-
-5. Vehicle and Equipment Fleet Manager (VFM)
-
-In the Software Management System the HRM can:
-* Register a Vehicle
-* Register Equipment
-* Register a Check-Up of a Vehicle
-* List all Vehicles needing Maintenance Check-Up
-
 
 # System Overview
+The Green Spaces Management System is a comprehensive and efficient platform designed to facilitate the management and operation of green spaces. This software offers a wide range of functionalities to efficiently organize information about staff, vehicles, and other park resources. The main features include:
+* Employee, Task, and Team Management: The application allows for the registration and access to employees' personal data. Additionally, it enables viewing and managing tasks assigned to each employee according to their competencies. It also allows managing teams of employees, which are assembled according to the desired number of team members and the set of skills they possess.
+* Vehicle, Machinery, and Equipment Management: This software enables the registration and monitoring of crucial vehicle information. Data such as maintenance history, records, and mileage are stored, ensuring the safety and proper maintenance of the park's fleet. Moreover, users can schedule and register maintenance check-ups for the vehicles and view a list of those scheduled for review. Additionally, this application allows for the management of various essential equipment required for park tasks.
+* Agenda Management: The agenda is a crucial mechanism for planning the workweek. The system provides a view of tasks to be performed each day and allows for postponing or canceling tasks. By comparing agenda entries and the to-do list, it is possible to assess the work yet to be done, the week's workload, and the work completed by a team in a green space over a specific period and on a specific date.
+* Statistical Analysis: The application allows analyzing water consumption, the most used equipment, and the profile of park users by age to manage public green spaces efficiently.
+* Irrigation System Management: This system enables the planning and construction of irrigation systems to save materials such as piping, reduce the time needed for planning and installation, and create more efficient irrigation systems.
+* Emergency Planning: This functionality allows green space managers to install signage for evacuating park users to a meeting point in emergency situations. The signage indicates the shortest route from various points in the park.
 
-
-The Green Space Management System is a platform designed to ensure the efficient management of employees,
-vehicles, equipment, tasks, collaborator teams, schedules, and more in green space environments. It enables detailed
-registration and tracking of employees, including their assignments, skills, and availability. Additionally,
-the system manages vehicle maintenance, including checklists and service records.
-Necessary equipment for the maintenance of green spaces is also monitored, along with their conditions and maintenance
-history. Task assignment has the ability to assign specific tasks to collaborator teams and track
-their progress. The integrated schedule allows for efficient activity scheduling and management of important
-events. In summary, the Green Space Management System offers a comprehensive and effective solution for all
-management needs in green space environments.
 Below is a figure that illustrates an overview of the application:
 
 
@@ -139,7 +93,8 @@ Step 1- Do login and enter the cards according syntax notes:
 ![login](imagesUserManual/login.png)
 Image 2- Do login (login UI)
 
-
+Step 2- If you are not yet registered, click the "Register" button and this menu will appear where you must enter your credentials (email and password according syntax notes:
+![register](imagesUserManual/register.png)
 
 
 ## Green Space User (GSU)
@@ -150,7 +105,6 @@ can:
 * Login - Login if he is already registered in the system.
 * Register – The user can register himself in the application.
 * Browse all the Green Spaces – The user can see all the information of the Green Spaces
-* See Evaluations of Green Spaces – The user can see all the Evaluations of the Green Spaces, of other Users Registered
 
 
 #### Register
@@ -164,30 +118,9 @@ can:
 
 When you login in the User Portal app, there are four possible paths, the GSU
 can:
-
 * Browse all the Green Spaces – The user can access all the information of the Green Spaces
-* See Evaluations of Green Spaces – The user can access all the Evaluations of the Green Spaces made by other registered users
-* Register a Report Fault in a Green Space - The user can make a report fault of a malfunction of the Green Space
-* Make an Evaluation of a Green Space - The user can make an Evaluation of a Green Space to comment something about it.
-
-#### Register a Report Fault
-##### Syntax Notes:
-
-
-#### Make an Evaluation of a Green Space
-##### Syntax Notes:
-
-
 
 ## Green Space Manager (GSM)
-
-When you open and login in the User Portal app,(there are 2 possible paths) the GSM
-can:
-
-* See the Report Faults of the Green Spaces - The Manager can access the report faults made by the users of the Green Space
-* See the Evaluations of Green Spaces - The Manager can access the Evaluations made by the users of the Green Spaces
-
-
 When you open and login in the software, (there are 6 possible paths), the GSM can:
 
 * Manage the Vehicles - The Manager can oversee and administer vehicles used for green space management.(including Check-Up List and Check Up register)
@@ -196,6 +129,7 @@ When you open and login in the software, (there are 6 possible paths), the GSM c
 * Manage the Skills - The Manager can oversee and modify skills related to green space management.
 * Manage Teams - The manager can create teams according to the number of members (maximum and minimum team size) and the set of skills that employees have.
 * Manage the equipment - The manager can can control the most used park equipment.
+* 
 
 
 ![portal_GSM](imagesUserManual/portal_GSM.png)

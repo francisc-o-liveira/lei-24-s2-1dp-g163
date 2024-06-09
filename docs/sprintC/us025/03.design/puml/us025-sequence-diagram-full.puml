@@ -5,18 +5,13 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
+'hide footboxFN
 actor "GSM" as GSM
 participant ":ViewDetailsEntryUI" as UI
 participant ":ViewDetailsEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "entryRepository:\nEntryRepository" as EntryRepository
-participant ":EntryMapper" as MAPPER
-participant "cancelEntryListDto : List<EntryDto>" as ListDTO
-participant "List : List<EntryDto>" as EntryDtoList
-participant "cancelEntryList : List<Entry>" as List
-participant "entryList : List<Entry>" as EntryList
 participant ":EntryDto" as EntryDto
 participant ":Entry" as OBJ
 
@@ -59,10 +54,10 @@ activate GSM
         activate EntryDto
 
 
-        EntryDto -> OBJ: stateOfEntry = setStateOfEntry()
+        EntryDto -> OBJ: status = setSatus()
         activate OBJ
 
-        OBJ --> EntryDto: stateOfEntry
+        OBJ --> EntryDto: status
 
         EntryDto --> EntryRepository: true/false
         deactivate OBJ

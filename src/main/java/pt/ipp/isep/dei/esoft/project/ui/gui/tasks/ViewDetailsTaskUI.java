@@ -2,30 +2,35 @@ package pt.ipp.isep.dei.esoft.project.ui.gui.tasks;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import pt.ipp.isep.dei.esoft.project.domain.dto.EntryDto;
-import pt.ipp.isep.dei.esoft.project.domain.dto.TaskDto;
-import pt.ipp.isep.dei.esoft.project.domain.task.Task;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.dto.EntryDto;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
 
-
+/**
+ * UI Controller class for viewing details of a task.
+ */
 public class ViewDetailsTaskUI {
-        @FXML
-        private Label titleTask;
-        @FXML
-        private Label descriptionTask;
-        @FXML
-        private Label duration;
-        @FXML
-        private Label greenSpace;
-        @FXML
-        private Label urgency;
+    @FXML
+    private Label titleTask;
+    @FXML
+    private Label descriptionTask;
+    @FXML
+    private Label duration;
+    @FXML
+    private Label greenSpace;
+    @FXML
+    private Label urgency;
 
-        public void setLabels(EntryDto task){
-            titleTask.setText(task.getTitle());
-            descriptionTask.setText(task.getDescription());
-            Task.DegreeUrgency typeUrgency=task.getDegreeUrgency();
-            urgency.setText(typeUrgency.name());
-            duration.setText(String.valueOf(task.getExpectedDuration()));
-            greenSpace.setText(String.valueOf(task.getGreenSpace()));
-        }
+    /**
+     * Sets the labels with the details of the task.
+     *
+     * @param task the task DTO containing the details
+     */
+    public void setLabels(EntryDto task) {
+        titleTask.setText(task.getTitle());
+        descriptionTask.setText(task.getDescription());
+        Task.DegreeUrgency typeUrgency = task.getDegreeUrgency();
+        urgency.setText(typeUrgency.name());
+        duration.setText(String.valueOf(task.getExpectedDuration()));
+        greenSpace.setText(String.valueOf(task.getGreenSpace()));
     }
-
+}

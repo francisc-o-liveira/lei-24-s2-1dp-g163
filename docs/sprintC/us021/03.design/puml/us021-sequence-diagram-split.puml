@@ -1,0 +1,58 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "GSM" as GSM
+participant ":RegisterTaskUI" as UI
+participant ":RegisterTaskController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "Organization\n:Organization" as Organization
+participant "entryRepository:\nEntryRepository" as EntryRepository
+
+
+activate GSM
+
+
+GSM -> UI : Ask to add a new entry to the To-Do List
+activate UI
+
+
+UI -> CTRL : createRegisterTaskController()
+activate CTRL
+
+CTRL -> RepositorySingleton : getInstance()
+activate RepositorySingleton
+
+RepositorySingleton --> CTRL: repositories
+deactivate RepositorySingleton
+
+CTRL -> PLAT: getEntryRepository()
+activate PLAT
+
+PLAT --> CTRL: entryRepository
+deactivate PLAT
+
+ref over CTRL : Get Green Space List
+
+ref over CTRL : Register New Task List
+
+CTRL --> UI : true
+deactivate CTRL
+
+UI --> GSM : Displays Operation Success Message
+deactivate UI
+
+@enduml

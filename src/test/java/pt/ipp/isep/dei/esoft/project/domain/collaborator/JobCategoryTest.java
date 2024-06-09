@@ -1,6 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain.collaborator;
 
 import org.junit.jupiter.api.Test;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.JobCategory;
 
 import static org.junit.jupiter.api.Assertions.*;
 

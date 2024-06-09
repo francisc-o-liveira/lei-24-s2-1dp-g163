@@ -11,9 +11,8 @@ participant ":RegisterTaskUI" as UI
 participant ":RegisterTaskController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "GreenSpaceRepositories\n:GreenSpaceRepositories" as GreenSpaceRepositories
+participant "Organization\n:Organization" as Organization
 participant "entryRepository:\nEntryRepository" as EntryRepository
-participant "GreenSpace\n:GreenSpace" as GreenSpace
 participant "Task:\nTask" as Task
 participant ":GreenSpaceDto" as DTO
 participant ":GreenSpaceMapper" as MAPPER
@@ -45,21 +44,16 @@ activate GSM
         PLAT --> CTRL: entryRepository
         deactivate PLAT
 
-        CTRL -> PLAT: getGreenSpaceRepositories()
-        activate PLAT
 
-        PLAT --> CTRL: greenSpaceRepository
-        deactivate PLAT
+        CTRL -> Organization: getGreenSpaceList()
+        activate Organization
 
-        CTRL -> GreenSpaceRepositories: getGreenSpaceList()
-        activate GreenSpaceRepositories
-
-        GreenSpaceRepositories -> List: getGreenSpaceList()
+        Organization -> List: getGreenSpaceList()
         activate List
         deactivate List
 
-        GreenSpaceRepositories --> CTRL: greenSpaceList
-        deactivate GreenSpaceRepositories
+        Organization --> CTRL: greenSpaceList
+        deactivate Organization
 
         CTRL -> MAPPER: toDto(greenSpaceList)
         activate MAPPER
@@ -89,17 +83,17 @@ activate GSM
 
         GSM -> UI: selects green space
 
-        UI -> CTRL : getDegreeUrgency()
+        UI -> CTRL : getDegreOfUrgency()
 
 
-            CTRL -> Task: getEnumDegreeUrgencyList()
+            CTRL -> Task: getDegreeUrgency()
         activate Task
 
 
-        Task --> CTRL: enumDegreeUrgencyList
+        Task --> CTRL: degreeUrgency
         deactivate Task
 
-        CTRL --> UI: enumDegreeUrgencyList
+        CTRL --> UI: degreeUrgency
 
         UI --> GSM: show degree of urgency list and ask to select one
 
@@ -118,40 +112,42 @@ activate GSM
         CTRL -> EntryRepository: registerNewTask(entryDto)
         activate EntryRepository
 
-        EntryRepository -> EntryDto**: create(entryDto)
+        EntryRepository -> EntryDto**: registerNewTask(entryDto)
         deactivate EntryRepository
         activate EntryDto
 
-        EntryDto -> OBJ: stateOfEntry = getStateOfEntry()
+        EntryDto -> OBJ: status = setStatus()
         activate OBJ
 
         OBJ --> EntryDto: stateOfEntry
 
-        EntryDto -> OBJ: greenSpace = getGreenSpace()
+        EntryDto -> OBJ: greenSpaceDto = setGreenSpaceDto()
 
         OBJ --> EntryDto: greenSpace
 
-        EntryDto -> OBJ: titleOfEntry = getTitleOfEntry()
+        EntryDto -> OBJ: title = setTitle()
 
-        OBJ --> EntryDto: titleOfEntry
+        OBJ --> EntryDto: title
 
-        EntryDto -> OBJ: descriptionOfEntry = getDescriptionOfEntry()
+        EntryDto -> OBJ: description = setDescription()
 
-        OBJ --> EntryDto: descriptionOfEntry
+        OBJ --> EntryDto: description
 
-        EntryDto -> OBJ: approximateExpectedDuration = getApproximateExpectedDuration()
+        EntryDto -> OBJ: expectedDuration = setExpectedDuration()
 
-        OBJ --> EntryDto: approximateExpectedDuration
+        OBJ --> EntryDto: expectedDuration
 
-        EntryDto -> OBJ: degreeOfUrgency = getDegreeUrgency()
+        EntryDto -> OBJ: degreeUrgency = setDegreeUrgency()
 
         OBJ --> EntryDto: degreeOfUrgency
+
+        EntryDto -> OBJ: startDate = setStartDate()
+
+        OBJ --> EntryDto: startDate
         deactivate OBJ
 
         EntryDto --> EntryRepository: true/false
         activate EntryRepository
-
-        EntryRepository -> EntryRepository : verifyIfExist(entry)
 
         EntryRepository --> CTRL: true/false
         deactivate EntryRepository

@@ -1,78 +1,76 @@
 @startuml
-'skinparam monochrome true
-skinparam packageStyle rectangle
 skinparam shadowing false
-skinparam linetype polyline
-'skinparam linetype orto
-
 skinparam classAttributeIconSize 0
 
-'left to right direction
+left to right direction
 
-class ApplicationSession{
-    + static getInstance()
-    + getCurrentSession()
-}
-
-class UserSession{
-}
-
-class GSM {
-}
-
-class Entry {
-    - String stateOfEntry
-}
-
-class EntryDto {
-    - String stateOfEntry
-}
-
-class EntryMapper {
-    - String stateOfEntry
-}
-
-
-class EntryRepository{
-    + create()
-    + cancelEntry()
-}
-
-
-class Repositories {
-    - Repositories()
-    + getInstance() : repositories
-    + getEntryRepository()
+package "UI" #f0f0f0{
+    class ViewDetailsEntryUI {
+    }
 
 }
+package "Core" #f0f0f0{
 
-class ViewDetailsEntryController{
-    + cancelEntry(entryDto)
+    package "Controller" #dddddd{
+
+        class ViewDetailsEntryController {
+            +ceateViewDetailsEntryController()
+        }
+
+        ViewDetailsEntryUI ..>  ViewDetailsEntryController
+
+
+    }
+
+    package "Domain" #dddddd{
+
+        package "DTO" #dddddd{
+
+            class EntryDto {
+                +registerNewTask(entryDto): String
+            }
+
+        }
+
+
+        package "Repository" #bbbbbb{
+
+            class Repositories {
+                - static instance : Repositories
+                + getInstance() : Repositories
+                + getEntryRepository() : EntryRepository
+                - Repositories()
+            }
+
+            ViewDetailsEntryController ..> Repositories : repositories
+
+            Repositories --> Repositories : instance
+
+            class EntryRepository {
+                +cancelEntry(entryDto)
+            }
+
+            Repositories "1" --> "1" EntryRepository : entryRepository
+            ViewDetailsEntryController ..> EntryRepository: entryRepository
+
+        }
+
+        package "Model" #bbbbbb{
+
+            class Entry {
+                -status : EntryState
+                +setStatus()
+            }
+
+            EntryRepository "1" --> "*" Entry
+
+        }
+
+            EntryDto "1" --> "1" Entry
+            EntryRepository "1" --> "1" EntryDto
+
+
+    }
 }
-
-class ViewDetailsEntryUI {
-}
-
-Repositories -> Repositories : instance
-
-ApplicationSession -> ApplicationSession : instance
-ApplicationSession --> "1" UserSession : userSession
-
-ViewDetailsEntryUI .> ViewDetailsEntryController
-
-ViewDetailsEntryController .> Repositories : repositories
-
-Repositories -> "1" skillRepository
-
-
-
-ViewDetailsEntryController ..> Skill
-ViewDetailsEntryController ..> skillRepository : skillRepository
-ViewDetailsEntryController ..> ApplicationSession
-ViewDetailsEntryController ..> UserSession
-
-skillRepository "1" --> "*" Skill : Skills
-
-skillRepository --> "*" HRM : employs
 
 @enduml

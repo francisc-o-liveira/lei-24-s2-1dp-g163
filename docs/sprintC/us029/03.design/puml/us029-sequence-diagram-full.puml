@@ -5,88 +5,209 @@ skinparam shadowing false
 
 autonumber
 
-actor "GSM" as GSM
+actor "Collaborator" as Colaborador
 
-participant ":ViewDetailsEntryUI" as UI2
-participant ":ViewDetailsEntryController" as CTRL2
-participant ":Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
-participant "entryRepository:\nEntryRepository" as EntryRepo
+participant ":CollaboratorUI" as CollabUI
 
+
+participant ":ViewTaskListCollaboratorUI" as UI
+participant ":ViewTaskListAssignedCollabController" as CTRL
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+
+participant ":ApplicationSession" as Session
+participant ":UserSession" as UserSession
+participant "collaboratorRepository:CollaboratorRepository" as CollabRepo
+participant ":EntryRepository" as EntryRepo
 participant ":EntryMapper" as EntryMapper
-participant "objDto:EntryDto" as ObjDto
-participant "entryDto:EntryDto" as EntryDto
-participant "entry:Entry" as OBJ
-
-activate GSM
-activate UI2
-activate CTRL2
-
-ref over GSM : Get details and management options\n of a selected entry on the agenda
-
-note right of UI2
-    UI and Controller were activated simultaneously with GSM,
-    because this diagram continues from the previous one referenced
-    in this diagram at the beggining.
-end note
-
-GSM-> UI2: Completes the Task and Provides Finish Time  
-
-UI2 -> CTRL2: completeEntry(objDto, entryDto)
-
-note right of UI2
-   Remember that in the previous diagram, 
-   ViewDetailsUI received entryDto from AgendaUI via 
-   receiveDto and will use it via this method: "assignTeamToEntry"
-end note
-note right of UI2
-     {finishTime}, entry
-end note
 
 
-CTRL2 -> EntryRepo : completeEntry(objDto, entryDto)
-note right of CTRL2
-    {finishTime}, entry
-end note
+
+participant "entry:Entry" as Entry
+participant "entryList:list<Entry>" as EntryList
+participant "entryCollaboratorListDto:list<EntryDto>" as EntryListDto
+participant "objDto:EntryDto" as EntryDto
+
+
+activate Colaborador
+
+Colaborador -> CollabUI : Selects start date and end date
+activate CollabUI
+
+CollabUI -> CTRL** : create()
+
+CollabUI -> CollabUI: seeTasks()
+activate CollabUI
+
+CollabUI -> CTRL: tasksInThoseDates = getEntriesAssignedToMe(firstDate, secondDate)
+activate CTRL
+
+
+CTRL -> Repos: getInstance()
+activate Repos
+
+Repos --> CTRL: repositories
+deactivate Repos
+
+CTRL -> reposRepos: getCollaboratorRepository()
+activate reposRepos
+
+reposRepos --> CTRL: collaboratorRepository
+deactivate reposRepos
+
+CTRL -> reposRepos: getEntryRepository()
+activate reposRepos
+
+reposRepos --> CTRL: entryRepository
+deactivate reposRepos
+
+CTRL -> CTRL : getCollaboratorFromSession()
+activate CTRL
+
+CTRL -> Session: getCurrentSession()
+activate Session
+
+Session -> CTRL: userSession
+deactivate Session
+
+CTRL -> UserSession: getUserEmail()
+activate UserSession
+
+UserSession -> CTRL : userEmail
+deactivate UserSession
+deactivate CTRL
+
+CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
+activate CollabRepo
+CollabRepo -> CTRL: collaborator
+deactivate CollabRepo
+
+CTRL -> EntryRepo: getEntriesByCollaboratorInAgenda(collaborator, firstDate, secondDate)
 activate EntryRepo
 
-EntryRepo -> EntryMapper : toDomainAndcompleteTask(objDto, entryDto)
-note right of EntryRepo
-    {finishTime}, entry
-end note
+EntryRepo -> CTRL: entryCollaboratorList
+deactivate EntryRepo
+
+
+CTRL -> EntryMapper: entryListToEntryDtoList(entryCollaboratorList)
 activate EntryMapper
 
-EntryMapper -> EntryDto : reference = getReference()
-activate EntryDto
-deactivate EntryDto
 
-EntryMapper -> EntryRepo : findEntryByReference(reference)
+EntryMapper -> EntryListDto** : create()
+
+loop for each object in EntryList
+    EntryMapper -> EntryList : obj = get()
+    activate EntryList
+    deactivate EntryList
+    EntryMapper -> EntryMapper: objDto = toDto(obj)
+    activate EntryMapper
+
+    EntryMapper -> EntryDto** : create(objAllAtributes)
+    deactivate EntryMapper
+    EntryMapper -> EntryListDto : add(objDto)
+    activate EntryListDto
+    deactivate EntryListDto
+end
+
+deactivate EntryList
+
+EntryMapper -> CTRL: entryCollaboratorListDto
+deactivate EntryMapper
+deactivate CTRL
+
+CollabUI -> UI : setTableTasks(tasksInThoseDates)
+deactivate CollabUI
+deactivate CollabUI
+activate UI
+
+UI -> Colaborador: Shows Entries in Those Dates
+deactivate UI
+
+
+Colaborador -> UI : Selects an Entry and Completes it
+activate UI
+UI -> CTRL: assignEntryCompleted(entryDto, completedDate)
+activate CTRL
+
+
+CTRL -> CTRL : getCollaboratorFromSession()
+activate CTRL
+
+CTRL -> Session: getCurrentSession()
+activate Session
+
+Session -> CTRL: userSession
+deactivate Session
+
+CTRL -> UserSession: getUserEmail()
+activate UserSession
+
+UserSession -> CTRL : userEmail
+deactivate UserSession
+deactivate CTRL
+
+CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
+activate CollabRepo
+CollabRepo -> CTRL: collaborator
+deactivate CollabRepo
+
+
+CTRL -> EntryDto: completeTask(completedDate, collaborator)
+activate EntryDto
+
+
+EntryDto -> EntryDto: finishDate = completedDate;
+EntryDto -> EntryDto: collaboratorThatCompleted = collaborator;
+EntryDto -> EntryDto: status.isCompleted();
+
+
+CTRL -> EntryRepo: completeTaskCollaborator(entryDto)
+deactivate EntryDto
 activate EntryRepo
 
-EntryRepo -> EntryMapper : entry
-deactivate EntryRepo
+EntryRepo -> EntryRepo: entry = searchForEntryAgenda(entryDto)
 
-EntryMapper -> OBJ: completeEntry()
-activate OBJ
+EntryRepo -> EntryMapper: entryDtoToEntry(entryDto, entry)
+activate EntryMapper
 
-OBJ -> OBJ: status.postponeState()
-OBJ -> OBJ: setStartDate(newStartDate)
+EntryMapper -> EntryMapper: shouldCompleteTask = shouldCompleteTask(entry,entryDto)
 
-OBJ -> EntryMapper: true
-deactivate OBJ
+note right of EntryMapper
+    "shouldCompleteTask" to verify if the entryDto contains a non-null finishDate,
+    which means that this entry has been marked as complete and we
+    need to update the domain entry to reflect that it has
+    been marked as complete.
+end note
+
+alt shouldCompleteTask is true
+    EntryMapper -> EntryMapper : completeTask(entry, entryDto)
+    activate EntryMapper
+
+    EntryMapper -> Entry : finishDate = getFinishDate()
+    activate Entry
+    deactivate Entry
+
+    EntryMapper -> Entry : collaborator = getCollaboratorFinish()
+    activate Entry
+    deactivate Entry
 
 
-EntryMapper -> EntryRepo: true
+    EntryMapper -> Entry : completeTask(finishDate, collaborator)
+    activate Entry
+    deactivate Entry
+
+end
+deactivate EntryMapper
 deactivate EntryMapper
 
-EntryRepo -> CTRL2: true
+EntryRepo -> CTRL: Optional<Entry>
 deactivate EntryRepo
 
-CTRL2 -> UI2: true
-deactivate CTRL2
+CTRL -> UI: true
+deactivate CTRL
 
-
-UI2 -> GSM: Confirms the Change
-deactivate UI2
+UI -> Colaborador: Displays Operation Success
+deactivate UI
 
 @enduml

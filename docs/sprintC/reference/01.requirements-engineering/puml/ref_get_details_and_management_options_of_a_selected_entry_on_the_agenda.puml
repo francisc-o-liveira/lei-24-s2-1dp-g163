@@ -15,11 +15,11 @@ activate GSM
 
 group Get the details and management options of a selected entry on the agenda
 
-    GSM -> UI: Asks to get the details and management options of a specific entry on the agenda
+    GSM -> UI: Asks to get the details and management\n options of a specific entry on the agenda
     activate UI
 
 
-    UI -> GSM: Shows Agenda and its Entries
+    UI -> GSM: Shows Agenda Entries
     deactivate UI
 
 

@@ -1,0 +1,96 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+
+participant ":AssignSkillsController" as CTRL2
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+participant "entryRepository:EntryRepository" as EntryRepo
+
+participant "teamRepository:TeamRepository" as TeamRepo
+participant "agendaList:AgendaList" as AgendaList
+participant ":TeamMapper" as TeamMapper 
+participant ":EntryMapper" as EntryMapper
+
+participant "teamListFiltered:list<Team>" as TeamList
+participant "teamListDto:List<TeamDto>" as TeamListDto
+participant "objDto:TeamDto" as TeamDto
+
+
+autonumber 3
+
+-> CTRL2 : getTeamListPossibleForEntry(entryDto)
+autonumber 3.1
+activate CTRL2
+
+group Get Team List Possible For Entry Assignment
+    CTRL2 -> Repos: getInstance()
+    activate Repos
+
+    Repos --> CTRL2: repositories
+    deactivate Repos
+
+    CTRL2 -> reposRepos: getEntryRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: entryRepository
+    deactivate reposRepos
+
+    CTRL2 -> reposRepos: getTeamRepository()
+    activate reposRepos
+
+    reposRepos --> CTRL2: teamRepository
+    deactivate reposRepos
+
+    CTRL2 -> EntryRepo: getAgenda()
+    activate EntryRepo
+
+    EntryRepo -> CTRL2: agendaList
+    deactivate EntryRepo
+
+    CTRL2 -> TeamRepo: teamList = getTeams()
+    activate TeamRepo
+    deactivate TeamRepo
+
+
+    CTRL2 -> AgendaList: filterTeamNotActivateInTime(teamList,entryDto)
+    activate AgendaList
+
+    AgendaList -> CTRL2 :  teamListFiltered
+    deactivate AgendaList
+
+    CTRL2 -> TeamMapper: teamListToTeamDtoList(teamListFiltered)
+    activate TeamMapper
+
+
+    TeamMapper -> TeamListDto** : create()
+
+    loop for each object in TeamListFiltered
+        TeamMapper -> TeamList : obj = get()
+        activate TeamList
+        deactivate TeamList
+        TeamMapper -> TeamMapper: objDto = toDto(obj)
+        activate TeamMapper
+
+        TeamMapper -> TeamDto** : create(objAllAtributes)
+        deactivate TeamMapper
+        TeamMapper -> TeamListDto : add(objDto)
+        activate TeamListDto
+        deactivate TeamListDto
+    end
+
+    TeamMapper -> CTRL2 : teamListDto
+    deactivate TeamMapper
+end
+
+autonumber 4
+
+<-- CTRL2  : teamListDtoPossible
+deactivate CTRL2
+
+@enduml

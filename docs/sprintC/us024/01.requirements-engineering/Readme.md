@@ -25,10 +25,6 @@ The Agenda is made up of entries that relate to a task (which was previously in 
 > **Answer:** When postponing a task, the new predicated date for execution should be inserted.
 > 
 
-### 1.3. Acceptance Criteria
-
-* **AC1:**
-* **AC2:**
 
 ### 1.4. Found out Dependencies
 
@@ -61,6 +57,10 @@ The Agenda is made up of entries that relate to a task (which was previously in 
 #### Alternative One
 
 ![System Sequence Diagram - Alternative One](svg/us024-system-sequence-diagram-alternative-one-System_Sequence_Diagram__SSD____Alternative_One.svg)
+
+The reference diagram that illustrates the process of pre-selecting an agenda entry to obtain its details and management options is presented below.
+
+![System Sequence Diagram - Success Scenario](../../reference/01.requirements-engineering/svg/ref_get_details_and_management_options_of_a_selected_entry_on_the_agenda.svg)
 
 ### 1.7 Other Relevant Remarks
 N/A

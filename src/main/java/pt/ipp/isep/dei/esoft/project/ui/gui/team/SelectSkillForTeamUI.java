@@ -12,21 +12,31 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
-import pt.ipp.isep.dei.esoft.project.application.controller.authorization.RegisterController;
-import pt.ipp.isep.dei.esoft.project.application.controller.teamSystem.GenerateTeamController;
-import pt.ipp.isep.dei.esoft.project.domain.collaborator.Skill;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.authorization.RegisterController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.teamSystem.GenerateTeamController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.collaborator.Skill;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * UI Controller for selecting skills for a team.
+ */
 public class SelectSkillForTeamUI {
-    public Stage stage= new Stage();
-    public GenerateTeamController ctrl;
-    ObservableList<Skill> skillsToChoose= FXCollections.observableArrayList();
 
+    /** The stage */
+    public Stage stage = new Stage();
+
+    /** Controller for generating teams */
+    public GenerateTeamController ctrl;
+
+    /** Observable list for the TableView */
+    private ObservableList<Skill> skillsToChoose = FXCollections.observableArrayList();
+
+    /**Authentication Controller */
     public AuthenticationController ctrlAuth;
 
     @FXML
@@ -36,14 +46,23 @@ public class SelectSkillForTeamUI {
     @FXML
     public TableColumn<Skill, Skill> colSkills;
 
+    /** List of skills selected to generate a team */
     private List<Skill> skillsSelectedForTeam;
 
-    public SelectSkillForTeamUI(){
+    /**
+     * Constructor for SelectSkillForTeamUI.
+     * Initializes controllers and loads skills to choose from.
+     */
+    public SelectSkillForTeamUI() {
         ctrlAuth = AuthenticationController.getInstance();
         ctrl = GenerateTeamController.getInstance();
-        skillsSelectedForTeam= new ArrayList<>();
+        skillsSelectedForTeam = new ArrayList<>();
         skillsToChoose.addAll(ctrl.getSkillList());
     }
+
+    /**
+     * Sets up the table view for displaying skills.
+     */
     public void setTableViewSkill(){
         colSkills.setCellValueFactory(new PropertyValueFactory<>("skillName"));
         colSelect.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(false));
@@ -65,18 +84,20 @@ public class SelectSkillForTeamUI {
                             Skill skill = (Skill) getTableRow().getItem();
                             if (isNowSelected) {
                                 skillsSelectedForTeam.add(skill);
-
                             }
                         });
                     }
                 };
             }
         });
-
-
         tableViewSkills.setItems(skillsToChoose);
     }
 
+    /**
+     * Handles button click event to generate a team.
+     *
+     * @throws IOException if an error occurs during loading the UI
+     */
     @FXML
     public void btnGenerateTeam() throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("/fxml/teams/Scene_GenerateTeam.fxml"));
@@ -88,6 +109,12 @@ public class SelectSkillForTeamUI {
         ui.setSkillsSelectedForTeam(skillsSelectedForTeam);
     }
 
+    /**
+     * Handles going back to the previous scene.
+     *
+     * @param event the ActionEvent triggering the method
+     * @throws IOException if an error occurs during loading the UI
+     */
     @FXML
     public void goBack(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader ;
@@ -109,7 +136,13 @@ public class SelectSkillForTeamUI {
         }
     }
 
-
+    /**
+     * Creates a pop-up alert for displaying error messages.
+     *
+     * @param alertType the type of alert
+     * @param messages  the message to display
+     * @return the Alert object
+     */
     private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
         Alert alerta = new Alert(alertType);
 

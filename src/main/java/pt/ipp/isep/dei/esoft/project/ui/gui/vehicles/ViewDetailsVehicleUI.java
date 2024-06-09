@@ -11,10 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterCheckUpController;
-import pt.ipp.isep.dei.esoft.project.application.controller.vehicleSystem.RegisterVehicleController;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.CheckUp;
-import pt.ipp.isep.dei.esoft.project.domain.vehicle.Vehicle;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.vehicleSystem.RegisterCheckUpController;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.vehicleSystem.RegisterVehicleController;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.CheckUp;
+import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
 
 import java.io.IOException;
@@ -22,13 +22,19 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.concurrent.RejectedExecutionException;
 
+/**
+ * UI Controller for viewing details of vehicles.
+ */
 public class ViewDetailsVehicleUI {
 
+    /** Controller of Vehicle */
     public RegisterVehicleController ctrl;
+    /** Controller of check-ups */
     public RegisterCheckUpController ctrlCheck;
-
+    /** Variable for the selected vehicle to view the details */
     private static Vehicle selectedVehicle;
 
+    /** Parameters to register/edit a vehicle */
     private String vBrand;
     private String vModel;
     private String vPlate;
@@ -45,48 +51,34 @@ public class ViewDetailsVehicleUI {
 
     @FXML
     private DatePicker acquisitionDate;
-
     @FXML
     private TextField brand;
-
     @FXML
     private TextField checkupFrequency;
-
     @FXML
     private TextField currentKms;
-
     @FXML
     private TextField grossWeight;
-
     @FXML
     private TextField model;
-
     @FXML
     private TextField plate;
-
     @FXML
     private DatePicker registerDate;
-
     @FXML
     private TextField tare;
-
     @FXML
     private ComboBox<Vehicle.Type> type;
-
     @FXML
     private DatePicker checkDate;
-
     @FXML
     private TextField checkUpKMs;
     @FXML
     private TextField updateCurrentKm;
-
     @FXML
     private DatePicker updateDate;
-
     @FXML
     private TableColumn<CheckUp, Double> colCheckKm;
-
     @FXML
     private TableColumn<CheckUp, Date> colDateCheck;
     @FXML
@@ -97,41 +89,57 @@ public class ViewDetailsVehicleUI {
     private  TextField maintenanceUp;
     @FXML
     private Label newMaintenanceCheck;
-
     @FXML
     private Button btnAddVehicle;
     @FXML
     private Button btnEditVehicle;
-
     @FXML
     private TextField lastCheckUp;
     @FXML
     private DatePicker lastDateCheckUp;
 
+    /** Observable list for the TableView */
     private ObservableList<CheckUp> checkUpObservableList=FXCollections.observableArrayList();
 
-
+    /**
+     * Constructor for this UI.
+     * Initializes the controllers.
+     */
     public ViewDetailsVehicleUI(){
         ctrl =  RegisterVehicleController.getInstance();
         ctrlCheck= RegisterCheckUpController.getInstance();
     }
 
+    /** Sets the ComboBox to choose the type of vehicle */
     public void setComboBox(){
         type.setItems(FXCollections.observableArrayList(Vehicle.Type.values()));
     }
 
+    /** Sets the selected vehicle */
     public void setSelectedVehicle(Vehicle selectedVehicle){
         ViewDetailsVehicleUI.selectedVehicle =selectedVehicle;
     }
 
+    /**
+     * Sets the visibility of the 'Add Vehicle' button.
+     * @param value The visibility value.
+     */
     public void setBtnAddVehicleToVisibleOrNot(boolean value){
         btnAddVehicle.setVisible(value);
     }
 
+    /**
+     * Sets the visibility of the 'Edit Vehicle' button.
+     * @param value The visibility value.
+     */
     public void setBtnEditVehicleToVisileOrNot(boolean value){
         btnEditVehicle.setVisible(value);
     }
 
+    /**
+     * Populates the text fields with details of the selected vehicle.
+     * @param selectedVehicle The selected vehicle.
+     */
     public void putInTextFields(Vehicle selectedVehicle){
         String editedBrand=selectedVehicle.getBrand();
         brand.setText(editedBrand);
@@ -164,6 +172,11 @@ public class ViewDetailsVehicleUI {
         type.setValue(typeOfVehicle);
     }
 
+
+    /**
+     * Sets up the table with check-up details for the selected vehicle.
+     * @param vehicle The selected vehicle.
+     */
     public void setTable(Vehicle vehicle){
         colCheckKm.setCellValueFactory(new PropertyValueFactory<>("kmOfCheck"));
         colDateCheck.setCellValueFactory(new PropertyValueFactory<>("dateOfCheck"));
@@ -171,7 +184,11 @@ public class ViewDetailsVehicleUI {
         tableCheckUp.setItems(checkUpObservableList);
     }
 
-
+    /**
+     * Handles the event when the 'Add Vehicle' button is clicked.
+     * @param event The action event.
+     * @throws IOException If an error occurs while loading the UI.
+     */
     @FXML
     public void btnAdd(ActionEvent event) throws IOException {
         vBrand= brand.getText();
@@ -221,6 +238,12 @@ public class ViewDetailsVehicleUI {
         }
     }
 
+    /**
+     * Handles the event when the 'Register Check-Up' button is clicked.
+     * Registers a new check-up for the selected vehicle with the provided details.
+     * Displays a pop-up confirmation or error message based on the registration result.
+     * @param event The action event.
+     */
     @FXML
     public void btnRegisterCheck(ActionEvent event){
         vlastDateCheck=new Date(checkDate.getValue().getYear(),checkDate.getValue().getMonthValue(),checkDate.getValue().getDayOfMonth());
@@ -248,6 +271,11 @@ public class ViewDetailsVehicleUI {
         }
     }
 
+    /**
+     * Handles the event when the 'Edit Vehicle' button is clicked.
+     * Updates the details of the selected vehicle.
+     * @param event The action event.
+     */
     @FXML
     void btnEdit(ActionEvent event) {
         if(selectedVehicle != null){
@@ -291,10 +319,19 @@ public class ViewDetailsVehicleUI {
         }
     }
 
+    /** Method to get the selected vehicle
+     *
+     * @param selectedVehicle to view details
+     */
     public void showSelectedVehicle(Vehicle selectedVehicle){
         this.selectedVehicle=selectedVehicle;
     }
 
+    /**
+     * Handles the event when the 'Remove Check-Up' button is clicked.
+     * Removes the selected check-up for the vehicle.
+     * @param event The action event.
+     */
     @FXML
     void btnRemoveCheckUp(ActionEvent event) {
         CheckUp selectedCheck = tableCheckUp.getSelectionModel().getSelectedItem();
@@ -312,6 +349,12 @@ public class ViewDetailsVehicleUI {
         }
     }
 
+    /**
+     * Handles the event when the 'Add Check-Up' button is clicked.
+     * Opens a new window to register a new check-up for the vehicle.
+     * @param event The action event.
+     * @throws IOException If an error occurs while loading the UI.
+     */
     @FXML
     void addCheckUp(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/vehicles/Scene_RegisterCheckVehicle.fxml"));
@@ -322,6 +365,11 @@ public class ViewDetailsVehicleUI {
         stage.show();
     }
 
+    /**
+     * Handles the event when the 'Show Maintenance' checkbox is clicked.
+     * Shows or hides the maintenance text field based on checkbox state.
+     * @param event The action event.
+     */
     @FXML
     public void showMaintenance(ActionEvent event){
         if(maintenanceCheckBox.isSelected()){
@@ -333,21 +381,37 @@ public class ViewDetailsVehicleUI {
         }
     }
 
-    private Alert popUpOfVerifications(Alert.AlertType alertType, String messages) {
-        Alert alerta = new Alert(alertType);
-        alerta.setTitle("ERROR");
-        alerta.setHeaderText("Invalid Data");
-        alerta.setContentText(messages);
-        return alerta;
+
+    /**
+     * Creates a pop-up alert for displaying verification messages.
+     *
+     * @param alertType The type of alert (e.g., ERROR, INFORMATION).
+     * @param message The message to be displayed in the alert.
+     * @return The configured alert.
+     */
+    private Alert popUpOfVerifications(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle("ERROR");
+        alert.setHeaderText("Invalid Data");
+        alert.setContentText(message);
+        return alert;
     }
 
-    private Alert popUpOfConfirmation(Alert.AlertType alertType, String messages) {
-        Alert alerta = new Alert(alertType);
-        alerta.setTitle("Confirmation");
-        alerta.setHeaderText("Correct Data");
-        alerta.setContentText(messages);
-        return alerta;
+    /**
+     * Creates a pop-up alert for displaying confirmation messages.
+     *
+     * @param alertType The type of alert (e.g., CONFIRMATION).
+     * @param message The message to be displayed in the alert.
+     * @return The configured alert.
+     */
+    private Alert popUpOfConfirmation(Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Correct Data");
+        alert.setContentText(message);
+        return alert;
     }
+
 
     /** Converts a date to LocalDate
      *
@@ -363,8 +427,11 @@ public class ViewDetailsVehicleUI {
         return LocalDate.of(year, month, day);
     }
 
-
-
+    /**
+     * Handles the submission of updated data for the vehicle's current kilometers.
+     *
+     * @param event The event triggered by the submission action.
+     */
     @FXML
     public void submitDataUpdate(ActionEvent event){
         try {

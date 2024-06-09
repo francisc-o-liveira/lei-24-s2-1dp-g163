@@ -30,16 +30,8 @@ As a Green Space Manager (GSM), I want to register a green space (garden, medium
 
 > **Question:** In which unit should the area be measured in?
 > 
-> > **Answer:** Usually, areas are measured in hectares.
+> **Answer:** Usually, areas are measured in hectares.
 
-
-### 1.3. Acceptance Criteria
-
-* **AC1:** 
-* **AC3:**
-* **AC4:**
-* **AC5:**
-* **AC6:**
 
 ### 1.4. Found out Dependencies
 

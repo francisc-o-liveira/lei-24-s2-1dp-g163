@@ -1,0 +1,222 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "Collaborator" as Colaborador
+
+participant ":CollaboratorUI" as CollabUI
+
+
+participant ":ViewTaskListCollaboratorUI" as UI
+participant ":ViewTaskListAssignedCollabController" as CTRL
+
+participant "Repositories" as Repos
+participant "repositories\n:Repositories" as reposRepos
+
+participant ":ApplicationSession" as Session
+participant ":UserSession" as UserSession
+participant "collaboratorRepository:CollaboratorRepository" as CollabRepo
+participant ":EntryRepository" as EntryRepo
+participant ":EntryMapper" as EntryMapper
+
+
+
+participant "entry:Entry" as Entry
+participant "entryList:list<Entry>" as EntryList
+participant "entryCollaboratorListDto:list<EntryDto>" as EntryListDto
+participant "objDto:EntryDto" as EntryDto
+
+
+activate Colaborador
+
+Colaborador -> CollabUI : Selects start date and end date
+activate CollabUI
+
+CollabUI -> CTRL** : create()
+
+CollabUI -> CollabUI: seeTasks()
+activate CollabUI
+
+CollabUI -> CTRL: tasksInThoseDates = getEntriesAssignedToMe(firstDate, secondDate)
+activate CTRL
+
+
+CTRL -> Repos: getInstance()
+activate Repos
+
+Repos --> CTRL: repositories
+deactivate Repos
+
+CTRL -> reposRepos: getCollaboratorRepository()
+activate reposRepos
+
+reposRepos --> CTRL: collaboratorRepository
+deactivate reposRepos
+
+CTRL -> reposRepos: getEntryRepository()
+activate reposRepos
+
+reposRepos --> CTRL: entryRepository
+deactivate reposRepos
+/' 
+CTRL -> CTRL : getCollaboratorFromSession()
+activate CTRL
+
+CTRL -> Session: getCurrentSession()
+activate Session
+
+Session -> CTRL: userSession
+deactivate Session
+
+CTRL -> UserSession: getUserEmail()
+activate UserSession
+
+UserSession -> CTRL : userEmail
+deactivate UserSession
+deactivate CTRL '/
+
+ref over CTRL
+Get Email of User That is Currently Logged in
+end ref
+
+CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
+activate CollabRepo
+CollabRepo -> CTRL: collaborator
+deactivate CollabRepo
+
+CTRL -> EntryRepo: getEntriesByCollaboratorInAgenda(collaborator, firstDate, secondDate)
+activate EntryRepo
+
+EntryRepo -> CTRL: entryCollaboratorList
+deactivate EntryRepo
+
+
+CTRL -> EntryMapper: entryListToEntryDtoList(entryCollaboratorList)
+activate EntryMapper
+
+
+EntryMapper -> EntryListDto** : create()
+
+loop for each object in EntryList
+    EntryMapper -> EntryList : obj = get()
+    activate EntryList
+    deactivate EntryList
+    EntryMapper -> EntryMapper: objDto = toDto(obj)
+    activate EntryMapper
+
+    EntryMapper -> EntryDto** : create(objAllAtributes)
+    deactivate EntryMapper
+    EntryMapper -> EntryListDto : add(objDto)
+    activate EntryListDto
+    deactivate EntryListDto
+end
+
+deactivate EntryList
+
+EntryMapper -> CTRL: entryCollaboratorListDto
+deactivate EntryMapper
+deactivate CTRL
+
+CollabUI -> UI : setTableTasks(tasksInThoseDates)
+deactivate CollabUI
+deactivate CollabUI
+activate UI
+
+UI -> Colaborador: Shows Entries in Those Dates
+deactivate UI
+
+
+Colaborador -> UI : Selects an Entry and Completes it
+activate UI
+UI -> CTRL: assignEntryCompleted(entryDto, completedDate)
+activate CTRL
+
+/'
+CTRL -> CTRL : getCollaboratorFromSession()
+activate CTRL
+
+CTRL -> Session: getCurrentSession()
+activate Session
+
+Session -> CTRL: userSession
+deactivate Session
+
+CTRL -> UserSession: getUserEmail()
+activate UserSession
+
+UserSession -> CTRL : userEmail
+deactivate UserSession
+deactivate CTRL
+'/
+
+ref over CTRL
+Get Email of User That is Currently Logged in
+end ref
+
+CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
+activate CollabRepo
+CollabRepo -> CTRL: collaborator
+deactivate CollabRepo
+
+
+CTRL -> EntryDto: completeTask(completedDate, collaborator)
+activate EntryDto
+
+
+EntryDto -> EntryDto: finishDate = completedDate;
+EntryDto -> EntryDto: collaboratorThatCompleted = collaborator;
+EntryDto -> EntryDto: status.isCompleted();
+
+
+CTRL -> EntryRepo: completeTaskCollaborator(entryDto)
+deactivate EntryDto
+activate EntryRepo
+
+EntryRepo -> EntryRepo: entry = searchForEntryAgenda(entryDto)
+
+EntryRepo -> EntryMapper: entryDtoToEntry(entryDto, entry)
+activate EntryMapper
+
+EntryMapper -> EntryMapper: shouldCompleteTask = shouldCompleteTask(entry,entryDto)
+
+note right of EntryMapper
+    "shouldCompleteTask" to verify if the entryDto contains a non-null finishDate,
+    which means that this entry has been marked as complete and we
+    need to update the domain entry to reflect that it has
+    been marked as complete.
+end note
+
+alt shouldCompleteTask is true
+    EntryMapper -> EntryMapper : completeTask(entry, entryDto)
+    activate EntryMapper
+
+    EntryMapper -> Entry : finishDate = getFinishDate()
+    activate Entry
+    deactivate Entry
+
+    EntryMapper -> Entry : collaborator = getCollaboratorFinish()
+    activate Entry
+    deactivate Entry
+
+
+    EntryMapper -> Entry : completeTask(finishDate, collaborator)
+    activate Entry
+    deactivate Entry
+
+end
+deactivate EntryMapper
+deactivate EntryMapper
+
+EntryRepo -> CTRL: Optional<Entry>
+deactivate EntryRepo
+
+CTRL -> UI: true
+deactivate CTRL
+
+UI -> Colaborador: Displays Operation Success
+deactivate UI
+
+@enduml

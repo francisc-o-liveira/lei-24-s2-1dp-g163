@@ -1,0 +1,51 @@
+ç@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footboxFN
+actor "GSM" as GSM
+participant ":ViewDetailsEntryUI" as UI
+participant ":ViewDetailsEntryController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+
+
+activate GSM
+
+        ref over GSM
+        Get Agenda Entry's List
+        end
+
+        GSM -> UI : ask and select an entry to cancel
+        activate UI
+
+        UI -> CTRL**: createViewDetailsEntryController()
+        activate CTRL
+
+        CTRL -> RepositorySingleton: getInstance()
+        activate RepositorySingleton
+
+        RepositorySingleton --> CTRL: repositories
+        deactivate RepositorySingleton
+
+        CTRL -> PLAT: getEntryRepository()
+        activate PLAT
+
+        PLAT --> CTRL: entryRepository
+        deactivate PLAT
+
+        ref over CTRL
+        Cancel Entry
+        end
+
+        CTRL --> UI: true/false
+
+        UI --> GSM : displays operation success
+        deactivate UI
+
+deactivate GSM
+
+@enduml

@@ -8,18 +8,102 @@ package "UI" #f0f0f0{
     class RegisterGreenSpaceUI {
     }
 
+
 }
+
 package "Core" #f0f0f0{
+
+
+
 
     package "Controller" #dddddd{
 
         class RegisterGreenSpaceController {
-            +getGreenSpaceTypeListDto(objDto: TeamDto, entryDto: EntryDto)
+            +getGreenSpaceTypeListDto()
+            +registerGreenSpace(objDto : GreenSpaceDto) : list<GreenSpaceDto>
+
         }
 
-        RegisterGreenSpaceUI ..>  RegisterGreenSpaceController
+    }
+
+
+
+        package "DTO" #dddddd{
+
+            class GreenSpaceDto {
+                +name: String
+                +address:
+                +area: float
+                +type: enumType
+            }
+
+
+        }
+
+    package "Domain" #dddddd{
+
+
+        package "Repository" #bbbbbb{
+
+            class Repositories {
+                - organizationRepository: OrganizationRepository
+                + getInstance(): Repositories
+                + getOrganizationRepository(): Organization
+                - Repositories()
+            }
+
+
+
+
+            class OrganizationRepository {
+                + getEnumGreenSpaceTypes
+            }
+
+
+        }
+
+        package "Model" #bbbbbb{
+
+
+
+            class GreenSpace {
+                 - type: Type
+                 +getEnumGreenSpaceTypes() : Type []
+            }
+
+            class Type{
+
+            }
+
+
+
+
+        }
+    }
+}
+
+
+
+RegisterGreenSpaceUI ..> RegisterGreenSpaceController
+RegisterGreenSpaceController ..> Repositories : repositories
+
+RegisterGreenSpaceController ..> OrganizationRepository : organizationRepository
+
+
+RegisterGreenSpaceController ..> GreenSpaceDto
+
+
+
+
+OrganizationRepository "1" --> "*" GreenSpace
+
+Repositories "1" --> "1" OrganizationRepository
+
+
 
 
 
 @enduml
+
+
 
