@@ -1,0 +1,54 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+
+participant ":ViewTaskListAssignedCollabController" as CTRL
+
+participant ":ApplicationSession" as Session
+participant ":UserSession" as UserSession
+
+
+/' 
+participant "collaboratorRepository:CollaboratorRepository" as CollabRepo
+participant ":EntryRepository" as EntryRepo
+participant ":EntryMapper" as EntryMapper
+
+
+
+participant "entry:Entry" as Entry
+participant "entryList:list<Entry>" as EntryList
+participant "entryCollaboratorListDto:list<EntryDto>" as EntryListDto
+participant "objDto:EntryDto" as EntryDto
+ '/
+ 
+autonumber 11
+
+
+autonumber 11.1
+
+
+group Get Email of the User Currently Using the System
+
+
+
+    activate CTRL
+    CTRL -> Session: getCurrentSession()
+    activate Session
+
+    Session -> CTRL: userSession
+    deactivate Session
+
+    CTRL -> UserSession: getUserEmail()
+    activate UserSession
+
+    UserSession -> CTRL : userEmail
+    deactivate UserSession
+
+
+end
+
+@enduml

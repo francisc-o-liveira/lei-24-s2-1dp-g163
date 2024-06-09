@@ -16,13 +16,13 @@ participant ":UserSession" as UserSession
 participant "Repositories" as Repos
 participant "repositories:Repositories" as reposRepos
 
-participant "organization:Organization" as Org
+participant "organizationRepository:Organization" as Org
 participant "greenSpaceList:List<GreenSpace>" as GreenSpaceList
 participant "greenSpace:GreenSpace" as GreenSpace
 participant ":GreenSpaceMapper" as Mapper
 participant "greenSpaceListDto:List<GreenSpaceDto>" as GreenSpaceListDto
 participant "greenSpaceDto:GreenSpaceDto" as GreenSpaceDto
-participant "sortAlgorithm:SortingList" as SortAlgorithm
+participant "someSortingAlgorithm: SomeSortingAlgorithm\nimplements «SortingList»" as SortAlgorithm
 
 activate GreenSpaceManager
 
@@ -41,11 +41,12 @@ activate Repos
 Repos --> Controller: repositories
 deactivate Repos
 
-Controller -> reposRepos: getOrganization()
+Controller -> reposRepos: getOrganizationRepository()
 activate reposRepos
 
-reposRepos --> Controller: organization
+reposRepos --> Controller: organizationRepository
 deactivate reposRepos
+
 
 Controller -> Controller : getCollaboratorFromSession()
 activate Controller
@@ -72,7 +73,7 @@ loop for each greenSpace in greenSpaces
     Org -> GreenSpace : GSMEmail = createdBy()
     activate GreenSpace
     deactivate GreenSpace    
-    alt greenSpace was created by the GSM who is currently logged in\n, i.e, whose email is stored in email attribute
+    alt  greenSpace is managed by the Green Space Manager (GSM) currently using the system as a user
         Org -> GreenSpaceList : add(greenSpace)
         activate GreenSpaceList
         deactivate GreenSpaceList
@@ -110,7 +111,7 @@ activate Controller
 
 Controller -> Session : getAlgorithmService()
 activate Session
-Session -> Controller : sortAlgorithm
+Session -> Controller : someSortingAlgorithm
 
 deactivate Session
 deactivate Controller

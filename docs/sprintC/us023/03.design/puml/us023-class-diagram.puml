@@ -156,7 +156,7 @@ ViewDetailsEntryController ..> TeamDto
 ViewDetailsEntryController ..> EmailService
 EmailService ..> Collaborator
 EmailService ..> Entry
-EmailService ..> ApplicationSession
+ApplicationSession ..> EmailService
 EmailService ..> DeiEmailService
 EmailService ..> GmailService
 

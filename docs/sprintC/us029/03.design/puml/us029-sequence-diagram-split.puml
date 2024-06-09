@@ -1,4 +1,6 @@
 @startuml
+!pragma teoz true
+
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -61,10 +63,15 @@ activate reposRepos
 
 reposRepos --> CTRL: entryRepository
 deactivate reposRepos
-/' 
-CTRL -> CTRL : getCollaboratorFromSession()
-activate CTRL
 
+
+CTRL -> CTRL : userEmail = getCollaboratorFromSession()
+activate CTRL
+||0||
+ref over CTRL
+        Get Email of the User Currently Using the System
+end ref
+/' 
 CTRL -> Session: getCurrentSession()
 activate Session
 
@@ -75,12 +82,9 @@ CTRL -> UserSession: getUserEmail()
 activate UserSession
 
 UserSession -> CTRL : userEmail
-deactivate UserSession
-deactivate CTRL '/
-
-ref over CTRL
-Get Email of User That is Currently Logged in
-end ref
+deactivate UserSession '/
+||0||
+deactivate CTRL
 
 CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
 activate CollabRepo
@@ -134,10 +138,14 @@ activate UI
 UI -> CTRL: assignEntryCompleted(entryDto, completedDate)
 activate CTRL
 
-/'
-CTRL -> CTRL : getCollaboratorFromSession()
-activate CTRL
 
+CTRL -> CTRL : userEmail = getCollaboratorFromSession()
+activate CTRL
+||0||
+ref over CTRL
+        Get Email of the User Currently Using the System
+end ref
+/' 
 CTRL -> Session: getCurrentSession()
 activate Session
 
@@ -148,13 +156,9 @@ CTRL -> UserSession: getUserEmail()
 activate UserSession
 
 UserSession -> CTRL : userEmail
-deactivate UserSession
+deactivate UserSession '/
+||0||
 deactivate CTRL
-'/
-
-ref over CTRL
-Get Email of User That is Currently Logged in
-end ref
 
 CTRL -> CollabRepo: getCollaboratorByEmail(userEmail)
 activate CollabRepo
