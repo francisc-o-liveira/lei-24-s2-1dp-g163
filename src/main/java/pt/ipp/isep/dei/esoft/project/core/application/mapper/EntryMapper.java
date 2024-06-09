@@ -172,7 +172,7 @@ public class EntryMapper {
         return entry.getStartDate().equals(entryDto.getStartDate())
                 && !entry.getStatus().equals(entryDto.getStatus())
                 && entryDto.getFinishDate() != null
-                && entryDto.getTeamAssigned().equals(entry.getTeamAssigned())
+                && entryDto.getTeamAssigned().getTeamName().equals(entry.getTeamAssigned().getTeamName())
                 && entry.getVehicleList().equals(entryDto.getVehicleList());
     }
 

@@ -144,8 +144,7 @@ public class ViewTaskListCollaboratorUI {
     private void btnComplete(ActionEvent event) {
         entrySelected=tableTasks.getSelectionModel().getSelectedItem();
         try{
-            ZonedDateTime timeAndDate = ZonedDateTime.now();
-            Date completedDate=new Date(timeAndDate.getYear(),timeAndDate.getMonthValue(),timeAndDate.getDayOfMonth());
+            Date completedDate=Date.atualDate();
             ctrl.assignEntryCompleted(entrySelected,completedDate);
             popUp().show();
         } catch (Exception e) {

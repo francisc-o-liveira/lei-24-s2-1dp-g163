@@ -297,6 +297,7 @@ public boolean assignVehicle(VehicleDto vehicle) {
             if (finishDate != null && collaborator != null) {
                 this.finishDate = finishDate;
                 this.collaboratorThatCompleted = collaborator;
+                status.doneEntry();
                 status.isCompleted();
             } else {
                 throw new IllegalArgumentException("The finish date or collaborator is invalid");

@@ -351,7 +351,7 @@ public class Entry extends Task implements Serializable {
      * @throws IllegalArgumentException if the date is null or before the start date
      */
     private void setFinishDate(Date date) {
-        if (date == null || date.after(startDate)) {
+        if (date == null || date.compareTo(startDate)<0) {
             throw new IllegalArgumentException("Date cannot be null or before the start date.");
         } else {
             this.finishDate = date;
