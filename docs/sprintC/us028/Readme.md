@@ -1,4 +1,4 @@
-# US026 - Assign one or more Vehicles to an entry in the Agenda
+# US028 - View Tasks Assigned to Collaborator
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
