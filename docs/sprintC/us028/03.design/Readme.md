@@ -50,7 +50,7 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us006-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us028-sequence-diagram-full.svg)
 
 ### Split Diagrams
 
@@ -58,16 +58,13 @@ The following diagram shows the same sequence of interactions between the classe
 
 It uses Interaction Occurrence (a.k.a. Interaction Use).
 
-![Sequence Diagram - split](svg/us003-sequence-diagram-split.svg)
+![Sequence Diagram - split](svg/us028-sequence-diagram-split.svg)
 
-**Get Job Category List Partial SD**
+**Get collaborator from session SD**
 
-![Sequence Diagram - Partial - Get Task Category List](svg/us003-sequence-diagram-partial-get-job-category-list.svg)
+![Sequence Diagram - Partial - Get Collaborator From Session](svg/us028-partial-get-collaborator-from-session.svg)
 
-**Register a Collaborator Partial SD**
-
-![Sequence Diagram - Partial - Create Task](svg/us003-sequence-diagram-partial-register-collaborator.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us003-class-diagram.svg)
+![Class Diagram](svg/us028-class-diagram.svg)

@@ -48,7 +48,7 @@ UI -> UI2 :setEntry(entryDto)
 activate UI2
 deactivate UI
 
-UI2 -> CTRL2 :getTeamListPossibleForEntry(entryDto)
+UI2 -> CTRL2 : getTeamListPossibleForEntry(entryDto)
 activate CTRL2
 
 
