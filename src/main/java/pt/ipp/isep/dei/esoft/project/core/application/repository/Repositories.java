@@ -27,7 +27,11 @@ public class Repositories implements Serializable {
         teamRepository = new TeamRepository();
         collaboratorRepository = new CollaboratorRepository();
         vehicleRepository = new VehicleRepository();
-        entryRepository = new EntryRepository();
+        try {
+            entryRepository = new EntryRepository();
+        } catch (IOException e){
+
+        }
     }
 
     /**
