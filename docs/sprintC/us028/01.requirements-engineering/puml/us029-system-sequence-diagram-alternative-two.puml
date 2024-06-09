@@ -7,38 +7,15 @@ title System Sequence Diagram (SSD) - Alternative Two
 
 autonumber
 
-actor "HRM" as Manager
+actor "Collaborator" as Collaborator
 participant ":System" as System
 
-activate Manager
+activate Collaborator
 
-    Manager -> System : asks to register a new collaborator
+    Collaborator -> System : asks to view the tasks assigned to him
     activate System
 
-        System --> Manager : shows job category list and asks to select one
+        System --> Collaborator : shows tasks list and wait for option of sort or view task option
     deactivate System
 
-    Manager -> System : selects a job category
-    activate System
-
-     System --> Manager : shows docType list and asks to select one
-        deactivate System
-
-        Manager -> System : selects a docType
-        activate System
-
-        System --> Manager : requests data (i.e. name, date of birthday, admission data,\n address, email, phone number,docType,(taxpayer number/\ncitizen card number/passport number),...)
-    deactivate System
-
-    Manager -> System : types requested data
-    activate System
-
-        System --> Manager :shows all data and requests confirmation
-    deactivate System
-
-    Manager -> System : confirms data
-    activate System
-
-        System --> Manager : displays operation success / show list of existing collaborators
-    deactivate System
 @enduml
