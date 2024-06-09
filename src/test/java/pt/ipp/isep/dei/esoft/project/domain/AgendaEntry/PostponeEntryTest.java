@@ -71,8 +71,7 @@ public class PostponeEntryTest {
 
     @Test
     void postponeTest(){
-        entry.postponeEntry(postDate);
-        entry.setStartHour(startTime);
+        entry.postponeEntry(postDate,startTime);
         assertTrue(entry.isPostpone());
         assertEquals(entry.getStartDate(),postDate);
         assertEquals(entry.getStartHour(),startTime);
