@@ -50,6 +50,7 @@ public class PostponeUI {
             }
         } catch (Exception e){
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+            e.printStackTrace();
         }
     }
 

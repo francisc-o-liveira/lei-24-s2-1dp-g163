@@ -91,12 +91,13 @@ public class Entry extends Task implements Serializable {
      * @param status          the initial status of the entry
      * @param reference       the reference number of the entry
      */
-    public Entry(Date startDate, String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference) {
+    public Entry(Date startDate, String title, String description, Tempo expectedDuration, GreenSpace greenSpace, DegreeUrgency degreeUrgency, EntryState status, int reference, Tempo startHour) {
         super(title, description, expectedDuration, greenSpace, degreeUrgency);
         validateReference(Integer.toString(reference));
         this.reference = Integer.toString(reference);
         this.status = status;
         this.startDate = startDate;
+        this.startHour=startHour;
         this.vehicleList = new ArrayList<>();
         this.teamAssigned = null;
         this.finishDate = null;
@@ -188,21 +189,19 @@ public class Entry extends Task implements Serializable {
      * @param newStartDate the new start date
      */
     public void postponeEntry(Date newStartDate,  Tempo startTime) {
-        setStartDate(newStartDate);
-        setStartHour(startTime);
+        setStart(newStartDate,startTime);
         status.postponeState();
     }
 
-    /**
-     * Sets the start date of the entry.
+    /** Sets the start date and start hour
      *
-     * @param newStartDate the new start date
-     */
-    public void setStartDate(Date newStartDate){
-        if(newStartDate.compareTo(Date.atualDate())<=0){
+     * */
+    public void setStart(Date newStartDate,  Tempo startTime){
+        if(newStartDate.compareTo(Date.atualDate())>=0 && startTime.getHoras() >= 8 && startTime.getHoras() <= 20 ){
             this.startDate = newStartDate;
+            this.startHour = startTime;
         }else {
-            throw new IllegalArgumentException("The start date cannot be greater than or equal to the current date");
+            throw new IllegalArgumentException("The start date or the start hour is not correct.");
         }
     }
 
@@ -269,24 +268,10 @@ public class Entry extends Task implements Serializable {
      * @param startHour the start hour
      */
     public void setEntryAgenda(Date startDate, Tempo startHour) {
-        setStartDate(startDate);
-        setStartHour(startHour);
+        setStart(startDate,startHour);
         status.assignState();
     }
 
-    /**
-     * Sets the start hour of the entry.
-     *
-     * @param startHour the start hour
-     * @throws IllegalArgumentException if the start hour is not between 8 and 20
-     */
-    public void setStartHour(Tempo startHour) {
-        if (startHour.getHoras() >= 8 && startHour.getHoras() <= 20) {
-            this.startHour = startHour;
-        } else {
-            throw new IllegalArgumentException("Start hour must be between 8 and 20 horas.");
-        }
-    }
 
     /**
      * Gets the start hour of the entry.

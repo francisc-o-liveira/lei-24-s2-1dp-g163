@@ -77,7 +77,7 @@ public class EntryMapper {
     }
 
     public Entry toDomain(EntryDto entryDto){
-        return new Entry(entryDto.getStartDate(), entryDto.getTitle(), entryDto.getDescription(), entryDto.getExpectedDuration(), mapperSpaces.toDomain(entryDto.getGreenSpace()), entryDto.getDegreeUrgency(), entryDto.getStatus(), Integer.parseInt(entryDto.getReference()));
+        return new Entry(entryDto.getStartDate(), entryDto.getTitle(), entryDto.getDescription(), entryDto.getExpectedDuration(), mapperSpaces.toDomain(entryDto.getGreenSpace()), entryDto.getDegreeUrgency(), entryDto.getStatus(), Integer.parseInt(entryDto.getReference()), entryDto.getStartHour());
     }
 
     /**
@@ -251,6 +251,6 @@ public class EntryMapper {
      * @return the created Entry object
      */
     private Entry getEntryFromDtoToCompare(EntryDto entryDto) {
-        return new Entry(entryDto.getStartDate(), entryDto.getTitle(), entryDto.getDescription(), entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()), entryDto.getDegreeUrgency(), entryDto.getStatus(), -1);
+        return new Entry(entryDto.getStartDate(), entryDto.getTitle(), entryDto.getDescription(), entryDto.getExpectedDuration(), mapperSpaces.greenSpaceDtoToGreenSpace(entryDto.getGreenSpace()), entryDto.getDegreeUrgency(), entryDto.getStatus(), -1, entryDto.getStartHour());
     }
 }
