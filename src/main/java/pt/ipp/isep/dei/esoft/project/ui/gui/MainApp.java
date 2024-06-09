@@ -1,67 +1,60 @@
 package pt.ipp.isep.dei.esoft.project.ui.gui;
 
+import java.io.File;
+import java.io.IOException;
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.scene.control.Button;
+import pt.ipp.isep.dei.esoft.project.core.application.controller.AssignEntryOnAgendaController;
 import pt.ipp.isep.dei.esoft.project.core.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
-import java.io.File;
-import java.io.IOException;
-
-
-
 public class MainApp extends Application {
 
-    private static final int MAX_ATTEMPTS = 3;
-    private int attempts = 0;
-    Bootstrap bootstrap = new Bootstrap();
-    private ApplicationSession appSession;
+    private static File saveDirectory = null;
+
+
+    Bootstrap bootstrap=new Bootstrap();
+
 
     @Override
     public void start(Stage stage) {
-        if (attempts < MAX_ATTEMPTS) {
-            attempts++;
-            if (popUpBootStrap().showAndWait().get() == ButtonType.OK) {
+        try {
+            bootstrap.run();
+            initializeApp();
+        } catch (Exception ex) {
+            if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
                 File selectedDirectory = pickingDirectory();
                 if (selectedDirectory != null) {
-                    try {
-                        appSession = ApplicationSession.getInstance();
-                        appSession.setFilePath(selectedDirectory);
-                        File configFile = new File(appSession.getConfigFilePath());
-                        if (!configFile.exists()) {
-                            throw new IOException("Configuration file not found in the selected directory.");
-                        }
+                    try{
+                        bootstrap.setSaveDirectory(selectedDirectory);
                         bootstrap.run();
                         initializeApp();
-                    } catch (IOException io) {
-                        criarAlertaErro(io.getMessage()).show();
+                    }catch (IOException io){
+                        criarAlertaErro(io).show();
                     } catch (Exception e) {
-                        criarAlertaErro("An error occurred while starting the application. Please try again.").show();
+                        bootstrap.setSaveDirectory(pickingDirectory());
+                        start(stage);
                     }
+
+
+                    ApplicationSession.getInstance().setFilePath();
+
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    Alert alert=new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Please select a directory");
-                    alert.show();
-                    start(stage);
                 }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Operation was cancelled");
-                alert.show();
             }
-        } else {
-            criarAlertaErro("Maximum number of attempts reached. Application will exit.").showAndWait();
-            System.exit(1);
         }
     }
 
@@ -71,11 +64,13 @@ public class MainApp extends Application {
         return directoryChooser.showDialog(null);
     }
 
+
+    // VERIFICA BEM ESTE METODO NAO SEI QUE MERDA E AQUELA QUE FIZESTE
     private void initializeApp() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/SceneLogin.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage mainStage = new Stage();
-        LoginUI controller = fxmlLoader.getController();
+        Scene scene=new Scene(fxmlLoader.load());
+        Stage mainStage=new Stage();
+        LoginUI controller=fxmlLoader.getController();
         controller.setMainStage(mainStage);
         mainStage.setTitle("AquaCode - Green Space Management");
         mainStage.setScene(scene);
@@ -101,24 +96,33 @@ public class MainApp extends Application {
         });
     }
 
+
+    /**
+     * The main() method is ignored in correctly deployed JavaFX application.
+     * main() serves only as fallback in case the application can not be
+     * launched through deployment artifacts, e.g., in IDEs with limited FX
+     * support. NetBeans ignores main().
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
-    private Alert criarAlertaErro(String message) {
+    private Alert criarAlertaErro(Exception ex) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
 
-        alerta.setTitle("Application");
-        alerta.setHeaderText("Application Startup Issues");
-        alerta.setContentText(message);
+        alerta.setTitle("Aplicação");
+        alerta.setHeaderText("Problemas no arranque da aplicação");
+        alerta.setContentText(ex.getMessage());
 
         return alerta;
     }
 
-    private Alert popUpBootStrap() {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Configuration File");
-        alerta.setContentText("The application did not detect the configuration file. Select one?");
+    private Alert popUpBootStrap(){
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setContentText("The application did not detect a database. Select one?");
         return alerta;
     }
+
 }
