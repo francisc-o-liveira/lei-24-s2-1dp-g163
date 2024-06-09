@@ -113,7 +113,7 @@ public class ApplicationSession {
      * @throws IllegalAccessException if the class or its nullary constructor is not accessible
      */
     public static SendEmailExternalAPI getEmailService() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String emailClass = "pt.ipp.isep.dei.esoft.project.domain.adapters." + getEmail();
+        String emailClass = "pt.ipp.isep.dei.esoft.project.core.application.domain.adapters." + getEmail();
         Class<?> className = Class.forName(emailClass);
         return (SendEmailExternalAPI) className.newInstance();
     }
@@ -128,7 +128,7 @@ public class ApplicationSession {
      * @throws IllegalAccessException if the class or its nullary constructor is not accessible
      */
     public static SortingList getAlgorithmService() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String algorithmClass = "pt.ipp.isep.dei.esoft.project.repository.sortingAlgorithmsServ." + getAlgorithm();
+        String algorithmClass = "pt.ipp.isep.dei.esoft.project.core.application.repository.sortingAlgorithmsServ." + getAlgorithm();
         Class<?> className = Class.forName(algorithmClass);
         return (SortingList) className.newInstance();
     }
