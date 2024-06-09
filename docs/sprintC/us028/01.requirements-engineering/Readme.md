@@ -40,27 +40,19 @@ Later, that To-do List entry will originate an Entry in the Agenda with a starti
 * **AC2:** The Collaborator should be able to filter the results by the status of the task.
 
 ### 1.4. Found out Dependencies
+* There is a dependency on **US22 - As a GSM, I want to add a new entry in the Agenda**. A task must exist in the Agenda before it can see the tasks assigned a collaborator.
+* There is a dependency on **US23 - As a GSM, I want to assign a Team to an entry in the Agenda**. A task must be assigned to a team before it can see the tasks assigned.
 
-* 
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* Sorted Options:
-  * By Green Space
-  * By Date (Month/Week/Year)
-  * By Status of Entry
 
 
 **Output Data:**
 
-* **TableView/Calendar with the Entry's assigned to Collaborator**
-  - Sort options by date, green space, status of entry's
-* **Warnings or Errors (if applicable):**
-  - Error messages for any issues encountered during the process of getting the entry's, such non-existent data or duplications ,etc...
-* **Operational Feedback:**
-  - Overall status of the operation (success or failure), with immediate feedback to the Collaborator.
+* Shows entry assigned 
 
 
 ### 1.6. System Sequence Diagram (SSD)
