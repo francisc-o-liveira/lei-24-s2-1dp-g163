@@ -19,7 +19,7 @@ public class ToDoList {
     /**
      * List of tasks to be done.
      */
-    private static List<Entry> toDo = new ArrayList<>();
+    private final List<Entry> toDo = new ArrayList<>();
 
     /**
      * Retrieves the list of tasks to be done.

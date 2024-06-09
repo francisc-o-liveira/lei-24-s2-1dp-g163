@@ -20,14 +20,14 @@ import java.util.*;
  * The AgendaList class represents a list of agenda entries.
  */
 public class AgendaList implements Serializable, List<Entry> {
-    private static List<Entry> agenda = new ArrayList<>();
+    private final List<Entry> agenda = new ArrayList<>();
 
     /**
      * Retrieves the list of agenda entries.
      *
      * @return The list of agenda entries.
      */
-    public static List<Entry> getList() {
+    public  List<Entry> getList() {
         return agenda;
     }
 
@@ -36,7 +36,7 @@ public class AgendaList implements Serializable, List<Entry> {
      *
      * @return The array of degree of urgency options.
      */
-    public static Task.DegreeUrgency[] getDegreeOfUrgency() {
+    public final Task.DegreeUrgency[] getDegreeOfUrgency() {
         return Entry.getDegreeOfUrgency();
     }
 
