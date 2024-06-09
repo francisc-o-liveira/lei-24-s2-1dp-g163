@@ -23,6 +23,13 @@ public class TeamRepository {
      */
     public TeamRepository(){
         teams = new ArrayList<>();
+        try {
+            loadFromTeamDataBase();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

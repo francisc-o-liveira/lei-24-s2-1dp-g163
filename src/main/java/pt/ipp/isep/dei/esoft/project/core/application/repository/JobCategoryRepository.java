@@ -18,11 +18,11 @@ public class JobCategoryRepository {
 
     public JobCategoryRepository() {
         jobCategories=new ArrayList<>();
-       // try {
-        //    loadFromJobCategoryDataBase();
-       // } catch (IOException | CloneNotSupportedException e) {
-        //    throw new RuntimeException(e);
-       // }
+        try {
+            loadFromJobCategoryDataBase();
+        } catch (IOException | CloneNotSupportedException e) {
+           throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -80,13 +80,13 @@ public class JobCategoryRepository {
 
     public void removeFromJobCategoryDataBase(JobCategory jobCategory) {
         jobCategories.remove(jobCategory);
-       // saveJobCategorys();
+        saveJobCategorys();
     }
 
     public void saveFromJobCategoryInDataBase(JobCategory jobCategory) {
         if (!jobCategories.contains(jobCategory)) {
             jobCategories.add(jobCategory);
-            // saveJobCategorys();
+            saveJobCategorys();
         }
     }
 

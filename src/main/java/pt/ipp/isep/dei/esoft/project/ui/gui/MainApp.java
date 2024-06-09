@@ -46,10 +46,6 @@ public class MainApp extends Application {
                         bootstrap.setSaveDirectory(pickingDirectory());
                         start(stage);
                     }
-
-
-                    ApplicationSession.getInstance().setFilePath();
-
                 } else {
                     Alert alert=new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Please select a directory");
