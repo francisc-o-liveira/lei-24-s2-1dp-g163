@@ -1,0 +1,28 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative One
+
+autonumber
+
+actor "GSM" as Manager
+participant ":System" as System
+
+activate Manager
+
+
+
+Manager -> System : asks to view tasks assigned to me
+
+    activate System
+
+        System --> Manager : show entry's assigned
+    deactivate System
+
+
+
+
+
+@enduml
