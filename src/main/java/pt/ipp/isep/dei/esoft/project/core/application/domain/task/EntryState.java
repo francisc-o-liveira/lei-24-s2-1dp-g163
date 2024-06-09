@@ -114,7 +114,7 @@ public class EntryState implements Serializable {
      * @throws RuntimeException if the state transition is not allowed
      */
     public void cancelEntry() {
-        if (this.state == State.Postponed || this.state == State.Planned) {
+        if (this.state == State.Postponed || this.state == State.Planned || this.state==State.Assigned) {
             this.state = State.Canceled;
         } else if (this.state == State.Canceled) {
             throw new IllegalArgumentException("This entry is already cancelled");
