@@ -6,41 +6,35 @@
 
 _**Note that SSD - Alternative Two is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...          | Answer                         | Justification (with patterns)                                                                                 |
-|:---------------|:-----------------------------------------------------|:-------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		     | 	... interacting with the actor?                     | RegisterCollaboratorUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		        | 	... coordinating the US?                            | RegisterCollaboratorController | Controller                                                                                                    |
-| 			  		        | ... instantiating a new Collaborator?                | CollaboratorRepository         | Creator (Rule 1): in the DM CollaboratorRepository.                                                           |
-| 		             | 							                                              |                                |                                                                                                               |
-| Step 2  		     | 	...saving the inputted data?                        | Collaborator                   | IE: object created in step 1 has its own data.                                                                |
-| Step 3  		     | 	...knowing the Job categories to show?              | Repositories                   | IE: Job Categories are defined by the Administrators.                                                         |
-| Step 4  		     | 	... saving the selected category?                   | Collaborator                   | IE: object created in step 1 is classified in one jobCategory.                                                |
-| Step 5  		     | 	...knowing the DocType to show?                     | Enum DocType                   | IE: DocType are static and final.                                                                             |
-| Step 6  		     | 	... saving the selected docType?                    | Collaborator                   | IE: object created in step 1 is classified in one docType.                                                    |
-| Step 7  		     | 	... validating docIDNumber (local validation)? 				 | docType                        | IE:  the docType have the verification method by omission.                                                    |
-| Step 8  		     | 	... validating data (local validation)?             | Collaborator                   | IE: owns its data.                                                                                            | 
-|                | 	... validating all data (global validation)?        | CollaboratorRepository         | IE: knows all collaborators.                                                                                  | 
-| Step 9		       | 	... saving the registered Collaborator?             | CollaboratorRepository         | IE: owns all collaborators.                                                                                   | 
-| Step 10  		    | 	... informing operation success?                    | RegisterCollaboratorUI         | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID                                                           | Question: Which class is responsible for...      | Answer                        | Justification (with patterns)                                                                                                                                                     |
+|:-------------------------------------------------------------------------|:-------------------------------------------------|:------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Step 1: Ask to view tasks assigned to me		                               | 	... interacting with the actor?                 | AssignEntryOnAgendaUI         | **Pure Fabrication**: The `ViewDetailsEntryAgendaUI` manages user interaction to keep the UI logic separate from the business logic, ensuring high cohesion and low coupling.     |
+| 			  		                                                                  | 	... coordinating the US?                        | AssignEntryOnAgendaController | **Controller**: The `AssignEntryOnAgendaController` coordinates the process, delegating the request to appropriate handlers, ensuring separation of concerns and central control. |
+| 			  		                                                                  | ...knowing the collaborator email user session   | ApplicationSession            | **Information Expert**: The `ApplicationSession` knows the configure file for obtaining collaborator email.                                                                       |
+| 		                                                                       | ...knowing the collaborator email	               | CollaboratorRepository        | **Information Expert**: The `CollaboratorRepository` manages data persistence and is responsible for knowing collaborator email.                                                  |
+| 		                                                                       | 	...knowing the entries from collaborator        | EntryRepository               | **Information Expert**: The `CollaboratorRepository` manages data persistence and is responsible for knowing the entries from collaborator.                                       |
+| 		                                                                       | ...converting the entry list to entry dto list?	 | EntryMapper                   | **Pure Fabrication**: The `EntryMapper` handles the transformation of entry list to entry dto list, ensuring separation of concerns.                                              |
+| 	Step 2: shows entry's assigned		                                        | ...showing entry's assigned	                     | AssignEntryOnAgendaUI         | **Pure Fabrication**: The `AssignEntryOnAgendamUI` shows entry's assigned, maintaining separation of concerns between UI and business logic.                                      |
+                
 
 ### Systematization ##
 
-According to the taken rationale, the conceptual classes promoted to software classes are(i.e. Creator): 
+* Software classes (i.e. **Pure Fabrication**) identified
 
-* Collaborator Repository
-* Collaborator
+* ViewDetailsEntryAgendaUI
+* EntryMapper
 
-Other software classes (i.e Information Expert) identified:
 
-* Repositories
-* DocTypeRepository
-* JobCategoryRepository
+Other software classes (i.e. **Controller**) identified
+
+* AssignEntryOnAgendaController
+
+Other software classes (i.e. **Information Expert**) identified
+
+* EntryRepository
+* Entry
+* ApplicationSession
 * CollaboratorRepository
-
-Other software classes (i.e. Pure Fabrication) identified: 
-
-* RegisterCollaboratorUI  
-* RegisterCollaboratorController
 
 ## 3.2. Sequence Diagram (SD)
 

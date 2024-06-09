@@ -17,6 +17,7 @@ participant ":EntryDto" as DTO
 participant ":EntryMapper" as MAPPER
 participant "toDoListDto : List<EntryDto>" as ListDTO
 participant "toDoList : List<Entry>" as List
+participant "CollaboratorRepository" as CollabRepository
 
 
 activate CollaboratorUser
