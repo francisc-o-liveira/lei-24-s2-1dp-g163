@@ -17,7 +17,8 @@ import java.util.Properties;
  */
 public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
-    private static final String CONFIGURATION_FILENAME = "\\target\\classes\\configs\\config.properties";
+    private static String configfile;
+    //private static final String CONFIGURATION_FILENAME= configfile;
     private static final String COMPANY_DESIGNATION = "Company.Designation";
     private static final String EMAIL_DESIGNATION = "SendEmailExternalAPI.Class";
     private static final String SORTING_ALGORITHM = "SortingList.Class";
@@ -59,7 +60,7 @@ public class ApplicationSession {
         Properties props = new Properties();
         String currentDir = System.getProperty("user.dir");
         try {
-            InputStream in = new FileInputStream(currentDir+CONFIGURATION_FILENAME);
+            InputStream in = new FileInputStream(currentDir+configfile);
             props.load(in);
             in.close();
             String className = props.getProperty(EMAIL_DESIGNATION);
@@ -96,7 +97,7 @@ public class ApplicationSession {
      */
     private static String getEmail() throws IOException {
         String currentDir = System.getProperty("user.dir");
-        String fileName = currentDir + CONFIGURATION_FILENAME;
+        String fileName = currentDir + configfile;
         try (InputStream input = new FileInputStream(fileName)) {
             Properties prop = new Properties();
             prop.load(input);
@@ -141,7 +142,7 @@ public class ApplicationSession {
      * @throws IOException if an I/O error occurs
      */
     private static String getAlgorithm() throws IOException {
-        String fileName = System.getProperty("user.dir") + CONFIGURATION_FILENAME;
+        String fileName = System.getProperty("user.dir") + configfile;
         try (InputStream input = new FileInputStream(fileName)) {
             Properties prop = new Properties();
             prop.load(input);
@@ -156,7 +157,7 @@ public class ApplicationSession {
      * @throws IOException if an I/O error occurs
      */
     public static Tempo getTimeOfWork() throws IOException {
-        String fileName = System.getProperty("user.dir") + CONFIGURATION_FILENAME;
+        String fileName = configfile;
         try (InputStream input = new FileInputStream(fileName)) {
             Properties prop = new Properties();
             prop.load(input);
@@ -185,5 +186,8 @@ public class ApplicationSession {
     }
 
     public void setFilePath(File selectedDirectory) {
+        if(selectedDirectory != null){
+            configfile=selectedDirectory.getAbsolutePath()+"/config.properties";
+        }
     }
 }

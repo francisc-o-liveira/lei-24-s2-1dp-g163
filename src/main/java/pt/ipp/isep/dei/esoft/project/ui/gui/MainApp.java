@@ -25,37 +25,31 @@ public class MainApp extends Application {
 
 
     Bootstrap bootstrap=new Bootstrap();
+    private ApplicationSession appSession;
 
 
     @Override
     public void start(Stage stage) {
-        try {
-            bootstrap.run();
-            initializeApp();
-        } catch (Exception ex) {
-            if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
-                File selectedDirectory = pickingDirectory();
-                if (selectedDirectory != null) {
-                    try{
-                        bootstrap.setSaveDirectory(selectedDirectory);
-                        bootstrap.run();
-                        initializeApp();
-                    }catch (IOException io){
-                        criarAlertaErro(io).show();
-                    } catch (Exception e) {
-                        bootstrap.setSaveDirectory(pickingDirectory());
-                        start(stage);
-                    }
-
-
-                    ApplicationSession.getInstance().setFilePath();
-
-                } else {
-                    Alert alert=new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Please select a directory");
+        if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
+            File selectedDirectory = pickingDirectory();
+            if (selectedDirectory != null) {
+                try{
+                    appSession=ApplicationSession.getInstance();
+                    appSession.setFilePath(selectedDirectory);
+                    bootstrap.run();
+                    initializeApp();
+                }catch (IOException io){
+                    criarAlertaErro(io).show();
+                } catch (Exception e) {
+                    appSession.setFilePath(selectedDirectory);
+                    start(stage);
                 }
+            } else {
+                Alert alert=new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Please select a directory");
             }
         }
+
     }
 
     private File pickingDirectory() {
@@ -64,8 +58,6 @@ public class MainApp extends Application {
         return directoryChooser.showDialog(null);
     }
 
-
-    // VERIFICA BEM ESTE METODO NAO SEI QUE MERDA E AQUELA QUE FIZESTE
     private void initializeApp() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/fxml/SceneLogin.fxml"));
         Scene scene=new Scene(fxmlLoader.load());
@@ -121,7 +113,7 @@ public class MainApp extends Application {
 
     private Alert popUpBootStrap(){
         Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setContentText("The application did not detect a database. Select one?");
+        alerta.setContentText("The application did not detect the configuration file. Select one?");
         return alerta;
     }
 
