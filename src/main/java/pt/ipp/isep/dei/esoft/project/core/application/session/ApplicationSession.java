@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.sortingAlgorithmsServ.SortingList;
 import pt.ipp.isep.dei.esoft.project.utilities.Tempo;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -164,7 +165,7 @@ public class ApplicationSession {
             if (verifyTime(hoursMinutes)) {
                 return new Tempo(Integer.parseInt(hoursMinutes[0]), Integer.parseInt(hoursMinutes[1]));
             } else {
-                throw new IOException("Invalid time format in the config file");
+                throw new IllegalArgumentException("Invalid time format in the config file");
             }
         }
     }
@@ -181,5 +182,8 @@ public class ApplicationSession {
                 Integer.parseInt(hoursMinutes[1]) >= 0 &&
                 Integer.parseInt(hoursMinutes[1]) <= 60 &&
                 Integer.parseInt(hoursMinutes[0]) >= 0;
+    }
+
+    public void setFilePath(File selectedDirectory) {
     }
 }

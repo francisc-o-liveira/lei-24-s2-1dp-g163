@@ -15,6 +15,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import pt.ipp.isep.dei.esoft.project.core.application.controller.AssignEntryOnAgendaController;
+import pt.ipp.isep.dei.esoft.project.core.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.ui.gui.login.LoginUI;
 
@@ -45,6 +46,10 @@ public class MainApp extends Application {
                         bootstrap.setSaveDirectory(pickingDirectory());
                         start(stage);
                     }
+
+
+                    ApplicationSession.getInstance().setFilePath();
+
                 } else {
                     Alert alert=new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Please select a directory");

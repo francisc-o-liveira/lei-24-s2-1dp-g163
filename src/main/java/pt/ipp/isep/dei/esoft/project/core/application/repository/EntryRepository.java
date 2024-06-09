@@ -28,14 +28,14 @@ public class EntryRepository {
     /**
      * Constructor to initialize the EntryRepository.
      */
-    public EntryRepository() {
+    public EntryRepository() throws IOException {
         toDo = new ToDoList();
         agenda = new AgendaList();
         mapper = new EntryMapper();
         vehicleMapper = new VehicleMapper();
         try {
             timeOfWorkByCollaborators = ApplicationSession.getTimeOfWork();
-        } catch (IOException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Error in File Config Please Verify : Getting Time Of Work By Collaborators");
             timeOfWorkByCollaborators = new Tempo(HOURS_WORK_PER_OMISSION);
         }
