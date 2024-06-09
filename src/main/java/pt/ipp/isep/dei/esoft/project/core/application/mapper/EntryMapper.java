@@ -212,9 +212,9 @@ public class EntryMapper {
         if (entry.getTeamAssigned() == null && entryDto.getTeamAssigned() != null) {
             entry.setTeamAssigned(teamMapper.teamDtoToTeam(entryDto.getTeamAssigned()));
         }
-        if (entry.getVehicleList() == null && entryDto.getVehicleList() != null) {
+        if (entry.getVehicleList().size()==0 && entryDto.getVehicleList().size()>0) {
             entry.setVehicleList(vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()));
-        } else if (entry.getVehicleList() != null && entryDto.getVehicleList() != null) {
+        } else if (entry.getVehicleList().size()>0 && entryDto.getVehicleList().size()>0 && !entry.getVehicleList().equals(entryDto.getVehicleList())) {
             for (Vehicle vehicle : vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList())) {
                 if (!entry.getVehicleList().contains(vehicle)) {
                     entry.assignVehicle(vehicle);
