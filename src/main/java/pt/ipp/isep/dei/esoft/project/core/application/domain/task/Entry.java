@@ -120,13 +120,13 @@ public class Entry extends Task implements Serializable {
      * @throws IllegalArgumentException if the finish date is before the start date
      */
     public void completeTask(Date finishDate, Collaborator collaborator) {
-        if (finishDate.after(getTimePeriod().getStartDate())) {
+        //if (finishDate.after(getTimePeriod().getStartDate())) {
             this.collaboratorThatCompleted = collaborator;
             setFinishDate(finishDate);
             this.status.doneEntry();
-        } else {
+        /*} else {
             throw new IllegalArgumentException("This finish date is not right");
-        }
+        }*/
     }
 
     /**

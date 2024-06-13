@@ -105,7 +105,12 @@ public class TeamRepository {
      * @return true if the team is successfully saved, otherwise false
      */
     public boolean saveTeam(Team teamCreated) {
-        return teams.add(teamCreated);
+        boolean opSuccess=teams.add(teamCreated);
+        if(opSuccess){
+            saveFromTeamInDataBase(teamCreated);
+            return true;
+        }
+        return false;
     }
 
 
@@ -117,13 +122,13 @@ public class TeamRepository {
     public void saveFromTeamInDataBase(Team team) {
         if (!teams.contains(team)) {
             saveTeam(team);
-            saveTeams();
         }
+        saveTeams();
     }
 
     private void saveTeams() {
-        cleanFile(Bootstrap.getInstance().getTeamDataBaseFile());
-        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getInstance().getTeamDataBaseFile());
+        cleanFile(Bootstrap.getTeamDataBaseFile());
+        try (FileOutputStream fileOut = new FileOutputStream(Bootstrap.getTeamDataBaseFile());
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(teams);
         } catch (IOException e) {
@@ -142,7 +147,7 @@ public class TeamRepository {
 
     @SuppressWarnings("unchecked")
     public void loadFromTeamDataBase() throws CloneNotSupportedException, IOException {
-        File file = new File(Bootstrap.getInstance().getVehicleDataBaseFile());
+        File file = new File(Bootstrap.getTeamDataBaseFile());
         if (!file.exists()) {
             throw new IOException("The files do not exist.");
         }

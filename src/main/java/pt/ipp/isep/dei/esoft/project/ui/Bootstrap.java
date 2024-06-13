@@ -29,7 +29,8 @@ public class Bootstrap {
     }
 
     //Add some task categories to the repository as bootstrap
-    public void run() throws Exception {
+    public void run() {
+        try {
             addSkills();
             addJobCategories();
             addCollaborators();
@@ -37,6 +38,9 @@ public class Bootstrap {
             addEntries();
             addOrganization();
             addUsers();
+        } catch (Exception e){
+            System.out.print("erro inicializando");
+        }
     }
     private void addSkills() throws Exception {
         SkillRepository skillRepository = Repositories.getInstance().getSkillRepository();

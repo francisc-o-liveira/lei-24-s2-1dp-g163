@@ -227,6 +227,7 @@ public class CollaboratorRepository {
 
     public Optional<Collaborator> assignSkill(Collaborator collaborator, Skill skillName) throws CloneNotSupportedException {
         Optional<Collaborator> collabWithSkill = collaborator.setAddSkill(skillName);
+        saveFromCollaboratorDataBase(collabWithSkill.get());
         return collabWithSkill;
     }
 
@@ -281,7 +282,7 @@ public class CollaboratorRepository {
     }
 
     private void cleanFile(String collaboratorsDataBaseFile) {
-        File file = new File(Bootstrap.getJobCategoryDataBaseFile());
+        File file = new File(Bootstrap.getCollaboratorDataBaseFile());
         try (PrintWriter writer = new PrintWriter(file)) {
             writer.print("");
         } catch (FileNotFoundException e) {
@@ -304,7 +305,7 @@ public class CollaboratorRepository {
         }
     }
 
-
+    @SuppressWarnings("unchecked")
     private void loadFromCollaboratorDataBase() throws IOException {
         List<Collaborator> collaboratorLoad;
         File file = new File(Bootstrap.getCollaboratorDataBaseFile());

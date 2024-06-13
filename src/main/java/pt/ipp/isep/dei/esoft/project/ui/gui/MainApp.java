@@ -29,10 +29,14 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        try {
+        //try {
             bootstrap.run();
+        try {
             initializeApp();
-        } catch (Exception ex) {
+        } catch (IOException e) {
+           e.printStackTrace();
+        }
+        /*} catch (Exception ex) {
             if(popUpBootStrap().showAndWait().get()==ButtonType.OK){
                 File selectedDirectory = pickingDirectory();
                 if (selectedDirectory != null) {
@@ -51,7 +55,7 @@ public class MainApp extends Application {
                     alert.setContentText("Please select a directory");
                 }
             }
-        }
+        }*/
     }
 
     private File pickingDirectory() {

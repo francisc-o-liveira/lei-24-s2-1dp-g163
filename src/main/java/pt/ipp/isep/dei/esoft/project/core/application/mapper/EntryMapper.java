@@ -173,7 +173,7 @@ public class EntryMapper {
                 && !entry.getStatus().equals(entryDto.getStatus())
                 && entryDto.getFinishDate() != null
                 && entryDto.getTeamAssigned().getTeamName().equals(entry.getTeamAssigned().getTeamName())
-                && entry.getVehicleList().equals(entryDto.getVehicleList());
+                && vehicleMapper.vehicleListDtoToVehicleList(entryDto.getVehicleList()).equals(entry.getVehicleList());
     }
 
     /**
@@ -238,9 +238,9 @@ public class EntryMapper {
                 }
             }
         }
-        if (entryToCompare.getTeamAssigned().equals(entryAgenda.getTeamAssigned())) {
+        /*if (entryToCompare.getTeamAssigned().getTeamName().equals(entryAgenda.getTeamAssigned().getTeamName())) {
             return true;
-        }
+        }*/
         return false;
     }
 

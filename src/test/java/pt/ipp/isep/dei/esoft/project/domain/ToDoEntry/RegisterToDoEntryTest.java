@@ -16,6 +16,8 @@ import pt.ipp.isep.dei.esoft.project.core.application.domain.task.Task;
 import pt.ipp.isep.dei.esoft.project.core.application.domain.vehicle.Vehicle;
 import pt.ipp.isep.dei.esoft.project.core.application.mapper.EntryMapper;
 import pt.ipp.isep.dei.esoft.project.core.application.repository.EntryRepository;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Organization;
+import pt.ipp.isep.dei.esoft.project.core.application.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 import pt.ipp.isep.dei.esoft.project.utilities.Address;
 import pt.ipp.isep.dei.esoft.project.utilities.Date;
@@ -60,20 +62,24 @@ public class RegisterToDoEntryTest {
         reference = "1";
         finishDate = new Date(2024,6,7);
         startHour = new Tempo();
-        name = "isep";
-        address = "Rua Sao Tome";
-        city = "Porto";
-        zipCode ="4400-123";
-        area = 20.0;
-        type = GreenSpace.Type.Garden;
-        email = "gsm@this.app";
+
     }
 
     @Test
     void testEntryRegistry() throws Exception {
         Bootstrap boot = new Bootstrap();
         boot.run();
-        EntryDto entryDto = new EntryDto("x","banana", Task.DegreeUrgency.High,new Tempo(0,15),new GreenSpaceDto(area,new Address(zipCode,address,city),name,type,email));
+        Organization greenSpaceRepository = Repositories.getInstance().getOrganizationRepository();
+        name = "isep";
+        address = "rua sao tome";
+        city = "Porto";
+        zipCode ="4400-123";
+        area = 20.0;
+        type = GreenSpace.Type.Garden;
+        email = "gsm@this.app";
+        GreenSpaceDto gs =new GreenSpaceDto(area, new Address(zipCode,address,city),name,type,email);
+        greenSpaceRepository.registerGreenSpace(gs);
+        EntryDto entryDto = new EntryDto("x","banana", Task.DegreeUrgency.High,new Tempo(0,15),gs);
         Optional<Entry> entry = repo.registerNewTask(entryDto);
         assertNotNull(entry.get());
         assertEquals(entry.get().getReference(),reference);

@@ -149,6 +149,7 @@ public class ViewTaskListCollaboratorUI {
             popUp().show();
         } catch (Exception e) {
             popUpOfVerifications(Alert.AlertType.ERROR, e.getMessage()).show();
+            e.printStackTrace();
         }
     }
 

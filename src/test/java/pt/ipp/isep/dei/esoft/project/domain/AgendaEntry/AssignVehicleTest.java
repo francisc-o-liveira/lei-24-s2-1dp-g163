@@ -65,17 +65,17 @@ public class AssignVehicleTest {
         greenSpaceRepository.registerGreenSpace(gs);
         entryDto = new EntryDto(
                 new Date(2023, 6, 1),new Tempo(8),
-                new EntryState(EntryState.State.Assigned),
+                new EntryState(),
                 "Test Task",
                 "Description of Test Task",
                 Task.DegreeUrgency.Medium,
                 new Tempo(2),
                 gs,
-                "123",
+                "426",
                 null,
                 new ArrayList<>()
         );
-        v1 = new Vehicle("VW4", "Golf14", Vehicle.Type.LightCargo, 1300, 1600, 160000, new Date(2005, 10, 1), new Date(2010, 12, 3), 11000, "42-AB-91", new Date(2010, 10, 1), 150000);
+        v1 = new Vehicle("VW4", "Golf14", Vehicle.Type.LightCargo, 1300, 1600, 160000, new Date(2005, 10, 1), new Date(2010, 12, 3), 11000, "61-VC-12", new Date(2010, 10, 1), 150000);
         vehiclesAssigning=new ArrayList<>();
         vehiclesAssigning.add(v1);
         vehicleRepository.addVehicle(v1);

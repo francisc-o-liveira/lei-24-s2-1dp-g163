@@ -34,6 +34,7 @@ public class JobCategoryRepository {
         Optional<JobCategory> newJobCategory =Optional.empty();
         JobCategory jobCategory = new JobCategory(jobCategoryName);
         newJobCategory=verifyJobCategoryExistAndSave(jobCategory);
+        saveJobCategorys();
         return newJobCategory;
     }
 
@@ -46,12 +47,12 @@ public class JobCategoryRepository {
 
     private Optional<JobCategory> verifyJobCategoryExistAndSave(JobCategory jobCategory) throws CloneNotSupportedException {
        Optional<JobCategory> newJobCategory = Optional.empty();
-        if (!jobCategories.contains(jobCategory)){
+       // if (!jobCategories.contains(jobCategory)){
            saveFromJobCategoryInDataBase(jobCategory);
             newJobCategory=Optional.of(jobCategory);
-        }else{
+        /*}else{
             throw new CloneNotSupportedException("Job Category already exist");
-        }
+        }*/
         return newJobCategory;
     }
     /**
