@@ -1,5 +1,7 @@
 # US027 - To List All Green Spaces Managed by the GSM
 
+(Tomás)
+
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
@@ -8,7 +10,7 @@ As a GSM, I need to list all green spaces managed by me.
 
 ### 1.2. Customer Specifications and Clarifications
 
-**From the Specifications Document:**
+**From the Specifications Document:**v
 
 > *A GSM is responsible for managing the green spaces in charge of the organization. Green spaces can vary significantly in dimensions and available amenities.*
 

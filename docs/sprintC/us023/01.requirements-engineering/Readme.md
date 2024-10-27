@@ -1,5 +1,6 @@
 # US023 - To Assign a Team to an entry in the Agenda
 
+(Tomás)
 
 ## 1. Requirements Engineering
 
